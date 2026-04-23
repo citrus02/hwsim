@@ -30,7 +30,7 @@ export function playClickSound() {
     source.buffer = clickBuffer;
     
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = 1;
+    gainNode.gain.value = 0.4;
     
     source.connect(gainNode);
     gainNode.connect(audioContext.destination);
