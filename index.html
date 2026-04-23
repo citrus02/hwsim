@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>霍格沃茨模拟器</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- PWA 配置 -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0014">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="霍格沃茨">
+  
+  <!-- ✅ 用 SVG 城堡替代 emoji -->
+   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
+   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
+<div class="container">
+
+<!-- 角色创建 -->
+<div class="screen active" id="screen-create">
+  <h1 style="text-align:center; margin-top: 10px;">✨🏰 霍格沃茨模拟器 🏰✨</h1>
+  <hr style="border: none; height: 2px; background: linear-gradient(90deg, #4a5588, #8a94c2, #4a5588); margin: 14px 0; border-radius: 2px;">
+  
+<!-- ✅ 标题行：播放音乐 + 创建你的巫师 + 测试通道 -->
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px; padding: 0 20px; position: relative;">
+  <button id="music-button" style="position: absolute; left: 0; background:#161d2f; color:#fff; padding:6px 12px; border-radius:4px; border:none; cursor:pointer; white-space:nowrap;">🎵 播放音乐</button>
+  <h2 style="margin: 0;">🧙🏻‍♀️ 创建你的巫师</h2>
+  <button style="position: absolute; right: 0; background:#161d2f; color:#fff; padding:6px 12px; border-radius:4px; border:none; cursor:pointer; white-space:nowrap;"
+  onclick="quickTest()">⚡测试通道</button>
+</div>
+
+  <!-- 卡片 1：姓名 + 随机名字 -->
+  <div class="card">
+    <div class="title">👤 巫师姓名</div>
+    <input id="name" placeholder="姓名（可手动输入，有彩蛋）" value="">
+    <div class="random-row">
+      <button class="btn" id="random-name" style="background:#473c66; width:100%;">🎲 随机名字</button>
+    </div>
+  </div>
+
+  <!-- 卡片 2：出身 + 学院 + 分院帽 -->
+  <div class="card">
+    <div class="title">🏰 出身与学院</div>
+    <select id="blood" required>
+      <option value="" disabled selected>出身（点击选择）</option>
+      <option value="纯血巫师">纯血巫师</option>
+      <option value="混血巫师">混血巫师</option>
+      <option value="麻瓜出身">麻瓜出身</option>
+      <option value="其他出身">其他出身</option>
+    </select>
+
+    <select id="house" required>
+      <option value="" disabled selected>学院（可手动选择）</option>
+      <option value="格兰芬多">格兰芬多</option>
+      <option value="斯莱特林">斯莱特林</option>
+      <option value="拉文克劳">拉文克劳</option>
+      <option value="赫奇帕奇">赫奇帕奇</option>
+    </select>
+
+    <div class="random-row">
+      <button class="btn hat" id="sorting-hat" style="width:100%;">🎩 分院帽检测（可以不检测）</button>
+    </div>
+    <div id="sorting-result" style="margin-top:10px;"></div>
+  </div>
+
+  <!-- 卡片 3：魔杖 + 抽取 + 试用 -->
+  <div class="card">
+    <div class="title">🪄 魔杖选择巫师</div>
+    <input id="wand" placeholder="魔杖材质（可手动输入）" value="">
+    <div class="random-row">
+      <button class="btn" id="random-wand" style="background:#3c5a66; flex:1;">🪄 抽取魔杖</button>
+      <button class="btn success" id="try-wand" style="flex:1;" disabled>🪄 试用魔杖（可多次尝试）</button>
+    </div>
+    <div id="wand-result" style="margin-top:10px;"></div>
+  </div>
+
+  <!-- 开始游戏按钮 -->
+  <div class="card" style="text-align:center; background:transparent; padding:0;">
+    <button class="btn warn" id="start-game" style="min-height:80px; font-size:18px; width:100%; margin:0 !important; box-sizing:border-box;">✨ 进入霍格沃茨</button>
+  </div>
+</div>
+
+<!-- 主界面 -->
+<div class="screen" id="screen-main">
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 0 0 10px 0; width: 100%; box-sizing: border-box; position: relative;">
+    <button id="music-button-main" style="position: absolute; left: 0; background:#161d2f; color:#fff; padding:4px 8px; border-radius:4px; border:1px solid #4a5588; cursor:pointer; font-weight:bold; font-size:16px; user-select:none;">🎵</button>
+    <h1 style="text-align:center; margin-top: 10px;">✨🏰 霍格沃茨模拟器 🏰✨</h1>
+    <button id="note-button-main" style="position: absolute; right: 0; background:#161d2f; color:#fff; padding:4px 8px; border-radius:4px; border:1px solid #4a5588; cursor:pointer; font-weight:bold; font-size:16px; user-select:none;">✍</button>
+</div>
+  <hr style="border: none; height: 2px; background: linear-gradient(90deg, #4a5588, #8a94c2, #4a5588); margin: 14px 0; border-radius: 2px;">
+
+  <!-- 主卡片：标签页 -->
+  <div class="card">
+    <div class="tab">
+      <button class="btn tab-btn active" data-tab="daily">日常</button>
+      <button class="btn tab-btn" data-tab="course">时间轴</button>
+      <button class="btn tab-btn" data-tab="info">信息</button>
+      <button class="btn tab-btn" data-tab="bag">背包</button>
+    </div>
+
+    <!-- 行动日常 -->
+    <div class="tab-screen active" id="tab-daily">
+      <div class="info">当前时间：<span id="date">1991-09-02</span> <span id="timeOfDay">早晨</span></div>
+      <div class="info">今日剩余行动次数：<span id="actions">3</span>/3</div>
+    </div>
+
+    <!-- 时间轴 -->
+    <div class="tab-screen" id="tab-course">
+      <div class="timeline" id="timeline"></div>
+    </div>
+
+    <!-- 个人信息 -->
+    <div class="tab-screen" id="tab-info">
+      <div class="info"><span class="info-label">姓名：</span><span id="stat-name">—</span></div>
+      <div class="info"><span class="info-label">出身：</span><span id="stat-blood">—</span></div>
+      <div class="info"><span class="info-label">学院：</span><span id="stat-house">—</span></div>
+      <div class="info"><span class="info-label">魔杖：</span><span id="stat-wand">—</span></div>
+    </div>
+
+    <!-- 背包 -->
+    <div class="tab-screen" id="tab-bag">
+      <div class="bag-tab-row">
+        <button class="bag-tab active" data-bag="material">材料</button>
+        <button class="bag-tab" data-bag="potion">魔药</button>
+        <button class="bag-tab" data-bag="item">道具</button>
+      </div>
+      <div class="bag-grid" id="bagGrid"></div>
+    </div>
+  </div>
+
+  <!-- 行动日志 -->
+  <div class="card">
+    <div class="title">行动日志</div>
+    <div class="log" id="log"></div>
+  </div>
+
+  <!-- 要做点什么？ -->
+  <div class="card">
+    <div id="actionMain">
+      <div class="title">✨ 要做点什么？</div>
+      <div style="display: grid; gap: 8px; margin-top: 12px;">
+        <!-- ✅ FIX #4：用 window 挂载的函数，避免 inline import 兼容性问题 -->
+        <button class="action-btn" onclick="window.openCoursePanel()">🪶 学习课程</button>
+        <button class="action-btn" onclick="window.openSpellPanel()">🪄 训练咒语</button>
+        <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
+        <button class="action-btn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
+      </div>
+    </div>
+
+    <div id="exploreMain" style="display: none;">
+      <div class="title">🗺️ 探索城堡</div>
+      <div id="explore-container" style="max-height: 400px; overflow: auto; margin-top: 8px;"></div>
+      <button class="action-btn" style="margin-top:10px;" onclick="window.closeExplorePanel()">← 返回行动</button>
+    </div>
+  </div>
+
+  <!-- 存档 / 读档 -->
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div class="title">💾 存档 / 读档</div>
+      <!-- ✅ FIX：改成调用 openSave() 并默认显示存档面板 -->
+      <button class="info-collapse-btn" id="saveBtnToggle" onclick="window.toggleSavePanel()">查看</button>
+    </div>
+    <!-- display:block 默认打开 -->
+    <div id="saveBox" style="display:none; margin-top:12px;"> 
+      <div class="save-btn-row">
+        <!-- ✅ FIX #3：统一用 window. 调用，防 module 作用域问题 -->
+        <button class="save-btn save" onclick="window.openSave()">💾 保存</button>
+        <button class="save-btn load" onclick="window.openLoad()">📂 读取</button>
+        <button class="save-btn reset" onclick="window.resetGame()">🔄 重置</button>
+      </div>
+      <div id="slotBox" style="max-height: 500px; overflow-y: auto; margin-top:8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ✅ FIX #5：课程列表提取为全局常量，不再重复定义 */
+const COURSES = [
+  "变形术","魔咒学","魔药学","黑魔法防御术",
+  "草药学","魔法史","天文学","飞行课",
+  "算术占卜","古代魔文","占卜学","保护神奇动物",
+  "麻瓜研究","幻影移形","炼金术"
+];
+
+/* ✅ FIX #6：提示框样式抽成公共函数 */
+function showTipBox(elementId, html) {
+  const box = document.getElementById(elementId);
+  box.style.display = "block";
+  box.style.background = "#2a3b66";
+  box.style.color = "#ffffff";
+  box.style.padding = "12px";
+  box.style.borderRadius = "8px";
+  box.style.marginTop = "10px";
+  box.innerHTML = html;
+}
+
+/* ✅ FIX #1 & #8：统一存档数据结构生成函数 */
+function buildSaveData(opts) {
+  const courseMap = {};
+  COURSES.forEach(c => courseMap[c] = 0);
+  return {
+    player: {
+      name:  opts.name  || "无名巫师",   /* ✅ FIX #10：姓名兜底 */
+      blood: opts.blood || "混血巫师",
+      house: opts.house || "格兰芬多",
+      wand:  opts.wand  || "未知魔杖",
+      wandAccepted: opts.wandAccepted ?? true
+    },
+    time: {
+      year: 1991,
+      month: 9,
+      day: 2,
+      dailyActionLeft: 3,
+      nowTime: "早晨",
+      currentDate: "1991-09-02"
+    },
+    log: opts.log || ["✅ 成功进入霍格沃茨"],
+    course: courseMap,
+    bag: {                                /* ✅ FIX #11：统一30格 */
+      material: Array(30).fill(null),
+      potion:   Array(30).fill(null),
+      item:     Array(30).fill(null)
+    }
+  };
+}
+
+// 全局测试通道
+function quickTest() {
+  const data = buildSaveData({
+    name: "无名巫师",
+    blood: "混血巫师",
+    house: "格兰芬多",
+    wand: "冬青木・凤凰羽毛",
+    wandAccepted: true,
+    log: ["✅ 测试通道已进入"]
+  });
+
+  localStorage.setItem("hogwarts", JSON.stringify(data));
+  document.getElementById("screen-create").classList.remove("active");
+  document.getElementById("screen-main").classList.add("active");
+
+  setTimeout(() => {
+    if (window.refreshAll) refreshAll();
+  }, 100);
+}
+
+// 标签页切换
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-screen').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`tab-${tab}`).classList.add('active');
+    });
+  });
+});
+</script>
+
+<!-- 核心：随机生成 + 开始游戏 -->
+<script type="module">
+import { initRandomGenerators, initSortingHat, initWandSelection, player } from './random-generator.js';
+
+window.addEventListener('load', () => {
+  initRandomGenerators();
+  initSortingHat();
+  initWandSelection();
+
+  document.getElementById('start-game').onclick = () => {
+    // 魔杖认可检测
+    if (!player.wandAccepted) {
+      showTipBox('wand-result', `
+        👴🏻 奥利凡德：<i>孩子，你还没有获得魔杖的认可！</i><br>
+        🪄 是魔杖选择巫师，不是巫师选择魔杖。<br>
+        <i>（如果一定要的话，也不是不可以。）</i><br>
+        ✨ 请先抽取魔杖并试用，成功后才能进入霍格沃茨！
+      `);
+      return;
+    }
+
+    // 出身 & 学院检测
+    const blood = document.getElementById('blood').value;
+    const house = document.getElementById('house').value;
+    if (!blood || !house) {
+      showTipBox('wand-result', `
+        🧙🏻‍♀️ 米勒娃 · 麦格：<i>请先登记你的出身与学院，再踏入霍格沃茨的校门。</i><br>
+        📚 规矩理应遵守，秩序不容懈怠，望各位谨记分寸。
+      `);
+      return;
+    }
+
+    /* ✅ FIX #1：使用统一的 buildSaveData，数据结构完全一致 */
+    const data = buildSaveData({
+      name:  document.getElementById('name').value.trim(),
+      blood,
+      house,
+      wand:  document.getElementById('wand').value.trim(),
+      wandAccepted: true,
+      log: ["✅ 成功进入霍格沃茨"]
+    });
+
+    localStorage.setItem("hogwarts", JSON.stringify(data));
+
+    document.getElementById("screen-create").classList.remove("active");
+    document.getElementById("screen-main").classList.add("active");
+
+    setTimeout(() => {
+      if (window.refreshAll) refreshAll();
+    }, 100);
+  };
+});
+</script>
+
+<script type="module">
+  import { initMusicSystem, setBGMSource } from './audio.js';
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setBGMSource('./audio/Prologue');
+      initMusicSystem();
+      
+      // ✅ 主屏幕的音乐按钮也绑定同样的事件
+      const musicBtnMain = document.getElementById('music-button-main');
+      const musicBtn = document.getElementById('music-button');
+      if (musicBtnMain && musicBtn) {
+        musicBtnMain.onclick = musicBtn.onclick;
+      }
+    });
+  } else {
+    setBGMSource('./audio/Prologue.mp3');
+    initMusicSystem();
+  }
+</script>
+  
+<script type="module">
+  import { initVersionManager } from './version.js';
+  
+  console.log('✅ version.js 导入成功！');
+  console.log('initVersionManager:', initVersionManager);
+  
+  try {
+    initVersionManager();
+    console.log('✅ initVersionManager 调用成功！');
+  } catch (e) {
+    console.error('❌ initVersionManager 出错:', e);
+  }
+</script>
+
+<script type="module" src="time-system.js"></script>
+<script type="module" src="explore-data.js"></script>
+<script type="module" src="explore.js"></script>
+<script type="module" src="material-emoji.js"></script>
+<script type="module" src="potion-data.js"></script>
+<script type="module" src="potion.js"></script>
+<!-- ✅ 别忘了加载 course.js 和 spell.js，否则 window.openCoursePanel 等不存在 -->
+<script type="module" src="course.js"></script>
+<script type="module" src="spell.js"></script>
+<script type="module" src="save-system.js"></script>
+
+<!-- 折叠展开按钮 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.info-collapse-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const name = this.getAttribute('data-toggle');
+      const el = document.getElementById(name + 'Box');
+      if (el) {
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+      }
+    });
+  });
+});
+
+// 切换存档面板显示/隐藏
+window.toggleSavePanel = function() {
+  const saveBox = document.getElementById('saveBox');
+  const btn = document.getElementById('saveBtnToggle');
+  
+  if (saveBox.style.display === 'none' || !saveBox.style.display) {
+    saveBox.style.display = 'block';
+    btn.textContent = '收起';
+    window.openSave();  // ✅ KEY：打开时默认加载存档列表
+  } else {
+    saveBox.style.display = 'none';
+    btn.textContent = '查看';
+  }
+};
+
+</script>
+
+<!-- 反馈弹窗 -->
+<div id="feedback-modal" class="modal">
+    <div class="modal-content">
+        <button id="close-feedback" class="close-btn">✕</button>
+        
+        <h2>反馈</h2>
+        <p class="feedback-message">
+            遇到问题、有新想法，请联系下方邮箱
+        </p>
+        
+        <div class="email-box">
+            <code id="email-display">hwsimgame@qq.com</code>
+        </div>
+        
+        <div class="button-group">
+            <button id="copy-email" class="btn btn-primary">📋 复制邮箱</button>
+            <button id="cancel-feedback" class="btn btn-secondary">关闭</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
