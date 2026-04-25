@@ -3,10 +3,13 @@
 // 版本管理 & 存档继承系统
 // ===========================
 
-export const CURRENT_VERSION = '1.1.0';
-export const VERSION_KEY = 'hogwarts_version';
-export const SAVE_KEY = 'hogwarts';
+import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
+export const CURRENT_VERSION = '1.2.0';
+export const VERSION_KEY = 'hogwarts_version';
+export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
+
+// git add . && git commit -m "1.1.3" && git pull origin main --rebase && git push
 export const versionLogs = {
   '1.0.0': '初始版本',
   '1.1.0': [
@@ -16,7 +19,14 @@ export const versionLogs = {
     '🎭 魔杖特殊角色彩蛋完善',
   ],
   '1.1.1': '修复PWA图标',
-  '1.1.2': '新增历史玩家人数',
+  '1.1.2': [
+    '・ 新增历史玩家人数',
+    '・ 新增版权声明',
+  ],
+  '1.2.0': [
+    '・ 新增探索获取材料系统',
+    '・ 新增魔药制作面板',
+    ],
 };
 
 function getPlayerBackup() {
@@ -189,61 +199,62 @@ function showVersionUpdateDialog(oldVersion, backup) {
   closeBtn.onmouseup = () => closeBtn.style.transform = 'scale(1.08)';
 }
 
+const DEBUG = false; // 开发时改为 true 可查看版本管理详细日志
 export function initVersionManager() {
-  console.log('=== VERSION MANAGER START ===');
+  if (DEBUG) console.log('=== VERSION MANAGER START ===');
   
   const oldVersion = localStorage.getItem(VERSION_KEY);
-  console.log('1️⃣ oldVersion from localStorage:', oldVersion);
-  console.log('2️⃣ CURRENT_VERSION:', CURRENT_VERSION);
-  console.log('3️⃣ VERSION_KEY:', VERSION_KEY);
+  if (DEBUG) console.log('1️⃣ oldVersion from localStorage:', oldVersion);
+  if (DEBUG) console.log('2️⃣ CURRENT_VERSION:', CURRENT_VERSION);
+  if (DEBUG) console.log('3️⃣ VERSION_KEY:', VERSION_KEY);
   
   const backup = getPlayerBackup();
-  console.log('4️⃣ backup:', backup);
+  if (DEBUG) console.log('4️⃣ backup:', backup);
 
   if (!oldVersion || oldVersion !== CURRENT_VERSION) {
-    console.log('5️⃣ 进入了 if (!oldVersion || oldVersion !== CURRENT_VERSION)');
+    if (DEBUG) console.log('5️⃣ 进入了 if (!oldVersion || oldVersion !== CURRENT_VERSION)');
     
     localStorage.setItem(VERSION_KEY, CURRENT_VERSION);
-    console.log('6️⃣ 已设置版本为:', CURRENT_VERSION);
+    if (DEBUG) console.log('6️⃣ 已设置版本为:', CURRENT_VERSION);
 
     if (oldVersion && oldVersion !== CURRENT_VERSION) {
-      console.log('7️⃣ 进入了版本不同的分支，准备显示弹窗');
-      console.log('8️⃣ document.body:', document.body);
-      console.log('9️⃣ document.readyState:', document.readyState);
+      if (DEBUG) console.log('7️⃣ 进入了版本不同的分支，准备显示弹窗');
+      if (DEBUG) console.log('8️⃣ document.body:', document.body);
+      if (DEBUG) console.log('9️⃣ document.readyState:', document.readyState);
       
       const doShow = () => {
         try {
           // ✅ FIX #6：版本升级时调用 restorePlayerData，接通存档继承
           restorePlayerData(backup);
           showVersionUpdateDialog(oldVersion, backup);
-          console.log('✅ showVersionUpdateDialog 调用成功');
+          if (DEBUG) console.log('✅ showVersionUpdateDialog 调用成功');
         } catch (e) {
           console.error('❌ showVersionUpdateDialog 出错:', e);
         }
       };
 
       if (document.body) {
-        console.log('🔟 document.body 存在，直接调用 showVersionUpdateDialog');
+        if (DEBUG) console.log('🔟 document.body 存在，直接调用 showVersionUpdateDialog');
         doShow();
       } else {
-        console.log('🔟 document.body 不存在，监听 DOMContentLoaded');
+        if (DEBUG) console.log('🔟 document.body 不存在，监听 DOMContentLoaded');
         document.addEventListener('DOMContentLoaded', () => {
-          console.log('🔟 DOMContentLoaded 触发，调用 showVersionUpdateDialog');
+          if (DEBUG) console.log('🔟 DOMContentLoaded 触发，调用 showVersionUpdateDialog');
           doShow();
         });
       }
     } else {
-      console.log('7️⃣ 没有进入版本不同的分支（oldVersion:', oldVersion, '）');
+      if (DEBUG) console.log('7️⃣ 没有进入版本不同的分支（oldVersion:', oldVersion, '）');
     }
   } else {
-    console.log('5️⃣ 没有进入 if 分支（版本相同或没有旧版本）');
+    if (DEBUG) console.log('5️⃣ 没有进入 if 分支（版本相同或没有旧版本）');
   }
 
   window.addEventListener('beforeunload', () => {
     localStorage.setItem(VERSION_KEY, CURRENT_VERSION);
   });
   
-  console.log('=== VERSION MANAGER END ===');
+  if (DEBUG) console.log('=== VERSION MANAGER END ===');
 }
 
 export function clearVersionInfo() {

@@ -11,7 +11,25 @@
   --color-text-light: #999;
   --color-gold: #f8c850;
   --color-gold-light: #f8d49d;
-  --scrollbar-thumb: #2a3b66;
+}
+
+/* 🔥 全局统一：干净 Firefox 风格滚动条（全平台一致） */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3b4f8a #161d2f;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: #161d2f;
+  border-radius: 3px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #3b4f8a;
+  border-radius: 3px;
+  border: none;
 }
 
 /* 基础重置与全局样式 */
@@ -21,7 +39,6 @@
   margin: 0;
   padding: 0;
 }
-
 body {
   background: var(--bg-dark);
   color: var(--color-text);
@@ -29,14 +46,12 @@ body {
   /* ✅ 新增：平滑滚动 */
   scroll-behavior: smooth;
 }
-
 .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   width: 100%;
 }
-
 /* 屏幕切换核心样式 */
 .screen {
   display: none !important;
@@ -44,7 +59,6 @@ body {
 .screen.active {
   display: block !important;
 }
-
 /* 标签页内部内容 */
 .tab-screen {
   display: none !important;
@@ -52,18 +66,15 @@ body {
 .tab-screen.active {
   display: block !important;
 }
-
 /* 文字样式 */
 h1, h2 {
   color: var(--color-gold);
   margin-bottom: 16px;
 }
-
 h3 {
   color: var(--color-text);
   margin-bottom: 12px;
 }
-
 /* 按钮样式 */
 .btn {
   background: var(--bg-btn);
@@ -77,39 +88,31 @@ h3 {
   flex: 1;
   min-width: 100px;
 }
-
 .btn:hover {
   background: var(--bg-btn-hover);
   transform: translateY(-1px);
 }
-
 .btn:active {
   transform: translateY(1px);
 }
-
 /* ✅ FIX #6：补齐所有按钮的 :active 状态 */
 .btn.primary { background: #732b2b; }
 .btn.primary:hover { background: #8a3434; }
 .btn.primary:active { transform: translateY(1px); }
-
 .btn.warn { background: #2b5a2b; }
 .btn.warn:hover { background: #366e36; }
 .btn.warn:active { transform: translateY(1px); }
-
 .btn.success { background: #2a7a3e; }
 .btn.success:hover { background: #329149; }
 .btn.success:active { transform: translateY(1px); }
-
 .btn.hat { background: #7d5a30; }
 .btn.hat:hover { background: #946c40; }
 .btn.hat:active { transform: translateY(1px); }
-
 .btn.tab-btn.active {
   background: #ffd700 !important;
   color: #000 !important;
   font-weight: bold;
 }
-
 .btn:disabled {
   background: #444 !important;
   color: #888;
@@ -117,7 +120,6 @@ h3 {
   opacity: 0.7;
   transform: none !important;
 }
-
 /* 标签栏 */
 .tab {
   display: flex;
@@ -125,7 +127,6 @@ h3 {
   margin-bottom: 12px;
   flex-wrap: wrap;
 }
-
 .tab-btn {
   flex: 1;
   background: #2d3756;
@@ -136,16 +137,13 @@ h3 {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-
 .tab-btn:hover {
   background: #3b4f8a;
 }
-
 .tab-btn.active {
   background: #4a5588;
   font-weight: bold;
 }
-
 /* ====================== ✅ 行动日志 / 日志区域 ====================== */
 .log {
   background: var(--bg-dark);
@@ -155,24 +153,8 @@ h3 {
   overflow-y: auto;
   margin: 8px 0;         /* ✅ 缩小上下边距 */
   width: 100%;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--bg-dark);
   font-size: 13px;       /* ✅ 文字稍微小一点 */
 }
-
-.log::-webkit-scrollbar {
-  width: 6px;
-}
-
-.log::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-
-.log::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 3px;
-}
-
 .log p { margin: 4px 0; }
 .log .me { color: #9cf; }
 .log .npc { color: #fc7; }
@@ -180,7 +162,6 @@ h3 {
 .log .good { color: #8f8; }
 .log .bad { color: #f66; }
 .log .legend { color: #fc0; font-weight: bold; }
-
 /* 输入框 */
 input {
   width: 100%;
@@ -192,28 +173,23 @@ input {
   color: #fff;
   font-size: 16px;
 }
-
 input::placeholder {
   color: var(--color-text-light) !important;
 }
-
 .chat-input-group {
   display: flex;
   gap: 8px;
   margin-top: 12px;
 }
-
 .chat-input-group input {
   margin: 0;
   flex: 1;
 }
-
 .chat-input-group .btn {
   margin: 0;
   min-width: 80px;
   flex: none;
 }
-
 /* 下拉框 */
 select {
   width: 100%;
@@ -232,16 +208,13 @@ select {
   background-size: 16px;
   padding-right: 36px;
 }
-
 select option {
   color: #fff;
   background: var(--bg-input);
 }
-
 select:valid {
   color: #ffffff !important;
 }
-
 /* 状态标签 */
 .stat {
   display: inline-block;
@@ -250,14 +223,12 @@ select:valid {
   border-radius: 6px;
   margin: 4px;
 }
-
 .card {
   background: var(--bg-card);
   border-radius: 10px;
   padding: 14px;
   margin: 10px 0;
 }
-
 /* 随机按钮行 */
 .random-row {
   display: flex;
@@ -265,7 +236,6 @@ select:valid {
   margin: 8px 0;
   flex-wrap: wrap;
 }
-
 /* 分院帽/魔杖结果面板 */
 #wand-result,
 #sorting-result {
@@ -275,28 +245,20 @@ select:valid {
   display: none;
   line-height: 1.5;
 }
-
 #wand-result.gryff,
 #sorting-result.gryff { background: #732b2b; color: white !important; }
-
 #wand-result.slyth,
 #sorting-result.slyth { background: #2b5a2b; color: white !important; }
-
 #wand-result.raven,
 #sorting-result.raven { background: #2a4b7a; color: white !important; }
-
 #wand-result.huff,
 #sorting-result.huff { background: #b99f55; color: black !important; }
-
 #wand-result.good,
 #sorting-result.good { background: #1a3a23; color: #8f8 !important; }
-
 #wand-result.bad,
 #sorting-result.bad { background: #3a1a1a; color: #f66 !important; }
-
 #wand-result.legend,
 #sorting-result.legend { background: #4a3a1a; color: #fc0 !important; }
-
 /* 七彩渐变动画 */
 .rainbow-legend {
   position: relative;
@@ -310,7 +272,6 @@ select:valid {
   z-index: 1;
   will-change: background-position;
 }
-
 .rainbow-legend::before {
   content: "";
   position: absolute;
@@ -325,17 +286,14 @@ select:valid {
   opacity: 0.4;
   animation: rainbowFlow 8s linear infinite;
 }
-
 @keyframes rainbowFlow {
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 /* 个人信息折叠按钮 */
 .info-collapse-btn {
   background: var(--bg-btn-action);
@@ -348,16 +306,13 @@ select:valid {
   font-weight: bold;
   transition: all 0.2s;
 }
-
 .info-collapse-btn:hover {
   background: var(--bg-btn-action-hover);
   transform: translateY(-1px);
 }
-
 /* 个人信息文字颜色 */
 .info-label { color: var(--color-gold-light); }
 .info-value { color: #c9d1d9; }
-
 /* 行动按钮 */
 .action-btn {
   width: 100%;
@@ -371,21 +326,17 @@ select:valid {
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
 }
-
 .action-btn:hover {
   background: var(--bg-btn-action-hover);
   transform: translateY(-1px);
 }
-
 .action-btn:active {
   transform: translateY(1px);
 }
-
 .action-btn:disabled {
   background: #444 !important;
   cursor: not-allowed;
 }
-
 /* 卡片内部标题/信息 */
 .title {
   font-size: 22px;
@@ -393,43 +344,36 @@ select:valid {
   margin-bottom: 10px;
   color: var(--color-gold);
 }
-
 .info {
   font-size: 16px;
   margin: 8px 0;
 }
-
 /* 时间线 */
 .timeline {
   margin: 12px 0;
   line-height: 1.7;
 }
-
 .timeline h4 {
   margin: 8px 0 4px;
   font-size: 15px;
   color: var(--color-gold);
 }
-
 .timeline p {
   margin: 3px 0;
   font-size: 14px;
   color: var(--color-text);
 }
-
 .event-date {
   display: inline-block;
   width: 130px;
   font-weight: bold;
   color: var(--bg-btn-action);
 }
-
 .divider {
   height: 1px;
   background: #2a3b66;
   margin: 12px 0;
 }
-
 /* ✅ FIX #1：删除重复定义！整合存档系统 */
 #saveBox {
   margin-top: 12px;
@@ -439,18 +383,15 @@ select:valid {
   padding: 14px;
   border: 1px solid var(--bg-input);
 }
-
 #saveBox.show {
   display: block !important;
 }
-
 .save-btn-row {
   display: flex;
   gap: 10px;
   margin-bottom: 12px;
   width: 100%;
 }
-
 .save-btn {
   flex: 1;
   padding: 10px 14px;
@@ -460,56 +401,45 @@ select:valid {
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .save-btn.save {
   background: #37594e;
   color: #fff;
 }
-
 .save-btn.save:hover {
   background: #467062;
   transform: translateY(-1px);
 }
-
 .save-btn.load {
   background: #3a5270;
   color: #fff;
 }
-
 .save-btn.load:hover {
   background: #46648a;
   transform: translateY(-1px);
 }
-
 .save-btn.reset {
   background: #6b3f48;
   color: #fff;
 }
-
 .save-btn.reset:hover {
   background: #854b56;
   transform: translateY(-1px);
 }
-
 /* ✅ 统一激活状态（只定义一次） */
 .save-btn.active {
   font-weight: bold;
   border: 2px solid #fff;
   opacity: 1 !important;
 }
-
 .save-btn.save.active {
   background: #467062 !important;
 }
-
 .save-btn.load.active {
   background: #46648a !important;
 }
-
 .save-modal {  /* 或者你的父容器class名 */
   overflow: visible; /* ✅ 允许子元素的滚动条溢出显示 */
   }
-
 /* 存档列表 */
 #slotBox {
   max-height: 500px;
@@ -518,24 +448,8 @@ select:valid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--bg-dark);
   margin-right: -10px;
 }
-
-#slotBox::-webkit-scrollbar {
-  width: 6px;
-}
-
-#slotBox::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-
-#slotBox::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 3px;
-}
-
 /* 存档卡片 */
 .slot-btn {
   background: var(--bg-card);
@@ -548,31 +462,26 @@ select:valid {
   font-size: 14px;
   transition: all 0.2s ease;
 }
-
 .slot-btn:hover {
   background: #242f47;
   border-color: #3b4f8a;
   transform: translateY(-1px);
 }
-
 .slot-desc {
   font-size: 12px;
   color: #a0aec0;
   margin-top: 4px;
 }
-
 .slot-btn.empty {
   background: var(--bg-card) !important;
   border-color: #2a3b66 !important;
   color: #aaa !important;
 }
-
 .slot-btn.empty:hover {
   transform: none;
   background: var(--bg-input);
   border-color: #2a3b66;
 }
-
 /* 背包系统 */
 .bag-tab-row {
   display: flex;
@@ -580,7 +489,6 @@ select:valid {
   margin: 10px 0;
   flex-wrap: wrap;
 }
-
 .bag-tab {
   background: var(--bg-btn);
   color: #fff;
@@ -590,15 +498,12 @@ select:valid {
   cursor: pointer;
   transition: background 0.2s;
 }
-
 .bag-tab:hover {
   background: var(--bg-btn-hover);
 }
-
 .bag-tab.active {
   background: var(--bg-btn-action);
 }
-
 /* ====================== 背包格子核心设置 ====================== */
 .bag-grid {
   display: grid;
@@ -606,7 +511,6 @@ select:valid {
   gap: 8px;
   margin-top: 8px;
 }
-
 .bag-slot {
   aspect-ratio: 1/1;     /* ✅ FIX #3：改成 1/1 才是正方形 */
   min-height: 40px;
@@ -626,130 +530,105 @@ select:valid {
   max-width: 100%;
   box-sizing: border-box;
 }
-
 .bag-slot.has-item {
   background: #2d3756;
   color: #fff;
   font-weight: 500;
 }
-
 /* ====================== 📱 响应式适配 ====================== */
-
 /* 平板 (768px 以下) */
 @media (max-width: 768px) {
   .container {
     padding: 12px;
     max-width: 100%;
   }
-
   h1, h2 {
     font-size: 1.4rem;
     margin-bottom: 10px;
   }
-
   h3 {
     font-size: 1.1rem;
   }
-
   .title {
     font-size: 16px;
   }
-
   .info {
     font-size: 14px;
   }
-
   .btn {
     padding: 8px 12px;
     min-width: 70px;
     margin: 4px;
     font-size: 14px;
   }
-
   .log {
     height: 180px;
     padding: 10px;
     font-size: 13px;
   }
-
   input, select {
     padding: 8px 10px;
     font-size: 16px;
     margin: 6px 0;
   }
-
   .bag-grid {
     grid-template-columns: repeat(8, 1fr);
     gap: 6px;
   }
-
   .bag-slot {
     min-height: 35px;
     font-size: 11px;
   }
-
   #slotBox {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
-
   .slot-btn {
     padding: 10px 6px;
     font-size: 12px;
   }
-
   .timeline {
     margin: 8px 0;
     line-height: 1.5;
   }
-
   .event-date {
     width: 100px;
     font-size: 12px;
   }
 }
-
 /* 手机小屏 (480px 以下) */
 @media (max-width: 480px) {
   .container {
     padding: 8px;
   }
-
   body {
     font-size: 13px;
   }
-
   h1 {
     font-size: 1.3rem;
     margin-bottom: 8px;
   }
-
   h2 {
     font-size: 1.1rem;
     margin-bottom: 8px;
   }
-
   h3 {
     font-size: 1rem;
     margin-bottom: 8px;
   }
-
   .title {
     font-size: 14px;
     margin-bottom: 8px;
   }
-
   .info {
     font-size: 13px;
     margin: 6px 0;
   }
-
   .card {
     padding: 10px;
     margin: 6px 0;
     border-radius: 8px;
   }
-
   .btn {
     padding: 8px 10px;
     min-width: 60px;
@@ -757,11 +636,9 @@ select:valid {
     font-size: 13px;
     border-radius: 6px;
   }
-
   .btn-row, .random-row {
     gap: 4px;
   }
-
   .log {
     height: 70px;        /* ✅ 手机上改成 70px */
     padding: 8px;
@@ -771,49 +648,41 @@ select:valid {
   .log p {
     margin: 2px 0;       /* ✅ 日志行间距也缩小 */
   }
-
   input, select {
     padding: 8px 10px;
     font-size: 16px;
     margin: 4px 0;
     border-radius: 6px;
   }
-
   .chat-input-group {
     gap: 6px;
     margin-top: 8px;
   }
-
   .chat-input-group .btn {
     min-width: 60px;
     margin: 0;
   }
-
   /* ✅ 背包改成 5 列，手机上能展开 */
   .bag-grid {
     grid-template-columns: repeat(5, 1fr);
     gap: 4px;
     margin-top: 6px;
   }
-
   .bag-slot {
     min-height: 30px;
     font-size: 10px;
     padding: 1px;
     border-radius: 4px;
   }
-
   .bag-tab-row {
     gap: 4px;
     margin: 6px 0;
   }
-
   .bag-tab {
     padding: 5px 8px;
     font-size: 12px;
     border-radius: 5px;
   }
-
   /* ✅ 存档卡片改成 1 列或 2 列 */
   #slotBox {
     grid-template-columns: 1fr;
@@ -821,65 +690,53 @@ select:valid {
     max-height: 400px;
     margin-right: 0;
   }
-
   .slot-btn {
     padding: 10px 8px;
     font-size: 11px;
   }
-
   .slot-desc {
     font-size: 10px;
     margin-top: 3px;
   }
-
   .save-btn {
     padding: 8px 10px;
     font-size: 13px;
   }
-
   .save-btn-row {
     gap: 6px;
   }
-
   .timeline {
     margin: 6px 0;
     line-height: 1.4;
   }
-
   .timeline h4 {
     margin: 6px 0 2px;
     font-size: 13px;
   }
-
   .timeline p {
     margin: 2px 0;
     font-size: 12px;
   }
-
   .event-date {
     display: block;
     width: 100%;
     margin-bottom: 4px;
   }
-
   .stat {
     padding: 4px 8px;
     margin: 2px;
     font-size: 12px;
   }
-
   .action-btn {
     padding: 10px;
     margin: 4px 0;
     font-size: 14px;
     border-radius: 6px;
   }
-
   .info-collapse-btn {
     padding: 6px 10px;
     font-size: 12px;
   }
-
   #wand-result,
   #sorting-result {
     margin-top: 8px;
@@ -887,29 +744,24 @@ select:valid {
     font-size: 13px;
   }
 }
-
 /* 超小屏 (320px 以下) - 保险起见 */
 @media (max-width: 320px) {
   .container {
     padding: 6px;
   }
-
   .btn {
     padding: 6px 8px;
     min-width: 50px;
     font-size: 12px;
   }
-
   .bag-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 3px;
   }
-
   .title {
     font-size: 13px;
   }
 }
-
 body {
   background: var(--bg-dark);
   color: var(--color-text);
@@ -920,51 +772,17 @@ body {
   -webkit-user-select: none;    /* ✅ 禁用文字选中（可选） */
   user-select: none;
 }
-
-/* ✅ 统一滚动条样式 */
-#course-container,
-#spell-container,
-#potion-container,
-#explore-container {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--bg-dark);
-}
-
-#course-container::-webkit-scrollbar,
-#spell-container::-webkit-scrollbar,
-#potion-container::-webkit-scrollbar,
-#explore-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-#course-container::-webkit-scrollbar-track,
-#spell-container::-webkit-scrollbar-track,
-#potion-container::-webkit-scrollbar-track,
-#explore-container::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-
-#course-container::-webkit-scrollbar-thumb,
-#spell-container::-webkit-scrollbar-thumb,
-#potion-container::-webkit-scrollbar-thumb,
-#explore-container::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 3px;
-}
-
 /* 左上角音乐按钮 - ❌ 删除绝对定位，改用 flex 布局 */
 /* #music-button-main {
   position: absolute;
   ...
 } */
-
 /* 小屏幕时直接靠左 */
 @media (max-width: 940px) {
   /* #music-button-main {
     left: 20px;
   } */
 }
-
 /* 反馈弹窗显示 */
 .modal {
     display: none;
@@ -978,11 +796,9 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .modal.show {
     display: flex;
 }
-
 .modal-content {
     background: var(--bg-card);
     padding: 30px;
@@ -992,12 +808,10 @@ body {
     position: relative;
     border: 1px solid var(--bg-input);
 }
-
 .modal-content h2 {
     color: var(--color-gold);
     margin-bottom: 16px;
 }
-
 .close-btn {
     position: absolute;
     top: 12px;
@@ -1009,18 +823,15 @@ body {
     color: var(--color-text-light);
     transition: color 0.2s;
 }
-
 .close-btn:hover {
     color: var(--color-gold);
 }
-
 .feedback-message {
     margin: 16px 0;
     color: var(--color-text);
     font-size: 14px;
     line-height: 1.6;
 }
-
 .email-box {
     background: var(--bg-input);
     padding: 14px;
@@ -1029,19 +840,16 @@ body {
     margin: 18px 0;
     border: 1px solid #2a3b66;
 }
-
 .email-box code {
     font-size: 16px;
     font-weight: bold;
     color: var(--color-gold);
 }
-
 .button-group {
     display: flex;
     gap: 10px;
     margin-top: 20px;
 }
-
 #copy-email {
     background: var(--bg-btn-action);
     color: white;
@@ -1054,16 +862,13 @@ body {
     transition: all 0.2s ease;
     flex: 1;
 }
-
 #copy-email:hover {
     background: var(--bg-btn-action-hover);
     transform: translateY(-1px);
 }
-
 #copy-email:active {
     transform: translateY(1px);
 }
-
 #cancel-feedback {
     background: var(--bg-btn);
     color: white;
@@ -1076,21 +881,17 @@ body {
     transition: all 0.2s ease;
     flex: 1;
 }
-
 #cancel-feedback:hover {
     background: var(--bg-btn-hover);
     transform: translateY(-1px);
 }
-
 #cancel-feedback:active {
     transform: translateY(1px);
 }
-
 /* ✅ 弹窗打开时禁用背景滚动 */
 body.modal-open {
     overflow: hidden !important;
 }
-
 .modal {
     display: none;
     position: fixed;
@@ -1103,11 +904,9 @@ body.modal-open {
     align-items: center;
     justify-content: center;
 }
-
 .modal.show {
     display: flex !important;
 }
-
 .modal-content {
     background: var(--bg-card);
     padding: 30px;
@@ -1119,7 +918,6 @@ body.modal-open {
     position: relative;
     border: 1px solid var(--bg-input);
 }
-
 /* ==================== 弹窗：彻底禁止闪动方案 ==================== */
 body.modal-open {
     position: fixed !important;
@@ -1128,12 +926,10 @@ body.modal-open {
     left: 0;
     overflow: hidden !important;
 }
-
 body.modal-open .container {
     width: 100vw;
     max-width: 100vw;
 }
-
 .modal {
     display: none;
     position: fixed;
@@ -1147,11 +943,9 @@ body.modal-open .container {
     justify-content: center;
     overflow: hidden;
 }
-
 .modal.show {
     display: flex !important;
 }
-
 .modal-content {
     background: var(--bg-card);
     padding: 30px;
@@ -1163,7 +957,191 @@ body.modal-open .container {
     position: relative;
     border: 1px solid var(--bg-input);
 }
-
 #feedback-modal .modal-content p:nth-of-type(1) {
     text-align: center;
+}
+/* ==================== 魔药系统 ==================== */
+/* 分类列表 一排三列 */
+.potion-cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.potion-cat-btn {
+  width: 100%; text-align: center; padding: 16px 10px;
+  border: 1px solid #3a2a5c; border-radius: 10px;
+  background: #2d1a3d; color: #f6e8ff;
+  cursor: pointer; font-size: 14px; min-height: 100px; transition: all 0.2s;
+}
+.potion-cat-btn:hover { background: #442a5c; }
+.potion-cat-icon { font-size: 26px; }
+.potion-cat-name { font-weight: bold; color: #f8c850; margin: 4px 0; }
+.potion-cat-desc { font-size: 11px; color: #e4c0ff; }
+/* 配方列表 一排三列 */
+.potion-recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.potion-recipe-btn {
+  width: 100%; text-align: left; padding: 12px;
+  border-radius: 10px; background: #2d1a3d;
+  border: 1px solid #3a2a5c; color: #f6e8ff;
+  cursor: pointer; font-size: 13px; min-height: 110px; transition: all 0.2s;
+}
+.potion-recipe-btn:hover { background: #442a5c; }
+.potion-recipe-btn.selected { border-color: #f8c850; background: #3a1a5c; }
+.potion-recipe-btn.locked { opacity: 0.5; cursor: not-allowed; }
+.potion-recipe-name { color: #f8c850; font-weight: bold; }
+.potion-recipe-name.locked { color: #888; }
+.potion-recipe-eng { font-size: 10px; color: #d8b8ff; }
+.potion-recipe-prof { font-size: 10px; color: #c4a0e8; margin-top: 2px; }
+.potion-recipe-lock { font-size: 10px; color: #ff8888; margin-top: 2px; }
+.potion-recipe-effect { font-size: 10px; color: #c8b0e8; margin-top: 2px; }
+.potion-recipe-mats { font-size: 10px; color: #d4b8f0; margin-top: 4px; }
+/* 炼制台 */
+.brew-station {
+  background: #1a1030; border-radius: 12px;
+  padding: 16px; border: 1px solid #3a2a5c;
+}
+.brew-title-row {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 10px; margin-bottom: 12px;
+  border-bottom: 1px solid #3a2a5c;
+}
+.brew-icon { font-size: 28px; }
+.brew-name { color: #f8c850; font-weight: bold; font-size: 16px; }
+.brew-eng { color: #d8b8ff; font-size: 11px; }
+.brew-workarea { display: flex; gap: 16px; align-items: flex-start; }
+.brew-cauldron-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 140px; }
+/* 混血王子笔记 */
+.prince-notes {
+  background: #150d28; border-radius: 12px; padding: 10px 12px;
+  margin-bottom: 10px; width: 100%; border: 1px solid #3a2a5c;
+}
+.prince-notes-title { color: #d4a860; font-size: 11px; text-align: center; margin-bottom: 6px; letter-spacing: 1px; }
+.prince-notes-steps { display: flex; flex-direction: column; gap: 4px; font-size: 10px; }
+.prince-step { color: #8a7aaa; }
+.prince-step.done { color: #7aaa7a; text-decoration: line-through; }
+.prince-step.current { color: #f8c850; font-weight: bold; }
+/* 坩埚 */
+.brew-cauldron {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #3a3a3a, #111);
+  border: 5px solid #4a3a22;
+  box-shadow: 0 8px 20px #000, inset 0 -8px 12px #050505;
+  display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+}
+.brew-cauldron.stirring { box-shadow: 0 8px 20px #000, 0 0 20px #ff9a3c, inset 0 -8px 12px #050505; }
+.brew-cauldron.brewing { border-color: #8060c8; box-shadow: 0 8px 20px #000, 0 0 30px #8060c8, inset 0 -8px 12px #050505; }
+.brew-cauldron.done { border-color: #f8c850; box-shadow: 0 8px 20px #000, 0 0 30px #f8c850, inset 0 -8px 12px #050505; }
+.brew-cauldron.fail { border-color: #6b3f48; box-shadow: 0 8px 20px #000, 0 0 20px #ff3030, inset 0 -8px 12px #050505; }
+/* 液体 */
+.brew-liquid { width: 86px; height: 86px; border-radius: 50%; transition: background 0.8s, box-shadow 0.8s; }
+.brew-liquid.initial { background: #5a3020; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+.brew-liquid.transitioning { background: #5040a0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 20px rgba(160,140,200,0.5); }
+.brew-liquid.clear { background: #b0d0e0; box-shadow: inset 0 0 20px #2c4b5e, 0 0 30px #aad4f0; }
+.brew-liquid.golden { background: #f4c542; box-shadow: inset 0 0 20px #b57c1c, 0 0 40px gold; }
+.brew-liquid.fail { background: #1a0505; box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 0 15px #ff3030; }
+/* 搅拌按钮 */
+.stir-row { display: flex; gap: 16px; margin-top: 8px; align-items: center; }
+.stir-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid #5a4a7a; background: #2d1a3d;
+  color: #c8b8e8; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 0; transition: all 0.2s;
+}
+.stir-btn:hover:not([disabled]) { background: #442a5c; border-color: #f8c850; }
+.stir-btn[disabled] { opacity: 0.35; cursor: not-allowed; };
+.stir-count { color: #f8c850; font-weight: bold; font-size: 16px; min-width: 30px; text-align: center; }
+.brew-liq-label { color: #d4b8e0; font-size: 11px; margin-top: 4px; text-align: center; }
+/* 清理一新按钮 */
+.brew-reset-btn {
+  margin-top: 6px; background: #3a2a5c; border: none;
+  color: #e8d8f8; padding: 8px 16px; border-radius: 8px;
+  cursor: pointer; font-size: 12px; width: auto; transition: background 0.2s;
+}
+.brew-reset-btn:hover { background: #4a3a7c; }
+/* 右侧面板 */
+.brew-right-panel { flex: 1.3; display: flex; flex-direction: column; gap: 10px; }
+.brew-mat-bag { 
+  background: #150d28; border-radius: 10px; padding: 10px; 
+  border: 1px solid #3a2a5c; 
+}
+.brew-section-title { color: #f8c850; font-size: 12px; margin-bottom: 6px; }
+.brew-mat-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.brew-mat-btn {
+  padding: 5px 8px; border-radius: 6px;
+  border: 1px solid #3a2a5c; cursor: pointer; font-size: 11px;
+  background: #2d1a3d; color: #d4c8e8; transition: all 0.15s;
+}
+.brew-mat-btn:hover:not([disabled]) { background: #442a5c; }
+.brew-mat-btn.done { background: #2a4a2a; opacity: 0.7; }
+.brew-mat-btn.short { color: #ff8888; }
+.brew-mat-btn[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.brew-mat-hint { font-size: 10px; color: #a090c0; margin-top: 4px; }
+/* 处理台 */
+.brew-prep { 
+  background: #150d28; border-radius: 10px; padding: 12px; 
+  border: 1px solid #3a2a5c; 
+}
+.brew-prep-title { text-align: center; color: #d4a860 !important; }
+.brew-prep-table {
+  background: linear-gradient(135deg, #1e1435, #281d45, #1e1435);
+  border-radius: 10px; padding: 12px; text-align: center;
+  border: 1px solid #3a2a5c;
+}
+.brew-prep-slot {
+  background: #120d28; color: #d4a860;
+  border: 2px dashed #4a3a6a; border-radius: 8px;
+  padding: 10px; margin: 8px 0; min-height: 35px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold; font-size: 13px;
+}
+/* 处理台按钮 */
+.brew-prep-btn {
+  flex: 1; font-size: 11px; padding: 6px 8px; border-radius: 6px;
+  border: 1px solid #3a2a5c; background: #2d1a3d;
+  color: #d4c8e8; cursor: pointer; transition: all 0.15s;
+}
+.brew-prep-btn:hover:not([disabled]) { background: #442a5c; }
+.brew-prep-btn[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.brew-prep-hint { font-size: 10px; color: #a090c0; margin-top: 6px; text-align: center; }
+/* 提示 */
+.brew-hint {
+  background: #150d28; border-radius: 10px; padding: 10px;
+  text-align: center; font-size: 12px; color: #d4c8e8;
+  margin-top: 10px; border: 1px solid #3a2a5c;
+}
+/* 补齐材料按钮 */
+.potion-fill-btn { background: #5c2d7e !important; }
+.potion-fill-btn:hover { background: #6e3a94 !important; }
+
+/* ==================== ✅ 魔药系统：滚动列表（参考魔咒）+ 熬制面板禁止滚动 ==================== */
+/* 魔药选择容器：可滚动（和咒语面板完全一致） */
+#pot-container {
+  max-height: 480px;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 4px;
+  margin: 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #3b4f8a #161d2f;
+}
+#pot-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+#pot-container::-webkit-scrollbar-track {
+  background: #161d2f;
+  border-radius: 3px;
+}
+#pot-container::-webkit-scrollbar-thumb {
+  background-color: #3b4f8a;
+  border-radius: 3px;
+  border: none;
+}
+
+/* 熬制魔药面板：禁止滚动（核心要求） */
+.brew-station {
+  overflow: hidden !important;
+  max-height: none !important;
+}
+
+/* 魔药列表网格：保持排版不被滚动影响 */
+.potion-cat-grid,
+.potion-recipe-grid {
+  overflow: visible !important;
 }

@@ -1,5 +1,7 @@
+// explore.js - 霍格沃茨探索系统主要功能
+
 import { timeSystem, costAction, nextTime, syncActionUI } from "./time-system.js";
-import { hogwartsExploreData, alwaysAllowArea } from "./explore-data.js";
+import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } from "./explore-data.js";
 import { getYearGrade } from "./save-system.js";
 import { exploreEventLib } from "./explore-default.js";
 
@@ -14,9 +16,36 @@ export function addExploreRate(area, val = 5) {
   return `探索进度：${area.name} ${area.exploreRate}%`;
 }
 
+// 返回结构化对象 { text: string, material: {name, count} | null }
+// 不再把材料信息嵌入字符串，避免正则解析出错
 export function triggerExploreEvent(areaName) {
   const list = exploreEventLib[areaName] || exploreEventLib["默认"];
-  return list[Math.floor(Math.random() * list.length)];
+  const eventText = list[Math.floor(Math.random() * list.length)];
+
+  const area = findAreaByName(areaName);
+  const exploreRate = area ? area.exploreRate : 0;
+
+  const material = exploreMaterials(areaName, exploreRate);
+
+  return { text: eventText, material: material || null };
+}
+
+// 根据名称查找区域对象
+function findAreaByName(name) {
+  // 递归查找函数
+  function searchInData(data) {
+    for (const item of data) {
+      if (item.name === name) return item;
+      if (item.children) {
+        const found = searchInData(item.children);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+  
+  // 从探索数据中查找
+  return searchInData(hogwartsExploreData || []); // 使用导入的局部变量，与 renderFirstLayer 保持一致
 }
 
 let currentFirstParent = null;
@@ -56,7 +85,7 @@ function clearExploreContainer() {
 const exploreBtnStyle = "width:100%;text-align:left;padding:10px 12px;border:none;border-radius:6px;background:#2b2d42;color:#edf2f4;cursor:pointer;box-sizing:border-box;min-height:140px;";
 const exploreBtnHover = "background:#383b59;";
 
-/* ✅ FIX #1：提取重复的"返回"按钮逻辑 */
+/* 提取重复的"返回"按钮逻辑 */
 function createBackButton(callback) {
   const back = document.createElement("button");
   back.className = "action-btn";
@@ -69,10 +98,10 @@ function createBackButton(callback) {
   return back;
 }
 
-/* ✅ FIX #2：提取按钮创建逻辑，减少重复代码 */
+/* 提取按钮创建逻辑，减少重复代码 */
 function createExploreButton(data, onClickHandler) {
   const btn = document.createElement("button");
-  btn.style.cssText = exploreBtnStyle;  // ✅ FIX #3：用 .cssText 而不是直接赋值 .style
+  btn.style.cssText = exploreBtnStyle;  // 用 .cssText 而不是直接赋值 .style
 
   btn.innerHTML = `
     <div style="font-size:15px;${data.titleColor || ''}">${data.icon || ''} ${data.name}${data.rateText || ''}</div>
@@ -172,8 +201,20 @@ function renderThirdLayer() {
       if (!costAction()) return;
 
       addExploreRate(item, 5);
-      const eventText = triggerExploreEvent(item.name);
-      window.doExploreLog(`✅ 探索：${item.name}（探索进度+5%，共${item.exploreRate}%）｜${eventText}`);
+
+      // triggerExploreEvent 返回 { text, material } 结构化对象
+      const exploreResult = triggerExploreEvent(item.name);
+      let logSuffix = exploreResult.text;
+
+      if (exploreResult.material) {
+        const mat = exploreResult.material;
+        const emoji = getMatEmoji ? getMatEmoji(mat.name) : "🌿";
+        // 直接用对象添加背包，不再解析字符串
+        window.addMaterialToBag(mat.name, mat.count);
+        logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
+      }
+
+      window.doExploreLog(`✅ 探索：${item.name}（探索进度+5%，共${item.exploreRate}%）｜${logSuffix}`);
 
       if (timeSystem.dailyActionLeft <= 0) {
         closeExplorePanel();

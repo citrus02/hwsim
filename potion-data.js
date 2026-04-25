@@ -1,5 +1,5 @@
 // potion-data.js
-// 哈利·波特 魔药课全图鉴（含原著剧情解锁条件）
+// 哈利·波特 魔药课全图鉴（含原著剧情解锁条件 + 魔药颜色）
 export const potions = [
   // ==============================================
   // 一、霍格沃茨学校教授的魔药（正规课程）
@@ -15,6 +15,8 @@ export const potions = [
     materials: ["干荨麻", "蛇牙", "豪猪刺", "带触角鼻涕虫"],
     quantities: [2, 3, 2, 4],
     icon: "⚗️",
+    color: "#6b8fa0",
+    colorName: "蓝绿色",
     unlockCondition: "一年级魔药课自动解锁",
     unlockTip: "完成一年级第一节魔药课即可学习"
   },
@@ -29,6 +31,8 @@ export const potions = [
     materials: ["睡莲花粉", "苦艾草", "雾隐花"],
     quantities: [2, 2, 1],
     icon: "⚗️",
+    color: "#a0b8d0",
+    colorName: "淡蓝色",
     unlockCondition: "一年级魔药课中期解锁",
     unlockTip: "通过一年级魔药课小测验解锁"
   },
@@ -43,6 +47,8 @@ export const potions = [
     materials: ["膨胀苔藓", "火蜥蜴血", "蝙蝠脾脏"],
     quantities: [1, 1, 2],
     icon: "⚗️",
+    color: "#c8a050",
+    colorName: "黄褐色",
     unlockCondition: "一年级魔药课自动解锁",
     unlockTip: "开学即可学习的基础魔药"
   },
@@ -57,6 +63,8 @@ export const potions = [
     materials: ["薄荷芽", "甘菊", "日光花瓣"],
     quantities: [3, 2, 1],
     icon: "⚗️",
+    color: "#80c8a0",
+    colorName: "翠绿色",
     unlockCondition: "一年级校医室事件解锁",
     unlockTip: "首次受伤前往校医室后解锁"
   },
@@ -71,6 +79,8 @@ export const potions = [
     materials: ["罂粟籽", "薰衣草", "夜影花"],
     quantities: [2, 2, 1],
     icon: "⚗️",
+    color: "#8070b0",
+    colorName: "淡紫色",
     unlockCondition: "一年级期末解锁",
     unlockTip: "完成一年级期末考试解锁"
   },
@@ -87,6 +97,8 @@ export const potions = [
     materials: ["雏菊根", "缩皱无花果", "毛毛虫", "蜘蛛毒液"],
     quantities: [2, 1, 3, 1],
     icon: "⚗️",
+    color: "#90b868",
+    colorName: "酸绿色",
     unlockCondition: "二年级魔药课解锁",
     unlockTip: "二年级开始学习的中级魔药"
   },
@@ -101,6 +113,8 @@ export const potions = [
     materials: ["荨麻", "豪猪刺", "火蜥蜴血"],
     quantities: [2, 2, 1],
     icon: "⚗️",
+    color: "#c89060",
+    colorName: "棕褐色",
     unlockCondition: "二年级恶作剧支线解锁",
     unlockTip: "与弗雷德、乔治互动后解锁"
   },
@@ -115,6 +129,8 @@ export const potions = [
     materials: ["乌头", "薄荷", "水仙根"],
     quantities: [1, 2, 2],
     icon: "⚗️",
+    color: "#6088c0",
+    colorName: "宁静蓝",
     unlockCondition: "三年级O.W.L.备考解锁",
     unlockTip: "开启O.W.L.考试筹备后解锁"
   },
@@ -129,6 +145,8 @@ export const potions = [
     materials: ["流液草", "草蛉虫", "蚂蟥", "目标生物毛发"],
     quantities: [3, 2, 4, 1],
     icon: "⚗️",
+    color: "#6b5b3a",
+    colorName: "泥浆色",
     unlockCondition: "二年级密室剧情解锁",
     unlockTip: "开启密室任务后解锁"
   },
@@ -143,6 +161,8 @@ export const potions = [
     materials: ["老龄苔藓", "龙血", "日光花"],
     quantities: [1, 1, 2],
     icon: "⚗️",
+    color: "#a09070",
+    colorName: "灰褐色",
     unlockCondition: "四年级火焰杯剧情解锁",
     unlockTip: "参与三强争霸赛年龄线事件解锁"
   },
@@ -157,6 +177,8 @@ export const potions = [
     materials: ["红花瓣", "独角兽角粉", "石榴汁"],
     quantities: [2, 1, 3],
     icon: "⚗️",
+    color: "#c04040",
+    colorName: "深红色",
     unlockCondition: "四年级黑魔法制裁事件解锁",
     unlockTip: "经历战斗失血后解锁"
   },
@@ -171,6 +193,8 @@ export const potions = [
     materials: ["雪滴花", "薄荷", "阳光花蜜"],
     quantities: [2, 2, 1],
     icon: "⚗️",
+    color: "#f0d060",
+    colorName: "阳光黄",
     unlockCondition: "五年级凤凰社剧情解锁",
     unlockTip: "加入D.A.防御协会后解锁"
   },
@@ -185,6 +209,8 @@ export const potions = [
     materials: ["混乱草", "雾隐花", "蝙蝠翅膀粉"],
     quantities: [2, 1, 2],
     icon: "⚗️",
+    color: "#9090b0",
+    colorName: "灰紫色",
     unlockCondition: "五年级O.W.L.考试解锁",
     unlockTip: "通过魔药O.W.L.考试后解锁"
   },
@@ -201,6 +227,8 @@ export const potions = [
     materials: ["缬草根", "水仙根粉末", "瞌睡豆", "乌头"],
     quantities: [2, 2, 1, 1],
     icon: "⚗️",
+    color: "#404080",
+    colorName: "深靛蓝色",
     unlockCondition: "六年级混血王子笔记解锁",
     unlockTip: "获得混血王子魔药课本后解锁"
   },
@@ -215,6 +243,8 @@ export const potions = [
     materials: ["龙血", "幸运四叶草", "金盏花", "星辰花蜜"],
     quantities: [1, 2, 2, 1],
     icon: "⚗️",
+    color: "#f4c542",
+    colorName: "熔金",
     unlockCondition: "六年级魔药课优秀奖励解锁",
     unlockTip: "成功调制生死水获得斯拉格霍恩奖励"
   },
@@ -229,6 +259,8 @@ export const potions = [
     materials: ["玫瑰花瓣", "薰衣草", "珍珠粉", "月光花蜜"],
     quantities: [3, 2, 1, 1],
     icon: "⚗️",
+    color: "#e8c0d0",
+    colorName: "珍珠粉",
     unlockCondition: "六年级情人节剧情解锁",
     unlockTip: "参与霍格沃茨情人节活动解锁"
   },
@@ -243,6 +275,8 @@ export const potions = [
     materials: ["月长石粉", "夜影花", "蛇毒"],
     quantities: [1, 2, 1],
     icon: "⚗️",
+    color: "#d0e8f0",
+    colorName: "无色透明",
     unlockCondition: "魔法部权限解锁",
     unlockTip: "完成魔法部相关任务后解锁"
   },
@@ -257,6 +291,8 @@ export const potions = [
     materials: ["乌头", "狼毒草", "银粉", "月光露水"],
     quantities: [2, 2, 1, 3],
     icon: "⚗️",
+    color: "#5080b0",
+    colorName: "蓝银色",
     unlockCondition: "三年级卢平支线解锁",
     unlockTip: "帮助卢平教授度过满月后解锁"
   },
@@ -271,6 +307,8 @@ export const potions = [
     materials: ["甘菊", "日光花瓣", "独角兽角粉", "白鲜"],
     quantities: [3, 2, 1, 1],
     icon: "⚗️",
+    color: "#40c870",
+    colorName: "鲜绿色",
     unlockCondition: "六年级N.E.W.T.课程解锁",
     unlockTip: "进入高级魔药班自动解锁"
   },
@@ -285,6 +323,8 @@ export const potions = [
     materials: ["粪石", "薄荷", "水仙根", "蒲公英"],
     quantities: [1, 2, 2, 3],
     icon: "⚗️",
+    color: "#80a880",
+    colorName: "灰绿色",
     unlockCondition: "五年级禁林事件解锁",
     unlockTip: "获得马人信任或获得粪石后解锁"
   },
@@ -301,6 +341,8 @@ export const potions = [
     materials: ["白鲜花瓣", "露水", "甘菊"],
     quantities: [2, 3, 1],
     icon: "⚗️",
+    color: "#b0d0c0",
+    colorName: "淡绿",
     unlockCondition: "六年级神锋无影剧情解锁",
     unlockTip: "哈利使用神锋无影受伤后解锁"
   },
@@ -315,6 +357,8 @@ export const potions = [
     materials: ["曼德拉草", "水仙根", "薄荷", "月光露水"],
     quantities: [1, 2, 2, 3],
     icon: "⚗️",
+    color: "#a0b878",
+    colorName: "草绿色",
     unlockCondition: "二年级密室剧情解锁",
     unlockTip: "启动石化解救任务后解锁"
   },
@@ -329,6 +373,8 @@ export const potions = [
     materials: ["白鲜", "甘菊", "蒲公英根"],
     quantities: [2, 2, 3],
     icon: "⚗️",
+    color: "#c8b880",
+    colorName: "暖金色",
     unlockCondition: "校医室常驻解锁",
     unlockTip: "基础治疗魔药，一年级后期解锁"
   },
@@ -349,6 +395,8 @@ export const potions = [
     materials: ["死神草", "夜影花", "剧毒蘑菇", "蛇毒"],
     quantities: [2, 2, 1, 1],
     icon: "💀",
+    color: "#1a0a20",
+    colorName: "黑紫色",
     unlockCondition: "黑魔法路线解锁",
     unlockTip: "触碰黑魔法道具/禁书区解锁"
   },
@@ -363,6 +411,8 @@ export const potions = [
     materials: ["黑魔法草", "龙毒", "暗影花", "夜影花"],
     quantities: [1, 1, 2, 2],
     icon: "💀",
+    color: "#204020",
+    colorName: "深绿",
     unlockCondition: "魂器任务解锁",
     unlockTip: "寻找魂器时遭遇剧毒陷阱解锁"
   },
@@ -377,6 +427,8 @@ export const potions = [
     materials: ["黑乌头", "狼毒草", "暗影粉", "蝙蝠血"],
     quantities: [2, 2, 1, 1],
     icon: "💀",
+    color: "#602020",
+    colorName: "暗血红",
     unlockCondition: "食死徒剧情解锁",
     unlockTip: "遭遇狼人食死徒后解锁"
   },
@@ -391,6 +443,8 @@ export const potions = [
     materials: ["剧毒蘑菇", "蛇毒", "夜影花", "死神草"],
     quantities: [1, 1, 2, 1],
     icon: "💀",
+    color: "#306030",
+    colorName: "毒液绿",
     unlockCondition: "黑市交易解锁",
     unlockTip: "进入对角巷黑市区域解锁"
   },
@@ -405,6 +459,8 @@ export const potions = [
     materials: ["暗影花", "诅咒苔藓", "黑乌头", "蝙蝠翅膀"],
     quantities: [2, 2, 1, 2],
     icon: "💀",
+    color: "#281828",
+    colorName: "暗紫",
     unlockCondition: "禁书区黑暗魔法解锁",
     unlockTip: "在禁书区阅读黑暗典籍后解锁"
   },
@@ -421,6 +477,8 @@ export const potions = [
     materials: ["锋利草", "龙血", "暗影粉", "夜影花"],
     quantities: [2, 1, 1, 1],
     icon: "🖤",
+    color: "#401010",
+    colorName: "深红",
     unlockCondition: "混血王子笔记专属解锁",
     unlockTip: "阅读混血王子课本黑暗咒术篇解锁"
   },
@@ -435,6 +493,8 @@ export const potions = [
     materials: ["瞌睡豆", "水仙根粉末", "缬草根", "银粉"],
     quantities: [1, 2, 2, 1],
     icon: "🖤",
+    color: "#383868",
+    colorName: "深蓝",
     unlockCondition: "混血王子笔记解锁",
     unlockTip: "掌握混血王子改良技巧后解锁"
   },
@@ -449,6 +509,8 @@ export const potions = [
     materials: ["空间草", "月光花蜜", "星辰粉"],
     quantities: [2, 1, 1],
     icon: "✨",
+    color: "#8090c0",
+    colorName: "浅蓝",
     unlockCondition: "家族魔法支线解锁",
     unlockTip: "获得无痕伸展道具后解锁"
   },
@@ -463,6 +525,8 @@ export const potions = [
     materials: ["喷嚏草", "呕吐豆", "鼻血花", "气泡草"],
     quantities: [2, 2, 1, 3],
     icon: "😜",
+    color: "#e88030",
+    colorName: "亮橙色",
     unlockCondition: "韦斯莱魔法把戏坊解锁",
     unlockTip: "对角巷开店后购买配方解锁"
   },
@@ -477,6 +541,8 @@ export const potions = [
     materials: ["流液草", "蚂蟥", "目标毛发", "闪电花"],
     quantities: [2, 2, 1, 1],
     icon: "✨",
+    color: "#5a4a2a",
+    colorName: "深棕",
     unlockCondition: "黑市魔法解锁",
     unlockTip: "黑市购买快速调制秘方解锁"
   },
@@ -491,6 +557,8 @@ export const potions = [
     materials: ["誓言草", "龙血", "银粉"],
     quantities: [1, 1, 2],
     icon: "🔒",
+    color: "#c0a030",
+    colorName: "暗金",
     unlockCondition: "古老魔法仪式解锁",
     unlockTip: "参与牢不可破誓言仪式后解锁"
   },
@@ -507,6 +575,8 @@ export const potions = [
     materials: ["凤凰泪", "白鲜", "星辰花蜜"],
     quantities: [1, 2, 1],
     icon: "🐦",
+    color: "#ff8040",
+    colorName: "金红色",
     unlockCondition: "凤凰羁绊解锁",
     unlockTip: "获得凤凰信任/获得凤凰泪后解锁"
   },
@@ -521,6 +591,8 @@ export const potions = [
     materials: ["传送草", "月光露水", "星辰粉"],
     quantities: [2, 2, 1],
     icon: "🌀",
+    color: "#6090c0",
+    colorName: "天蓝",
     unlockCondition: "门钥匙事件解锁",
     unlockTip: "通过门钥匙传送后解锁"
   },
@@ -535,6 +607,8 @@ export const potions = [
     materials: ["秘密草", "银粉", "月光花蜜"],
     quantities: [2, 1, 1],
     icon: "🔒",
+    color: "#c0c0d0",
+    colorName: "银白",
     unlockCondition: "赤胆忠心咒剧情解锁",
     unlockTip: "参与赤胆忠心咒守护任务解锁"
   },
@@ -549,6 +623,8 @@ export const potions = [
     materials: ["隐形苔藓", "雾隐花", "月光露水"],
     quantities: [2, 1, 3],
     icon: "👤",
+    color: "#a0a0b0",
+    colorName: "半透明银灰",
     unlockCondition: "隐形任务解锁",
     unlockTip: "需要潜行任务时自动解锁"
   },
@@ -563,6 +639,8 @@ export const potions = [
     materials: ["火焰花", "龙血", "暗影粉"],
     quantities: [2, 1, 1],
     icon: "🔥",
+    color: "#ff3000",
+    colorName: "烈焰红",
     unlockCondition: "厉火禁术解锁",
     unlockTip: "接触厉火魔法后解锁"
   },
@@ -579,6 +657,8 @@ export const potions = [
     materials: ["胡话草", "雾隐花", "蜂蜜水"],
     quantities: [2, 1, 2],
     icon: "🗣️",
+    color: "#c8c050",
+    colorName: "黄色",
     unlockCondition: "恶作剧支线解锁",
     unlockTip: "完成校园恶作剧任务解锁"
   },
@@ -593,6 +673,8 @@ export const potions = [
     materials: ["玫瑰花瓣", "珍珠粉", "花蜜"],
     quantities: [3, 1, 2],
     icon: "💅",
+    color: "#f0c8d8",
+    colorName: "粉红",
     unlockCondition: "霍格莫德商店解锁",
     unlockTip: "在蜂蜜公爵/佐科店铺购买解锁"
   },
@@ -607,6 +689,8 @@ export const potions = [
     materials: ["柔顺草", "花蜜", "月光露水"],
     quantities: [2, 2, 1],
     icon: "💇",
+    color: "#e8e0c8",
+    colorName: "奶油色",
     unlockCondition: "圣诞舞会剧情解锁",
     unlockTip: "参与圣诞舞会准备任务解锁"
   }
@@ -628,3 +712,43 @@ export const potionGrades = [
   { label: "特殊/古老", value: "特殊/古老" },
   { label: "其他特殊", value: "其他特殊" }
 ];
+
+export function getPotionEmoji(name) {
+  const found = potions.find(p => p.name === name);
+  return found?.icon || "🧪";
+}
+
+// ============================================================
+// 材料处理映射表
+// ============================================================
+export const materialProcessingMap = {
+  "缬草根": { action: "cut", resultName: "切割好的缬草根", icon: "🌿✂️", processVerb: "切割" },
+  "曼德拉草": { action: "cut", resultName: "切碎的曼德拉草", icon: "🌱✂️", processVerb: "切割" },
+  "雏菊根": { action: "cut", resultName: "切片的雏菊根", icon: "🌼✂️", processVerb: "切割" },
+  "白鲜": { action: "cut", resultName: "切碎的白鲜", icon: "🌿✂️", processVerb: "切割" },
+  "锋利草": { action: "cut", resultName: "切割的锋利草", icon: "🌿✂️", processVerb: "切割" },
+  "流液草": { action: "cut", resultName: "切碎的流液草", icon: "🌿✂️", processVerb: "切割" },
+
+  "瞌睡豆": { action: "crush", resultName: "压碎的瞌睡豆", icon: "🫘✨", processVerb: "压碎" },
+  "蛇牙": { action: "crush", resultName: "蛇牙粉末", icon: "🦷✨", processVerb: "压碎" },
+  "月长石": { action: "crush", resultName: "月长石粉末", icon: "🌙✨", processVerb: "压碎" },
+  "独角兽角": { action: "crush", resultName: "独角兽角粉", icon: "🦄✨", processVerb: "压碎" },
+  "水仙根": { action: "crush", resultName: "水仙根粉末", icon: "🌸✨", processVerb: "压碎" },
+  "珍珠": { action: "crush", resultName: "珍珠粉", icon: "🦪✨", processVerb: "压碎" },
+  "星辰石": { action: "crush", resultName: "星辰粉", icon: "⭐✨", processVerb: "压碎" },
+  "银石": { action: "crush", resultName: "银粉", icon: "🥈✨", processVerb: "压碎" },
+  "豪猪刺": { action: "crush", resultName: "豪猪刺粉末", icon: "🦔✨", processVerb: "压碎" },
+  "粪石": { action: "crush", resultName: "粪石粉末", icon: "🪨✨", processVerb: "压碎" },
+
+  "草蛉虫": { action: "juice", resultName: "草蛉虫汁液", icon: "🪲💧", processVerb: "榨汁" },
+  "火蜥蜴": { action: "juice", resultName: "火蜥蜴血液", icon: "🦎💧", processVerb: "榨汁" },
+  "蝙蝠脾脏": { action: "juice", resultName: "蝙蝠脾脏汁", icon: "🦇💧", processVerb: "榨汁" },
+  "雾隐花": { action: "juice", resultName: "雾隐花精华", icon: "🌫️💧", processVerb: "榨汁" },
+  "阳光花": { action: "juice", resultName: "阳光花蜜", icon: "🌞💧", processVerb: "榨汁" },
+  "月光花": { action: "juice", resultName: "月光花蜜", icon: "🌙💧", processVerb: "榨汁" },
+  "石榴": { action: "juice", resultName: "石榴汁", icon: "🍎💧", processVerb: "榨汁" },
+  "带触角鼻涕虫": { action: "juice", resultName: "鼻涕虫黏液", icon: "🐛💧", processVerb: "榨汁" },
+  "蚂蟥": { action: "juice", resultName: "蚂蟥汁", icon: "🪱💧", processVerb: "榨汁" }
+};
+
+window.getPotionEmoji = getPotionEmoji;

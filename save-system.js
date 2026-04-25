@@ -1,4 +1,9 @@
-const SAVE_KEY = "hogwarts";
+// save-system.js
+
+import { potions, getPotionEmoji } from './potion-data.js';
+import { getMatEmoji } from "./explore-data.js";
+
+export const SAVE_KEY = "hogwarts"; // 单一来源，version.js 从这里导入
 const SAVE_SLOT_KEY = "hogwarts_slots";
 const SLOT_COUNT = 9;
 const DEFAULT_BAG_SLOTS = 20;
@@ -150,9 +155,16 @@ export function renderBag() {
     const item = list[i];
     if (item) {
       let emoji = "";
-      if (nowBagType === "material") emoji = (window.getMatEmoji ? getMatEmoji(item.name) : "") + " ";
-      else if (nowBagType === "potion") emoji = (window.getPotionEmoji ? getPotionEmoji(item.name) : "") + " ";
-      html += `<div class="bag-slot has-item">${emoji}${item.name} ×${item.count || 1}</div>`;
+      if (nowBagType === "material") emoji = getMatEmoji(item.name);
+      else if (nowBagType === "potion") emoji = getPotionEmoji(item.name);
+      
+      html += `<div class="bag-slot has-item">
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+          <div style="font-size:20px; line-height:1;">${emoji}</div>
+          <div style="font-size:10px; line-height:1.1; margin-top:2px;">${item.name}</div>
+          <div style="font-size:10px; line-height:1;">×${item.count || 1}</div>
+        </div>
+      </div>`;
     } else {
       html += `<div class="bag-slot empty">空</div>`;
     }
@@ -164,11 +176,12 @@ export function addItemToBag(type, itemData) {
   const data = getSave();
   if (!data.bag) data.bag = { material: [], potion: [], item: [] };
   const list = data.bag[type] || [];
+  const addCount = itemData.count || 1; // 支持批量添加
   const exist = list.find(it => it?.name === itemData.name);
   if (exist) {
-    exist.count = (exist.count || 1) + 1;
+    exist.count = (exist.count || 1) + addCount;
   } else {
-    list.push({ ...itemData, count: 1 });
+    list.push({ ...itemData, count: addCount });
   }
   data.bag[type] = list;
   setSave(data);
@@ -456,7 +469,8 @@ window.renderBag = renderBag;
 window.renderLog = renderLog;
 window.renderTimeline = renderTimeline;
 window.setBagType = setBagType;
-window.addMaterialToBag = (name) => addItemToBag("material", { name });
+// count 参数可选，默认为 1；探索系统传 count 时会一次性合并入背包
+window.addMaterialToBag = (name, count = 1) => addItemToBag("material", { name, count });
 window.addPotionToBag = (potion) => addItemToBag("potion", potion);
 
 // ✅ FIX #9：合并两个 DOMContentLoaded 为一个，防止初始化顺序问题
