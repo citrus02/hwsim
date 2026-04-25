@@ -382,7 +382,7 @@ function openPotionPanel() {
   box.innerHTML = `
     <div class="title">⚗️ 熬制魔药</div>
     <button id="pot-fill-btn" class="action-btn potion-fill-btn" style="display:none;">🧪 一键补齐所有魔药材料</button>
-    <button id="pot-back-top" class="action-btn potion-back-btn" style="display:none;">← 返回分类</button>
+    <button id="pot-back-top" class="action-btn potion-back-btn" style="display:none;">← 返回上一层</button>
     <div id="pot-container"></div>
     <button id="pot-back-main" class="action-btn" style="margin-top:10px;">← 返回行动</button>`;
   const card = document.querySelector('#actionMain')?.closest('.card'); if (card) card.appendChild(box);

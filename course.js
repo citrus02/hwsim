@@ -463,8 +463,7 @@ function createBackButton(callback) {
   const back = document.createElement("button");
   back.className = "action-btn";
   back.innerText = "← 返回上一层";
-  back.style.marginBottom = "8px";
-  back.style.gridColumn = "1 / -1";
+  back.style.cssText = "position:sticky;top:0;z-index:999;grid-column:1 / -1;margin-bottom:8px;";
   back.addEventListener("click", callback);
   return back;
 }
