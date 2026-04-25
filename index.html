@@ -399,16 +399,17 @@ window.toggleSavePanel = function() {
         <button id="close-feedback" class="close-btn">✕</button>
         
         <h2>💡反馈</h2>
-          <p><i><span>🧙‍♂️ 已有 <span id="busuanzi_value_site_uv"></span> 位巫师入学</span><i></i></p>
-
-        <p class="feedback-message">
-            遇到问题、有新想法，请联系下方邮箱
-        </p>
+        <p><i><span>🧙‍♂️ 已有 <span id="visitor-count">--</span> 位巫师入学</span></i></p>
         
         <div class="email-box">
             <code id="email-display">hwsimgame@qq.com</code>
         </div>
-        
+      
+        <p class="feedback-message">
+            遇到问题、有新想法，请联系上方邮箱<br>
+            或者到GitHub发送<a href="https://github.com/citrus02/hwsim/issues" target="_blank" style="color: #bea6eb; text-decoration: none; border-bottom: 1px dotted #aaa;">Issue</a>
+        </p>
+
         <div class="button-group">
             <button id="copy-email" class="btn btn-primary">📋 复制</button>
             <button id="cancel-feedback" class="btn btn-secondary">关闭</button>
@@ -416,7 +417,56 @@ window.toggleSavePanel = function() {
     </div>
 </div>
 
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 霍格沃茨模拟器 · 页尾版权声明 -->
+<footer style="text-align: center; padding: 1.5rem 1rem; font-size: 0.75rem; color: #aaa; background: transparent; border-top: 1px solid rgba(255,255,255,0.1); font-family: system-ui, 'Segoe UI', monospace;">
+    <p>
+        © 同人非盈利作品 · Fan-made, Non-commercial<br>
+        霍格沃茨及相关元素版权归 © Warner Bros. Entertainment Inc. 所有。<br>
+        All rights belong to Warner Bros. Entertainment Inc. 本模拟器为爱好者创作，不主张任何版权。
+    </p>
+    <p style="margin-top: 0.5rem;">
+        🪄 仅供娱乐 · For entertainment only | 非官方 · Unofficial<br>
+        联系 · Contact: <a href="mailto:hwsimgame@qq.com" style="color: #aaa; text-decoration: none; border-bottom: 1px dotted #aaa;">hwsimgame@qq.com</a>
+    </p>
+</footer>
+
+<!-- 不蒜子计数 + 降级方案 -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+    // 降级方案：如果不蒜子加载失败或显示为0，使用localStorage本地计数
+    function initVisitorCounter() {
+        const counterSpan = document.getElementById('busuanzi_value_site_uv');
+        const fallbackSpan = document.getElementById('visitor-count');
+        
+        // 如果没有找到不蒜子专用span，就创建监听
+        if (!counterSpan && fallbackSpan) {
+            // 检查不蒜子是否已更新
+            let checkCount = 0;
+            const interval = setInterval(function() {
+                const busuanziValue = document.getElementById('busuanzi_value_site_uv');
+                if (busuanziValue && busuanziValue.innerText && busuanziValue.innerText !== '') {
+                    fallbackSpan.innerText = busuanziValue.innerText;
+                    clearInterval(interval);
+                } else if (checkCount > 30) { // 3秒后降级
+                    // 使用localStorage模拟本地计数
+                    let localCount = localStorage.getItem('hogwarts_visitors');
+                    if (localCount === null) {
+                        localCount = Math.floor(Math.random() * 100 + 42); // 随机起始数42-141
+                    } else {
+                        localCount = parseInt(localCount) + 1;
+                    }
+                    localStorage.setItem('hogwarts_visitors', localCount);
+                    fallbackSpan.innerText = localCount;
+                    clearInterval(interval);
+                }
+                checkCount++;
+            }, 100);
+        }
+    }
+    
+    // 等待DOM加载完成
+    document.addEventListener('DOMContentLoaded', initVisitorCounter);
+</script>
 
 </body>
 </html>
