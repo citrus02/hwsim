@@ -1,3 +1,4 @@
+/* style.css */
 /* 📦 颜色变量系统（放在最顶部） */
 :root {
   --bg-dark: #0b0f1a;
@@ -448,7 +449,6 @@ select:valid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-right: -10px;
 }
 /* 存档卡片 */
 .slot-btn {
