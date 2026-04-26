@@ -9,7 +9,7 @@ export const CURRENT_VERSION = '1.2.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
-// git add . && git commit -m "1.1.3" && git pull origin main --rebase && git push
+// git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
   '1.0.0': '初始版本',
   '1.1.0': [
@@ -26,6 +26,10 @@ export const versionLogs = {
   '1.2.0': [
     '・ 新增探索获取材料系统',
     '・ 新增魔药制作面板',
+    ],
+  '1.2.1': [
+    '・ 优化魔药制作面板UI',
+    '・ 优化存档UI',
     ],
 };
 
