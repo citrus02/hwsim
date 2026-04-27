@@ -908,13 +908,18 @@ body.modal-open .container {
 .potion-recipe-lock { font-size: 10px; color: #ff8888; margin-top: 2px; }
 .potion-recipe-effect { font-size: 10px; color: #c8b0e8; margin-top: 2px; }
 .potion-recipe-mats { font-size: 10px; color: #d4b8f0; margin-top: 4px; }
+
 /* 炼制台 */
 .brew-station {
-  background: #1a1030; border-radius: 12px;
-  padding: 16px; border: 1px solid #3a2a5c;
-  overflow: hidden !important;
+  background: #1a1030;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #3a2a5c;
+  /* 移除 overflow: hidden 和 max-height 限制 */
+  overflow: visible !important;
   max-height: none !important;
 }
+
 .brew-title-row {
   display: flex; align-items: center; gap: 10px;
   padding-bottom: 10px; margin-bottom: 12px;
@@ -925,6 +930,7 @@ body.modal-open .container {
 .brew-eng { color: #d8b8ff; font-size: 11px; }
 .brew-workarea { display: flex; gap: 16px; align-items: flex-start; }
 .brew-cauldron-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 140px; }
+
 /* 混血王子笔记 */
 .prince-notes {
   background: #150d28; border-radius: 12px; padding: 10px 12px;
@@ -935,6 +941,7 @@ body.modal-open .container {
 .prince-step { color: #8a7aaa; }
 .prince-step.done { color: #7aaa7a; text-decoration: line-through; }
 .prince-step.current { color: #f8c850; font-weight: bold; }
+
 /* 坩埚 */
 .brew-cauldron {
   width: 120px; height: 120px; border-radius: 50%;
@@ -1018,38 +1025,33 @@ body.modal-open .container {
 .brew-prep-btn:hover:not([disabled]) { background: #442a5c; }
 .brew-prep-btn[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 .brew-prep-hint { font-size: 10px; color: #a090c0; margin-top: 6px; text-align: center; }
+
 /* 提示 */
 .brew-hint {
-  background: #150d28; border-radius: 10px; padding: 10px;
-  text-align: center; font-size: 12px; color: #d4c8e8;
-  margin-top: 10px; border: 1px solid #3a2a5c;
+  background: #150d28;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #d4c8e8;
+  margin-top: 10px;
+  border: 1px solid #3a2a5c;
+  width: 100%;
+  box-sizing: border-box;
+  clear: both;
 }
+
 /* 补齐材料按钮 */
 .potion-fill-btn { background: #5c2d7e !important; }
 .potion-fill-btn:hover { background: #6e3a94 !important; }
 
-/* ==================== ✅ 魔药系统：滚动列表 ==================== */
+/* ==================== 魔药系统 ==================== */
 #pot-container {
-  max-height: 480px;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding-right: 4px;
+  max-height: none;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+  padding-right: 0;
   margin: 10px 0;
-  scrollbar-width: thin;
-  scrollbar-color: #3b4f8a #161d2f;
-}
-#pot-container::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-#pot-container::-webkit-scrollbar-track {
-  background: #161d2f;
-  border-radius: 3px;
-}
-#pot-container::-webkit-scrollbar-thumb {
-  background-color: #3b4f8a;
-  border-radius: 3px;
-  border: none;
 }
 
 .potion-cat-grid,
@@ -1387,3 +1389,23 @@ body.modal-open .container {
   color: #8899aa;
   word-break: break-all;
 }
+
+/* 随机名字按钮 */
+.random-name-btn {
+  background: #473c66;
+  width: 100%;
+}
+.random-name-btn:hover { background: #5a4d80; }  /* ✅ 新增 */
+
+/* 魔杖按钮组 */
+.wand-draw-btn {
+  background: #3c5a66;
+  flex: 1;
+}
+.wand-draw-btn:hover { background: #4d6f7d; }  /* ✅ 新增 */
+
+.wand-try-btn {
+  flex: 1;
+}
+/* .wand-try-btn 用的是 .btn.success，已在下面定义，但 hover 被全局覆盖，需要加强权重 */
+.btn.success.wand-try-btn:hover { background: #329149; }  /* ✅ 新增 */

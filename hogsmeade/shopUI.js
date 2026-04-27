@@ -471,7 +471,7 @@ export class shopUI {
       transform: translateX(-50%);
       background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
       color: white;
-      padding: 8px 16px;
+      padding: 8px 20px;
       border-radius: 8px;
       z-index: 10001;
       max-width: 85vw;

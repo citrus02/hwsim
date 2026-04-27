@@ -5,12 +5,16 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.3.4';
+export const CURRENT_VERSION = '1.3.5';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.3.5': [
+    '调整魔药工作台',
+    '增加制作魔药逻辑',
+  ],
   '1.3.4': [
     '更新风雅氏巫师服装店商品',
     '更新蜂蜜公爵糖果店商品',
