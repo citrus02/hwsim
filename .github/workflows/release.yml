@@ -19,11 +19,15 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Create zip
-        run: |
-          zip -r "${{ steps.get_version.outputs.VERSION }}.zip" . -x ".git/*" ".github/*"
+        run: zip -r "${{ steps.get_version.outputs.VERSION }}.zip" . -x ".git/*" ".github/*"
+
+      - name: Extract release notes from version.js
+        id: extract_notes
+        run: node .github/scripts/extract-notes.js
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.get_version.outputs.VERSION }}.zip
-          generate_release_notes: true
+          body: ${{ steps.extract_notes.outputs.notes }}
+          generate_release_notes: ${{ steps.extract_notes.outputs.notes == '' }}
