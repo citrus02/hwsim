@@ -27,18 +27,43 @@ jobs:
           node -e "
             const fs = require('fs');
             const content = fs.readFileSync('version.js', 'utf8');
+            console.log('1. 文件读取成功，长度：', content.length);
+            
             const versionMatch = content.match(/export const CURRENT_VERSION = ['\"]([^'\"]+)['\"]/);
-            if (!versionMatch) process.exit(1);
+            if (!versionMatch) {
+              console.error('2. 未找到 CURRENT_VERSION');
+              process.exit(1);
+            }
             const currentVersion = versionMatch[1];
+            console.log('2. CURRENT_VERSION =', currentVersion);
+            
             const logsMatch = content.match(/export const versionLogs = (\{[\s\S]*?\n\});/);
-            if (!logsMatch) process.exit(1);
-            const logs = eval('(' + logsMatch[1] + ')');
+            if (!logsMatch) {
+              console.error('3. 未找到 versionLogs 对象');
+              process.exit(1);
+            }
+            console.log('3. 找到 versionLogs，长度：', logsMatch[1].length);
+            
+            let logs;
+            try {
+              logs = eval('(' + logsMatch[1] + ')');
+              console.log('4. eval 成功，对象键：', Object.keys(logs));
+            } catch (e) {
+              console.error('4. eval 失败：', e.message);
+              process.exit(1);
+            }
+            
             const notes = logs[currentVersion];
+            console.log('5. notes 内容：', notes);
+            
             let output = '';
             if (Array.isArray(notes)) output = notes.join('\n');
             else if (typeof notes === 'string') output = notes;
             else output = '';
+            console.log('6. 最终输出长度：', output.length);
+            
             require('fs').appendFileSync(process.env.GITHUB_OUTPUT, 'notes<<EOF\n' + output + '\nEOF\n');
+            console.log('7. 写入 GITHUB_OUTPUT 完成');
           "
 
       - name: Release
