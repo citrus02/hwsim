@@ -5,32 +5,39 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.2.0';
+export const CURRENT_VERSION = '1.3.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
-  '1.0.0': '初始版本',
+  '1.3.0': [
+    '・ 新增麻瓜研究学分支科目！！',
+    '・ 新增加隆系统',
+    '・ 新增学院分系统',
+    '・ 优化“信息”UI',
+    '・ 新增霍格莫德村分类商店！！',
+  ],
+  '1.2.1': [
+    '・ 优化魔药制作面板UI',
+    '・ 优化存档UI',
+  ],
+  '1.2.0': [
+    '・ 新增探索获取材料系统',
+    '・ 新增魔药制作面板',
+  ],
+  '1.1.1': '・ 修复PWA图标',
+  '1.1.2': [
+    '・ 新增历史玩家人数',
+    '・ 新增版权声明',
+  ],
   '1.1.0': [
     '✨ 新增莉莉伊万斯分院彩蛋',
     '🎵 优化音效系统，使用 Web Audio API 实现零延迟',
     '💾 新增存档继承与版本管理系统',
     '🎭 魔杖特殊角色彩蛋完善',
   ],
-  '1.1.1': '修复PWA图标',
-  '1.1.2': [
-    '・ 新增历史玩家人数',
-    '・ 新增版权声明',
-  ],
-  '1.2.0': [
-    '・ 新增探索获取材料系统',
-    '・ 新增魔药制作面板',
-    ],
-  '1.2.1': [
-    '・ 优化魔药制作面板UI',
-    '・ 优化存档UI',
-    ],
+  '1.0.0': '・ 初始版本'
 };
 
 function getPlayerBackup() {
@@ -90,117 +97,124 @@ function showVersionUpdateDialog(oldVersion, backup) {
     border: 2px solid #ffd700;
     border-radius: 12px;
     padding: 24px;
+    width: 90%;
     max-width: 500px;
-    max-height: 70vh;
-    overflow-y: auto;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
     color: #fff;
     font-family: 'Microsoft YaHei', sans-serif;
     animation: slideUp 0.4s ease-out;
   `;
 
+  const logWrapper = document.createElement('div');
+  logWrapper.style.cssText = `
+    flex: 1;
+    overflow-y: auto;
+    margin: 16px 0;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #3b4f8a #161d2f;
+  `;
+
   const style = document.createElement('style');
   style.textContent = `
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    #version-modal div::-webkit-scrollbar { width: 6px; }
+    #version-modal div::-webkit-scrollbar-track { background: #161d2f; border-radius: 3px; }
+    #version-modal div::-webkit-scrollbar-thumb { background-color: #3b4f8a; border-radius: 3px; }
   `;
   document.head.appendChild(style);
 
-  let logHtml = `
-    <h2 style="text-align: center; color: #ffd700; margin: 0 0 16px 0; font-size: 24px;">
+  const titleHtml = `
+    <h2 style="text-align:center; color:#ffd700; margin:0 0 16px 0; font-size:24px;">
       🎉 版本更新
     </h2>
-    <hr style="border: none; border-top: 1px solid #ffd700; margin: 16px 0;">
-    <p style="text-align: center; font-size: 14px; color: #ccc; margin: 0 0 16px 0;">
-      ${oldVersion} → <b style="color: #ffd700; font-size: 16px;">${CURRENT_VERSION}</b>
+    <hr style="border:none; border-top:1px solid #ffd700; margin:16px 0;">
+    <p style="text-align:center; font-size:14px; color:#ccc;">
+      ${oldVersion || '无版本'} → <b style="color:#ffd700; font-size:16px;">${CURRENT_VERSION}</b>
     </p>
-    <hr style="border: none; border-top: 1px solid #ffd700; margin: 16px 0;">
+    <hr style="border:none; border-top:1px solid #ffd700; margin:16px 0;">
   `;
 
+  let logHtml = '';
   Object.entries(versionLogs).forEach(([version, log]) => {
     const isNew = version === CURRENT_VERSION;
-    
-    if (isNew || version === oldVersion) {
-      logHtml += `<div style="margin: 12px 0;">
-        <h4 style="color: ${isNew ? '#ffd700' : '#ccc'}; margin: 8px 0; display: flex; align-items: center; gap: 8px;">
-          <span>${isNew ? '🆕' : '📦'}</span>
-          <span>v${version}</span>
+
+    // ✅ 最新版本：字体更大 + 更粗
+    if (isNew) {
+      logHtml += `<div style="margin:12px 0;">
+        <h4 style="color:#ffd700; font-size:16px; font-weight:900; margin:8px 0; display:flex; align-items:center; gap:8px;">
+          <span>🆕</span>
+          <span>v${version}（最新版本）</span>
         </h4>`;
-      
+
       if (Array.isArray(log)) {
-        logHtml += '<ul style="margin: 6px 0; padding-left: 20px; line-height: 1.8;">';
+        logHtml += '<ul style="margin:6px 0; padding-left:20px; line-height:1.8;">';
         log.forEach(item => {
-          logHtml += `<li style="font-size: 13px; color: #ddd; margin: 4px 0;">${item}</li>`;
+          logHtml += `<li style="font-size:15px; font-weight:700; color:#fff; margin:6px 0;">${item}</li>`;
         });
         logHtml += '</ul>';
       } else {
-        logHtml += `<p style="font-size: 13px; color: #ddd; margin: 6px 0;">${log}</p>`;
+        logHtml += `<p style="font-size:15px; font-weight:700; color:#fff; margin:6px 0;">${log}</p>`;
       }
-      logHtml += '</div>';
     }
+
+    // 旧版本保持原样
+    else {
+      logHtml += `<div style="margin:12px 0;">
+        <h4 style="color:#ccc; margin:8px 0; display:flex; align-items:center; gap:8px;">
+          <span>📦</span>
+          <span>v${version}</span>
+        </h4>`;
+
+      if (Array.isArray(log)) {
+        logHtml += '<ul style="margin:6px 0; padding-left:20px; line-height:1.8;">';
+        log.forEach(item => {
+          logHtml += `<li style="font-size:13px; color:#ddd; margin:4px 0;">${item}</li>`;
+        });
+        logHtml += '</ul>';
+      } else {
+        logHtml += `<p style="font-size:13px; color:#ddd; margin:6px 0;">${log}</p>`;
+      }
+    }
+    logHtml += '</div>';
   });
 
-  // 如果有存档数据，显示继承提示
+  let footerHtml = '';
   if (backup) {
-    logHtml += `
-      <hr style="border: none; border-top: 1px solid #ffd700; margin: 16px 0;">
-      <p style="text-align: center; font-size: 13px; color: #aaffcc; margin: 0 0 8px 0;">
+    footerHtml += `
+      <p style="text-align:center; color:#aaffcc; margin:0 0 8px 0;">
         ✅ 已自动继承上一版本存档数据
       </p>
     `;
   }
 
-  logHtml += `
-    <hr style="border: none; border-top: 1px solid #ffd700; margin: 16px 0;">
-    <div style="text-align: center;">
+  footerHtml += `
+    <hr style="border:none; border-top:1px solid #ffd700; margin:16px 0;">
+    <div style="text-align:center;">
       <button id="close-version-modal" style="
         background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-        color: #000;
-        border: none;
-        padding: 12px 28px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
-      ">开始冒险 ✨</button>
+        color: #000; border:none; padding:12px 28px; border-radius:6px;
+        font-size:14px; font-weight:bold; cursor:pointer; transition:all 0.3s;">
+        开始冒险 ✨
+      </button>
     </div>
   `;
 
-  content.innerHTML = logHtml;
+  content.innerHTML = titleHtml;
+  logWrapper.innerHTML = logHtml;
+  content.appendChild(logWrapper);
+  content.innerHTML += footerHtml;
+
   modal.appendChild(content);
   document.body.appendChild(modal);
 
   const closeBtn = document.getElementById('close-version-modal');
-  closeBtn.onclick = () => {
-    modal.style.opacity = '0';
-    modal.style.transform = 'scale(0.95)';
-    setTimeout(() => modal.remove(), 200);
-  };
-
-  modal.onclick = (e) => {
-    if (e.target === modal) {
-      closeBtn.click();
-    }
-  };
-
-  closeBtn.onmouseover = () => {
-    closeBtn.style.transform = 'scale(1.08)';
-    closeBtn.style.boxShadow = '0 6px 20px rgba(255, 215, 0, 0.4)';
-  };
-  closeBtn.onmouseout = () => {
-    closeBtn.style.transform = 'scale(1)';
-    closeBtn.style.boxShadow = '0 4px 12px rgba(255, 215, 0, 0.2)';
-  };
-  closeBtn.onmousedown = () => closeBtn.style.transform = 'scale(1.05)';
-  closeBtn.onmouseup = () => closeBtn.style.transform = 'scale(1.08)';
+  closeBtn.onclick = () => { modal.remove(); };
+  modal.onclick = (e) => { if (e.target === modal) closeBtn.click(); };
 }
 
 const DEBUG = false; // 开发时改为 true 可查看版本管理详细日志

@@ -1,0 +1,463 @@
+/* ============================================================
+   classroom.css
+   课堂系统 UI 样式
+   追加在 course/course.css 末尾，或单独引入
+   ============================================================ */
+
+/* ── 选择弹窗 ──────────────────────────────────────────── */
+.cls-choice-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 10200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.cls-choice-box {
+  background: #161d2f;
+  border: 1px solid #2a3b66;
+  border-radius: 14px;
+  padding: 22px 18px;
+  max-width: 340px;
+  width: 100%;
+}
+
+.cls-choice-subject {
+  font-size: 13px;
+  color: #8899aa;
+  margin-bottom: 4px;
+}
+
+.cls-choice-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8c850;
+  margin-bottom: 16px;
+}
+
+.cls-choice-btns {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.cls-choice-btn {
+  flex: 1;
+  padding: 14px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  min-height: 110px;
+}
+.cls-choice-btn:hover { transform: translateY(-2px); }
+.cls-choice-btn:active { transform: translateY(0); }
+
+.cls-choice-hard {
+  background: #1e2f55;
+  border: 1px solid #3b4f8a;
+}
+.cls-choice-hard:hover { background: #253a6a; border-color: #f8c850; }
+
+.cls-choice-easy {
+  background: #161d2f;
+  border: 1px solid #2a3b66;
+}
+.cls-choice-easy:hover { background: #1e293b; border-color: #3b4f8a; }
+
+.cls-choice-icon { font-size: 20px; margin-bottom: 6px; }
+
+.cls-choice-name {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.cls-choice-hard .cls-choice-name { color: #f8d49d; }
+.cls-choice-easy .cls-choice-name { color: #e6e6e6; }
+
+.cls-choice-desc {
+  font-size: 11px;
+  color: #8899aa;
+  line-height: 1.5;
+}
+
+.cls-choice-cancel {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #2a3b66;
+  color: #8899aa;
+  padding: 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.cls-choice-cancel:hover { background: #1e293b; color: #e6e6e6; }
+
+/* ── 课堂面板 ──────────────────────────────────────────── */
+.cls-panel {
+  background: #0b0f1a;
+  color: #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+/* ── 顶部 header ────────────────────────────────────────── */
+.cls-header {
+  background: #161d2f;
+  border-bottom: 1px solid #2a3b66;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.cls-subject-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+
+.cls-header-info { flex: 1; }
+
+.cls-subject-line {
+  font-size: 11px;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cls-lesson-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8c850;
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+.cls-prof-line { font-size: 12px; color: #8899aa; }
+
+.cls-phase-badge {
+  background: #2a3b66;
+  color: #f8d49d;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── 步骤条 ─────────────────────────────────────────────── */
+.cls-phase-steps {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #2a3b66;
+}
+
+.cls-step {
+  flex: 1;
+  text-align: center;
+  padding: 7px 4px;
+  font-size: 11px;
+  color: #8899aa;
+  background: #1e293b;
+  border-right: 1px solid #2a3b66;
+  transition: all 0.2s;
+}
+.cls-step:last-child { border-right: none; }
+.cls-step-done { color: #4caf82; background: #0f2a1c; }
+.cls-step-active { color: #f8c850; background: #1a2210; font-weight: 600; }
+
+/* ── 主体 ───────────────────────────────────────────────── */
+.cls-body {
+  flex: 1;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* ── 氛围块 ─────────────────────────────────────────────── */
+.cls-atmosphere {
+  background: #111827;
+  border: 1px solid #1e3040;
+  border-left: 3px solid #2a5070;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #7a9ab8;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ── 开场白 ─────────────────────────────────────────────── */
+.cls-opening {
+  background: #161d2f;
+  border: 1px solid #2a3b66;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.cls-opening-label {
+  font-size: 11px;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.cls-opening-text {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #e6e6e6;
+}
+
+/* ── 进度点 ─────────────────────────────────────────────── */
+.cls-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.cls-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #2a3b66;
+  transition: all 0.2s;
+}
+.cls-dot-active { background: #f8c850; width: 20px; border-radius: 4px; }
+.cls-dot-done   { background: #4caf82; }
+
+/* ── 知识点卡 ───────────────────────────────────────────── */
+.cls-kp-card {
+  background: #161d2f;
+  border: 1px solid #2a3b66;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cls-kp-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #2a3b66;
+}
+
+.cls-kp-num {
+  background: #2a3b66;
+  color: #f8d49d;
+  font-size: 11px;
+  font-weight: 700;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cls-kp-point {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e6e6e6;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.cls-kp-context {
+  margin: 10px 14px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #8899aa;
+  line-height: 1.65;
+  border-left: 3px solid #f8c850;
+  background: #12192a;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+}
+
+/* ── 测验区 ─────────────────────────────────────────────── */
+.cls-quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cls-quiz-count { font-size: 12px; color: #8899aa; }
+
+.cls-diff-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.cls-diff-basic  { background: #1a3a23; color: #6abf8a; }
+.cls-diff-medium { background: #2a3a10; color: #9abf5a; }
+.cls-diff-hard   { background: #3a1a1a; color: #bf6a6a; }
+
+.cls-leadin {
+  background: #12192a;
+  border: 1px solid #1e3050;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #f8d49d;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.cls-question {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e6e6e6;
+  line-height: 1.45;
+}
+
+.cls-options { display: flex; flex-direction: column; gap: 8px; }
+
+.cls-option {
+  background: #1e293b;
+  border: 1px solid #2a3b66;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: #e6e6e6;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+}
+.cls-option:hover:not(:disabled) { background: #253050; border-color: #3b4f8a; }
+.cls-option:disabled { cursor: default; }
+.cls-option-correct { background: #1a3a23 !important; border-color: #4caf82 !important; color: #8fe8b0 !important; }
+.cls-option-wrong   { background: #3a1a1a !important; border-color: #e05c5c !important; color: #e89090 !important; }
+
+/* ── 答题反馈 ───────────────────────────────────────────── */
+.cls-feedback { display: none; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.6; }
+.cls-fb-show  { display: block; }
+.cls-fb-right { background: #1a3a23; border: 1px solid #2a6a3a; }
+.cls-fb-wrong { background: #3a1a1a; border: 1px solid #5a2a2a; }
+
+.cls-fb-tag { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+.cls-fb-r { color: #4caf82; }
+.cls-fb-w { color: #e05c5c; }
+.cls-fb-kp { color: #f8d49d; font-weight: 600; }
+.cls-fb-analysis { color: #c8d8e8; }
+
+/* ── 结算 ───────────────────────────────────────────────── */
+.cls-result-card {
+  background: #161d2f;
+  border: 1px solid #2a3b66;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+}
+
+.cls-result-lesson { font-size: 13px; color: #8899aa; margin-bottom: 12px; }
+.cls-result-rating { font-size: 52px; font-weight: 900; line-height: 1; margin: 8px 0; }
+.cls-result-grade  { font-size: 14px; color: #e6e6e6; margin-bottom: 4px; }
+.cls-result-score  { font-size: 13px; color: #8899aa; margin-bottom: 14px; }
+.cls-result-no-quiz { font-size: 14px; color: #e6e6e6; padding: 12px 0; }
+
+.cls-result-hp {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.cls-hp-plus { background: #1a3a23; color: #4caf82; border: 1px solid #2a5a33; }
+.cls-hp-minus { background: #3a1a1a; color: #e05c5c; border: 1px solid #5a2a2a; }
+
+.cls-result-comment {
+  background: #12192a;
+  border-left: 3px solid #f8c850;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  text-align: left;
+  margin-top: 10px;
+}
+.cls-comment-prof { font-size: 11px; color: #8899aa; margin-bottom: 4px; }
+.cls-comment-text { font-size: 13px; color: #f8d49d; line-height: 1.65; font-style: italic; }
+
+/* ── 导航按钮 ───────────────────────────────────────────── */
+.cls-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* 后退/次要按钮 */
+.cls-btn-sec {
+  flex: 1;
+  background: #1e293b;
+  border: 1px solid #2a3b66;
+  color: #8899aa;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cls-btn-sec:hover { background: #253050; color: #e6e6e6; border-color: #3b4f8a; }
+
+/* 普通前进按钮（下一条） */
+.cls-btn-pri {
+  flex: 2;
+  background: #2a3b66;
+  border: 1px solid #3b4f8a;
+  color: #e6e6e6;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cls-btn-pri:hover { background: #3b4f8a; color: #fff; }
+
+/* 关键跳转按钮（开始上课/随堂测验/查看结果） */
+.cls-btn-advance {
+  flex: 2;
+  background: #1e2f55;
+  border: 1px solid #3b4f8a;
+  color: #f8d49d;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cls-btn-advance:hover { background: #253a6a; border-color: #f8c850; color: #f8c850; }
+
+/* 离开教室 */
+.cls-btn-leave {
+  width: 100%;
+  background: #1e293b;
+  border: 1px solid #2a3b66;
+  color: #8899aa;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cls-btn-leave:hover { background: #253050; color: #e6e6e6; border-color: #3b4f8a; }
+
+/* ── 响应式 ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .cls-choice-btns { flex-direction: column; }
+  .cls-choice-btn  { min-height: 80px; }
+  .cls-result-rating { font-size: 44px; }
+  .cls-kp-context { margin: 8px 10px; padding: 8px 10px; }
+}

@@ -2,7 +2,7 @@
 
 import { timeSystem, costAction, nextTime, syncActionUI } from "./time-system.js";
 import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } from "./explore-data.js";
-import { getYearGrade } from "./save-system.js";
+import { getYearGrade, getPlayerHouse, openShop } from "./save-system.js";
 import { exploreEventLib } from "./explore-default.js";
 
 export function addExploreRate(area, val = 5) {
@@ -10,7 +10,11 @@ export function addExploreRate(area, val = 5) {
   const isLock = area.needLevel > currentGrade;
 
   if (isLock) return "该区域未解锁";
-  if (area.exploreRate >= 100) return "该区域已完全探索";
+  
+  // 修改：100%后不再增加进度，但返回提示
+  if (area.exploreRate >= 100) {
+    return "该区域已完全探索，无法继续增加探索度";
+  }
   
   area.exploreRate = Math.min(100, area.exploreRate + val);
   return `探索进度：${area.name} ${area.exploreRate}%`;
@@ -126,13 +130,37 @@ export function renderFirstLayer() {
   const wrap = document.getElementById("explore-container");
   if (!wrap) return;
 
+  const currentGrade = getYearGrade();
+  const currentHouse = getPlayerHouse();
+
   hogwartsExploreData.forEach(lv1 => {
+    // 检查第一层锁定
+    let isLock = false;
+    let unlockTipText = '';
+    
+    if (lv1.needLevel !== undefined && lv1.needLevel > currentGrade) {
+      isLock = true;
+      unlockTipText = lv1.unlockTip || `需要${lv1.needLevel}年级`;
+    }
+    
+    // 检查学院锁
+    if (!isLock && lv1.requiredHouse && currentHouse !== lv1.requiredHouse) {
+      isLock = true;
+      unlockTipText = `需要${lv1.requiredHouse}学院身份`;
+    }
+    
     const btn = createExploreButton({
       icon: lv1.icon || '',
       name: lv1.name,
       desc: lv1.desc || '',
-      rateText: ''
+      rateText: isLock ? ' 🔒' : '',
+      unlockTip: unlockTipText,
+      isDisabled: isLock
     }, () => {
+      if (isLock) {
+        window.doExploreLog(`🔒 ${lv1.name} 无法进入｜${unlockTipText}`);
+        return;
+      }
       currentFirstParent = lv1;
       renderSecondLayer();
     });
@@ -146,13 +174,73 @@ function renderSecondLayer() {
 
   wrap.appendChild(createBackButton(() => renderFirstLayer()));
 
+  const currentGrade = getYearGrade();
+  const currentHouse = getPlayerHouse();
+
   (currentFirstParent.children || []).forEach(lv2 => {
+    // 检查第二层锁定
+    let isLock = false;
+    let unlockTipText = '';
+    
+    if (lv2.needLevel !== undefined && lv2.needLevel > currentGrade) {
+      isLock = true;
+      unlockTipText = lv2.unlockTip || `需要${lv2.needLevel}年级`;
+    }
+    
+    // 检查学院锁
+    if (!isLock && lv2.requiredHouse && currentHouse !== lv2.requiredHouse) {
+      isLock = true;
+      unlockTipText = `需要${lv2.requiredHouse}学院身份`;
+    }
+    
+    const isShop2 = lv2.shopId && lv2.shopId !== undefined;
+    const shopIcon2 = isShop2 ? " 🏪" : "";
+
     const btn = createExploreButton({
       icon: lv2.icon || '',
-      name: lv2.name,
+      name: lv2.name + shopIcon2,
+
       desc: lv2.desc || '',
-      rateText: ''
-    }, () => {
+      rateText: isLock ? ' 🔒' : '',
+      unlockTip: unlockTipText,
+      isDisabled: isLock
+    }, async () => {
+      if (isLock) {
+        window.doExploreLog(`🔒 ${lv2.name} 无法进入｜${unlockTipText}`);
+        return;
+      }
+
+      // 商店节点：打开商店UI
+      if (isShop2) {
+        if (!costAction()) return;
+        try {
+          const shopManager = await openShop(lv2.shopId);
+          if (!shopManager) {
+            window.doExploreLog(`❌ 无法打开 ${lv2.name}`);
+            return;
+          }
+          const { shopUI } = await import('./hogsmeade/shopUI.js');
+          const shopUIInstance = new shopUI(shopManager, () => {
+            if (window.refreshAll) window.refreshAll();
+            // 行动用完了就关闭探索，返回行动界面
+            if (window.timeSystem?.dailyActionLeft <= 0) {
+              window.closeExplorePanel?.();
+              window.nextTime?.();
+              window.syncActionUI?.();
+            } else {
+              renderSecondLayer();
+            }
+          });
+          const uiElement = shopUIInstance.render();
+          document.body.appendChild(uiElement);
+        } catch (err) {
+          console.error('打开商店失败:', err);
+          window.doExploreLog(`❌ 打开 ${lv2.name} 失败：${err.message}`);
+        }
+        return;
+      }
+
+      // 普通节点：进第三层
       currentSecondParent = lv2;
       renderThirdLayer();
     });
@@ -168,53 +256,110 @@ function renderThirdLayer() {
 
   const list = currentSecondParent?.children || [];
   const currentGrade = getYearGrade();
+  const currentHouse = getPlayerHouse();
 
   list.forEach(item => {
     if (!item) return;
 
-    const isLock = item.needLevel > currentGrade;
+    // 检查年级锁
+    let isLock = item.needLevel > currentGrade;
+    let unlockTipText = item.unlockTip || '';
+    
+    // 检查学院锁（如果还没有被年级锁锁定）
+    if (!isLock && item.requiredHouse && currentHouse !== item.requiredHouse) {
+      isLock = true;
+      unlockTipText = `需要${item.requiredHouse}学院身份`;
+    }
+    
+    // 修改：不再把100%当作禁用条件，只是显示已完成
     const isComplete = item.exploreRate >= 100;
     
+    // 判断是否是商店（检查是否有 shopId 属性）
+    const isShop = item.shopId && item.shopId !== undefined;
+    
+    // 修改显示文本：100%时显示已完成标识，但不禁用
     const rateText = isComplete
-      ? "【已完全探索】"
+      ? "【100%已完成】" 
       : isLock ? "【🔒未解锁】" : `(${item.exploreRate}%)`;
 
+    // 为商店添加特殊的图标标记
+    const shopIcon = isShop ? " 🏪" : "";
+    
     const btn = createExploreButton({
       icon: item.icon || '',
-      name: item.name,
-      titleColor: "color:#ffdf70;",
+      name: item.name + shopIcon,
+      titleColor: isShop ? "color:#ffd700;" : "color:#ffdf70;",
       desc: item.desc || '',
       rateText: ` ${rateText}`,
-      unlockTip: isLock ? (item.unlockTip || '需要更高年级') : '',
-      isDisabled: isLock || isComplete
-    }, (e) => {
+      unlockTip: isLock ? unlockTipText : '',
+      isDisabled: isLock
+    }, async (e) => {
       e.stopPropagation();
 
       if (isLock) {
-        window.doExploreLog(`🔒 ${item.name} 无法探索｜${item.unlockTip}`);
+        window.doExploreLog(`🔒 ${item.name} 无法进入｜${unlockTipText}`);
         return;
       }
-      if (isComplete) {
-        window.doExploreLog(`✅ ${item.name} 已完全探索`);
+      
+      // 如果是商店，异步打开商店界面
+      if (isShop) {
+        if (item.needLevel && currentGrade < item.needLevel) {
+          window.doExploreLog(`🔒 ${item.name} 需要 ${item.needLevel} 年级才能进入`);
+          return;
+        }
+        
+        try {
+          // 异步打开商店
+          const shopManager = await openShop(item.shopId);
+          if (!shopManager) {
+            window.doExploreLog(`❌ 无法打开 ${item.name}`);
+            return;
+          }
+          
+          // 动态导入 shopUI
+          const { shopUI } = await import('./hogsmeade/shopUI.js');
+          
+          // 创建商店UI实例
+          const shopUIInstance = new shopUI(
+            shopManager,
+            () => {
+              renderThirdLayer();
+              if (window.refreshAll) window.refreshAll();
+            }
+          );
+          
+          const uiElement = shopUIInstance.render();
+          document.body.appendChild(uiElement);
+        } catch (err) {
+          console.error('打开商店失败:', err);
+          window.doExploreLog(`❌ 打开 ${item.name} 失败`);
+        }
         return;
       }
+      
+      // ========== 原有的探索逻辑 ==========
       if (!costAction()) return;
 
-      addExploreRate(item, 5);
+      const rateResult = addExploreRate(item, 5);
+      
+      let logMessage = '';
+      if (item.exploreRate >= 100) {
+        logMessage = `✅ 继续探索：${item.name}（探索度已达100%，继续寻找材料）｜`;
+      } else {
+        logMessage = `✅ 探索：${item.name}（探索进度+5%，共${item.exploreRate}%）｜`;
+      }
 
-      // triggerExploreEvent 返回 { text, material } 结构化对象
       const exploreResult = triggerExploreEvent(item.name);
       let logSuffix = exploreResult.text;
 
       if (exploreResult.material) {
         const mat = exploreResult.material;
         const emoji = getMatEmoji ? getMatEmoji(mat.name) : "🌿";
-        // 直接用对象添加背包，不再解析字符串
         window.addMaterialToBag(mat.name, mat.count);
         logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
       }
 
-      window.doExploreLog(`✅ 探索：${item.name}（探索进度+5%，共${item.exploreRate}%）｜${logSuffix}`);
+      window.doExploreLog(logMessage + logSuffix);
 
       if (timeSystem.dailyActionLeft <= 0) {
         closeExplorePanel();

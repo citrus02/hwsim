@@ -1,4 +1,4 @@
-// 霍格沃茨探索事件库（纯文本配置，无逻辑）
+// explore-default.js霍格沃茨探索事件库（纯文本配置，无逻辑）
 export const exploreEventLib = {
   "魔药课教室": [
     "嗅到浓郁药草气息，魔力小幅恢复",

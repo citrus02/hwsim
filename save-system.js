@@ -1,12 +1,13 @@
-// save-system.js
+// save-system.js - 使用动态导入避免循环依赖
 
 import { potions, getPotionEmoji } from './potion-data.js';
 import { getMatEmoji } from "./explore-data.js";
+// ❌ 删除这行：import { ShopManager } from './hogsmeade/index.js'; 
 
-export const SAVE_KEY = "hogwarts"; // 单一来源，version.js 从这里导入
+export const SAVE_KEY = "hogwarts";
 const SAVE_SLOT_KEY = "hogwarts_slots";
-const SLOT_COUNT = 9;
-const DEFAULT_BAG_SLOTS = 20;
+const SLOT_COUNT = 10;
+const DEFAULT_BAG_SLOTS = 10;
 
 const COLOR_SAVE = "#37594e";
 const COLOR_LOAD = "#3a5270";
@@ -32,7 +33,7 @@ function getDefaultSave() {
   return {
     year: 1991, month: 9, day: 2, actions: 3,
     log: [], timeline: [],
-    player: { name: "无名巫师", era: "", house: "", blood: "", wand: "", wandAccepted: true },
+    player: { name: "无名巫师", era: "", house: "", blood: "", wand: "", wandAccepted: true, galleons: 10 },
     bag: { material: [], potion: [], item: [] },
     course,
     potion: {},
@@ -52,12 +53,11 @@ export function getSave() {
   }
 }
 
-// ✅ FIX #1：存档失败时输出错误，不再静默吞掉
 export function setSave(data) {
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify(data));
   } catch (e) {
-    console.error('⚠️ 存档失败（可能是 localStorage 空间不足）:', e);
+    console.error('⚠️ 存档失败:', e);
   }
 }
 
@@ -67,16 +67,20 @@ export function resetAll() {
 }
 
 // ===========================
-// 年级换算：1991 = 1年级
+// 年级换算
 // ===========================
 export function getYearGrade() {
   const data = getSave();
   return (data.year ?? 1991) - 1990;
 }
 
+export function getPlayerHouse() {
+  const data = getSave();
+  return data.player?.house || "";
+}
+
 // ===========================
-// 跨年升级：每年9月1日升学
-// 用 _yearUpgraded 标记防止重复触发
+// 跨年升级
 // ===========================
 export function checkYearUpgrade() {
   const data = getSave();
@@ -132,7 +136,6 @@ export function addLog(text) {
   const curTime = d.time?.nowTime || "早晨";
   d.log.push(`[${curDate} ${curTime}] ${text}`);
   setSave(d);
-  // ✅ FIX #2：统一用 window.renderLog() 调用，避免模块作用域找不到
   if (window.renderLog) window.renderLog();
 }
 
@@ -176,7 +179,7 @@ export function addItemToBag(type, itemData) {
   const data = getSave();
   if (!data.bag) data.bag = { material: [], potion: [], item: [] };
   const list = data.bag[type] || [];
-  const addCount = itemData.count || 1; // 支持批量添加
+  const addCount = itemData.count || 1;
   const exist = list.find(it => it?.name === itemData.name);
   if (exist) {
     exist.count = (exist.count || 1) + addCount;
@@ -270,7 +273,7 @@ const baseEvents = [
   { date: "1998-03-01", text: "马尔福庄园被俘，多比牺牲" },
   { date: "1998-04-01", text: "抢劫古灵阁，赫敏・格兰杰销毁赫奇帕奇金杯魂器" },
   { date: "1998-05-01", text: "哈利・波特返回学校，销毁拉文克劳冠冕魂器" },
-  { date: "1998-05-02", text: "霍格沃茨大战全面爆发；西弗勒斯・斯内普临终交付记忆，揭露全部真相；伏地魔亲手摧毁哈利・波特体内的灵魂碎片；纳威・隆巴顿斩杀纳吉尼，最后一个魂器销毁；伏地魔杀戮咒反弹，彻底死亡" },
+  { date: "1998-05-02", text: "霍格沃茨大战全面爆发" },
   { date: "1998-05-08", text: "霍格沃茨重建，第二次巫师战争结束" },
   { date: "1999-09-01", text: "金斯莱・沙克尔成为魔法部长，开启和平时代" },
   { date: "2017-09-01", text: "十九年后，国王十字车站送别孩子们入学" }
@@ -337,9 +340,22 @@ export function refreshAll() {
   setText("stat-blood", data.player?.blood || "—");
   setText("stat-house", data.player?.house || "—");
   setText("stat-wand", data.player?.wand || "—");
-  setText("date", data.time?.currentDate || "1991-09-02");
+  setText("stat-galleons", data.player?.galleons ?? 10);
+  const curDate = data.time?.currentDate || "1991-09-02";
+  setText("date", curDate);
   setText("timeOfDay", data.time?.nowTime || "早晨");
   setText("actions", data.time?.dailyActionLeft ?? 3);
+
+  // 星期
+  const weekdays = ["周日","周一","周二","周三","周四","周五","周六"];
+  const dateObj  = new Date(curDate);
+  setText("weekday", weekdays[dateObj.getDay()]);
+
+  // 货币
+  window.currency?.refreshCurrencyUI?.();
+
+  // 学院积分
+  window.housePoints?.refreshHousePointsUI?.();
   renderBag();
   renderLog();
   renderTimeline();
@@ -370,7 +386,7 @@ function initTabs() {
 }
 
 // ===========================
-// 存档槽：公共卡片构建
+// 存档槽
 // ===========================
 export function getAllSlots() {
   try {
@@ -469,13 +485,239 @@ window.renderBag = renderBag;
 window.renderLog = renderLog;
 window.renderTimeline = renderTimeline;
 window.setBagType = setBagType;
-// count 参数可选，默认为 1；探索系统传 count 时会一次性合并入背包
 window.addMaterialToBag = (name, count = 1) => addItemToBag("material", { name, count });
 window.addPotionToBag = (potion) => addItemToBag("potion", potion);
 
-// ✅ FIX #9：合并两个 DOMContentLoaded 为一个，防止初始化顺序问题
+// ===========================
+// 商店系统集成 - 使用动态导入避免循环依赖
+// ===========================
+
+let _shopManager = null;
+let _shopManagerLoading = false;
+
+// 获取玩家加隆
+export function getPlayerGalleons() {
+  const data = getSave();
+  return data.player?.galleons ?? 10;
+}
+
+// 获取玩家材料
+export function getPlayerMaterials() {
+  const data = getSave();
+  const materials = {};
+  const materialList = data.bag?.material || [];
+  materialList.forEach(item => {
+    if (item && item.name) {
+      materials[item.name] = item.count || 1;
+    }
+  });
+  return materials;
+}
+
+// 获取玩家物品
+export function getPlayerInventory() {
+  const data = getSave();
+  const inventory = {};
+  const itemList = data.bag?.item || [];
+  itemList.forEach(item => {
+    if (item && item.name) {
+      inventory[item.id || item.name] = {
+        name: item.name,
+        quantity: item.count || 1,
+        icon: item.icon || "📦"
+      };
+    }
+  });
+  return inventory;
+}
+
+// 获取巫师画片
+export function getPlayerWizardCards() {
+  const data = getSave();
+  return data.player?.wizardCards || {};
+}
+
+// 更新玩家加隆
+export function updatePlayerGalleons(amount) {
+  const data = getSave();
+  if (!data.player) data.player = {};
+  data.player.galleons = (data.player.galleons || 10) + amount;
+  setSave(data);
+  refreshAll();
+  return data.player.galleons;
+}
+
+// 从背包移除材料
+export function removeMaterialFromBag(materialName, quantity) {
+  const data = getSave();
+  if (!data.bag) data.bag = { material: [], potion: [], item: [] };
+  const list = data.bag.material || [];
+  const index = list.findIndex(item => item?.name === materialName);
+  
+  if (index !== -1) {
+    const item = list[index];
+    if (item.count > quantity) {
+      item.count -= quantity;
+    } else {
+      list.splice(index, 1);
+    }
+    data.bag.material = list;
+    setSave(data);
+    renderBag();
+    return true;
+  }
+  return false;
+}
+
+// 添加商品到背包
+export function addShopItemToBag(itemId, itemName, quantity, icon = "📦") {
+  const data = getSave();
+  if (!data.bag) data.bag = { material: [], potion: [], item: [] };
+  const list = data.bag.item || [];
+  
+  const existing = list.find(item => item?.id === itemId || item?.name === itemName);
+  if (existing) {
+    existing.count = (existing.count || 1) + quantity;
+  } else {
+    list.push({
+      id: itemId,
+      name: itemName,
+      icon: icon,
+      count: quantity
+    });
+  }
+  
+  data.bag.item = list;
+  setSave(data);
+  renderBag();
+  addLog(`🛍️ 获得：${itemName} x${quantity}`);
+}
+
+// 保存巫师画片
+export function addWizardCard(cardName) {
+  const data = getSave();
+  if (!data.player) data.player = {};
+  if (!data.player.wizardCards) data.player.wizardCards = {};
+  
+  data.player.wizardCards[cardName] = (data.player.wizardCards[cardName] || 0) + 1;
+  setSave(data);
+  addLog(`🃏 获得巫师画片：${cardName}！`);
+}
+
+// 获取商店统计数据
+export function getShopStats() {
+  const data = getSave();
+  return data.shopStats || {
+    totalSpent: 0,
+    totalEarned: 0,
+    favoriteShop: null,
+    purchases: []
+  };
+}
+
+// 更新商店统计
+export function updateShopStats(shopId, amount, type = 'spent') {
+  const data = getSave();
+  if (!data.shopStats) data.shopStats = getShopStats();
+  
+  if (type === 'spent') {
+    data.shopStats.totalSpent += amount;
+  } else {
+    data.shopStats.totalEarned += amount;
+  }
+  
+  data.shopStats.purchases.unshift({
+    shopId: shopId,
+    amount: amount,
+    type: type,
+    date: data.time?.currentDate || new Date().toISOString()
+  });
+  
+  if (data.shopStats.purchases.length > 50) {
+    data.shopStats.purchases.pop();
+  }
+  
+  setSave(data);
+}
+
+// 异步获取商店管理器（动态导入）
+export async function getShopManager() {
+  if (_shopManager) return _shopManager;
+  
+  if (_shopManagerLoading) {
+    // 等待加载完成
+    await new Promise(resolve => {
+      const checkInterval = setInterval(() => {
+        if (!_shopManagerLoading) {
+          clearInterval(checkInterval);
+          resolve();
+        }
+      }, 50);
+    });
+    return _shopManager;
+  }
+  
+  _shopManagerLoading = true;
+  
+  try {
+    const module = await import('./hogsmeade/index.js');
+    const { ShopManager } = module;
+    
+    // 创建玩家数据适配器
+    const playerAdapter = {
+      year: getYearGrade(),
+      house: getPlayerHouse(),
+      galleons: getPlayerGalleons(),
+      materials: getPlayerMaterials(),
+      inventory: getPlayerInventory(),
+      wizardCards: getPlayerWizardCards(),
+      // 辅助方法
+      addLog: addLog,
+      updateGalleons: updatePlayerGalleons,
+      removeMaterial: removeMaterialFromBag,
+      addItem: addShopItemToBag,
+      addCard: addWizardCard
+    };
+    
+    _shopManager = new ShopManager(playerAdapter);
+    _shopManagerLoading = false;
+    return _shopManager;
+  } catch (err) {
+    console.error('加载商店模块失败:', err);
+    _shopManagerLoading = false;
+    return null;
+  }
+}
+
+// 异步打开商店
+export async function openShop(shopId) {
+  const manager = await getShopManager();
+  if (!manager) {
+    addLog(`❌ 商店系统加载失败`);
+    return null;
+  }
+  
+  const result = manager.openShop(shopId);
+  if (!result.success) {
+    addLog(`❌ ${result.message}`);
+    return null;
+  }
+  
+  addLog(`🏪 进入 ${result.shop.name}`);
+  return manager;
+}
+
+// 挂在到window供全局使用
+window.openShop = (shopId) => openShop(shopId);
+window.getShopManager = () => getShopManager();
+window.getPlayerGalleons = getPlayerGalleons;
+window.updatePlayerGalleons = updatePlayerGalleons;
+
+// ===========================
+// DOMContentLoaded
+// ===========================
 document.addEventListener("DOMContentLoaded", () => {
-  getScrollbarWidth(); // 预计算滚动条宽度
+  getScrollbarWidth();
   initTabs();
   refreshAll();
   checkYearUpgrade();
@@ -535,8 +777,6 @@ function preventScroll(e) {
   return false;
 }
 
-// ==================== 复制邮箱功能 ====================
-
 function initCopyButton() {
   const copyBtn = document.getElementById('copy-email');
   if (!copyBtn) return;
@@ -572,7 +812,6 @@ function showCopySuccess(btn, originalText) {
   }, 1500);
 }
 
-// ✅ FIX #3：finally 块用变量引用 textarea，不再用选择器查找，防止误删其他元素
 function fallbackCopy(btn, originalText) {
   let textarea = null;
   try {

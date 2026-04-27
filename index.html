@@ -6,6 +6,8 @@
   <title>霍格沃茨模拟器</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="course/course.css">
+  <link rel="stylesheet" href="course/classroom.css">
   
   <!-- PWA 配置 -->
   <link rel="manifest" href="./manifest.json">
@@ -15,30 +17,30 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="霍格沃茨">
   
-  <!-- ✅ 用 SVG 城堡替代 emoji -->
-   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
-   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
+</head>
+<body>
+
 <div class="container">
 
 <!-- 角色创建 -->
 <div class="screen active" id="screen-create">
-  <h1 style="text-align:center; margin-top: 10px;">✨🏰 霍格沃茨模拟器 🏰✨</h1>
-  <hr style="border: none; height: 2px; background: linear-gradient(90deg, #4a5588, #8a94c2, #4a5588); margin: 14px 0; border-radius: 2px;">
+  <h1>✨🏰 霍格沃茨模拟器 🏰✨</h1>
+  <hr>
   
-<!-- ✅ 标题行：播放音乐 + 创建你的巫师 + 测试通道 -->
-<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px; padding: 0 20px; position: relative;">
-  <button id="music-button" style="position: absolute; left: 0; background:#161d2f; color:#fff; padding:6px 12px; border-radius:4px; border:none; cursor:pointer; white-space:nowrap;">🎵 播放音乐</button>
-  <h2 style="margin: 0;">🧙🏻‍♀️ 创建你的巫师</h2>
-  <button style="position: absolute; right: 0; background:#161d2f; color:#fff; padding:6px 12px; border-radius:4px; border:none; cursor:pointer; white-space:nowrap;"
-  onclick="quickTest()">⚡测试通道</button>
-</div>
+  <div class="create-header-row">
+    <button id="music-button" class="music-btn">🎵 播放音乐</button>
+    <h2>🧙🏻‍♀️ 创建你的巫师</h2>
+    <button class="quick-test-btn" onclick="quickTest()">⚡测试通道</button>
+  </div>
 
   <!-- 卡片 1：姓名 + 随机名字 -->
   <div class="card">
     <div class="title">👤 巫师姓名</div>
     <input id="name" placeholder="姓名（可手动输入，有彩蛋）" value="">
     <div class="random-row">
-      <button class="btn" id="random-name" style="background:#473c66; width:100%;">🎲 随机名字</button>
+      <button class="btn random-name-btn" id="random-name">🎲 随机名字</button>
     </div>
   </div>
 
@@ -62,36 +64,51 @@
     </select>
 
     <div class="random-row">
-      <button class="btn hat" id="sorting-hat" style="width:100%;">🎩 分院帽检测（可以不检测）</button>
+      <button class="btn hat sorting-hat-btn" id="sorting-hat">🎩 分院帽检测（可以不检测）</button>
     </div>
-    <div id="sorting-result" style="margin-top:10px;"></div>
+    <div id="sorting-result"></div>
   </div>
 
   <!-- 卡片 3：魔杖 + 抽取 + 试用 -->
   <div class="card">
     <div class="title">🪄 魔杖选择巫师</div>
     <input id="wand" placeholder="魔杖材质（可手动输入）" value="">
-    <div class="random-row">
-      <button class="btn" id="random-wand" style="background:#3c5a66; flex:1;">🪄 抽取魔杖</button>
-      <button class="btn success" id="try-wand" style="flex:1;" disabled>🪄 试用魔杖（可多次尝试）</button>
+    <div class="random-row wand-btn-row">
+      <button class="btn wand-draw-btn" id="random-wand">🪄 抽取魔杖</button>
+      <button class="btn success wand-try-btn" id="try-wand" disabled>🪄 试用魔杖（可多次尝试）</button>
     </div>
-    <div id="wand-result" style="margin-top:10px;"></div>
+    <div id="wand-result"></div>
   </div>
 
   <!-- 开始游戏按钮 -->
-  <div class="card" style="text-align:center; background:transparent; padding:0;">
-    <button class="btn warn" id="start-game" style="min-height:80px; font-size:18px; width:100%; margin:0 !important; box-sizing:border-box;">✨ 进入霍格沃茨</button>
+  <div class="card enter-card">
+    <button class="btn warn enter-btn" id="start-game">✨ 进入霍格沃茨</button>
+  </div>
+
+  <!-- 存档 / 读档（创建角色界面） -->
+  <div class="card" id="create-save-card">
+    <div class="save-card-header">
+      <div class="title">💾 存档 / 读档</div>
+      <button class="info-collapse-btn" onclick="toggleCreateSaveBox()">查看</button>
+    </div>
+    <div id="saveBox-create" style="display:none; margin-top:12px;">
+      <div class="save-btn-row">
+        <button class="save-btn load" onclick="window.openLoad()">📂 读取存档</button>
+        <button class="save-btn reset" onclick="window.resetGame()">🔄 重置游戏</button>
+      </div>
+      <div id="slotBox-create"></div>
+    </div>
   </div>
 </div>
 
 <!-- 主界面 -->
 <div class="screen" id="screen-main">
-<div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 0 0 10px 0; width: 100%; box-sizing: border-box; position: relative;">
-    <button id="music-button-main" style="position: absolute; left: 0; background:#161d2f; color:#fff; padding:4px 8px; border-radius:4px; border:1px solid #4a5588; cursor:pointer; font-weight:bold; font-size:16px; user-select:none;">🎵</button>
-    <h1 style="text-align:center; margin-top: 10px;">✨🏰 霍格沃茨模拟器 🏰✨</h1>
-    <button id="note-button-main" style="position: absolute; right: 0; background:#161d2f; color:#fff; padding:4px 8px; border-radius:4px; border:1px solid #4a5588; cursor:pointer; font-weight:bold; font-size:16px; user-select:none;">✍</button>
-</div>
-  <hr style="border: none; height: 2px; background: linear-gradient(90deg, #4a5588, #8a94c2, #4a5588); margin: 14px 0; border-radius: 2px;">
+  <div class="main-header-row">
+    <button id="music-button-main" class="music-btn-main">🎵</button>
+    <h1>✨🏰 霍格沃茨模拟器 🏰✨</h1>
+    <button id="note-button-main" class="note-btn-main">✍</button>
+  </div>
+  <hr>
 
   <!-- 主卡片：标签页 -->
   <div class="card">
@@ -104,8 +121,16 @@
 
     <!-- 行动日常 -->
     <div class="tab-screen active" id="tab-daily">
-      <div class="info">当前时间：<span id="date">1991-09-02</span> <span id="timeOfDay">早晨</span></div>
-      <div class="info">今日剩余行动次数：<span id="actions">3</span>/3</div>
+      <div class="status-grid">
+        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">早晨</span></span>
+        <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分</span>
+        <span class="sg-left">今日行动次数：<span id="actions">3</span>/3</span>
+        <span class="sg-right sg-currency">
+          <span class="coin-g">🟡<span id="stat-galleons">100</span></span>
+          <span class="coin-s">⚪<span id="stat-sickles">0</span></span>
+          <span class="coin-b">🟤<span id="stat-knuts">0</span></span>
+        </span>
+      </div>
     </div>
 
     <!-- 时间轴 -->
@@ -115,10 +140,47 @@
 
     <!-- 个人信息 -->
     <div class="tab-screen" id="tab-info">
-      <div class="info"><span class="info-label">姓名：</span><span id="stat-name">—</span></div>
-      <div class="info"><span class="info-label">出身：</span><span id="stat-blood">—</span></div>
-      <div class="info"><span class="info-label">学院：</span><span id="stat-house">—</span></div>
-      <div class="info"><span class="info-label">魔杖：</span><span id="stat-wand">—</span></div>
+      <div class="info-grid-2x2">
+        <div class="ig-cell">
+          <div class="ig-label">姓名</div>
+          <div class="ig-value" id="stat-name">—</div>
+        </div>
+        <div class="ig-cell">
+          <div class="ig-label">出身</div>
+          <div class="ig-value" id="stat-blood">—</div>
+        </div>
+        <div class="ig-cell">
+          <div class="ig-label">学院</div>
+          <div class="ig-value" id="stat-house">—</div>
+        </div>
+        <div class="ig-cell">
+          <div class="ig-label">魔杖</div>
+          <div class="ig-value" id="stat-wand">—</div>
+        </div>
+      </div>
+      <div class="house-points-detail">
+        <div class="hp-detail-title">🏆 学院积分</div>
+        <div class="hp-row">
+          <span class="hp-house hp-gryffindor">🦁 格兰芬多</span>
+          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-g" id="hp-bar-g"></span></span>
+          <span class="hp-score" id="hp-score-g">0</span>
+        </div>
+        <div class="hp-row">
+          <span class="hp-house hp-slytherin">🐍 斯莱特林</span>
+          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-s" id="hp-bar-s"></span></span>
+          <span class="hp-score" id="hp-score-s">0</span>
+        </div>
+        <div class="hp-row">
+          <span class="hp-house hp-ravenclaw">🦅 拉文克劳</span>
+          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-r" id="hp-bar-r"></span></span>
+          <span class="hp-score" id="hp-score-r">0</span>
+        </div>
+        <div class="hp-row">
+          <span class="hp-house hp-hufflepuff">🦡 赫奇帕奇</span>
+          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-h" id="hp-bar-h"></span></span>
+          <span class="hp-score" id="hp-score-h">0</span>
+        </div>
+      </div>
     </div>
 
     <!-- 背包 -->
@@ -142,9 +204,8 @@
   <div class="card">
     <div id="actionMain">
       <div class="title">✨ 要做点什么？</div>
-      <div style="display: grid; gap: 8px; margin-top: 12px;">
-        <!-- ✅ FIX #4：用 window 挂载的函数，避免 inline import 兼容性问题 -->
-        <button class="action-btn" onclick="window.openCoursePanel()">🪶 学习课程</button>
+      <div class="action-grid">
+        <button class="action-btn" onclick="window.openCoursePanel?.()">🪶 学习课程</button>
         <button class="action-btn" onclick="window.openSpellPanel()">🪄 训练咒语</button>
         <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
         <button class="action-btn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
@@ -153,27 +214,24 @@
 
     <div id="exploreMain" style="display: none;">
       <div class="title">🗺️ 探索城堡</div>
-      <div id="explore-container" style="max-height: 400px; overflow: auto; margin-top: 8px;"></div>
-      <button class="action-btn" style="margin-top:10px;" onclick="window.closeExplorePanel()">← 返回行动</button>
+      <div class="explore-container" id="explore-container"></div>
+      <button class="action-btn back-btn" onclick="window.closeExplorePanel()">← 返回行动</button>
     </div>
   </div>
 
   <!-- 存档 / 读档 -->
   <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div class="save-card-header">
       <div class="title">💾 存档 / 读档</div>
-      <!-- ✅ FIX：改成调用 openSave() 并默认显示存档面板 -->
       <button class="info-collapse-btn" id="saveBtnToggle" onclick="window.toggleSavePanel()">查看</button>
     </div>
-    <!-- display:block 默认打开 -->
-    <div id="saveBox" style="display:none; margin-top:12px;"> 
+    <div id="saveBox">
       <div class="save-btn-row">
-        <!-- ✅ FIX #3：统一用 window. 调用，防 module 作用域问题 -->
         <button class="save-btn save" onclick="window.openSave()">💾 保存</button>
         <button class="save-btn load" onclick="window.openLoad()">📂 读取</button>
         <button class="save-btn reset" onclick="window.resetGame()">🔄 重置</button>
       </div>
-      <div id="slotBox" style="max-height: 500px; overflow-y: auto; margin-top:8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;"></div>
+      <div id="slotBox"></div>
     </div>
   </div>
 </div>
@@ -205,14 +263,14 @@ function buildSaveData(opts) {
   COURSES.forEach(c => courseMap[c] = 0);
   return {
     player: {
-      name:  opts.name  || "无名巫师",   /* ✅ FIX #10：姓名兜底 */
+      name:  opts.name  || "无名巫师",
       blood: opts.blood || "混血巫师",
       house: opts.house || "格兰芬多",
       wand:  opts.wand  || "未知魔杖",
       wandAccepted: opts.wandAccepted ?? true
     },
     time: {
-      year: 1991,
+      year: 1991,        // ✅ 添加这一行！
       month: 9,
       day: 2,
       dailyActionLeft: 3,
@@ -221,7 +279,7 @@ function buildSaveData(opts) {
     },
     log: opts.log || ["✅ 成功进入霍格沃茨"],
     course: courseMap,
-    bag: {                                /* ✅ FIX #11：统一30格 */
+    bag: {
       material: Array(30).fill(null),
       potion:   Array(30).fill(null),
       item:     Array(30).fill(null)
@@ -261,6 +319,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ✅ 创建界面存档面板切换
+function toggleCreateSaveBox() {
+  const box = document.getElementById('saveBox-create');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (box.style.display === 'block') {
+    window.openLoad();
+    setTimeout(() => {
+      const source = document.getElementById('slotBox');
+      const target = document.getElementById('slotBox-create');
+      if (source && target) {
+        target.innerHTML = source.innerHTML;
+        target.querySelectorAll('.save-slot').forEach(slot => {
+          slot.onclick = () => {
+            const key = slot.getAttribute('data-slot');
+            const data = localStorage.getItem('save_' + key);
+            if (data) {
+              localStorage.setItem('hogwarts', data);
+              location.reload();
+            }
+          };
+        });
+      }
+    }, 100);
+  }
+}
+
+// ✅ 最终正确：无存档 → 隐藏创建界面的【存档卡片】
+document.addEventListener('DOMContentLoaded', () => {
+  const card = document.getElementById('create-save-card');
+  if (!card) return;
+
+  const hasSave = () => {
+    if (localStorage.getItem('hogwarts')) return true;
+    for (let i = 1; i <= 9; i++) {
+      if (localStorage.getItem('save_' + i)) return true;
+    }
+    return false;
+  };
+
+  card.style.display = hasSave() ? 'block' : 'none';
+});
 </script>
 
 <!-- 核心：随机生成 + 开始游戏 -->
@@ -273,18 +373,15 @@ window.addEventListener('load', () => {
   initWandSelection();
 
   document.getElementById('start-game').onclick = () => {
-    // 魔杖认可检测
     if (!player.wandAccepted) {
       showTipBox('wand-result', `
         👴🏻 奥利凡德：<i>孩子，你还没有获得魔杖的认可！</i><br>
         🪄 是魔杖选择巫师，不是巫师选择魔杖。<br>
-        <i>（如果一定要的话，也不是不可以。）</i><br>
         ✨ 请先抽取魔杖并试用，成功后才能进入霍格沃茨！
       `);
       return;
     }
 
-    // 出身 & 学院检测
     const blood = document.getElementById('blood').value;
     const house = document.getElementById('house').value;
     if (!blood || !house) {
@@ -295,7 +392,6 @@ window.addEventListener('load', () => {
       return;
     }
 
-    /* ✅ FIX #1：使用统一的 buildSaveData，数据结构完全一致 */
     const data = buildSaveData({
       name:  document.getElementById('name').value.trim(),
       blood,
@@ -306,7 +402,6 @@ window.addEventListener('load', () => {
     });
 
     localStorage.setItem("hogwarts", JSON.stringify(data));
-
     document.getElementById("screen-create").classList.remove("active");
     document.getElementById("screen-main").classList.add("active");
 
@@ -325,7 +420,6 @@ window.addEventListener('load', () => {
       setBGMSource('./audio/Prologue');
       initMusicSystem();
       
-      // ✅ 主屏幕的音乐按钮也绑定同样的事件
       const musicBtnMain = document.getElementById('music-button-main');
       const musicBtn = document.getElementById('music-button');
       if (musicBtnMain && musicBtn) {
@@ -340,13 +434,8 @@ window.addEventListener('load', () => {
   
 <script type="module">
   import { initVersionManager } from './version.js';
-  
-  console.log('✅ version.js 导入成功！');
-  console.log('initVersionManager:', initVersionManager);
-  
   try {
     initVersionManager();
-    console.log('✅ initVersionManager 调用成功！');
   } catch (e) {
     console.error('❌ initVersionManager 出错:', e);
   }
@@ -357,8 +446,19 @@ window.addEventListener('load', () => {
 <script type="module" src="explore.js"></script>
 <script type="module" src="potion-data.js"></script>
 <script type="module" src="potion.js"></script>
-<!-- ✅ 别忘了加载 course.js 和 spell.js，否则 window.openCoursePanel 等不存在 -->
-<script type="module" src="course.js"></script>
+<script type="module" src="currency.js"></script>
+  <script type="module" src="house-points.js"></script>
+  <script type="module" src="course/subjects/math.js"></script>
+  <script type="module" src="course/subjects/physics.js"></script>
+  <script type="module" src="course/subjects/chemistry.js"></script>
+  <script type="module" src="course/subjects/biology.js"></script>
+  <script type="module" src="course/subjects/history.js"></script>
+  <script type="module" src="course/subjects/civics.js"></script>
+  <script type="module" src="course/subjects/geography.js"></script>
+  <script type="module" src="course/subjects/literature.js"></script>
+  <script type="module" src="course/subjects/english.js"></script>
+  <script type="module" src="course/classroom.js"></script>
+  <script type="module" src="course/course.js"></script>
 <script type="module" src="spell.js"></script>
 <script type="module" src="save-system.js"></script>
 
@@ -376,7 +476,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// 切换存档面板显示/隐藏
 window.toggleSavePanel = function() {
   const saveBox = document.getElementById('saveBox');
   const btn = document.getElementById('saveBtnToggle');
@@ -384,13 +483,12 @@ window.toggleSavePanel = function() {
   if (saveBox.style.display === 'none' || !saveBox.style.display) {
     saveBox.style.display = 'block';
     btn.textContent = '收起';
-    window.openSave();  // ✅ KEY：打开时默认加载存档列表
+    window.openSave();
   } else {
     saveBox.style.display = 'none';
     btn.textContent = '查看';
   }
 };
-
 </script>
 
 <!-- 反馈弹窗 -->
@@ -409,8 +507,8 @@ window.toggleSavePanel = function() {
             遇到问题、有新想法，请联系上方邮箱<br>
         </p>
 
-       <p class="feedback-message" style="text-align: center; margin: 10px 0;">
-            <a href="https://github.com/citrus02/hwsim/issues" target="_blank" style="color: #bea6eb; text-decoration: none; border-bottom: 1px dotted #aaa;">或者到GitHub发送Issue</a>
+       <p class="feedback-github-link">
+            <a href="https://github.com/citrus02/hwsim/issues" target="_blank">或者到GitHub发送Issue</a>
         </p>
 
         <div class="button-group">
@@ -419,41 +517,25 @@ window.toggleSavePanel = function() {
     </div>
 </div>
 
-<!-- 霍格沃茨模拟器 · 页尾版权声明 -->
-<footer style="text-align: center; padding: 1.5rem 1rem; font-size: 0.75rem; color: #aaa; background: transparent; border-top: 1px solid rgba(255,255,255,0.1); font-family: system-ui, 'Segoe UI', monospace;">
-    <p>
-        © 同人非盈利作品 · Fan-made, Non-commercial<br>
-        霍格沃茨及相关元素版权归 © Warner Bros. Entertainment Inc. 所有。<br>
-        All rights belong to Warner Bros. Entertainment Inc. 本模拟器为爱好者创作，不主张任何版权。
-    </p>
-    <p style="margin-top: 0.5rem;">
-        🪄 仅供娱乐 · For entertainment only | 非官方 · Unofficial<br>
-        联系 · Contact: <a href="mailto:hwsimgame@qq.com" style="color: #aaa; text-decoration: none; border-bottom: 1px dotted #aaa;">hwsimgame@qq.com</a>
-    </p>
-</footer>
 
 <!-- 不蒜子计数 + 降级方案 -->
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script>
-    // 降级方案：如果不蒜子加载失败或显示为0，使用localStorage本地计数
     function initVisitorCounter() {
         const counterSpan = document.getElementById('busuanzi_value_site_uv');
         const fallbackSpan = document.getElementById('visitor-count');
         
-        // 如果没有找到不蒜子专用span，就创建监听
         if (!counterSpan && fallbackSpan) {
-            // 检查不蒜子是否已更新
             let checkCount = 0;
             const interval = setInterval(function() {
                 const busuanziValue = document.getElementById('busuanzi_value_site_uv');
                 if (busuanziValue && busuanziValue.innerText && busuanziValue.innerText !== '') {
                     fallbackSpan.innerText = busuanziValue.innerText;
                     clearInterval(interval);
-                } else if (checkCount > 30) { // 3秒后降级
-                    // 使用localStorage模拟本地计数
+                } else if (checkCount > 30) {
                     let localCount = localStorage.getItem('hogwarts_visitors');
                     if (localCount === null) {
-                        localCount = Math.floor(Math.random() * 100 + 42); // 随机起始数42-141
+                        localCount = Math.floor(Math.random() * 100 + 42);
                     } else {
                         localCount = parseInt(localCount) + 1;
                     }
@@ -466,9 +548,21 @@ window.toggleSavePanel = function() {
         }
     }
     
-    // 等待DOM加载完成
     document.addEventListener('DOMContentLoaded', initVisitorCounter);
 </script>
+
+<!-- 霍格沃茨模拟器 · 页尾版权声明 -->
+<footer class="site-footer">
+    <p>
+        © 同人非盈利作品 · Fan-made, Non-commercial<br>
+        霍格沃茨及相关元素版权归 © Warner Bros. Entertainment Inc. 所有。<br>
+        All rights belong to Warner Bros. Entertainment Inc. 本模拟器为爱好者创作，不主张任何版权。
+    </p>
+    <p>
+        🪄 仅供娱乐 · For entertainment only | 非官方 · Unofficial<br>
+        联系 · Contact: <a href="mailto:hwsimgame@qq.com">hwsimgame@qq.com</a>
+    </p>
+</footer>
 
 </body>
 </html>

@@ -1,0 +1,407 @@
+/* ==================== 课程系统 CSS 追加内容 ====================
+   追加至 style.css 末尾
+   涵盖：三级导航 / 分科卡片 / 进度条 / 评级徽章 / 学习结果弹窗 / 成就Toast
+   ============================================================ */
+
+/* ── 一级：大类按钮 ────────────────────────────────────── */
+#course-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.course-cat-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  background: var(--bg-card);
+  border: 1px solid #2a3b66;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: none; /* override global .btn flex:1 */
+  min-width: unset;
+}
+.course-cat-btn:hover:not([disabled]) {
+  background: #242f47;
+  border-color: #3b4f8a;
+  transform: translateY(-1px);
+}
+.course-cat-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.course-cat-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-gold);
+}
+.course-cat-lock {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+  display: block;
+}
+.btn--locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── 二级：科目按钮 ────────────────────────────────────── */
+.course-sub-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.course-sub-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  text-align: left;
+  background: var(--bg-card);
+  border: 1px solid #2a3b66;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: none;
+  min-width: unset;
+}
+.course-sub-btn:hover:not([disabled]) {
+  background: #242f47;
+  border-color: #3b4f8a;
+  transform: translateY(-1px);
+}
+.course-sub-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.course-sub-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.course-sub-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--color-gold);
+}
+.course-sub-desc {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+.course-sub-lock {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ── 三级：麻瓜研究分科 ────────────────────────────────── */
+.course-muggle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.course-muggle-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid #2a3b66;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: none;
+  min-width: unset;
+  min-height: 90px;
+}
+.course-muggle-btn:hover:not([disabled]) {
+  background: #242f47;
+  border-color: #3b4f8a;
+  transform: translateY(-1px);
+}
+.course-muggle-icon {
+  font-size: 26px;
+}
+.course-muggle-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+.course-muggle-name {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--color-gold);
+}
+
+/* ── 返回按钮 ───────────────────────────────────────────── */
+.course-back-btn {
+  background: var(--bg-input);
+  color: var(--color-text-light);
+  border: none;
+  padding: 7px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  flex: none;
+  min-width: unset;
+  width: auto;
+}
+.course-back-btn:hover {
+  background: #2a3b66;
+  color: var(--color-text);
+}
+
+/* ── 进度条 ─────────────────────────────────────────────── */
+.course-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+.course-progress-label {
+  font-size: 11px;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.course-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-input);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.course-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.course-progress-fill--high { background: #8f8; }
+.course-progress-fill--mid  { background: #aad4f0; }
+.course-progress-fill--low  { background: #f8c850; }
+.course-progress-pct {
+  font-size: 11px;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ── 评级徽章 ────────────────────────────────────────────── */
+.rating-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.rating-badge--O { background: #4a3a00; color: #ffd700; }
+.rating-badge--E { background: #1a3a1a; color: #98e898; }
+.rating-badge--A { background: #1a2a3a; color: #aad4f0; }
+.rating-badge--P { background: #2a2a2a; color: #ccc; }
+.rating-badge--D { background: #3a1a1a; color: #f88; }
+.rating-badge--T { background: #2a0a0a; color: #f44; }
+
+/* ── 学习结果弹窗 ───────────────────────────────────────── */
+.study-result-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.72);
+  z-index: 10100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.study-result-modal {
+  background: var(--bg-card);
+  border-radius: 14px;
+  padding: 24px 22px 20px;
+  width: 90%;
+  max-width: 380px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid #2a3b66;
+}
+.study-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #2a3b66;
+  padding-bottom: 10px;
+}
+.study-result-subject {
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--color-gold);
+}
+.study-result-rating {
+  font-size: 28px;
+  font-weight: bold;
+}
+.study-result-event {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+  font-style: italic;
+}
+.study-result-comment {
+  font-size: 13px;
+  color: var(--color-text-light);
+  background: var(--bg-dark);
+  border-radius: 8px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--color-gold);
+  line-height: 1.6;
+}
+.study-result-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.study-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text);
+}
+.study-result-achievements {
+  background: #1a2a1a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #2a4a2a;
+}
+.achieve-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #f8c850;
+  margin-bottom: 6px;
+}
+.achieve-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 3px 0;
+}
+.achieve-icon { font-size: 18px; }
+.achieve-name { flex: 1; color: var(--color-text); }
+.achieve-pts { color: #f8c850; font-weight: bold; }
+
+.study-result-close {
+  margin-top: 4px;
+  width: 100%;
+  background: var(--bg-btn-action);
+  color: #fff;
+  border: none;
+  padding: 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.study-result-close:hover {
+  background: var(--bg-btn-action-hover);
+}
+
+/* ── 成就解锁 Toast ─────────────────────────────────────── */
+.achievement-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 16px;
+  z-index: 10200;
+  background: #1a2a1a;
+  border: 1px solid #2a4a2a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+  max-width: 280px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  transform: translateX(120%);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+.achievement-toast--show {
+  transform: translateX(0);
+}
+.toast-icon { font-size: 22px; flex-shrink: 0; }
+.toast-text { flex: 1; }
+.toast-title {
+  font-size: 10px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.toast-name {
+  font-size: 13px;
+  color: var(--color-gold);
+  font-weight: bold;
+}
+.toast-pts {
+  font-size: 13px;
+  color: #8f8;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* ── 响应式：小屏幕适配 ─────────────────────────────────── */
+@media (max-width: 480px) {
+  .course-muggle-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .course-muggle-btn {
+    min-height: 80px;
+    padding: 10px 6px;
+  }
+  .course-muggle-name {
+    font-size: 12px;
+  }
+  .study-result-modal {
+    padding: 18px 16px 16px;
+    border-radius: 12px;
+  }
+  .study-result-rating {
+    font-size: 24px;
+  }
+  .achievement-toast {
+    bottom: 16px;
+    right: 8px;
+    left: 8px;
+    max-width: none;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 320px) {
+  .course-muggle-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+}
