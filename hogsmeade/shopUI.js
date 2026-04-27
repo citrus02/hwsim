@@ -14,6 +14,14 @@ export class shopUI {
     const shop = this.shopManager.currentShop;
     if (!shop) return null;
     
+    // ✅ 渲染前先同步货币
+    if (window.currency) {
+      const wallet = window.currency.getWallet();
+      this.shopManager.player.galleons = wallet.galleons;
+      this.shopManager.player.sickles = wallet.sickles;
+      this.shopManager.player.knuts = wallet.knuts;
+    }
+    
     // 注入商店样式（作用域隔离，不污染全局）
     if (!document.getElementById('shop-ui-style')) {
       document.head.insertAdjacentHTML('beforeend', `<style id="shop-ui-style">
