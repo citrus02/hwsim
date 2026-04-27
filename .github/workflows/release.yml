@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write    # 加上这一整段
+
 jobs:
   release:
     runs-on: ubuntu-latest
