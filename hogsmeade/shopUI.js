@@ -21,7 +21,7 @@ export class shopUI {
       this.shopManager.player.sickles = wallet.sickles;
       this.shopManager.player.knuts = wallet.knuts;
     }
-    
+
     // 注入商店样式（作用域隔离，不污染全局）
     if (!document.getElementById('shop-ui-style')) {
       document.head.insertAdjacentHTML('beforeend', `<style id="shop-ui-style">
@@ -463,7 +463,7 @@ export class shopUI {
   showMessage(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `shop-toast ${type}`;
-    toast.textContent = message;
+    toast.innerHTML = message.replace(/\n/g, '<br>');
     toast.style.cssText = `
       position: fixed;
       bottom: 100px;
@@ -471,9 +471,13 @@ export class shopUI {
       transform: translateX(-50%);
       background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
       color: white;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 8px;
       z-index: 10001;
+      max-width: 85vw;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.6;
       animation: fadeOut 3s ease;
     `;
     document.body.appendChild(toast);

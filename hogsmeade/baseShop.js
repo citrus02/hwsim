@@ -1,16 +1,6 @@
 // hogsmeade/baseShop.js - 修改以适配你的存档系统
 
-import { 
-  addLog, 
-  updatePlayerGalleons, 
-  removeMaterialFromBag, 
-  addShopItemToBag,
-  addWizardCard,
-  updateShopStats,
-  getYearGrade,
-  getPlayerHouse
-} from '../save-system.js';
-
+import { addLog, getYearGrade, getPlayerHouse } from '../save-system.js';
 
 // 纳特数转人类可读价格
 function knutsToDisplay(knuts) {
@@ -117,13 +107,13 @@ export class BaseShop {
     }
     
     // 添加物品到背包
-    addShopItemToBag(item.id, item.name, quantity, item.icon);
+    window.addShopItemToBag(item.id, item.name, quantity, item.icon);
     
     // 增加忠诚度
     this.loyaltyPoints += Math.floor(totalPrice / 10);
     
     // 记录统计
-    updateShopStats(this.id, totalPrice, 'spent');
+    window.updateShopStats(this.id, totalPrice, 'spent');
     
     // 添加日志
     addLog(`🛒 在 ${this.name} 购买了 ${item.name} x${quantity}，花费 ${item.displayPrice || knutsToDisplay(totalPrice)}`);
@@ -152,13 +142,13 @@ export class BaseShop {
     const totalPrice = buybackPrice * quantity;
     
     // 移除材料
-    removeMaterialFromBag(itemName, quantity);
+    window.removeMaterialFromBag(itemName, quantity);
     
     // 增加加隆
-    updatePlayerGalleons(totalPrice);
+    window.updatePlayerGalleons(totalPrice);
     
     // 记录统计
-    updateShopStats(this.id, totalPrice, 'earned');
+    window.updateShopStats(this.id, totalPrice, 'earned');
     
     // 添加日志
     addLog(`💰 在 ${this.name} 出售了 ${itemName} x${quantity}，获得 ${totalPrice} 加隆`);

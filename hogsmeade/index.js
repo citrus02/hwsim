@@ -7,6 +7,11 @@ import { ThreeBroomsticks } from './shops/threeBroomsticks.js';
 import { ZonkosJokeShop } from './shops/zonkosJokeShop.js';
 import { DevisesAndBangs } from './shops/devisesAndBangs.js';
 import { GladragsWizardwear } from './shops/gladragsWizardwear.js';
+import { LaurelApothecary } from './shops/laurelApothecary.js';
+import { AncientBookshop } from './shops/ancientBookshop.js';
+import { ErmineTeahouse } from './shops/ermineTeahouse.js';
+import { HogsmeadePost } from './shops/hogsmeadePost.js';
+import { FurFeatherPet } from './shops/furFeatherPet.js';
 
 // 商店注册表
 const SHOP_REGISTRY = {
@@ -14,7 +19,12 @@ const SHOP_REGISTRY = {
   three_broomsticks: ThreeBroomsticks,
   zonkos: ZonkosJokeShop,
   devises_and_bangs: DevisesAndBangs,
-  gladrags: GladragsWizardwear
+  gladrags: GladragsWizardwear,
+  laurel_apothecary: LaurelApothecary,
+  ancient_bookshop: AncientBookshop,
+  ermine_teahouse: ErmineTeahouse,
+  hogsmeade_post: HogsmeadePost,
+  fur_feather_pet: FurFeatherPet
 };
 
 // 商店管理器类

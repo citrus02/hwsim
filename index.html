@@ -189,6 +189,7 @@
         <button class="bag-tab active" data-bag="material">材料</button>
         <button class="bag-tab" data-bag="potion">魔药</button>
         <button class="bag-tab" data-bag="item">道具</button>
+        <button class="bag-tab" data-bag="wizardCard">画片</button>
       </div>
       <div class="bag-grid" id="bagGrid"></div>
     </div>
@@ -280,9 +281,10 @@ function buildSaveData(opts) {
     log: opts.log || ["✅ 成功进入霍格沃茨"],
     course: courseMap,
     bag: {
-      material: Array(30).fill(null),
-      potion:   Array(30).fill(null),
-      item:     Array(30).fill(null)
+      material: [],
+      potion:   [],
+      item:     [],
+      wizardCard: []
     }
   };
 }
@@ -461,6 +463,10 @@ window.addEventListener('load', () => {
   <script type="module" src="course/course.js"></script>
 <script type="module" src="spell.js"></script>
 <script type="module" src="save-system.js"></script>
+<script type="module" src="bag-system.js"></script>
+<script type="module" src="slot-system.js"></script>
+<script type="module" src="ui-render.js"></script>
+<script type="module" src="hogsmeade/shop-bridge.js"></script>
 
 <!-- 折叠展开按钮 -->
 <script>

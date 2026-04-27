@@ -14,6 +14,9 @@
 
 import { BaseShop } from '../baseShop.js';
 
+// shop-bridge.js 已挂到 window
+const { updateShopStats } = window;
+
 // 换算工具
 const G = (g) => g * 493;           // 加隆→纳特
 const S = (s) => s * 29;            // 西可→纳特
@@ -530,36 +533,61 @@ export class DevisesAndBangs extends BaseShop {
     if (item.packageItems) {
       const unitPrice = this.getItemPrice(item, player);
       const totalPrice = unitPrice * quantity;
-      const currentGalleons = this.getPlayerGalleons?.() || 0;
 
-      if (currentGalleons * 493 < totalPrice) {
-        return { success: false, message: "加隆不足" };
-      }
-
-      // 扣钱（转换为加隆）
-      const galleonCost = totalPrice / 493;
-      if (window.currency?.spendMoney) {
-        const g = Math.floor(galleonCost);
-        const rem = totalPrice - g * 493;
+      // 用 currency 系统检查余额
+      const totalKnutsOwned = window.currency?.getTotalKnuts?.() ?? 0;
+      if (totalKnutsOwned < totalPrice) {
+        const g = Math.floor(totalPrice / 493);
+        const rem = totalPrice % 493;
         const s = Math.floor(rem / 29);
         const n = rem % 29;
-        window.currency.spendMoney(g, s, n, `在德维斯与班斯购买 ${item.name}×${quantity}`);
+        return { success: false, message: `金币不足，需要 ${g>0?g+"加隆 ":""}${s>0?s+"西可 ":""}${n>0?n+"纳特":""}` };
       }
 
+      // 扣钱
+      const g = Math.floor(totalPrice / 493);
+      const rem = totalPrice % 493;
+      const s = Math.floor(rem / 29);
+      const n = rem % 29;
+      window.currency?.spendMoney?.(g, s, n, `在德维斯与班斯购买 ${item.name}×${quantity}`);
+
+      // 扣库存
+      if (item.stock) item.stock -= quantity;
+
+      // 加忠诚度
+      this.loyaltyPoints += Math.floor(totalPrice / 10);
+
+      // 记录统计
+      if (typeof updateShopStats === 'function') {
+        updateShopStats(this.id, totalPrice, 'spent');
+      }
+
+      // 添加材料到背包（带 icon）
       for (let i = 0; i < quantity; i++) {
         for (const pkg of item.packageItems) {
-          if (window.addItemToBag) {
-            window.addItemToBag("material", { name: pkg.name, count: pkg.count });
+          const matchedItem = this.items.find(it => it.name === pkg.name);
+          if (window.window.addItemToBag) {
+            window.window.addItemToBag("material", { 
+              name: pkg.name, 
+              count: pkg.count,
+              icon: matchedItem?.icon || "📦"
+            });
           }
         }
       }
 
       if (window.doStudyLog) {
-        window.doStudyLog(`🛒 ${item.name}×${quantity} — ${item.displayPrice || totalPrice+"纳特"}`);
+        window.doStudyLog(`🛒 ${item.name}×${quantity} — ${item.displayPrice || totalPrice + "纳特"}`);
       }
-      return { success: true, message: `成功购买 ${item.name}×${quantity}`, totalPrice };
+
+      return { 
+        success: true, 
+        message: `成功购买 ${item.name}×${quantity}，花费 ${item.displayPrice || totalPrice + "纳特"}`,
+        totalPrice 
+      };
     }
 
+    // 普通物品走基类逻辑
     return super.buyItem(itemId, quantity, player);
   }
 }

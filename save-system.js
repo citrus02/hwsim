@@ -1,32 +1,14 @@
-// save-system.js - 使用动态导入避免循环依赖
-
-import { potions, getPotionEmoji } from './potion-data.js';
-import { getMatEmoji } from "./explore-data.js";
-// ❌ 删除这行：import { ShopManager } from './hogsmeade/index.js'; 
+// save-system.js — 存档核心读写 + 数据结构 + 日志 + 时间轴
 
 export const SAVE_KEY = "hogwarts";
 const SAVE_SLOT_KEY = "hogwarts_slots";
 const SLOT_COUNT = 10;
-const DEFAULT_BAG_SLOTS = 10;
-
-const COLOR_SAVE = "#37594e";
-const COLOR_LOAD = "#3a5270";
-const COLOR_CLEAR = "#6b3f48";
-const CARD_BG = "#161d2f";
-const CARD_BORDER = "#2a3b66";
-const TEXT_COLOR = "#e6e6e6";
-const TITLE_COLOR = "#f8c850";
 
 const allCourseList = [
   "变形术","魔咒学","魔药学","黑魔法防御术","草药学","魔法史","天文学","飞行课",
   "算术占卜","古代魔文","占卜学","保护神奇动物","麻瓜研究","幻影移形","炼金术"
 ];
 
-export let nowBagType = "material";
-
-// ===========================
-// 默认存档结构
-// ===========================
 function getDefaultSave() {
   const course = {};
   allCourseList.forEach(c => course[c] = 0);
@@ -34,41 +16,27 @@ function getDefaultSave() {
     year: 1991, month: 9, day: 2, actions: 3,
     log: [], timeline: [],
     player: { name: "无名巫师", era: "", house: "", blood: "", wand: "", wandAccepted: true, galleons: 10 },
-    bag: { material: [], potion: [], item: [] },
+    bag: { material: [], potion: [], item: [], wizardCard: [] },
     course,
     potion: {},
     time: { dailyActionLeft: 3, nowTime: "早晨", currentDate: "1991-09-02" }
   };
 }
 
-// ===========================
-// 存档核心读写
-// ===========================
 export function getSave() {
   try {
     const data = localStorage.getItem(SAVE_KEY);
     return data ? JSON.parse(data) : getDefaultSave();
-  } catch (e) {
-    return getDefaultSave();
-  }
+  } catch (e) { return getDefaultSave(); }
 }
 
 export function setSave(data) {
-  try {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-  } catch (e) {
-    console.error('⚠️ 存档失败:', e);
-  }
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); }
+  catch (e) { console.error('⚠️ 存档失败:', e); }
 }
 
-export function resetAll() {
-  localStorage.clear();
-  location.reload();
-}
+export function resetAll() { localStorage.clear(); location.reload(); }
 
-// ===========================
-// 年级换算
-// ===========================
 export function getYearGrade() {
   const data = getSave();
   return (data.year ?? 1991) - 1990;
@@ -79,30 +47,20 @@ export function getPlayerHouse() {
   return data.player?.house || "";
 }
 
-// ===========================
-// 跨年升级
-// ===========================
 export function checkYearUpgrade() {
   const data = getSave();
   if (data.month === 9 && data.day === 1 && !data._yearUpgraded) {
     data.year += 1;
     data._yearUpgraded = true;
     setSave(data);
-    const newGrade = getYearGrade();
-    addLog(`🎓 新学年开启！年份更替，你已晋升为【${newGrade}年级】`);
+    addLog(`🎓 新学年开启！年份更替，你已晋升为【${getYearGrade()}年级】`);
     if (window.autoUpdateCourseUnlock) window.autoUpdateCourseUnlock();
-    refreshAll();
+    if (window.refreshAll) window.refreshAll();
   } else if (!(data.month === 9 && data.day === 1)) {
-    if (data._yearUpgraded) {
-      data._yearUpgraded = false;
-      setSave(data);
-    }
+    if (data._yearUpgraded) { data._yearUpgraded = false; setSave(data); }
   }
 }
 
-// ===========================
-// 玩家 / 时间 存取
-// ===========================
 export function loadPlayer(player) {
   const data = getSave();
   if (data.player) Object.assign(player, data.player);
@@ -126,9 +84,6 @@ export function saveTime(timeSystem) {
   checkYearUpgrade();
 }
 
-// ===========================
-// 日志
-// ===========================
 export function addLog(text) {
   const d = getSave();
   if (!d.log) d.log = [];
@@ -139,86 +94,21 @@ export function addLog(text) {
   if (window.renderLog) window.renderLog();
 }
 
-// ===========================
-// 背包
-// ===========================
-export function setBagType(type) {
-  nowBagType = type;
-  renderBag();
-}
-
-export function renderBag() {
-  const g = document.getElementById("bagGrid");
-  if (!g) return;
+export function renderLog() {
   const data = getSave();
-  const list = (data.bag?.[nowBagType] || []).filter(i => i != null);
-  const totalSlots = Math.max(DEFAULT_BAG_SLOTS, list.length);
-  let html = "";
-  for (let i = 0; i < totalSlots; i++) {
-    const item = list[i];
-    if (item) {
-      let emoji = "";
-      if (nowBagType === "material") emoji = getMatEmoji(item.name);
-      else if (nowBagType === "potion") emoji = getPotionEmoji(item.name);
-      
-      html += `<div class="bag-slot has-item">
-        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
-          <div style="font-size:20px; line-height:1;">${emoji}</div>
-          <div style="font-size:10px; line-height:1.1; margin-top:2px;">${item.name}</div>
-          <div style="font-size:10px; line-height:1;">×${item.count || 1}</div>
-        </div>
-      </div>`;
-    } else {
-      html += `<div class="bag-slot empty">空</div>`;
-    }
-  }
-  g.innerHTML = html;
-}
-
-export function addItemToBag(type, itemData) {
-  const data = getSave();
-  if (!data.bag) data.bag = { material: [], potion: [], item: [] };
-  const list = data.bag[type] || [];
-  const addCount = itemData.count || 1;
-  const exist = list.find(it => it?.name === itemData.name);
-  if (exist) {
-    exist.count = (exist.count || 1) + addCount;
-  } else {
-    list.push({ ...itemData, count: addCount });
-  }
-  data.bag[type] = list;
-  setSave(data);
-  renderBag();
-}
-
-export function initBagData() {}
-
-// ===========================
-// 课程渲染
-// ===========================
-export function renderCourse() {
-  const data = getSave();
-  const wrap = document.getElementById("courseList");
-  if (!wrap) return;
-  wrap.innerHTML = "";
-  allCourseList.forEach(name => {
-    const v = data.course[name] || 0;
-    let lvl = "未学习";
-    if (v >= 100) lvl = "精通";
-    else if (v >= 75) lvl = "优秀";
-    else if (v >= 50) lvl = "良好";
-    else if (v >= 20) lvl = "普通";
-    else if (v > 0) lvl = "初学";
-    const div = document.createElement("div");
-    div.className = "course-item";
-    div.innerText = `${name} | ${v}% | ${lvl}`;
-    wrap.appendChild(div);
+  const el = document.getElementById("log");
+  if (!el) return;
+  if (!Array.isArray(data.log)) data.log = []; 
+  el.innerHTML = "";
+  data.log.forEach(t => {
+    const p = document.createElement("p");
+    p.innerText = t;
+    el.appendChild(p);
   });
+  el.scrollTop = el.scrollHeight;
 }
 
-// ===========================
 // 时间轴
-// ===========================
 const baseEvents = [
   { date: "1960-01-09", text: "西弗勒斯・斯内普 生日", isBirthday: true, character: "西弗勒斯・斯内普" },
   { date: "1960-03-27", text: "莱姆斯・卢平 生日", isBirthday: true, character: "莱姆斯・卢平" },
@@ -311,526 +201,21 @@ export function renderTimeline() {
   el.innerHTML = html;
 }
 
-// ===========================
-// 日志渲染
-// ===========================
-export function renderLog() {
-  const data = getSave();
-  const el = document.getElementById("log");
-  if (!el) return;
-  el.innerHTML = "";
-  data.log.forEach(t => {
-    const p = document.createElement("p");
-    p.innerText = t;
-    el.appendChild(p);
-  });
-  el.scrollTop = el.scrollHeight;
-}
-
-// ===========================
-// 全局刷新
-// ===========================
-export function refreshAll() {
-  const data = getSave();
-  const setText = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.innerText = val;
-  };
-  setText("stat-name", data.player?.name || "—");
-  setText("stat-blood", data.player?.blood || "—");
-  setText("stat-house", data.player?.house || "—");
-  setText("stat-wand", data.player?.wand || "—");
-  setText("stat-galleons", data.player?.galleons ?? 10);
-  const curDate = data.time?.currentDate || "1991-09-02";
-  setText("date", curDate);
-  setText("timeOfDay", data.time?.nowTime || "早晨");
-  setText("actions", data.time?.dailyActionLeft ?? 3);
-
-  // 星期
-  const weekdays = ["周日","周一","周二","周三","周四","周五","周六"];
-  const dateObj  = new Date(curDate);
-  setText("weekday", weekdays[dateObj.getDay()]);
-
-  // 货币
-  window.currency?.refreshCurrencyUI?.();
-
-  // 学院积分
-  window.housePoints?.refreshHousePointsUI?.();
-  renderBag();
-  renderLog();
-  renderTimeline();
-}
-
-// ===========================
-// 标签页初始化
-// ===========================
-function initTabs() {
-  document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const tab = btn.dataset.tab;
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".tab-screen").forEach(s => s.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(`tab-${tab}`).classList.add("active");
-      refreshAll();
-    });
-  });
-  document.querySelectorAll(".bag-tab").forEach(btn => {
-    btn.addEventListener("click", () => {
-      nowBagType = btn.dataset.bag;
-      document.querySelectorAll(".bag-tab").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderBag();
-    });
-  });
-}
-
-// ===========================
-// 存档槽
-// ===========================
+// 存档槽（供 slot-system.js 使用）
 export function getAllSlots() {
   try {
     const data = localStorage.getItem(SAVE_SLOT_KEY);
     return data ? JSON.parse(data) : Array(SLOT_COUNT).fill(null);
-  } catch (e) {
-    return Array(SLOT_COUNT).fill(null);
-  }
+  } catch (e) { return Array(SLOT_COUNT).fill(null); }
 }
 
 export function saveAllSlots(slots) {
   localStorage.setItem(SAVE_SLOT_KEY, JSON.stringify(slots));
 }
 
-function createSlotCard(i, slots, mode) {
-  const item = document.createElement("div");
-  Object.assign(item.style, {
-    background: CARD_BG, border: `1px solid ${CARD_BORDER}`,
-    borderRadius: "8px", padding: "12px", color: TEXT_COLOR, boxSizing: "border-box"
-  });
-
-  const timeText = slots[i]?.time
-    ? `${slots[i].time.currentDate} ${slots[i].time.nowTime}`
-    : "空存档";
-  const info = document.createElement("div");
-  Object.assign(info.style, { fontSize: "13px", lineHeight: "1.4", marginBottom: "10px" });
-  info.innerHTML = `<div style="color:${TITLE_COLOR};font-weight:bold;">存档${i + 1}</div><div style="margin-top:4px;">${timeText}</div>`;
-  item.appendChild(info);
-
-  function makeBtn(label, bg, hoverBg, disabled) {
-    const btn = document.createElement("button");
-    Object.assign(btn.style, {
-      flex: "1", border: "none", borderRadius: "4px", padding: "6px 0",
-      background: bg, color: "#fff", cursor: "pointer", transition: "all 0.2s ease"
-    });
-    btn.innerText = label;
-    btn.disabled = disabled;
-    btn.onmouseover = () => { btn.style.background = hoverBg; btn.style.transform = "translateY(-1px)"; };
-    btn.onmouseout = () => { btn.style.background = bg; btn.style.transform = "translateY(0)"; };
-    btn.onmousedown = () => btn.style.transform = "translateY(1px)";
-    btn.onmouseup = () => btn.style.transform = "translateY(0)";
-    return btn;
-  }
-
-  if (mode === "save") {
-    const btn = makeBtn(slots[i] ? "覆盖存档" : "存档", COLOR_SAVE, "#497c68", false);
-    btn.style.width = "100%";
-    btn.onclick = () => { slots[i] = getSave(); saveAllSlots(slots); openSave(); addLog(`✅ 已保存至【存档${i + 1}】`); };
-    item.appendChild(btn);
-  } else {
-    const wrap = document.createElement("div");
-    wrap.style.display = "flex";
-    wrap.style.gap = "6px";
-    const loadBtn = makeBtn("读取", COLOR_LOAD, "#486899", !slots[i]);
-    const delBtn = makeBtn("清空", COLOR_CLEAR, "#8c5260", !slots[i]);
-    loadBtn.onclick = () => { setSave(slots[i]); refreshAll(); addLog(`📥 已读取【存档${i + 1}】`); };
-    delBtn.onclick = () => { slots[i] = null; saveAllSlots(slots); openLoad(); addLog(`🗑️ 已清空【存档${i + 1}】`); };
-    wrap.appendChild(loadBtn);
-    wrap.appendChild(delBtn);
-    item.appendChild(wrap);
-  }
-  return item;
-}
-
-window.openSave = function () {
-  const slots = getAllSlots();
-  const slotBox = document.getElementById("slotBox");
-  slotBox.innerHTML = "";
-  for (let i = 0; i < SLOT_COUNT; i++) slotBox.appendChild(createSlotCard(i, slots, "save"));
-};
-
-window.openLoad = function () {
-  const slots = getAllSlots();
-  const slotBox = document.getElementById("slotBox");
-  slotBox.innerHTML = "";
-  for (let i = 0; i < SLOT_COUNT; i++) slotBox.appendChild(createSlotCard(i, slots, "load"));
-};
-
-window.resetGame = function () {
-  if (confirm("确定要清空进度吗？")) { 
-    if (window.versionMgr) window.versionMgr.clearVersionInfo();
-    localStorage.clear(); 
-    location.reload(); 
-  }
-};
-
-// ===========================
 // 全局挂载
-// ===========================
 window.saveSys = { getSave, setSave, loadPlayer, savePlayer, loadTime, saveTime, addLog, resetAll, checkYearUpgrade };
 window.doStudyLog = (text) => addLog(text);
 window.doExploreLog = window.doStudyLog;
-window.refreshAll = refreshAll;
-window.renderCourse = renderCourse;
-window.renderBag = renderBag;
 window.renderLog = renderLog;
 window.renderTimeline = renderTimeline;
-window.setBagType = setBagType;
-window.addMaterialToBag = (name, count = 1) => addItemToBag("material", { name, count });
-window.addPotionToBag = (potion) => addItemToBag("potion", potion);
-
-// ===========================
-// 商店系统集成 - 使用动态导入避免循环依赖
-// ===========================
-
-let _shopManager = null;
-let _shopManagerLoading = false;
-
-// 获取玩家加隆
-export function getPlayerGalleons() {
-  const data = getSave();
-  return data.player?.galleons ?? 10;
-}
-
-// 获取玩家材料
-export function getPlayerMaterials() {
-  const data = getSave();
-  const materials = {};
-  const materialList = data.bag?.material || [];
-  materialList.forEach(item => {
-    if (item && item.name) {
-      materials[item.name] = item.count || 1;
-    }
-  });
-  return materials;
-}
-
-// 获取玩家物品
-export function getPlayerInventory() {
-  const data = getSave();
-  const inventory = {};
-  const itemList = data.bag?.item || [];
-  itemList.forEach(item => {
-    if (item && item.name) {
-      inventory[item.id || item.name] = {
-        name: item.name,
-        quantity: item.count || 1,
-        icon: item.icon || "📦"
-      };
-    }
-  });
-  return inventory;
-}
-
-// 获取巫师画片
-export function getPlayerWizardCards() {
-  const data = getSave();
-  return data.player?.wizardCards || {};
-}
-
-// 更新玩家加隆
-export function updatePlayerGalleons(amount) {
-  const data = getSave();
-  if (!data.player) data.player = {};
-  data.player.galleons = (data.player.galleons || 10) + amount;
-  setSave(data);
-  refreshAll();
-  return data.player.galleons;
-}
-
-// 从背包移除材料
-export function removeMaterialFromBag(materialName, quantity) {
-  const data = getSave();
-  if (!data.bag) data.bag = { material: [], potion: [], item: [] };
-  const list = data.bag.material || [];
-  const index = list.findIndex(item => item?.name === materialName);
-  
-  if (index !== -1) {
-    const item = list[index];
-    if (item.count > quantity) {
-      item.count -= quantity;
-    } else {
-      list.splice(index, 1);
-    }
-    data.bag.material = list;
-    setSave(data);
-    renderBag();
-    return true;
-  }
-  return false;
-}
-
-// 添加商品到背包
-export function addShopItemToBag(itemId, itemName, quantity, icon = "📦") {
-  const data = getSave();
-  if (!data.bag) data.bag = { material: [], potion: [], item: [] };
-  const list = data.bag.item || [];
-  
-  const existing = list.find(item => item?.id === itemId || item?.name === itemName);
-  if (existing) {
-    existing.count = (existing.count || 1) + quantity;
-  } else {
-    list.push({
-      id: itemId,
-      name: itemName,
-      icon: icon,
-      count: quantity
-    });
-  }
-  
-  data.bag.item = list;
-  setSave(data);
-  renderBag();
-  addLog(`🛍️ 获得：${itemName} x${quantity}`);
-}
-
-// 保存巫师画片
-export function addWizardCard(cardName) {
-  const data = getSave();
-  if (!data.player) data.player = {};
-  if (!data.player.wizardCards) data.player.wizardCards = {};
-  
-  data.player.wizardCards[cardName] = (data.player.wizardCards[cardName] || 0) + 1;
-  setSave(data);
-  addLog(`🃏 获得巫师画片：${cardName}！`);
-}
-
-// 获取商店统计数据
-export function getShopStats() {
-  const data = getSave();
-  return data.shopStats || {
-    totalSpent: 0,
-    totalEarned: 0,
-    favoriteShop: null,
-    purchases: []
-  };
-}
-
-// 更新商店统计
-export function updateShopStats(shopId, amount, type = 'spent') {
-  const data = getSave();
-  if (!data.shopStats) data.shopStats = getShopStats();
-  
-  if (type === 'spent') {
-    data.shopStats.totalSpent += amount;
-  } else {
-    data.shopStats.totalEarned += amount;
-  }
-  
-  data.shopStats.purchases.unshift({
-    shopId: shopId,
-    amount: amount,
-    type: type,
-    date: data.time?.currentDate || new Date().toISOString()
-  });
-  
-  if (data.shopStats.purchases.length > 50) {
-    data.shopStats.purchases.pop();
-  }
-  
-  setSave(data);
-}
-
-// 异步获取商店管理器（动态导入）
-export async function getShopManager() {
-  if (_shopManager) return _shopManager;
-  
-  if (_shopManagerLoading) {
-    // 等待加载完成
-    await new Promise(resolve => {
-      const checkInterval = setInterval(() => {
-        if (!_shopManagerLoading) {
-          clearInterval(checkInterval);
-          resolve();
-        }
-      }, 50);
-    });
-    return _shopManager;
-  }
-  
-  _shopManagerLoading = true;
-  
-  try {
-    const module = await import('./hogsmeade/index.js');
-    const { ShopManager } = module;
-    
-    // 创建玩家数据适配器
-    const playerAdapter = {
-      year: getYearGrade(),
-      house: getPlayerHouse(),
-      galleons: getPlayerGalleons(),
-      materials: getPlayerMaterials(),
-      inventory: getPlayerInventory(),
-      wizardCards: getPlayerWizardCards(),
-      // 辅助方法
-      addLog: addLog,
-      updateGalleons: updatePlayerGalleons,
-      removeMaterial: removeMaterialFromBag,
-      addItem: addShopItemToBag,
-      addCard: addWizardCard
-    };
-    
-    _shopManager = new ShopManager(playerAdapter);
-    _shopManagerLoading = false;
-    return _shopManager;
-  } catch (err) {
-    console.error('加载商店模块失败:', err);
-    _shopManagerLoading = false;
-    return null;
-  }
-}
-
-// 异步打开商店
-export async function openShop(shopId) {
-  const manager = await getShopManager();
-  if (!manager) {
-    addLog(`❌ 商店系统加载失败`);
-    return null;
-  }
-  
-  const result = manager.openShop(shopId);
-  if (!result.success) {
-    addLog(`❌ ${result.message}`);
-    return null;
-  }
-  
-  addLog(`🏪 进入 ${result.shop.name}`);
-  return manager;
-}
-
-// 挂在到window供全局使用
-window.openShop = (shopId) => openShop(shopId);
-window.getShopManager = () => getShopManager();
-window.getPlayerGalleons = getPlayerGalleons;
-window.updatePlayerGalleons = updatePlayerGalleons;
-
-// ===========================
-// DOMContentLoaded
-// ===========================
-document.addEventListener("DOMContentLoaded", () => {
-  getScrollbarWidth();
-  initTabs();
-  refreshAll();
-  checkYearUpgrade();
-
-  const noteButton = document.getElementById('note-button-main');
-  const closeFeedbackBtn = document.getElementById('close-feedback');
-  const cancelFeedbackBtn = document.getElementById('cancel-feedback');
-
-  if (noteButton) noteButton.addEventListener('click', openFeedback);
-  if (closeFeedbackBtn) closeFeedbackBtn.addEventListener('click', closeFeedback);
-  if (cancelFeedbackBtn) cancelFeedbackBtn.addEventListener('click', closeFeedback);
-
-  initCopyButton();
-});
-
-// ==================== 问题反馈功能 ====================
-
-const EMAIL = 'hwsimgame@qq.com';
-let scrollTop = 0;
-let scrollbarWidth = 0;
-
-function getScrollbarWidth() {
-  if (scrollbarWidth > 0) return scrollbarWidth;
-  const div = document.createElement('div');
-  div.style.cssText = 'width:100px;height:100px;overflow:scroll;position:absolute;top:-9999px;';
-  document.body.appendChild(div);
-  scrollbarWidth = div.offsetWidth - div.clientWidth;
-  document.body.removeChild(div);
-  return scrollbarWidth;
-}
-
-function openFeedback() {
-  const modal = document.getElementById('feedback-modal');
-  scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
-  document.body.classList.add('modal-open');
-  document.body.style.top = '-' + scrollTop + 'px';
-  document.addEventListener('wheel', preventScroll, { passive: false });
-  document.addEventListener('touchmove', preventScroll, { passive: false });
-  modal.classList.add('show');
-  initCopyButton();
-}
-
-function closeFeedback() {
-  const modal = document.getElementById('feedback-modal');
-  modal.classList.remove('show');
-  document.body.classList.remove('modal-open');
-  document.body.style.top = '';
-  document.removeEventListener('wheel', preventScroll);
-  document.removeEventListener('touchmove', preventScroll);
-  setTimeout(() => { window.scrollTo(0, scrollTop); }, 0);
-}
-
-function preventScroll(e) {
-  const modalContent = document.querySelector('.modal-content');
-  if (modalContent && modalContent.contains(e.target)) return;
-  e.preventDefault();
-  return false;
-}
-
-function initCopyButton() {
-  const copyBtn = document.getElementById('copy-email');
-  if (!copyBtn) return;
-  copyBtn.removeEventListener('click', handleCopyClick);
-  copyBtn.addEventListener('click', handleCopyClick);
-}
-
-function handleCopyClick(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const btn = e.currentTarget;
-  const originalText = btn.textContent;
-  if (!EMAIL) {
-    btn.textContent = '❌ 邮箱未配置';
-    setTimeout(() => { btn.textContent = originalText; }, 1500);
-    return;
-  }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(EMAIL)
-      .then(() => showCopySuccess(btn, originalText))
-      .catch(() => fallbackCopy(btn, originalText));
-  } else {
-    fallbackCopy(btn, originalText);
-  }
-}
-
-function showCopySuccess(btn, originalText) {
-  btn.textContent = '✓ 已复制！';
-  btn.style.background = '#2a7a3e';
-  setTimeout(() => {
-    btn.textContent = originalText;
-    btn.style.background = '';
-  }, 1500);
-}
-
-function fallbackCopy(btn, originalText) {
-  let textarea = null;
-  try {
-    textarea = document.createElement('textarea');
-    textarea.value = EMAIL;
-    textarea.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;pointer-events:none;z-index:-9999;';
-    document.body.appendChild(textarea);
-    textarea.select();
-    textarea.setSelectionRange(0, 99999);
-    if (document.execCommand('copy')) {
-      showCopySuccess(btn, originalText);
-    } else {
-      throw new Error('复制失败');
-    }
-  } catch (err) {
-    console.error('复制失败:', err);
-    btn.textContent = '❌ 复制失败';
-    setTimeout(() => { btn.textContent = originalText; }, 1500);
-  } finally {
-    if (textarea && textarea.parentNode) document.body.removeChild(textarea);
-  }
-}

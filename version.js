@@ -5,12 +5,28 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.3.3';
+export const CURRENT_VERSION = '1.3.4';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.3.4': [
+    '更新风雅氏巫师服装店商品',
+    '更新蜂蜜公爵糖果店商品',
+    '新增巧克力蛙画片抽卡系统！',
+    '比比多味豆现在可以吃了！',
+    '优化文件结构并修复调用逻辑',
+    '更新佐科笑话店商品',
+    '更新三把扫帚酒吧商品',
+    '新增霍格莫德邮局',
+    '新增白鼬夫人茶屋',
+    '新增古卷二手书铺',
+    '新增毛羽宠物小店',
+    '新增月桂魔材药房',
+    '新增霍格莫德分支地点事件',
+    '丰富掉落材料',
+  ],
   '1.3.3': [
     '修复商店无法显示金币的bug',
   ],

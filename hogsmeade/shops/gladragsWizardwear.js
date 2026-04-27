@@ -17,6 +17,9 @@
 
 import { BaseShop } from '../baseShop.js';
 
+// shop-bridge.js 已挂到 window
+const { updateShopStats } = window;
+
 // 换算工具
 const G = (g) => g * 493;           // 加隆→纳特
 const S = (s) => s * 29;            // 西可→纳特
@@ -343,32 +346,48 @@ export class GladragsWizardwear extends BaseShop {
         { name: "《一千种神奇草药与真菌》", icon: "🌿" },
         { name: "《黑暗力量·自卫指南》", icon: "📕" },
       ];
-      // 随机选3本不重复
       const shuffled = textbookPool.sort(() => Math.random() - 0.5);
       const selected = shuffled.slice(0, 3);
 
       const unitPrice = this.getItemPrice(item, player);
       const totalPrice = unitPrice * quantity;
 
-      if (player.galleons * 493 < totalPrice * quantity) {
-        return { success: false, message: "加隆不足" };
-      }
-
-      if (window.currency?.spendMoney) {
+      // ✅ 用 currency 系统检查余额
+      const totalKnutsOwned = window.currency?.getTotalKnuts?.() ?? 0;
+      if (totalKnutsOwned < totalPrice) {
         const g = Math.floor(totalPrice / 493);
-        const rem = totalPrice - g * 493;
+        const rem = totalPrice % 493;
         const s = Math.floor(rem / 29);
         const n = rem % 29;
-        window.currency.spendMoney(g, s, n, `在风雅氏购买 ${item.name}×${quantity}`);
+        return { success: false, message: `金币不足，需要 ${g>0?g+"加隆 ":""}${s>0?s+"西可 ":""}${n>0?n+"纳特":""}` };
       }
 
+      // 扣钱
+      const g = Math.floor(totalPrice / 493);
+      const rem = totalPrice % 493;
+      const s = Math.floor(rem / 29);
+      const n = rem % 29;
+      window.currency?.spendMoney?.(g, s, n, `在风雅氏购买 ${item.name}×${quantity}`);
+
+      // ✅ 扣库存
+      if (item.stock) item.stock -= quantity;
+
+      // ✅ 加忠诚度
+      this.loyaltyPoints += Math.floor(totalPrice / 10);
+
+      // ✅ 加在这里
+      if (typeof updateShopStats === 'function') {
+        updateShopStats(this.id, totalPrice, 'spent');
+      }
+      
+      // 添加书本到背包
       for (let i = 0; i < quantity; i++) {
         for (const book of selected) {
-          if (window.addItemToBag) {
-            window.addItemToBag("book", {
+          if (window.window.addItemToBag) {
+            window.window.addItemToBag("book", {
               name: book.name,
               count: book.count,
-              icon: book.icon    // ✅ 把 emoji 一起传进去
+              icon: book.icon
             });
           }
         }
@@ -378,6 +397,7 @@ export class GladragsWizardwear extends BaseShop {
         const names = selected.map(b => b.name).join("、");
         window.doStudyLog(`🛒 ${item.name} — 获得：${names}`);
       }
+
       return {
         success: true,
         message: `成功购买 ${item.name}，获得：${selected.map(b => b.name).join("、")}`,

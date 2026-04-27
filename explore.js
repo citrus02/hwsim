@@ -2,7 +2,7 @@
 
 import { timeSystem, costAction, nextTime, syncActionUI } from "./time-system.js";
 import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } from "./explore-data.js";
-import { getYearGrade, getPlayerHouse, openShop } from "./save-system.js";
+import { getYearGrade, getPlayerHouse } from "./save-system.js";
 import { exploreEventLib } from "./explore-default.js";
 
 export function addExploreRate(area, val = 5) {
@@ -172,6 +172,12 @@ function renderSecondLayer() {
   clearExploreContainer();
   const wrap = document.getElementById("explore-container");
 
+  // ✅ 防御：如果 currentFirstParent 为 null，回退到第一层
+  if (!currentFirstParent) {
+    renderFirstLayer();
+    return;
+  }
+
   wrap.appendChild(createBackButton(() => renderFirstLayer()));
 
   const currentGrade = getYearGrade();
@@ -199,7 +205,6 @@ function renderSecondLayer() {
     const btn = createExploreButton({
       icon: lv2.icon || '',
       name: lv2.name + shopIcon2,
-
       desc: lv2.desc || '',
       rateText: isLock ? ' 🔒' : '',
       unlockTip: unlockTipText,
@@ -214,7 +219,7 @@ function renderSecondLayer() {
       if (isShop2) {
         if (!costAction()) return;
         try {
-          const shopManager = await openShop(lv2.shopId);
+          const shopManager = await window.openShop(lv2.shopId);
           if (!shopManager) {
             window.doExploreLog(`❌ 无法打开 ${lv2.name}`);
             return;
@@ -222,7 +227,6 @@ function renderSecondLayer() {
           const { shopUI } = await import('./hogsmeade/shopUI.js');
           const shopUIInstance = new shopUI(shopManager, () => {
             if (window.refreshAll) window.refreshAll();
-            // 行动用完了就关闭探索，返回行动界面
             if (window.timeSystem?.dailyActionLeft <= 0) {
               window.closeExplorePanel?.();
               window.nextTime?.();
@@ -240,7 +244,40 @@ function renderSecondLayer() {
         return;
       }
 
-      // 普通节点：进第三层
+      // ✅ 如果没有子节点，直接执行探索逻辑
+      if (!lv2.children || lv2.children.length === 0) {
+        if (!costAction()) return;
+
+        addExploreRate(lv2, 5);
+        let logMessage = '';
+        if (lv2.exploreRate >= 100) {
+          logMessage = `✅ 继续探索：${lv2.name}（探索度已达100%，继续寻找材料）｜`;
+        } else {
+          logMessage = `✅ 探索：${lv2.name}（探索进度+5%，共${lv2.exploreRate}%）｜`;
+        }
+
+        const exploreResult = triggerExploreEvent(lv2.name);
+        let logSuffix = exploreResult.text;
+
+        if (exploreResult.material) {
+          const mat = exploreResult.material;
+          const emoji = getMatEmoji ? getMatEmoji(mat.name) : "🌿";
+          window.addMaterialToBag(mat.name, mat.count);
+          logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
+        }
+
+        window.doExploreLog(logMessage + logSuffix);
+
+        if (timeSystem.dailyActionLeft <= 0) {
+          closeExplorePanel();
+          setTimeout(() => { nextTime(); syncActionUI(); }, 80);
+          return;
+        }
+        renderSecondLayer();
+        return;
+      }
+
+      // 有子节点：进第三层
       currentSecondParent = lv2;
       renderThirdLayer();
     });
@@ -259,7 +296,7 @@ function renderThirdLayer() {
   const currentHouse = getPlayerHouse();
 
   list.forEach(item => {
-    if (!item) return;
+    if (!item) return;  
 
     // 检查年级锁
     let isLock = item.needLevel > currentGrade;
@@ -310,7 +347,7 @@ function renderThirdLayer() {
         
         try {
           // 异步打开商店
-          const shopManager = await openShop(item.shopId);
+          const shopManager = await window.openShop(item.shopId);
           if (!shopManager) {
             window.doExploreLog(`❌ 无法打开 ${item.name}`);
             return;
