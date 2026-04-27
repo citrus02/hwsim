@@ -14,20 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get version from tag
+      - name: Get version
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Create zip package
-        run: git archive --format zip --output "${{ steps.get_version.outputs.VERSION }}.zip" HEAD
+      - name: Create zip
+        run: |
+          zip -r "${{ steps.get_version.outputs.VERSION }}.zip" . -x ".git/*" ".github/*"
 
-      - name: Extract release notes from version.js
-        id: extract_notes
-        run: node .github/scripts/extract-notes.js
-
-      - name: Create Release and Upload Asset
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.get_version.outputs.VERSION }}.zip
-          body: ${{ steps.extract_notes.outputs.notes }}
-          generate_release_notes: ${{ steps.extract_notes.outputs.notes == '' }}
+          generate_release_notes: true
