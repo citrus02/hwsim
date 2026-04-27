@@ -23,7 +23,23 @@ jobs:
 
       - name: Extract release notes from version.js
         id: extract_notes
-        run: node .github/scripts/extract-notes.js
+        run: |
+          node -e "
+            const fs = require('fs');
+            const content = fs.readFileSync('version.js', 'utf8');
+            const versionMatch = content.match(/export const CURRENT_VERSION = ['\"]([^'\"]+)['\"]/);
+            if (!versionMatch) process.exit(1);
+            const currentVersion = versionMatch[1];
+            const logsMatch = content.match(/export const versionLogs = (\{[\s\S]*?\n\});/);
+            if (!logsMatch) process.exit(1);
+            const logs = eval('(' + logsMatch[1] + ')');
+            const notes = logs[currentVersion];
+            let output = '';
+            if (Array.isArray(notes)) output = notes.join('\n');
+            else if (typeof notes === 'string') output = notes;
+            else output = '';
+            require('fs').appendFileSync(process.env.GITHUB_OUTPUT, 'notes<<EOF\n' + output + '\nEOF\n');
+          "
 
       - name: Release
         uses: softprops/action-gh-release@v2
