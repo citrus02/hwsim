@@ -84,11 +84,14 @@ export class ShopManager {
     const result = this.currentShop.buyItem(itemId, quantity, this.player);
     
     if (result.success) {
+      // 安全获取物品信息
+      const item = this.currentShop.items.find(i => String(i.id) === String(itemId));
+      
       this.addToHistory('purchase', this.currentShop.id, {
         itemId: itemId,
-        itemName: result.item.name,
+        itemName: item?.name || String(itemId),
         quantity: quantity,
-        price: result.totalPrice
+        price: result.totalPrice || 0
       });
       this.saveProgress();
     }

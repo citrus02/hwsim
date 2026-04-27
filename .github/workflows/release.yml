@@ -16,7 +16,10 @@ jobs:
 
       - name: Get version
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=$(echo "$TAG" | sed 's/^v*//')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create zip
         run: zip -r "${{ steps.get_version.outputs.VERSION }}.zip" . -x ".git/*" ".github/*"
