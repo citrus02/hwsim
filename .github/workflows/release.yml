@@ -14,23 +14,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get version
+      - name: Get version from tag
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Create zip
+      - name: Create zip package
         run: git archive --format zip --output "${{ steps.get_version.outputs.VERSION }}.zip" HEAD
 
-      # 新增：从 version.js 提取当前版本的更新说明
       - name: Extract release notes from version.js
         id: extract_notes
-        run: node .github/scripts/extract-notes.mjs
+        run: node .github/scripts/extract-notes.js
 
-      - name: Release
+      - name: Create Release and Upload Asset
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            ${{ steps.get_version.outputs.VERSION }}.zip
+          files: ${{ steps.get_version.outputs.VERSION }}.zip
           body: ${{ steps.extract_notes.outputs.notes }}
-          # 如果提取失败（输出为空），可以回退到自动生成
           generate_release_notes: ${{ steps.extract_notes.outputs.notes == '' }}
