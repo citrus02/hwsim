@@ -24,7 +24,7 @@ jobs:
       # 新增：从 version.js 提取当前版本的更新说明
       - name: Extract release notes from version.js
         id: extract_notes
-        run: node .github/scripts/extract-notes.js
+        run: node .github/scripts/extract-notes.mjs
 
       - name: Release
         uses: softprops/action-gh-release@v2
