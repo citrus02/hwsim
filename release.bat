@@ -31,6 +31,8 @@ echo Copying to USB drive...
 copy "%version%.zip" "%backup_folder%\" >nul
 if %errorlevel%==0 (
     echo SUCCESS: Zip saved to %backup_folder%\%version%.zip
+    del "%version%.zip"
+    echo Local zip deleted.
 ) else (
     echo ERROR: Copy failed
 )

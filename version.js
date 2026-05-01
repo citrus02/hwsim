@@ -5,12 +5,15 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.3.7';
+export const CURRENT_VERSION = '1.3.8';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.3.8': [
+    '新增道具系统！',
+  ],
   '1.3.7': [
     '新增好感度系统！',
   ],

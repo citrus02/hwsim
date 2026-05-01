@@ -3,6 +3,7 @@
 import { getMatEmoji } from "./explore-data.js";
 import { getPotionEmoji } from './potion-data.js';
 import { getSave, setSave } from './save-system.js';
+import { getItemEmoji, applyItemEffect } from './item.js';
 
 const DEFAULT_BAG_SLOTS = 10;
 
@@ -31,7 +32,7 @@ export function renderBag() {
       } else if (nowBagType === "wizardCard") {
         emoji = item.icon || "🃏";
       } else {
-        emoji = item.icon || "📦";
+        emoji = getItemEmoji(item.name) || item.icon || "📦";
       }
 
       if (nowBagType === "wizardCard") {
@@ -81,60 +82,8 @@ export function addItemToBag(type, itemData) {
 }
 
 export function useItem(itemName, index) {
-  const data = getSave();
-  const list = data.bag?.item || [];
-  const item = list[index];
-  if (!item || item.name !== itemName || (item.count || 0) <= 0) return;
-
-  if (itemName === "比比多味豆") {
-    const flavors = [
-      { name: "草莓", emoji: "🍓", good: true },
-      { name: "薄荷", emoji: "🌿", good: true },
-      { name: "椰子", emoji: "🥥", good: true },
-      { name: "肉桂", emoji: "🟤", good: true },
-      { name: "菠菜", emoji: "🥬", good: false },
-      { name: "肝脏", emoji: "🫁", good: false },
-      { name: "耳垢", emoji: "👂", good: false },
-      { name: "鼻涕", emoji: "🤧", good: false },
-      { name: "臭鸡蛋", emoji: "🥚", good: false },
-      { name: "呕吐物", emoji: "🤢", good: false },
-    ];
-
-    const flavor = flavors[Math.floor(Math.random() * flavors.length)];
-
-    if (!data.time) data.time = { dailyActionLeft: 3, nowTime: "早晨", currentDate: "1991-09-02" };
-    const delta = flavor.good ? 1 : -1;
-    data.time.dailyActionLeft = Math.max(0, (data.time.dailyActionLeft || 3) + delta);
-
-    if (item.count > 1) {
-      item.count -= 1;
-    } else {
-      list.splice(index, 1);
-    }
-    data.bag.item = list;
-
-    localStorage.setItem("hogwarts", JSON.stringify(data));
-
-    const actionsEl = document.getElementById("actions");
-    if (actionsEl) actionsEl.textContent = data.time.dailyActionLeft;
-
-    renderBag();
-    if (window.renderLog) window.renderLog();
-
-    // 通过 window.addLog 写日志（save-system.js 挂载的）
-    const logMsg = flavor.good
-      ? `🫘 你吃了一颗比比多味豆——是${flavor.emoji} ${flavor.name}味！真幸运！行动次数 +1`
-      : `🫘 你吃了一颗比比多味豆——天哪，是${flavor.emoji} ${flavor.name}味！你的表情扭曲了……行动次数 -1`;
-    if (window.doStudyLog) window.doStudyLog(logMsg);
-
-    if (data.time.dailyActionLeft <= 0) {
-      if (window.timeSystem) window.timeSystem.dailyActionLeft = 0;
-      setTimeout(() => {
-        if (window.nextTime) window.nextTime();
-        if (window.syncActionUI) window.syncActionUI();
-      }, 500);
-    }
-  }
+  // 全部道具使用逻辑委托给 item.js 的 applyItemEffect
+  applyItemEffect(itemName, index);
 }
 
 export function changeActions(delta) {
