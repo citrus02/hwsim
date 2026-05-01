@@ -908,123 +908,326 @@ body.modal-open .container {
 .potion-recipe-lock { font-size: 10px; color: #ff8888; margin-top: 2px; }
 .potion-recipe-effect { font-size: 10px; color: #c8b0e8; margin-top: 2px; }
 .potion-recipe-mats { font-size: 10px; color: #d4b8f0; margin-top: 4px; }
-/* 炼制台 */
+/* ===================== 魔药炼制系统 样式注释版 ===================== */
+
+/* 炼制台整体容器
+ * 作用：整个魔药炼制界面的大背景、外框
+ */
 .brew-station {
-  background: #1a1030; border-radius: 12px;
-  padding: 16px; border: 1px solid #3a2a5c;
-  overflow: hidden !important;
-  max-height: none !important;
+  background: #1a1030;        /* 背景深紫色 */
+  border-radius: 12px;         /* 圆角 */
+  padding: 10px;               /* 内边距，让内容不贴边 */
+  border: 1px solid #3a2a5c;   /* 边框颜色 */
+  overflow: hidden !important; /* 隐藏超出部分 */
+  max-height: none !important; /* 高度不限制 */
 }
+
+/* 炼制标题行
+ * 作用：显示魔药图标 + 魔药名字 + 英文名称
+ */
 .brew-title-row {
-  display: flex; align-items: center; gap: 10px;
-  padding-bottom: 10px; margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
   border-bottom: 1px solid #3a2a5c;
 }
+.brew-title-row > div:nth-child(2) { flex: 1; } /* 名称区占满剩余，把熟练度推到右边 */
+
+/* 魔药图标样式 */
 .brew-icon { font-size: 28px; }
+
+/* 魔药名称（黄色加粗） */
 .brew-name { color: #f8c850; font-weight: bold; font-size: 16px; }
+
+/* 魔药英文名称（淡紫色小字） */
 .brew-eng { color: #d8b8ff; font-size: 11px; }
-.brew-workarea { display: flex; gap: 16px; align-items: flex-start; }
-.brew-cauldron-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 140px; }
-/* 混血王子笔记 */
+
+/* 熟练度徽章（右对齐） */
+.brew-prof-badge { text-align: right; flex-shrink: 0; }
+.brew-prof-num { color: #f8c850; font-size: 20px; font-weight: bold; line-height: 1; }
+.brew-prof-pct { font-size: 12px; color: #c8a840; }
+.brew-prof-bar {
+  width: 64px; height: 4px; background: #2a1a40;
+  border-radius: 2px; margin-top: 4px; overflow: hidden;
+}
+.brew-prof-fill { height: 100%; background: #f8c850; border-radius: 2px; transition: width 0.3s; }
+.brew-prof-mastered { color: #f8c850; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+
+/* 炼制工作区域
+ * 作用：左边坩埚列 + 右边材料面板 的整体布局
+ */
+.brew-workarea {
+  display: flex;              /* 左右分栏 */
+  gap: 14px;                  /* 左右间距 */
+  align-items: flex-start;    /* 顶部对齐 */
+}
+
+/* 坩埚列（左侧）
+ * 作用：放坩埚、搅拌按钮、步骤提示
+ */
+.brew-cauldron-col {
+  flex: 1;                        /* 自动占宽度 */
+  display: flex;                  /* 纵向布局 */
+  flex-direction: column;         /* 垂直排列 */
+  align-items: center;            /* 水平居中 */
+  min-width: 130px;               /* 最小宽度，防止变形 */
+}
+
+/* ===================== 混血王子笔记 ===================== */
+/* 笔记外框
+ * 作用：显示炼制步骤的面板
+ */
 .prince-notes {
-  background: #150d28; border-radius: 12px; padding: 10px 12px;
-  margin-bottom: 10px; width: 100%; border: 1px solid #3a2a5c;
+  background: #150d28;        /* 背景色 */
+  border-radius: 12px;       /* 圆角 */
+  padding: 8px 8px;          /* 内边距 */
+  margin-bottom: 10px;       /* 底部间距 */
+  width: 100%;               /* 宽度铺满 */
+  border: 1px solid #3a2a5c; /* 边框 */
 }
-.prince-notes-title { color: #d4a860; font-size: 11px; text-align: center; margin-bottom: 6px; letter-spacing: 1px; }
-.prince-notes-steps { display: flex; flex-direction: column; gap: 4px; font-size: 10px; }
+
+/* 笔记标题 */
+.prince-notes-title {
+  color: #d4a860;            /* 文字颜色 */
+  font-size: 11px;           /* 字号 */
+  text-align: left;          /* 左对齐 */
+  margin-bottom: 6px;        /* 底部间距 */
+  letter-spacing: 1px;       /* 字间距 */
+}
+
+/* 笔记步骤列表 */
+.prince-notes-steps {
+  display: flex;             /* 纵向排列 */
+  flex-direction: column;
+  gap: 4px;                  /* 步骤之间间距 */
+  font-size: 10px;           /* 字号很小 */
+}
+
+/* 普通步骤（灰色） */
 .prince-step { color: #8a7aaa; }
+
+/* 已完成步骤（绿色+划线） */
 .prince-step.done { color: #7aaa7a; text-decoration: line-through; }
+
+/* 当前步骤（黄色加粗） */
 .prince-step.current { color: #f8c850; font-weight: bold; }
-/* 坩埚 */
+
+/* ===================== 坩埚样式 ===================== */
+/* 坩埚默认样式
+ * 作用：圆形坩埚外观、阴影、边框
+ */
 .brew-cauldron {
-  width: 120px; height: 120px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #3a3a3a, #111);
-  border: 5px solid #4a3a22;
-  box-shadow: 0 8px 20px #000, inset 0 -8px 12px #050505;
-  display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+  width: 150px; height: 150px;       /* 宽高固定，正圆 */
+  border-radius: 50%;                /* 圆形 */
+  background: radial-gradient(circle at 35% 35%, #3a3a3a, #111); /* 渐变金属质感 */
+  border: 5px solid #4a3a22;         /* 边框 */
+  box-shadow: 0 8px 20px #000, inset 0 -8px 12px #050505; /* 阴影+立体感 */
+  display: flex; align-items: center; justify-content: center; /* 内部液体居中 */
+  transition: all 0.3s;              /* 动画过渡 */
 }
+
+/* 搅拌状态：发光橙色 */
 .brew-cauldron.stirring { box-shadow: 0 8px 20px #000, 0 0 20px #ff9a3c, inset 0 -8px 12px #050505; }
+
+/* 炼制中：发光紫色 */
 .brew-cauldron.brewing { border-color: #8060c8; box-shadow: 0 8px 20px #000, 0 0 30px #8060c8, inset 0 -8px 12px #050505; }
+
+/* 炼制完成：发光金色 */
 .brew-cauldron.done { border-color: #f8c850; box-shadow: 0 8px 20px #000, 0 0 30px #f8c850, inset 0 -8px 12px #050505; }
+
+/* 炼制失败：发光红色 */
 .brew-cauldron.fail { border-color: #6b3f48; box-shadow: 0 8px 20px #000, 0 0 20px #ff3030, inset 0 -8px 12px #050505; }
-/* 液体 */
-.brew-liquid { width: 86px; height: 86px; border-radius: 50%; transition: background 0.8s, box-shadow 0.8s; }
-.brew-liquid.initial { background: #5a3020; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
-.brew-liquid.transitioning { background: #5040a0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 20px rgba(160,140,200,0.5); }
-.brew-liquid.clear { background: #b0d0e0; box-shadow: inset 0 0 20px #2c4b5e, 0 0 30px #aad4f0; }
-.brew-liquid.golden { background: #f4c542; box-shadow: inset 0 0 20px #b57c1c, 0 0 40px gold; }
-.brew-liquid.fail { background: #1a0505; box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 0 15px #ff3030; }
-/* 搅拌按钮 */
-.stir-row { display: flex; gap: 16px; margin-top: 8px; align-items: center; }
-.stir-btn {
-  width: 42px; height: 42px; border-radius: 50%;
-  border: 1px solid #5a4a7a; background: #2d1a3d;
-  color: #c8b8e8; font-size: 22px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; padding: 0; transition: all 0.2s;
+
+/* ===================== 坩埚内液体样式 ===================== */
+.brew-liquid {
+  width: 110px; height: 110px;        /* 液体大小 */
+  border-radius: 50%;               /* 圆形 */
+  transition: background 0.8s, box-shadow 0.8s; /* 颜色渐变动画 */
 }
+
+/* 初始液体（褐色） */
+.brew-liquid.initial { background: #5a3020; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+
+/* 过渡中液体（紫色） */
+.brew-liquid.transitioning { background: #5040a0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 20px rgba(160,140,200,0.5); }
+
+/* 清澈液体（蓝色） */
+.brew-liquid.clear { background: #b0d0e0; box-shadow: inset 0 0 20px #2c4b5e, 0 0 30px #aad4f0; }
+
+/* 金色液体（成功） */
+.brew-liquid.golden { background: #f4c542; box-shadow: inset 0 0 20px #b57c1c, 0 0 40px gold; }
+
+/* 失败液体（黑色） */
+.brew-liquid.fail { background: #1a0505; box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 0 15px #ff3030; }
+
+/* ===================== 搅拌按钮 ===================== */
+/* 搅拌按钮行 */
+.stir-row { display: flex; gap: 16px; margin-top: 8px; align-items: center; }
+
+/* 搅拌按钮（左右旋转） */
+.stir-btn {
+  width: 42px; height: 42px;        /* 圆形按钮 */
+  border-radius: 50%;
+  border: 1px solid #5a4a7a;
+  background: #2d1a3d;
+  color: #c8b8e8;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+/* 鼠标悬浮效果 */
 .stir-btn:hover:not([disabled]) { background: #442a5c; border-color: #f8c850; }
+
+/* 按钮禁用样式 */
 .stir-btn[disabled] { opacity: 0.35; cursor: not-allowed; };
+
+/* 搅拌次数显示（黄色） */
 .stir-count { color: #f8c850; font-weight: bold; font-size: 16px; min-width: 30px; text-align: center; }
+
+/* 液体状态文字 */
 .brew-liq-label { color: #d4b8e0; font-size: 11px; margin-top: 4px; text-align: center; }
-/* 清理一新按钮 */
+
+/* 清理一新按钮（重置炼制） */
 .brew-reset-btn {
-  margin-top: 6px; background: #3a2a5c; border: none;
-  color: #e8d8f8; padding: 8px 16px; border-radius: 8px;
-  cursor: pointer; font-size: 12px; width: auto; transition: background 0.2s;
+  margin-top: 6px;
+  background: #3a2a5c;
+  border: none;
+  color: #e8d8f8;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  width: auto;
+  transition: background 0.2s;
 }
 .brew-reset-btn:hover { background: #4a3a7c; }
-/* 右侧面板 */
-.brew-right-panel { flex: 1.3; display: flex; flex-direction: column; gap: 10px; }
+
+/* ===================== 右侧材料面板 ===================== */
+/* 右侧整体面板宽度 */
+.brew-right-panel { flex: 1.2; display: flex; flex-direction: column; gap: 8px; }
+
+/* 材料背包面板 */
 .brew-mat-bag { 
-  background: #150d28; border-radius: 10px; padding: 10px; 
+  background: #150d28;
+  border-radius: 10px;
+  padding: 8px; 
   border: 1px solid #3a2a5c; 
 }
+
+/* 面板小标题 */
 .brew-section-title { color: #f8c850; font-size: 12px; margin-bottom: 6px; }
+
+/* 材料列表（自动换行） */
 .brew-mat-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* 材料按钮 */
 .brew-mat-btn {
-  padding: 5px 8px; border-radius: 6px;
-  border: 1px solid #3a2a5c; cursor: pointer; font-size: 11px;
-  background: #2d1a3d; color: #d4c8e8; transition: all 0.15s;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid #3a2a5c;
+  cursor: pointer;
+  font-size: 11px;
+  background: #2d1a3d;
+  color: #d4c8e8;
+  transition: all 0.15s;
 }
 .brew-mat-btn:hover:not([disabled]) { background: #442a5c; }
+
+/* 材料已足够（绿色） */
 .brew-mat-btn.done { background: #2a4a2a; opacity: 0.7; }
+
+/* 材料不足（红色） */
 .brew-mat-btn.short { color: #ff8888; }
+
+/* 按钮禁用 */
 .brew-mat-btn[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+/* 材料提示小字 */
 .brew-mat-hint { font-size: 10px; color: #a090c0; margin-top: 4px; }
-/* 处理台 */
+
+/* ===================== 材料处理台 ===================== */
 .brew-prep { 
-  background: #150d28; border-radius: 10px; padding: 12px; 
+  background: #150d28;
+  border-radius: 10px;
+  padding: 8px; 
   border: 1px solid #3a2a5c; 
 }
-.brew-prep-title { text-align: center; color: #d4a860 !important; }
+
+/* 处理台标题 */
+.brew-prep-title { text-align: left; color: #d4a860 !important; }
+
+/* 处理台背景 */
 .brew-prep-table {
   background: linear-gradient(135deg, #1e1435, #281d45, #1e1435);
-  border-radius: 10px; padding: 12px; text-align: center;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
   border: 1px solid #3a2a5c;
 }
+
+/* 空置槽位（虚线框） */
 .brew-prep-slot {
-  background: #120d28; color: #d4a860;
-  border: 2px dashed #4a3a6a; border-radius: 8px;
-  padding: 10px; margin: 8px 0; min-height: 35px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: bold; font-size: 13px;
+  background: #120d28;
+  color: #d4a860;
+  border: 2px dashed #4a3a6a;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 8px 0;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 13px;
 }
-/* 处理台按钮 */
+
+/* 处理台按钮组（垂直排列） */
+.brew-prep-actions { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+
+/* 处理按钮 */
 .brew-prep-btn {
-  flex: 1; font-size: 11px; padding: 6px 8px; border-radius: 6px;
-  border: 1px solid #3a2a5c; background: #2d1a3d;
-  color: #d4c8e8; cursor: pointer; transition: all 0.15s;
+  width: 100%;
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #3a2a5c;
+  background: #2d1a3d;
+  color: #d4c8e8;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
 }
 .brew-prep-btn:hover:not([disabled]) { background: #442a5c; }
 .brew-prep-btn[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+/* 处理提示 */
 .brew-prep-hint { font-size: 10px; color: #a090c0; margin-top: 6px; text-align: center; }
-/* 提示 */
+
+/* ===================== 提示信息 ===================== */
 .brew-hint {
-  background: #150d28; border-radius: 10px; padding: 10px;
-  text-align: center; font-size: 12px; color: #d4c8e8;
-  margin-top: 10px; border: 1px solid #3a2a5c;
+  background: #150d28;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #d4c8e8;
+  margin-top: 10px;
+  border: 1px solid #3a2a5c;
 }
-/* 补齐材料按钮 */
+
+/* 全宽下一步提示条 */
+.brew-hint-full {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+/* 补齐材料按钮（紫色） */
 .potion-fill-btn { background: #5c2d7e !important; }
 .potion-fill-btn:hover { background: #6e3a94 !important; }
 

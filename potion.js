@@ -507,6 +507,11 @@ function renderBrewStation() {
           <div class="brew-name">${selectedPotion.name}</div>
           <div class="brew-eng">${selectedPotion.english}</div>
         </div>
+        <div class="brew-prof-badge">
+          ${selectedPotion.proficiency >= 100
+            ? '<span class="brew-prof-mastered">✦ 精通</span>'
+            : `<span class="brew-prof-num">${selectedPotion.proficiency}<span class="brew-prof-pct">%</span></span><div class="brew-prof-bar"><div class="brew-prof-fill" style="width:${selectedPotion.proficiency}%"></div></div>`}
+        </div>
       </div>
 
       <div class="brew-workarea">

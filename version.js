@@ -5,12 +5,17 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.3.6';
+export const CURRENT_VERSION = '1.3.7';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.3.7': [
+    '魔药制作台ui加入熟练度显示',
+    '魔药制作台ui放大坩埚',
+    '魔药制作台ui变得更加舒展',
+  ],
   '1.3.6': [
     '调整魔药制作台ui',
   ],

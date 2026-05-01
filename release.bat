@@ -1,7 +1,7 @@
 @echo off
 set /p version="Enter version number (example: 1.3.0): "
 
-set usb_drive=D:\
+set usb_drive=E:\
 set backup_folder=%usb_drive%hogwarts_backup
 
 if not exist %usb_drive% (
