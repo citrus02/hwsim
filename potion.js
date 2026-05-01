@@ -510,42 +510,7 @@ function renderBrewStation() {
       </div>
 
       <div class="brew-workarea">
-        <!-- 右侧面板（原左侧面板） -->
-        <div class="brew-right-panel">
-          <!-- 材料背包 -->
-          <div class="brew-mat-bag">
-            <div class="brew-section-title">🧺 材料背包</div>
-            <div class="brew-mat-list">
-              ${selectedPotion.materials.map((m, i) => {
-                const own = ownMap[m] || 0, need = selectedPotion.quantities[i], ok = own >= need;
-                const needsProc = materialProcessingMap[m] && !processedMaterials[m];
-                const isDone = addedMaterials[m] || processedMaterials[m];
-                const disabled = isDone || brewPhase !== 'idle';
-                return `<button class="brew-mat-btn ${isDone?'done':''} ${!ok&&!isDone?'short':''}" data-mat="${m}" data-qty="${need}" data-proc="${needsProc}">
-                  ${getMatEmoji(m)} ${m}×${need} (${ok?'✓':'✗'}${own})${isDone?' ✓':''}
-                </button>`;
-              }).join('')}
-            </div>
-          </div>
-
-          <!-- 处理台 -->
-          <div class="brew-prep">
-            <div class="brew-section-title brew-prep-title">🔪 材料处理台</div>
-            <div class="brew-prep-table">
-              <div id="pot-prep-slot" class="brew-prep-slot">${prepMaterialName ? `${getMatEmoji(prepMaterialName)} ${prepMaterialName}` : '⬜ 空置'}</div>
-              <div class="brew-prep-actions">
-                <button id="pot-cut-btn" class="brew-prep-btn">🔪 切割</button>
-                <button id="pot-crush-btn" class="brew-prep-btn">💎 压碎</button>
-                <button id="pot-juice-btn" class="brew-prep-btn">💧 榨汁</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 下一步提示 -->
-          <div id="pot-hint" class="brew-hint" style="margin-top:8px;">${hintText}</div>
-        </div>
-
-        <!-- 坩埚列（原右侧列） -->
+        <!-- 坩埚列（左） -->
         <div class="brew-cauldron-col">
 
           <!-- 课堂笔记 -->
@@ -592,7 +557,41 @@ function renderBrewStation() {
             ${brewPhase==='done'||brewPhase==='fail'?'🔄 再熬一次':'🧹 清理一新'}
           </button>
         </div>
+
+        <!-- 右侧面板（材料背包 + 处理台） -->
+        <div class="brew-right-panel">
+          <!-- 材料背包 -->
+          <div class="brew-mat-bag">
+            <div class="brew-section-title">🧺 材料背包</div>
+            <div class="brew-mat-list">
+              ${selectedPotion.materials.map((m, i) => {
+                const own = ownMap[m] || 0, need = selectedPotion.quantities[i], ok = own >= need;
+                const needsProc = materialProcessingMap[m] && !processedMaterials[m];
+                const isDone = addedMaterials[m] || processedMaterials[m];
+                return `<button class="brew-mat-btn ${isDone?'done':''} ${!ok&&!isDone?'short':''}" data-mat="${m}" data-qty="${need}" data-proc="${needsProc}">
+                  ${getMatEmoji(m)} ${m}×${need} (${ok?'✓':'✗'}${own})${isDone?' ✓':''}
+                </button>`;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- 处理台 -->
+          <div class="brew-prep">
+            <div class="brew-section-title brew-prep-title">🔪 材料处理台</div>
+            <div class="brew-prep-table">
+              <div id="pot-prep-slot" class="brew-prep-slot">${prepMaterialName ? `${getMatEmoji(prepMaterialName)} ${prepMaterialName}` : '⬜ 空置'}</div>
+              <div class="brew-prep-actions">
+                <button id="pot-cut-btn" class="brew-prep-btn">🔪 切割</button>
+                <button id="pot-crush-btn" class="brew-prep-btn">💎 压碎</button>
+                <button id="pot-juice-btn" class="brew-prep-btn">💧 榨汁</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- 下一步提示（全宽，独立一行） -->
+      <div id="pot-hint" class="brew-hint brew-hint-full">${hintText}</div>
     </div>
   `;
 

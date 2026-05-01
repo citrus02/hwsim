@@ -1028,33 +1028,14 @@ body.modal-open .container {
 .potion-fill-btn { background: #5c2d7e !important; }
 .potion-fill-btn:hover { background: #6e3a94 !important; }
 
-/* ==================== ✅ 魔药系统：滚动列表 ==================== */
+/* ==================== ✅ 魔药系统：展开式布局 ==================== */
 #pot-container {
-  max-height: 480px;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding-right: 4px;
   margin: 10px 0;
-  scrollbar-width: thin;
-  scrollbar-color: #3b4f8a #161d2f;
-}
-#pot-container::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-#pot-container::-webkit-scrollbar-track {
-  background: #161d2f;
-  border-radius: 3px;
-}
-#pot-container::-webkit-scrollbar-thumb {
-  background-color: #3b4f8a;
-  border-radius: 3px;
-  border: none;
 }
 
 .potion-cat-grid,
 .potion-recipe-grid {
-  overflow: visible !important;
+  overflow: visible;
 }
 
 /* ====================== 📱 响应式适配 ====================== */
