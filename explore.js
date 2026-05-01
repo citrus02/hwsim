@@ -4,6 +4,7 @@ import { timeSystem, costAction, nextTime, syncActionUI } from "./time-system.js
 import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } from "./explore-data.js";
 import { getYearGrade, getPlayerHouse } from "./save-system.js";
 import { exploreEventLib } from "./explore-default.js";
+import { tryTriggerEncounter } from "./affinity-ui.js";
 
 export function addExploreRate(area, val = 5) {
   const currentGrade = getYearGrade();
@@ -268,6 +269,9 @@ function renderSecondLayer() {
 
         window.doExploreLog(logMessage + logSuffix);
 
+        // 尝试触发人物偶遇（30% 概率）
+        setTimeout(() => tryTriggerEncounter(lv2.name), 300);
+
         if (timeSystem.dailyActionLeft <= 0) {
           closeExplorePanel();
           setTimeout(() => { nextTime(); syncActionUI(); }, 80);
@@ -397,6 +401,9 @@ function renderThirdLayer() {
       }
 
       window.doExploreLog(logMessage + logSuffix);
+
+      // 尝试触发人物偶遇（30% 概率）
+      setTimeout(() => tryTriggerEncounter(item.name), 300);
 
       if (timeSystem.dailyActionLeft <= 0) {
         closeExplorePanel();

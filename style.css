@@ -1571,3 +1571,147 @@ body.modal-open .container {
   color: #8899aa;
   word-break: break-all;
 }
+
+/* ==================== 👥 好感度系统 ==================== */
+
+/* ── 升级通知 ────────────────────────────────────────── */
+.affinity-notif {
+  position: fixed; bottom: 80px; right: 16px; z-index: 9999;
+  background: #1e1235; border: 1px solid #5a3a8a;
+  border-radius: 12px; padding: 12px 14px; min-width: 200px; max-width: 260px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 20px rgba(140,80,220,0.2);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.affinity-notif.show { opacity: 1; transform: translateY(0); }
+.affinity-notif-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+}
+.affinity-notif-icon { font-size: 20px; }
+.affinity-notif-name { flex: 1; font-size: 13px; color: #f8c850; font-weight: bold; }
+.affinity-notif-tier {
+  font-size: 11px; background: #5a3a8a; color: #e8d8ff;
+  padding: 2px 6px; border-radius: 10px;
+}
+.affinity-notif-desc { font-size: 11px; color: #c8b8e8; line-height: 1.5; }
+.affinity-notif-unlock {
+  font-size: 10px; color: #a0e8a0; margin-top: 5px;
+  border-top: 1px solid #3a2a5c; padding-top: 5px;
+}
+
+/* ── 弹窗通用 ───────────────────────────────────────── */
+.affinity-modal-overlay {
+  position: fixed; inset: 0; z-index: 8888;
+  background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.affinity-modal-box {
+  background: #1a1030; border: 1px solid #3a2a5c;
+  border-radius: 16px; padding: 20px;
+  max-width: 380px; width: 100%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  max-height: 80vh; overflow-y: auto;
+}
+
+/* ── 偶遇弹窗 ───────────────────────────────────────── */
+.affinity-enc-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.affinity-enc-icon { font-size: 24px; }
+.affinity-enc-name { flex: 1; font-size: 15px; color: #f8c850; font-weight: bold; }
+.affinity-enc-tag {
+  font-size: 10px; background: #3a2a5c; color: #c8b8e8;
+  padding: 2px 8px; border-radius: 10px;
+}
+.affinity-enc-text {
+  font-size: 13px; color: #d8c8e8; line-height: 1.7;
+  margin-bottom: 16px;
+}
+.affinity-enc-choices { display: flex; flex-direction: column; gap: 8px; }
+.affinity-enc-choice-btn {
+  background: #2d1a3d; border: 1px solid #3a2a5c;
+  color: #d4c8e8; padding: 10px 14px; border-radius: 8px;
+  font-size: 13px; text-align: left; cursor: pointer; transition: all 0.15s;
+}
+.affinity-enc-choice-btn:hover:not([disabled]) { background: #442a5c; border-color: #7a5aaa; }
+.affinity-enc-choice-btn[disabled] { cursor: default; }
+.affinity-enc-response {
+  margin-top: 14px; padding: 12px; background: #150d28;
+  border-radius: 10px; border: 1px solid #3a2a5c;
+  font-size: 13px; color: #c8b8e8; line-height: 1.7;
+}
+.affinity-enc-close {
+  display: block; width: 100%; margin-top: 12px;
+  background: #3a2a5c; border: none; color: #e8d8f8;
+  padding: 10px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; transition: background 0.2s;
+}
+.affinity-enc-close:hover { background: #4a3a7c; }
+
+/* ── 总览面板 ───────────────────────────────────────── */
+.affinity-panel-overlay {
+  position: fixed; inset: 0; z-index: 8888;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 20px 16px; overflow-y: auto;
+}
+.affinity-panel-box {
+  background: #1a1030; border: 1px solid #3a2a5c;
+  border-radius: 16px; padding: 16px;
+  max-width: 440px; width: 100%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+.affinity-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; font-size: 15px; color: #f8c850; font-weight: bold;
+}
+.affinity-panel-header button {
+  background: none; border: none; color: #8888aa;
+  font-size: 16px; cursor: pointer; padding: 2px 6px;
+}
+.affinity-panel-grid { display: flex; flex-direction: column; gap: 10px; }
+.affinity-char-card {
+  background: #150d28; border: 1px solid #3a2a5c;
+  border-radius: 12px; padding: 12px;
+}
+.affinity-char-top {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.affinity-char-icon { font-size: 22px; flex-shrink: 0; }
+.affinity-char-info { flex: 1; }
+.affinity-char-name { font-size: 13px; color: #f8c850; font-weight: bold; }
+.affinity-char-role { font-size: 10px; color: #a090c0; margin-top: 2px; }
+.affinity-char-tier-badge {
+  background: #3a2a5c; color: #d8b8ff;
+  font-size: 11px; padding: 3px 8px; border-radius: 10px; flex-shrink: 0;
+}
+.affinity-char-tier-label {
+  font-size: 11px; color: #c8b8e8; margin-bottom: 8px; line-height: 1.5;
+}
+.affinity-char-bar-wrap {
+  background: #2a1a40; border-radius: 3px; height: 4px;
+  overflow: hidden; margin-bottom: 10px;
+}
+.affinity-char-bar { height: 100%; background: #8a5adc; border-radius: 3px; transition: width 0.4s; }
+.affinity-char-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.affinity-char-btn {
+  font-size: 11px; padding: 5px 10px; border-radius: 6px;
+  border: 1px solid #3a2a5c; background: #2d1a3d;
+  color: #d4c8e8; cursor: pointer; transition: all 0.15s;
+}
+.affinity-char-btn:hover { background: #442a5c; }
+
+/* ── 故事/信件阅读 ──────────────────────────────────── */
+.affinity-read-box { max-width: 420px; }
+.affinity-read-tag {
+  font-size: 10px; color: #a090c0; margin-bottom: 8px; letter-spacing: 1px;
+}
+.affinity-read-title {
+  font-size: 15px; color: #f8c850; font-weight: bold; margin-bottom: 14px;
+}
+.affinity-read-body {
+  font-size: 13px; color: #d4c8e8; line-height: 1.9;
+  white-space: pre-line;
+}

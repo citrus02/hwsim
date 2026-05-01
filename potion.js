@@ -1,6 +1,7 @@
 // potion.js — 手动熬制版（严格步骤）
 import { potions, getPotionEmoji, materialProcessingMap } from './potion-data.js';
 import { getMatEmoji } from "./explore-data.js";
+import { onBrewResult } from './affinity-system.js';
 
 let currentPotionSourceType = "hogwarts";
 let allPotionData = [];
@@ -695,6 +696,9 @@ function finishBrew() {
     const success = brewPotion(selectedPotion.id);
     brewPhase = success ? 'done' : 'fail';
     liquidState = success ? 'golden' : 'initial';
+    // 好感度触发：成功 +1，精通 +5
+    const mastered = success && (selectedPotion.proficiency >= 100);
+    onBrewResult(success, mastered);
     showBrewResult(success);
     allPotionData = getPotionListWithStatus();
     renderBrewStation();

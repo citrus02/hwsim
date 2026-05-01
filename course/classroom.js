@@ -16,6 +16,7 @@
 
 import { loadSave, writeSave } from './save-utils.js';
 import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
+import { onClassResult, onSubjectCompleted } from '../affinity-system.js';
 
 // ── 分科数据映射 ─────────────────────────────────────────
 const SUBJECT_WIN_KEY = {
@@ -412,6 +413,16 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   const comment = rating ? (window.courseDefault?.getProfessorComment(subjectKey, rating) || "") : "";
 
   saveProgress(subjectKey, lesson.lesson, rating);
+
+  // 好感度触发
+  if (rating) onClassResult(subjectKey, rating, true);
+
+  // 检查该分科是否全部课时完成（触发一次性 +10）
+  const allLessons = getAllLessons(sd.syllabus);
+  const done = loadSave().course?.muggleProgress?.[subjectKey]?.completed || [];
+  if (allLessons.length > 0 && done.length >= allLessons.length) {
+    onSubjectCompleted(subjectKey);
+  }
 
   const logMsg = rating
     ? `🎓 ${sd.subjectMeta.name}·第${lesson.lesson}课《${lesson.title}》评级 ${rating}，学院分 ${housePoints>=0?"+":""}${housePoints}`

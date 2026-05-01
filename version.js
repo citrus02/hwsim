@@ -12,9 +12,7 @@ export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-sy
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
   '1.3.7': [
-    '魔药制作台ui加入熟练度显示',
-    '魔药制作台ui放大坩埚',
-    '魔药制作台ui变得更加舒展',
+    '新增好感度系统！',
   ],
   '1.3.6': [
     '调整魔药制作台ui',

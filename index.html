@@ -210,6 +210,7 @@
         <button class="action-btn" onclick="window.openSpellPanel()">🪄 训练咒语</button>
         <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
         <button class="action-btn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
+        <button class="action-btn" onclick="window.affinityUI?.openAffinityPanel()">👥 人物关系</button>
       </div>
     </div>
 
@@ -443,6 +444,9 @@ window.addEventListener('load', () => {
   }
 </script>
 
+<script type="module" src="affinity-system.js"></script>
+<script type="module" src="affinity-data.js"></script>
+<script type="module" src="affinity-ui.js"></script>
 <script type="module" src="time-system.js"></script>
 <script type="module" src="explore-data.js"></script>
 <script type="module" src="explore.js"></script>

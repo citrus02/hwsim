@@ -123,7 +123,6 @@ let navStack = [];   // [{list, title}] 导航历史栈
 
 export function openCoursePanel() {
   loadTimeFromSave();
-  autoUpdateCourseUnlock();
 
   document.getElementById("actionMain").style.display = "none";
   const exploreMain = document.getElementById("exploreMain");
@@ -154,7 +153,8 @@ export function openCoursePanel() {
   }
 
   navStack = [];
-  loadCourseProgressFromSave();
+  loadCourseProgressFromSave(); // 先读 studyRate
+  autoUpdateCourseUnlock();     // 再计算 unlock（必须在 loadProgress 之后）
   renderLevel(courseData, "课程列表");
 }
 
