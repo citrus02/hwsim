@@ -14,9 +14,9 @@
 
 import { loadTimeFromSave } from '../time-system.js';
 import { getYearGrade } from '../save-system.js';
-import { courseData, getStudyEvent, getMuggleStudiesEvent } from './course-data.js';
-import { addInternalPoints, SCORE_MAP } from './muggle-studies.js';
-import { unlockAchievement } from './achievement.js';
+import { courseData, getStudyEvent } from './course-data.js';
+import { addInternalPoints } from './muggle-studies.js';
+import { loadSave, writeSave } from './save-utils.js';
 import { showLearnChoiceModal } from './classroom.js';
 
 export function getCurrentGrade() {
@@ -45,37 +45,6 @@ export function autoUpdateCourseUnlock() {
   }
 
   traverse(courseData);
-}
-
-// ============================================================
-// 学习逻辑
-// ============================================================
-
-function studyCourse(course) {
-  if (!course.unlock) return `🔒 未解锁：需要 ${course.unlockGrade} 年级`;
-  if (course.studyRate >= 100) return "✅ 已完全掌握这门课程";
-
-  const add = 5;
-  course.studyRate = Math.min(100, course.studyRate + add);
-
-  const data = JSON.parse(localStorage.getItem("hogwarts")) || {};
-  if (!data.course) data.course = {};
-  data.course[course.name] = course.studyRate;
-  localStorage.setItem("hogwarts", JSON.stringify(data));
-
-  // 内部积分：学习一次固定加1分（非测验途径）
-  addInternalPoints(1, `学习：${course.name}`);
-
-  if (window.autoUnlockByCourse) window.autoUnlockByCourse();
-  return `📚 学习：${course.name}（熟练度+${add}%，共${course.studyRate}%）`;
-}
-
-/** 获取学习事件文本，麻瓜研究走分科路由 */
-function resolveStudyEvent(course) {
-  if (course.muggleSubjectKey) {
-    return getMuggleStudiesEvent(course.muggleSubjectKey);
-  }
-  return getStudyEvent(course.name);
 }
 
 // ============================================================
@@ -316,24 +285,12 @@ function calcMuggleOverallRate(subjects) {
   return avg >= 100 ? "【已完全掌握】" : `（${Math.round(avg)}%）`;
 }
 
-/** 成就触发检查（学习动作触发类） */
-function checkFirstStudyAchievement(course) {
-  const data = JSON.parse(localStorage.getItem("hogwarts")) || {};
-  const achievements = data.achievements || [];
-
-  // 第一次测验（第一次学任何科目）
-  if (!achievements.includes("first_quiz")) {
-    const unlocked = unlockAchievement("first_quiz");
-    if (unlocked) window.doStudyLog?.("🏆 成就解锁：「第一次测验」");
-  }
-}
-
 // ============================================================
 // 存档读取（支持三级结构）
 // ============================================================
 
 function loadCourseProgressFromSave() {
-  const data = JSON.parse(localStorage.getItem("hogwarts")) || {};
+  const data = loadSave();
   if (!data.course) return;
 
   function traverse(items) {

@@ -12,8 +12,7 @@ export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-sy
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
   '1.3.5': [
-    '调整魔药工作台',
-    '增加制作魔药逻辑',
+    '优化文件结构',
   ],
   '1.3.4': [
     '更新风雅氏巫师服装店商品',

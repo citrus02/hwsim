@@ -14,6 +14,9 @@
  *   window.renderLevelFn（course.js 暴露的刷新当前层函数）
  */
 
+import { loadSave, writeSave } from './save-utils.js';
+import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
+
 // ── 分科数据映射 ─────────────────────────────────────────
 const SUBJECT_WIN_KEY = {
   math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
@@ -22,16 +25,6 @@ const SUBJECT_WIN_KEY = {
 };
 
 function getSubjectData(key) { return window[SUBJECT_WIN_KEY[key]] || null; }
-
-// ── 存档工具 ─────────────────────────────────────────────
-function _load() {
-  try { return JSON.parse(localStorage.getItem("hogwarts")) || {}; }
-  catch { return {}; }
-}
-function _save(d) {
-  try { localStorage.setItem("hogwarts", JSON.stringify(d)); }
-  catch {}
-}
 
 // ── 课时工具 ─────────────────────────────────────────────
 function getAllLessons(syllabus) {
@@ -44,7 +37,7 @@ function getCurrentLesson(subjectKey) {
   const data = getSubjectData(subjectKey);
   if (!data) return null;
   const all = getAllLessons(data.syllabus);
-  const done = _load().course?.muggleProgress?.[subjectKey]?.completed || [];
+  const done = loadSave().course?.muggleProgress?.[subjectKey]?.completed || [];
   return all.find(l => !done.includes(l.lesson)) || all[all.length - 1];
 }
 
@@ -52,19 +45,9 @@ function getQuestionsForLesson(questionBank, lessonNum) {
   return (questionBank || []).find(q => q.lesson === lessonNum) || null;
 }
 
-// ── 评分 → 评级 ──────────────────────────────────────────
-function scoreToRating(score) {
-  if (score >= 6) return "O";
-  if (score >= 4) return "E";
-  if (score >= 2) return "A";
-  if (score >= 0) return "P";
-  if (score >= -1) return "D";
-  return "T";
-}
-
 // ── 结算写档 ─────────────────────────────────────────────
 function saveProgress(subjectKey, lessonNum, rating) {
-  const data = _load();
+  const data = loadSave();
   if (!data.course) data.course = {};
   if (!data.course.muggleProgress) data.course.muggleProgress = {};
   if (!data.course.muggleProgress[subjectKey])
@@ -86,12 +69,11 @@ function saveProgress(subjectKey, lessonNum, rating) {
   data.course["麻瓜研究"] = Math.round(totalRate / KEYS.length);
 
   // 学院分（交由 house-points.js 处理）
-  const HP = { O:6, E:5, A:3, P:1, D:-1, T:-3 };
-  if (rating && HP[rating]) {
-    window.housePoints?.addPlayerPoints?.(HP[rating]);
+  if (rating && HOUSE_POINTS_MAP[rating]) {
+    window.housePoints?.addPlayerPoints?.(HOUSE_POINTS_MAP[rating]);
   }
 
-  _save(data);
+  writeSave(data);
   window.refreshAll?.();
   window.autoUnlockByCourse?.();
 }
@@ -170,10 +152,10 @@ function doQuickStudy(item, items, title) {
 
   const add = 5;
   item.studyRate = Math.min(100, (item.studyRate || 0) + add);
-  const data = _load();
+  const data = loadSave();
   if (!data.course) data.course = {};
   data.course[item.name] = item.studyRate;
-  _save(data);
+  writeSave(data);
 
   const evt = item.muggleSubjectKey
     ? (window.courseDefault?.getMuggleStudiesEvent(item.muggleSubjectKey) || "你专心学习，知识稳步提升")
@@ -217,8 +199,11 @@ function enterClassroom(item, subjectKey, subjectData, items, title) {
   });
 }
 
-// ── 课堂内部状态（模块级）────────────────────────────────
-let _st, _subjectKey, _sd, _lesson, _qGroup, _onClose;
+// ── 课堂内部状态 ─────────────────────────────────────────
+// 统一用一个对象管理，方便面板销毁时整体 reset
+let _clsState = null;
+
+function _resetState() { _clsState = null; }
 
 // ── 课堂面板外框 ─────────────────────────────────────────
 function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
@@ -252,21 +237,24 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
   const card = document.getElementById("actionMain")?.closest(".card") || document.body;
   card.appendChild(panel);
 
-  const st = { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0 };
-  _st = st; _subjectKey = subjectKey; _sd = subjectData;
-  _lesson = lesson; _qGroup = qGroup; _onClose = onClose;
-  _phaseOpening(st, subjectKey, subjectData, lesson, qGroup, onClose);
+  _clsState = {
+    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0 },
+    subjectKey, sd: subjectData, lesson, qGroup, onClose
+  };
+  const { st, sd, onClose: oc } = _clsState;
+  _phaseOpening(st, subjectKey, sd, lesson, qGroup, oc);
 }
 
 function _setPhase(n) {
   const labels = ["📍 导入","📖 讲课","📝 测验","🎓 结算"];
   const badge = document.getElementById("cls-phase-badge");
   if (badge) badge.textContent = labels[n];
-  if (_st && n > _st.maxPhase) _st.maxPhase = n;
+  const st = _clsState?.st;
+  if (st && n > st.maxPhase) st.maxPhase = n;
   for (let i = 0; i < 4; i++) {
     const el = document.getElementById(`cls-s${i}`);
     if (!el) continue;
-    const reached = _st ? i <= _st.maxPhase : i === 0;
+    const reached = st ? i <= st.maxPhase : i === 0;
     el.className = "cls-step" + (i<n?" cls-step-done":i===n?" cls-step-active":"");
     el.style.cursor = reached ? "pointer" : "not-allowed";
     el.style.opacity = reached ? "1" : "0.35";
@@ -274,17 +262,19 @@ function _setPhase(n) {
 }
 
 window._clsJumpToPhase = (target) => {
-  if (!_st || target > _st.maxPhase) return;
+  if (!_clsState || target > _clsState.st.maxPhase) return;
+  const { st, subjectKey, sd, lesson, qGroup, onClose } = _clsState;
   if (target === 0) {
-    _phaseOpening(_st, _subjectKey, _sd, _lesson, _qGroup, _onClose);
+    _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 1) {
-    _st.kpIdx = 0;
-    _phaseLecture(_st, _subjectKey, _sd, _lesson, _qGroup, _onClose);
+    st.kpIdx = 0;
+    _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 2) {
-    if (_qGroup) { _st.qIdx = 0; _st.score = 0; _st.answered = false; }
-    _phaseQuiz(_st, _subjectKey, _sd, _lesson, _qGroup, _onClose);
+    // 注意：从步骤条回跳测验会重置本轮分数，相当于重新作答
+    if (qGroup) { st.qIdx = 0; st.score = 0; st.answered = false; }
+    _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 3) {
-    _phaseResult(_st, _subjectKey, _sd, _lesson, _qGroup, _onClose);
+    _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose);
   }
 };
 
@@ -418,8 +408,7 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   if (!body) return;
 
   const rating = qGroup ? scoreToRating(st.score) : null;
-  const HP = { O:6, E:5, A:3, P:1, D:-1, T:-3 };
-  const housePoints = rating ? (HP[rating] || 0) : 0;
+  const housePoints = rating ? (HOUSE_POINTS_MAP[rating] || 0) : 0;
   const comment = rating ? (window.courseDefault?.getProfessorComment(subjectKey, rating) || "") : "";
 
   saveProgress(subjectKey, lesson.lesson, rating);
@@ -454,6 +443,7 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     document.getElementById("classroomPanel")?.remove();
     const cm = document.getElementById("courseMain");
     if (cm) cm.style.display = "";
+    _resetState();
     onClose?.();
   };
 }

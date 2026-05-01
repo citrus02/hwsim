@@ -4,22 +4,20 @@
  *
  * 职责：
  *   - 内部积分管理（internalPoints）
- *   - 评分计分规则（SCORE_MAP）
+ *   - 评分计分规则（SCORE_MAP / HOUSE_POINTS_MAP）
+ *   - scoreToRating（唯一权威版本，classroom.js 复用此处）
  *   - 学期结算（内部积分→学院分）
- *   - 熟练度更新
+ *   - 熟练度读取
  *
  * 已拆出至独立文件：
  *   - 成就系统   → achievement.js
- *   - 教授评语   → course-default.js（professorComments）
- *   - 分科事件   → course-default.js（muggleStudiesEvents）
+ *   - 教授评语 / 分科事件 → course-default.js（唯一权威来源）
  *
  * 依赖：
- *   - achievement.js（window.achievementSystem）
- *   - course-default.js（getProfessorComment, recordProfessorComment）
+ *   - save-utils.js（loadSave / writeSave）
  */
 
-import { checkAchievementByStudy, recordProfessorComment } from './achievement.js';
-import { getProfessorComment } from './course-default.js';
+import { loadSave, writeSave } from './save-utils.js';
 
 // ── 评级→积分映射 ──────────────────────────────────────────
 export const SCORE_MAP = {
@@ -38,8 +36,8 @@ export const HOUSE_POINTS_MAP = {
 
 // ── 测验评级计算 ──────────────────────────────────────────
 /**
- * 根据答题得分计算评级
- * 计分规则：完全正确+2 / 部分正确+0 / 完全错误-1
+ * 根据答题得分计算评级（唯一权威版本）
+ * 计分规则：正确+2 / 错误压轴题-1
  * 满分6分（3道题全对）
  * @param {number} score 原始得分
  * @returns {string} 评级 O/E/A/P/D/T
@@ -54,18 +52,6 @@ export function scoreToRating(score) {
 }
 
 // ── 内部积分管理 ──────────────────────────────────────────
-function _loadData() {
-  try {
-    const raw = localStorage.getItem("hogwarts");
-    return raw ? JSON.parse(raw) : {};
-  } catch { return {}; }
-}
-
-function _saveData(data) {
-  try {
-    localStorage.setItem("hogwarts", JSON.stringify(data));
-  } catch {}
-}
 
 /**
  * 增加内部积分
@@ -73,7 +59,7 @@ function _saveData(data) {
  * @param {string} reason 原因说明
  */
 export function addInternalPoints(points, reason = "") {
-  const data = _loadData();
+  const data = loadSave();
   if (!data.muggleStudies) data.muggleStudies = { internalPoints: 0 };
   data.muggleStudies.internalPoints = (data.muggleStudies.internalPoints || 0) + points;
   if (!data.muggleStudies.pointsLog) data.muggleStudies.pointsLog = [];
@@ -83,7 +69,7 @@ export function addInternalPoints(points, reason = "") {
     timestamp: Date.now(),
     total: data.muggleStudies.internalPoints
   });
-  _saveData(data);
+  writeSave(data);
   return data.muggleStudies.internalPoints;
 }
 
@@ -91,63 +77,11 @@ export function addInternalPoints(points, reason = "") {
  * 获取当前内部积分
  */
 export function getInternalPoints() {
-  const data = _loadData();
+  const data = loadSave();
   return data.muggleStudies?.internalPoints || 0;
 }
 
-// ── 学习结算（完整流程）────────────────────────────────────
-/**
- * 完成一次分科学习后的完整结算
- * @param {string} subjectKey  科目键名
- * @param {number} rawScore    原始测验得分（-3~6），无测验传null
- * @param {object} courseRef   课程对象引用（含studyRate等字段）
- * @returns {object} 结算结果 { rating, comment, housePoints, internalDelta, newStudyRate, newAchievements }
- */
-export function settleMuggleStudySession(subjectKey, rawScore, courseRef) {
-  const rating = rawScore !== null ? scoreToRating(rawScore) : null;
-
-  // 熟练度更新
-  const studyAdd = 5;
-  const newStudyRate = Math.min(100, (courseRef.studyRate || 0) + studyAdd);
-  courseRef.studyRate = newStudyRate;
-
-  // 内部积分
-  let internalDelta = 1; // 基础学习积分
-  if (rating) {
-    internalDelta += SCORE_MAP[rating] || 0;
-  }
-  const totalPoints = addInternalPoints(internalDelta, `学习结算：${subjectKey}（${rating || "无测验"}）`);
-
-  // 学院分
-  const housePoints = rating ? (HOUSE_POINTS_MAP[rating] || 0) : 0;
-
-  // 教授评语
-  let comment = "";
-  if (rating) {
-    comment = getProfessorComment(subjectKey, rating);
-    recordProfessorComment(subjectKey);
-  }
-
-  // 成就检测
-  const newAchievements = checkAchievementByStudy(subjectKey, newStudyRate, rating);
-
-  // 持久化课程进度
-  const data = _loadData();
-  if (!data.course) data.course = {};
-  data.course[subjectKey] = newStudyRate;
-  _saveData(data);
-
-  return {
-    rating,
-    comment,
-    housePoints,
-    internalDelta,
-    totalInternalPoints: totalPoints,
-    newStudyRate,
-    newAchievements
-  };
-}
-
+// ── 学期末结算 ─────────────────────────────────────────────
 /**
  * 学期末结算：内部积分→学院分贡献
  * 规则：内部积分 ÷ 10 = 学院分贡献值
@@ -155,13 +89,12 @@ export function settleMuggleStudySession(subjectKey, rawScore, courseRef) {
 export function semesterSettlement() {
   const pts = getInternalPoints();
   const housePointsBonus = Math.floor(pts / 10);
-  // 重置内部积分
-  const data = _loadData();
+  const data = loadSave();
   if (data.muggleStudies) {
     data.muggleStudies.lastSemesterPoints = pts;
     data.muggleStudies.internalPoints = 0;
   }
-  _saveData(data);
+  writeSave(data);
   return { housePointsBonus, settledPoints: pts };
 }
 
@@ -171,7 +104,7 @@ export function semesterSettlement() {
  * @returns {number} studyRate(0~100)
  */
 export function getSubjectStudyRate(subjectKey) {
-  const data = _loadData();
+  const data = loadSave();
   return data.course?.[subjectKey] || 0;
 }
 
@@ -197,7 +130,6 @@ window.muggleStudiesSystem = {
   scoreToRating,
   addInternalPoints,
   getInternalPoints,
-  settleMuggleStudySession,
   semesterSettlement,
   getSubjectStudyRate,
   calcComprehensiveScore

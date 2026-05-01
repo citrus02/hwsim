@@ -1,12 +1,15 @@
 /**
  * course-default.js
- * 课程系统全部文字内容数据库
+ * 课程系统全部文字内容数据库（唯一权威来源）
  *
  * 包含：
  *   1. 麻瓜研究九门分科学习事件库   getMuggleStudiesEvent(key)
  *   2. 其他科目学习事件库           getStudyEvent(name)
  *   3. 九位教授评语库               getProfessorComment(key, rating)
  *      每位教授 × 每评级(O/E/A/P/D/T) × 5条，随机取1条
+ *
+ * 原 course-data.js 中的重复事件库已删除，统一由此文件提供。
+ * course-data.js 通过 import 复用本文件的导出函数。
  *
  * 教授对应科目键：
  *   math       → 奥古斯都·芬威克

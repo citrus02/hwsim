@@ -12,19 +12,17 @@ let prepMaterialName = null;
 let processedMaterials = {};
 let liquidState = 'initial';
 let addedMaterials = {};
-let currentStepIndex = 0;
-let stepsList = [];
+let currentStepIndex = 0; // 当前应该执行的步骤
+let stepsList = []; // 步骤列表
 let backTopBtn = null;
 
+// ==================== 存档 ====================
 function initPotionSave() {
   const save = window.saveSys?.getSave?.() || {};
   if (!save.bag) save.bag = { material: [], potion: [], item: [] };
   if (!save.potion) save.potion = {};
   if (!save.year) save.year = 1;
   if (!save.flags) save.flags = {};
-  // ✅ 确保 time.dailyActionLeft 字段存在
-  if (!save.time) save.time = {};
-  if (save.time.dailyActionLeft === undefined) save.time.dailyActionLeft = 3;
   return save;
 }
 
@@ -58,8 +56,9 @@ function costMaterials(materials, quantities) {
 // ==================== 解锁 ====================
 function checkPotionUnlock(potion) {
   const data = initPotionSave();
+  // data.year 存的是公元年份（如1991），需换算为年级（1991=1年级）
   const rawYear = data.year ?? 1991;
-  const y = rawYear > 100 ? rawYear - 1990 : rawYear;
+  const y = rawYear > 100 ? rawYear - 1990 : rawYear; // 兼容旧存档直接存年级的情况
   const f = data.flags;
   if (potion.grade === '一年级') return true;
   if (potion.id === 204 && f.unlock_chamber_of_secrets) return true;
@@ -246,7 +245,7 @@ function advanceStep() {
 
 function checkStepViolation(actionType, material, action) {
   const step = getCurrentStep();
-  if (!step) return true;
+  if (!step) return true; // 没有步骤了（应该在搅拌阶段）
 
   if (step.type === 'stir' && actionType !== 'stir') {
     triggerFail('你打乱了制作顺序！坩埚冒出刺鼻的绿烟...');
@@ -259,7 +258,7 @@ function checkStepViolation(actionType, material, action) {
       return true;
     }
     if (actionType === 'process' && material === step.material && action === step.action) {
-      return false;
+      return false; // 正确
     }
     if (actionType === 'process' && material === step.material && action !== step.action) {
       triggerFail(`处理方式错误！应该${step.verb}${step.material}，你的操作让材料彻底毁了`);
@@ -277,7 +276,7 @@ function checkStepViolation(actionType, material, action) {
       return true;
     }
     if (actionType === 'add' && material === step.material) {
-      return false;
+      return false; // 正确
     }
     if (actionType === 'add' && material !== step.material) {
       triggerFail(`步骤错误！当前应该加入${step.material}，而不是${material}`);
@@ -299,6 +298,7 @@ function triggerFail(reason) {
   currentStepIndex = 0;
   stepsList = [];
 
+  // 失败视觉效果
   const cauldron = document.getElementById('pot-cauldron');
   const liquid = document.getElementById('pot-liquid');
   if (cauldron) cauldron.classList.add('fail');
@@ -378,19 +378,10 @@ function openPotionPanel() {
   createFailModal();
   selectedPotion = null; brewPhase = 'idle'; resetAll();
 
-  // ✅ 检查行动次数（字段名：time.dailyActionLeft）
-  const data = initPotionSave();
-  const dailyActionLeft = data.time?.dailyActionLeft ?? 3;
-  if (dailyActionLeft <= 0) {
-    window.doStudyLog?.('❌ 行动次数不足，无法熬制魔药');
-    closePotionPanel();
-    return;
-  }
-
   const box = document.createElement('div'); box.id = 'potionMain';
   box.innerHTML = `
     <div class="title">⚗️ 熬制魔药</div>
-    <button id="pot-fill-btn" class="action-btn potion-fill-btn">🧪 一键补齐所有魔药材料</button>
+    <button id="pot-fill-btn" class="action-btn potion-fill-btn" style="display:none;">🧪 一键补齐所有魔药材料</button>
     <button id="pot-back-top" class="action-btn potion-back-btn" style="display:none;">← 返回上一层</button>
     <div id="pot-container"></div>
     <button id="pot-back-main" class="action-btn" style="margin-top:10px;">← 返回行动</button>`;
@@ -483,15 +474,12 @@ function renderBrewStation() {
   const bagMats = data.bag?.material || [];
   const ownMap = {};
   bagMats.forEach(s => { if (!s) return; ownMap[s.name] = (ownMap[s.name] || 0) + (s.count || 1); });
-  
-  // ✅ 使用 time.dailyActionLeft 字段
-  const dailyActionLeft = data.time?.dailyActionLeft ?? 3;
-  const hasActions = dailyActionLeft > 0;
 
   let canBrew = true;
   selectedPotion.materials.forEach((m, i) => { if ((ownMap[m] || 0) < selectedPotion.quantities[i]) canBrew = false; });
   const allDone = currentStepIndex >= stepsList.length;
 
+  // 当前步骤提示
   let currentStepHint = '';
   const step = getCurrentStep();
   if (step && brewPhase === 'idle') {
@@ -506,11 +494,13 @@ function renderBrewStation() {
     brewPhase === 'done' ? `✨ ${selectedPotion.name} 熬制成功！` :
     currentStepHint || '准备开始...';
 
+  // 按钮状态
   const canProcess = brewPhase === 'idle' && prepMaterialName !== null;
   const isStirring = brewPhase === 'stirring';
 
   wrap.innerHTML = `
     <div class="brew-station">
+      <!-- 标题 -->
       <div class="brew-title-row">
         <span class="brew-icon">${selectedPotion.icon}</span>
         <div>
@@ -520,49 +510,9 @@ function renderBrewStation() {
       </div>
 
       <div class="brew-workarea">
-        <div class="brew-cauldron-col">
-          <div class="prince-notes">
-            <div class="prince-notes-title">📜 课堂笔记</div>
-            <div id="pot-steps" class="prince-notes-steps">
-              ${stepsList.map((s, i) => {
-                let label = '';
-                if (s.type === 'process') label = `${s.verb}${s.material}`;
-                else if (s.type === 'add') label = `加入${s.material}`;
-                else label = `逆时针搅拌${s.count}圈`;
-                const isPassed = i < currentStepIndex;
-                const isCurrent = i === currentStepIndex;
-                return `<div class="prince-step ${isPassed?'done':''} ${isCurrent?'current':''}">${i+1}. ${label} ${isPassed?'✓':''} ${isCurrent?'←':''}</div>`;
-              }).join('')}
-            </div>
-          </div>
-
-          <div id="pot-cauldron" class="brew-cauldron ${brewPhase}">
-            <div id="pot-liquid" class="brew-liquid ${liquidState}" 
-              style="${liquidState==='golden'?`background:${potionColor};box-shadow:inset 0 0 20px ${potionColor},0 0 40px ${potionColor};`:liquidState==='clear'?`box-shadow:inset 0 0 20px #2c4b5e,0 0 30px ${potionColor}80;`:''}">
-            </div>
-          </div>
-
-          <div class="stir-row">
-            <button id="pot-stir-cw-btn" class="stir-btn">↷</button>
-            <span id="pot-stir-count" class="stir-count">${stirCount}/${STIR_CIRCLES}</span>
-            <button id="pot-stir-ccw-btn" class="stir-btn">↶</button>
-          </div>
-
-          <div id="pot-liquid-label" class="brew-liq-label">
-            ${brewPhase==='done'?`🌟 ${potionColorName}：${selectedPotion.name}`:
-              brewPhase==='fail'?'💥 焦黑冒烟，恶臭弥漫':
-              liquidState==='initial'?'🌫️ 浑浊的深褐色':
-              liquidState==='transitioning'?'🌊 搅拌中...颜色逐渐变化':
-              liquidState==='clear'?`✨ 变得清澈，泛起${potionColorName}光泽`:
-              '等待中...'}
-          </div>
-
-          <button id="pot-reset-btn" class="brew-reset-btn" style="margin-top:8px;">
-            ${brewPhase==='done'||brewPhase==='fail'?'🔄 再熬一次':'🧹 清理一新'}
-          </button>
-        </div>
-
+        <!-- 右侧面板（原左侧面板） -->
         <div class="brew-right-panel">
+          <!-- 材料背包 -->
           <div class="brew-mat-bag">
             <div class="brew-section-title">🧺 材料背包</div>
             <div class="brew-mat-list">
@@ -578,6 +528,7 @@ function renderBrewStation() {
             </div>
           </div>
 
+          <!-- 处理台 -->
           <div class="brew-prep">
             <div class="brew-section-title brew-prep-title">🔪 材料处理台</div>
             <div class="brew-prep-table">
@@ -589,14 +540,65 @@ function renderBrewStation() {
               </div>
             </div>
           </div>
+
+          <!-- 下一步提示 -->
+          <div id="pot-hint" class="brew-hint" style="margin-top:8px;">${hintText}</div>
+        </div>
+
+        <!-- 坩埚列（原右侧列） -->
+        <div class="brew-cauldron-col">
+
+          <!-- 课堂笔记 -->
+          <div class="prince-notes">
+            <div class="prince-notes-title">📜 课堂笔记</div>
+            <div id="pot-steps" class="prince-notes-steps">
+              ${stepsList.map((s, i) => {
+                let label = '';
+                if (s.type === 'process') label = `${s.verb}${s.material}`;
+                else if (s.type === 'add') label = `加入${s.material}`;
+                else label = `逆时针搅拌${s.count}圈`;
+                const isPassed = i < currentStepIndex;
+                const isCurrent = i === currentStepIndex;
+                return `<div class="prince-step ${isPassed?'done':''} ${isCurrent?'current':''}">${i+1}. ${label} ${isPassed?'✓':''} ${isCurrent?'←':''}</div>`;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- 坩埚 -->
+          <div id="pot-cauldron" class="brew-cauldron ${brewPhase}">
+            <div id="pot-liquid" class="brew-liquid ${liquidState}" 
+              style="${liquidState==='golden'?`background:${potionColor};box-shadow:inset 0 0 20px ${potionColor},0 0 40px ${potionColor};`:liquidState==='clear'?`box-shadow:inset 0 0 20px #2c4b5e,0 0 30px ${potionColor}80;`:''}">
+            </div>
+          </div>
+
+          <!-- 搅拌按钮 -->
+          <div class="stir-row">
+            <button id="pot-stir-cw-btn" class="stir-btn">↷</button>
+            <span id="pot-stir-count" class="stir-count">${stirCount}/${STIR_CIRCLES}</span>
+            <button id="pot-stir-ccw-btn" class="stir-btn">↶</button>
+          </div>
+
+          <div id="pot-liquid-label" class="brew-liq-label">
+            ${brewPhase==='done'?`🌟 ${potionColorName}：${selectedPotion.name}`:
+              brewPhase==='fail'?'💥 焦黑冒烟，恶臭弥漫':
+              liquidState==='initial'?'🌫️ 浑浊的深褐色':
+              liquidState==='transitioning'?'🌊 搅拌中...颜色逐渐变化':
+              liquidState==='clear'?`✨ 变得清澈，泛起${potionColorName}光泽`:
+              '等待中...'}
+          </div>
+
+          <!-- 清理一新 -->
+          <button id="pot-reset-btn" class="brew-reset-btn" style="margin-top:8px;">
+            ${brewPhase==='done'||brewPhase==='fail'?'🔄 再熬一次':'🧹 清理一新'}
+          </button>
         </div>
       </div>
-
-      <div id="pot-hint" class="brew-hint" style="margin-top:12px; width:100%; text-align:center;">${hintText}</div>
     </div>
   `;
 
   // ==================== 事件绑定 ====================
+
+  // 搅拌按钮
   const cwBtn = wrap.querySelector('#pot-stir-cw-btn');
   const ccwBtn = wrap.querySelector('#pot-stir-ccw-btn');
   if (cwBtn) {
@@ -611,15 +613,9 @@ function renderBrewStation() {
     };
   }
   if (ccwBtn) {
-    // ✅ 使用 hasActions
-    if (isStirring && hasActions) ccwBtn.removeAttribute('disabled'); 
-    else ccwBtn.setAttribute('disabled', '');
+    if (isStirring) ccwBtn.removeAttribute('disabled'); else ccwBtn.setAttribute('disabled', '');
     ccwBtn.onclick = () => {
       if (brewPhase !== 'stirring') return;
-      if (!hasActions) {
-        updateHint('⚡ 行动次数不足！');
-        return;
-      }
       stirCount++;
       const countEl = document.getElementById('pot-stir-count');
       if (countEl) countEl.textContent = `${stirCount}/${STIR_CIRCLES}`;
@@ -628,6 +624,7 @@ function renderBrewStation() {
     };
   }
 
+  // 处理台按钮
   const cutBtn = wrap.querySelector('#pot-cut-btn');
   const crushBtn = wrap.querySelector('#pot-crush-btn');
   const juiceBtn = wrap.querySelector('#pot-juice-btn');
@@ -635,11 +632,13 @@ function renderBrewStation() {
   if (crushBtn) { if (canProcess) crushBtn.removeAttribute('disabled'); else crushBtn.setAttribute('disabled', ''); crushBtn.onclick = () => processMaterial('crush'); }
   if (juiceBtn) { if (canProcess) juiceBtn.removeAttribute('disabled'); else juiceBtn.setAttribute('disabled', ''); juiceBtn.onclick = () => processMaterial('juice'); }
 
+  // 重置按钮
   const resetBtn = wrap.querySelector('#pot-reset-btn');
   if (resetBtn) {
     resetBtn.onclick = () => { brewPhase = 'idle'; resetAll(); buildStepsList(); renderBrewStation(); };
   }
 
+  // 材料按钮
   wrap.querySelectorAll('.brew-mat-btn').forEach(btn => {
     const matName = btn.dataset.mat;
     const alreadyDone = addedMaterials[matName] || processedMaterials[matName];
@@ -682,23 +681,11 @@ function startStirring() {
 function finishBrew() {
   brewPhase = 'brewing'; liquidState = 'clear';
   updateHint('🔥 搅拌完成！正在熬制...');
-  
-  const data = initPotionSave();
-  if (!data.time) data.time = {};
-  if (!data.time.dailyActionLeft || data.time.dailyActionLeft <= 0) {
+  if (window.costAction && !window.costAction()) {
     window.doStudyLog?.('❌ 行动次数不足');
     brewPhase = 'fail'; liquidState = 'initial';
-    showFailModal('行动次数不足，无法继续熬制');
-    renderBrewStation();
-    return;
+    showBrewResult(false, '行动次数不足'); renderBrewStation(); return;
   }
-  
-  data.time.dailyActionLeft -= 1;
-  window.saveSys?.setSave?.(data);
-  
-  // ✅ 刷新主界面显示
-  if (window.refreshAll) window.refreshAll();
-  
   renderBrewStation();
   setTimeout(() => {
     const success = brewPotion(selectedPotion.id);
@@ -707,15 +694,6 @@ function finishBrew() {
     showBrewResult(success);
     allPotionData = getPotionListWithStatus();
     renderBrewStation();
-    
-    const updatedData = initPotionSave();
-    if ((updatedData.time?.dailyActionLeft ?? 0) <= 0) {
-      updateHint('⚡ 行动次数已用完，自动返回行动列表');
-      setTimeout(() => {
-        closePotionPanel();
-        if (window.nextDay) window.nextDay();
-      }, 2000);
-    }
   }, 1500);
 }
 

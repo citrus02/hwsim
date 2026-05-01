@@ -11,6 +11,8 @@
  *   checkAchievementByStudy(subjectKey, studyRate, rating) 学习后自动检测
  */
 
+import { loadSave, writeSave } from './save-utils.js';
+
 // ── 常规成就（19个）──────────────────────────────────────────
 
 const REGULAR_ACHIEVEMENTS = [
@@ -271,27 +273,22 @@ export const ACHIEVEMENTS = [...REGULAR_ACHIEVEMENTS, ...HIDDEN_ACHIEVEMENTS];
 // ── 内部状态（存入localStorage）─────────────────────────────
 
 function _loadState() {
-  try {
-    const raw = localStorage.getItem("hogwarts");
-    const data = raw ? JSON.parse(raw) : {};
-    if (!data.achievements) data.achievements = {};
-    if (!data.achievementStats) data.achievementStats = {
-      ratingHistory: [],       // [{subjectKey, rating, date}]
-      oCount: 0,
-      noFailStreak: 0,
-      internalPoints: 0,
-      crossAnchorsTriggered: 0,
-      professorsCommented: new Set(),
-      studyDates: [],
-    };
-    return data;
-  } catch { return { achievements: {}, achievementStats: {} }; }
+  const data = loadSave();
+  if (!data.achievements) data.achievements = {};
+  if (!data.achievementStats) data.achievementStats = {
+    ratingHistory: [],       // [{subjectKey, rating, date}]
+    oCount: 0,
+    noFailStreak: 0,
+    internalPoints: 0,
+    crossAnchorsTriggered: 0,
+    professorsCommented: [],  // 数组，可被 JSON 序列化（原为 new Set()，无法持久化）
+    studyDates: [],
+  };
+  return data;
 }
 
 function _saveState(data) {
-  try {
-    localStorage.setItem("hogwarts", JSON.stringify(data));
-  } catch {}
+  writeSave(data);
 }
 
 // ── 核心接口 ──────────────────────────────────────────────────
