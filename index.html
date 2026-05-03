@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="course/course.css">
   <link rel="stylesheet" href="course/classroom.css">
+  <link rel="stylesheet" href="gesture-widget.css">
+  <link rel="stylesheet" href="duel.css">
   
   <!-- PWA 配置 -->
   <link rel="manifest" href="./manifest.json">
@@ -140,46 +142,69 @@
 
     <!-- 个人信息 -->
     <div class="tab-screen" id="tab-info">
-      <div class="info-grid-2x2">
-        <div class="ig-cell">
-          <div class="ig-label">姓名</div>
-          <div class="ig-value" id="stat-name">—</div>
+      <!-- 信息页内部子标签 -->
+      <div class="info-sub-tab-row">
+        <button class="info-sub-tab active" data-sub="profile">👤 档案</button>
+        <button class="info-sub-tab" data-sub="grimoire">📖 咒语图鉴</button>
+        <button class="info-sub-tab" data-sub="affinity">👥 人物关系</button>
+      </div>
+
+      <!-- 子页：档案 -->
+      <div class="info-sub-screen active" id="info-sub-profile">
+        <div class="info-grid-2x2">
+          <div class="ig-cell">
+            <div class="ig-label">姓名</div>
+            <div class="ig-value" id="stat-name">—</div>
+          </div>
+          <div class="ig-cell">
+            <div class="ig-label">出身</div>
+            <div class="ig-value" id="stat-blood">—</div>
+          </div>
+          <div class="ig-cell">
+            <div class="ig-label">学院</div>
+            <div class="ig-value" id="stat-house">—</div>
+          </div>
+          <div class="ig-cell">
+            <div class="ig-label">魔杖</div>
+            <div class="ig-value" id="stat-wand">—</div>
+          </div>
         </div>
-        <div class="ig-cell">
-          <div class="ig-label">出身</div>
-          <div class="ig-value" id="stat-blood">—</div>
-        </div>
-        <div class="ig-cell">
-          <div class="ig-label">学院</div>
-          <div class="ig-value" id="stat-house">—</div>
-        </div>
-        <div class="ig-cell">
-          <div class="ig-label">魔杖</div>
-          <div class="ig-value" id="stat-wand">—</div>
+        <div class="house-points-detail">
+          <div class="hp-detail-title">🏆 学院积分</div>
+          <div class="hp-row">
+            <span class="hp-house hp-gryffindor">🦁 格兰芬多</span>
+            <span class="hp-bar-wrap"><span class="hp-bar hp-bar-g" id="hp-bar-g"></span></span>
+            <span class="hp-score" id="hp-score-g">0</span>
+          </div>
+          <div class="hp-row">
+            <span class="hp-house hp-slytherin">🐍 斯莱特林</span>
+            <span class="hp-bar-wrap"><span class="hp-bar hp-bar-s" id="hp-bar-s"></span></span>
+            <span class="hp-score" id="hp-score-s">0</span>
+          </div>
+          <div class="hp-row">
+            <span class="hp-house hp-ravenclaw">🦅 拉文克劳</span>
+            <span class="hp-bar-wrap"><span class="hp-bar hp-bar-r" id="hp-bar-r"></span></span>
+            <span class="hp-score" id="hp-score-r">0</span>
+          </div>
+          <div class="hp-row">
+            <span class="hp-house hp-hufflepuff">🦡 赫奇帕奇</span>
+            <span class="hp-bar-wrap"><span class="hp-bar hp-bar-h" id="hp-bar-h"></span></span>
+            <span class="hp-score" id="hp-score-h">0</span>
+          </div>
         </div>
       </div>
-      <div class="house-points-detail">
-        <div class="hp-detail-title">🏆 学院积分</div>
-        <div class="hp-row">
-          <span class="hp-house hp-gryffindor">🦁 格兰芬多</span>
-          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-g" id="hp-bar-g"></span></span>
-          <span class="hp-score" id="hp-score-g">0</span>
-        </div>
-        <div class="hp-row">
-          <span class="hp-house hp-slytherin">🐍 斯莱特林</span>
-          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-s" id="hp-bar-s"></span></span>
-          <span class="hp-score" id="hp-score-s">0</span>
-        </div>
-        <div class="hp-row">
-          <span class="hp-house hp-ravenclaw">🦅 拉文克劳</span>
-          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-r" id="hp-bar-r"></span></span>
-          <span class="hp-score" id="hp-score-r">0</span>
-        </div>
-        <div class="hp-row">
-          <span class="hp-house hp-hufflepuff">🦡 赫奇帕奇</span>
-          <span class="hp-bar-wrap"><span class="hp-bar hp-bar-h" id="hp-bar-h"></span></span>
-          <span class="hp-score" id="hp-score-h">0</span>
-        </div>
+
+      <!-- 子页：咒语图鉴（内嵌，不跳转） -->
+      <div class="info-sub-screen" id="info-sub-grimoire">
+        <div id="info-grimoire-mount"></div>
+      </div>
+
+      <!-- 子页：人物关系（点击打开浮层） -->
+      <div class="info-sub-screen" id="info-sub-affinity">
+        <div class="info-affinity-tip">人物关系详情在弹出面板中查看</div>
+        <button class="action-btn" onclick="window.affinityUI?.openAffinityPanel()">
+          👥 打开人物关系面板
+        </button>
       </div>
     </div>
 
@@ -207,10 +232,9 @@
       <div class="title">✨ 要做点什么？</div>
       <div class="action-grid">
         <button class="action-btn" onclick="window.openCoursePanel?.()">🪶 学习课程</button>
-        <button class="action-btn" onclick="window.openSpellPanel()">🪄 训练咒语</button>
+        <button class="action-btn" onclick="window.openDuelPanel?.()">⚔️ 决斗训练场</button>
         <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
         <button class="action-btn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
-        <button class="action-btn" onclick="window.affinityUI?.openAffinityPanel()">👥 人物关系</button>
       </div>
     </div>
 
@@ -319,6 +343,24 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.tab-screen').forEach(s => s.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(`tab-${tab}`).classList.add('active');
+    });
+  });
+});
+
+// 信息页子标签切换 + 咒语图鉴内嵌
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.info-sub-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sub = btn.dataset.sub;
+      document.querySelectorAll('.info-sub-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.info-sub-screen').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`info-sub-${sub}`).classList.add('active');
+
+      // 切换到咒语图鉴时，内嵌渲染
+      if (sub === 'grimoire') {
+        setTimeout(() => window._renderInlineGrimoire?.(), 50);
+      }
     });
   });
 });
@@ -463,6 +505,8 @@ window.addEventListener('load', () => {
   <script type="module" src="course/subjects/geography.js"></script>
   <script type="module" src="course/subjects/literature.js"></script>
   <script type="module" src="course/subjects/english.js"></script>
+  <script type="module" src="course/subjects/transfiguration.js"></script>
+  <script type="module" src="course/subjects/charms.js"></script>
   <script type="module" src="course/classroom.js"></script>
   <script type="module" src="course/course.js"></script>
 <script type="module" src="spell.js"></script>
@@ -471,6 +515,9 @@ window.addEventListener('load', () => {
 <script type="module" src="slot-system.js"></script>
 <script type="module" src="ui-render.js"></script>
 <script type="module" src="hogsmeade/shop-bridge.js"></script>
+<script type="module" src="duel-data.js"></script>
+<script type="module" src="duel-engine.js"></script>
+<script type="module" src="duel-ui.js"></script>
 
 <!-- 折叠展开按钮 -->
 <script>

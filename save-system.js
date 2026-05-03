@@ -39,7 +39,9 @@ export function resetAll() { localStorage.clear(); location.reload(); }
 
 export function getYearGrade() {
   const data = getSave();
-  return (data.year ?? 1991) - 1990;
+  // 兼容两种存档结构：data.time.year（新）和 data.year（旧）
+  const year = data.time?.year ?? data.year ?? 1991;
+  return year - 1990;
 }
 
 export function getPlayerHouse() {
@@ -49,15 +51,26 @@ export function getPlayerHouse() {
 
 export function checkYearUpgrade() {
   const data = getSave();
-  if (data.month === 9 && data.day === 1 && !data._yearUpgraded) {
-    data.year += 1;
-    data._yearUpgraded = true;
+  // 兼容两种存档结构：time子对象（新）和根层（旧）
+  const month = data.time?.month ?? data.month;
+  const day   = data.time?.day   ?? data.day;
+  const upgraded = data.time?._yearUpgraded ?? data._yearUpgraded;
+
+  if (month === 9 && day === 1 && !upgraded) {
+    if (data.time) {
+      data.time.year = (data.time.year ?? 1991) + 1;
+      data.time._yearUpgraded = true;
+    } else {
+      data.year = (data.year ?? 1991) + 1;
+      data._yearUpgraded = true;
+    }
     setSave(data);
     addLog(`🎓 新学年开启！年份更替，你已晋升为【${getYearGrade()}年级】`);
     if (window.autoUpdateCourseUnlock) window.autoUpdateCourseUnlock();
     if (window.refreshAll) window.refreshAll();
-  } else if (!(data.month === 9 && data.day === 1)) {
-    if (data._yearUpgraded) { data._yearUpgraded = false; setSave(data); }
+  } else if (!(month === 9 && day === 1)) {
+    if (data.time?._yearUpgraded) { data.time._yearUpgraded = false; setSave(data); }
+    else if (data._yearUpgraded)  { data._yearUpgraded = false; setSave(data); }
   }
 }
 

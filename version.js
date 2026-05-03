@@ -5,14 +5,22 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.3.8';
+export const CURRENT_VERSION = '1.4.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.4.0': [
+    '新增决斗系统！',
+    '融合“学习课程”和“训练魔咒”，更新魔咒熟练度逻辑',
+    '修正学院分不加分的bug',
+    '新增4v4决斗！可邀请角色组队决斗',
+  ],
   '1.3.8': [
     '新增道具系统！',
+    '新增变形术课的“好好学习”版',
+    '新增魔咒课的“好好学习”版',
   ],
   '1.3.7': [
     '新增好感度系统！',

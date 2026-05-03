@@ -1,0 +1,937 @@
+/* ============================================================
+   duel.css
+   决斗系统 UI 样式
+   ============================================================ */
+
+/* ── 主面板 ─────────────────────────────────────────────── */
+
+.duel-panel {
+  position: absolute;
+  inset: 0;
+  background: #080f1a;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.duel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e2f55;
+  background: #0c1525;
+  flex-shrink: 0;
+}
+
+.duel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8d49d;
+  letter-spacing: 0.5px;
+}
+
+.duel-close-btn {
+  background: transparent;
+  border: 1px solid #2a3b66;
+  color: #8899aa;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.duel-close-btn:hover { background: #1e293b; color: #e6e6e6; }
+
+.duel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── 对手选择 ───────────────────────────────────────────── */
+
+.duel-section-title {
+  font-size: 12px;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.duel-opponent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.duel-opp-card {
+  display: flex;
+  gap: 12px;
+  background: #0e1a2e;
+  border: 1px solid #1e2f55;
+  border-radius: 10px;
+  padding: 12px;
+  transition: all 0.2s;
+  align-items: flex-start;
+}
+.duel-opp-card:hover {
+  background: #131f38;
+  border-color: #2a3b66;
+}
+
+.duel-opp-portrait {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 38px;
+  text-align: center;
+}
+
+.duel-opp-info { flex: 1; min-width: 0; }
+
+.duel-opp-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e6e6e6;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.duel-opp-level {
+  font-size: 11px;
+  font-weight: 400;
+  color: #8899aa;
+  background: #1e2f55;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.duel-opp-flavor {
+  font-size: 12px;
+  color: #8899aa;
+  line-height: 1.5;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+
+.duel-opp-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+}
+
+.duel-opp-hp  { color: #e05c5c; }
+.duel-opp-reward { color: #f8c850; }
+
+.duel-notice {
+  background: #2a1e0a;
+  border: 1px solid #5a3a10;
+  color: #f8c870;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── 决斗场 ─────────────────────────────────────────────── */
+
+.duel-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 状态栏 */
+.duel-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0c1525;
+  border: 1px solid #1e2f55;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.duel-combatant {
+  flex: 1;
+  min-width: 0;
+}
+
+.duel-vs {
+  font-size: 11px;
+  font-weight: 900;
+  color: #4a5a7a;
+  flex-shrink: 0;
+  padding: 0 4px;
+}
+
+.duel-comb-name {
+  font-size: 12px;
+  color: #8899aa;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.duel-player-side .duel-comb-name { color: #a8d8f8; }
+.duel-enemy-side  .duel-comb-name { color: #f8a8a8; }
+
+.duel-hp-bar-wrap {
+  height: 6px;
+  background: #1e293b;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+
+.duel-hp-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf82, #70e0a8);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.duel-hp-enemy {
+  background: linear-gradient(90deg, #e05c5c, #f87878);
+}
+
+.duel-hp-num {
+  font-size: 10px;
+  color: #8899aa;
+  text-align: right;
+}
+
+.duel-enemy-side .duel-hp-num { text-align: left; }
+
+.duel-status-icons {
+  display: flex;
+  gap: 3px;
+  margin-top: 2px;
+  min-height: 14px;
+  font-size: 11px;
+}
+
+.duel-icon-shield { color: #80c8f8; }
+.duel-icon-debuff { color: #f8c870; }
+
+/* 战斗日志 */
+.duel-log {
+  background: #080f1a;
+  border: 1px solid #1a2535;
+  border-radius: 8px;
+  padding: 8px 10px;
+  max-height: 90px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.duel-log-line {
+  font-size: 12px;
+  color: #8899aa;
+  line-height: 1.5;
+}
+
+.duel-log-player { color: #a8d8f8; }
+.duel-log-enemy  { color: #f8a8a8; }
+
+/* 主内容区 */
+.duel-main-area {
+  background: #0c1525;
+  border: 1px solid #1e2f55;
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 180px;
+}
+
+/* ── 咒语选择 ───────────────────────────────────────────── */
+
+.duel-select-title {
+  font-size: 12px;
+  color: #8899aa;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.duel-spell-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.duel-spell-btn {
+  background: #0e1a2e;
+  border: 1px solid #1e2f55;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.duel-spell-btn:hover {
+  background: #131f38;
+  border-color: #2a3b66;
+  transform: translateY(-1px);
+}
+
+.duel-spell-icon { font-size: 18px; line-height: 1; margin-bottom: 2px; }
+
+.duel-spell-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.duel-spell-en {
+  font-size: 10px;
+  color: #8899aa;
+  font-style: italic;
+}
+
+.duel-spell-type {
+  font-size: 10px;
+  color: #6a7a8a;
+  margin-top: 2px;
+}
+
+.duel-spell-gesture-hint {
+  font-size: 10px;
+  color: #f8c850;
+  background: #1e1a08;
+  border: 1px solid #3a3010;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-top: 3px;
+}
+
+.duel-prof-bar {
+  height: 2px;
+  background: linear-gradient(90deg, #f8c850, #f8d870);
+  border-radius: 1px;
+  transition: width 0.3s;
+}
+
+/* 熟练度底条 */
+.duel-spell-btn::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #1e293b;
+  border-radius: 1px;
+  margin-top: 2px;
+  position: relative;
+}
+
+.duel-spell-btn { position: relative; }
+
+.duel-prof-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background: linear-gradient(90deg, #f8c850, #f8d870);
+  border-radius: 1px;
+}
+
+.duel-spell-prof {
+  width: calc(100% - 20px);
+  height: 2px;
+  background: #1e293b;
+  border-radius: 1px;
+  margin-top: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.duel-prof-bar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #f8c850, #f8d870);
+  border-radius: 1px;
+}
+
+.duel-spell-prof-num {
+  font-size: 9px;
+  color: #6a7a8a;
+}
+
+/* ── 手势施法阶段 ────────────────────────────────────────── */
+
+.duel-gesture-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.duel-gesture-spell-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.duel-gesture-prompt {
+  font-size: 12px;
+  color: #8899aa;
+}
+
+/* 决斗手势组件覆盖 */
+.duel-main-area .gest-stage {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(248,120,48,0.1);
+}
+
+.duel-main-area .gest-timer-bar {
+  height: 5px;
+  background: #1a0a0a;
+}
+
+/* ── 敌方思考 ────────────────────────────────────────────── */
+
+.duel-enemy-thinking {
+  text-align: center;
+  color: #f8a8a8;
+  font-size: 13px;
+  padding: 40px 0;
+  font-style: italic;
+  animation: duel-pulse 1s ease-in-out infinite;
+}
+
+@keyframes duel-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── 决斗结果 ────────────────────────────────────────────── */
+
+.duel-result {
+  text-align: center;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.duel-result-icon { font-size: 40px; line-height: 1; }
+
+.duel-result-title {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.duel-result-win  .duel-result-title { color: #f8c850; }
+.duel-result-lose .duel-result-title { color: #e05c5c; }
+
+.duel-result-desc {
+  font-size: 13px;
+  color: #8899aa;
+  line-height: 1.6;
+  max-width: 260px;
+  font-style: italic;
+}
+
+.duel-result-exp {
+  background: #1a2a10;
+  border: 1px solid #2a4a18;
+  color: #8fe8b0;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+
+.duel-result-record {
+  font-size: 11px;
+  color: #6a7a8a;
+}
+
+.duel-result-btns {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 4px;
+}
+
+.duel-btn-primary {
+  flex: 2;
+  background: #1e2f55;
+  border: 1px solid #3b4f8a;
+  color: #f8d49d;
+  padding: 11px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.duel-btn-primary:hover { background: #253a6a; border-color: #f8c850; color: #f8c850; }
+
+.duel-btn-sec {
+  flex: 1;
+  background: #1e293b;
+  border: 1px solid #2a3b66;
+  color: #8899aa;
+  padding: 11px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.duel-btn-sec:hover { background: #253050; color: #e6e6e6; }
+
+/* ── 响应式 ─────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .duel-spell-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .duel-spell-btn  { padding: 8px 6px; }
+  .duel-spell-name { font-size: 12px; }
+
+  .duel-main-area .gest-stage {
+    width: 155px;
+    height: 155px;
+  }
+
+  .duel-result-btns { flex-direction: column; }
+}
+
+/* ============================================================
+   决斗系统扩展样式：1v1/4v4 模式选择、组队、战斗界面
+   ============================================================ */
+
+/* ── 模式选择 ─────────────────────────────────────────────── */
+
+.duel-mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.duel-mode-card {
+  background: var(--bg-btn);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 20px 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.duel-mode-card:hover {
+  background: var(--bg-btn-hover);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.duel-mode-icon { font-size: 32px; line-height: 1; }
+.duel-mode-name { font-size: 15px; font-weight: 700; color: var(--color-gold); }
+.duel-mode-desc { font-size: 11px; color: var(--color-text-light); }
+
+/* ── 返回按钮 ─────────────────────────────────────────────── */
+
+.duel-back-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-light);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-bottom: 8px;
+  text-align: left;
+  display: block;
+}
+.duel-back-btn:hover { color: var(--color-text); }
+
+/* ── 队友选择 ─────────────────────────────────────────────── */
+
+.duel-ally-selected {
+  font-size: 12px;
+  color: var(--color-text-light);
+  background: rgba(248,200,80,0.06);
+  border: 1px solid rgba(248,200,80,0.15);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+}
+.duel-ally-sel-label { color: var(--color-gold); font-weight: 600; }
+
+.duel-ally-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+  margin-bottom: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.duel-ally-card {
+  background: var(--bg-btn);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  text-align: left;
+  transition: all 0.18s;
+}
+.duel-ally-card:hover { background: var(--bg-btn-hover); border-color: rgba(255,255,255,0.15); }
+.duel-ally-selected-card { border-color: var(--color-gold) !important; background: rgba(248,200,80,0.08) !important; }
+.duel-ally-locked { opacity: 0.45; cursor: not-allowed; }
+
+.duel-ally-portrait { font-size: 24px; flex-shrink: 0; }
+.duel-ally-info { flex: 1; min-width: 0; }
+.duel-ally-name { font-size: 13px; font-weight: 700; color: var(--color-text); margin-bottom: 2px; }
+.duel-ally-role { font-size: 11px; color: var(--color-text-light); }
+.duel-ally-tier { font-size: 10px; margin-top: 3px; }
+.duel-tier-ok   { color: #8fe8b0; }
+.duel-tier-lock { color: #e05c5c; }
+.duel-ally-check { font-size: 10px; color: var(--color-gold); margin-top: 2px; font-weight: 700; }
+
+/* ── 敌方队伍选择 ─────────────────────────────────────────── */
+
+.duel-enemy-team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.duel-et-card {
+  background: var(--bg-btn);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all 0.18s;
+}
+.duel-et-card:hover { background: var(--bg-btn-hover); border-color: rgba(255,255,255,0.15); }
+.duel-et-custom { border-style: dashed; border-color: rgba(248,200,80,0.3); }
+
+.duel-et-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.duel-et-icon   { font-size: 18px; }
+.duel-et-name   { font-size: 14px; font-weight: 700; color: var(--color-gold); flex: 1; }
+.duel-et-diff   { font-size: 11px; }
+.duel-et-flavor { font-size: 12px; color: var(--color-text-light); font-style: italic; line-height: 1.5; margin-bottom: 4px; }
+.duel-et-members { font-size: 16px; letter-spacing: 2px; }
+
+/* ── 4v4 HP状态栏 ─────────────────────────────────────────── */
+
+.duel-4v4-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.duel-4v4-team {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.duel-4v4-vs {
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--color-text-light);
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+.duel-unit-mini {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  padding: 5px 4px;
+  text-align: center;
+  transition: opacity 0.3s;
+  position: relative;
+}
+.duel-unit-fainted { opacity: 0.35; }
+.duel-unit-enemy   { /* 对手使用红色调 */ }
+
+.duel-unit-portrait { font-size: 14px; line-height: 1; }
+.duel-unit-name {
+  font-size: 9px;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.duel-hp-wrap-mini {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 2px 0;
+}
+
+.duel-unit-hp {
+  font-size: 9px;
+  color: var(--color-text-light);
+}
+
+.duel-icon-shield {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 9px;
+}
+
+/* ── 队友出手动画 ─────────────────────────────────────────── */
+
+.duel-ally-action {
+  text-align: center;
+  padding: 30px 0;
+  animation: ally-pulse 0.4s ease-out;
+}
+
+@keyframes ally-pulse {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.duel-ally-action-portrait { font-size: 36px; margin-bottom: 6px; }
+.duel-ally-action-name     { font-size: 14px; color: var(--color-text-light); font-weight: 600; margin-bottom: 4px; }
+.duel-ally-action-spell    { font-size: 18px; font-weight: 700; color: var(--color-gold); }
+
+/* ── 日志：队友台词 ───────────────────────────────────────── */
+
+.dlog-ally        { color: #a8d8f8; }
+.dlog-ally-quote  { color: #c8e8f8; font-style: italic; opacity: 0.85; }
+.dlog-shield      { color: #80c8f8; }
+.dlog-shieldbreak { color: #f8c870; }
+.dlog-heal        { color: #8fe8b0; }
+.dlog-hit         { color: var(--color-text); }
+.dlog-miss        { color: var(--color-text-light); opacity: 0.6; }
+.dlog-faint       { color: #e05c5c; font-weight: 600; }
+.dlog-round       { color: var(--color-gold); text-align: center; opacity: 0.6; font-size: 11px; }
+.dlog-sys         { color: var(--color-text-light); font-style: italic; opacity: 0.7; }
+.dlog-player      { color: #a8d8f8; }
+.dlog-enemy       { color: #f8a8a8; }
+.dlog-err         { color: #e05c5c; }
+
+/* ── 无手势提示 ───────────────────────────────────────────── */
+
+.duel-no-gesture {
+  text-align: center;
+  color: var(--color-text-light);
+  padding: 20px 0;
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* ── 对手等级/好感度徽章 ─────────────────────────────────── */
+
+.duel-opp-tier {
+  font-size: 10px;
+  background: rgba(76,175,130,0.15);
+  color: #8fe8b0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+.duel-opp-locked {
+  background: rgba(255,255,255,0.06);
+  color: var(--color-text-light);
+}
+
+/* ── 响应式 ───────────────────────────────────────────────── */
+
+@media (max-width: 400px) {
+  .duel-mode-grid   { grid-template-columns: 1fr; }
+  .duel-ally-grid   { grid-template-columns: 1fr; }
+  .duel-4v4-team    { gap: 2px; }
+  .duel-unit-mini   { padding: 3px 2px; }
+}
+
+/* ============================================================
+   信息页子标签 + 咒语图鉴三列
+   ============================================================ */
+
+/* ── 子标签栏 ────────────────────────────────────────────── */
+
+.info-sub-tab-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.info-sub-tab {
+  flex: 1;
+  background: var(--bg-btn);
+  border: none;
+  color: var(--color-text-light);
+  padding: 7px 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.info-sub-tab:hover {
+  background: var(--bg-btn-hover);
+  color: var(--color-text);
+}
+.info-sub-tab.active {
+  background: var(--bg-btn-action);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── 子页面显隐 ───────────────────────────────────────────── */
+
+.info-sub-screen        { display: none; }
+.info-sub-screen.active { display: block; }
+
+/* ── 人物关系子页 ────────────────────────────────────────── */
+
+.info-affinity-tip {
+  font-size: 12px;
+  color: var(--color-text-light);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+/* ── 咒语图鉴内嵌（三列网格）────────────────────────────── */
+
+.sg-inline-tip {
+  font-size: 11px;
+  color: var(--color-text-light);
+  background: rgba(248,200,80,0.07);
+  border-left: 2px solid var(--color-gold);
+  padding: 5px 9px;
+  border-radius: 0 5px 5px 0;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.sg-tab-row {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 9px;
+}
+
+.sg-tab-btn {
+  flex: 1;
+  background: var(--bg-btn);
+  border: none;
+  color: var(--color-text-light);
+  padding: 6px 4px;
+  border-radius: 5px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.sg-tab-btn:hover  { background: var(--bg-btn-hover); }
+.sg-tab-active     { background: var(--bg-btn-action) !important; color: #fff; font-weight: 600; }
+
+/* 三列网格 */
+.sg-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+
+.sg-card-mini {
+  background: var(--bg-btn);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 7px;
+  padding: 9px 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: background 0.15s;
+  min-width: 0;
+}
+.sg-card-mini:hover  { background: var(--bg-btn-hover); }
+.sg-card-mini-locked { opacity: 0.45; }
+
+.sg-mini-name {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-gold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sg-card-mini-locked .sg-mini-name { color: var(--color-text-light); }
+
+.sg-mini-en {
+  font-size: 9px;
+  color: var(--color-text-light);
+  font-style: italic;
+  opacity: 0.7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sg-mini-gesture { font-size: 10px; color: var(--color-gold); opacity: 0.85; }
+
+.sg-mini-prof-wrap {
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 1px;
+  overflow: hidden;
+  margin-top: 3px;
+}
+.sg-mini-prof-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-gold), #f8e870);
+  border-radius: 1px;
+  transition: width 0.4s;
+}
+
+.sg-mini-prof-num  { font-size: 9px; color: var(--color-gold-light); font-weight: 600; }
+.sg-mini-unlock    { font-size: 9px; color: #e05c5c; line-height: 1.4; margin-top: 2px; }
+
+.sg-empty-3col {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-text-light);
+  padding: 20px 0;
+  font-size: 12px;
+}
+
+/* 极窄屏降为两列 */
+@media (max-width: 360px) {
+  .sg-grid-3col { grid-template-columns: repeat(2, 1fr); }
+}

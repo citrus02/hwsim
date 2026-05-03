@@ -101,235 +101,208 @@ async function loadSpellEvents() {
   }
 }
 
-// 施法 + 增加熟练度 → 每次+5%
+// 施法（不再涨熟练度——熟练度只能在决斗中获得）
 export function castSpell(spellId) {
   const list = getLearnedSpell();
   if (!list.includes(spellId)) {
     if (window.doStudyLog) window.doStudyLog(`❌ 尚未学会该咒语`);
     return false;
   }
-
   const spell = spellData.find(s => s.id === spellId);
   if (!spell) return false;
 
+  if (window.doStudyLog && spellEventLib) {
+    const events = spellEventLib[spellId] || spellEventLib["默认"];
+    const event = events[Math.floor(Math.random() * events.length)];
+    window.doStudyLog(`🪄 施法：${spell.nameCn}｜${event}`);
+  }
+  return true;
+}
+
+/**
+ * 决斗专用：增加熟练度
+ * @param {string} spellId
+ * @param {number} amount  增加量（0-100），由决斗系统根据精准度计算传入
+ * @returns {number} 新的熟练度值
+ */
+export function gainProficiency(spellId, amount) {
   const save = getSave();
   if (!save.spellProficiency) save.spellProficiency = {};
 
-  const oldPro = save.spellProficiency[spellId] || 0;
-  let newPro = oldPro;
+  const old = save.spellProficiency[spellId] || 0;
+  if (old >= 100) return 100;
 
-  // 增加熟练度（满级不再增加）→ 每次 +5
-  if (oldPro < 100) {
-    newPro = oldPro + 5;
-    if (newPro > 100) newPro = 100;
-    save.spellProficiency[spellId] = newPro;
-    setSave(save);
-  }
-
-  if (window.doStudyLog && spellEventLib) {
-    /* ✅ FIX #2：同步使用已加载的事件库 */
-    const events = spellEventLib[spellId] || spellEventLib["默认"];
-    const event = events[Math.floor(Math.random() * events.length)];
-    
-    window.doStudyLog(
-      `🪄 施法：${spell.nameCn}（熟练度+5%，共${newPro}%）｜${event}`
-    );
-  }
-
-  return true;
+  const next = Math.min(100, old + Math.round(amount));
+  save.spellProficiency[spellId] = next;
+  setSave(save);
+  return next;
 }
+
+window.gainProficiency = gainProficiency;
 
 window.autoUnlockByCourse = autoUnlockByCourse;
 
 // ==============================================
-// 咒语界面 UI（面板、渲染、点击逻辑）
+// 咒语图鉴 UI（只读展示，不能施法，不涨熟练度）
 // ==============================================
 import { costAction, timeSystem, nextTime, syncActionUI } from "./time-system.js";
+import { getGestureBySpellId } from "./gesture-data.js";
 
 let currentSpellSourceType = "hogwarts";
 let allSpellData = [];
-let backTopBtn = null;
 
 export function openSpellPanel() {
   autoUnlockByCourse();
-  
-  /* ✅ FIX #5：在打开面板时预加载事件库 */
   loadSpellEvents();
 
   document.getElementById("actionMain").style.display = "none";
   const exploreMain = document.getElementById("exploreMain");
   if (exploreMain) exploreMain.style.display = "none";
 
-  let old = document.getElementById("spellMain");
-  if (old) old.remove();
+  document.getElementById("spellMain")?.remove();
 
   const spellBox = document.createElement("div");
   spellBox.id = "spellMain";
-  spellBox.innerHTML = `<div class="title">🪄 训练咒语</div>`;
 
-  const container = document.createElement("div");
-  container.id = "spell-container";
-  container.style.maxHeight = "400px";
-  container.style.overflow = "auto";
-  container.style.display = "grid";
-  container.style.gridTemplateColumns = "repeat(3, 1fr)";
-  container.style.gap = "8px";
-
-  backTopBtn = document.createElement("button");
-  backTopBtn.className = "action-btn";
-  backTopBtn.innerText = "← 返回上一层";
-  backTopBtn.style.width = "100%";
-  backTopBtn.style.margin = "0 0 8px 0";
-  backTopBtn.style.display = "none";
-  backTopBtn.onclick = () => {
-    renderSpellRoot();
-    backTopBtn.style.display = "none";
-  };
-  spellBox.appendChild(backTopBtn);
-
-  const backBtn = document.createElement("button");
-  backBtn.className = "action-btn";
-  backBtn.innerText = "← 返回行动";
-  backBtn.style.marginTop = "10px";
-  backBtn.onclick = closeSpellPanel;
+  // ── 标题 ──
+  spellBox.innerHTML = `
+    <div class="title">📖 咒语图鉴</div>
+    <div class="spell-grimoire-tip">
+      🏅 熟练度通过<strong>决斗训练</strong>提升，课堂学理论，决斗练技巧
+    </div>
+    <div class="spell-tab-row" id="spell-tab-row">
+      <button class="spell-tab-btn active" data-type="hogwarts">📚 课程咒语</button>
+      <button class="spell-tab-btn" data-type="self">📖 自学/特殊</button>
+      <button class="spell-tab-btn" data-type="dark">💀 黑魔法</button>
+    </div>
+    <div id="spell-list-wrap"></div>
+    <button class="action-btn" id="spell-back-btn" style="margin-top:10px;">← 返回行动</button>`;
 
   const card = document.querySelector("#actionMain").closest(".card");
   card.appendChild(spellBox);
-  spellBox.appendChild(container);
-  spellBox.appendChild(backBtn);
+
+  document.getElementById("spell-back-btn").onclick = closeSpellPanel;
+
+  // 标签切换
+  document.querySelectorAll(".spell-tab-btn").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll(".spell-tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentSpellSourceType = btn.dataset.type;
+      renderGrimoireList();
+    };
+  });
 
   allSpellData = getSpellListWithStatus();
-  renderSpellRoot();
+  currentSpellSourceType = "hogwarts";
+  renderGrimoireList();
 }
 
 export function closeSpellPanel() {
-  const box = document.getElementById("spellMain");
-  if (box) box.remove();
+  document.getElementById("spellMain")?.remove();
   document.getElementById("actionMain").style.display = "block";
 }
 
-// 咒语专属深蓝配色
-const spellBtnStyle = `width:100%;text-align:left;padding:10px 12px;border:none;border-radius:6px;background:#1a263d;color:#e0e8ff;cursor:pointer;box-sizing:border-box;min-height:140px;`;
-const spellBtnHover = "#2a3b5c";
-
-function renderSpellRoot() {
-  const wrap = document.getElementById("spell-container");
+function renderGrimoireList() {
+  const wrap = document.getElementById("spell-list-wrap");
   if (!wrap) return;
-  wrap.innerHTML = "";
-  if (backTopBtn) backTopBtn.style.display = "none";
 
-  const categories = [
-    { icon: "📚", name: "霍格沃茨正规课程", desc: "校内教授正规教学咒语", type: "hogwarts" },
-    { icon: "📖", name: "自学/特殊来源", desc: "禁书、私下传授、自学咒语", type: "self" },
-    { icon: "💀", name: "黑魔法 / 禁咒", desc: "高危禁忌、不可饶恕咒", type: "dark" }
-  ];
+  const list = allSpellData.filter(s => s.sourceType === currentSpellSourceType);
 
-  categories.forEach(cat => {
-    const btn = document.createElement("button");
-    btn.style.cssText = spellBtnStyle;
-    btn.innerHTML = `<div style="font-size:15px;">${cat.icon} ${cat.name}</div><div style="font-size:12px;color:#c0d8ff;margin-top:4px;">${cat.desc}</div>`;
-    /* ✅ FIX #1：改成 style.background 而不是 cssText += */
-    btn.onmouseover = () => btn.style.background = spellBtnHover;
-    btn.onmouseout = () => btn.style.background = "#1a263d";
-    btn.onclick = () => {
-      currentSpellSourceType = cat.type;
-      renderSpellList();
-    };
-    wrap.appendChild(btn);
-  });
+  if (list.length === 0) {
+    wrap.innerHTML = `<div class="spell-grimoire-empty">暂无咒语</div>`;
+    return;
+  }
+
+  wrap.innerHTML = list.map(spell => {
+    const gesture  = getGestureBySpellId(spell.id);
+    const prof     = spell.proficiency || 0;
+    const profText = prof >= 100 ? "精通" : `${prof}%`;
+    const profBar  = `<div class="sg-prof-wrap">
+      <div class="sg-prof-bar" style="width:${prof}%"></div>
+    </div>`;
+
+    const learnedClass = spell.isLearned ? "" : "sg-card-locked";
+    const nameColor    = spell.isLearned ? "var(--color-gold)" : "var(--color-text-light)";
+    const lockBadge    = spell.isLearned ? "" : `<span class="sg-lock">🔒</span>`;
+    const unlockHint   = !spell.isLearned && spell.unlockCourse
+      ? `<div class="sg-unlock-hint">需【${spell.unlockCourse}】≥${spell.unlockPercent ?? 0}%</div>`
+      : "";
+    const gestureBadge = gesture
+      ? `<span class="sg-gesture-badge">✋ 有手势</span>`
+      : "";
+    const profSection  = spell.isLearned ? `
+      <div class="sg-prof-row">
+        <span class="sg-prof-label">决斗熟练度</span>
+        <span class="sg-prof-num">${profText}</span>
+      </div>
+      ${profBar}` : "";
+
+    return `<div class="sg-card ${learnedClass}">
+      <div class="sg-card-top">
+        <div class="sg-name" style="color:${nameColor}">${spell.nameCn}${lockBadge}</div>
+        <div class="sg-en">${spell.nameEn || ""}</div>
+        ${gestureBadge}
+      </div>
+      <div class="sg-effect">${spell.effect || ""}</div>
+      ${unlockHint}
+      ${profSection}
+    </div>`;
+  }).join("");
 }
 
-function renderSpellList() {
-  const wrap = document.getElementById("spell-container");
-  if (!wrap) return;
-  wrap.innerHTML = "";
-  if (backTopBtn) backTopBtn.style.display = "block";
+window.openSpellPanel  = openSpellPanel;
+window.closeSpellPanel = closeSpellPanel;
 
-  const filtered = allSpellData.filter(s => s.sourceType === currentSpellSourceType);
-  filtered.forEach(spell => {
-    const btn = document.createElement("button");
-    btn.style.cssText = spellBtnStyle;
-    if (!spell.isLearned) {
-      btn.style.opacity = "0.6";
-      btn.style.cursor = "not-allowed";
-    }
+/**
+ * 信息页内嵌图鉴渲染（三列卡片，无标签切换，直接渲染到 #info-grimoire-mount）
+ */
+window._renderInlineGrimoire = function() {
+  autoUnlockByCourse();
+  const mount = document.getElementById("info-grimoire-mount");
+  if (!mount) return;
 
-    // 名称（显示熟练度% / 满级精通）
-    const name = document.createElement("div");
-    name.style.fontSize = "15px";
-    name.style.color = spell.isLearned ? "#ffdf70" : "#8899bb";
-    name.innerText = spell.isLearned
-      ? (spell.proficiency >= 100 ? `${spell.nameCn} 【精通】` : `${spell.nameCn}（${spell.proficiency}%）`)
-      : `${spell.nameCn} 🔒`;
+  const all = getSpellListWithStatus();
 
-    // 咒语原文
-    const eng = document.createElement("div");
-    eng.style = "font-size:12px;color:#a0b8e8;";
-    eng.innerText = spell.nameEn || "（无英文名）";
+  // 当前激活的分类
+  let activeType = mount.dataset.activeType || "hogwarts";
 
-    // 效果
-    const effect = document.createElement("div");
-    effect.style = "font-size:12px;color:#c0d8ff;margin-top:4px;";
-    effect.innerText = `效果：${spell.effect || "（未定义）"}`;
+  function render() {
+    const list = all.filter(s => s.sourceType === activeType);
+    mount.innerHTML = `
+      <div class="sg-inline-tip">🏅 熟练度通过<strong>决斗训练</strong>提升</div>
+      <div class="sg-tab-row">
+        <button class="sg-tab-btn ${activeType==='hogwarts'?'sg-tab-active':''}" data-t="hogwarts">📚 课程</button>
+        <button class="sg-tab-btn ${activeType==='self'?'sg-tab-active':''}" data-t="self">📖 自学</button>
+        <button class="sg-tab-btn ${activeType==='dark'?'sg-tab-active':''}" data-t="dark">💀 黑魔法</button>
+      </div>
+      <div class="sg-grid-3col">
+        ${list.map(spell => {
+          const gesture = window.getGestureBySpellId?.(spell.id);
+          const prof    = spell.proficiency || 0;
+          const learned = spell.isLearned;
+          return `<div class="sg-card-mini ${learned?'':'sg-card-mini-locked'}">
+            <div class="sg-mini-name" style="color:${learned?'var(--color-gold)':'var(--color-text-light)'}">${spell.nameCn}${learned?'':'🔒'}</div>
+            <div class="sg-mini-en">${spell.nameEn||''}</div>
+            ${gesture?`<div class="sg-mini-gesture">✋</div>`:''}
+            ${learned?`
+              <div class="sg-mini-prof-wrap">
+                <div class="sg-mini-prof-bar" style="width:${prof}%"></div>
+              </div>
+              <div class="sg-mini-prof-num">${prof>=100?'精通':prof+'%'}</div>
+            `:`<div class="sg-mini-unlock">${spell.unlockCourse?`需${spell.unlockCourse}≥${spell.unlockPercent??0}%`:'未解锁'}</div>`}
+          </div>`;
+        }).join('')}
+        ${list.length===0?`<div class="sg-empty-3col">暂无咒语</div>`:''}
+      </div>`;
 
-    btn.appendChild(name);
-    btn.appendChild(eng);
-    btn.appendChild(effect);
-
-    // 未解锁提示
-    if (!spell.isLearned) {
-      const unlockTipEl = document.createElement("div");
-      unlockTipEl.style = "font-size:11px;color:#ff8888;margin-top:4px;";
-      /* ✅ FIX #4：防空检查，避免 undefined 显示 */
-      let tip;
-      if (spell.sourceType === "hogwarts" && spell.unlockCourse && spell.unlockPercent !== undefined) {
-        tip = `需【${spell.unlockCourse}】≥${spell.unlockPercent}%`;
-      } else {
-        tip = `尚未解锁`;
-      }
-      unlockTipEl.innerText = `🔒 ${tip}`;
-      btn.appendChild(unlockTipEl);
-    }
-
-    /* ✅ FIX #1：同样改成 style.background */
-    btn.onmouseover = () => {
-      if (spell.isLearned) btn.style.background = spellBtnHover;
-    };
-    btn.onmouseout = () => {
-      if (spell.isLearned) btn.style.background = "#1a263d";
-    };
-
-    // 点击施法逻辑
-    btn.onclick = () => {
-      if (!spell.isLearned) {
-        let tip;
-        if (spell.sourceType === "hogwarts" && spell.unlockCourse && spell.unlockPercent !== undefined) {
-          tip = `需【${spell.unlockCourse}】≥${spell.unlockPercent}%`;
-        } else {
-          tip = `该咒语尚未解锁`;
-        }
-        window.doStudyLog(`❌ ${tip}`);
-        return;
-      }
-
-      /* ✅ FIX #3：先检查行动是否足够 */
-      if (!costAction()) return;
-
-      castSpell(spell.id);
-      allSpellData = getSpellListWithStatus();
-      renderSpellList();
-
-      if (timeSystem.dailyActionLeft <= 0) {
-        closeSpellPanel();
-        setTimeout(() => {
-          nextTime();
-          syncActionUI();
-        }, 50);
-      }
-    };
-
-    wrap.appendChild(btn);
-  });
-}
-
-window.openSpellPanel = openSpellPanel;
+    mount.querySelectorAll('.sg-tab-btn').forEach(btn => {
+      btn.onclick = () => {
+        activeType = btn.dataset.t;
+        mount.dataset.activeType = activeType;
+        render();
+      };
+    });
+  }
+  render();
+};

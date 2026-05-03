@@ -17,12 +17,15 @@
 import { loadSave, writeSave } from './save-utils.js';
 import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
 import { onClassResult, onSubjectCompleted } from '../affinity-system.js';
+import { GestureWidget } from '../gesture-widget.js';
+import { getGestureById } from '../gesture-data.js';
 
 // ── 分科数据映射 ─────────────────────────────────────────
 const SUBJECT_WIN_KEY = {
   math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
   biology:"subject_biology", history:"subject_history", civics:"subject_civics",
   geography:"subject_geography", literature:"subject_literature", english:"subject_english",
+  transfiguration: "subject_transfiguration",charms: "subject_charms",
 };
 
 function getSubjectData(key) { return window[SUBJECT_WIN_KEY[key]] || null; }
@@ -57,24 +60,39 @@ function saveProgress(subjectKey, lessonNum, rating) {
   const prog = data.course.muggleProgress[subjectKey];
   if (!prog.completed.includes(lessonNum)) prog.completed.push(lessonNum);
 
-  // 麻瓜研究总进度（九门均值）
-  const KEYS = Object.keys(SUBJECT_WIN_KEY);
-  let totalRate = 0;
-  KEYS.forEach(k => {
-    const sd = getSubjectData(k);
-    if (!sd) return;
+  // ── 霍格沃茨课程：按完成课时数更新 data.course[课程名] ──
+  const sd = getSubjectData(subjectKey);
+  if (sd) {
     const total = getAllLessons(sd.syllabus).length;
+    const done  = prog.completed.length;
+    const pct   = total > 0 ? Math.floor(done / total * 100) : 0;
+    // 找到课程对应的中文名写入 data.course
+    const courseName = sd.subjectMeta?.name;
+    if (courseName) data.course[courseName] = pct;
+  }
+
+  // ── 麻瓜研究总进度（九门均值）──────────────────────────
+  const MUGGLE_KEYS = Object.keys(SUBJECT_WIN_KEY).filter(k =>
+    !["transfiguration","charms"].includes(k)
+  );
+  let totalRate = 0;
+  MUGGLE_KEYS.forEach(k => {
+    const sd2 = getSubjectData(k);
+    if (!sd2) return;
+    const total = getAllLessons(sd2.syllabus).length;
     const done  = (data.course.muggleProgress?.[k]?.completed || []).length;
     totalRate += total > 0 ? Math.floor(done / total * 100) : 0;
   });
-  data.course["麻瓜研究"] = Math.round(totalRate / KEYS.length);
+  if (MUGGLE_KEYS.length > 0)
+    data.course["麻瓜研究"] = Math.round(totalRate / MUGGLE_KEYS.length);
 
-  // 学院分（交由 house-points.js 处理）
+  writeSave(data);
+
+  // ── 学院分（必须在 writeSave 之后，否则会被覆盖）────────
   if (rating && HOUSE_POINTS_MAP[rating]) {
     window.housePoints?.addPlayerPoints?.(HOUSE_POINTS_MAP[rating]);
   }
 
-  writeSave(data);
   window.refreshAll?.();
   window.autoUnlockByCourse?.();
 }
@@ -86,7 +104,8 @@ function saveProgress(subjectKey, lessonNum, rating) {
 export function showLearnChoiceModal(item, items, title) {
   document.getElementById("cls-choice-modal")?.remove();
 
-  const subjectKey  = item.muggleSubjectKey || null;
+  // 同时支持麻瓜研究（muggleSubjectKey）和霍格沃茨课程（hogwartsSubjectKey）
+  const subjectKey  = item.muggleSubjectKey || item.hogwartsSubjectKey || null;
   const subjectData = subjectKey ? getSubjectData(subjectKey) : null;
   const hasLesson   = !!(subjectData?.syllabus);
 
@@ -158,8 +177,10 @@ function doQuickStudy(item, items, title) {
   data.course[item.name] = item.studyRate;
   writeSave(data);
 
-  const evt = item.muggleSubjectKey
-    ? (window.courseDefault?.getMuggleStudiesEvent(item.muggleSubjectKey) || "你专心学习，知识稳步提升")
+  const evt = (item.muggleSubjectKey || item.hogwartsSubjectKey)
+    ? (item.muggleSubjectKey
+        ? (window.courseDefault?.getMuggleStudiesEvent(item.muggleSubjectKey) || "你专心学习，知识稳步提升")
+        : (window.courseDefault?.getQuickStudyEvent?.(item.hogwartsSubjectKey) || window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升"))
     : (window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升");
 
   window.doStudyLog?.(`📚 ${item.name}（熟练度+${add}%，共${item.studyRate}%）｜${evt}`);
@@ -351,6 +372,74 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
     const isLast = st.qIdx === qGroup.questions.length - 1;
     const diffLabel = {basic:"基础",medium:"进阶",hard:"压轴"}[q.difficulty] || "";
 
+    // ── gesture 题型分支 ──────────────────────────────────
+    if (q.type === "gesture") {
+      const gesture = getGestureById(q.gestureId);
+      body.innerHTML = `
+        <div class="cls-quiz-header">
+          <span class="cls-quiz-count">第 ${st.qIdx+1} 题 / 共 ${qGroup.questions.length} 题</span>
+          <span class="cls-diff-badge cls-diff-${q.difficulty}">${diffLabel} · 手势</span>
+        </div>
+        <div class="cls-question">${q.text}</div>
+        <div class="cls-gest-block">
+          <div class="cls-gest-desc">${gesture ? gesture.description : "（手势数据缺失）"}</div>
+          <div id="cls-gest-mount"></div>
+        </div>
+        <div class="cls-feedback" id="cls-fb"></div>
+        <div class="cls-nav" id="cls-qnav" style="display:none">
+          ${isLast
+            ? `<button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`
+            : `<button class="cls-btn-advance" id="cls-next-q">下一题 →</button>`}
+        </div>`;
+
+      if (gesture) {
+        const mount = document.getElementById("cls-gest-mount");
+        GestureWidget.render(mount, gesture, {
+          mode: "classroom",
+          timeLimit: null,           // 课堂不限时
+          showLabel: true,
+          onComplete: ({ success, accuracy, hitCount }) => {
+            if (st.answered) return;
+            st.answered = true;
+
+            // 评分：全部节点命中得满分，部分命中按比例，完全失败扣分（hard）
+            const totalNodes = gesture.nodes.length;
+            if (success) {
+              const pct = accuracy;
+              if (pct >= 0.85)      st.score += 2;
+              else if (pct >= 0.50) st.score += 1;
+              // pct<0.5 得0分
+            } else {
+              if (q.difficulty === "hard") st.score -= 1;
+            }
+
+            const fb = document.getElementById("cls-fb");
+            if (fb) {
+              const pctText = Math.round(accuracy * 100);
+              if (success) {
+                fb.className = "cls-feedback cls-fb-show cls-fb-right";
+                fb.innerHTML = `
+                  <div class="cls-fb-tag cls-fb-r">✦ 手势成功！精准度 ${pctText}%</div>
+                  <div class="cls-fb-analysis"><span class="cls-fb-kp">解析：</span>${q.analysis}</div>`;
+              } else {
+                fb.className = "cls-feedback cls-fb-show cls-fb-wrong";
+                fb.innerHTML = `
+                  <div class="cls-fb-tag cls-fb-w">✗ 手势不完整（完成 ${hitCount}/${totalNodes} 个节点）</div>
+                  <div class="cls-fb-analysis"><span class="cls-fb-kp">解析：</span>${q.analysis}</div>`;
+              }
+            }
+            const nav = document.getElementById("cls-qnav");
+            if (nav) nav.style.display = "flex";
+            document.getElementById("cls-next-q")?.addEventListener("click", () => { st.qIdx++; render(); });
+            document.getElementById("cls-to-result")?.addEventListener("click", () =>
+              _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose));
+          }
+        });
+      }
+      return;  // gesture 题型处理完毕
+    }
+
+    // ── 普通选择题（原有逻辑） ────────────────────────────
     body.innerHTML = `
       <div class="cls-quiz-header">
         <span class="cls-quiz-count">第 ${st.qIdx+1} 题 / 共 ${qGroup.questions.length} 题</span>
