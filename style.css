@@ -1715,3 +1715,278 @@ body.modal-open .container {
   font-size: 13px; color: #d4c8e8; line-height: 1.9;
   white-space: pre-line;
 }
+
+/* ── 好感度面板：分组布局 ── */
+.affinity-panel-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0 4px;
+}
+.affinity-section {
+  margin-bottom: 10px;
+}
+.affinity-section-title {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 4px 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 8px;
+}
+
+/* ── 主动聊聊按钮 ── */
+.affinity-btn-chat {
+  background: linear-gradient(135deg, #1a3a5c, #1e4a7a);
+  border-color: #2a5a9a;
+}
+.affinity-btn-chat:hover:not([disabled]) {
+  background: linear-gradient(135deg, #1e4a7a, #2460a0);
+}
+.affinity-btn-cooldown {
+  opacity: 0.45;
+  cursor: not-allowed !important;
+  background: #222 !important;
+  border-color: #333 !important;
+}
+
+/* ── Toast 轻提示 ── */
+.affinity-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(20, 20, 40, 0.95);
+  color: #ccc;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 99999;
+  pointer-events: none;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.affinity-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── 人物关系面板：标签页 ── */
+.aff-tab-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.aff-tab-btn {
+  flex: 1;
+  background: #2d1a3d;
+  border: 1px solid #3a2a5c;
+  color: #c8b8e8;
+  padding: 7px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  text-align: center;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.aff-tab-btn:hover { background: #3a2a5c; }
+.aff-tab-btn.active {
+  background: #5a3a8a;
+  color: #f8c850;
+  border-color: #7a5aaa;
+  font-weight: bold;
+}
+.aff-tab-pane { display: none; }
+.aff-tab-pane.active { display: block; }
+
+/* ── 内嵌模式（info 子页） ── */
+.aff-inline-wrapper {
+  padding: 0;
+}
+.aff-inline-wrapper .aff-tab-bar {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.aff-inline-wrapper .affinity-panel-body {
+  overflow-y: auto;
+  max-height: 600px;
+  padding: 0;
+}
+
+/* ==================== ✅ 信息页子标签（修复：原来完全没有这段）==================== */
+.info-sub-tab-row {
+  display: flex;
+  gap: 5px;
+  margin: 0 0 10px;
+  flex-wrap: nowrap;
+}
+.info-sub-tab {
+  flex: 1;
+  min-width: 0;
+  background: #1a2438;
+  border: 1px solid #2a3656;
+  color: #8899bb;
+  padding: 6px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+.info-sub-tab:hover {
+  background: #243050;
+  color: #ccd8ee;
+  border-color: #3b4f88;
+}
+.info-sub-tab.active {
+  background: var(--bg-btn-action);
+  color: #fff;
+  font-weight: 600;
+  border-color: var(--bg-btn-action-hover);
+}
+
+/* 子页默认隐藏 */
+.info-sub-screen {
+  display: none;
+}
+.info-sub-screen.active {
+  display: block;
+}
+
+/* ==================== ✅ 好感度卡片：2列网格 + 紧凑化 ==================== */
+
+/* 改成2列 */
+.affinity-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* 卡片整体缩紧 */
+.affinity-char-card {
+  background: #150d28;
+  border: 1px solid #2a1f45;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* 顶部行收紧 */
+.affinity-char-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+}
+
+/* 图标小一点 */
+.affinity-char-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* 名字 */
+.affinity-char-name {
+  font-size: 12px;
+  color: #f8c850;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+/* 职位 */
+.affinity-char-role {
+  font-size: 10px;
+  color: #8a7aaa;
+  margin-top: 1px;
+}
+
+/* 等级徽章 */
+.affinity-char-tier-badge {
+  background: #3a2a5c;
+  color: #d8b8ff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* 描述文字：最多2行，超出省略 */
+.affinity-char-tier-label {
+  font-size: 10px;
+  color: #7a6a9a;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 进度条稍粗一点，更可见 */
+.affinity-char-bar-wrap {
+  background: #2a1a40;
+  border-radius: 3px;
+  height: 5px;
+  overflow: hidden;
+  margin-bottom: 7px;
+}
+
+/* 操作按钮更小 */
+.affinity-char-btn {
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid #3a2a5c;
+  background: #2d1a3d;
+  color: #c8b8e8;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.affinity-char-btn:hover {
+  background: #442a5c;
+}
+
+/* 分组标题：去掉 uppercase（中文用大写超奇怪） */
+.affinity-section-title {
+  font-size: 11px;
+  color: #8a7aaa;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  padding: 8px 4px 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 8px;
+}
+
+/* 内嵌 aff-tab 更紧凑 */
+.aff-inline-wrapper .aff-tab-bar {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  gap: 5px;
+}
+.aff-inline-wrapper .aff-tab-btn {
+  padding: 6px 4px;
+  font-size: 11px;
+}
+
+/* 内嵌面板可滚动区域收紧 */
+.aff-inline-wrapper .affinity-panel-body {
+  max-height: 520px;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* 手机上退回单列 */
+@media (max-width: 400px) {
+  .affinity-panel-grid {
+    grid-template-columns: 1fr;
+  }
+}

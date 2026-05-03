@@ -54,7 +54,16 @@ export function refreshAll() {
   renderTimeline();
 }
 
+// ── 内嵌人物关系面板初始化 ──
+export function renderAffinityInline() {
+  const mount = document.getElementById('info-affinity-mount');
+  if (mount && window.affinityUI?.renderAffinityPanelInline) {
+    window.affinityUI.renderAffinityPanelInline(mount);
+  }
+}
+
 function initTabs() {
+  // 主标签页（日常/时间轴/信息/背包）
   document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const tab = btn.dataset.tab;
@@ -65,9 +74,32 @@ function initTabs() {
       refreshAll();
     });
   });
+
+  // 背包标签页
   document.querySelectorAll(".bag-tab").forEach(btn => {
     btn.addEventListener("click", () => {
       if (window.setBagType) window.setBagType(btn.dataset.bag);
+    });
+  });
+
+  // ── 信息页子标签切换（档案/咒语/人物关系/任务） ──
+  document.querySelectorAll(".info-sub-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sub = btn.dataset.sub;
+      document.querySelectorAll(".info-sub-tab").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".info-sub-screen").forEach(s => s.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(`info-sub-${sub}`).classList.add("active");
+
+      if (sub === 'grimoire') {
+        window._renderInlineGrimoire?.();
+      }
+      if (sub === 'affinity') {
+        renderAffinityInline();  // 直接调用
+      }
+      if (sub === 'quest') {
+        window.renderQuestPanel?.();
+      }
     });
   });
 }
@@ -76,9 +108,12 @@ function initTabs() {
 document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   refreshAll();
+  // 初始化人物关系面板（防止页面加载时为空）
+  setTimeout(renderAffinityInline, 200);
   if (window.saveSys?.checkYearUpgrade) window.saveSys.checkYearUpgrade();
 });
 
 // 全局挂载
 window.refreshAll = refreshAll;
 window.renderCourse = renderCourse;
+window.renderAffinityInline = renderAffinityInline;

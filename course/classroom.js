@@ -503,6 +503,23 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
 
   saveProgress(subjectKey, lesson.lesson, rating);
 
+  // ── 学生角色好感度系统（维度一 + 维度四）──────────────────
+  if (rating) {
+    // 维度一：行动触发偶遇
+    window.affinityUI?.tryStudentActionEncounter('courseStudy');
+    
+    // 维度四：专属条件触发
+    window.affinityUI?.checkStudentSpecialTriggers('courseGrade', { 
+      subject: subjectKey, 
+      rating: rating 
+    });
+    
+    // 草药学（biology）特殊触发 → 纳威
+    if (subjectKey === 'biology') {
+      window.affinityUI?.checkStudentSpecialTriggers('goodStudy', { subject: '草药学' });
+    }
+  }
+
   // 好感度触发
   if (rating) onClassResult(subjectKey, rating, true);
 

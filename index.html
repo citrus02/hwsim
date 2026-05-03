@@ -32,9 +32,9 @@
   <hr>
   
   <div class="create-header-row">
-    <button id="music-button" class="music-btn">🎵 播放音乐</button>
+    <button id="music-button" class="music-btn">🎵</button>
     <h2>🧙🏻‍♀️ 创建你的巫师</h2>
-    <button class="quick-test-btn" onclick="quickTest()">⚡测试通道</button>
+    <button class="quick-test-btn" onclick="quickTest()">⚡ 测试</button>
   </div>
 
   <!-- 卡片 1：姓名 + 随机名字 -->
@@ -147,6 +147,7 @@
         <button class="info-sub-tab active" data-sub="profile">👤 档案</button>
         <button class="info-sub-tab" data-sub="grimoire">📖 咒语图鉴</button>
         <button class="info-sub-tab" data-sub="affinity">👥 人物关系</button>
+        <button class="info-sub-tab" data-sub="quest">📋 任务</button>
       </div>
 
       <!-- 子页：档案 -->
@@ -199,12 +200,14 @@
         <div id="info-grimoire-mount"></div>
       </div>
 
-      <!-- 子页：人物关系（点击打开浮层） -->
+      <!-- 子页：人物关系（内嵌） -->
       <div class="info-sub-screen" id="info-sub-affinity">
-        <div class="info-affinity-tip">人物关系详情在弹出面板中查看</div>
-        <button class="action-btn" onclick="window.affinityUI?.openAffinityPanel()">
-          👥 打开人物关系面板
-        </button>
+        <div id="info-affinity-mount"></div>
+      </div>
+      
+      <!-- 任务子页面 -->
+      <div class="info-sub-screen" id="info-sub-quest">
+        <!-- 由 quest-ui.js 的 renderQuestPanel() 填充 -->
       </div>
     </div>
 
@@ -361,6 +364,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (sub === 'grimoire') {
         setTimeout(() => window._renderInlineGrimoire?.(), 50);
       }
+      // 切换到人物关系时，内嵌渲染
+      if (sub === 'affinity') {
+        setTimeout(() => window.renderAffinityInline?.(), 50);
+      }
+      // 切换到任务页时渲染
+      if (sub === 'quest') {
+        setTimeout(() => window.renderQuestPanel?.(), 50);
+      }
     });
   });
 });
@@ -486,6 +497,7 @@ window.addEventListener('load', () => {
   }
 </script>
 
+<script type="module" src="affinity-students.js"></script>
 <script type="module" src="affinity-system.js"></script>
 <script type="module" src="affinity-data.js"></script>
 <script type="module" src="affinity-ui.js"></script>
@@ -510,14 +522,15 @@ window.addEventListener('load', () => {
   <script type="module" src="course/classroom.js"></script>
   <script type="module" src="course/course.js"></script>
 <script type="module" src="spell.js"></script>
+<script type="module" src="duel.js"></script>
 <script type="module" src="save-system.js"></script>
 <script type="module" src="bag-system.js"></script>
 <script type="module" src="slot-system.js"></script>
 <script type="module" src="ui-render.js"></script>
 <script type="module" src="hogsmeade/shop-bridge.js"></script>
-<script type="module" src="duel-data.js"></script>
-<script type="module" src="duel-engine.js"></script>
-<script type="module" src="duel-ui.js"></script>
+<script type="module" src="quest-data.js"></script>
+<script type="module" src="quest-engine.js"></script>
+<script type="module" src="quest-ui.js"></script>
 
 <!-- 折叠展开按钮 -->
 <script>

@@ -5,12 +5,16 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.4.0';
+export const CURRENT_VERSION = '1.5.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.5.0': [
+    '新增任务系统！',
+    '新增学生好感度系统！现在可以和学生组队了！',
+  ],
   '1.4.0': [
     '新增决斗系统！',
     '融合“学习课程”和“训练魔咒”，更新魔咒熟练度逻辑',

@@ -272,6 +272,10 @@ function renderSecondLayer() {
         // 尝试触发人物偶遇（30% 概率）
         setTimeout(() => tryTriggerEncounter(lv2.name), 300);
 
+        // ── 学生角色好感度触发（维度一 + 维度四）──────────────
+        window.affinityUI?.tryStudentActionEncounter('explore');
+        window.affinityUI?.checkStudentSpecialTriggers('explore', { area: lv2.name });
+
         if (timeSystem.dailyActionLeft <= 0) {
           closeExplorePanel();
           setTimeout(() => { nextTime(); syncActionUI(); }, 80);
@@ -404,6 +408,10 @@ function renderThirdLayer() {
 
       // 尝试触发人物偶遇（30% 概率）
       setTimeout(() => tryTriggerEncounter(item.name), 300);
+
+      // ── 学生角色好感度触发（维度一 + 维度四）──────────────
+      window.affinityUI?.tryStudentActionEncounter('explore');
+      window.affinityUI?.checkStudentSpecialTriggers('explore', { area: item.name });
 
       if (timeSystem.dailyActionLeft <= 0) {
         closeExplorePanel();

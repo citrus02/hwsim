@@ -138,7 +138,7 @@ export function toggleBGM() {
 }
 
 function updateMusicButtonUI(btn) {
-  btn.textContent = musicEnabled ? '🔇 暂停音乐' : '🎵 播放音乐';
+  btn.textContent = musicEnabled ? '🔇 音乐' : '🎵 音乐';
 }
 
 export function setBGMSource(src) {

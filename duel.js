@@ -709,6 +709,16 @@ function _duelEnd(playerWon, playerSpells) {
   if (playerWon) save.duelRecord.wins++;
   else save.duelRecord.losses++;
   setSave(save);
+  // ── 学生角色好感度触发（决斗胜利）─────────────────────
+  if (playerWon) {
+    // 维度一：行动触发偶遇
+    window.affinityUI?.tryStudentActionEncounter('duelWin');
+    
+    // 维度四：专属条件触发
+    window.affinityUI?.checkStudentSpecialTriggers('duelWin', { 
+      opponentLevel: opponent.level || 1 
+    });
+  }
 
   // ── 日志 ──────────────────────────────────────────────
   const resultText = playerWon
