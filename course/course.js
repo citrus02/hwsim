@@ -163,6 +163,9 @@ export function closeCoursePanel() {
   if (box) box.remove();
   document.getElementById("actionMain").style.display = "block";
   navStack = [];
+  if (window.timeSystem?.dailyActionLeft <= 0) {
+    setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+  }
 }
 
 // ============================================================
@@ -311,6 +314,7 @@ window.closeCoursePanel      = closeCoursePanel;
 window.autoUpdateCourseUnlock = autoUpdateCourseUnlock;
 window.getCurrentGrade       = getCurrentGrade;
 window.renderLevelFn         = renderLevel;
+window.loadCourseProgressFromSave = loadCourseProgressFromSave;
 
 export default {
   openCoursePanel,

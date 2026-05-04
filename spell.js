@@ -201,6 +201,9 @@ export function openSpellPanel() {
 export function closeSpellPanel() {
   document.getElementById("spellMain")?.remove();
   document.getElementById("actionMain").style.display = "block";
+  if (window.timeSystem?.dailyActionLeft <= 0) {
+    setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+  }
 }
 
 function renderGrimoireList() {

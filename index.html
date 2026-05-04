@@ -466,6 +466,21 @@ window.addEventListener('load', () => {
     }, 100);
   };
 });
+
+// ✅ 页面加载时：有存档则自动跳转主界面
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('hogwarts');
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      if (data.player?.name) {
+        document.getElementById("screen-create").classList.remove("active");
+        document.getElementById("screen-main").classList.add("active");
+        setTimeout(() => { if (window.refreshAll) window.refreshAll(); }, 100);
+      }
+    } catch {}
+  }
+});
 </script>
 
 <script type="module">
@@ -473,7 +488,7 @@ window.addEventListener('load', () => {
   
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      setBGMSource('./audio/Prologue');
+      setBGMSource('./audio/Prologue.mp3');
       initMusicSystem();
       
       const musicBtnMain = document.getElementById('music-button-main');

@@ -400,6 +400,9 @@ function closePotionPanel() {
   document.getElementById('potionFailModal')?.remove();
   const main = document.getElementById('actionMain'); if (main) main.style.display = 'block';
   selectedPotion = null; brewPhase = 'idle'; resetAll();
+  if (window.timeSystem?.dailyActionLeft <= 0) {
+    setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+  }
 }
 
 // ==================== 分类列表 一排三列 ====================

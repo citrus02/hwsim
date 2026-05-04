@@ -383,8 +383,8 @@ export class GladragsWizardwear extends BaseShop {
       // 添加书本到背包
       for (let i = 0; i < quantity; i++) {
         for (const book of selected) {
-          if (window.window.addItemToBag) {
-            window.window.addItemToBag("book", {
+          if (window.addItemToBag) {
+            window.addItemToBag("item", {
               name: book.name,
               count: book.count,
               icon: book.icon

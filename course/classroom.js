@@ -170,10 +170,11 @@ function doQuickStudy(item, items, title) {
   }
   if (window.costAction && !window.costAction()) return;
 
-  const add = 5;
-  item.studyRate = Math.min(100, (item.studyRate || 0) + add);
   const data = loadSave();
   if (!data.course) data.course = {};
+  const currentRate = data.course[item.name] || 0;
+  const add = 5;
+  item.studyRate = Math.min(100, currentRate + add);
   data.course[item.name] = item.studyRate;
   writeSave(data);
 
@@ -217,6 +218,7 @@ function enterClassroom(item, subjectKey, subjectData, items, title) {
 
   _buildPanel(item, subjectKey, subjectData, lesson, qGroup, () => {
     window.refreshAll?.();
+    window.loadCourseProgressFromSave?.();
     window.renderLevelFn?.(items, title);
   });
 }

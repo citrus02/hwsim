@@ -181,6 +181,7 @@ function _showEncounterModal(config, enc) {
 
   document.body.appendChild(modal);
   if (enc.oneTime) setFlag(config.key, enc.id);
+  window.saveSys?.addLog?.(`${config.icon} 偶遇了${config.name}：${enc.text.slice(0, 30)}${enc.text.length > 30 ? '…' : ''}`);
 
   modal.querySelectorAll('.affinity-enc-choice-btn').forEach(btn => {
     btn.addEventListener('click', () => {

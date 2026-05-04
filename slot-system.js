@@ -52,7 +52,7 @@ function createSlotCard(i, slots, mode) {
     wrap.style.gap = "6px";
     const loadBtn = makeBtn("读取", COLOR_LOAD, "#486899", !slots[i]);
     const delBtn = makeBtn("清空", COLOR_CLEAR, "#8c5260", !slots[i]);
-    loadBtn.onclick = () => { setSave(slots[i]); refreshAll(); addLog(`📥 已读取【存档${i + 1}】`); };
+    loadBtn.onclick = () => { setSave(slots[i]); if (window.refreshAll) window.refreshAll(); addLog(`📥 已读取【存档${i + 1}】`); };
     delBtn.onclick = () => { slots[i] = null; saveAllSlots(slots); window.openLoad(); addLog(`🗑️ 已清空【存档${i + 1}】`); };
     wrap.appendChild(loadBtn);
     wrap.appendChild(delBtn);

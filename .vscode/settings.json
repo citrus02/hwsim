@@ -1,0 +1,9 @@
+{
+    "liveServer.settings.port": 5501,
+    "css.lint.validProperties": [
+        "-webkit-line-clamp",
+        "-webkit-box-orient"
+    ],
+    "css.lint.vendorPrefix": "ignore",
+    "css.lint.unknownProperties": "ignore"
+}

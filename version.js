@@ -5,12 +5,18 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.5.0';
+export const CURRENT_VERSION = '1.5.1';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.5.1': [
+    '捉虫：每次刷新都得重新建立角色',
+    '捉虫：完成课程没有加熟练度',
+    '捉虫：偶遇同学没有计入游戏中的行动日志',
+    '捉虫：三次行动次数用完没有自动更新下一天',
+  ],
   '1.5.0': [
     '新增任务系统！',
     '新增学生好感度系统！现在可以和学生组队了！',

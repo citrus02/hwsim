@@ -204,6 +204,9 @@ export function closeDuelPanel() {
   document.getElementById("duelMain")?.remove();
   document.getElementById("actionMain").style.display = "block";
   _resetDuel();
+  if (window.timeSystem?.dailyActionLeft <= 0) {
+    setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+  }
 }
 
 // ─── 对手选择 ────────────────────────────────────────────

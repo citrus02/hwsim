@@ -566,8 +566,8 @@ export class DevisesAndBangs extends BaseShop {
       for (let i = 0; i < quantity; i++) {
         for (const pkg of item.packageItems) {
           const matchedItem = this.items.find(it => it.name === pkg.name);
-          if (window.window.addItemToBag) {
-            window.window.addItemToBag("material", { 
+          if (window.addItemToBag) {
+            window.addItemToBag("material", { 
               name: pkg.name, 
               count: pkg.count,
               icon: matchedItem?.icon || "📦"
