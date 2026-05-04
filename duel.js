@@ -15,19 +15,16 @@
  */
 
 // ── 运行时依赖（通过 window/localStorage 访问，无 import 依赖）──
-function _ls()              { try { return JSON.parse(localStorage.getItem('hogwarts') || '{}'); } catch(e) { return {}; } }
-function _lsSave(d)         { try { localStorage.setItem('hogwarts', JSON.stringify(d)); } catch(e) {} }
 function getSpellListWithStatus() {
-  // spell.js 挂载在 window.getSpellListWithStatus 或从存档直接读
   if (window.getSpellListWithStatus) return window.getSpellListWithStatus();
-  const save = _ls();
+  const save = window.saveSys?.getSave?.() || {};
   const learned = save.spellList || [];
   const prof    = save.spellProficiency || {};
   return learned.map(id => ({ id, nameCn: id, nameEn: id, isLearned: true, proficiency: prof[id] || 0, sourceType: 'hogwarts' }));
 }
-function getSave()          { return window.saveSys?.getSave?.() || _ls(); }
-function setSave(data)      { if (window.saveSys?.setSave) window.saveSys.setSave(data); else _lsSave(data); }
-function addLog(text)       { if (window.addLog) window.addLog(text); else { const d=_ls(); if(!d.log)d.log=[]; d.log.unshift(text); _lsSave(d); } }
+function getSave()          { return window.saveSys?.getSave?.() || {}; }
+function setSave(data)      { if (window.saveSys?.setSave) window.saveSys.setSave(data); }
+function addLog(text)       { window.addLog?.(text); }
 function renderLog()        { window.renderLog?.(); }
 const GestureWidget = {
   render:        (...a) => window.GestureWidget?.render(...a),
@@ -178,8 +175,6 @@ function _initDuel(opponent, playerSpells) {
 // ═══════════════════════════════════════════════════════════
 
 export function openDuelPanel() {
-  if (!window.costAction?.()) return;
-
   document.getElementById("actionMain").style.display = "none";
   const exploreMain = document.getElementById("exploreMain");
   if (exploreMain) exploreMain.style.display = "none";

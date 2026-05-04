@@ -15,8 +15,7 @@
  */
 
 // ── 运行时依赖包装 ───────────────────────────────────────
-function _ls()          { try { return JSON.parse(localStorage.getItem('hogwarts')||'{}'); } catch(e){return{};} }
-function getSave()      { return window.saveSys?.getSave?.() || _ls(); }
+function getSave()      { return window.saveSys?.getSave?.() || {}; }
 function addLog(t)      { window.addLog?.(t); }
 
 // ═══════════════════════════════════════════════════════════
@@ -24,8 +23,6 @@ function addLog(t)      { window.addLog?.(t); }
 // ═══════════════════════════════════════════════════════════
 
 export function openDuelPanel() {
-  if (!window.costAction?.()) return;
-
   document.getElementById("actionMain").style.display = "none";
   const ex = document.getElementById("exploreMain");
   if (ex) ex.style.display = "none";
@@ -528,6 +525,7 @@ function _renderResult(won, profGains, record, mode) {
 // ═══════════════════════════════════════════════════════════
 
 function _startBattle1v1(opponent) {
+  if (!window.costAction?.()) return;
   const playerSpells = (window.getSpellListWithStatus?.() || []).filter(s => s.isLearned);
   if (!playerSpells.length) {
     alert("你还没有习得任何咒语，无法参与决斗！");
@@ -593,6 +591,7 @@ function _startBattle1v1(opponent) {
 // ═══════════════════════════════════════════════════════════
 
 function _startBattle4v4(teamConfig) {
+  if (!window.costAction?.()) return;
   const playerSpells = (window.getSpellListWithStatus?.() || []).filter(s => s.isLearned);
   if (!playerSpells.length) {
     alert("你还没有习得任何咒语，无法参与决斗！");

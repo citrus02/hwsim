@@ -17,8 +17,8 @@
  */
 
 // ── 运行时依赖 ───────────────────────────────────────────
-function getSave()     { return window.saveSys?.getSave?.() || JSON.parse(localStorage.getItem('hogwarts')||'{}'); }
-function setSave(d)    { window.saveSys?.setSave?.(d) || localStorage.setItem('hogwarts', JSON.stringify(d)); }
+function getSave()     { return window.saveSys?.getSave?.() || {}; }
+function setSave(d)    { window.saveSys?.setSave?.(d); }
 function addLog(t)     { window.addLog?.(t); }
 
 // ── 咒语效果表 ────────────────────────────────────────────

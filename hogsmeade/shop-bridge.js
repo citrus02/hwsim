@@ -1,13 +1,13 @@
 // shop-bridge.js — 商店系统集成
 
 import { getSave, setSave, addLog, getYearGrade, getPlayerHouse } from '../save-system.js';
+import { getWallet, addMoney, spendMoney } from '../currency.js';
 
 let _shopManager = null;
 let _shopManagerLoading = false;
 
 export function getPlayerGalleons() {
-  const data = getSave();
-  return data.player?.galleons ?? 10;
+  return getWallet().galleons;
 }
 
 export function getPlayerMaterials() {
@@ -40,12 +40,13 @@ export function getPlayerWizardCards() {
 }
 
 export function updatePlayerGalleons(amount) {
-  const data = getSave();
-  if (!data.player) data.player = {};
-  data.player.galleons = (data.player.galleons || 10) + amount;
-  setSave(data);
+  if (amount >= 0) {
+    addMoney(amount, 0, 0, '');
+  } else {
+    spendMoney(-amount, 0, 0, '');
+  }
   if (window.refreshAll) window.refreshAll();
-  return data.player.galleons;
+  return getWallet().galleons;
 }
 
 export function removeMaterialFromBag(materialName, quantity) {

@@ -14,35 +14,27 @@
  * 全局挂载：window.currency
  */
 
+import { getSave, setSave } from './save-system.js';
+
 // ── 换算常量 ─────────────────────────────────────────────
 const SICKLES_PER_GALLEON = 17;
 const KNUTS_PER_SICKLE    = 29;
 const KNUTS_PER_GALLEON   = SICKLES_PER_GALLEON * KNUTS_PER_SICKLE; // 493
 
-// ── 存档工具 ─────────────────────────────────────────────
-function _load() {
-  try { return JSON.parse(localStorage.getItem("hogwarts")) || {}; }
-  catch { return {}; }
-}
-function _save(data) {
-  try { localStorage.setItem("hogwarts", JSON.stringify(data)); }
-  catch {}
-}
-
 // ── 初始化货币字段（首次加载时补齐）────────────────────
 export function initCurrency() {
-  const data = _load();
+  const data = getSave();
   if (!data.player) data.player = {};
   let changed = false;
   if (data.player.galleons === undefined) { data.player.galleons = 10; changed = true; }
   if (data.player.sickles  === undefined) { data.player.sickles  = 0;   changed = true; }
   if (data.player.knuts    === undefined) { data.player.knuts    = 0;   changed = true; }
-  if (changed) _save(data);
+  if (changed) setSave(data);
 }
 
 // ── 获取货币 ─────────────────────────────────────────────
 export function getWallet() {
-  const data = _load();
+  const data = getSave();
   return {
     galleons: data.player?.galleons ?? 10,
     sickles:  data.player?.sickles  ?? 0,
@@ -64,7 +56,7 @@ export function getTotalKnuts() {
  * @param {string} reason 日志原因
  */
 export function addMoney(galleons = 0, sickles = 0, knuts = 0, reason = "") {
-  const data = _load();
+  const data = getSave();
   if (!data.player) data.player = {};
 
   let totalKnuts = getTotalKnuts()
@@ -72,14 +64,14 @@ export function addMoney(galleons = 0, sickles = 0, knuts = 0, reason = "") {
     + sickles  * KNUTS_PER_SICKLE
     + knuts;
 
-  if (totalKnuts < 0) totalKnuts = 0; // 不允许负数
+  if (totalKnuts < 0) totalKnuts = 0;
 
   data.player.galleons = Math.floor(totalKnuts / KNUTS_PER_GALLEON);
   totalKnuts %= KNUTS_PER_GALLEON;
   data.player.sickles  = Math.floor(totalKnuts / KNUTS_PER_SICKLE);
   data.player.knuts    = totalKnuts % KNUTS_PER_SICKLE;
 
-  _save(data);
+  setSave(data);
 
   if (reason) window.doStudyLog?.(`💰 ${reason}`);
   window.refreshAll?.();

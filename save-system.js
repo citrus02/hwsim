@@ -97,12 +97,16 @@ export function saveTime(timeSystem) {
   checkYearUpgrade();
 }
 
+const MAX_LOG_ENTRIES = 200;
+const RENDER_LOG_LIMIT = 50;
+
 export function addLog(text) {
   const d = getSave();
   if (!d.log) d.log = [];
   const curDate = d.time?.currentDate || "1991-09-02";
   const curTime = d.time?.nowTime || "早晨";
   d.log.push(`[${curDate} ${curTime}] ${text}`);
+  if (d.log.length > MAX_LOG_ENTRIES) d.log = d.log.slice(-MAX_LOG_ENTRIES);
   setSave(d);
   if (window.renderLog) window.renderLog();
 }
@@ -112,8 +116,9 @@ export function renderLog() {
   const el = document.getElementById("log");
   if (!el) return;
   if (!Array.isArray(data.log)) data.log = []; 
+  const recent = data.log.slice(-RENDER_LOG_LIMIT);
   el.innerHTML = "";
-  data.log.forEach(t => {
+  recent.forEach(t => {
     const p = document.createElement("p");
     p.innerText = t;
     el.appendChild(p);

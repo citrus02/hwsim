@@ -5,12 +5,23 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.5.1';
+export const CURRENT_VERSION = '1.5.2';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.5.2': [
+    '捉虫：探索进度不持久化',
+    '捉虫：商店系统绕过货币系统',
+    '捉虫：存档读写函数统一',
+    '捉虫：日志无限增长',
+    '捉虫：决斗面板进入就扣行动',
+    '捉虫：初始金币硬编码不一致',
+    '捉虫：buildSaveData 缺少字段',
+    '捉虫：renderLog 性能优化',
+    '捉虫：空 catch 块',
+  ],
   '1.5.1': [
     '捉虫：每次刷新都得重新建立角色',
     '捉虫：完成课程没有加熟练度',

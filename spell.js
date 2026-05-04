@@ -1,24 +1,20 @@
 import { spellData } from "./spell-data.js";
+import { getSave as _getSave, setSave as _setSave } from "./save-system.js";
 
-// ==============================================
-// 咒语系统核心（存档、解锁、熟练度、施法）
-// ==============================================
-
-// 初始化咒语存档
 export function initSpellSave() {
-  const save = JSON.parse(localStorage.getItem("hogwarts")) || {};
+  const save = _getSave();
   if (!save.spellList) save.spellList = [];
   if (!save.spellProficiency) save.spellProficiency = {};
   if (!save.darkMagicRecord) save.darkMagicRecord = 0;
-  localStorage.setItem("hogwarts", JSON.stringify(save));
+  _setSave(save);
 }
 
 function getSave() {
-  return JSON.parse(localStorage.getItem("hogwarts")) || {};
+  return _getSave();
 }
 
 function setSave(data) {
-  localStorage.setItem("hogwarts", JSON.stringify(data));
+  _setSave(data);
 }
 
 // 课程自动解锁咒语

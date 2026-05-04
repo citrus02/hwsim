@@ -18,6 +18,7 @@
 //   吹宝超级泡泡糖约3~5西可
 
 import { BaseShop } from '../baseShop.js';
+import { getSave, setSave } from '../../save-system.js';
 
 // shop-bridge.js 已挂到 window
 const { updateShopStats } = window;
@@ -553,7 +554,7 @@ export class Honeydukes extends BaseShop {
     if (!player.wizardCards) player.wizardCards = {};
     player.wizardCards[card.name] = (player.wizardCards[card.name] || 0) + 1;
 
-    const data = JSON.parse(localStorage.getItem("hogwarts")) || {};
+    const data = getSave();
     if (!data.player) data.player = {};
     if (!data.player.wizardCards) data.player.wizardCards = {};
     data.player.wizardCards[card.name] = (data.player.wizardCards[card.name] || 0) + 1;
@@ -573,7 +574,7 @@ export class Honeydukes extends BaseShop {
       });
     }
 
-    localStorage.setItem("hogwarts", JSON.stringify(data));
+    setSave(data);
     if (window.renderBag) window.renderBag();
 
     const count = player.wizardCards[card.name];

@@ -2,9 +2,28 @@
 
 import { timeSystem, costAction, nextTime, syncActionUI } from "./time-system.js";
 import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } from "./explore-data.js";
-import { getYearGrade, getPlayerHouse } from "./save-system.js";
+import { getYearGrade, getPlayerHouse, getSave, setSave } from "./save-system.js";
 import { exploreEventLib } from "./explore-default.js";
 import { tryTriggerEncounter } from "./affinity-ui.js";
+
+function _saveExploreRate(area) {
+  const data = getSave();
+  if (!data.explore) data.explore = {};
+  data.explore[area.name] = area.exploreRate;
+  setSave(data);
+}
+
+function _loadAllExploreRate() {
+  const data = getSave();
+  if (!data.explore) return;
+  function traverse(items) {
+    items.forEach(item => {
+      if (item.children) traverse(item.children);
+      else if (data.explore[item.name] !== undefined) item.exploreRate = data.explore[item.name];
+    });
+  }
+  traverse(hogwartsExploreData);
+}
 
 export function addExploreRate(area, val = 5) {
   const currentGrade = getYearGrade();
@@ -12,12 +31,12 @@ export function addExploreRate(area, val = 5) {
 
   if (isLock) return "该区域未解锁";
   
-  // 修改：100%后不再增加进度，但返回提示
   if (area.exploreRate >= 100) {
     return "该区域已完全探索，无法继续增加探索度";
   }
   
   area.exploreRate = Math.min(100, area.exploreRate + val);
+  _saveExploreRate(area);
   return `探索进度：${area.name} ${area.exploreRate}%`;
 }
 
@@ -58,6 +77,7 @@ let currentSecondParent = null;
 
 export function openExplorePanel() {
   resetExploreCache();
+  _loadAllExploreRate();
   document.getElementById("actionMain").style.display = "none";
   document.getElementById("exploreMain").style.display = "block";
 

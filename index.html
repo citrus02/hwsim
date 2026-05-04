@@ -128,7 +128,7 @@
         <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分</span>
         <span class="sg-left">今日行动次数：<span id="actions">3</span>/3</span>
         <span class="sg-right sg-currency">
-          <span class="coin-g">🟡<span id="stat-galleons">100</span></span>
+          <span class="coin-g">🟡<span id="stat-galleons">10</span></span>
           <span class="coin-s">⚪<span id="stat-sickles">0</span></span>
           <span class="coin-b">🟤<span id="stat-knuts">0</span></span>
         </span>
@@ -296,10 +296,13 @@ function buildSaveData(opts) {
       blood: opts.blood || "混血巫师",
       house: opts.house || "格兰芬多",
       wand:  opts.wand  || "未知魔杖",
-      wandAccepted: opts.wandAccepted ?? true
+      wandAccepted: opts.wandAccepted ?? true,
+      galleons: 10,
+      sickles: 0,
+      knuts: 0
     },
     time: {
-      year: 1991,        // ✅ 添加这一行！
+      year: 1991,
       month: 9,
       day: 2,
       dailyActionLeft: 3,
@@ -313,7 +316,15 @@ function buildSaveData(opts) {
       potion:   [],
       item:     [],
       wizardCard: []
-    }
+    },
+    affinity: {},
+    housePoints: { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 },
+    duelRecord: { wins: 0, losses: 0 },
+    quests: {},
+    spellList: [],
+    spellProficiency: {},
+    darkMagicRecord: 0,
+    explore: {}
   };
 }
 
@@ -478,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("screen-main").classList.add("active");
         setTimeout(() => { if (window.refreshAll) window.refreshAll(); }, 100);
       }
-    } catch {}
+    } catch (e) { console.warn('[auto-load] parse save failed:', e); }
   }
 });
 </script>

@@ -57,10 +57,8 @@
 import { DAILY_QUEST_POOL, SIDE_QUESTS, ACHIEVEMENTS, drawDailyQuests } from './quest-data.js';
 
 // ── 运行时依赖 ───────────────────────────────────────────
-function _ls()     { try { return JSON.parse(localStorage.getItem('hogwarts')||'{}'); } catch(e){return{};} }
-function _lsSet(d) { try { localStorage.setItem('hogwarts', JSON.stringify(d)); } catch(e){} }
-function getSave() { return window.saveSys?.getSave?.() || _ls(); }
-function setSave(d){ if(window.saveSys?.setSave) window.saveSys.setSave(d); else _lsSet(d); }
+function getSave() { return window.saveSys?.getSave?.() || {}; }
+function setSave(d){ window.saveSys?.setSave?.(d); }
 function addLog(t) { window.addLog?.(t); window.renderLog?.(); }
 function getDate() {
   const d = getSave();

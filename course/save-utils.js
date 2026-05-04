@@ -10,11 +10,11 @@ export function loadSave() {
   try {
     const raw = localStorage.getItem("hogwarts");
     return raw ? JSON.parse(raw) : {};
-  } catch { return {}; }
+  } catch (e) { console.warn('[save-utils] loadSave failed:', e); return {}; }
 }
 
 export function writeSave(data) {
   try {
     localStorage.setItem("hogwarts", JSON.stringify(data));
-  } catch {}
+  } catch (e) { console.warn('[save-utils] writeSave failed:', e); }
 }

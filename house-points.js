@@ -9,6 +9,8 @@
  * 全局挂载：window.housePoints
  */
 
+import { getSave, setSave } from './save-system.js';
+
 const HOUSE_MAP = {
   "格兰芬多": "gryffindor",
   "斯莱特林": "slytherin",
@@ -23,16 +25,6 @@ const HOUSE_DISPLAY = {
   hufflepuff: { label: "🦡 赫奇帕奇", color: "#ffd700", barClass: "hp-bar-h" },
 };
 
-// ── 存档工具 ─────────────────────────────────────────────
-function _load() {
-  try { return JSON.parse(localStorage.getItem("hogwarts")) || {}; }
-  catch { return {}; }
-}
-function _save(data) {
-  try { localStorage.setItem("hogwarts", JSON.stringify(data)); }
-  catch {}
-}
-
 // ── 默认积分结构 ─────────────────────────────────────────
 function _defaultScores() {
   return { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
@@ -40,23 +32,22 @@ function _defaultScores() {
 
 // ── 初始化 ───────────────────────────────────────────────
 export function initHousePoints() {
-  const data = _load();
-  // 兼容旧存档：把 data.housePoints（数字）迁移到新结构
+  const data = getSave();
   if (typeof data.housePoints === "number") {
     const playerHouseKey = HOUSE_MAP[data.player?.house] || "gryffindor";
     const scores = _defaultScores();
     scores[playerHouseKey] = data.housePoints;
     data.housePoints = scores;
-    _save(data);
+    setSave(data);
   } else if (!data.housePoints || typeof data.housePoints !== "object") {
     data.housePoints = _defaultScores();
-    _save(data);
+    setSave(data);
   }
 }
 
 // ── 获取积分 ─────────────────────────────────────────────
 export function getScores() {
-  const data = _load();
+  const data = getSave();
   if (typeof data.housePoints === "object" && data.housePoints !== null) {
     return { ..._defaultScores(), ...data.housePoints };
   }
@@ -64,29 +55,22 @@ export function getScores() {
 }
 
 export function getPlayerScore() {
-  const data  = _load();
+  const data  = getSave();
   const key   = HOUSE_MAP[data.player?.house] || null;
   if (!key) return 0;
   return getScores()[key] || 0;
 }
 
 // ── 加减分 ───────────────────────────────────────────────
-/**
- * 给指定学院加分（传负数为扣分）
- * @param {string} houseKey  "gryffindor"|"slytherin"|"ravenclaw"|"hufflepuff"
- *                           或中文名 "格兰芬多" 等
- * @param {number} points
- * @param {string} reason
- */
 export function addPoints(houseKey, points, reason = "") {
   const key = HOUSE_MAP[houseKey] || houseKey;
   if (!HOUSE_DISPLAY[key]) return;
 
-  const data   = _load();
+  const data   = getSave();
   const scores = typeof data.housePoints === "object" ? data.housePoints : _defaultScores();
   scores[key]  = Math.max(0, (scores[key] || 0) + points);
   data.housePoints = scores;
-  _save(data);
+  setSave(data);
 
   if (reason && points !== 0) {
     const sign = points > 0 ? "+" : "";
@@ -95,11 +79,8 @@ export function addPoints(houseKey, points, reason = "") {
   window.refreshAll?.();
 }
 
-/**
- * 给玩家自己的学院加分（上课时用这个）
- */
 export function addPlayerPoints(points, reason = "") {
-  const data = _load();
+  const data = getSave();
   const key  = HOUSE_MAP[data.player?.house];
   if (!key) return;
   addPoints(key, points, reason);
@@ -108,15 +89,13 @@ export function addPlayerPoints(points, reason = "") {
 // ── UI 刷新 ──────────────────────────────────────────────
 export function refreshHousePointsUI() {
   const scores   = getScores();
-  const data     = _load();
+  const data     = getSave();
   const maxScore = Math.max(...Object.values(scores), 1);
   const playerKey = HOUSE_MAP[data.player?.house] || "";
 
-  // 顶部简版：玩家学院分
   const topEl = document.getElementById("stat-house-points");
   if (topEl) topEl.textContent = playerKey ? (scores[playerKey] || 0) : 0;
 
-  // 详细版四院进度条
   Object.entries(HOUSE_DISPLAY).forEach(([key, info]) => {
     const score   = scores[key] || 0;
     const bar     = document.getElementById(`hp-bar-${key[0]}`);
