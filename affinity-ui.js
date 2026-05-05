@@ -11,13 +11,13 @@
  *   7. 专属条件触发（维度四）
  */
 
-import { getAllAffinity, getTierByValue, addAffinity, setFlag, hasFlag } from './affinity-system.js';
+import { getAllAffinity, getTierByValue, addAffinity, setFlag, hasFlag, isCharacterKnown, getKnownCharacters } from './affinity-system.js';
+import { addLog } from './save-system.js';
 import {
   AFFINITY_CHARACTERS,
-  CHARACTER_DISPLAY_ORDER,   // 保留，其他地方可能用到
+  CHARACTER_DISPLAY_ORDER,
   MUGGLE_STUDIES_ORDER,
   HOGWARTS_STAFF_ORDER,
-  HEADMASTER_ORDER,
   DEFAULT_TIER_LABELS,
 } from './affinity-data.js';
 
@@ -46,7 +46,7 @@ function getConfig(key) {
  */
 function getCharTier(config, value) {
   if (config?.tierThresholds) {
-    const bounds = config.tierThresholds; // 如 [0, 25, 50, 70, 88]
+    const bounds = config.tierThresholds;
     let tier = 1;
     for (let i = 0; i < bounds.length; i++) {
       if (value >= bounds[i]) tier = i + 1;
@@ -56,18 +56,22 @@ function getCharTier(config, value) {
   return getTierByValue(value).tier;
 }
 
-/** 计算进度条百分比（到下一级）*/
 function getTierBarPct(config, value, tier) {
   let tierMin, tierMax;
   if (config?.tierThresholds) {
     const b = config.tierThresholds;
     tierMin = b[tier - 1] ?? 0;
     tierMax = tier >= 5 ? 100 : (b[tier] ?? 100);
+  } else if (tier < 0) {
+    const BOUNDS = { '-2': [-100, -40], '-1': [-39, -1] };
+    tierMin = BOUNDS[tier]?.[0] ?? -100;
+    tierMax = BOUNDS[tier]?.[1] ?? -1;
   } else {
     const BOUNDS = [0, 20, 40, 60, 80, 100];
     tierMin = BOUNDS[tier - 1];
     tierMax = BOUNDS[tier];
   }
+  if (tier <= -2) return 100;
   if (tier >= 5) return 100;
   return Math.round(Math.max(0, Math.min(100,
     (value - tierMin) / (tierMax - tierMin) * 100
@@ -95,7 +99,7 @@ export function showAffinityNotification(charKey, oldTier, newTier, newValue) {
   const config     = getConfig(charKey);
   const name       = config?.name || charKey;
   const icon       = config?.icon || '👤';
-  const tierLabel  = config?.tiers?.[newTier - 1] || DEFAULT_TIER_LABELS[newTier - 1];
+  const tierLabel  = config?.tiers?.[newTier - 1] || DEFAULT_TIER_LABELS[newTier];
   const unlockHint = config?.tierUnlocks?.[newTier - 1] || null;
 
   const el = document.createElement('div');
@@ -213,156 +217,7 @@ function _showEncounterModal(config, enc) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  3. 好感度总览面板（分组显示）
-// ════════════════════════════════════════════════════════════
-
-export function openAffinityPanel() {
-  document.getElementById('affinity-panel')?.remove();
-
-  const data      = getAllAffinity();
-  const saveData  = loadSave();
-  const todayDate = saveData.time?.currentDate || '';
-  const panel     = document.createElement('div');
-  panel.id        = 'affinity-panel';
-  panel.className = 'affinity-panel-overlay';
-
-  // ── 渲染一组人物卡片（sectionTitle 传 null 则不显示分组标题）──
-  function renderSection(keys, configMap, sectionTitle) {
-    const items = keys
-      .map(key => ({ key, config: configMap[key] }))
-      .filter(x => x.config);
-    if (items.length === 0) return '';
-
-    const cardsHtml = items.map(({ key, config }) => {
-      const aff       = data[key] || { value: config.initValue || 0 };
-      const value     = aff.value;
-      const tier      = getCharTier(config, value);
-      const tierLabel = config.tiers?.[tier - 1] || DEFAULT_TIER_LABELS[tier - 1];
-      const barPct    = getTierBarPct(config, value, tier);
-      const hasStory  = config.story  && tier >= config.story.unlockTier;
-      const hasLetter = config.letter && tier >= config.letter.unlockTier;
-
-      const canChat     = config.isStudent && !!config.activeChat;
-      const chatCoolKey = `chatCooldown_${todayDate}`;
-      const onCooldown  = canChat && hasFlag(key, chatCoolKey);
-
-      const tierBadge = config.relationLabel
-        ? `${config.relationLabel} Lv.${tier}`
-        : `Lv.${tier}`;
-
-      return `
-        <div class="affinity-char-card" data-key="${key}">
-          <div class="affinity-char-top">
-            <span class="affinity-char-icon">${config.icon}</span>
-            <div class="affinity-char-info">
-              <div class="affinity-char-name">${config.name}</div>
-              <div class="affinity-char-role">${config.role}</div>
-            </div>
-            <div class="affinity-char-tier-badge">${tierBadge}</div>
-          </div>
-          <div class="affinity-char-tier-label">${tierLabel}</div>
-          <div class="affinity-char-bar-wrap">
-            <div class="affinity-char-bar" style="width:${barPct}%"></div>
-          </div>
-          <div class="affinity-char-actions">
-            ${canChat ? `
-              <button class="affinity-char-btn affinity-btn-chat ${onCooldown ? 'affinity-btn-cooldown' : ''}"
-                data-key="${key}" ${onCooldown ? 'disabled' : ''}>
-                💬 ${onCooldown ? '今天聊过了' : '主动找他聊聊'}
-              </button>` : ''}
-            ${hasStory  ? `<button class="affinity-char-btn affinity-btn-story"  data-key="${key}">📜 故事碎片</button>` : ''}
-            ${hasLetter ? `<button class="affinity-char-btn affinity-btn-letter" data-key="${key}">✉️ 来信</button>` : ''}
-          </div>
-        </div>`;
-    }).join('');
-
-    return `
-      <div class="affinity-section">
-        ${sectionTitle ? `<div class="affinity-section-title">${sectionTitle}</div>` : ''}
-        <div class="affinity-panel-grid">${cardsHtml}</div>
-      </div>`;
-  }
-
-  // ── 三个标签页定义 ──────────────────────────────────────
-  const TABS = [
-    {
-      id:    'muggle',
-      label: '🏫 麻瓜系',
-      html:  () => renderSection(MUGGLE_STUDIES_ORDER, AFFINITY_CHARACTERS, null),
-    },
-    {
-      id:    'staff',
-      label: '📚 教职员',
-      html:  () =>
-        renderSection(HOGWARTS_STAFF_ORDER, AFFINITY_CHARACTERS, null) +
-        renderSection(HEADMASTER_ORDER,     AFFINITY_CHARACTERS, '✨ 校长室'),
-    },
-    {
-      id:    'students',
-      label: '🎓 同学',
-      html:  () =>
-        renderSection(GRYFFINDOR_ORDER, STUDENT_CHARACTERS, '🦁 格兰芬多') +
-        renderSection(SLYTHERIN_ORDER,  STUDENT_CHARACTERS, '🐍 斯莱特林') +
-        renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳'),
-    },
-  ];
-
-  panel.innerHTML = `
-    <div class="affinity-panel-box">
-      <div class="affinity-panel-header">
-        <span>👥 人物关系</span>
-        <button id="affinity-panel-close">✕</button>
-      </div>
-      <div class="aff-tab-bar">
-        ${TABS.map((t, i) =>
-          `<button class="aff-tab-btn ${i === 0 ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`
-        ).join('')}
-      </div>
-      <div class="affinity-panel-body">
-        ${TABS.map((t, i) =>
-          `<div class="aff-tab-pane ${i === 0 ? 'active' : ''}" data-tab="${t.id}">${t.html()}</div>`
-        ).join('')}
-      </div>
-    </div>`;
-
-  document.body.appendChild(panel);
-
-  // ── 标签页切换 ──────────────────────────────────────────
-  panel.querySelectorAll('.aff-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      panel.querySelectorAll('.aff-tab-btn').forEach(b => b.classList.remove('active'));
-      panel.querySelectorAll('.aff-tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      panel.querySelector(`.aff-tab-pane[data-tab="${btn.dataset.tab}"]`)?.classList.add('active');
-    });
-  });
-
-  // ── 关闭 ───────────────────────────────────────────────
-  document.getElementById('affinity-panel-close').addEventListener('click', () => panel.remove());
-  panel.addEventListener('click', e => { if (e.target === panel) panel.remove(); });
-
-  // ── 主动聊天 ────────────────────────────────────────────
-  panel.querySelectorAll('.affinity-btn-chat:not([disabled])').forEach(btn => {
-    btn.addEventListener('click', () => tryActiveChat(btn.dataset.key, panel));
-  });
-
-  // ── 故事 / 信件 ─────────────────────────────────────────
-  panel.querySelectorAll('.affinity-btn-story').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cfg = getConfig(btn.dataset.key);
-      if (cfg?.story) showReadModal(cfg.story.title, cfg.story.text, '📜 故事碎片');
-    });
-  });
-  panel.querySelectorAll('.affinity-btn-letter').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cfg = getConfig(btn.dataset.key);
-      if (cfg?.letter) showReadModal(`✉️ 来自 ${cfg.name} 的信`, cfg.letter.text, '✉️ 来信');
-    });
-  });
-}
-
-// ════════════════════════════════════════════════════════════
-//  4. 故事 / 信件阅读弹窗
+//  3. 故事 / 信件阅读弹窗
 // ════════════════════════════════════════════════════════════
 
 function showReadModal(title, text, tag) {
@@ -487,8 +342,8 @@ function _showActiveChatModal(config, ev, panelEl, onComplete = null) {
         
         // 面板还在则重新渲染（更新冷却状态）
         if (panelEl && document.body.contains(panelEl)) {
-          panelEl.remove();
-          openAffinityPanel();
+          const mount = document.getElementById('info-affinity-mount');
+          if (mount) renderAffinityPanelInline(mount);
         }
       });
     });
@@ -580,12 +435,7 @@ export function checkStudentSpecialTriggers(eventType, payload = {}) {
     // 写入行动日志
     const logMsg = typeof trigger.logText === 'function' ? trigger.logText(payload) : null;
     if (logMsg) {
-      const logEl = document.getElementById('log');
-      if (logEl) {
-        const p = document.createElement('p');
-        p.textContent = logMsg;
-        logEl.prepend(p);
-      }
+      addLog(logMsg, 'player');
     }
 
     // 轻量提示
@@ -608,18 +458,20 @@ export function renderAffinityPanelInline(containerEl) {
   const todayDate = saveData.time?.currentDate || '';
 
   // ── 渲染一组人物卡片 ──
-  function renderSection(keys, configMap, sectionTitle) {
+  function renderSection(keys, configMap, sectionTitle, collapsible = false) {
     const items = keys
       .map(key => ({ key, config: configMap[key] }))
-      .filter(x => x.config);
+      .filter(x => x.config)
+      .filter(x => isCharacterKnown(x.key));
     if (items.length === 0) return '';
 
     const cardsHtml = items.map(({ key, config }) => {
       const aff       = data[key] || { value: config.initValue || 0 };
       const value     = aff.value;
       const tier      = getCharTier(config, value);
-      const tierLabel = config.tiers?.[tier - 1] || DEFAULT_TIER_LABELS[tier - 1];
+      const tierLabel = config.tiers?.[tier - 1] || DEFAULT_TIER_LABELS[tier] || getTierByValue(value).label;
       const barPct    = getTierBarPct(config, value, tier);
+      const isNeg     = value < 0;
       const hasStory  = config.story  && tier >= config.story.unlockTier;
       const hasLetter = config.letter && tier >= config.letter.unlockTier;
 
@@ -632,18 +484,18 @@ export function renderAffinityPanelInline(containerEl) {
         : `Lv.${tier}`;
 
       return `
-        <div class="affinity-char-card" data-key="${key}">
+        <div class="affinity-char-card${isNeg ? ' affinity-char-card-neg' : ''}" data-key="${key}">
           <div class="affinity-char-top">
             <span class="affinity-char-icon">${config.icon}</span>
             <div class="affinity-char-info">
               <div class="affinity-char-name">${config.name}</div>
               <div class="affinity-char-role">${config.role}</div>
             </div>
-            <div class="affinity-char-tier-badge">${tierBadge}</div>
+            <div class="affinity-char-tier-badge${isNeg ? ' affinity-tier-badge-neg' : ''}">${tierBadge}</div>
           </div>
-          <div class="affinity-char-tier-label">${tierLabel}</div>
+          <div class="affinity-char-tier-label${isNeg ? ' affinity-tier-label-neg' : ''}">${tierLabel}</div>
           <div class="affinity-char-bar-wrap">
-            <div class="affinity-char-bar" style="width:${barPct}%"></div>
+            <div class="affinity-char-bar${isNeg ? ' affinity-char-bar-neg' : ''}" style="width:${barPct}%"></div>
           </div>
           <div class="affinity-char-actions">
             ${canChat ? `
@@ -657,6 +509,21 @@ export function renderAffinityPanelInline(containerEl) {
         </div>`;
     }).join('');
 
+    if (collapsible) {
+      const sectionId = 'aff-inl-' + sectionTitle.replace(/[^a-zA-Z0-9\u4e00-\u9fff]/g, '');
+      return `
+        <div class="affinity-section affinity-collapsible">
+          <div class="affinity-collapse-header" data-target="${sectionId}">
+            <span class="affinity-section-title">${sectionTitle}</span>
+            <span class="affinity-collapse-count">${items.length}</span>
+            <span class="affinity-collapse-arrow">▶</span>
+          </div>
+          <div class="affinity-collapse-body affinity-collapse-closed" id="${sectionId}">
+            <div class="affinity-panel-grid">${cardsHtml}</div>
+          </div>
+        </div>`;
+    }
+
     return `
       <div class="affinity-section">
         ${sectionTitle ? `<div class="affinity-section-title">${sectionTitle}</div>` : ''}
@@ -667,24 +534,35 @@ export function renderAffinityPanelInline(containerEl) {
   // ── 三个标签页定义 ──────────────────────────────────────
   const TABS = [
     {
-      id:    'muggle',
-      label: '🏫 麻瓜系',
-      html:  () => renderSection(MUGGLE_STUDIES_ORDER, AFFINITY_CHARACTERS, null),
+      id:    'professors',
+      label: '🧙 教授',
+      html:  () =>
+        renderSection(HOGWARTS_STAFF_ORDER, AFFINITY_CHARACTERS, '🏰 霍格沃茨教授', true) +
+        renderSection(MUGGLE_STUDIES_ORDER, AFFINITY_CHARACTERS, '🏫 麻瓜研究系', true),
     },
     {
       id:    'staff',
-      label: '📚 教职员',
-      html:  () =>
-        renderSection(HOGWARTS_STAFF_ORDER, AFFINITY_CHARACTERS, null) +
-        renderSection(HEADMASTER_ORDER,     AFFINITY_CHARACTERS, '✨ 校长室'),
+      label: '🔧 员工',
+      html:  () => {
+        const html = renderSection([], AFFINITY_CHARACTERS, null);
+        return html || '<div class="aff-empty-tip">暂无认识的员工</div>';
+      },
     },
     {
       id:    'students',
       label: '🎓 同学',
       html:  () =>
-        renderSection(GRYFFINDOR_ORDER, STUDENT_CHARACTERS, '🦁 格兰芬多') +
-        renderSection(SLYTHERIN_ORDER,  STUDENT_CHARACTERS, '🐍 斯莱特林') +
-        renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳'),
+        renderSection(GRYFFINDOR_ORDER, STUDENT_CHARACTERS, '🦁 格兰芬多', true) +
+        renderSection(SLYTHERIN_ORDER,  STUDENT_CHARACTERS, '🐍 斯莱特林', true) +
+        renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳', true),
+    },
+    {
+      id:    'others',
+      label: '📋 其他',
+      html:  () => {
+        const html = renderSection([], AFFINITY_CHARACTERS, null);
+        return html || '<div class="aff-empty-tip">暂无</div>';
+      },
     },
   ];
 
@@ -710,6 +588,22 @@ export function renderAffinityPanelInline(containerEl) {
       containerEl.querySelectorAll('.aff-tab-pane').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       containerEl.querySelector(`.aff-tab-pane[data-tab="${btn.dataset.tab}"]`)?.classList.add('active');
+    });
+  });
+
+  // ── 学院分组折叠/展开 ──────────────────────────────────
+  containerEl.querySelectorAll('.affinity-collapse-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const target = document.getElementById(header.dataset.target);
+      if (!target) return;
+      const isOpen = !target.classList.contains('affinity-collapse-closed');
+      if (isOpen) {
+        target.classList.add('affinity-collapse-closed');
+        header.classList.add('affinity-collapse-header-closed');
+      } else {
+        target.classList.remove('affinity-collapse-closed');
+        header.classList.remove('affinity-collapse-header-closed');
+      }
     });
   });
 
@@ -752,8 +646,7 @@ export function renderAffinityPanelInline(containerEl) {
 // ════════════════════════════════════════════════════════════
 
 window.affinityUI = {
-  openAffinityPanel,
-  renderAffinityPanelInline,  // ← 加这行
+  renderAffinityPanelInline,
   tryTriggerEncounter,
   tryStudentActionEncounter,
   checkStudentSpecialTriggers,

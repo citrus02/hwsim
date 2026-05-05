@@ -6,7 +6,22 @@ export function initSpellSave() {
   if (!save.spellList) save.spellList = [];
   if (!save.spellProficiency) save.spellProficiency = {};
   if (!save.darkMagicRecord) save.darkMagicRecord = 0;
+  if (!save.knownSpells) save.knownSpells = [];
   _setSave(save);
+}
+
+export function markSpellKnown(spellId) {
+  initSpellSave();
+  const save = getSave();
+  if (!save.knownSpells.includes(spellId)) {
+    save.knownSpells.push(spellId);
+    setSave(save);
+  }
+}
+
+export function isSpellKnown(spellId) {
+  const save = getSave();
+  return save.knownSpells?.includes(spellId) || false;
 }
 
 function getSave() {
@@ -28,6 +43,10 @@ export function autoUnlockByCourse() {
     if (spell.sourceType !== "hogwarts") return;
     if (!spell.unlockCourse) return;
     const nowPercent = courseData[spell.unlockCourse] || 0;
+
+    if (nowPercent > 0 && !save.knownSpells.includes(spell.id)) {
+      save.knownSpells.push(spell.id);
+    }
 
     if (nowPercent >= spell.unlockPercent && !save.spellList.includes(spell.id)) {
       save.spellList.push(spell.id);
@@ -51,6 +70,7 @@ export function unlockSingleSpell(spellId) {
   if (!target) return false;
 
   save.spellList.push(spellId);
+  if (!save.knownSpells.includes(spellId)) save.knownSpells.push(spellId);
   if (target.sourceType === "dark") save.darkMagicRecord += 1;
 
   setSave(save);
@@ -71,11 +91,13 @@ export function getSpellListWithStatus() {
   const learned = getLearnedSpell();
   const save = getSave();
   const prof = save.spellProficiency || {};
+  const known = save.knownSpells || [];
 
   return spellData.map(item => {
     return {
       ...item,
       isLearned: learned.includes(item.id),
+      isKnown: learned.includes(item.id) || known.includes(item.id),
       proficiency: prof[item.id] ?? 0,
       maxProficiency: 100
     };
@@ -206,7 +228,7 @@ function renderGrimoireList() {
   const wrap = document.getElementById("spell-list-wrap");
   if (!wrap) return;
 
-  const list = allSpellData.filter(s => s.sourceType === currentSpellSourceType);
+  const list = allSpellData.filter(s => s.sourceType === currentSpellSourceType && s.isKnown);
 
   if (list.length === 0) {
     wrap.innerHTML = `<div class="spell-grimoire-empty">暂无咒语</div>`;
@@ -256,9 +278,9 @@ window.closeSpellPanel = closeSpellPanel;
 /**
  * 信息页内嵌图鉴渲染（三列卡片，无标签切换，直接渲染到 #info-grimoire-mount）
  */
-window._renderInlineGrimoire = function() {
+window._renderInlineGrimoire = function(mountEl) {
   autoUnlockByCourse();
-  const mount = document.getElementById("info-grimoire-mount");
+  const mount = mountEl || document.getElementById("info-grimoire-mount") || document.getElementById("duel-grimoire-mount");
   if (!mount) return;
 
   const all = getSpellListWithStatus();
@@ -267,7 +289,7 @@ window._renderInlineGrimoire = function() {
   let activeType = mount.dataset.activeType || "hogwarts";
 
   function render() {
-    const list = all.filter(s => s.sourceType === activeType);
+    const list = all.filter(s => s.sourceType === activeType && s.isKnown);
     mount.innerHTML = `
       <div class="sg-inline-tip">🏅 熟练度通过<strong>决斗训练</strong>提升</div>
       <div class="sg-tab-row">

@@ -1,6 +1,6 @@
 // ui-render.js — UI 渲染 + 全局刷新 + 标签页初始化
 
-import { getSave, renderLog, renderTimeline } from './save-system.js';
+import { getSave, setSave, addLog, renderLog, renderTimeline } from './save-system.js';
 
 const allCourseList = [
   "变形术","魔咒学","魔药学","黑魔法防御术","草药学","魔法史","天文学","飞行课",
@@ -52,6 +52,21 @@ export function refreshAll() {
   if (window.renderBag) window.renderBag();
   renderLog();
   renderTimeline();
+
+  if (window.storyEngine?.hasActiveStory?.()) {
+    setTimeout(() => window.storyEngine.resumeActiveStory(), 300);
+  } else {
+    const available = window.storyEngine?.getAvailableStoryEvents?.();
+    if (available?.length > 0) {
+      const d = getSave();
+      const notified = d._storyNotified || [];
+      if (!notified.includes(available[0].id)) {
+        d._storyNotified = [...notified, available[0].id];
+        setSave(d);
+        addLog(`📜 剧情事件：「${available[0].title}」即将发生，可选择前往时间轴参与剧情`);
+      }
+    }
+  }
 }
 
 // ── 内嵌人物关系面板初始化 ──
@@ -63,7 +78,6 @@ export function renderAffinityInline() {
 }
 
 function initTabs() {
-  // 主标签页（日常/时间轴/信息/背包）
   document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const tab = btn.dataset.tab;
@@ -72,6 +86,13 @@ function initTabs() {
       btn.classList.add("active");
       document.getElementById(`tab-${tab}`).classList.add("active");
       refreshAll();
+
+      if (tab === 'affinity') {
+        renderAffinityInline();
+      }
+      if (tab === 'quest') {
+        window.renderQuestPanel?.();
+      }
     });
   });
 
@@ -79,27 +100,6 @@ function initTabs() {
   document.querySelectorAll(".bag-tab").forEach(btn => {
     btn.addEventListener("click", () => {
       if (window.setBagType) window.setBagType(btn.dataset.bag);
-    });
-  });
-
-  // ── 信息页子标签切换（档案/咒语/人物关系/任务） ──
-  document.querySelectorAll(".info-sub-tab").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const sub = btn.dataset.sub;
-      document.querySelectorAll(".info-sub-tab").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".info-sub-screen").forEach(s => s.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(`info-sub-${sub}`).classList.add("active");
-
-      if (sub === 'grimoire') {
-        window._renderInlineGrimoire?.();
-      }
-      if (sub === 'affinity') {
-        renderAffinityInline();  // 直接调用
-      }
-      if (sub === 'quest') {
-        window.renderQuestPanel?.();
-      }
     });
   });
 }
@@ -116,4 +116,108 @@ document.addEventListener("DOMContentLoaded", () => {
 // 全局挂载
 window.refreshAll = refreshAll;
 window.renderCourse = renderCourse;
+
+export function openProfilePanel() {
+  document.getElementById("profilePanelModal")?.remove();
+
+  const data = getSave();
+  const p = data.player || {};
+
+  const overlay = document.createElement('div');
+  overlay.id = 'profilePanelModal';
+  overlay.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+  `;
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeProfilePanel(); });
+
+  const panel = document.createElement('div');
+  panel.style.cssText = `
+    background: #1a1a2e; border: 2px solid #3a3b66; border-radius: 12px;
+    width: 90vw; max-width: 420px; max-height: 80vh; overflow-y: auto;
+    padding: 16px; color: #e6e6e6;
+  `;
+
+  panel.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <div style="font-size:16px; font-weight:bold; color:#f8c850;">📋 角色信息</div>
+      <button onclick="window.closeProfilePanel()" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
+    </div>
+    <div class="info-grid-2x2">
+      <div class="ig-cell">
+        <div class="ig-label">姓名</div>
+        <div class="ig-value" id="stat-name">${p.name || '—'}</div>
+      </div>
+      <div class="ig-cell">
+        <div class="ig-label">出身</div>
+        <div class="ig-value" id="stat-blood">${p.blood || '—'}</div>
+      </div>
+      <div class="ig-cell">
+        <div class="ig-label">学院</div>
+        <div class="ig-value" id="stat-house">${p.house || '—'}</div>
+      </div>
+      <div class="ig-cell">
+        <div class="ig-label">魔杖</div>
+        <div class="ig-value" id="stat-wand">${p.wand || '—'}</div>
+      </div>
+    </div>
+    <div class="house-points-detail">
+      <div class="hp-detail-title">🏆 学院杯</div>
+      <div class="hourglasses">
+        <div class="hg-col" data-house="gryffindor">
+          <div class="hg-label">🦁 格兰芬多</div>
+          <div class="hg-body">
+            <div class="hg-neck"></div>
+            <div class="hg-glass">
+              <div class="hg-sand" id="hg-sand-gryffindor"></div>
+            </div>
+          </div>
+          <div class="hg-score" id="hp-score-g">0</div>
+        </div>
+        <div class="hg-col" data-house="hufflepuff">
+          <div class="hg-label">🦡 赫奇帕奇</div>
+          <div class="hg-body">
+            <div class="hg-neck"></div>
+            <div class="hg-glass">
+              <div class="hg-sand" id="hg-sand-hufflepuff"></div>
+            </div>
+          </div>
+          <div class="hg-score" id="hp-score-h">0</div>
+        </div>
+        <div class="hg-col" data-house="ravenclaw">
+          <div class="hg-label">🦅 拉文克劳</div>
+          <div class="hg-body">
+            <div class="hg-neck"></div>
+            <div class="hg-glass">
+              <div class="hg-sand" id="hg-sand-ravenclaw"></div>
+            </div>
+          </div>
+          <div class="hg-score" id="hp-score-r">0</div>
+        </div>
+        <div class="hg-col" data-house="slytherin">
+          <div class="hg-label">🐍 斯莱特林</div>
+          <div class="hg-body">
+            <div class="hg-neck"></div>
+            <div class="hg-glass">
+              <div class="hg-sand" id="hg-sand-slytherin"></div>
+            </div>
+          </div>
+          <div class="hg-score" id="hp-score-s">0</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  overlay.appendChild(panel);
+  document.body.appendChild(overlay);
+  window.housePoints?.refreshHousePointsUI?.();
+}
+
+export function closeProfilePanel() {
+  document.getElementById("profilePanelModal")?.remove();
+}
+
+window.openProfilePanel = openProfilePanel;
+window.closeProfilePanel = closeProfilePanel;
 window.renderAffinityInline = renderAffinityInline;

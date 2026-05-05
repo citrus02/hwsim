@@ -22,11 +22,13 @@ import { loadSave, writeSave } from './course/save-utils.js';
 
 // ── 阶段定义 ────────────────────────────────────────────────
 export const TIERS = [
-  { tier: 1, min: 0,  max: 19,  label: "陌生人" },
-  { tier: 2, min: 20, max: 39,  label: "认识了" },
-  { tier: 3, min: 40, max: 59,  label: "被记住了" },
-  { tier: 4, min: 60, max: 79,  label: "有点特别" },
-  { tier: 5, min: 80, max: 100, label: "真正的关系" },
+  { tier: -2, min: -100, max: -40, label: "敌对" },
+  { tier: -1, min: -39,  max: -1,  label: "厌恶" },
+  { tier: 1,  min: 0,    max: 19,  label: "陌生人" },
+  { tier: 2,  min: 20,   max: 39,  label: "认识了" },
+  { tier: 3,  min: 40,   max: 59,  label: "被记住了" },
+  { tier: 4,  min: 60,   max: 79,  label: "有点特别" },
+  { tier: 5,  min: 80,   max: 100, label: "真正的关系" },
 ];
 
 export function getTierByValue(value) {
@@ -37,16 +39,42 @@ export function getTierByValue(value) {
 function _load() {
   const data = loadSave();
   if (!data.affinity) data.affinity = {};
+  if (!data.knownCharacters) data.knownCharacters = [];
   return data;
 }
 
 function _getChar(data, key) {
   if (!data.affinity[key]) {
-    // 邓布利多初始 Tier3（40分）
     const initValue = key === 'albusDumbledore' ? 40 : 0;
     data.affinity[key] = { value: initValue, tier: key === 'albusDumbledore' ? 3 : 1, flags: {} };
   }
   return data.affinity[key];
+}
+
+// ── 认识追踪 ────────────────────────────────────────────────
+
+export function markCharacterKnown(key) {
+  if (!key) return;
+  const data = _load();
+  if (!data.knownCharacters) data.knownCharacters = [];
+  if (!data.knownCharacters.includes(key)) {
+    data.knownCharacters.push(key);
+    writeSave(data);
+  }
+}
+
+export function isCharacterKnown(key) {
+  if (!key) return false;
+  const data = _load();
+  if (data.knownCharacters?.includes(key)) return true;
+  const aff = data.affinity?.[key];
+  if (aff && aff.value !== undefined && aff.value !== 0) return true;
+  return false;
+}
+
+export function getKnownCharacters() {
+  const data = _load();
+  return data.knownCharacters || [];
 }
 
 // ── 核心接口 ────────────────────────────────────────────────
@@ -65,9 +93,14 @@ export function addAffinity(key, delta, source = '') {
   const oldValue = char.value;
   const oldTier  = char.tier;
 
-  char.value = Math.max(0, Math.min(100, char.value + delta));
+  char.value = Math.max(-100, Math.min(100, char.value + delta));
   const newTierObj = getTierByValue(char.value);
   char.tier = newTierObj.tier;
+
+  if (!data.knownCharacters) data.knownCharacters = [];
+  if (!data.knownCharacters.includes(key)) {
+    data.knownCharacters.push(key);
+  }
 
   writeSave(data);
 
@@ -191,4 +224,5 @@ window.affinitySystem = {
   addAffinity, getAffinity, getTier, hasFlag, setFlag,
   getAllAffinity, onClassResult, onSubjectCompleted, onBrewResult,
   SUBJECT_TO_CHARACTER, COURSE_TO_CHARACTER, TIERS, getTierByValue,
+  markCharacterKnown, isCharacterKnown, getKnownCharacters,
 };

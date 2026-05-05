@@ -536,10 +536,10 @@ export const AFFINITY_CHARACTERS = {
     ],
   },
 
-  // ── 费利克斯·韦斯莱（地理）──────────────────────────
+  // ── 菲利克斯·韦斯莱（地理）──────────────────────────
   felixWeasley: {
     key: 'felixWeasley',
-    name: '费利克斯·韦斯莱',
+    name: '菲利克斯·韦斯莱',
     role: '地理讲师',
     icon: '🗺️',
     subject: '地理',
@@ -552,7 +552,7 @@ export const AFFINITY_CHARACTERS = {
     ],
     tierUnlocks: [
       null,
-      '解锁：费利克斯专属课堂互动',
+      '解锁：菲利克斯专属课堂互动',
       '解锁：偶遇事件「地图上的那个圈」',
       '解锁：个人故事碎片',
       '解锁：专属信件',
@@ -695,18 +695,21 @@ export const MUGGLE_STUDIES_ORDER = [
 ];
 
 export const HOGWARTS_STAFF_ORDER = [
+  'albusDumbledore',
   'minervaMcGonagall', 'severusSnape', 'filiusFlitwick',
   'pomonaSprout', 'rolandaHooch', 'sybillTrelawney',
 ];
 
-export const HEADMASTER_ORDER = [
-  'albusDumbledore',
-];
-
 // 未完整配置的人物（只有数值，无故事/偶遇）用这个默认模板
-export const DEFAULT_TIER_LABELS = [
-  '陌生人', '认识了', '被记住了', '有点特别', '真正的关系'
-];
+export const DEFAULT_TIER_LABELS = {
+  '-2': '敌对',
+  '-1': '厌恶',
+  1: '陌生人',
+  2: '认识了',
+  3: '被记住了',
+  4: '有点特别',
+  5: '真正的关系',
+};
 
 export function getCharacterConfig(key) {
   return AFFINITY_CHARACTERS[key] || null;

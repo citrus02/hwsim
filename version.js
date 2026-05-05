@@ -5,12 +5,32 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.5.2';
+export const CURRENT_VERSION = '1.6.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.6.0': [
+    '新增时间轴剧情！',
+    '人物关系面板可折叠！',
+    '新增弗雷德&乔治·韦斯莱角色！',
+    '咒语图鉴更改入口至决斗训练场',
+    '咒语图鉴更改为只显示已知咒语',
+    '更改背包为弹出式面板，使用道具有弹窗提示',
+    '更改信息为弹出式面板',
+    '更改成就为弹出式面板',
+    '更改初始时间为1991-09-02夜晚',
+    '更改剧情显示模式',
+    '更改学院分进度条为沙漏状，积分为圆球',
+    '修复”好好学习“不加分的bug',
+    '修复”好好学习“后行动次数清零不进入到下一天的bug',
+    '修复学院分沙漏的沙子垂直排列的bug',
+    '更改”参与剧情“触发模式为手动触发',
+    '新增行动日志筛选模式',
+    '新增角色行为事件系统',
+    '修复无法探索的bug',
+  ],
   '1.5.2': [
     '捉虫：探索进度不持久化',
     '捉虫：商店系统绕过货币系统',

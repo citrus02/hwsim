@@ -19,10 +19,10 @@ const HOUSE_MAP = {
 };
 
 const HOUSE_DISPLAY = {
-  gryffindor: { label: "🦁 格兰芬多", color: "#ff6b6b", barClass: "hp-bar-g" },
-  slytherin:  { label: "🐍 斯莱特林", color: "#6bff6b", barClass: "hp-bar-s" },
-  ravenclaw:  { label: "🦅 拉文克劳", color: "#6b9fff", barClass: "hp-bar-r" },
-  hufflepuff: { label: "🦡 赫奇帕奇", color: "#ffd700", barClass: "hp-bar-h" },
+  gryffindor: { label: "🦁 格兰芬多", color: "#ff6b6b" },
+  slytherin:  { label: "🐍 斯莱特林", color: "#6bff6b" },
+  ravenclaw:  { label: "🦅 拉文克劳", color: "#6b9fff" },
+  hufflepuff: { label: "🦡 赫奇帕奇", color: "#ffd700" },
 };
 
 // ── 默认积分结构 ─────────────────────────────────────────
@@ -97,13 +97,43 @@ export function refreshHousePointsUI() {
   if (topEl) topEl.textContent = playerKey ? (scores[playerKey] || 0) : 0;
 
   Object.entries(HOUSE_DISPLAY).forEach(([key, info]) => {
-    const score   = scores[key] || 0;
-    const bar     = document.getElementById(`hp-bar-${key[0]}`);
-    const scoreEl = document.getElementById(`hp-score-${key[0]}`);
+    const score    = scores[key] || 0;
+    const sandEl   = document.getElementById(`hg-sand-${key}`);
+    const scoreEl  = document.getElementById(`hp-score-${key[0]}`);
     const isPlayer = key === playerKey;
-    if (bar) {
-      bar.style.width = Math.round(score / maxScore * 100) + "%";
-      bar.style.opacity = isPlayer ? "1" : "0.6";
+
+    if (sandEl) {
+      const fillPct = maxScore > 0 ? Math.round(score / maxScore * 100) : 0;
+      sandEl.style.opacity = isPlayer ? "1" : "0.7";
+
+      let orbsHtml = '';
+      let totalOrbH = 0;
+      if (score > 0) {
+        const containerW = (sandEl.parentElement?.offsetWidth || 44) - 6;
+        const orbCount = Math.min(Math.ceil(score / 5), 20);
+        const baseSize = Math.max(5, Math.min(12, 5 + score / 25));
+        const sizes = [];
+        for (let i = 0; i < orbCount; i++) sizes.push(baseSize + Math.random() * 2);
+
+        let rowX = 0, rowY = 0, rowH = 0;
+        for (let i = 0; i < sizes.length; i++) {
+          const s = sizes[i];
+          if (rowX + s > containerW && rowX > 0) {
+            rowX = 0;
+            rowY += rowH + 1;
+            rowH = 0;
+          }
+          rowH = Math.max(rowH, s);
+          orbsHtml += `<span class="hg-orb" style="width:${s}px;height:${s}px;left:${rowX}px;bottom:${rowY}px"></span>`;
+          rowX += s + 1;
+        }
+        totalOrbH = rowY + rowH;
+      }
+      const glassH = sandEl.parentElement?.offsetHeight || 120;
+      const minH = totalOrbH + 4;
+      const fillH = Math.round(glassH * fillPct / 100);
+      sandEl.style.height = Math.max(minH, fillH) + 'px';
+      sandEl.innerHTML = orbsHtml;
     }
     if (scoreEl) scoreEl.textContent = score;
   });

@@ -906,7 +906,7 @@ export function applyItemEffect(itemName, index) {
   }
 
   const data = getSave();
-  if (!data.time) data.time = { dailyActionLeft: 3, nowTime: "早晨", currentDate: "1991-09-02" };
+  if (!data.time) data.time = { dailyActionLeft: 1, nowTime: "夜晚", currentDate: "1991-09-02" };
   const list = data.bag?.item || [];
   const item = list[index];
   if (!item || item.name !== itemName || (item.count || 0) <= 0) return;
@@ -997,6 +997,8 @@ export function applyItemEffect(itemName, index) {
       if (window.syncActionUI) window.syncActionUI();
     }, 500);
   }
+
+  return logMsg;
 }
 
 // 全局挂载

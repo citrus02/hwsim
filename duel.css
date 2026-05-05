@@ -45,6 +45,19 @@
 }
 .duel-close-btn:hover { background: #1e293b; color: #e6e6e6; }
 
+.duel-header-btn {
+  background: transparent;
+  border: 1px solid #2a3b66;
+  color: #8899aa;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 6px;
+}
+.duel-header-btn:hover { background: #1e293b; color: #e6e6e6; }
+
 .duel-body {
   flex: 1;
   overflow-y: auto;
@@ -683,7 +696,6 @@
   position: relative;
 }
 .duel-unit-fainted { opacity: 0.35; }
-.duel-unit-enemy   { /* 对手使用红色调 */ }
 
 .duel-unit-portrait { font-size: 14px; line-height: 1; }
 .duel-unit-name {
@@ -785,40 +797,6 @@
 /* ============================================================
    信息页子标签 + 咒语图鉴三列
    ============================================================ */
-
-/* ── 子标签栏 ────────────────────────────────────────────── */
-
-.info-sub-tab-row {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.info-sub-tab {
-  flex: 1;
-  background: var(--bg-btn);
-  border: none;
-  color: var(--color-text-light);
-  padding: 7px 4px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.info-sub-tab:hover {
-  background: var(--bg-btn-hover);
-  color: var(--color-text);
-}
-.info-sub-tab.active {
-  background: var(--bg-btn-action);
-  color: #fff;
-  font-weight: 600;
-}
-
-/* ── 子页面显隐 ───────────────────────────────────────────── */
-
-.info-sub-screen        { display: none; }
-.info-sub-screen.active { display: block; }
 
 /* ── 人物关系子页 ────────────────────────────────────────── */
 
@@ -1262,7 +1240,7 @@
 
 /* ── 标签页红点 ─────────────────────────────────────────── */
 
-.info-sub-tab { position: relative; }
+.tab-btn { position: relative; }
 
 .quest-tab-badge {
   position: absolute;

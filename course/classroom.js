@@ -16,7 +16,7 @@
 
 import { loadSave, writeSave } from './save-utils.js';
 import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
-import { onClassResult, onSubjectCompleted } from '../affinity-system.js';
+import { onClassResult, onSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
 import { GestureWidget } from '../gesture-widget.js';
 import { getGestureById } from '../gesture-data.js';
 
@@ -88,9 +88,16 @@ function saveProgress(subjectKey, lessonNum, rating) {
 
   writeSave(data);
 
-  // ── 学院分（必须在 writeSave 之后，否则会被覆盖）────────
+  // ── 学院分 ──────────────────────────────────────────────
   if (rating && HOUSE_POINTS_MAP[rating]) {
-    window.housePoints?.addPlayerPoints?.(HOUSE_POINTS_MAP[rating]);
+    const hpData   = loadSave();
+    const pKey     = window.housePoints?.HOUSE_MAP?.[hpData.player?.house];
+    if (pKey && window.housePoints?.HOUSE_DISPLAY?.[pKey]) {
+      if (!hpData.housePoints || typeof hpData.housePoints !== "object")
+        hpData.housePoints = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+      hpData.housePoints[pKey] = Math.max(0, (hpData.housePoints[pKey] || 0) + HOUSE_POINTS_MAP[rating]);
+      writeSave(hpData);
+    }
   }
 
   window.refreshAll?.();
@@ -235,6 +242,8 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
   const courseMain = document.getElementById("courseMain");
   if (courseMain) courseMain.style.display = "none";
 
+  const prefix = item.muggleSubjectKey ? "麻瓜研究" : "霍格沃茨";
+
   const panel = document.createElement("div");
   panel.id = "classroomPanel";
   panel.className = "cls-panel";
@@ -242,7 +251,7 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
     <div class="cls-header">
       <div class="cls-subject-icon">${subjectData.subjectMeta.icon || "📚"}</div>
       <div class="cls-header-info">
-        <div class="cls-subject-line">麻瓜研究 · ${subjectData.subjectMeta.name}</div>
+        <div class="cls-subject-line">${prefix} · ${subjectData.subjectMeta.name}</div>
         <div class="cls-lesson-title">${lesson.title}</div>
         <div class="cls-prof-line">${subjectData.subjectMeta.professor} · 第 ${lesson.lesson} 课</div>
       </div>
@@ -376,6 +385,7 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
 
     // ── gesture 题型分支 ──────────────────────────────────
     if (q.type === "gesture") {
+      st.answered = false;  // 重置答题状态
       const gesture = getGestureById(q.gestureId);
       body.innerHTML = `
         <div class="cls-quiz-header">
@@ -525,6 +535,10 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   // 好感度触发
   if (rating) onClassResult(subjectKey, rating, true);
 
+  // 上课即认识教授
+  const charKey = window.affinitySystem?.SUBJECT_TO_CHARACTER?.[subjectKey];
+  if (charKey) markCharacterKnown(charKey);
+
   // 检查该分科是否全部课时完成（触发一次性 +10）
   const allLessons = getAllLessons(sd.syllabus);
   const done = loadSave().course?.muggleProgress?.[subjectKey]?.completed || [];
@@ -532,8 +546,10 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     onSubjectCompleted(subjectKey);
   }
 
+  const HOUSE_EMOJI = { "格兰芬多":"🦁", "斯莱特林":"🐍", "拉文克劳":"🦅", "赫奇帕奇":"🦡" };
+  const houseEmoji = HOUSE_EMOJI[loadSave()?.player?.house] || "🏠";
   const logMsg = rating
-    ? `🎓 ${sd.subjectMeta.name}·第${lesson.lesson}课《${lesson.title}》评级 ${rating}，学院分 ${housePoints>=0?"+":""}${housePoints}`
+    ? `🎓 ${sd.subjectMeta.name}·第${lesson.lesson}课《${lesson.title}》评级 ${rating}，${houseEmoji}学院分 ${housePoints>=0?"+":""}${housePoints}`
     : `🎓 ${sd.subjectMeta.name}·第${lesson.lesson}课《${lesson.title}》已完成`;
   window.doStudyLog?.(logMsg);
 
@@ -564,6 +580,11 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     if (cm) cm.style.display = "";
     _resetState();
     onClose?.();
+
+    if (window.timeSystem?.dailyActionLeft <= 0) {
+      window.closeCoursePanel?.();
+      setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+    }
   };
 }
 

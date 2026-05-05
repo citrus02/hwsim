@@ -1,6 +1,6 @@
 // slot-system.js — 存档槽 + 反馈功能
 
-import { getSave, setSave, addLog } from './save-system.js';
+import { getSave, setSave, addLog, restartGame } from './save-system.js';
 import { getAllSlots, saveAllSlots } from './save-system.js';
 
 const COLOR_SAVE = "#37594e";
@@ -78,10 +78,8 @@ window.openLoad = function () {
 };
 
 window.resetGame = function () {
-  if (confirm("确定要清空进度吗？")) {
-    if (window.versionMgr) window.versionMgr.clearVersionInfo();
-    localStorage.clear();
-    location.reload();
+  if (confirm("确定要重新开始吗？角色信息会保留，游戏进度将重置。")) {
+    restartGame();
   }
 };
 

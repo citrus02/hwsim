@@ -1,6 +1,6 @@
 export const timeSystem = {
-  dailyActionLeft: 3,
-  nowTime: "早晨",
+  dailyActionLeft: 1,
+  nowTime: "夜晚",
   currentDate: "1991-09-02"
 };
 
@@ -11,7 +11,13 @@ function saveTimeToSave() {
     return;
   }
   const data = window.saveSys.getSave();
+  const parts = timeSystem.currentDate.split('-');
+  const year = parseInt(parts[0], 10) || 1991;
+  const month = parseInt(parts[1], 10) || 9;
+  const day = parseInt(parts[2], 10) || 2;
   data.time = {
+    ...data.time,
+    year, month, day,
     dailyActionLeft: timeSystem.dailyActionLeft,
     nowTime: timeSystem.nowTime,
     currentDate: timeSystem.currentDate
@@ -21,7 +27,6 @@ function saveTimeToSave() {
 }
 
 export function loadTimeFromSave() {
-  // ✅ FIX #5：加防御检查，避免 saveSys 未就绪时报错
   if (!window.saveSys) {
     console.warn('⚠️ timeSystem: saveSys 未就绪，跳过加载');
     return;
@@ -31,6 +36,9 @@ export function loadTimeFromSave() {
     timeSystem.dailyActionLeft = data.time.dailyActionLeft ?? 3;
     timeSystem.nowTime = data.time.nowTime ?? "早晨";
     timeSystem.currentDate = data.time.currentDate ?? "1991-09-02";
+    if (data.time.year !== undefined) timeSystem.year = data.time.year;
+    if (data.time.month !== undefined) timeSystem.month = data.time.month;
+    if (data.time.day !== undefined) timeSystem.day = data.time.day;
     syncUI();
   }
 }
@@ -60,10 +68,22 @@ export function nextDay() {
 
   date.setDate(date.getDate() + 1);
   timeSystem.currentDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  timeSystem.year = date.getFullYear();
+  timeSystem.month = date.getMonth() + 1;
+  timeSystem.day = date.getDate();
   timeSystem.dailyActionLeft = 3;
   timeSystem.nowTime = "早晨";
   syncUI();
   saveTimeToSave();
+
+  setTimeout(() => {
+    if (window.storyEngine?.checkAndTriggerStory) {
+      window.storyEngine.checkAndTriggerStory();
+    }
+    if (window.npcEvents?.triggerNpcDailyEvents) {
+      window.npcEvents.triggerNpcDailyEvents();
+    }
+  }, 200);
 }
 
 export function nextTime() {

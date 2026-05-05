@@ -186,12 +186,14 @@ export function openDuelPanel() {
   panel.innerHTML = `
     <div class="duel-header">
       <span class="duel-title">⚔️ 决斗训练场</span>
+      <button class="duel-header-btn" id="duel-grimoire-btn">📖 咒语</button>
       <button class="duel-close-btn" id="duel-close">离开</button>
     </div>
     <div class="duel-body" id="duel-body"></div>`;
 
   document.querySelector("#actionMain").closest(".card").appendChild(panel);
   document.getElementById("duel-close").onclick = closeDuelPanel;
+  document.getElementById("duel-grimoire-btn").onclick = _renderGrimoire;
   _renderOpponentSelect();
 }
 
@@ -201,6 +203,22 @@ export function closeDuelPanel() {
   _resetDuel();
   if (window.timeSystem?.dailyActionLeft <= 0) {
     setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+  }
+}
+
+// ─── 咒语图鉴 ────────────────────────────────────────────
+
+function _renderGrimoire() {
+  const body = document.getElementById("duel-body");
+  if (!body) return;
+  body.innerHTML = `
+    <button class="duel-back-btn" id="duel-back">← 返回</button>
+    <div id="duel-grimoire-mount"></div>`;
+  document.getElementById("duel-back").onclick = _renderOpponentSelect;
+
+  const mount = document.getElementById("duel-grimoire-mount");
+  if (mount && window._renderInlineGrimoire) {
+    window._renderInlineGrimoire(mount);
   }
 }
 
