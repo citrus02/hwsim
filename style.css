@@ -2301,3 +2301,13 @@ body.modal-open .container {
     grid-template-columns: 1fr;
   }
 }
+
+.duel-second-tag {
+  text-align: center;
+  font-size: 12px;
+  color: #c9a84c;
+  padding: 4px 0;
+  margin: 4px 0;
+  border-top: 1px solid #2a3b66;
+  border-bottom: 1px solid #2a3b66;
+}

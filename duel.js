@@ -37,10 +37,75 @@ function getGestureById(id)      { return window.getGestureById?.(id) || null; }
 // 对手数据库
 // ═══════════════════════════════════════════════════════════
 
+const NAMED_OPPONENTS = {
+  1: [
+    { name: "奥利弗·平克斯", house: "赫奇帕奇", flavor: "手指发抖，魔杖差点掉在地上。" },
+    { name: "玛格丽特·弗利", house: "格兰芬多", flavor: "紧张地咬着嘴唇，但还是举起了魔杖。" },
+    { name: "塞缪尔·巴比奇", house: "拉文克劳", flavor: "嘴里念念有词地复习咒语口诀。" },
+    { name: "伊妮德·普朗克特", house: "斯莱特林", flavor: "虽然害怕，但眼神里有一股倔强。" },
+    { name: "蒂莫西·珀克斯", house: "格兰芬多", flavor: "第一次站在决斗台上，双腿微微发颤。" },
+    { name: "维罗妮卡·斯梅威克", house: "拉文克劳", flavor: "默默背诵着《标准咒语·初级》的每一页。" },
+  ],
+  2: [
+    { name: "菲利克斯·拉什", house: "格兰芬多", flavor: "除你武器已经练了整整一年，终于能稳定释放了。" },
+    { name: "多丽丝·珀基斯", house: "赫奇帕奇", flavor: "虽然不擅长攻击咒语，但防御倒是做得不错。" },
+    { name: "伦道夫·伯罗斯", house: "斯莱特林", flavor: "嘴角带着一丝轻蔑，觉得一年级生根本不值一提。" },
+    { name: "西西莉·万斯", house: "拉文克劳", flavor: "冷静地调整站姿，显然在家练习过。" },
+    { name: "赫克托·达利", house: "格兰芬多", flavor: "挥魔杖的姿势很夸张，但咒语倒确实有效。" },
+    { name: "米尔德里德·塔特", house: "赫奇帕奇", flavor: "不太情愿上台，但被朋友推了上来。" },
+  ],
+  3: [
+    { name: "昆廷·特林布尔", house: "拉文克劳", flavor: "镜片后的眼睛冷静地打量着你，显然做过充分准备。" },
+    { name: "阿格尼丝·梅里韦瑟", house: "格兰芬多", flavor: "三年级就敢挑战高年级，勇气可嘉。" },
+    { name: "雷金纳德·科顿", house: "斯莱特林", flavor: "擅长用障碍咒拖延对手，再伺机出击。" },
+    { name: "菲比·格林斯特德", house: "赫奇帕奇", flavor: "看起来温和无害，但昏迷咒出手极快。" },
+    { name: "巴塞洛缪·克劳奇", house: "斯莱特林", flavor: "家族里出过不少傲罗，决斗是传统。" },
+    { name: "尤菲米娅·普拉特", house: "拉文克劳", flavor: "在图书馆研究过每一种决斗咒语的理论。" },
+  ],
+  4: [
+    { name: "康奈利·普威特", house: "格兰芬多", flavor: "韦斯莱家的邻居，继承了红头发和倔脾气。" },
+    { name: "贝拉·普威特", house: "格兰芬多", flavor: "康奈利的双胞胎妹妹，咒语比哥哥还快。" },
+    { name: "西奥多·诺特", house: "斯莱特林", flavor: "斜靠着墙，嘴角带着一丝傲慢。显然觉得这场决斗毫无悬念。" },
+    { name: "格特鲁德·斯平纳", house: "拉文克劳", flavor: "四年级就精通四种攻击咒语，被称为'咒语机器'。" },
+    { name: "阿尔伯图斯·弗林特", house: "斯莱特林", flavor: "魁地奇球场上的冲撞让他习惯了对抗。" },
+    { name: "罗莎琳·希金斯", house: "赫奇帕奇", flavor: "看起来文静，但四年的魔咒课让她脱胎换骨。" },
+  ],
+  5: [
+    { name: "卡修斯·沃林顿", house: "斯莱特林", flavor: "在决斗俱乐部练了两年——每个手势都干净利落。" },
+    { name: "安吉利卡·科尔", house: "格兰芬多", flavor: "五年级的级长候选人，决斗实力是她的竞选资本。" },
+    { name: "菲利达·斯普劳特", house: "赫奇帕奇", flavor: "草药学和魔咒双修，咒语带着植物般的生命力。" },
+    { name: "达克·塞尔温", house: "斯莱特林", flavor: "家族世代出食死徒，但他只想在决斗中证明自己。" },
+    { name: "普鲁登斯·迈尔斯", house: "拉文克劳", flavor: "每场决斗前都会做详细的心理分析。" },
+    { name: "鲁弗斯·德里克", house: "格兰芬多", flavor: "沉默寡言，但魔杖从不犹豫。" },
+  ],
+  6: [
+    { name: "埃文·罗齐尔", house: "斯莱特林", flavor: "胸口的级长徽章在烛光下反光，眼神比咒语更冷。" },
+    { name: "阿米莉亚·博恩斯", house: "赫奇帕奇", flavor: "魔法部未来的新星，公正且强大。" },
+    { name: "吉迪翁·普威特", house: "格兰芬多", flavor: "凤凰社成员的弟弟，决斗天赋丝毫不逊。" },
+    { name: "伊万·多卡洛夫", house: "拉文克劳", flavor: "德姆斯特朗转学生，融合了两种决斗风格。" },
+    { name: "克拉丽莎·麦克米兰", house: "赫奇帕奇", flavor: "级长中的级长，连教授都对她点头称赞。" },
+    { name: "塞拉斯·雅克斯利", house: "斯莱特林", flavor: "法律执行司司长的侄子，决斗风格冷酷高效。" },
+  ],
+};
+
+function _pickNamedOpponent(grade) {
+  const pool = NAMED_OPPONENTS[grade];
+  if (!pool || pool.length === 0) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function _pickSecondFromPool(grade, excludeName) {
+  const pool = NAMED_OPPONENTS[grade];
+  if (!pool || pool.length === 0) return { portrait: "🧑‍🎓", name: "对手的助手" };
+  const filtered = pool.filter(n => n.name !== excludeName);
+  const pick = filtered.length > 0 ? filtered[Math.floor(Math.random() * filtered.length)] : pool[0];
+  return { portrait: "🧑‍🎓", name: pick.name };
+}
+
 const OPPONENTS = [
   {
     id: "firstYear",
-    name: "一年级新生",
+    name: "随机一年级新生",
     house: "随机",
     level: 1,
     hp: 40,
@@ -53,7 +118,7 @@ const OPPONENTS = [
   },
   {
     id: "secondYear",
-    name: "二年级学生",
+    name: "随机二年级学生",
     house: "格兰芬多",
     level: 2,
     hp: 55,
@@ -66,7 +131,7 @@ const OPPONENTS = [
   },
   {
     id: "thirdYear",
-    name: "三年级学生",
+    name: "随机三年级学生",
     house: "拉文克劳",
     level: 3,
     hp: 70,
@@ -79,7 +144,7 @@ const OPPONENTS = [
   },
   {
     id: "fourthYear",
-    name: "四年级学生",
+    name: "随机四年级学生",
     house: "斯莱特林",
     level: 4,
     hp: 85,
@@ -92,7 +157,7 @@ const OPPONENTS = [
   },
   {
     id: "duelClub",
-    name: "决斗俱乐部选手",
+    name: "随机决斗俱乐部选手",
     house: "混合",
     level: 5,
     hp: 100,
@@ -105,7 +170,7 @@ const OPPONENTS = [
   },
   {
     id: "prefect",
-    name: "级长",
+    name: "随机级长",
     house: "拉文克劳",
     level: 6,
     hp: 120,
@@ -157,16 +222,27 @@ let _duel = null;
 
 function _resetDuel() { _duel = null; }
 
-function _initDuel(opponent, playerSpells) {
+function _getPlayerMaxHp() {
+  const data = getSave();
+  const grade = data.time?.currentGrade || 1;
+  const hpTable = { 1: 40, 2: 55, 3: 70, 4: 85, 5: 100, 6: 120, 7: 140 };
+  return hpTable[grade] || 40 + (grade - 1) * 15;
+}
+
+function _initDuel(opponent, playerSpells, second) {
+  const maxHp = _getPlayerMaxHp();
+  const oppDisplayName = opponent.displayName || opponent.name;
+  const oppDisplayHouse = opponent.displayHouse || opponent.house;
+  const oppDisplayFlavor = opponent.displayFlavor || opponent.flavorText;
   _duel = {
-    opponent:     { ...opponent, currentHp: opponent.hp, shielded: false, slowed: false },
-    player:       { hp: 100, maxHp: 100, shielded: false, disarmed: false },
+    opponent:     { ...opponent, currentHp: opponent.hp, shielded: false, slowed: false, name: oppDisplayName, house: oppDisplayHouse, flavorText: oppDisplayFlavor },
+    player:       { hp: maxHp, maxHp, shielded: false, disarmed: false },
+    second:       second ? { ...second, currentHp: second.hp || 80, maxHp: second.hp || 80, shielded: false, disarmed: false, active: false } : null,
     round:        1,
     log:          [],
     phase:        "select",
     selectedSpell: null,
     gestureResult: null,
-    // 本场决斗的施法记录：{ spellId -> { hits, totalAccuracy, misses } }
     spellHits:    {},
   };
 }
@@ -186,7 +262,7 @@ export function openDuelPanel() {
   panel.id = "duelMain";
   panel.innerHTML = `
     <div class="duel-header">
-      <span class="duel-title">⚔️ 决斗训练场</span>
+      <span class="duel-title">⚔️ 决斗俱乐部</span>
       <button class="duel-header-btn" id="duel-grimoire-btn">📖 咒语</button>
       <button class="duel-close-btn" id="duel-close">离开</button>
     </div>
@@ -391,7 +467,21 @@ function _renderOpponentSelect() {
     card.style.cursor = canFight ? "pointer" : "not-allowed";
     card.style.opacity = canFight ? "1" : "0.5";
     if (canFight) {
-      card.onclick = () => _startDuel({ ...opp, level, rewardExp }, learnedSpells);
+      card.onclick = () => {
+        let finalOpp;
+        if (opp.isStudent === false && opp.characterKey) {
+          finalOpp = { ...opp, level, rewardExp, displayName: opp.name, displayHouse: opp.house || "", displayFlavor: opp.enemyFlavorText || opp.flavorText };
+        } else {
+          const named = _pickNamedOpponent(opp.level || 1);
+          finalOpp = {
+            ...opp, level, rewardExp,
+            displayName: named ? named.name : opp.name,
+            displayHouse: named ? named.house : opp.house,
+            displayFlavor: named ? named.flavor : (opp.enemyFlavorText || opp.flavorText),
+          };
+        }
+        _selectSecond(finalOpp, learnedSpells);
+      };
     }
     return card;
   };
@@ -560,7 +650,7 @@ function _start4v4Battle(selectedAllies, enemyTeam, playerSpells) {
             <div class="duel-4v4-unit">
               <span class="duel-4v4-unit-name">${i === 0 ? "🧙" : (alliesData[i-1]?.portrait || "🧙")} ${name}</span>
               <div class="duel-hp-bar-wrap"><div class="duel-hp-bar" id="hp-ally-${i}" style="width:100%"></div></div>
-              <span class="duel-hp-num" id="hp-ally-num-${i}">${i === 0 ? "100/100" : `${alliesData[i-1]?.hp||80}/${alliesData[i-1]?.hp||80}`}</span>
+              <span class="duel-hp-num" id="hp-ally-num-${i}">${i === 0 ? `${_getPlayerMaxHp()}/${_getPlayerMaxHp()}` : `${alliesData[i-1]?.hp||80}/${alliesData[i-1]?.hp||80}`}</span>
             </div>`).join("")}
         </div>
         <div class="duel-4v4-team">
@@ -581,6 +671,30 @@ function _start4v4Battle(selectedAllies, enemyTeam, playerSpells) {
   const engine = window.DuelEngine?.start4v4?.(alliesData, members, playerSpells, callbacks);
   if (!engine) {
     body.innerHTML = '<div class="duel-notice">4v4 模式暂不可用</div>';
+  } else {
+    const infoEl = document.getElementById("duel-4v4-info");
+    if (infoEl) infoEl.textContent = "敬礼中……";
+    const spellsEl = document.getElementById("duel-4v4-spells");
+    if (spellsEl) spellsEl.innerHTML = "";
+    _duelLog(`⚔️ 4v4团队决斗开始！`);
+    _duelLog(`双方队员面对面站定，举起魔杖。`);
+    setTimeout(() => {
+      _duelLog(`🤝 「敬礼！」——双方郑重地相互鞠躬。`);
+      setTimeout(() => {
+        _duelLog(`三……`);
+        setTimeout(() => {
+          _duelLog(`二……`);
+          setTimeout(() => {
+            _duelLog(`一……`);
+            setTimeout(() => {
+              _duelLog(`⚡ 开始！`);
+              if (infoEl) infoEl.textContent = "第 1 回合 — 选择咒语";
+              _render4v4SpellSelect(engine, playerSpells);
+            }, 500);
+          }, 500);
+        }, 500);
+      }, 600);
+    }, 800);
   }
 }
 
@@ -660,11 +774,69 @@ function _duelEnd4v4(won, gains, record, allies, enemyTeam) {
   document.getElementById("duel-exit").onclick = closeDuelPanel;
 }
 
+// ─── 选择助手 ────────────────────────────────────────────
+
+function _selectSecond(opponent, playerSpells) {
+  const body = document.getElementById("duel-body");
+  if (!body) return;
+
+  const characters = _getKnownCharacters();
+  const oppKey = opponent.characterKey || null;
+  const allies = characters.filter(c => c.canInvite !== false && c.characterKey !== oppKey);
+  const oppName = opponent.displayName || opponent.name;
+  const oppFlavor = opponent.displayFlavor || opponent.flavorText;
+
+  body.innerHTML = `
+    <div class="duel-section-title">🤝 选择助手</div>
+    <div style="font-size:12px;color:#888;margin-bottom:6px;">对手：${opponent.portrait} ${oppName}（${opponent.displayHouse || opponent.house}）</div>
+    <div style="font-size:11px;color:#666;margin-bottom:12px;font-style:italic;">${oppFlavor}</div>
+    <div style="font-size:12px;color:#888;margin-bottom:12px;">正式决斗中需要一位助手，在你倒下时接替你继续战斗。也可以独自上场。</div>
+    <div class="duel-ally-list" id="duel-second-list"></div>`;
+
+  const list = document.getElementById("duel-second-list");
+
+  const soloCard = document.createElement("div");
+  soloCard.className = "duel-opp-card";
+  soloCard.innerHTML = `
+    <div class="duel-opp-portrait">🧙</div>
+    <div class="duel-opp-info">
+      <div class="duel-opp-name">独自上场</div>
+      <div class="duel-opp-flavor">不需要助手，一个人也能行。</div>
+    </div>`;
+  soloCard.style.cursor = "pointer";
+  soloCard.onclick = () => _startDuel(opponent, playerSpells, null);
+  list.appendChild(soloCard);
+
+  allies.forEach(ally => {
+    const card = document.createElement("div");
+    card.className = "duel-opp-card duel-opp-character";
+    const coop = _getAffinityCooperation(ally.characterKey);
+    card.innerHTML = `
+      <div class="duel-opp-portrait">${ally.portrait || '🧑‍🎓'}</div>
+      <div class="duel-opp-info">
+        <div class="duel-opp-name">${ally.name} <span class="duel-opp-level">配合度：${coop.label}</span></div>
+        <div class="duel-opp-flavor">${coop.label === '陌生' ? '还不太熟悉，但也许能帮上忙。' : coop.label === '信赖' ? '会毫不犹豫地为你挡咒。' : '愿意站在你身边。'}</div>
+      </div>`;
+    card.style.cursor = "pointer";
+    card.onclick = () => _startDuel(opponent, playerSpells, ally);
+    list.appendChild(card);
+  });
+}
+
 // ─── 开始决斗 ────────────────────────────────────────────
 
-function _startDuel(opponent, playerSpells) {
+function _startDuel(opponent, playerSpells, second) {
   if (window.costAction && !window.costAction()) return;
-  _initDuel(opponent, playerSpells);
+  _initDuel(opponent, playerSpells, second);
+
+  const maxHp = _getPlayerMaxHp();
+  const secondName = second ? `${second.portrait || '🧑‍🎓'} ${second.name}` : null;
+
+  const oppName = opponent.displayName || opponent.name;
+  const oppGrade = opponent.level || 1;
+  const enemySecond = _pickSecondFromPool(oppGrade, oppName);
+
+  const secondLine = `🤝 你的助手：${secondName || '无'} ｜ 对手的助手：${enemySecond.portrait} ${enemySecond.name}`;
 
   const body = document.getElementById("duel-body");
   body.innerHTML = `
@@ -676,12 +848,12 @@ function _startDuel(opponent, playerSpells) {
           <div class="duel-hp-bar-wrap">
             <div class="duel-hp-bar" id="duel-player-hp" style="width:100%;"></div>
           </div>
-          <div class="duel-hp-num" id="duel-player-num">100 / 100</div>
+          <div class="duel-hp-num" id="duel-player-num">${maxHp} / ${maxHp}</div>
           <div class="duel-status-icons" id="duel-player-icons"></div>
         </div>
         <div class="duel-vs">VS</div>
         <div class="duel-combatant duel-enemy-side">
-          <div class="duel-comb-name">${opponent.portrait} ${opponent.name}</div>
+          <div class="duel-comb-name">${opponent.portrait} ${oppName}</div>
           <div class="duel-hp-bar-wrap">
             <div class="duel-hp-bar duel-hp-enemy" id="duel-enemy-hp" style="width:100%;"></div>
           </div>
@@ -689,15 +861,32 @@ function _startDuel(opponent, playerSpells) {
           <div class="duel-status-icons" id="duel-enemy-icons"></div>
         </div>
       </div>
+      <div class="duel-second-tag">${secondLine}</div>
       <!-- 战斗日志 -->
       <div class="duel-log" id="duel-log"></div>
       <!-- 主内容区 -->
       <div class="duel-main-area" id="duel-main-area"></div>
     </div>`;
 
-  _duelLog(`⚔️ 决斗开始！对手：${opponent.portrait} ${opponent.name}`);
-  _duelLog(`弗立维教授大喊「开始！」，你们相互鞠躬。`);
-  _renderSpellSelect(playerSpells);
+  _duelLog(`⚔️ 决斗开始！对手：${opponent.portrait} ${oppName}（${opponent.displayHouse || opponent.house}）`);
+  _duelLog(secondLine);
+  _duelLog(`你们面对面站定，举起魔杖。`);
+  setTimeout(() => {
+    _duelLog(`🤝 「敬礼！」——你们郑重地相互鞠躬。`);
+    setTimeout(() => {
+      _duelLog(`三……`);
+      setTimeout(() => {
+        _duelLog(`二……`);
+        setTimeout(() => {
+          _duelLog(`一……`);
+          setTimeout(() => {
+            _duelLog(`⚡ 开始！`);
+            _renderSpellSelect(playerSpells);
+          }, 500);
+        }, 500);
+      }, 500);
+    }, 600);
+  }, 800);
 }
 
 // ─── 战斗日志 ────────────────────────────────────────────
@@ -1066,11 +1255,289 @@ function _enemyTurn(playerSpells) {
     _updateHP();
 
     if (player.hp <= 0) {
-      setTimeout(() => _duelEnd(false, playerSpells), 600);
+      if (_duel.second && !_duel.second.active) {
+        _duelLog(`💔 你倒下了！`, "duel-log-enemy");
+        _activateSecond(playerSpells);
+      } else {
+        setTimeout(() => _duelEnd(false, playerSpells), 600);
+      }
     } else {
       _nextRound(playerSpells);
     }
   }, thinkTime);
+}
+
+// ─── 助手接替战斗 ────────────────────────────────────────
+
+function _activateSecond(playerSpells) {
+  if (!_duel || !_duel.second) return;
+  const sec = _duel.second;
+  sec.active = true;
+
+  const secName = sec.name || "助手";
+  const secPortrait = sec.portrait || "🧑‍🎓";
+
+  _duelLog(`🤝 ${secPortrait} ${secName} 接替了你，走上决斗台！`, "duel-log-sys");
+
+  const statusBar = document.querySelector(".duel-status-bar");
+  if (statusBar) {
+    const playerSide = statusBar.querySelector(".duel-player-side");
+    if (playerSide) {
+      const nameEl = playerSide.querySelector(".duel-comb-name");
+      if (nameEl) nameEl.textContent = `${secPortrait} ${secName}`;
+    }
+  }
+
+  const hpBar = document.getElementById("duel-player-hp");
+  const hpNum = document.getElementById("duel-player-num");
+  if (hpBar) hpBar.style.width = `${Math.max(0, (sec.currentHp / sec.maxHp) * 100)}%`;
+  if (hpNum) hpNum.textContent = `${sec.currentHp} / ${sec.maxHp}`;
+
+  setTimeout(() => _secondTurn(playerSpells), 800);
+}
+
+function _secondTurn(playerSpells) {
+  if (!_duel || !_duel.second || !_duel.second.active) return;
+  const { opponent, second: sec } = _duel;
+
+  const secName = sec.name || "助手";
+  const secPortrait = sec.portrait || "🧑‍🎓";
+
+  const area = document.getElementById("duel-main-area");
+  if (area) {
+    area.innerHTML = `<div class="duel-enemy-thinking">
+      ${secPortrait} ${secName} 正在施法……
+    </div>`;
+  }
+
+  const secSpells = sec.spells || ["expelliarmus", "protego", "stupefy"];
+  const secAccuracy = sec.aiAccuracy || 0.7;
+  const secDelay = sec.aiDelay || [600, 1000];
+  const [minD, maxD] = secDelay;
+  const thinkTime = minD + Math.random() * (maxD - minD);
+
+  setTimeout(() => {
+    if (!_duel || !_duel.second || !_duel.second.active) return;
+
+    const hpRatio = sec.currentHp / sec.maxHp;
+    const useShield = hpRatio < 0.35 && secSpells.includes("protego") && Math.random() < 0.4;
+
+    let chosenSpellId;
+    if (useShield) {
+      chosenSpellId = "protego";
+    } else {
+      const attackSpells = secSpells.filter(s => {
+        const ef = getSpellEffect(s);
+        return ef.type !== "shield";
+      });
+      chosenSpellId = attackSpells[Math.floor(Math.random() * attackSpells.length)] || "expelliarmus";
+    }
+
+    const ef = getSpellEffect(chosenSpellId);
+    const gesture = getGestureBySpellId(chosenSpellId);
+    const aiSuccess = Math.random() < secAccuracy;
+
+    if (!aiSuccess && gesture) {
+      _duelLog(`💨 ${secName} 的 ${ef.label} 手势出错——哑火！`);
+      setTimeout(() => _enemyTurnAfterSecond(playerSpells), 400);
+      return;
+    }
+
+    switch (ef.type) {
+      case "shield":
+        sec.shielded = true;
+        _duelLog(`🛡️ ${secName} 施放盔甲护身——防护盾就位！`, "duel-log-player");
+        break;
+
+      case "damage":
+      case "knockback":
+      case "dazzle": {
+        let dmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (opponent.shielded) {
+          const reduced = Math.round(dmg * 0.3);
+          opponent.currentHp -= reduced;
+          opponent.shielded = false;
+          _duelLog(`${ef.icon} ${secName} 的 ${ef.label} 击碎了对手的防护盾！穿透伤害 ${reduced}。`, "duel-log-player");
+        } else {
+          opponent.currentHp -= dmg;
+          _duelLog(`${ef.icon} ${secName} 的 ${ef.label} 命中！造成 ${dmg} 点伤害。`, "duel-log-player");
+        }
+        break;
+      }
+
+      case "disarm": {
+        const ddmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (opponent.shielded) {
+          opponent.shielded = false;
+          _duelLog(`💫 ${secName} 的除你武器击碎了对手的防护盾！`, "duel-log-player");
+        } else {
+          opponent.currentHp -= ddmg;
+          _duel._enemyDisarmedNextRound = true;
+          _duelLog(`💫 ${secName} 的除你武器命中！对手魔杖飞出。`, "duel-log-player");
+        }
+        break;
+      }
+
+      case "slow":
+      case "disrupt": {
+        const sdmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (!opponent.shielded) {
+          opponent.currentHp -= sdmg;
+          opponent.slowed = true;
+          _duelLog(`${ef.icon} ${secName} 的 ${ef.label} 命中！造成 ${sdmg} 点伤害。`, "duel-log-player");
+        }
+        break;
+      }
+
+      case "heal": {
+        const healed = Math.min(sec.maxHp - sec.currentHp, Math.round(ef.base * (0.85 + Math.random() * 0.3)));
+        sec.currentHp += healed;
+        _duelLog(`💚 ${secName} 的 ${ef.label} 恢复了 ${healed} 点HP。`, "duel-log-player");
+        break;
+      }
+
+      default: {
+        const defDmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (!opponent.shielded) {
+          opponent.currentHp -= defDmg;
+          _duelLog(`🔮 ${secName} 的 ${ef.label} 造成了 ${defDmg} 点伤害。`, "duel-log-player");
+        }
+      }
+    }
+
+    if (ef.type !== "shield") opponent.shielded = false;
+    opponent.slowed = false;
+    opponent.currentHp = Math.max(0, opponent.currentHp);
+    _updateSecondHP();
+
+    if (opponent.currentHp <= 0) {
+      setTimeout(() => _duelEnd(true, playerSpells), 600);
+    } else {
+      setTimeout(() => _enemyTurnAfterSecond(playerSpells), 700);
+    }
+  }, thinkTime);
+}
+
+function _enemyTurnAfterSecond(playerSpells) {
+  if (!_duel) return;
+  const { opponent, second: sec } = _duel;
+  if (!sec || !sec.active) return;
+
+  const secName = sec.name || "助手";
+
+  const area = document.getElementById("duel-main-area");
+  if (area) {
+    area.innerHTML = `<div class="duel-enemy-thinking">
+      ${opponent.portrait} ${opponent.name} 正在施法……
+    </div>`;
+  }
+
+  if (_duel._enemyDisarmedNextRound) {
+    _duel._enemyDisarmedNextRound = false;
+    _duelLog(`💫 ${opponent.name} 的魔杖还没捡回来，被迫跳过这一回合！`);
+    _duel.round++;
+    setTimeout(() => _secondTurn(playerSpells), 400);
+    return;
+  }
+
+  const [minDelay, maxDelay] = opponent.aiDelay;
+  const thinkTime = minDelay + Math.random() * (maxDelay - minDelay);
+
+  setTimeout(() => {
+    if (!_duel || !sec.active) return;
+
+    let chosenSpellId;
+    const hpRatio = opponent.currentHp / opponent.hp;
+    const useShield = hpRatio < 0.35 && opponent.spells.includes("protego") && Math.random() < 0.4;
+
+    if (useShield) {
+      chosenSpellId = "protego";
+    } else {
+      const attackSpells = opponent.spells.filter(s => {
+        const ef = getSpellEffect(s);
+        return ef.type !== "shield";
+      });
+      chosenSpellId = attackSpells[Math.floor(Math.random() * attackSpells.length)];
+    }
+
+    const ef = getSpellEffect(chosenSpellId);
+    const gesture = getGestureBySpellId(chosenSpellId);
+    const aiSuccess = Math.random() < opponent.aiAccuracy;
+
+    if (!aiSuccess && gesture) {
+      _duelLog(`💨 ${opponent.name} 的 ${ef.label} 手势出错——哑火！`);
+      _duel.round++;
+      setTimeout(() => _secondTurn(playerSpells), 400);
+      return;
+    }
+
+    switch (ef.type) {
+      case "shield":
+        opponent.shielded = true;
+        _duelLog(`🛡️ ${opponent.name} 施放盔甲护身——防护盾就位！`, "duel-log-enemy");
+        break;
+
+      case "damage":
+      case "knockback":
+      case "dazzle": {
+        let dmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (sec.shielded) {
+          const reduced = Math.round(dmg * 0.3);
+          sec.currentHp -= reduced;
+          sec.shielded = false;
+          _duelLog(`${ef.icon} ${opponent.name} 的 ${ef.label} 击碎了${secName}的防护盾！穿透伤害 ${reduced}。`, "duel-log-enemy");
+        } else {
+          sec.currentHp -= dmg;
+          _duelLog(`${ef.icon} ${opponent.name} 的 ${ef.label} 命中！${secName}受到 ${dmg} 点伤害。`, "duel-log-enemy");
+        }
+        break;
+      }
+
+      case "disarm": {
+        const ddmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (sec.shielded) {
+          sec.shielded = false;
+          _duelLog(`💫 ${opponent.name} 的除你武器击碎了${secName}的防护盾！`, "duel-log-enemy");
+        } else {
+          sec.currentHp -= ddmg;
+          _duelLog(`💫 ${opponent.name} 的除你武器命中！${secName}的魔杖飞出。`, "duel-log-enemy");
+        }
+        break;
+      }
+
+      case "slow":
+      case "disrupt": {
+        const sdmg = Math.round(ef.base * (0.85 + Math.random() * 0.3));
+        if (!sec.shielded) {
+          sec.currentHp -= sdmg;
+          _duelLog(`${ef.icon} ${opponent.name} 的 ${ef.label} 命中！${secName}受到 ${sdmg} 点伤害。`, "duel-log-enemy");
+        }
+        break;
+      }
+    }
+
+    if (ef.type !== "shield") opponent.shielded = false;
+    sec.currentHp = Math.max(0, sec.currentHp);
+    _updateSecondHP();
+
+    if (sec.currentHp <= 0) {
+      _duelLog(`💔 ${secName} 也倒下了！`, "duel-log-enemy");
+      setTimeout(() => _duelEnd(false, playerSpells), 600);
+    } else {
+      _duel.round++;
+      setTimeout(() => _secondTurn(playerSpells), 400);
+    }
+  }, thinkTime);
+}
+
+function _updateSecondHP() {
+  if (!_duel || !_duel.second || !_duel.second.active) return;
+  const sec = _duel.second;
+  const pct = Math.max(0, (sec.currentHp / sec.maxHp) * 100);
+  const hpBar = document.getElementById("duel-player-hp");
+  const hpNum = document.getElementById("duel-player-num");
+  if (hpBar) hpBar.style.width = `${pct}%`;
+  if (hpNum) hpNum.textContent = `${Math.max(0, sec.currentHp)} / ${sec.maxHp}`;
 }
 
 // ─── 进入下一回合 ────────────────────────────────────────
@@ -1135,10 +1602,19 @@ function _duelEnd(playerWon, playerSpells) {
     addLog(`❤️ ${charName}好感度${deltaText}（决斗${playerWon ? '胜利' : '失败'}）`);
   }
 
-  // ── 日志 ──────────────────────────────────────────────
+  if (_duel.second && _duel.second.active && _duel.second.characterKey) {
+    const secDelta = playerWon ? 4 : 1;
+    window.affinitySystem?.addAffinity(_duel.second.characterKey, secDelta, 'duel');
+    const secDeltaText = secDelta > 0 ? `+${secDelta}` : `${secDelta}`;
+    addLog(`❤️ ${_duel.second.name}好感度${secDeltaText}（决斗${playerWon ? '协助胜利' : '并肩作战'}）`);
+  }
+
+  const secondInfo = _duel.second;
+  const secondTag = secondInfo ? (secondInfo.active ? `（${secondInfo.name} 接替了你）` : '') : '';
+
   const resultText = playerWon
-    ? `🏆 你赢得了对 ${opponent.name} 的决斗！（${round-1} 回合）`
-    : `💔 你在第 ${round-1} 回合被 ${opponent.name} 击败了。`;
+    ? `🏆 你赢得了对 ${opponent.name} 的决斗！（${round-1} 回合）${secondTag}`
+    : `💔 你在第 ${round-1} 回合被 ${opponent.name} 击败了。${secondTag}`;
   addLog(resultText);
   if (window.renderLog) renderLog();
 
@@ -1161,8 +1637,8 @@ function _duelEnd(playerWon, playerSpells) {
       <div class="duel-result-icon">${playerWon ? '🏆' : '💔'}</div>
       <div class="duel-result-title">${playerWon ? '决斗胜利！' : '决斗失败'}</div>
       <div class="duel-result-desc">${playerWon
-        ? `在 ${round-1} 个回合后，${opponent.name} 认输了。`
-        : `${opponent.name} 施法稳健——继续练习吧。`}</div>
+        ? `在 ${round-1} 个回合后，${opponent.name} 认输了。${secondTag}`
+        : `${opponent.name} 施法稳健——继续练习吧。${secondTag}`}</div>
       ${profHTML}
       <div class="duel-result-record">
         战绩：${save.duelRecord.wins} 胜 / ${save.duelRecord.losses} 负
@@ -1185,4 +1661,5 @@ function _duelEnd(playerWon, playerSpells) {
 // ═══════════════════════════════════════════════════════════
 
 window.openDuelPanel  = openDuelPanel;
+window._getPlayerMaxHp = _getPlayerMaxHp;
 window.closeDuelPanel = closeDuelPanel;

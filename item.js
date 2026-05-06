@@ -831,6 +831,18 @@ export const ITEM_DATA = [
   // ══════════════════════════════════════════
 
   {
+    name: "时间转换器",
+    icon: "⏳",
+    category: "稀有道具",
+    usable: true,
+    description: "原著：Time-Turner。魔法部颁发的极其稀有且受严格管控的魔法器具，外形是一串沙漏挂坠，逆时针旋转即可回到过去的时间。赫敏·格兰杰在三年级时曾获准使用，以便同时修读更多课程。每次使用消耗一次机会，回到过去后每次行动都会询问是否返回原时间。",
+    effect: {
+      type: "time_turner",
+    },
+    source: "魔法部特别许可 / 剧情奖励",
+  },
+
+  {
     name: "费利克斯快乐水（幸运药水）",
     icon: "✨",
     category: "稀有药剂",
@@ -962,6 +974,23 @@ export function applyItemEffect(itemName, index) {
     }
   }
 
+  else if (ef?.type === "time_turner") {
+    if (window.isTimeTraveling?.()) {
+      if (window.doStudyLog) window.doStudyLog(`⏳ 你正在时间旅行中，无法再次使用时间转换器。`);
+      return;
+    }
+    const usesLeft = window.getTimeTurnerUsesLeft?.() ?? 0;
+    if (usesLeft !== -1 && usesLeft <= 0) {
+      if (window.doStudyLog) window.doStudyLog(`⏳ 时间转换器的使用次数已耗尽。`);
+      return;
+    }
+    actionDelta = 0;
+    logMsg = `⏳ 你握住时间转换器，沙漏开始逆时针旋转……`;
+    setTimeout(() => {
+      if (window.openTimeTurnerPanel) window.openTimeTurnerPanel();
+    }, 300);
+  }
+
   // ── 应用行动次数变化 ──────────────────────
 
   if (actionDelta !== 0) {
@@ -970,10 +999,12 @@ export function applyItemEffect(itemName, index) {
 
   // ── 消耗道具 ─────────────────────────────
 
-  if (item.count > 1) {
-    item.count -= 1;
-  } else {
-    list.splice(index, 1);
+  if (ef?.type !== "time_turner") {
+    if (item.count > 1) {
+      item.count -= 1;
+    } else {
+      list.splice(index, 1);
+    }
   }
   data.bag.item = list;
 

@@ -126,7 +126,7 @@
       <div class="status-grid">
         <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">早晨</span></span>
         <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分 <span id="profileBtn" onclick="window.openProfilePanel?.()" class="info-emoji-btn" title="角色信息">📋</span></span>
-        <span class="sg-left">今日行动次数：<span id="actions">3</span>/3</span>
+        <span class="sg-left">今日行动次数：<span id="actions">3</span>/3 <span id="timeTurnerBtn" onclick="window.openTimeTurnerPanel?.()" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
         <span class="sg-right sg-currency">
           <span class="coin-g">🟡<span id="stat-galleons">10</span></span>
           <span class="coin-s">⚪<span id="stat-sickles">0</span></span>
@@ -166,7 +166,7 @@
       <div class="title">✨ 要做点什么？</div>
       <div class="action-grid">
         <button class="action-btn" onclick="window.openCoursePanel?.()">🪶 学习课程</button>
-        <button class="action-btn" onclick="window.openDuelPanel?.()">⚔️ 决斗训练场</button>
+        <button class="action-btn" onclick="window.openDuelPanel?.()">⚔️ 决斗俱乐部</button>
         <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
         <button class="action-btn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
       </div>
@@ -295,6 +295,12 @@ function quickTest() {
   if (savedAffinity) data.affinity = savedAffinity;
   if (savedKnownCharacters) data.knownCharacters = savedKnownCharacters;
   if (savedBag) data.bag = savedBag;
+
+  data.timeTurner = { isTraveling: false, originalTime: null, travelHistory: [], usesLeft: -1 };
+  if (!data.bag) data.bag = { item: [] };
+  if (!data.bag.item.some(i => i.name === "时间转换器")) {
+    data.bag.item.push({ name: "时间转换器", emoji: "⏳", count: 1 });
+  }
 
   localStorage.setItem("hogwarts", JSON.stringify(data));
   document.getElementById("screen-create").classList.remove("active");
@@ -468,6 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script type="module" src="affinity-data.js"></script>
 <script type="module" src="affinity-ui.js"></script>
 <script type="module" src="time-system.js"></script>
+<script type="module" src="time-turner.js"></script>
 <script type="module" src="explore-data.js"></script>
 <script type="module" src="explore.js"></script>
 <script type="module" src="potion-data.js"></script>

@@ -224,7 +224,8 @@ export const DuelEngine = {
   start1v1(opponentData, playerSpells, callbacks) {
     const { onLog, onHPUpdate, onPhaseChange, onRoundStart, onResult, onEnemyAction } = callbacks;
 
-    const player   = makeUnit({ name:"你", portrait:"🧙", hp:100, spells: playerSpells.map(s=>s.id), role:"damage" }, true);
+    const playerHp = window._getPlayerMaxHp?.() || 100;
+    const player   = makeUnit({ name:"你", portrait:"🧙", hp:playerHp, spells: playerSpells.map(s=>s.id), role:"damage" }, true);
     const opponent = makeUnit(opponentData);
 
     _battle = {
@@ -371,9 +372,10 @@ export const DuelEngine = {
     } = callbacks;
 
     // 构建双方队伍
+    const playerHp = window._getPlayerMaxHp?.() || 100;
     const playerUnit = makeUnit({
       name:"你", portrait:"🧙",
-      hp:100, spells: playerSpells.map(s=>s.id), role:"damage"
+      hp:playerHp, spells: playerSpells.map(s=>s.id), role:"damage"
     }, true);
 
     const allies = alliesData.map(a => makeUnit(a));

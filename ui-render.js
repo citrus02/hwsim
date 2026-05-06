@@ -54,6 +54,25 @@ export function refreshAll() {
   renderLog();
   renderTimeline();
 
+  const ttBtn = document.getElementById("timeTurnerBtn");
+  if (ttBtn) {
+    const hasTT = data.timeTurner?.usesLeft !== undefined || (data.bag?.item || []).some(i => i.name === "时间转换器");
+    ttBtn.style.display = hasTT ? "inline" : "none";
+  }
+
+  const dateEl = document.getElementById("date");
+  const weekdayEl = document.getElementById("weekday");
+  const todEl = document.getElementById("timeOfDay");
+  if (dateEl && data.timeTurner?.isTraveling) {
+    dateEl.style.color = "#c9a84c";
+    if (weekdayEl) weekdayEl.style.color = "#c9a84c";
+    if (todEl) todEl.style.color = "#c9a84c";
+  } else if (dateEl) {
+    dateEl.style.color = "";
+    if (weekdayEl) weekdayEl.style.color = "";
+    if (todEl) todEl.style.color = "";
+  }
+
   if (window.storyEngine?.hasActiveStory?.()) {
     setTimeout(() => window.storyEngine.resumeActiveStory(), 300);
   } else {

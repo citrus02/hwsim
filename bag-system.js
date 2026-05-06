@@ -57,7 +57,7 @@ export function openBagPanel() {
 
   panel.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <div style="font-size:16px; font-weight:bold; color:#f8c850;">🎒 背包</div>
+      <div style="font-size:16px; font-weight:bold; color:#f8c850;">📦 物品</div>
       <button onclick="window.closeBagPanel()" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
     </div>
     <div class="bag-tab-row" id="bagPanelTabRow" style="display:flex; gap:6px; margin-bottom:12px;">

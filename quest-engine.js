@@ -235,6 +235,7 @@ function _checkAchievements(q) {
       case "brewPotion":     done = q.counters.brewPotion   >= cond.count; break;
       case "sideQuestDone":  done = q.counters.sideQuestDone >= cond.count; break;
       case "dailyDaysDone":  done = q.counters.dailyDaysDone >= cond.count; break;
+      case "timeTurnerUse":  done = q.counters.timeTurnerUse  >= cond.count; break;
 
       case "courseComplete": {
         const data  = getSave();
@@ -382,7 +383,7 @@ export const QuestEngine = {
     }
 
     // 更新全局计数器（成就用）
-    const globalCounterKeys = ["courseStudy","goodStudy","duelPlay","duelWin","duel4v4Play","duel4v4Win","explore","brewPotion"];
+    const globalCounterKeys = ["courseStudy","goodStudy","duelPlay","duelWin","duel4v4Play","duel4v4Win","explore","brewPotion","timeTurnerUse"];
     if (globalCounterKeys.includes(event)) {
       q.counters[event] = (q.counters[event] || 0) + 1;
     }

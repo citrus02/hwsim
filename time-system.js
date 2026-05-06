@@ -77,6 +77,10 @@ export function nextDay() {
   saveTimeToSave();
 
   setTimeout(() => {
+    if (window.checkTimeTurnerAutoEnd) window.checkTimeTurnerAutoEnd();
+  }, 100);
+
+  setTimeout(() => {
     if (window.storyEngine?.checkAndTriggerStory) {
       window.storyEngine.checkAndTriggerStory();
     }
@@ -88,6 +92,9 @@ export function nextDay() {
 
 export function nextTime() {
   if (timeSystem.dailyActionLeft <= 0) {
+    if (window.isTimeTraveling?.()) {
+      return false;
+    }
     nextDay();
     return true;
   }

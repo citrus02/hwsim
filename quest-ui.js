@@ -461,6 +461,7 @@ export function openAchievementPanel() {
       <button class="quest-ach-tab" data-cat="explore">探索</button>
       <button class="quest-ach-tab" data-cat="affinity">人物</button>
       <button class="quest-ach-tab" data-cat="daily">日常</button>
+      <button class="quest-ach-tab" data-cat="special">特殊</button>
     </div>
     <div class="quest-ach-list" id="achPanelList">
       ${_renderAchList(achievements, "all")}

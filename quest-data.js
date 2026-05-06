@@ -665,6 +665,42 @@ export const ACHIEVEMENTS = [
       { type: "material", name: "独角兽角粉", count: 1 },
     ],
   },
+
+  // ── 时间转换器类 ───────────────────────────────────────
+
+  {
+    id: "ach_tt_first",
+    title: "时间旅行者",
+    desc: "第一次使用时间转换器。",
+    icon: "⏳",
+    category: "special",
+    condition: { type: "timeTurnerUse", count: 1 },
+    rewards: [{ type: "housePoint", amount: 10 }],
+  },
+  {
+    id: "ach_tt_5",
+    title: "反复横跳",
+    desc: "累计使用时间转换器5次。",
+    icon: "🔄",
+    category: "special",
+    condition: { type: "timeTurnerUse", count: 5 },
+    rewards: [
+      { type: "housePoint", amount: 20 },
+      { type: "item", name: "巧克力蛙", count: 2 },
+    ],
+  },
+  {
+    id: "ach_tt_20",
+    title: "时间的囚徒",
+    desc: "累计使用时间转换器20次。赫敏·格兰杰也会为你叹服。",
+    icon: "🕰️",
+    category: "special",
+    condition: { type: "timeTurnerUse", count: 20 },
+    rewards: [
+      { type: "housePoint", amount: 50 },
+      { type: "material", name: "时间之沙", count: 1 },
+    ],
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════

@@ -5,12 +5,19 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.6.1';
+export const CURRENT_VERSION = '1.6.2';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.6.2': [
+    '新增道具：时间转换器',
+    '新增时间转换器相关成就',
+    '修正决斗逻辑，现在的决斗更贴合原著了！',
+    '新增决斗对手池',
+    '修正决斗逻辑，现在的决斗不会痛击队友了！',
+  ],
   '1.6.1': [
     '补充时间轴剧情',
     '补充生日快乐剧情',

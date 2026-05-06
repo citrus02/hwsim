@@ -872,7 +872,7 @@ export const STUDENT_CHARACTERS = {
       },
       {
         id: 'draco_enc_3',
-        area: '决斗训练场',
+        area: '决斗俱乐部',
         minTier: 3,
         oneTime: true,
         text: '德拉科在旁边看你决斗，整场都没有走。你赢了之后，他走过来，「你，」他说，「那个收势——你知道为什么这样更有效吗？」',
