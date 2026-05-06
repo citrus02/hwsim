@@ -498,6 +498,7 @@ export function renderAffinityPanelInline(containerEl) {
             <div class="affinity-char-bar${isNeg ? ' affinity-char-bar-neg' : ''}" style="width:${barPct}%"></div>
           </div>
           <div class="affinity-char-actions">
+            <button class="affinity-char-btn affinity-btn-gift" data-key="${key}">🎁 送礼</button>
             ${canChat ? `
               <button class="affinity-char-btn affinity-btn-chat ${onCooldown ? 'affinity-btn-cooldown' : ''}"
                 data-key="${key}" ${onCooldown ? 'disabled' : ''}>
@@ -610,6 +611,14 @@ export function renderAffinityPanelInline(containerEl) {
         target.classList.remove('affinity-collapse-closed');
         header.classList.remove('affinity-collapse-header-closed');
       }
+    });
+  });
+
+  // ── 送礼 ──────────────────────────────────────────────
+  containerEl.querySelectorAll('.affinity-btn-gift').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.key;
+      if (window.openGiftPanel) window.openGiftPanel(key);
     });
   });
 

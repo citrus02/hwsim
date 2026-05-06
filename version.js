@@ -11,6 +11,9 @@ export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-sy
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.0': [
+    '现在可以送礼啦！',
+  ],
   '1.6.2': [
     '新增道具：时间转换器',
     '新增时间转换器相关成就',
