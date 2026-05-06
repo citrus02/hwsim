@@ -170,7 +170,7 @@ export function renderLog() {
     const filters = data.logFilters || { story: true, npc: true, player: true };
     filtersEl.innerHTML =
       `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer;margin-right:12px"><input type="checkbox" data-filter="story" ${filters.story ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;color:rgba(255,255,255,0.7)">旁白</span></label>` +
-      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer;margin-right:12px"><input type="checkbox" data-filter="npc" ${filters.npc ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;background:linear-gradient(to right,#dc143c,#ffd700,#4169e1,#2e8b2e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">角色</span></label>` +
+      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer;margin-right:12px"><input type="checkbox" data-filter="npc" ${filters.npc ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;background:linear-gradient(to right,#dc143c,#ffd700,#4169e1,#5cb85c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">角色</span></label>` +
       `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer"><input type="checkbox" data-filter="player" ${filters.player ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;color:#9999cc">自己</span></label>`;
 
     filtersEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
@@ -192,7 +192,7 @@ export function renderLog() {
   
   const houseColors = {
     gryffindor: "#dc143c",
-    slytherin: "#2e8b2e",
+    slytherin: "#5cb85c",
     ravenclaw: "#6b9fff",
     hufflepuff: "#ffd700"
   };
@@ -204,18 +204,18 @@ export function renderLog() {
     let displayText = t;
     let house = '';
     
-    const npcMatch = t.match(/\[NPC\](\[(\w+)\])?/);
-    const storyMatch = t.match(/\[story\]/);
-    if (npcMatch) {
-      logType = 'npc';
-      displayText = t.replace(/\[NPC\](\[\w+\])?\s*/, '');
-      if (npcMatch[2]) house = npcMatch[2];
-      p.className = "log-npc";
-    } else if (storyMatch || storyKeywords.some(kw => t.includes(kw))) {
-      logType = 'story';
-      displayText = t.replace(/\[story\]\s*/, '');
-      p.className = "log-story";
-    }
+    const npcMatch = t.match(/\[npc\](\[(\w+)\])?/i);
+  const storyMatch = t.match(/\[story\]/i);
+  if (npcMatch) {
+    logType = 'npc';
+    displayText = t.replace(/\[npc\](\[\w+\])?\s*/i, '');
+    if (npcMatch[2]) house = npcMatch[2].toLowerCase();
+    p.className = "log-npc";
+  } else if (storyMatch || storyKeywords.some(kw => t.includes(kw))) {
+    logType = 'story';
+    displayText = t.replace(/\[story\]\s*/i, '');
+    p.className = "log-story";
+  }
     
     if (filters[logType]) {
       p.innerText = displayText;
@@ -246,65 +246,65 @@ export function renderLog() {
 
 // 时间轴
 const baseEvents = [
-  { date: "1960-01-09", text: "西弗勒斯・斯内普 生日", isBirthday: true, character: "西弗勒斯・斯内普" },
-  { date: "1960-03-27", text: "莱姆斯・卢平 生日", isBirthday: true, character: "莱姆斯・卢平" },
-  { date: "1960-11-19", text: "小天狼星・布莱克 生日", isBirthday: true, character: "小天狼星・布莱克" },
-  { date: "1979-09-19", text: "赫敏・格兰杰 生日", isBirthday: true, character: "赫敏・格兰杰" },
-  { date: "1980-03-01", text: "罗恩・韦斯莱 生日", isBirthday: true, character: "罗恩・韦斯莱" },
-  { date: "1980-07-31", text: "哈利・波特 生日", isBirthday: true, character: "哈利・波特" },
-  { date: "1981-08-11", text: "金妮・韦斯莱 生日", isBirthday: true, character: "金妮・韦斯莱" },
-  { date: "1991-07-31", text: "哈利・波特11岁生日，鲁伯・海格到访，告知巫师身世" },
-  { date: "1991-08-15", text: "哈利・波特前往对角巷，购买冬青木凤凰羽毛魔杖" },
-  { date: "1991-09-01", text: "9¾站台，哈利・波特结识罗恩・韦斯莱、赫敏・格兰杰" },
+  { date: "1960-01-09", text: "西弗勒斯・斯内普 生日", isBirthday: true, character: "西弗勒斯・斯内普", storyId: "birthday_snape" },
+  { date: "1960-03-27", text: "莱姆斯・卢平 生日", isBirthday: true, character: "莱姆斯・卢平", storyId: "birthday_lupin" },
+  { date: "1960-11-19", text: "小天狼星・布莱克 生日", isBirthday: true, character: "小天狼星・布莱克", storyId: "birthday_sirius" },
+  { date: "1979-09-19", text: "赫敏・格兰杰 生日", isBirthday: true, character: "赫敏・格兰杰", storyId: "birthday_hermione" },
+  { date: "1980-03-01", text: "罗恩・韦斯莱 生日", isBirthday: true, character: "罗恩・韦斯莱", storyId: "birthday_ron" },
+  { date: "1980-07-31", text: "哈利・波特 生日", isBirthday: true, character: "哈利・波特", storyId: "birthday_harry" },
+  { date: "1981-08-11", text: "金妮・韦斯莱 生日", isBirthday: true, character: "金妮・韦斯莱", storyId: "birthday_ginny" },
+  { date: "1991-07-31", text: "海格的来信", storyId: "story_0_1" },
+  { date: "1991-08-15", text: "对角巷购杖", storyId: "story_0_2" },
+  { date: "1991-09-01", text: "九又四分之三", storyId: "story_0_3" },
   { date: "1991-09-02", text: "分院仪式之夜", storyId: "story_1_1" },
   { date: "1991-09-15", text: "走廊里的飞行课", storyId: "story_1_2" },
   { date: "1991-10-31", text: "万圣节的尖叫", storyId: "story_1_3" },
   { date: "1991-12-01", text: "三楼走廊的秘密", storyId: "story_1_4" },
   { date: "1991-12-25", text: "圣诞节的隐形衣", storyId: "story_1_5" },
   { date: "1992-06-01", text: "魔法石之夜", storyId: "story_1_6" },
-  { date: "1992-08-01", text: "多比警告哈利・波特，阻止他返回霍格沃茨" },
-  { date: "1992-09-01", text: "哈利・波特与罗恩・韦斯莱驾驶飞车撞断打人柳" },
+  { date: "1992-08-01", text: "多比的警告", storyId: "story_2_0" },
+  { date: "1992-09-01", text: "飞车撞打人柳", storyId: "story_2_0b" },
   { date: "1992-10-31", text: "墙上的血字", storyId: "story_2_1" },
   { date: "1992-12-10", text: "决斗俱乐部的蛇", storyId: "story_2_2" },
   { date: "1993-05-25", text: "密室关闭", storyId: "story_2_3" },
-  { date: "1993-07-15", text: "哈利・波特逃离女贞路，小天狼星・布莱克越狱消息公布" },
-  { date: "1993-09-01", text: "莱姆斯・卢平就任黑魔法防御术教授" },
+  { date: "1993-07-15", text: "布莱克越狱", storyId: "story_3_0" },
+  { date: "1993-09-01", text: "卢平就任教授" },
   { date: "1993-09-01", text: "摄魂怪", storyId: "story_3_1" },
-  { date: "1993-10-01", text: "摄魂怪进驻学校，哈利・波特开始学习守护神咒" },
+  { date: "1993-10-01", text: "守护神咒", storyId: "story_3_1b" },
   { date: "1994-04-15", text: "尖叫棚屋的真相", storyId: "story_3_2" },
-  { date: "1994-06-06", text: "赫敏・格兰杰使用时间转换器，拯救巴克比克与小天狼星・布莱克" },
-  { date: "1994-06-24", text: "伏地魔复活，制造纳吉尼魂器" },
-  { date: "1994-08-15", text: "魁地奇世界杯，食死徒现身，黑魔标记重现" },
-  { date: "1994-10-01", text: "三强争霸赛重启，布斯巴顿与德姆斯特朗抵达" },
+  { date: "1994-06-06", text: "时间转换器", storyId: "story_3_2b" },
+  { date: "1994-06-24", text: "纳吉尼魂器" },
+  { date: "1994-08-15", text: "世界杯骚乱", storyId: "story_4_0" },
+  { date: "1994-10-01", text: "三强争霸赛重启" },
   { date: "1994-10-15", text: "火焰杯的选择", storyId: "story_4_1" },
-  { date: "1994-11-01", text: "火焰杯选中哈利・波特成为第四位勇士" },
-  { date: "1994-12-25", text: "圣诞舞会，罗恩・韦斯莱与赫敏・格兰杰爆发矛盾" },
-  { date: "1995-02-24", text: "黑湖任务，哈利・波特救下罗恩・韦斯莱与芙蓉・德拉库尔妹妹" },
+  { date: "1994-11-01", text: "哈利成为第四勇士" },
+  { date: "1994-12-25", text: "圣诞舞会", storyId: "story_4_1b" },
+  { date: "1995-02-24", text: "黑湖任务" },
   { date: "1995-06-24", text: "墓地的闪光", storyId: "story_4_2" },
-  { date: "1995-08-02", text: "哈利・波特遭遇摄魂怪，使用守护神咒受审" },
-  { date: "1995-09-01", text: "多洛雷斯・乌姆里奇就任，开始独裁统治" },
+  { date: "1995-08-02", text: "摄魂怪受审", storyId: "story_5_0" },
+  { date: "1995-09-01", text: "乌姆里奇就任" },
   { date: "1995-09-10", text: "粉色的独裁", storyId: "story_5_1" },
-  { date: "1995-10-05", text: "邓布利多军正式成立" },
-  { date: "1996-01-02", text: "神秘事务司大战，小天狼星・布莱克牺牲" },
-  { date: "1996-06-01", text: "乌姆里奇下台，霍格沃茨进入危机；阿不思・邓布利多摧毁冈特戒指魂器" },
-  { date: "1996-09-01", text: "霍拉斯・斯拉格霍恩任教，德拉科・马尔福执行暗杀邓布利多任务" },
+  { date: "1995-10-05", text: "邓布利多军", storyId: "story_5_1b" },
+  { date: "1996-01-02", text: "布莱克牺牲", storyId: "story_5_2" },
+  { date: "1996-06-01", text: "乌姆里奇下台" },
+  { date: "1996-09-01", text: "斯拉格霍恩任教", storyId: "story_6_0" },
   { date: "1996-09-15", text: "王子的笔记", storyId: "story_6_1" },
-  { date: "1996-10-01", text: "哈利・波特获得混血王子课本，魔药天赋觉醒" },
-  { date: "1996-12-01", text: "阿不思・邓布利多开始讲解魂器真相" },
-  { date: "1997-03-01", text: "阿不思・邓布利多带哈利・波特寻找魂器，身受重伤" },
+  { date: "1996-10-01", text: "混血王子课本" },
+  { date: "1996-12-01", text: "魂器的秘密", storyId: "story_6_1b" },
+  { date: "1997-03-01", text: "邓布利多受伤" },
   { date: "1997-06-01", text: "天文塔的绿光", storyId: "story_6_2" },
-  { date: "1997-06-30", text: "天文塔决战，阿不思・邓布利多陨落" },
-  { date: "1997-07-27", text: "七哈利转移计划，海德薇死亡，乔治・韦斯莱失一耳" },
-  { date: "1997-09-01", text: "铁三角开始荒野逃亡，寻找魂器" },
-  { date: "1998-01-05", text: "赫敏・格兰杰销毁斯莱特林挂坠盒魂器" },
-  { date: "1998-02-01", text: "三人得知死亡圣器传说" },
-  { date: "1998-03-01", text: "马尔福庄园被俘，多比牺牲" },
-  { date: "1998-04-01", text: "抢劫古灵阁，赫敏・格兰杰销毁赫奇帕奇金杯魂器" },
+  { date: "1997-06-30", text: "邓布利多陨落" },
+  { date: "1997-07-27", text: "七哈利转移", storyId: "story_7_0" },
+  { date: "1997-09-01", text: "铁三角逃亡" },
+  { date: "1998-01-05", text: "销毁挂坠盒" },
+  { date: "1998-02-01", text: "死亡圣器传说" },
+  { date: "1998-03-01", text: "马尔福庄园", storyId: "story_7_0b" },
+  { date: "1998-04-01", text: "抢劫古灵阁", storyId: "story_7_0c" },
   { date: "1998-05-01", text: "最后的战斗", storyId: "story_7_1" },
-  { date: "1998-05-02", text: "霍格沃茨大战全面爆发" },
-  { date: "1998-05-08", text: "霍格沃茨重建，第二次巫师战争结束" },
-  { date: "1999-09-01", text: "金斯莱・沙克尔成为魔法部长，开启和平时代" },
-  { date: "2017-09-01", text: "十九年后，国王十字车站送别孩子们入学" }
+  { date: "1998-05-02", text: "霍格沃茨大战" },
+  { date: "1998-05-08", text: "霍格沃茨重建" },
+  { date: "1999-09-01", text: "和平时代开启" },
+  { date: "2017-09-01", text: "十九年后" }
 ];
 
 function generateAllEvents() {
@@ -314,7 +314,7 @@ function generateAllEvents() {
   for (let y = 1990; y <= 2018; y++) {
     birthdays.forEach(b => {
       const [, m, d] = b.date.split('-');
-      all.push({ date: `${y}-${m}-${d}`, text: `🎂 ${b.character} 生日快乐`, isAutoBirthday: true });
+      all.push({ date: `${y}-${m}-${d}`, text: `🎂 ${b.character} 生日快乐`, isAutoBirthday: true, storyId: b.storyId });
     });
   }
   return all.sort((a, b) => a.date.localeCompare(b.date));
@@ -372,8 +372,19 @@ function _renderTimelineEntry(e, storyData, STORY_MAP, today) {
 
   const evt = STORY_MAP[storyId];
   const isCompleted = !!storyData.completed[storyId];
-  const isAvailable = evt && !isCompleted && today >= evt.dateRange[0] && today <= evt.dateRange[1]
-    && (!evt.prerequisite || storyData.completed[evt.prerequisite]);
+  let isAvailable = false;
+  if (evt) {
+    if (evt.isBirthday) {
+      const todayMD = today.substring(5);
+      const completedYear = storyData.completed[storyId];
+      const currentYear = parseInt(today.split('-')[0], 10);
+      isAvailable = todayMD === evt.birthdayDate && completedYear !== currentYear
+        && (!evt.prerequisite || storyData.completed[evt.prerequisite]);
+    } else {
+      isAvailable = !isCompleted && today >= evt.dateRange[0] && today <= evt.dateRange[1]
+        && (!evt.prerequisite || storyData.completed[evt.prerequisite]);
+    }
+  }
 
   if (!evt) {
     return `<p><span class="event-date">${e.date}</span> ${e.text}</p>`;

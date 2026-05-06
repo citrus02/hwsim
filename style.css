@@ -307,7 +307,6 @@ h3 {
 .log .me { color: #9999cc; }
 .log .npc { color: #8a8a6a; opacity: 0.75; }
 .log .log-story { color: rgba(255,255,255,0.7); }
-.log .log-npc { }
 .log .sys { color: #aaa; }
 .log .good { color: #8f8; }
 .log .bad { color: #f66; }
@@ -889,13 +888,13 @@ select:valid {
 /* ====================== 背包格子核心设置 ====================== */
 .bag-grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
   margin-top: 8px;
 }
 .bag-slot {
   aspect-ratio: 1/1;
-  min-height: 40px;
+  min-height: 48px;
   background: var(--bg-input);
   border-radius: 6px;
   display: flex;
@@ -904,7 +903,7 @@ select:valid {
   font-size: 12px;
   color: #aaa;
   text-align: center;
-  padding: 2px;
+  padding: 3px;
   word-break: break-word;
   white-space: normal;
   overflow: hidden;
@@ -1476,11 +1475,11 @@ body.modal-open .container {
     margin: 6px 0;
   }
   .bag-grid {
-    grid-template-columns: repeat(8, 1fr);
-    gap: 6px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
   }
   .bag-slot {
-    min-height: 35px;
+    min-height: 40px;
     font-size: 11px;
   }
   #slotBox,
@@ -1574,7 +1573,7 @@ body.modal-open .container {
     margin-top: 6px;
   }
   .bag-slot {
-    min-height: 30px;
+    min-height: 36px;
     font-size: 10px;
     padding: 1px;
     border-radius: 4px;
@@ -2038,14 +2037,18 @@ body.modal-open .container {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 8px 6px;
+  padding: 8px 10px;
   cursor: pointer;
   user-select: none;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  margin-bottom: 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 6px;
+  transition: background 0.15s, border-color 0.15s;
 }
 .affinity-collapse-header:hover {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
 }
 .affinity-collapse-header .affinity-section-title {
   border-bottom: none;
@@ -2054,7 +2057,7 @@ body.modal-open .container {
   flex: 1;
 }
 .affinity-collapse-count {
-  background: #2a3656;
+  background: rgba(255,255,255,0.1);
   color: #aaa;
   font-size: 11px;
   padding: 1px 8px;
@@ -2062,7 +2065,7 @@ body.modal-open .container {
 }
 .affinity-collapse-arrow {
   font-size: 10px;
-  color: #667;
+  color: #888;
   transition: transform 0.2s;
 }
 .affinity-collapse-header-closed .affinity-collapse-arrow {
@@ -2259,6 +2262,22 @@ body.modal-open .container {
   padding: 8px 4px 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   margin-bottom: 8px;
+}
+
+.aff-empty-tip {
+  text-align: center;
+  padding: 8px 10px;
+  color: #5a4a7a;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.aff-empty-tip::before {
+  content: '✦ ';
+  font-size: 12px;
+  color: #3a2a5c;
 }
 
 .aff-inline-wrapper .aff-tab-bar {

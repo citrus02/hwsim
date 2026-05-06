@@ -49,8 +49,19 @@ function _checkCondition(condition) {
 export function getAvailableStoryEvents() {
   const story = _getStoryData();
   const today = getSave().time?.currentDate || "1991-09-02";
+  const currentYear = parseInt(today.split('-')[0], 10);
 
   return STORY_EVENTS.filter(evt => {
+    if (evt.isBirthday) {
+      const bd = evt.birthdayDate;
+      const todayMD = today.substring(5);
+      if (todayMD !== bd) return false;
+      const completedYear = story.completed[evt.id];
+      if (completedYear === currentYear) return false;
+      if (evt.prerequisite && !story.completed[evt.prerequisite]) return false;
+      if (!_checkCondition(evt.condition)) return false;
+      return true;
+    }
     if (story.completed[evt.id]) return false;
     if (evt.prerequisite && !story.completed[evt.prerequisite]) return false;
     if (!_checkCondition(evt.condition)) return false;
@@ -61,7 +72,15 @@ export function getAvailableStoryEvents() {
 
 export function getCompletedStoryEvents() {
   const story = _getStoryData();
-  return STORY_EVENTS.filter(evt => story.completed[evt.id]).sort((a, b) => a.dateRange[0].localeCompare(b.dateRange[0]));
+  return STORY_EVENTS.filter(evt => {
+    if (!story.completed[evt.id]) return false;
+    if (evt.isBirthday) return true;
+    return true;
+  }).sort((a, b) => {
+    const aDate = a.dateRange ? a.dateRange[0] : a.birthdayDate || '';
+    const bDate = b.dateRange ? b.dateRange[0] : b.birthdayDate || '';
+    return aDate.localeCompare(bDate);
+  });
 }
 
 export function getUpcomingStoryEvents() {
@@ -69,11 +88,26 @@ export function getUpcomingStoryEvents() {
   const today = getSave().time?.currentDate || "1991-09-02";
 
   return STORY_EVENTS.filter(evt => {
-    if (story.completed[evt.id]) return false;
+    if (story.completed[evt.id]) {
+      if (evt.isBirthday) {
+        const currentYear = parseInt(today.split('-')[0], 10);
+        if (story.completed[evt.id] === currentYear) return false;
+      } else {
+        return false;
+      }
+    }
     if (evt.prerequisite && !story.completed[evt.prerequisite]) return false;
     if (!_checkCondition(evt.condition)) return false;
+    if (evt.isBirthday) {
+      const todayMD = today.substring(5);
+      return todayMD < evt.birthdayDate;
+    }
     return today < evt.dateRange[0];
-  }).sort((a, b) => a.dateRange[0].localeCompare(b.dateRange[0]));
+  }).sort((a, b) => {
+    const aDate = a.dateRange ? a.dateRange[0] : a.birthdayDate || '';
+    const bDate = b.dateRange ? b.dateRange[0] : b.birthdayDate || '';
+    return aDate.localeCompare(bDate);
+  });
 }
 
 export function startStoryEvent(eventId) {
@@ -82,7 +116,15 @@ export function startStoryEvent(eventId) {
 
   const evt = STORY_EVENTS.find(e => e.id === eventId);
   if (!evt) return false;
-  if (story.completed[eventId]) return false;
+  if (story.completed[eventId]) {
+    if (evt.isBirthday) {
+      const today = getSave().time?.currentDate || "1991-09-02";
+      const currentYear = parseInt(today.split('-')[0], 10);
+      if (story.completed[eventId] === currentYear) return false;
+    } else {
+      return false;
+    }
+  }
   if (evt.prerequisite && !story.completed[evt.prerequisite]) return false;
   if (!_checkCondition(evt.condition)) return false;
 
@@ -147,7 +189,12 @@ export function skipStoryScene() {
 
 function _completeStoryEvent(evt) {
   const story = _getStoryData();
-  story.completed[evt.id] = true;
+  if (evt.isBirthday) {
+    const today = getSave().time?.currentDate || "1991-09-02";
+    story.completed[evt.id] = parseInt(today.split('-')[0], 10);
+  } else {
+    story.completed[evt.id] = true;
+  }
   story.active = null;
   _saveStoryData(story);
 
@@ -212,7 +259,20 @@ function _renderStoryScene() {
   const evt = STORY_EVENTS.find(e => e.id === story.active.id);
   if (!evt) return;
 
-  const scene = evt.scenes[story.active.sceneIndex];
+  let scene = evt.scenes[story.active.sceneIndex];
+  if (!scene) return;
+
+  while (scene && scene.minAffinityTier) {
+    const tier = _getAffinityTier(scene.minAffinityTier.key || evt.affinityKey);
+    if (tier >= scene.minAffinityTier.tier) break;
+    story.active.sceneIndex++;
+    _saveStoryData(story);
+    if (story.active.sceneIndex >= evt.scenes.length) {
+      _completeStoryEvent(evt);
+      return;
+    }
+    scene = evt.scenes[story.active.sceneIndex];
+  }
   if (!scene) return;
 
   let modal = document.getElementById("story-modal");

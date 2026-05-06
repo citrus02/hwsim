@@ -141,6 +141,7 @@ const SPELL_EFFECTS = {
   aguamenti:   { type: "disrupt", base: 10, label: "清水如泉",  color: "#78c8f8", icon: "💧" },
   reparo:      { type: "heal",    base: 12, label: "修复如初",  color: "#a8f0c8", icon: "💚" },
   scourgify:   { type: "disrupt", base: 6,  label: "清理一新",  color: "#c8f8e8", icon: "🌀" },
+  serpensortia:{ type: "damage",  base: 18, label: "乌龙出洞",  color: "#5cb85c", icon: "🐍" },
 };
 
 // 默认效果（未定义咒语）
@@ -194,7 +195,7 @@ export function openDuelPanel() {
   document.querySelector("#actionMain").closest(".card").appendChild(panel);
   document.getElementById("duel-close").onclick = closeDuelPanel;
   document.getElementById("duel-grimoire-btn").onclick = _renderGrimoire;
-  _renderOpponentSelect();
+  _renderModeSelect();
 }
 
 export function closeDuelPanel() {
@@ -224,6 +225,135 @@ function _renderGrimoire() {
 
 // ─── 对手选择 ────────────────────────────────────────────
 
+let _currentMode = "1v1";
+
+function _renderModeSelect() {
+  const body = document.getElementById("duel-body");
+  if (!body) return;
+
+  body.innerHTML = `
+    <div class="duel-mode-select">
+      <div class="duel-mode-card" id="duel-pick-1v1">
+        <div class="duel-mode-icon">⚔️</div>
+        <div class="duel-mode-name">1v1 决斗</div>
+        <div class="duel-mode-desc">与一名对手单挑，考验个人实力</div>
+      </div>
+      <div class="duel-mode-card" id="duel-pick-4v4">
+        <div class="duel-mode-icon">🛡️</div>
+        <div class="duel-mode-name">4v4 团队战</div>
+        <div class="duel-mode-desc">邀请队友组队，挑战敌方队伍</div>
+      </div>
+    </div>`;
+
+  document.getElementById("duel-pick-1v1").onclick = () => {
+    _currentMode = "1v1";
+    _renderOpponentSelect();
+  };
+  document.getElementById("duel-pick-4v4").onclick = () => {
+    _currentMode = "4v4";
+    _render4v4Select();
+  };
+}
+
+function _switchMode(mode) {
+  _currentMode = mode;
+  _renderModeSelect();
+}
+
+const KNOWN_CHARACTERS = {
+  minervaMcGonagall: { name: "米勒娃·麦格", portrait: "🐱", hp: 130, role: "tank", spells: ["protego","expelliarmus","stupefy","depulso"], aiAccuracy: 0.9, aiDelay: [400,800], enemyFlavorText: "麦格教授站在对面，方形眼镜后的眼神比她的咒语还锐利。", joinQuote: "「格兰芬多不会退缩。」" },
+  severusSnape: { name: "西弗勒斯·斯内普", portrait: "🧪", hp: 120, role: "damage", spells: ["expelliarmus","stupefy","diffindo","protego","incendio"], aiAccuracy: 0.92, aiDelay: [350,700], enemyFlavorText: "斯内普教授的黑袍在暗处飘动，他甚至懒得看你——但他的魔杖已经举起。", joinQuote: "「……别拖后腿。」" },
+  albusDumbledore: { name: "阿不思·邓布利多", portrait: "✨", hp: 200, role: "support", spells: ["protego","stupefy","expelliarmus","accio","incendio","bombarda"], aiAccuracy: 0.97, aiDelay: [300,600], enemyFlavorText: "邓布利多站在对面，半月形眼镜后的眼睛里有一种宁静的光芒。", joinQuote: "「偶尔出手也无妨。」" },
+  filiusFlitwick: { name: "弗立维·弗利维克", portrait: "🪄", hp: 95, role: "damage", spells: ["expelliarmus","stupefy","protego","diffindo","bombarda"], aiAccuracy: 0.88, aiDelay: [450,850], enemyFlavorText: "弗立维教授站在一摞书上，但他的魔杖挥舞速度比任何人都快。", joinQuote: "「决斗？当然！」" },
+  pomonaSprout: { name: "波莫纳·斯普劳特", portrait: "🌿", hp: 120, role: "tank", spells: ["protego","expelliarmus","stupefy","arresto","reparo"], aiAccuracy: 0.78, aiDelay: [700,1200], enemyFlavorText: "斯普劳特教授的围裙上还沾着泥土，但她握魔杖的手稳如磐石。", joinQuote: "「韧性比力量重要。」" },
+  quirrell: { name: "奎洛教授", portrait: "🧣", hp: 80, role: "damage", spells: ["stupefy","expelliarmus","protego","incendio"], aiAccuracy: 0.7, aiDelay: [800,1400], enemyFlavorText: "奎洛教授的围巾遮住了半张脸，但他的手在发抖。", joinQuote: "「呃……好吧，我试试……」" },
+  rolandaHooch: { name: "罗兰达·胡奇", portrait: "🦅", hp: 100, role: "damage", spells: ["expelliarmus","stupefy","protego","depulso"], aiAccuracy: 0.82, aiDelay: [500,900], enemyFlavorText: "胡奇教授的黄色鹰眼紧盯着你，像审视一个犯规的球员。", joinQuote: "「注意你的姿势！」" },
+  remusLupin: { name: "莱姆斯·卢平", portrait: "🐺", hp: 110, role: "support", spells: ["protego","expelliarmus","stupefy","diffindo","reparo"], aiAccuracy: 0.85, aiDelay: [500,900], enemyFlavorText: "卢平教授温和的笑容下是精准到毫厘的施法节奏。", joinQuote: "「防御永远比进攻重要。」" },
+  harry: { name: "哈利·波特", portrait: "⚡", hp: 100, role: "damage", spells: ["expelliarmus","protego","stupefy","accio"], aiAccuracy: 0.82, aiDelay: [500,900], enemyFlavorText: "哈利·波特站在对面，闪电伤疤下的绿眼睛专注而坚定。", joinQuote: "「一起上！我掩护你。」" },
+  hermione: { name: "赫敏·格兰杰", portrait: "📚", hp: 85, role: "support", spells: ["protego","expelliarmus","stupefy","reparo","arresto"], aiAccuracy: 0.86, aiDelay: [500,900], enemyFlavorText: "赫敏·格兰杰站在对面，魔杖握得标准而有力。", joinQuote: "「我已经背过了所有决斗规则。」" },
+  ron: { name: "罗恩·韦斯莱", portrait: "♟️", hp: 105, role: "tank", spells: ["expelliarmus","protego","stupefy","depulso"], aiAccuracy: 0.72, aiDelay: [700,1300], enemyFlavorText: "罗恩·韦斯莱握着魔杖，看起来有点紧张——但他的眼神告诉你，他不会轻易认输。", joinQuote: "「来吧！韦斯莱家的人不退缩！」" },
+  draco: { name: "德拉科·马尔福", portrait: "🐍", hp: 90, role: "damage", spells: ["expelliarmus","stupefy","depulso","protego"], aiAccuracy: 0.8, aiDelay: [550,1000], enemyFlavorText: "德拉科·马尔福站在对面，铂金色的头发在烛光下闪着冷光。", joinQuote: "「哼，你倒是有点胆量。」" },
+  neville: { name: "纳威·隆巴顿", portrait: "🌱", hp: 110, role: "tank", spells: ["expelliarmus","protego","stupefy","diffindo"], aiAccuracy: 0.68, aiDelay: [800,1500], enemyFlavorText: "纳威·隆巴顿握着魔杖的手在微微发抖——但他的脚没有后退一步。", joinQuote: "「我……我可以的。」" },
+  luna: { name: "卢娜·洛夫古德", portrait: "🌙", hp: 80, role: "support", spells: ["protego","expelliarmus","stupefy","accio","reparo"], aiAccuracy: 0.74, aiDelay: [700,1300], enemyFlavorText: "卢娜·洛夫古德站在对面，萝卜耳环晃来晃去，看起来完全没把决斗当回事。", joinQuote: "「Nargles说今天适合决斗。」" },
+  ginnyWeasley: { name: "金妮·韦斯莱", portrait: "🔥", hp: 90, role: "damage", spells: ["expelliarmus","stupefy","diffindo","bombarda","protego"], aiAccuracy: 0.83, aiDelay: [500,950], enemyFlavorText: "金妮·韦斯莱站在对面，红头发像火焰一样。", joinQuote: "「别小看我！」" },
+  fredWeasley: { name: "弗雷德·韦斯莱", portrait: "🃏", hp: 95, role: "damage", spells: ["expelliarmus","stupefy","bombarda","depulso","protego"], aiAccuracy: 0.78, aiDelay: [550,1000], enemyFlavorText: "弗雷德·韦斯莱站在对面，嘴角带着那种让你不安的笑。", joinQuote: "「我一个人也能赢——大概。」" },
+  georgeWeasley: { name: "乔治·韦斯莱", portrait: "🃏", hp: 95, role: "damage", spells: ["expelliarmus","stupefy","bombarda","depulso","protego"], aiAccuracy: 0.78, aiDelay: [550,1000], enemyFlavorText: "乔治·韦斯莱站在对面，表情和弗雷德一模一样。", joinQuote: "「我一个人就够。」" },
+  siriusBlack: { name: "小天狼星·布莱克", portrait: "🐕", hp: 115, role: "damage", spells: ["expelliarmus","stupefy","diffindo","bombarda","protego","incendio"], aiAccuracy: 0.87, aiDelay: [450,850], enemyFlavorText: "小天狼星·布莱克站在对面，黑发垂在眼前，眼神里有十二年的压抑。", joinQuote: "「终于来点有意思的了。」" },
+};
+
+function _getKnownCharacters() {
+  const result = [];
+  try {
+    const raw = localStorage.getItem("hogwarts");
+    const data = raw ? JSON.parse(raw) : {};
+    Object.entries(KNOWN_CHARACTERS).forEach(([key, stats]) => {
+      const known = data.knownCharacters?.includes(key) || !!data.affinity?.[key];
+      if (known) {
+        const aff = data.affinity?.[key];
+        const v = typeof aff === 'object' ? (aff.value || 0) : (aff || 0);
+        let tier = 1;
+        if (v >= 80) tier = 5; else if (v >= 60) tier = 4; else if (v >= 40) tier = 3; else if (v >= 20) tier = 2; else if (v < 0) tier = -1;
+        result.push({ ...stats, characterKey: key, tierCurrent: tier, isStudent: false, canChallenge: true, canInvite: true });
+      }
+    });
+  } catch (e) {}
+  return result;
+}
+
+function _getEnemyTeams() {
+  if (window.duelData?.ENEMY_TEAMS?.length) return window.duelData.ENEMY_TEAMS;
+  return [
+    {
+      id: "slytherin_squad", name: "斯莱特林小队", icon: "🐍", difficulty: 2,
+      flavorText: "四个斯莱特林学生，步调一致，眼神里有同一种冷漠。",
+      members: [
+        { ...OPPONENTS[3], name: "德拉科式的四年级生" },
+        { ...OPPONENTS[2], name: "斯莱特林三年级" },
+        { ...OPPONENTS[2], name: "斯莱特林三年级" },
+        { ...OPPONENTS[1], name: "斯莱特林二年级" },
+      ],
+    },
+    {
+      id: "duel_club_elite", name: "决斗俱乐部精英队", icon: "⚔️", difficulty: 3,
+      flavorText: "他们在决斗俱乐部里见过太多阵势——对你们投来评估的目光。",
+      members: [
+        { ...OPPONENTS[4], name: "决斗俱乐部队长" },
+        { ...OPPONENTS[4], name: "决斗俱乐部老将" },
+        { ...OPPONENTS[3], name: "决斗俱乐部四年级" },
+        { ...OPPONENTS[3], name: "决斗俱乐部四年级" },
+      ],
+    },
+    {
+      id: "prefect_team", name: "级长团队", icon: "🏅", difficulty: 4,
+      flavorText: "四名级长，胸口的徽章在烛光下一齐发光。",
+      members: [
+        { ...OPPONENTS[5], name: "格兰芬多级长" },
+        { ...OPPONENTS[5], name: "拉文克劳级长" },
+        { ...OPPONENTS[5], name: "赫奇帕奇级长" },
+        { ...OPPONENTS[5], name: "斯莱特林级长" },
+      ],
+    },
+    {
+      id: "mixed_random", name: "随机混合对手", icon: "🎲", difficulty: 2,
+      flavorText: "来自不同学院、不同年级——唯一的共同点是今天想赢你。",
+      members: null, randomPool: OPPONENTS, randomCount: 4,
+    },
+  ];
+}
+
+function _getAffinityCooperation(characterKey) {
+  if (window.duelData?.getAffinityCooperation) return window.duelData.getAffinityCooperation(characterKey);
+  return { accuracyBonus: 0, healChance: 0, shieldPriority: false, label: "陌生" };
+}
+
+function _buildRandomTeam(pool, count) {
+  if (window.duelData?.buildRandomTeam) return window.duelData.buildRandomTeam(pool, count);
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count).map((o, i) => ({
+    ...o, name: `${o.name}${i > 0 ? `（${i+1}）` : ''}`,
+  }));
+}
+
 function _renderOpponentSelect() {
   const body = document.getElementById("duel-body");
   if (!body) return;
@@ -234,32 +364,48 @@ function _renderOpponentSelect() {
 
   const list = document.getElementById("duel-opp-list");
 
-  // 读取玩家已解锁咒语
   const learnedSpells = getSpellListWithStatus().filter(s => s.isLearned);
   const canFight = learnedSpells.length >= 1;
 
-  OPPONENTS.forEach(opp => {
+  const characters = _getKnownCharacters();
+
+  const makeCard = (opp) => {
     const card = document.createElement("div");
-    card.className = "duel-opp-card";
+    card.className = "duel-opp-card" + (opp.isStudent ? "" : " duel-opp-character");
+    const level = opp.level ?? Math.round((opp.hp || 80) / 20);
+    const rewardExp = opp.rewardExp ?? opp.rewardBase ?? Math.round((opp.hp || 80) * 0.7);
+    const flavor = opp.enemyFlavorText || opp.flavorText;
+    const tierLabel = opp.tierCurrent ? ` ❤️${opp.tierCurrent}` : '';
     card.innerHTML = `
       <div class="duel-opp-portrait">${opp.portrait}</div>
       <div class="duel-opp-info">
         <div class="duel-opp-name">${opp.name}
-          <span class="duel-opp-level">Lv.${opp.level}</span>
+          <span class="duel-opp-level">Lv.${level}${tierLabel}</span>
         </div>
-        <div class="duel-opp-flavor">${opp.flavorText}</div>
+        <div class="duel-opp-flavor">${flavor}</div>
         <div class="duel-opp-meta">
           <span class="duel-opp-hp">❤️ ${opp.hp}</span>
-          <span class="duel-opp-reward">经验 +${opp.rewardExp}</span>
+          <span class="duel-opp-reward">经验 +${rewardExp}</span>
         </div>
       </div>`;
     card.style.cursor = canFight ? "pointer" : "not-allowed";
     card.style.opacity = canFight ? "1" : "0.5";
     if (canFight) {
-      card.onclick = () => _startDuel(opp, learnedSpells);
+      card.onclick = () => _startDuel({ ...opp, level, rewardExp }, learnedSpells);
     }
-    list.appendChild(card);
-  });
+    return card;
+  };
+
+  OPPONENTS.forEach(opp => list.appendChild(makeCard({ ...opp, isStudent: true })));
+
+  if (characters.length > 0) {
+    const divider = document.createElement("div");
+    divider.className = "duel-section-title";
+    divider.style.marginTop = "12px";
+    divider.textContent = "认识的人";
+    list.appendChild(divider);
+    characters.forEach(opp => list.appendChild(makeCard(opp)));
+  }
 
   if (!canFight) {
     const tip = document.createElement("div");
@@ -269,9 +415,255 @@ function _renderOpponentSelect() {
   }
 }
 
+function _render4v4Select() {
+  const body = document.getElementById("duel-body");
+  if (!body) return;
+
+  const learnedSpells = getSpellListWithStatus().filter(s => s.isLearned);
+  const canFight = learnedSpells.length >= 1;
+
+  const knownAllies = _getKnownCharacters();
+
+  body.innerHTML = `
+    <div class="duel-section-title">🛡️ 邀请队友（最多3人）</div>
+    <div class="duel-ally-list" id="duel-ally-list"></div>
+    <div class="duel-section-title" style="margin-top:12px">🎯 选择对手队伍</div>
+    <div class="duel-team-list" id="duel-team-list"></div>`;
+
+  const allyList = document.getElementById("duel-ally-list");
+  const selectedAllies = [];
+
+  if (knownAllies.length === 0) {
+    allyList.innerHTML = '<div class="duel-notice">暂无认识的人可以邀请。多去上课和探索吧！</div>';
+  } else {
+    knownAllies.forEach(ally => {
+      const card = document.createElement("div");
+      card.className = "duel-ally-card";
+      const coop = _getAffinityCooperation(ally.characterKey);
+      const coopLabel = coop ? ` · ${coop.label}` : '';
+      card.innerHTML = `
+        <div class="duel-opp-portrait">${ally.portrait}</div>
+        <div class="duel-opp-info">
+          <div class="duel-opp-name">${ally.name}<span class="duel-opp-level">❤️${ally.tierCurrent}${coopLabel}</span></div>
+          <div class="duel-opp-flavor">${ally.joinQuote}</div>
+        </div>
+        <div class="duel-ally-check" id="ally-check-${ally.characterKey}">☐</div>`;
+      card.onclick = () => {
+        const idx = selectedAllies.findIndex(a => a.characterKey === ally.characterKey);
+        if (idx >= 0) {
+          selectedAllies.splice(idx, 1);
+          document.getElementById(`ally-check-${ally.characterKey}`).textContent = "☐";
+          card.classList.remove("duel-ally-selected");
+        } else if (selectedAllies.length < 3) {
+          selectedAllies.push(ally);
+          document.getElementById(`ally-check-${ally.characterKey}`).textContent = "☑";
+          card.classList.add("duel-ally-selected");
+        }
+      };
+      allyList.appendChild(card);
+    });
+  }
+
+  const teamList = document.getElementById("duel-team-list");
+  const teams = _getEnemyTeams();
+
+  teams.forEach(team => {
+    if (team.isCustom) return;
+    const card = document.createElement("div");
+    card.className = "duel-opp-card";
+    const diffStars = "⭐".repeat(Math.min(team.difficulty || 1, 5));
+    card.innerHTML = `
+      <div class="duel-opp-portrait">${team.icon}</div>
+      <div class="duel-opp-info">
+        <div class="duel-opp-name">${team.name}<span class="duel-opp-level">${diffStars}</span></div>
+        <div class="duel-opp-flavor">${team.flavorText}</div>
+      </div>`;
+    card.style.cursor = canFight ? "pointer" : "not-allowed";
+    card.style.opacity = canFight ? "1" : "0.5";
+    if (canFight) {
+      card.onclick = () => _start4v4Battle(selectedAllies, team, learnedSpells);
+    }
+    teamList.appendChild(card);
+  });
+
+  if (!canFight) {
+    const tip = document.createElement("div");
+    tip.className = "duel-notice";
+    tip.textContent = "⚠️ 至少需要习得一个咒语才能参与决斗。";
+    body.appendChild(tip);
+  }
+}
+
+function _start4v4Battle(selectedAllies, enemyTeam, playerSpells) {
+  if (window.costAction && !window.costAction()) return;
+  let members = enemyTeam.members;
+  if (!members && enemyTeam.randomPool) {
+    members = _buildRandomTeam(enemyTeam.randomPool, enemyTeam.randomCount || 4) ?? [];
+  }
+  if (!members || members.length === 0) return;
+
+  const alliesData = selectedAllies.map(a => ({ ...a, id: a.characterKey }));
+
+  const callbacks = {
+    onLog: (text, cls) => {
+      const logEl = document.getElementById("duel-log");
+      if (logEl) {
+        const entry = document.createElement("div");
+        entry.className = cls || "dlog-sys";
+        entry.textContent = text;
+        logEl.appendChild(entry);
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+    },
+    onHPUpdate: (state) => {
+      state.myTeam.forEach((u, i) => {
+        const bar = document.getElementById(`hp-ally-${i}`);
+        if (bar) bar.style.width = `${Math.max(0, (u.hp / u.maxHp) * 100)}%`;
+        const num = document.getElementById(`hp-ally-num-${i}`);
+        if (num) num.textContent = `${Math.max(0, u.hp)}/${u.maxHp}`;
+      });
+      state.enemyTeam.forEach((u, i) => {
+        const bar = document.getElementById(`hp-enemy-${i}`);
+        if (bar) bar.style.width = `${Math.max(0, (u.hp / u.maxHp) * 100)}%`;
+        const num = document.getElementById(`hp-enemy-num-${i}`);
+        if (num) num.textContent = `${Math.max(0, u.hp)}/${u.maxHp}`;
+      });
+    },
+    onPhaseChange: (phase) => {
+      const area = document.getElementById("duel-4v4");
+      if (!area) return;
+      if (phase === "select") _render4v4SpellSelect(engine, playerSpells);
+      else if (phase === "gesture") {}
+      else if (phase === "enemy") {
+        const info = document.getElementById("duel-4v4-info");
+        if (info) info.textContent = "敌方回合...";
+      }
+    },
+    onRoundStart: (round) => {
+      const info = document.getElementById("duel-4v4-info");
+      if (info) info.textContent = `第 ${round} 回合 — 选择咒语`;
+    },
+    onResult: (won, gains, record) => {
+      _duelEnd4v4(won, gains, record, selectedAllies, enemyTeam);
+    },
+    onAllyAction: (unit, spellId, success) => {},
+    onEnemyAction: (enemy, spellId, success) => {},
+  };
+
+  const body = document.getElementById("duel-body");
+  body.innerHTML = `
+    <div class="duel-4v4" id="duel-4v4">
+      <div class="duel-4v4-status">
+        <div class="duel-4v4-team">
+          <div class="duel-4v4-team-label">🟦 己方</div>
+          ${["你", ...alliesData.map(a => a.name)].map((name, i) => `
+            <div class="duel-4v4-unit">
+              <span class="duel-4v4-unit-name">${i === 0 ? "🧙" : (alliesData[i-1]?.portrait || "🧙")} ${name}</span>
+              <div class="duel-hp-bar-wrap"><div class="duel-hp-bar" id="hp-ally-${i}" style="width:100%"></div></div>
+              <span class="duel-hp-num" id="hp-ally-num-${i}">${i === 0 ? "100/100" : `${alliesData[i-1]?.hp||80}/${alliesData[i-1]?.hp||80}`}</span>
+            </div>`).join("")}
+        </div>
+        <div class="duel-4v4-team">
+          <div class="duel-4v4-team-label">🟥 对方</div>
+          ${members.map((m, i) => `
+            <div class="duel-4v4-unit">
+              <span class="duel-4v4-unit-name">${m.portrait || "🧑‍🎓"} ${m.name}</span>
+              <div class="duel-hp-bar-wrap"><div class="duel-hp-bar duel-hp-enemy" id="hp-enemy-${i}" style="width:100%"></div></div>
+              <span class="duel-hp-num" id="hp-enemy-num-${i}">${m.hp}/${m.hp}</span>
+            </div>`).join("")}
+        </div>
+      </div>
+      <div class="duel-4v4-info" id="duel-4v4-info">第 1 回合 — 选择咒语</div>
+      <div class="duel-log" id="duel-log"></div>
+      <div class="duel-4v4-spells" id="duel-4v4-spells"></div>
+    </div>`;
+
+  const engine = window.DuelEngine?.start4v4?.(alliesData, members, playerSpells, callbacks);
+  if (!engine) {
+    body.innerHTML = '<div class="duel-notice">4v4 模式暂不可用</div>';
+  }
+}
+
+function _render4v4SpellSelect(engine, playerSpells) {
+  const container = document.getElementById("duel-4v4-spells");
+  if (!container || !engine) return;
+
+  container.innerHTML = "";
+  const grid = document.createElement("div");
+  grid.className = "duel-spell-grid";
+
+  playerSpells.forEach(spell => {
+    const btn = document.createElement("button");
+    btn.className = "duel-spell-btn";
+    const eff = SPELL_EFFECTS[spell.id] || { label: spell.nameCn, icon: "✨", color: "#888" };
+    btn.innerHTML = `<span class="duel-spell-icon">${eff.icon}</span> ${eff.label}`;
+    btn.style.borderColor = eff.color;
+    btn.onclick = () => {
+      const targetArea = document.getElementById("duel-4v4-spells");
+      if (targetArea) targetArea.innerHTML = '<div class="duel-notice">画出手势...</div>';
+      GestureWidget.render(
+        targetArea || container,
+        spell.id,
+        (result) => {
+          engine.playerCast(spell.id, result);
+        },
+        { timeout: 6000 }
+      );
+    };
+    grid.appendChild(btn);
+  });
+
+  container.appendChild(grid);
+}
+
+function _duelEnd4v4(won, gains, record, allies, enemyTeam) {
+  const body = document.getElementById("duel-body");
+  if (!body) return;
+
+  if (won) {
+    allies.forEach(a => {
+      if (a.characterKey) {
+        window.affinitySystem?.addAffinity(a.characterKey, 2, 'duel4v4');
+      }
+    });
+  }
+
+  const save = getSave();
+  addLog(won
+    ? `🏆 4v4团队决斗胜利！`
+    : `💔 4v4团队决斗失败。`);
+  window.renderLog?.();
+  window._questHook_duelEnd?.(won, true);
+
+  const profHTML = gains.length > 0 ? `
+    <div class="duel-prof-gains">
+      <div class="duel-prof-gains-title">⚡ 熟练度提升</div>
+      ${gains.map(g => `
+        <div class="duel-prof-gain-row">
+          <span>${g.name}</span><span>+${g.gain}%</span><span>${g.mastered ? '【精通】' : `→ ${g.newProf}%`}</span>
+        </div>`).join("")}
+    </div>` : "";
+
+  body.innerHTML = `
+    <div class="duel-result ${won ? 'duel-result-win' : 'duel-result-lose'}">
+      <div class="duel-result-icon">${won ? '🏆' : '💔'}</div>
+      <div class="duel-result-title">${won ? '团队胜利！' : '团队失败'}</div>
+      ${profHTML}
+      <div class="duel-result-record">战绩：${record.wins} 胜 / ${record.losses} 负</div>
+      <div class="duel-result-btns">
+        <button class="duel-btn-primary" id="duel-again">再来一场</button>
+        <button class="duel-btn-sec" id="duel-exit">离开决斗场</button>
+      </div>
+    </div>`;
+
+  document.getElementById("duel-again").onclick = () => _render4v4Select();
+  document.getElementById("duel-exit").onclick = closeDuelPanel;
+}
+
 // ─── 开始决斗 ────────────────────────────────────────────
 
 function _startDuel(opponent, playerSpells) {
+  if (window.costAction && !window.costAction()) return;
   _initDuel(opponent, playerSpells);
 
   const body = document.getElementById("duel-body");
@@ -727,13 +1119,20 @@ function _duelEnd(playerWon, playerSpells) {
   setSave(save);
   // ── 学生角色好感度触发（决斗胜利）─────────────────────
   if (playerWon) {
-    // 维度一：行动触发偶遇
     window.affinityUI?.tryStudentActionEncounter('duelWin');
-    
-    // 维度四：专属条件触发
     window.affinityUI?.checkStudentSpecialTriggers('duelWin', { 
       opponentLevel: opponent.level || 1 
     });
+  }
+
+  window._questHook_duelEnd?.(playerWon, false);
+
+  if (opponent.characterKey) {
+    const delta = playerWon ? 3 : -1;
+    window.affinitySystem?.addAffinity(opponent.characterKey, delta, 'duel');
+    const charName = opponent.name;
+    const deltaText = delta > 0 ? `+${delta}` : `${delta}`;
+    addLog(`❤️ ${charName}好感度${deltaText}（决斗${playerWon ? '胜利' : '失败'}）`);
   }
 
   // ── 日志 ──────────────────────────────────────────────

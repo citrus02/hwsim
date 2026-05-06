@@ -653,3 +653,6 @@ window._questHook_duelEnd = function(won, is4v4) {
 
 // 全局挂载
 window.questEngine = QuestEngine;
+
+// 页面加载时自动初始化
+setTimeout(() => QuestEngine.init(), 500);

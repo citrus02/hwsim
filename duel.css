@@ -33,6 +33,122 @@
   letter-spacing: 0.5px;
 }
 
+.duel-mode-select {
+  display: flex;
+  gap: 16px;
+  padding: 24px 16px;
+}
+.duel-mode-card {
+  flex: 1;
+  background: #0e1a2e;
+  border: 2px solid #1e2f55;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.duel-mode-card:hover {
+  background: #131f38;
+  border-color: #3a5a9e;
+  transform: translateY(-2px);
+}
+.duel-mode-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.duel-mode-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8d49d;
+  margin-bottom: 6px;
+}
+.duel-mode-desc {
+  font-size: 12px;
+  color: #8899bb;
+  line-height: 1.5;
+}
+
+.duel-ally-card {
+  display: flex;
+  gap: 10px;
+  background: #0e1a2e;
+  border: 1px solid #1e2f55;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  align-items: center;
+}
+.duel-ally-card:hover {
+  background: #131f38;
+  border-color: #2a3b66;
+}
+.duel-ally-card.duel-ally-selected {
+  border-color: #4a6aaa;
+  background: #152545;
+}
+.duel-ally-check {
+  font-size: 18px;
+  color: #6a8abb;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.duel-4v4-status {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.duel-4v4-team {
+  flex: 1;
+  background: #0a1220;
+  border-radius: 8px;
+  padding: 8px;
+}
+.duel-4v4-team-label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #8899bb;
+}
+.duel-4v4-unit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+.duel-4v4-unit-name {
+  width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #ccd;
+}
+.duel-4v4-info {
+  text-align: center;
+  font-size: 13px;
+  color: #f8d49d;
+  padding: 6px;
+  background: #0c1525;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.duel-4v4-spells {
+  margin-top: 8px;
+}
+.duel-hp-num {
+  font-size: 10px;
+  color: #889;
+  width: 50px;
+  text-align: right;
+}
+.duel-hp-enemy {
+  background: #c44 !important;
+}
+
 .duel-close-btn {
   background: transparent;
   border: 1px solid #2a3b66;
@@ -96,6 +212,15 @@
 .duel-opp-card:hover {
   background: #131f38;
   border-color: #2a3b66;
+}
+
+.duel-opp-character {
+  border-color: #2a1f55;
+  background: linear-gradient(135deg, #0e1a2e 0%, #15102e 100%);
+}
+.duel-opp-character:hover {
+  border-color: #4a3b88;
+  background: linear-gradient(135deg, #131f38 0%, #1a1540 100%);
 }
 
 .duel-opp-portrait {

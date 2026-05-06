@@ -18,8 +18,10 @@ export function renderQuestPanel() {
   const mount = document.getElementById("tab-quest");
   if (!mount) return;
 
-  if (getEngine()) {
-    getEngine().onQuestUpdate = (_type, _data) => {
+  const engine = getEngine();
+  if (engine) {
+    engine.init();
+    engine.onQuestUpdate = (_type, _data) => {
       _updateQuestBadge();
       const panel = document.getElementById("tab-quest");
       if (panel?.classList.contains("active")) {

@@ -674,16 +674,15 @@ export const ACHIEVEMENTS = [
 /**
  * 按权重从日常任务池中随机抽取N条
  */
-export function drawDailyQuests(count = 3) {
-  const pool = [...DAILY_QUEST_POOL];
-  const total = pool.reduce((s, q) => s + (q.weight || 1), 0);
+export function drawDailyQuests(count = 3, pool = DAILY_QUEST_POOL) {
+  const source = [...pool];
   const result = [];
   const used   = new Set();
 
-  for (let i = 0; i < count && used.size < pool.length; i++) {
-    let r = Math.random() * pool.filter(q => !used.has(q.id))
+  for (let i = 0; i < count && used.size < source.length; i++) {
+    let r = Math.random() * source.filter(q => !used.has(q.id))
               .reduce((s, q) => s + (q.weight || 1), 0);
-    for (const q of pool) {
+    for (const q of source) {
       if (used.has(q.id)) continue;
       r -= (q.weight || 1);
       if (r <= 0) { result.push(q); used.add(q.id); break; }

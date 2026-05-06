@@ -289,6 +289,8 @@ function renderSecondLayer() {
 
         window.doExploreLog(logMessage + logSuffix);
 
+        window._questHook_explore?.();
+
         // 尝试触发人物偶遇（30% 概率）
         setTimeout(() => tryTriggerEncounter(lv2.name), 300);
 
@@ -425,6 +427,8 @@ function renderThirdLayer() {
       }
 
       window.doExploreLog(logMessage + logSuffix);
+
+      window._questHook_explore?.();
 
       // 尝试触发人物偶遇（30% 概率）
       setTimeout(() => tryTriggerEncounter(item.name), 300);

@@ -147,6 +147,7 @@ function brewPotion(potionId) {
     window.saveSys?.setSave?.(d2);
     window.addPotionToBag?.({ name: potion.name, emoji: getPotionEmoji(potion.name), effect: potion.effect });
     window.doStudyLog?.(`🧪 熬制：${potion.name}（熟练度+5%，共${d2.potion[potionId].proficiency}%）`);
+    window._questHook_brew?.();
     return true;
   }
   window.doStudyLog?.(`💥 熬制失败：${potion.name}`);

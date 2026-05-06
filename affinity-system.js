@@ -67,8 +67,7 @@ export function isCharacterKnown(key) {
   if (!key) return false;
   const data = _load();
   if (data.knownCharacters?.includes(key)) return true;
-  const aff = data.affinity?.[key];
-  if (aff && aff.value !== undefined && aff.value !== 0) return true;
+  if (data.affinity?.[key]) return true;
   return false;
 }
 

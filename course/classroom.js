@@ -192,6 +192,7 @@ function doQuickStudy(item, items, title) {
     : (window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升");
 
   window.doStudyLog?.(`📚 ${item.name}（熟练度+${add}%，共${item.studyRate}%）｜${evt}`);
+  window._questHook_courseStudy?.(false);
   window.refreshAll?.();
   window.autoUnlockByCourse?.();
 
@@ -552,6 +553,7 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     ? `🎓 ${sd.subjectMeta.name}·第${lesson.lesson}课《${lesson.title}》评级 ${rating}，${houseEmoji}学院分 ${housePoints>=0?"+":""}${housePoints}`
     : `🎓 ${sd.subjectMeta.name}·第${lesson.lesson}课《${lesson.title}》已完成`;
   window.doStudyLog?.(logMsg);
+  window._questHook_courseStudy?.(true);
 
   const ratingColor = {O:"#ffd700",E:"#98e898",A:"#aad4f0",P:"#ccc",D:"#f88",T:"#f44"}[rating] || "#aaa";
   const gradeText = {O:"Outstanding · 卓越",E:"Exceeds Expectations · 超预期",A:"Acceptable · 合格",P:"Poor · 欠佳",D:"Dreadful · 糟糕",T:"Troll · 极差"}[rating] || "";

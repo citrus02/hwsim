@@ -536,9 +536,12 @@ export function renderAffinityPanelInline(containerEl) {
     {
       id:    'professors',
       label: '🧙 教授',
-      html:  () =>
-        renderSection(HOGWARTS_STAFF_ORDER, AFFINITY_CHARACTERS, '🏰 霍格沃茨教授', true) +
-        renderSection(MUGGLE_STUDIES_ORDER, AFFINITY_CHARACTERS, '🏫 麻瓜研究系', true),
+      html:  () => {
+        const html =
+          renderSection(HOGWARTS_STAFF_ORDER, AFFINITY_CHARACTERS, '🏰 霍格沃茨教授', true) +
+          renderSection(MUGGLE_STUDIES_ORDER, AFFINITY_CHARACTERS, '🏫 麻瓜研究系', true);
+        return html || '<div class="aff-empty-tip">暂无认识的教授</div>';
+      },
     },
     {
       id:    'staff',
@@ -551,17 +554,20 @@ export function renderAffinityPanelInline(containerEl) {
     {
       id:    'students',
       label: '🎓 同学',
-      html:  () =>
-        renderSection(GRYFFINDOR_ORDER, STUDENT_CHARACTERS, '🦁 格兰芬多', true) +
-        renderSection(SLYTHERIN_ORDER,  STUDENT_CHARACTERS, '🐍 斯莱特林', true) +
-        renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳', true),
+      html:  () => {
+        const html =
+          renderSection(GRYFFINDOR_ORDER, STUDENT_CHARACTERS, '🦁 格兰芬多', true) +
+          renderSection(SLYTHERIN_ORDER,  STUDENT_CHARACTERS, '🐍 斯莱特林', true) +
+          renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳', true);
+        return html || '<div class="aff-empty-tip">暂无认识的同学</div>';
+      },
     },
     {
       id:    'others',
       label: '📋 其他',
       html:  () => {
         const html = renderSection([], AFFINITY_CHARACTERS, null);
-        return html || '<div class="aff-empty-tip">暂无</div>';
+        return html || '<div class="aff-empty-tip">暂无认识的其他人</div>';
       },
     },
   ];

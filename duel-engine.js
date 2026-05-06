@@ -37,7 +37,8 @@ const SPELL_EFFECTS = {
   lumos:        { type:"dazzle",    base:5,  label:"荧光闪烁",  icon:"✦"  },
   aguamenti:    { type:"disrupt",   base:10, label:"清水如泉",  icon:"💧" },
   reparo:       { type:"heal",      base:12, label:"修复如初",  icon:"💚" },
-  scourgify:    { type:"disrupt",   base:6,  label:"清理一新",  icon:"🌀" },
+  scourgify:    { type:"disrupt", base:6,  label:"清理一新",  icon:"🌀" },
+  serpensortia: { type:"damage",  base:18, label:"乌龙出洞",  icon:"🐍" },
 };
 function getEffect(id) {
   return SPELL_EFFECTS[id] || { type:"damage", base:10, label:id, icon:"🔮" };
@@ -45,8 +46,10 @@ function getEffect(id) {
 
 // ── 战斗单位工厂 ─────────────────────────────────────────
 function makeUnit(data, isPlayer = false) {
+  const characterKey = data.characterKey || null;
+  const cooperation = characterKey ? (window.duelData?.getAffinityCooperation?.(characterKey) || null) : null;
   return {
-    id:        data.id || data.characterKey || data.name,
+    id:        data.id || characterKey || data.name,
     name:      data.name,
     portrait:  data.portrait || "🧙",
     hp:        data.hp,
@@ -56,12 +59,12 @@ function makeUnit(data, isPlayer = false) {
     aiDelay:   data.aiDelay   || [700, 1300],
     role:      data.role      || "damage",
     isPlayer,
-    // 状态
+    characterKey,
+    _cooperation: cooperation,
     shielded:  false,
     disarmed:  false,
     slowed:    false,
     fainted:   false,
-    // 台词（队友用）
     battleQuotes: data.battleQuotes || [],
     victoryQuote: data.victoryQuote || "",
     defeatQuote:  data.defeatQuote  || "",
@@ -189,21 +192,21 @@ function _settleProficiency(spellHits, playerSpells, won, teamBonus = 1.0) {
 // AI 出手逻辑（1v1 + 4v4 AI 成员共用）
 // ═══════════════════════════════════════════════════════════
 
-function _aiChooseSpell(unit, targets) {
-  // 血量低时优先防护，有治疗时优先治疗
+function _aiChooseSpell(unit, targets, cooperation) {
   const hpRatio = unit.hp / unit.maxHp;
   const canHeal = unit.spells.includes("reparo") && unit.role === "support" && hpRatio < 0.4;
   const canShield = unit.spells.includes("protego") && hpRatio < 0.35 && !unit.shielded;
 
+  if (cooperation?.shieldPriority && canShield) return "protego";
+  if (cooperation?.healChance && Math.random() < cooperation.healChance && canHeal) return "reparo";
+
   if (canHeal)   return "reparo";
   if (canShield) return "protego";
 
-  // 否则从攻击咒中随机选
   const attackSpells = unit.spells.filter(s => {
     const ef = getEffect(s);
     return ef.type !== "shield" && ef.type !== "heal";
   });
-  // 选择 HP 最高的存活目标（tank 优先打最厚的）
   const alive = targets.filter(t => !t.fainted);
   if (alive.length === 0) return attackSpells[0];
 
@@ -374,8 +377,8 @@ export const DuelEngine = {
     }, true);
 
     const allies = alliesData.map(a => makeUnit(a));
-    const myTeam = [playerUnit, ...allies];         // 己方4人
-    const enemyTeam = enemyTeamData.map(e => makeUnit(e)); // 敌方4人
+    const myTeam = [playerUnit, ...allies];
+    const enemyTeam = enemyTeamData.map(e => makeUnit(e));
 
     _battle = {
       mode: "4v4",
@@ -385,7 +388,6 @@ export const DuelEngine = {
       round: 1,
       spellHits: {},
       playerSpells,
-      // 本回合轮次索引（己方按顺序出手）
       myTurnIdx: 0,
     };
 
@@ -404,6 +406,9 @@ export const DuelEngine = {
     onLog(`⚔️ 4v4 团队决斗开始！`);
     onLog(`🟦 己方：${myTeam.map(u => u.portrait+u.name).join(" · ")}`);
     onLog(`🟥 对方：${enemyTeam.map(u => u.portrait+u.name).join(" · ")}`);
+    myTeam.filter(u => u._cooperation).forEach(u => {
+      onLog(`  ${u.portrait} ${u.name} — ${u._cooperation.label}`, "dlog-sys");
+    });
     onHPUpdate(getState());
     onRoundStart(1);
 
@@ -473,7 +478,8 @@ export const DuelEngine = {
 
       // 队友随机台词
       if (unit.battleQuotes?.length) {
-        const q = unit.battleQuotes[Math.floor(Math.random() * unit.battleQuotes.length)];
+        const quotes = window.duelData?.getAffinityBattleQuotes?.(unit.characterKey, unit.battleQuotes) || unit.battleQuotes;
+        const q = quotes[Math.floor(Math.random() * quotes.length)];
         onLog(`${unit.portrait} ${unit.name}：${q}`, "dlog-ally");
       }
 
@@ -485,8 +491,10 @@ export const DuelEngine = {
         const target  = firstAliveEnemy();
         if (!target)  { _finishAll(); return; }
 
-        const spellId = _aiChooseSpell(unit, aliveIn(enemyTeam));
-        const success = Math.random() < unit.aiAccuracy;
+        const spellId = _aiChooseSpell(unit, aliveIn(enemyTeam), unit._cooperation);
+
+        const baseAccuracy = unit.aiAccuracy + (unit._cooperation?.accuracyBonus || 0);
+        const success = Math.random() < Math.max(0.1, Math.min(1, baseAccuracy));
 
         if (onAllyAction) onAllyAction(unit, spellId, success);
 

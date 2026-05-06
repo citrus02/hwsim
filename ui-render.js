@@ -49,6 +49,7 @@ export function refreshAll() {
 
   window.currency?.refreshCurrencyUI?.();
   window.housePoints?.refreshHousePointsUI?.();
+  if (window.loadTimeFromSave) window.loadTimeFromSave();
   if (window.renderBag) window.renderBag();
   renderLog();
   renderTimeline();
@@ -155,7 +156,7 @@ export function openProfilePanel() {
       </div>
       <div class="ig-cell">
         <div class="ig-label">学院</div>
-        <div class="ig-value" id="stat-house">${p.house || '—'}</div>
+        <div class="ig-value" id="stat-house" style="display:flex;align-items:center;justify-content:space-between">${p.house || '—'}<span style="font-size:2.4em;line-height:1">${{ '格兰芬多': '🦁', '斯莱特林': '🐍', '拉文克劳': '🦅', '赫奇帕奇': '🦡' }[p.house] || ''}</span></div>
       </div>
       <div class="ig-cell">
         <div class="ig-label">魔杖</div>

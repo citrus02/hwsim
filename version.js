@@ -5,12 +5,26 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.6.0';
+export const CURRENT_VERSION = '1.6.1';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.6.1': [
+    '补充时间轴剧情',
+    '补充生日快乐剧情',
+    '调整人物UI',
+    '决斗训练场现在可以挑战教授和认识的人了！',
+    '读取存档后决斗面板不刷新的问题',
+    '修复4v4对手队伍列表为空的问题',
+    '修复无法完成任务的问题',
+    '修复决斗不扣行动次数的问题',
+    '修复飞行羽毛的emoji',
+    '扩大背包格子大小',
+    '修复角色事件不变色的问题',
+    '增加院徽emoji',
+  ],
   '1.6.0': [
     '新增时间轴剧情！',
     '人物关系面板可折叠！',
