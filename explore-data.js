@@ -339,6 +339,107 @@ export const hogwartsExploreData = [
         isResident: true
       }
     ]
+  },
+  {
+    level: 1,
+    name: "对角巷",
+    icon: "🛒",
+    desc: "英国巫师世界最繁华的商业街，假期才能光顾的购物天堂",
+    needLevel: 1,
+    unlockTip: "仅限假期前往",
+    isHolidayOnly: true,
+    children: [
+      {
+        level: 3, name: "古灵阁巫师银行", icon: "🏦",
+        desc: "妖精经营的巫师银行，金库深埋地下，取款需乘坐矿车穿梭迷宫",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放", isGringotts: true
+      },
+      { level: 3, name: "奥利凡德魔杖店", icon: "🪄",
+        desc: "「自公元前382年即制杖」，每根魔杖都在等待它的主人",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "olivanders", shopType: "specialty"
+      },
+      { level: 3, name: "佛鲁利许与布洛茨书店", icon: "📚",
+        desc: "对角巷最大的书店，从教材到禁书应有尽有",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "flourish_blotts", shopType: "bookstore"
+      },
+      { level: 3, name: "德维斯与班斯商店", icon: "🔧",
+        desc: "魔法器具与日用品商店，望远镜、天平、坩埚一应俱全",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "devises_bangs_diagon", shopType: "general"
+      },
+      { level: 3, name: "摩金夫人长袍专卖店", icon: "👗",
+        desc: "校袍、礼袍、旅行斗篷——量体裁衣，立等可取",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "malkin_robes", shopType: "clothing"
+      },
+      { level: 3, name: "对角巷药房", icon: "🧪",
+        desc: "药材、药剂和医疗用品的批发零售中心，比霍格莫德的选择更多",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "diagon_apothecary", shopType: "medicine"
+      },
+      { level: 3, name: "魁地奇精品店", icon: "🧹",
+        desc: "光轮、火弩箭、各种型号的飞天扫帚和魁地奇装备",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "quidditch_shop", shopType: "specialty"
+      },
+      { level: 3, name: "神奇动物园", icon: "🦉",
+        desc: "猫头鹰、蟾蜍、老鼠……还有笼子里蹦跳的紫色蟾蜍",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放",
+        shopId: "magical_menagerie", shopType: "pet"
+      },
+      { level: 3, name: "对角巷巷口", icon: "🧱",
+        desc: "破釜酒吧后院那面魔法砖墙，敲击特定砖块即可进入对角巷",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放"
+      },
+      { level: 3, name: "佛罗伦斯冰淇淋店", icon: "🍦",
+        desc: "对角巷最受欢迎的冰淇淋店，即使在冬天门口也排着长队",
+        unlock: true, exploreRate: 0, needLevel: 1,
+        unlockTip: "假期开放"
+      },
+    ]
+  },
+  {
+    level: 1,
+    name: "翻倒巷",
+    icon: "🌑",
+    desc: "对角巷旁的阴暗小巷，黑魔法用品和可疑交易的聚集地",
+    needLevel: 2,
+    unlockTip: "仅限假期前往·二年级以上",
+    isHolidayOnly: true,
+    children: [
+      { level: 3, name: "博金-博克商店", icon: "💀",
+        desc: "黑魔法器具、诅咒物品和毒药——橱窗里的东西让人不寒而栗",
+        unlock: true, exploreRate: 0, needLevel: 2,
+        unlockTip: "假期开放·二年级以上",
+        shopId: "borgin_burkes", shopType: "dark"
+      },
+      { level: 3, name: "翻倒巷暗巷", icon: "🚬",
+        desc: "笼罩在阴影中的狭窄巷道，两侧是形迹可疑的店铺",
+        unlock: true, exploreRate: 0, needLevel: 2,
+        unlockTip: "假期开放·二年级以上"
+      },
+      { level: 3, name: "二手魔杖摊位", icon: "🪄",
+        desc: "来路不明的旧魔杖，摊主从不问你为什么需要第二根",
+        unlock: true, exploreRate: 0, needLevel: 3,
+        unlockTip: "假期开放·三年级以上"
+      },
+      { level: 3, name: "黑市药剂交易点", icon: "☠️",
+        desc: "没有招牌，只有一扇半掩的门和门缝里飘出的刺鼻气味",
+        unlock: true, exploreRate: 0, needLevel: 4,
+        unlockTip: "假期开放·四年级以上"
+      },
+    ]
   }
 ];
 
@@ -391,7 +492,14 @@ export const materialLocations = {
   "霍格莫德邮局": ["猫头鹰羽毛", "信使花蜜", "邮政苔藓", "羽毛粉"],
   "尖叫棚屋": ["狼毒草", "隐形苔藓"],
   "山间墓园": ["亡灵苔藓", "墓地花瓣", "夜影花残片", "诅咒花粉"],
-  "溪流小巷居民区": ["家常魔材", "庭院花草", "邻里馈赠草药", "温和花瓣"]
+  "溪流小巷居民区": ["家常魔材", "庭院花草", "邻里馈赠草药", "温和花瓣"],
+
+  "古灵阁巫师银行": ["金粉", "妖精铁屑", "古币碎片", "龙鳞护甲残片"],
+  "对角巷巷口": ["魔法砖粉", "破釜啤酒花", "旅行魔材", "城市苔藓"],
+  "佛罗伦斯冰淇淋店": ["冰晶花蜜", "甜霜草", "奶油花瓣", "冻露水"],
+  "翻倒巷暗巷": ["黑魔法苔藓", "暗影粉", "诅咒花粉", "可疑药渣"],
+  "二手魔杖摊位": ["旧杖芯毛", "残缺杖木", "龙心弦碎片", "独角兽毛残段"],
+  "黑市药剂交易点": ["龙毒", "黑乌头", "夜影花", "死神草", "暗影花"]
 };
 
 // 材料稀有度分类（补全原著核心材料，唯一定义）
@@ -399,7 +507,8 @@ const materialRarity = {
   common: [
     "干荨麻", "薄荷", "蒲公英", "荨麻", "露水", "花蜜", "蜂蜜水", 
     "薰衣草", "罂粟籽", "金盏花", "玫瑰花瓣", "日光花瓣", "日光花",
-    "家常魔材", "庭院花草", "邻里馈赠草药", "温和花瓣" // 霍格莫德居民区材料
+    "家常魔材", "庭院花草", "邻里馈赠草药", "温和花瓣",
+    "魔法砖粉", "城市苔藓", "甜霜草", "奶油花瓣", "冻露水"
   ],
   uncommon: [
     "蛇牙", "薄荷芽", "甘菊", "雏菊根", "缩皱无花果", "水仙根", "白鲜", 
@@ -407,7 +516,8 @@ const materialRarity = {
     "毛毛虫", "喷嚏草", "雾隐花", "日光花", "红花瓣", "柔顺草",
     "蝙蝠粪", "狼粪", "古籍墨粉", "古老草籽", "月露草", "书页苔藓",
     "安抚草", "饲料魔材", "墓地花瓣", "夜影花残片", "诅咒花粉",
-    "甘菊精华", "薰衣草蜜", "舒缓草", "花茶原料" // 白鼬夫人茶屋材料
+    "甘菊精华", "薰衣草蜜", "舒缓草", "花茶原料",
+    "破釜啤酒花", "冰晶花蜜", "可疑药渣", "旧杖芯毛", "残缺杖木"
   ],
   rare: [
     "带触角鼻涕虫", "火蜥蜴血", "睡莲花粉", "蜘蛛毒液", "蝙蝠脾脏", 
@@ -420,7 +530,8 @@ const materialRarity = {
     "陈年魔酒残渣", "地下暗影苔藓", "铁路魔法苔藓", "旅行魔材", 
     "闪电花残片", "龙粪", "猫头鹰羽毛", "信使花蜜", "邮政苔藓", 
     "羽毛粉", "疗伤花粉", "基础魔药耗材", "古老魔材", "宠物羽毛", 
-    "小动物鳞片", "亡灵苔藓" // 霍格莫德特殊地点材料
+    "小动物鳞片", "亡灵苔藓",
+    "金粉", "妖精铁屑", "古币碎片", "龙鳞护甲残片", "龙心弦碎片", "独角兽毛残段"
   ],
   very_rare: [
     "独角兽角粉", "龙血", "蛇毒", "暗影花", "黑乌头", "死神草", 
@@ -580,7 +691,24 @@ const materialEmojis = {
   "家常魔材": "🏠",
   "庭院花草": "🌱",
   "邻里馈赠草药": "🤝",
-  "温和花瓣": "🌸"
+  "温和花瓣": "🌸",
+
+  "金粉": "✨",
+  "妖精铁屑": "⚙️",
+  "古币碎片": "🪙",
+  "龙鳞护甲残片": "🐉",
+  "魔法砖粉": "🧱",
+  "破釜啤酒花": "🍺",
+  "城市苔藓": "🏙️",
+  "冰晶花蜜": "❄️",
+  "甜霜草": "🍬",
+  "奶油花瓣": "🥛",
+  "冻露水": "💧",
+  "可疑药渣": "⚠️",
+  "旧杖芯毛": "🪄",
+  "残缺杖木": "🪵",
+  "龙心弦碎片": "🐉",
+  "独角兽毛残段": "🦄"
 };
 
 // 获取材料对应的表情符号

@@ -59,7 +59,9 @@ export function restartGame() {
     darkMagicRecord: 0,
     explore: {},
     potion: {},
-    story: { completed: {}, active: null }
+    story: { completed: {}, active: null },
+    knownCharacters: [],
+    knownSpells: []
   };
   setSave(fresh);
 
@@ -374,15 +376,34 @@ function _renderTimelineEntry(e, storyData, STORY_MAP, today) {
   const isCompleted = !!storyData.completed[storyId];
   let isAvailable = false;
   if (evt) {
+    const data = getSave();
+    const isTimeTraveling = !!data.timeTurner?.isTraveling;
+
+    function _prereqOk(prereqId) {
+      if (!prereqId) return true;
+      if (storyData.completed[prereqId]) return true;
+      if (isTimeTraveling) {
+        const prereqEvt = STORY_MAP[prereqId];
+        if (prereqEvt && !prereqEvt.isBirthday && prereqEvt.dateRange) {
+          if (prereqEvt.dateRange[1] <= today) return true;
+        }
+        if (prereqEvt?.isBirthday && prereqEvt.birthdayDate) {
+          const bdThisYear = `${today.substring(0, 5)}${prereqEvt.birthdayDate}`;
+          if (bdThisYear <= today) return true;
+        }
+      }
+      return false;
+    }
+
     if (evt.isBirthday) {
       const todayMD = today.substring(5);
       const completedYear = storyData.completed[storyId];
       const currentYear = parseInt(today.split('-')[0], 10);
       isAvailable = todayMD === evt.birthdayDate && completedYear !== currentYear
-        && (!evt.prerequisite || storyData.completed[evt.prerequisite]);
+        && _prereqOk(evt.prerequisite);
     } else {
       isAvailable = !isCompleted && today >= evt.dateRange[0] && today <= evt.dateRange[1]
-        && (!evt.prerequisite || storyData.completed[evt.prerequisite]);
+        && _prereqOk(evt.prerequisite);
     }
   }
 

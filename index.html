@@ -168,12 +168,12 @@
         <button class="action-btn" onclick="window.openCoursePanel?.()">🪶 学习课程</button>
         <button class="action-btn" onclick="window.openDuelPanel?.()">⚔️ 决斗俱乐部</button>
         <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
-        <button class="action-btn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
+        <button class="action-btn" id="exploreBtn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
       </div>
     </div>
 
     <div id="exploreMain" style="display: none;">
-      <div class="title">🗺️ 探索城堡</div>
+      <div class="title" id="exploreTitle">🗺️ 探索城堡</div>
       <div class="explore-container" id="explore-container"></div>
       <button class="action-btn back-btn" onclick="window.closeExplorePanel()">← 返回行动</button>
     </div>
@@ -255,7 +255,10 @@ function buildSaveData(opts) {
     spellList: [],
     spellProficiency: {},
     darkMagicRecord: 0,
-    explore: {}
+    explore: {},
+    story: { completed: {}, active: null },
+    knownCharacters: [],
+    knownSpells: []
   };
 }
 
@@ -296,7 +299,7 @@ function quickTest() {
   if (savedKnownCharacters) data.knownCharacters = savedKnownCharacters;
   if (savedBag) data.bag = savedBag;
 
-  data.timeTurner = { isTraveling: false, originalTime: null, travelHistory: [], usesLeft: -1 };
+  data.timeTurner = { isTraveling: false, originalTime: null, travelHistory: [], usesLeft: -1, isTestMode: true };
   if (!data.bag) data.bag = { item: [] };
   if (!data.bag.item.some(i => i.name === "时间转换器")) {
     data.bag.item.push({ name: "时间转换器", emoji: "⏳", count: 1 });
@@ -495,6 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <script type="module" src="course/subjects/english.js"></script>
   <script type="module" src="course/subjects/transfiguration.js"></script>
   <script type="module" src="course/subjects/charms.js"></script>
+  <script type="module" src="course/subjects/magic-history.js"></script>
   <script type="module" src="course/classroom.js"></script>
   <script type="module" src="course/course.js"></script>
 <script type="module" src="spell.js"></script>

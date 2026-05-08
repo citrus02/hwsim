@@ -210,6 +210,19 @@ export function onSubjectCompleted(subjectKey) {
 }
 
 /**
+ * 完成某门霍格沃茨必修/选修课全部课时（一次性 +10）
+ * @param {string} courseChineseName 与 COURSE_TO_CHARACTER 键一致，如「变形术」
+ */
+export function onCourseSubjectCompleted(courseChineseName) {
+  const charKey = COURSE_TO_CHARACTER[courseChineseName];
+  if (!charKey) return;
+  const flagKey = `completed_course_${courseChineseName}`;
+  if (hasFlag(charKey, flagKey)) return;
+  setFlag(charKey, flagKey);
+  addAffinity(charKey, 10, `完成全部课时:${courseChineseName}`);
+}
+
+/**
  * 魔药熬制结果
  * @param {boolean} success  是否成功
  * @param {boolean} mastered 是否达成精通
@@ -221,7 +234,7 @@ export function onBrewResult(success, mastered = false) {
 // 全局挂载
 window.affinitySystem = {
   addAffinity, getAffinity, getTier, hasFlag, setFlag,
-  getAllAffinity, onClassResult, onSubjectCompleted, onBrewResult,
+  getAllAffinity, onClassResult, onSubjectCompleted, onCourseSubjectCompleted, onBrewResult,
   SUBJECT_TO_CHARACTER, COURSE_TO_CHARACTER, TIERS, getTierByValue,
   markCharacterKnown, isCharacterKnown, getKnownCharacters,
 };

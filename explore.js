@@ -1,6 +1,6 @@
 // explore.js - 霍格沃茨探索系统主要功能
 
-import { timeSystem, costAction, nextTime, syncActionUI } from "./time-system.js";
+import { timeSystem, costAction, nextTime, syncActionUI, isHoliday, isHogsmeadeWeekend } from "./time-system.js";
 import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } from "./explore-data.js";
 import { getYearGrade, getPlayerHouse, getSave, setSave } from "./save-system.js";
 import { exploreEventLib } from "./explore-default.js";
@@ -78,6 +78,19 @@ let currentSecondParent = null;
 export function openExplorePanel() {
   resetExploreCache();
   _loadAllExploreRate();
+
+  const holiday = isHoliday();
+  const exploreBtn = document.getElementById("exploreBtn");
+  const exploreTitle = document.getElementById("exploreTitle");
+
+  if (holiday) {
+    if (exploreBtn) exploreBtn.textContent = "🚪 出门探险";
+    if (exploreTitle) exploreTitle.textContent = `🚪 出门探险 · ${holiday}`;
+  } else {
+    if (exploreBtn) exploreBtn.textContent = "🗺️ 探索城堡";
+    if (exploreTitle) exploreTitle.textContent = "🗺️ 探索城堡";
+  }
+
   document.getElementById("actionMain").style.display = "none";
   document.getElementById("exploreMain").style.display = "block";
 
@@ -146,6 +159,31 @@ function createExploreButton(data, onClickHandler) {
   return btn;
 }
 
+function _handleGringotts() {
+  const currentGrade = getYearGrade();
+  const baseGalleons = 5 + currentGrade * 3;
+  const bonusSickles = Math.floor(Math.random() * 10) + 1;
+  const bonusKnuts = Math.floor(Math.random() * 29);
+
+  if (window.currency?.addMoney) {
+    window.currency.addMoney(baseGalleons, bonusSickles, bonusKnuts, "古灵阁取款");
+  }
+  if (window.currency?.refreshCurrencyUI) {
+    window.currency.refreshCurrencyUI();
+  }
+
+  const events = [
+    `你乘坐小推车深入地下金库，在妖精的注视下取出了 ${baseGalleons} 加隆 ${bonusSickles} 西可 ${bonusKnuts} 纳特。`,
+    `妖精柜员面无表情地核对了你的钥匙，从金库中拨出 ${baseGalleons} 加隆。`,
+    `矿车在迷宫般的隧道中飞速穿行，你从家族金库中取出了 ${baseGalleons} 加隆。`,
+    `金库大门缓缓打开，金加隆在烛光下闪闪发光。你取走了 ${baseGalleons} 加隆。`,
+    `妖精用长长的手指数出 ${baseGalleons} 加隆，推到你面前。「下一位。」`,
+  ];
+  const eventText = events[Math.floor(Math.random() * events.length)];
+
+  window.doExploreLog(`🏦 古灵阁：${eventText}`);
+}
+
 export function renderFirstLayer() {
   clearExploreContainer();
   const wrap = document.getElementById("explore-container");
@@ -153,9 +191,9 @@ export function renderFirstLayer() {
 
   const currentGrade = getYearGrade();
   const currentHouse = getPlayerHouse();
+  const holiday = isHoliday();
 
   hogwartsExploreData.forEach(lv1 => {
-    // 检查第一层锁定
     let isLock = false;
     let unlockTipText = '';
     
@@ -164,10 +202,21 @@ export function renderFirstLayer() {
       unlockTipText = lv1.unlockTip || `需要${lv1.needLevel}年级`;
     }
     
-    // 检查学院锁
     if (!isLock && lv1.requiredHouse && currentHouse !== lv1.requiredHouse) {
       isLock = true;
       unlockTipText = `需要${lv1.requiredHouse}学院身份`;
+    }
+
+    if (!isLock && lv1.isHolidayOnly && !holiday) {
+      isLock = true;
+      unlockTipText = "仅限假期前往";
+    }
+
+    if (!isLock && lv1.name === "霍格莫德村") {
+      if (!holiday && !isHogsmeadeWeekend()) {
+        isLock = true;
+        unlockTipText = "周末或假期才能前往";
+      }
     }
     
     const btn = createExploreButton({
@@ -236,13 +285,31 @@ function renderSecondLayer() {
         return;
       }
 
+      if (lv2.isGringotts) {
+        if (!costAction()) return;
+        _handleGringotts();
+        if (timeSystem.dailyActionLeft <= 0) {
+          closeExplorePanel();
+          setTimeout(() => { nextTime(); syncActionUI(); }, 80);
+          return;
+        }
+        renderSecondLayer();
+        return;
+      }
+
       // 商店节点：打开商店UI
       if (isShop2) {
         if (!costAction()) return;
         try {
           const shopManager = await window.openShop(lv2.shopId);
           if (!shopManager) {
-            window.doExploreLog(`❌ 无法打开 ${lv2.name}`);
+            window.doExploreLog(`🏪 ${lv2.name} 暂未开业，敬请期待。`);
+            if (timeSystem.dailyActionLeft <= 0) {
+              closeExplorePanel();
+              setTimeout(() => { nextTime(); syncActionUI(); }, 80);
+            } else {
+              renderSecondLayer();
+            }
             return;
           }
           const { shopUI } = await import('./hogsmeade/shopUI.js');
@@ -367,6 +434,18 @@ function renderThirdLayer() {
         window.doExploreLog(`🔒 ${item.name} 无法进入｜${unlockTipText}`);
         return;
       }
+
+      if (item.isGringotts) {
+        if (!costAction()) return;
+        _handleGringotts();
+        if (timeSystem.dailyActionLeft <= 0) {
+          closeExplorePanel();
+          setTimeout(() => { nextTime(); syncActionUI(); }, 80);
+          return;
+        }
+        renderThirdLayer();
+        return;
+      }
       
       // 如果是商店，异步打开商店界面
       if (isShop) {
@@ -379,7 +458,8 @@ function renderThirdLayer() {
           // 异步打开商店
           const shopManager = await window.openShop(item.shopId);
           if (!shopManager) {
-            window.doExploreLog(`❌ 无法打开 ${item.name}`);
+            window.doExploreLog(`🏪 ${item.name} 暂未开业，敬请期待。`);
+            renderThirdLayer();
             return;
           }
           

@@ -12,12 +12,299 @@
  *   muggle-studies-system.js → unlockAchievement / addInternalPoints / SCORE_MAP
  */
 
-import { loadTimeFromSave } from '../time-system.js';
-import { getYearGrade } from '../save-system.js';
+import { loadTimeFromSave, isHoliday } from '../time-system.js';
+import { getYearGrade, getSave } from '../save-system.js';
 import { courseData, getStudyEvent } from './course-data.js';
 import { addInternalPoints } from './muggle-studies.js';
 import { loadSave, writeSave } from './save-utils.js';
 import { showLearnChoiceModal } from './classroom.js';
+
+const SCHEDULE = {
+  1: {
+    周一: [
+      { time: "上午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+      { time: "下午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+      { time: "夜晚", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "下午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "黑魔法防御术", icon: "🛡️", prof: "奇洛教授" },
+      { time: "下午", subject: "飞行课", icon: "🧹", prof: "胡奇教授" },
+    ],
+    周四: [
+      { time: "上午", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+      { time: "下午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+      { time: "下午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "奇洛教授" },
+    ],
+  },
+  2: {
+    周一: [
+      { time: "上午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "下午", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "洛哈特教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "黑魔法防御术", icon: "🛡️", prof: "洛哈特教授" },
+      { time: "下午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+      { time: "下午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+      { time: "夜晚", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+    ],
+    周四: [
+      { time: "上午", subject: "飞行课", icon: "🧹", prof: "胡奇教授" },
+      { time: "下午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+      { time: "下午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+    ],
+  },
+  3: {
+    周一: [
+      { time: "上午", subject: "黑魔法防御术", icon: "🛡️", prof: "卢平教授" },
+      { time: "下午", subject: "占卜学", icon: "🔮", prof: "特里劳妮教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "下午", subject: "保护神奇动物", icon: "🦎", prof: "海格教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+      { time: "下午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+      { time: "夜晚", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+    ],
+    周四: [
+      { time: "上午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+      { time: "下午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "卢平教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "算术占卜", icon: "🔢", prof: "维克多教授" },
+      { time: "下午", subject: "古代魔文", icon: "𓂀", prof: "巴希达教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+    ],
+  },
+  4: {
+    周一: [
+      { time: "上午", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+      { time: "下午", subject: "黑魔法防御术", icon: "🛡️", prof: "穆迪教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "下午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "占卜学", icon: "🔮", prof: "特里劳妮教授" },
+      { time: "下午", subject: "保护神奇动物", icon: "🦎", prof: "海格教授" },
+      { time: "夜晚", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+    ],
+    周四: [
+      { time: "上午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+      { time: "下午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "穆迪教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "算术占卜", icon: "🔢", prof: "维克多教授" },
+      { time: "下午", subject: "古代魔文", icon: "𓂀", prof: "巴希达教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+    ],
+  },
+  5: {
+    周一: [
+      { time: "上午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "下午", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "黑魔法防御术", icon: "🛡️", prof: "乌姆里奇教授" },
+      { time: "下午", subject: "占卜学", icon: "🔮", prof: "特里劳妮教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+      { time: "下午", subject: "保护神奇动物", icon: "🦎", prof: "海格教授" },
+      { time: "夜晚", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+    ],
+    周四: [
+      { time: "上午", subject: "幻影移形", icon: "💨", prof: "威斯考特教授" },
+      { time: "下午", subject: "古代魔文", icon: "𓂀", prof: "巴希达教授" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "乌姆里奇教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+      { time: "下午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
+    ],
+  },
+  6: {
+    周一: [
+      { time: "上午", subject: "魔药学", icon: "⚗️", prof: "斯拉格霍恩教授" },
+      { time: "下午", subject: "黑魔法防御术", icon: "🛡️", prof: "斯内普教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+      { time: "下午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "保护神奇动物", icon: "🦎", prof: "海格教授" },
+      { time: "下午", subject: "炼金术", icon: "🥇", prof: "尼可·勒梅" },
+    ],
+    周四: [
+      { time: "上午", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+      { time: "下午", subject: "古代魔文", icon: "𓂀", prof: "巴希达教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯拉格霍恩教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "算术占卜", icon: "🔢", prof: "维克多教授" },
+      { time: "下午", subject: "草药学", icon: "🌿", prof: "斯普劳特教授" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "斯内普教授" },
+    ],
+  },
+  7: {
+    周一: [
+      { time: "上午", subject: "黑魔法防御术", icon: "🛡️", prof: "卡罗教授" },
+      { time: "下午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
+    ],
+    周二: [
+      { time: "上午", subject: "魔药学", icon: "⚗️", prof: "斯拉格霍恩教授" },
+      { time: "下午", subject: "魔咒学", icon: "✨", prof: "弗立维教授" },
+    ],
+    周三: [
+      { time: "上午", subject: "魔法史", icon: "📜", prof: "宾斯教授" },
+      { time: "下午", subject: "保护神奇动物", icon: "🦎", prof: "海格教授" },
+    ],
+    周四: [
+      { time: "上午", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
+      { time: "下午", subject: "炼金术", icon: "🥇", prof: "尼可·勒梅" },
+      { time: "夜晚", subject: "黑魔法防御术", icon: "🛡️", prof: "卡罗教授" },
+    ],
+    周五: [
+      { time: "上午", subject: "占卜学", icon: "🔮", prof: "特里劳妮教授" },
+      { time: "下午", subject: "算术占卜", icon: "🔢", prof: "维克多教授" },
+      { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯拉格霍恩教授" },
+    ],
+  },
+};
+
+const HOLIDAYS_INFO = [
+  { start: "09-01", end: "09-01", name: "开学日", type: "special" },
+  { start: "10-31", end: "10-31", name: "万圣节", type: "holiday" },
+  { start: "12-20", end: "01-05", name: "圣诞假期", type: "holiday" },
+  { start: "02-14", end: "02-14", name: "情人节", type: "special" },
+  { start: "03-28", end: "04-14", name: "复活节假期", type: "holiday" },
+  { start: "06-15", end: "09-01", name: "暑假", type: "holiday" },
+];
+
+function _renderSchedule(container) {
+  const data = getSave();
+  const grade = getYearGrade();
+  const currentDate = data.time?.currentDate || "1991-09-02";
+  const dateObj = new Date(currentDate);
+  const dayOfWeek = isNaN(dateObj.getTime()) ? -1 : dateObj.getDay();
+  const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const todayDayName = dayNames[dayOfWeek] || "";
+
+  const holiday = isHoliday(currentDate);
+  const gradeSchedule = SCHEDULE[grade] || SCHEDULE[1];
+
+  const todayMD = currentDate.substring(5);
+  const todayHoliday = HOLIDAYS_INFO.find(h => {
+    const [sm, sd] = h.start.split('-').map(Number);
+    const [em, ed] = h.end.split('-').map(Number);
+    const [mm, dd] = todayMD.split('-').map(Number);
+    const start = sm * 100 + sd;
+    const end = em * 100 + ed;
+    const now = mm * 100 + dd;
+    if (start <= end) return now >= start && now <= end;
+    return now >= start || now <= end;
+  });
+
+  let html = '';
+
+  html += `<div class="schedule-header">`;
+  html += `<div class="schedule-grade">📖 ${grade}年级课程表</div>`;
+  html += `<div class="schedule-date">📅 ${currentDate} ${todayDayName}</div>`;
+  if (holiday) {
+    html += `<div class="schedule-holiday-tag">🏖️ ${holiday}</div>`;
+  }
+  html += `</div>`;
+
+  html += `<div class="schedule-table">`;
+  html += `<div class="schedule-row schedule-row-header">
+    <div class="schedule-cell schedule-cell-time">时段</div>
+    <div class="schedule-cell">周一</div>
+    <div class="schedule-cell">周二</div>
+    <div class="schedule-cell">周三</div>
+    <div class="schedule-cell">周四</div>
+    <div class="schedule-cell">周五</div>
+    <div class="schedule-cell schedule-cell-weekend">周六</div>
+    <div class="schedule-cell schedule-cell-weekend">周日</div>
+  </div>`;
+
+  html += `<div class="schedule-row">
+    <div class="schedule-cell schedule-cell-time">上午</div>`;
+  for (const day of ["周一", "周二", "周三", "周四", "周五"]) {
+    const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
+    const course = gradeSchedule[day]?.find(c => c.time === "上午");
+    if (course) {
+      html += `<div class="${cls}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+    } else {
+      html += `<div class="${cls}"><div class="schedule-empty">—</div></div>`;
+    }
+  }
+  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
+  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
+  html += `</div>`;
+
+  html += `<div class="schedule-row">
+    <div class="schedule-cell schedule-cell-time">下午</div>`;
+  for (const day of ["周一", "周二", "周三", "周四", "周五"]) {
+    const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
+    const course = gradeSchedule[day]?.find(c => c.time === "下午");
+    if (course) {
+      html += `<div class="${cls}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+    } else {
+      html += `<div class="${cls}"><div class="schedule-empty">—</div></div>`;
+    }
+  }
+  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
+  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
+  html += `</div>`;
+
+  html += `<div class="schedule-row">
+    <div class="schedule-cell schedule-cell-time">夜晚</div>`;
+  for (let i = 0; i < 5; i++) {
+    html += `<div class="schedule-cell"><div class="schedule-empty">自习</div></div>`;
+  }
+  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
+  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
+  html += `</div>`;
+
+  html += `</div>`;
+
+  html += `<div class="schedule-holidays">`;
+  html += `<div class="schedule-holidays-title">📆 学年重要日期</div>`;
+  HOLIDAYS_INFO.forEach(h => {
+    const isCurrent = todayHoliday && todayHoliday.name === h.name;
+    const tag = h.type === 'holiday' ? '🏖️' : '⭐';
+    const cls = isCurrent ? 'schedule-holiday-item schedule-holiday-current' : 'schedule-holiday-item';
+    html += `<div class="${cls}">${tag} ${h.start} ~ ${h.end}　${h.name}</div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="schedule-note">💡 周末和假期没有固定课程，可以自由探索、决斗或熬制魔药</div>`;
+
+  container.innerHTML = html;
+}
 
 export function getCurrentGrade() {
   return getYearGrade();
@@ -133,11 +420,23 @@ export function openCoursePanel() {
 
   const courseBox = document.createElement("div");
   courseBox.id = "courseMain";
-  courseBox.innerHTML = `<div class="title">🪶 学习课程</div>`;
+
+  const tabHtml = `
+    <div class="course-tabs">
+      <button class="course-tab active" id="courseTabList">📚 课程列表</button>
+      <button class="course-tab" id="courseTabSchedule">📅 课程表</button>
+    </div>
+    <div class="title" id="coursePanelTitle">🪶 学习课程</div>`;
+
+  courseBox.innerHTML = tabHtml;
 
   const container = document.createElement("div");
   container.id = "course-container";
   container.style.cssText = "max-height:400px;overflow:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;";
+
+  const scheduleContainer = document.createElement("div");
+  scheduleContainer.id = "schedule-container";
+  scheduleContainer.style.display = "none";
 
   const backBtn = document.createElement("button");
   backBtn.className = "action-btn";
@@ -149,8 +448,26 @@ export function openCoursePanel() {
   if (card) {
     card.appendChild(courseBox);
     courseBox.appendChild(container);
+    courseBox.appendChild(scheduleContainer);
     courseBox.appendChild(backBtn);
   }
+
+  document.getElementById("courseTabList").addEventListener("click", () => {
+    document.getElementById("courseTabList").classList.add("active");
+    document.getElementById("courseTabSchedule").classList.remove("active");
+    document.getElementById("coursePanelTitle").textContent = "🪶 学习课程";
+    container.style.display = "grid";
+    scheduleContainer.style.display = "none";
+  });
+
+  document.getElementById("courseTabSchedule").addEventListener("click", () => {
+    document.getElementById("courseTabSchedule").classList.add("active");
+    document.getElementById("courseTabList").classList.remove("active");
+    document.getElementById("coursePanelTitle").textContent = "📅 课程表";
+    container.style.display = "none";
+    scheduleContainer.style.display = "block";
+    _renderSchedule(scheduleContainer);
+  });
 
   navStack = [];
   loadCourseProgressFromSave(); // 先读 studyRate

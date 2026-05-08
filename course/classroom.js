@@ -16,7 +16,7 @@
 
 import { loadSave, writeSave } from './save-utils.js';
 import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
-import { onClassResult, onSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
+import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
 import { GestureWidget } from '../gesture-widget.js';
 import { getGestureById } from '../gesture-data.js';
 
@@ -25,8 +25,12 @@ const SUBJECT_WIN_KEY = {
   math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
   biology:"subject_biology", history:"subject_history", civics:"subject_civics",
   geography:"subject_geography", literature:"subject_literature", english:"subject_english",
-  transfiguration: "subject_transfiguration",charms: "subject_charms",
+  transfiguration: "subject_transfiguration",
+  charms: "subject_charms",
+  magicHistory: "subject_magicHistory",
 };
+
+const HOGWARTS_SUBJECT_KEYS = new Set(["transfiguration", "charms", "magicHistory"]);
 
 function getSubjectData(key) { return window[SUBJECT_WIN_KEY[key]] || null; }
 
@@ -72,9 +76,7 @@ function saveProgress(subjectKey, lessonNum, rating) {
   }
 
   // ── 麻瓜研究总进度（九门均值）──────────────────────────
-  const MUGGLE_KEYS = Object.keys(SUBJECT_WIN_KEY).filter(k =>
-    !["transfiguration","charms"].includes(k)
-  );
+  const MUGGLE_KEYS = Object.keys(SUBJECT_WIN_KEY).filter(k => !HOGWARTS_SUBJECT_KEYS.has(k));
   let totalRate = 0;
   MUGGLE_KEYS.forEach(k => {
     const sd2 = getSubjectData(k);
@@ -273,7 +275,12 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
 
   _clsState = {
     st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0 },
-    subjectKey, sd: subjectData, lesson, qGroup, onClose
+    subjectKey,
+    sd: subjectData,
+    lesson,
+    qGroup,
+    onClose,
+    isMuggleStudy: !!item.muggleSubjectKey,
   };
   const { st, sd, onClose: oc } = _clsState;
   _phaseOpening(st, subjectKey, sd, lesson, qGroup, oc);
@@ -512,7 +519,15 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
 
   const rating = qGroup ? scoreToRating(st.score) : null;
   const housePoints = rating ? (HOUSE_POINTS_MAP[rating] || 0) : 0;
-  const comment = rating ? (window.courseDefault?.getProfessorComment(subjectKey, rating) || "") : "";
+  const isMuggle = _clsState?.isMuggleStudy ?? true;
+  let comment = "";
+  if (rating) {
+    comment = window.courseDefault?.getProfessorComment(subjectKey, rating) || "";
+    if (!comment && sd.professorComments?.[rating]?.length) {
+      const list = sd.professorComments[rating];
+      comment = list[Math.floor(Math.random() * list.length)];
+    }
+  }
 
   saveProgress(subjectKey, lesson.lesson, rating);
 
@@ -533,18 +548,24 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     }
   }
 
-  // 好感度触发
-  if (rating) onClassResult(subjectKey, rating, true);
+  // 好感度触发（麻瓜分科用英文键；霍格沃茨课程用中文科目名对照 COURSE_TO_CHARACTER）
+  if (rating) {
+    if (isMuggle) onClassResult(subjectKey, rating, true);
+    else onClassResult(sd.subjectMeta.name, rating, false);
+  }
 
   // 上课即认识教授
-  const charKey = window.affinitySystem?.SUBJECT_TO_CHARACTER?.[subjectKey];
+  const charKey = isMuggle
+    ? window.affinitySystem?.SUBJECT_TO_CHARACTER?.[subjectKey]
+    : window.affinitySystem?.COURSE_TO_CHARACTER?.[sd.subjectMeta.name];
   if (charKey) markCharacterKnown(charKey);
 
-  // 检查该分科是否全部课时完成（触发一次性 +10）
+  // 检查是否全部课时完成（触发一次性 +10）
   const allLessons = getAllLessons(sd.syllabus);
   const done = loadSave().course?.muggleProgress?.[subjectKey]?.completed || [];
   if (allLessons.length > 0 && done.length >= allLessons.length) {
-    onSubjectCompleted(subjectKey);
+    if (isMuggle) onSubjectCompleted(subjectKey);
+    else onCourseSubjectCompleted(sd.subjectMeta.name);
   }
 
   const HOUSE_EMOJI = { "格兰芬多":"🦁", "斯莱特林":"🐍", "拉文克劳":"🦅", "赫奇帕奇":"🦡" };

@@ -104,6 +104,50 @@ export function nextTime() {
 export function checkAreaTimeLimit() { return true; }
 export function syncActionUI() { syncUI(); }
 
+const HOLIDAYS = [
+  { start: "12-20", end: "01-05", name: "圣诞假期" },
+  { start: "03-28", end: "04-14", name: "复活节假期" },
+  { start: "06-15", end: "09-01", name: "暑假" },
+];
+
+export function isHoliday(dateStr) {
+  if (!dateStr) dateStr = timeSystem.currentDate;
+  const parts = dateStr.split('-');
+  const mm = parseInt(parts[1], 10);
+  const dd = parseInt(parts[2], 10);
+  const mmdd = mm * 100 + dd;
+
+  for (const h of HOLIDAYS) {
+    const [sm, sd] = h.start.split('-').map(Number);
+    const [em, ed] = h.end.split('-').map(Number);
+    const start = sm * 100 + sd;
+    const end = em * 100 + ed;
+    if (start <= end) {
+      if (mmdd >= start && mmdd <= end) return h.name;
+    } else {
+      if (mmdd >= start || mmdd <= end) return h.name;
+    }
+  }
+  return null;
+}
+
+export function isHogsmeadeWeekend(dateStr) {
+  if (!dateStr) dateStr = timeSystem.currentDate;
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return false;
+  const day = date.getDay();
+  if (day !== 0 && day !== 6) return false;
+  const holiday = isHoliday(dateStr);
+  if (holiday) return false;
+  const parts = dateStr.split('-');
+  const mm = parseInt(parts[1], 10);
+  if (mm >= 6 && mm <= 8) return false;
+  return true;
+}
+
+window.isHoliday = isHoliday;
+window.isHogsmeadeWeekend = isHogsmeadeWeekend;
+
 function syncUI() {
   const a = document.getElementById("actions");
   const t = document.getElementById("timeOfDay");
@@ -111,6 +155,12 @@ function syncUI() {
   if (a) a.textContent = timeSystem.dailyActionLeft;
   if (t) t.textContent = timeSystem.nowTime;
   if (d) d.textContent = timeSystem.currentDate;
+
+  const exploreBtn = document.getElementById("exploreBtn");
+  if (exploreBtn) {
+    const holiday = isHoliday();
+    exploreBtn.textContent = holiday ? "🚪 出门探险" : "🗺️ 探索城堡";
+  }
 }
 
 window.timeSystem = timeSystem;

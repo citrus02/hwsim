@@ -46,6 +46,26 @@ function _checkCondition(condition) {
   return true;
 }
 
+function _isPrereqSatisfied(prereqId, story) {
+  if (!prereqId) return true;
+  if (story.completed[prereqId]) return true;
+
+  const data = getSave();
+  if (data.timeTurner?.isTraveling) {
+    const today = data.time?.currentDate || "1991-09-02";
+    const prereqEvt = STORY_EVENTS.find(e => e.id === prereqId);
+    if (prereqEvt && !prereqEvt.isBirthday && prereqEvt.dateRange) {
+      if (prereqEvt.dateRange[1] <= today) return true;
+    }
+    if (prereqEvt?.isBirthday && prereqEvt.birthdayDate) {
+      const bdThisYear = `${today.substring(0, 5)}${prereqEvt.birthdayDate}`;
+      if (bdThisYear <= today) return true;
+    }
+  }
+
+  return false;
+}
+
 export function getAvailableStoryEvents() {
   const story = _getStoryData();
   const today = getSave().time?.currentDate || "1991-09-02";
@@ -58,12 +78,12 @@ export function getAvailableStoryEvents() {
       if (todayMD !== bd) return false;
       const completedYear = story.completed[evt.id];
       if (completedYear === currentYear) return false;
-      if (evt.prerequisite && !story.completed[evt.prerequisite]) return false;
+      if (!_isPrereqSatisfied(evt.prerequisite, story)) return false;
       if (!_checkCondition(evt.condition)) return false;
       return true;
     }
     if (story.completed[evt.id]) return false;
-    if (evt.prerequisite && !story.completed[evt.prerequisite]) return false;
+    if (!_isPrereqSatisfied(evt.prerequisite, story)) return false;
     if (!_checkCondition(evt.condition)) return false;
     if (today < evt.dateRange[0] || today > evt.dateRange[1]) return false;
     return true;
