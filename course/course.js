@@ -204,6 +204,8 @@ const HOLIDAYS_INFO = [
   { start: "06-15", end: "09-01", name: "暑假", type: "holiday" },
 ];
 
+const SCHOOL_DAYS = ["周一", "周二", "周三", "周四", "周五"];
+
 function _renderSchedule(container) {
   const data = getSave();
   const grade = getYearGrade();
@@ -217,15 +219,20 @@ function _renderSchedule(container) {
   const gradeSchedule = SCHEDULE[grade] || SCHEDULE[1];
 
   const todayMD = currentDate.substring(5);
+  const todayDate = new Date(currentDate);
   const todayHoliday = HOLIDAYS_INFO.find(h => {
     const [sm, sd] = h.start.split('-').map(Number);
     const [em, ed] = h.end.split('-').map(Number);
-    const [mm, dd] = todayMD.split('-').map(Number);
-    const start = sm * 100 + sd;
-    const end = em * 100 + ed;
-    const now = mm * 100 + dd;
-    if (start <= end) return now >= start && now <= end;
-    return now >= start || now <= end;
+    
+    const year = todayDate.getFullYear();
+    let startDate = new Date(year, sm - 1, sd);
+    let endDate = new Date(year, em - 1, ed);
+    
+    if (endDate < startDate) {
+      endDate = new Date(year + 1, em - 1, ed);
+    }
+    
+    return todayDate >= startDate && todayDate <= endDate;
   });
 
   let html = '';
@@ -252,7 +259,7 @@ function _renderSchedule(container) {
 
   html += `<div class="schedule-row">
     <div class="schedule-cell schedule-cell-time">上午</div>`;
-  for (const day of ["周一", "周二", "周三", "周四", "周五"]) {
+  for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
     const course = gradeSchedule[day]?.find(c => c.time === "上午");
     if (course) {
@@ -267,7 +274,7 @@ function _renderSchedule(container) {
 
   html += `<div class="schedule-row">
     <div class="schedule-cell schedule-cell-time">下午</div>`;
-  for (const day of ["周一", "周二", "周三", "周四", "周五"]) {
+  for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
     const course = gradeSchedule[day]?.find(c => c.time === "下午");
     if (course) {
@@ -282,8 +289,14 @@ function _renderSchedule(container) {
 
   html += `<div class="schedule-row">
     <div class="schedule-cell schedule-cell-time">夜晚</div>`;
-  for (let i = 0; i < 5; i++) {
-    html += `<div class="schedule-cell"><div class="schedule-empty">自习</div></div>`;
+  for (const day of SCHOOL_DAYS) {
+    const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
+    const course = gradeSchedule[day]?.find(c => c.time === "夜晚");
+    if (course) {
+      html += `<div class="${cls}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+    } else {
+      html += `<div class="${cls}"><div class="schedule-empty">自习</div></div>`;
+    }
   }
   html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
   html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
@@ -452,22 +465,30 @@ export function openCoursePanel() {
     courseBox.appendChild(backBtn);
   }
 
-  document.getElementById("courseTabList").addEventListener("click", () => {
-    document.getElementById("courseTabList").classList.add("active");
-    document.getElementById("courseTabSchedule").classList.remove("active");
-    document.getElementById("coursePanelTitle").textContent = "🪶 学习课程";
-    container.style.display = "grid";
-    scheduleContainer.style.display = "none";
-  });
+  const courseTabList = document.getElementById("courseTabList");
+  const courseTabSchedule = document.getElementById("courseTabSchedule");
+  const coursePanelTitle = document.getElementById("coursePanelTitle");
+  
+  if (courseTabList) {
+    courseTabList.addEventListener("click", () => {
+      courseTabList.classList.add("active");
+      courseTabSchedule?.classList.remove("active");
+      coursePanelTitle?.textContent = "🪶 学习课程";
+      container.style.display = "grid";
+      scheduleContainer.style.display = "none";
+    });
+  }
 
-  document.getElementById("courseTabSchedule").addEventListener("click", () => {
-    document.getElementById("courseTabSchedule").classList.add("active");
-    document.getElementById("courseTabList").classList.remove("active");
-    document.getElementById("coursePanelTitle").textContent = "📅 课程表";
-    container.style.display = "none";
-    scheduleContainer.style.display = "block";
-    _renderSchedule(scheduleContainer);
-  });
+  if (courseTabSchedule) {
+    courseTabSchedule.addEventListener("click", () => {
+      courseTabSchedule.classList.add("active");
+      courseTabList?.classList.remove("active");
+      coursePanelTitle?.textContent = "📅 课程表";
+      container.style.display = "none";
+      scheduleContainer.style.display = "block";
+      _renderSchedule(scheduleContainer);
+    });
+  }
 
   navStack = [];
   loadCourseProgressFromSave(); // 先读 studyRate

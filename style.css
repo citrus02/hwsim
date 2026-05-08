@@ -1172,7 +1172,7 @@ body.modal-open .container {
   min-width: 130px;               /* 最小宽度，防止变形 */
 }
 
-/* ===================== 混血王子笔记 ===================== */
+/* ===================== 课堂笔记 ===================== */
 /* 笔记外框
  * 作用：显示炼制步骤的面板
  */
@@ -1236,6 +1236,34 @@ body.modal-open .container {
 
 /* 炼制失败：发光红色 */
 .brew-cauldron.fail { border-color: #6b3f48; box-shadow: 0 8px 20px #000, 0 0 20px #ff3030, inset 0 -8px 12px #050505; }
+
+/* 混血王子光环特效 */
+.brew-cauldron.prince-aura {
+  border-color: #9b59b6;
+  box-shadow: 0 8px 30px #000, 0 0 40px rgba(155, 89, 182, 0.6), inset 0 -8px 12px #050505;
+  animation: princePulse 2s ease-in-out infinite;
+}
+
+/* 混血王子发光效果 */
+.prince-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155, 89, 182, 0.3) 0%, rgba(155, 89, 182, 0) 70%);
+  animation: princeGlow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes princePulse {
+  0%, 100% { box-shadow: 0 8px 30px #000, 0 0 40px rgba(155, 89, 182, 0.6), inset 0 -8px 12px #050505; }
+  50% { box-shadow: 0 8px 30px #000, 0 0 60px rgba(155, 89, 182, 0.8), inset 0 -8px 12px #050505; }
+}
+
+@keyframes princeGlow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.3; }
+}
 
 /* ===================== 坩埚内液体样式 ===================== */
 .brew-liquid {

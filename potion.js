@@ -54,6 +54,12 @@ function costMaterials(materials, quantities) {
   return true;
 }
 
+function hasPrinceBook() {
+  const data = initPotionSave();
+  const items = data.bag?.item || [];
+  return items.some(item => item.name === "混血王子的旧书");
+}
+
 // ==================== 解锁 ====================
 function checkPotionUnlock(potion) {
   const data = initPotionSave();
@@ -61,6 +67,8 @@ function checkPotionUnlock(potion) {
   const rawYear = data.year ?? 1991;
   const y = rawYear > 100 ? rawYear - 1990 : rawYear; // 兼容旧存档直接存年级的情况
   const f = data.flags;
+  const hasBook = hasPrinceBook();
+  
   if (potion.grade === '一年级') return true;
   if (potion.id === 204 && f.unlock_chamber_of_secrets) return true;
   if (potion.id === 402 && f.unlock_chamber_of_secrets) return true;
@@ -71,10 +79,13 @@ function checkPotionUnlock(potion) {
   if (y >= 4 && potion.grade.includes('四年级')) return true;
   if (potion.id === 207 && f.joined_da) return true;
   if (y >= 5 && potion.grade.includes('五年级')) return true;
-  if (potion.id === 301 && f.got_prince_book) return true;
+  
+  // 混血王子旧书解锁魔药
+  if (potion.id === 301 && (f.got_prince_book || hasBook)) return true;
   if (potion.id === 302 && f.got_felix_reward) return true;
-  if (potion.id === 601 && f.got_prince_book) return true;
-  if (potion.id === 602 && f.got_prince_book) return true;
+  if (potion.id === 601 && (f.got_prince_book || hasBook)) return true;
+  if (potion.id === 602 && (f.got_prince_book || hasBook)) return true;
+  
   if (potion.id === 401 && f.used_sectumsempra) return true;
   if (y >= 6 && potion.grade.includes('N.E.W.T.')) return true;
   if (potion.id === 604 && f.visited_wheezes) return true;
@@ -138,8 +149,16 @@ function brewPotion(potionId) {
   const data = initPotionSave();
   if (!data.potion[potionId]?.unlocked) { window.doStudyLog?.(`❌ ${potion.name} 尚未解锁`); return false; }
   if (!costMaterials(potion.materials, potion.quantities)) { window.doStudyLog?.(`❌ 材料不足`); return false; }
+  
+  const hasBook = hasPrinceBook();
   const diff = PotionSystem.getDifficulty(potion);
-  const successRate = Math.max(20, Math.min(100, 120 - diff * 10));
+  const baseSuccessRate = Math.max(20, Math.min(100, 120 - diff * 10));
+  const successRate = hasBook ? 100 : baseSuccessRate;
+  
+  if (hasBook) {
+    window.doStudyLog?.(`📕 混血王子的旧书发挥作用——魔药制作成功率提升至100%！`);
+  }
+  
   if (Math.random() * 100 < successRate) {
     const d2 = initPotionSave();
     if (!d2.potion[potionId]) d2.potion[potionId] = { proficiency: 0, unlocked: true };
@@ -540,10 +559,11 @@ function renderBrewStation() {
           </div>
 
           <!-- 坩埚 -->
-          <div id="pot-cauldron" class="brew-cauldron ${brewPhase}">
+          <div id="pot-cauldron" class="brew-cauldron ${brewPhase} ${hasPrinceBook()?'prince-aura':''}">
             <div id="pot-liquid" class="brew-liquid ${liquidState}" 
               style="${liquidState==='golden'?`background:${potionColor};box-shadow:inset 0 0 20px ${potionColor},0 0 40px ${potionColor};`:liquidState==='clear'?`box-shadow:inset 0 0 20px #2c4b5e,0 0 30px ${potionColor}80;`:''}">
             </div>
+            ${hasPrinceBook()?`<div class="prince-glow"></div>`:''}
           </div>
 
           <!-- 搅拌按钮 -->

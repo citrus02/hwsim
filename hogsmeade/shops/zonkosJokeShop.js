@@ -30,6 +30,15 @@ export const ZonkosConfig = {
   owner: "佐科先生",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "初级捣蛋鬼", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "恶作剧学徒", minPoints: 100, discount: 0.05, perks: ["5%折扣", "限量道具优先购买"] },
+    { level: 3, name: "整蛊专家", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费粪弹"] },
+    { level: 4, name: "恶作剧大师", minPoints: 600, discount: 0.15, perks: ["15%折扣", "隐藏商品解锁", "专属整蛊方案"] },
+    { level: 5, name: "捣蛋传奇", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人定制道具", "佐科先生亲自指导"] },
+  ],
 
   items: [
 

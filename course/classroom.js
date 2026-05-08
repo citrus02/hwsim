@@ -28,9 +28,17 @@ const SUBJECT_WIN_KEY = {
   transfiguration: "subject_transfiguration",
   charms: "subject_charms",
   magicHistory: "subject_magicHistory",
+  defense: "subject_defense",
+  herbology: "subject_herbology",
+  astronomy: "subject_astronomy",
+  potions: "subject_potions",
 };
 
-const HOGWARTS_SUBJECT_KEYS = new Set(["transfiguration", "charms", "magicHistory"]);
+// 麻瓜课程列表（用于过滤）
+const MUGGLE_SUBJECTS = new Set(['math', 'physics', 'chemistry', 'biology', 'history', 'civics', 'geography', 'literature', 'english']);
+
+// 从 SUBJECT_WIN_KEY 动态生成霍格沃茨魔法课程键名集合
+const HOGWARTS_SUBJECT_KEYS = new Set(Object.keys(SUBJECT_WIN_KEY).filter(k => !MUGGLE_SUBJECTS.has(k)));
 
 function getSubjectData(key) { return window[SUBJECT_WIN_KEY[key]] || null; }
 
@@ -542,8 +550,8 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
       rating: rating 
     });
     
-    // 草药学（biology）特殊触发 → 纳威
-    if (subjectKey === 'biology') {
+    // 草药学特殊触发 → 纳威
+    if (subjectKey === 'herbology') {
       window.affinityUI?.checkStudentSpecialTriggers('goodStudy', { subject: '草药学' });
     }
   }

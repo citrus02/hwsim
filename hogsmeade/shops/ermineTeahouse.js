@@ -30,6 +30,15 @@ export const ErmineTeahouseConfig = {
   owner: "格温妮丝·白鼬女士",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "新客人", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "常客", minPoints: 100, discount: 0.05, perks: ["5%折扣", "优先座位"] },
+    { level: 3, name: "茶友", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费司康饼"] },
+    { level: 4, name: "贵宾", minPoints: 600, discount: 0.15, perks: ["15%折扣", "私人包厢", "专属茶具"] },
+    { level: 5, name: "终身会员", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人下午茶", "白鼬夫人亲自招待"] },
+  ],
 
   items: [
 

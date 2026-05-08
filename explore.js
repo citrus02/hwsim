@@ -75,33 +75,57 @@ function findAreaByName(name) {
 let currentFirstParent = null;
 let currentSecondParent = null;
 
+// 面板布局配置常量
+const PANEL_LAYOUT = {
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
+  gap: "8px",
+  maxHeight: "400px",
+  overflow: "auto"
+};
+
+function applyPanelLayout(element) {
+  element.style.display = PANEL_LAYOUT.display;
+  element.style.gridTemplateColumns = PANEL_LAYOUT.gridTemplateColumns;
+  element.style.gap = PANEL_LAYOUT.gap;
+  element.style.maxHeight = PANEL_LAYOUT.maxHeight;
+  element.style.overflow = PANEL_LAYOUT.overflow;
+}
+
 export function openExplorePanel() {
   resetExploreCache();
   _loadAllExploreRate();
-
-  const holiday = isHoliday();
-  const exploreBtn = document.getElementById("exploreBtn");
-  const exploreTitle = document.getElementById("exploreTitle");
-
-  if (holiday) {
-    if (exploreBtn) exploreBtn.textContent = "🚪 出门探险";
-    if (exploreTitle) exploreTitle.textContent = `🚪 出门探险 · ${holiday}`;
-  } else {
-    if (exploreBtn) exploreBtn.textContent = "🗺️ 探索城堡";
-    if (exploreTitle) exploreTitle.textContent = "🗺️ 探索城堡";
-  }
 
   document.getElementById("actionMain").style.display = "none";
   document.getElementById("exploreMain").style.display = "block";
 
   const wrap = document.getElementById("explore-container");
-  wrap.style.display = "grid";
-  wrap.style.gridTemplateColumns = "repeat(3, 1fr)";
-  wrap.style.gap = "8px";
-  wrap.style.maxHeight = "400px";
-  wrap.style.overflow = "auto";
+  applyPanelLayout(wrap);
 
   renderFirstLayer();
+}
+
+export function openAdventurePanel() {
+  resetExploreCache();
+  _loadAllExploreRate();
+
+  const holiday = isHoliday();
+  const adventureTitle = document.getElementById("adventureTitle");
+  if (adventureTitle) adventureTitle.textContent = holiday ? `🚪 外出探险 · ${holiday}` : "🚪 外出探险";
+
+  document.getElementById("actionMain").style.display = "none";
+  document.getElementById("adventureMain").style.display = "block";
+
+  const wrap = document.getElementById("adventure-container");
+  applyPanelLayout(wrap);
+
+  renderAdventureLayer();
+}
+
+export function closeAdventurePanel() {
+  currentAdventureArea = null;
+  document.getElementById("adventureMain").style.display = "none";
+  document.getElementById("actionMain").style.display = "block";
 }
 
 export function closeExplorePanel() {
@@ -117,6 +141,11 @@ function resetExploreCache() {
 
 function clearExploreContainer() {
   const wrap = document.getElementById("explore-container");
+  if (wrap) wrap.innerHTML = "";
+}
+
+function clearAdventureContainer() {
+  const wrap = document.getElementById("adventure-container");
   if (wrap) wrap.innerHTML = "";
 }
 
@@ -182,6 +211,189 @@ function _handleGringotts() {
   const eventText = events[Math.floor(Math.random() * events.length)];
 
   window.doExploreLog(`🏦 古灵阁：${eventText}`);
+}
+
+let currentAdventureArea = null;
+
+export function renderAdventureLayer() {
+  clearAdventureContainer();
+  const wrap = document.getElementById("adventure-container");
+  if (!wrap) return;
+
+  const currentGrade = getYearGrade();
+
+  if (currentAdventureArea) {
+    renderAdventureSecondLayer();
+    return;
+  }
+
+  const adventureAreas = [
+    { name: "对角巷", icon: "🏪", desc: "伦敦的魔法商业街，古灵阁、奥利凡德魔杖店等", needLevel: 1, hasChildren: true },
+    { name: "翻倒巷", icon: "🌑", desc: "对角巷旁的阴暗小巷，黑魔法用品和可疑交易的聚集地", needLevel: 5, hasChildren: true },
+    { name: "国王十字车站", icon: "🚂", desc: "伦敦的主要火车站，九又四分之三站台所在地", needLevel: 1 },
+    { name: "魔法部", icon: "🏛️", desc: "英国魔法界的政府机构，位于伦敦地下", needLevel: 5 },
+    { name: "圣芒戈魔法伤病医院", icon: "🏥", desc: "巫师界的主要医院，治疗各种魔法伤病", needLevel: 3, hasChildren: true },
+    { name: "破釜酒吧", icon: "🍺", desc: "伦敦查令十字路的巫师酒吧，壁炉后有通往对角巷的秘密通道", needLevel: 1 },
+    { name: "魁地奇世界杯球场", icon: "⚽", desc: "举办魁地奇世界杯的巨大体育场，充满魔法氛围", needLevel: 4 },
+    { name: "格里莫广场12号", icon: "🏠", desc: "布莱克家族的老宅，凤凰社的总部所在地", needLevel: 5 },
+  ];
+
+  adventureAreas.forEach(area => {
+    let isLock = false;
+    let unlockTipText = '';
+    
+    if (area.needLevel !== undefined && area.needLevel > currentGrade) {
+      isLock = true;
+      unlockTipText = `需要${area.needLevel}年级`;
+    }
+    
+    const btn = createExploreButton({
+      icon: area.icon || '',
+      name: area.name,
+      desc: area.desc || '',
+      rateText: isLock ? ' 🔒' : (area.hasChildren ? ' →' : ''),
+      unlockTip: unlockTipText,
+      isDisabled: isLock
+    }, () => {
+      if (isLock) {
+        window.doExploreLog(`🔒 ${area.name} 无法前往｜${unlockTipText}`);
+        return;
+      }
+      
+      if (area.hasChildren) {
+        currentAdventureArea = area;
+        renderAdventureSecondLayer();
+        return;
+      }
+      
+      if (area.name === "魁地奇世界杯球场") {
+        window.doExploreLog(`⚽ 你来到了魁地奇世界杯球场！巨大的帐篷和看台延伸至远方，空气中弥漫着兴奋的气息。虽然比赛已经结束，但场地依然壮观。`);
+        return;
+      }
+      
+      if (area.name === "格里莫广场12号") {
+        window.doExploreLog(`🏠 你站在格里莫广场12号门前。这栋阴暗的老宅散发着神秘的气息，布莱克家族的徽章隐约可见。你感觉到有什么力量在守护着这栋房子。`);
+        return;
+      }
+      
+      window.doExploreLog(`🚪 你外出前往${area.icon} ${area.name}，但目前这里还没有可探索的内容。`);
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+function renderAdventureSecondLayer() {
+  clearAdventureContainer();
+  const wrap = document.getElementById("adventure-container");
+  if (!wrap || !currentAdventureArea) return;
+
+  const backBtn = createBackButton(() => {
+    currentAdventureArea = null;
+    renderAdventureLayer();
+  });
+  wrap.appendChild(backBtn);
+
+  const currentGrade = getYearGrade();
+  let subAreas = [];
+
+  if (currentAdventureArea.name === "对角巷") {
+    subAreas = [
+      { name: "古灵阁巫师银行", icon: "🏦", desc: "妖精经营的巫师银行，金库深埋地下", needLevel: 1, isGringotts: true, shopId: "gringotts" },
+      { name: "奥利凡德魔杖店", icon: "🪄", desc: "自公元前382年即制杖，每根魔杖都在等待它的主人", needLevel: 1, shopId: "olivanders" },
+      { name: "丽痕书店", icon: "📚", desc: "对角巷最大的书店，从教材到禁书应有尽有", needLevel: 1, shopId: "flourish_blotts" },
+      { name: "摩金夫人长袍专卖店", icon: "👗", desc: "校袍、礼袍、旅行斗篷——量体裁衣", needLevel: 1, shopId: "malkins" },
+      { name: "对角巷药房", icon: "🧪", desc: "药材、药剂和医疗用品的批发零售中心", needLevel: 1, shopId: "diagon_apothecary" },
+      { name: "魁地奇精品店", icon: "🧹", desc: "光轮、火弩箭、各种型号的飞天扫帚", needLevel: 1, shopId: "quidditch" },
+      { name: "神奇动物园", icon: "🦉", desc: "猫头鹰、蟾蜍、老鼠……各种魔法宠物", needLevel: 1, shopId: "magical_menagerie" },
+      { name: "弗洛林冰淇淋店", icon: "🍦", desc: "对角巷最受欢迎的冰淇淋店，即使在冬天也排队", needLevel: 1, shopId: "florean" },
+    ];
+  } else if (currentAdventureArea.name === "翻倒巷") {
+    subAreas = [
+      { name: "博金-博克商店", icon: "💀", desc: "黑魔法器具、诅咒物品和毒药——橱窗里的东西让人不寒而栗", needLevel: 5, shopId: "borgin_burkes" },
+      { name: "黑暗药房", icon: "⚗️", desc: "专门出售毒药和危险魔药材料的阴暗药房", needLevel: 5, shopId: "dark_apothecary" },
+      { name: "黑暗武器店", icon: "⚔️", desc: "专门出售黑魔法武器和诅咒物品的店铺", needLevel: 5, shopId: "dark_weapons" },
+      { name: "翻倒巷暗巷", icon: "🚬", desc: "笼罩在阴影中的狭窄巷道，两侧是形迹可疑的店铺", needLevel: 5 },
+      { name: "二手魔杖摊位", icon: "🪄", desc: "来路不明的旧魔杖，摊主从不问你为什么需要第二根", needLevel: 5 },
+    ];
+  } else if (currentAdventureArea.name === "圣芒戈魔法伤病医院") {
+    subAreas = [
+      { name: "急诊病房", icon: "🚑", desc: "处理紧急魔法伤害的病房，治疗师随时待命", needLevel: 3 },
+      { name: "魔咒伤害科", icon: "⚡", desc: "专门治疗魔咒造成的伤害和诅咒", needLevel: 3 },
+      { name: "生物伤害科", icon: "🐍", desc: "治疗神奇动物造成的咬伤、蜇伤和中毒", needLevel: 3 },
+      { name: "长期护理病房", icon: "🏥", desc: "为需要长期治疗的患者准备的安静病房", needLevel: 3 },
+      { name: "药房", icon: "🧪", desc: "医院药房，供应各种治疗魔药和医疗用品", needLevel: 3, shopId: "st_mungos_apothecary" },
+    ];
+  }
+
+  subAreas.forEach(area => {
+    let isLock = false;
+    let unlockTipText = '';
+    
+    if (area.needLevel !== undefined && area.needLevel > currentGrade) {
+      isLock = true;
+      unlockTipText = `需要${area.needLevel}年级`;
+    }
+    
+    const btn = createExploreButton({
+      icon: area.icon || '',
+      name: area.name,
+      desc: area.desc || '',
+      rateText: isLock ? ' 🔒' : '',
+      unlockTip: unlockTipText,
+      isDisabled: isLock
+    }, async () => {
+      if (isLock) {
+        window.doExploreLog(`🔒 ${area.name} 无法前往｜${unlockTipText}`);
+        return;
+      }
+      
+      if (area.shopId) {
+        if (!costAction()) return;
+        try {
+          const shopManager = await window.openShop(area.shopId);
+          if (!shopManager) {
+            window.doExploreLog(`🏪 ${area.name} 暂未开业，敬请期待。`);
+            if (timeSystem.dailyActionLeft <= 0) {
+              closeAdventurePanel();
+              setTimeout(() => { 
+                nextTime(); 
+                if (timeSystem.dailyActionLeft <= 0) {
+                  nextDay();
+                }
+                syncActionUI(); 
+              }, 80);
+            }
+            return;
+          }
+          const { shopUI } = await import('./hogsmeade/shopUI.js');
+          const shopUIInstance = new shopUI(shopManager, () => {
+            if (window.refreshAll) window.refreshAll();
+            if (timeSystem.dailyActionLeft <= 0) {
+              closeAdventurePanel();
+              setTimeout(() => { 
+                nextTime(); 
+                if (timeSystem.dailyActionLeft <= 0) {
+                  nextDay();
+                }
+                syncActionUI(); 
+              }, 80);
+            } else {
+              renderAdventureLayer();
+            }
+          });
+          const uiElement = shopUIInstance.render();
+          document.body.appendChild(uiElement);
+        } catch (err) {
+          console.error('打开商店失败:', err);
+          window.doExploreLog(`❌ 打开 ${area.name} 失败：${err.message}`);
+        }
+        return;
+      }
+      
+      window.doExploreLog(`🚪 你进入了${area.icon} ${area.name}。`);
+    });
+    wrap.appendChild(btn);
+  });
 }
 
 export function renderFirstLayer() {
@@ -285,18 +497,6 @@ function renderSecondLayer() {
         return;
       }
 
-      if (lv2.isGringotts) {
-        if (!costAction()) return;
-        _handleGringotts();
-        if (timeSystem.dailyActionLeft <= 0) {
-          closeExplorePanel();
-          setTimeout(() => { nextTime(); syncActionUI(); }, 80);
-          return;
-        }
-        renderSecondLayer();
-        return;
-      }
-
       // 商店节点：打开商店UI
       if (isShop2) {
         if (!costAction()) return;
@@ -315,10 +515,15 @@ function renderSecondLayer() {
           const { shopUI } = await import('./hogsmeade/shopUI.js');
           const shopUIInstance = new shopUI(shopManager, () => {
             if (window.refreshAll) window.refreshAll();
-            if (window.timeSystem?.dailyActionLeft <= 0) {
-              window.closeExplorePanel?.();
-              window.nextTime?.();
-              window.syncActionUI?.();
+            if (timeSystem.dailyActionLeft <= 0) {
+              closeExplorePanel();
+              setTimeout(() => { 
+                nextTime(); 
+                if (timeSystem.dailyActionLeft <= 0) {
+                  nextDay();
+                }
+                syncActionUI(); 
+              }, 80);
             } else {
               renderSecondLayer();
             }
@@ -349,9 +554,14 @@ function renderSecondLayer() {
 
         if (exploreResult.material) {
           const mat = exploreResult.material;
-          const emoji = getMatEmoji ? getMatEmoji(mat.name) : "🌿";
-          window.addMaterialToBag(mat.name, mat.count);
-          logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
+          if (mat.type === "item") {
+            window.addItemToBag?.({ name: mat.name });
+            logSuffix += `【🎉 获得特殊物品: 📕 ${mat.name}】`;
+          } else {
+            const emoji = getMatEmoji ? getMatEmoji(mat.name) : "🌿";
+            window.addMaterialToBag(mat.name, mat.count);
+            logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
+          }
         }
 
         window.doExploreLog(logMessage + logSuffix);
@@ -435,18 +645,6 @@ function renderThirdLayer() {
         return;
       }
 
-      if (item.isGringotts) {
-        if (!costAction()) return;
-        _handleGringotts();
-        if (timeSystem.dailyActionLeft <= 0) {
-          closeExplorePanel();
-          setTimeout(() => { nextTime(); syncActionUI(); }, 80);
-          return;
-        }
-        renderThirdLayer();
-        return;
-      }
-      
       // 如果是商店，异步打开商店界面
       if (isShop) {
         if (item.needLevel && currentGrade < item.needLevel) {
@@ -470,8 +668,19 @@ function renderThirdLayer() {
           const shopUIInstance = new shopUI(
             shopManager,
             () => {
-              renderThirdLayer();
-              if (window.refreshAll) window.refreshAll();
+              if (timeSystem.dailyActionLeft <= 0) {
+                closeExplorePanel();
+                setTimeout(() => { 
+                  nextTime(); 
+                  if (timeSystem.dailyActionLeft <= 0) {
+                    nextDay();
+                  }
+                  syncActionUI(); 
+                }, 80);
+              } else {
+                renderThirdLayer();
+                if (window.refreshAll) window.refreshAll();
+              }
             }
           );
           
@@ -533,3 +742,5 @@ function renderThirdLayer() {
 
 window.openExplorePanel = openExplorePanel;
 window.closeExplorePanel = closeExplorePanel;
+window.openAdventurePanel = openAdventurePanel;
+window.closeAdventurePanel = closeAdventurePanel;

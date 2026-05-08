@@ -134,11 +134,11 @@ export const courseData = [
     children: [
       { level: 4, name: "变形术", icon: "🔁", desc: "麦格教授教授，物体变形与人体变形", unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "transfiguration" },
       { level: 4, name: "魔咒学", icon: "✨", desc: "各类攻击、防御、生活实用魔咒",    unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "charms" },
-      { level: 4, name: "魔药学",      icon: "⚗️", desc: "药剂调配、魔法草药与材料使用",     unlock: false, studyRate: 0, unlockGrade: 1 },
-      { level: 4, name: "黑魔法防御术", icon: "🛡️", desc: "抵御黑暗魔法、诅咒与邪恶生物",  unlock: false, studyRate: 0, unlockGrade: 1 },
-      { level: 4, name: "草药学",      icon: "🌿", desc: "培育、识别与使用魔法植物",         unlock: false, studyRate: 0, unlockGrade: 1 },
+      { level: 4, name: "魔药学",      icon: "⚗️", desc: "药剂调配、魔法草药与材料使用",     unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "potions" },
+      { level: 4, name: "黑魔法防御术", icon: "🛡️", desc: "抵御黑暗魔法、诅咒与邪恶生物",  unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "defense" },
+      { level: 4, name: "草药学",      icon: "🌿", desc: "培育、识别与使用魔法植物",         unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "herbology" },
       { level: 4, name: "魔法史",      icon: "📜", desc: "巫师世界千年历史与大事件",         unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "magicHistory" },
-      { level: 4, name: "天文学",      icon: "🌌", desc: "星辰观测与星象魔法理论",           unlock: false, studyRate: 0, unlockGrade: 1 },
+      { level: 4, name: "天文学",      icon: "🌌", desc: "星辰观测与星象魔法理论",           unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "astronomy" },
       { level: 4, name: "飞行课",      icon: "🧹", desc: "扫帚飞行基础与空中操控",           unlock: false, studyRate: 0, unlockGrade: 1 }
     ]
   },

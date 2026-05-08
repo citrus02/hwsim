@@ -206,7 +206,7 @@ export const muggleStudiesStaff = {
   },
 
   felixWeasley: {
-    name: "菲利克斯·韦斯利",
+    name: "菲利克斯·韦斯莱",
     role: "地理讲师",
     house: "格兰芬多",
     age: 35,

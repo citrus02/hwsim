@@ -26,7 +26,23 @@ function getDefaultSave() {
 export function getSave() {
   try {
     const data = localStorage.getItem(SAVE_KEY);
-    return data ? JSON.parse(data) : getDefaultSave();
+    const save = data ? JSON.parse(data) : getDefaultSave();
+    
+    // 存档迁移：添加缺失的新字段默认值
+    if (!save.knownCharacters) save.knownCharacters = [];
+    if (!save.knownSpells) save.knownSpells = [];
+    if (!save.affinity) save.affinity = {};
+    if (!save.housePoints) save.housePoints = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+    if (!save.duelRecord) save.duelRecord = { wins: 0, losses: 0 };
+    if (!save.quests) save.quests = {};
+    if (!save.spellList) save.spellList = [];
+    if (!save.spellProficiency) save.spellProficiency = {};
+    if (!save.darkMagicRecord) save.darkMagicRecord = 0;
+    if (!save.explore) save.explore = {};
+    if (!save.story) save.story = { completed: {}, active: null };
+    if (!save.bag) save.bag = { material: [], potion: [], item: [], wizardCard: [] };
+    
+    return save;
   } catch (e) { return getDefaultSave(); }
 }
 
@@ -60,8 +76,6 @@ export function restartGame() {
     explore: {},
     potion: {},
     story: { completed: {}, active: null },
-    knownCharacters: [],
-    knownSpells: []
   };
   setSave(fresh);
 

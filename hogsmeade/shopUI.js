@@ -131,6 +131,9 @@ export class shopUI {
 
     const container = document.createElement('div');
     container.className = 'shop-ui-container';
+    
+    const isGringotts = shop.id === 'gringotts';
+    
     container.innerHTML = `
       <div class="shop-ui-overlay">
         <div class="shop-ui-panel">
@@ -149,6 +152,7 @@ export class shopUI {
             "${shop.getWelcomeMessage(this.shopManager.player)}"
           </div>
           
+          ${!isGringotts ? `
           <div class="shop-ui-tabs">
             <button class="shop-tab-btn ${this.currentTab === 'buy' ? 'active' : ''}" data-tab="buy">
               🛒 购买
@@ -162,12 +166,25 @@ export class shopUI {
               </button>
             ` : ''}
           </div>
+          ` : `
+          <div class="shop-ui-tabs">
+            <button class="shop-tab-btn ${this.currentTab === 'deposit' ? 'active' : ''}" data-tab="deposit">
+              📥 存款
+            </button>
+            <button class="shop-tab-btn ${this.currentTab === 'withdraw' ? 'active' : ''}" data-tab="withdraw">
+              📤 取款
+            </button>
+            <button class="shop-tab-btn ${this.currentTab === 'statement' ? 'active' : ''}" data-tab="statement">
+              📊 对账单
+            </button>
+          </div>
+          `}
           
           <div class="shop-ui-content">
             ${this.renderContent()}
           </div>
           
-          ${this.cart.length > 0 ? this.renderCart() : ''}
+          ${!isGringotts && this.cart.length > 0 ? this.renderCart() : ''}
         </div>
       </div>
     `;
@@ -180,6 +197,10 @@ export class shopUI {
   
   renderContent() {
     const shop = this.shopManager.currentShop;
+    
+    if (shop.id === 'gringotts') {
+      return this.renderGringottsBank(shop);
+    }
     
     if (this.currentTab === 'buy') {
       return this.renderBuyItems(shop);
@@ -275,6 +296,139 @@ export class shopUI {
     `;
   }
   
+  renderGringottsBank(shop) {
+    const accountInfo = shop.getAccountInfo();
+    const accountType = accountInfo.accountType;
+    
+    return `
+      <style>
+        .gringotts-panel { padding: 12px; }
+        .gringotts-balance { 
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+          border-radius: 12px;
+          padding: 16px;
+          margin-bottom: 16px;
+          text-align: center;
+          border: 2px solid ${accountType.color};
+        }
+        .gringotts-balance .account-type { 
+          font-size: 14px; 
+          color: ${accountType.color};
+          margin-bottom: 8px;
+        }
+        .gringotts-balance .balance { 
+          font-size: 24px; 
+          font-weight: bold; 
+          color: #ffd700;
+        }
+        .gringotts-balance .interest-rate { 
+          font-size: 12px; 
+          color: #8899aa;
+          margin-top: 8px;
+        }
+        .gringotts-services {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+        .gringotts-service {
+          background: #1e293b;
+          border: 1px solid #2a3b66;
+          border-radius: 10px;
+          padding: 12px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .gringotts-service:hover { border-color: #5c6bc0; background: #2a3b66; }
+        .gringotts-service .service-icon { font-size: 24px; margin-bottom: 4px; }
+        .gringotts-service .service-name { font-size: 13px; font-weight: 600; }
+        .gringotts-service .service-desc { font-size: 11px; color: #8899aa; margin-top: 2px; }
+        .gringotts-form { margin-top: 16px; }
+        .gringotts-form .form-group { margin-bottom: 12px; }
+        .gringotts-form .form-label { font-size: 12px; color: #a9b4d2; margin-bottom: 4px; display: block; }
+        .gringotts-form .form-input {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #2a3b66;
+          border-radius: 8px;
+          background: #0b0f1a;
+          color: #e6e6e6;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
+        .gringotts-form .form-row { display: flex; gap: 8px; }
+        .gringotts-form .form-row .form-group { flex: 1; }
+        .gringotts-form .submit-btn {
+          width: 100%;
+          padding: 10px;
+          background: #2a3b66;
+          color: #f8d49d;
+          border: 1px solid #3b4f8a;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 14px;
+          margin-top: 12px;
+        }
+        .gringotts-form .submit-btn:hover { background: #3b4f8a; }
+        .gringotts-message {
+          padding: 10px;
+          border-radius: 8px;
+          margin-bottom: 12px;
+          text-align: center;
+          font-size: 13px;
+        }
+        .gringotts-message.success { background: #1a3a23; color: #4caf82; }
+        .gringotts-message.error { background: #3a1a1a; color: #ff6b6b; }
+        .gringotts-transactions { margin-top: 16px; }
+        .gringotts-transactions .transaction-header { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+        .gringotts-transactions .transaction-list { max-height: 200px; overflow-y: auto; }
+        .gringotts-transactions .transaction-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 8px 10px;
+          background: #1e293b;
+          border-radius: 6px;
+          margin-bottom: 6px;
+          font-size: 12px;
+        }
+        .gringotts-transactions .transaction-item .desc { flex: 1; }
+        .gringotts-transactions .transaction-item .amount { font-weight: 600; }
+        .gringotts-transactions .transaction-item.deposit .amount { color: #4caf82; }
+        .gringotts-transactions .transaction-item.withdraw .amount { color: #ff6b6b; }
+        .gringotts-transactions .transaction-item.interest .amount { color: #ffd700; }
+      </style>
+      
+      <div class="gringotts-panel" id="gringotts-panel">
+        <div class="gringotts-balance">
+          <div class="account-type">🏦 ${accountType.name}</div>
+          <div class="balance">💰 ${accountInfo.formattedBalance}</div>
+          <div class="interest-rate">年利率: ${(accountType.interestRate * 100).toFixed(1)}%</div>
+        </div>
+        
+        <div class="gringotts-services">
+          <div class="gringotts-service" data-service="deposit">
+            <div class="service-icon">📥</div>
+            <div class="service-name">存款</div>
+            <div class="service-desc">存入金币</div>
+          </div>
+          <div class="gringotts-service" data-service="withdraw">
+            <div class="service-icon">📤</div>
+            <div class="service-name">取款</div>
+            <div class="service-desc">提取金币</div>
+          </div>
+          <div class="gringotts-service" data-service="statement">
+            <div class="service-icon">📊</div>
+            <div class="service-name">对账单</div>
+            <div class="service-desc">交易记录</div>
+          </div>
+        </div>
+        
+        <div id="gringotts-form-container"></div>
+      </div>
+    `;
+  }
+  
   renderCart() {
     const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
@@ -309,7 +463,9 @@ export class shopUI {
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
         this.shopManager.closeShop();
-        if (this.onClose) this.onClose();
+        if (this.onClose) {
+          this.onClose();
+        }
         this.container.remove();
       });
     }
@@ -392,6 +548,136 @@ export class shopUI {
     const checkoutBtn = this.container.querySelector('.checkout-btn');
     if (checkoutBtn) {
       checkoutBtn.addEventListener('click', () => this.checkout());
+    }
+    
+    // 古灵阁银行服务
+    const gringottsServices = this.container.querySelectorAll('.gringotts-service');
+    gringottsServices.forEach(service => {
+      service.addEventListener('click', (e) => {
+        const serviceId = e.currentTarget.dataset.service;
+        this.showGringottsService(serviceId);
+      });
+    });
+  }
+  
+  showGringottsService(serviceId) {
+    const container = this.container.querySelector('#gringotts-form-container');
+    if (!container) return;
+    
+    switch (serviceId) {
+      case 'deposit':
+        container.innerHTML = `
+          <div class="gringotts-form">
+            <h4 style="margin-bottom: 12px;">📥 存款</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">加隆</label>
+                <input type="number" class="form-input" id="deposit-galleons" min="0" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label class="form-label">西可</label>
+                <input type="number" class="form-input" id="deposit-sickles" min="0" max="16" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label class="form-label">纳特</label>
+                <input type="number" class="form-input" id="deposit-knuts" min="0" max="28" placeholder="0">
+              </div>
+            </div>
+            <button class="submit-btn" onclick="window.shopUIInstance.handleDeposit()">确认存款</button>
+          </div>
+        `;
+        break;
+        
+      case 'withdraw':
+        container.innerHTML = `
+          <div class="gringotts-form">
+            <h4 style="margin-bottom: 12px;">📤 取款</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">加隆</label>
+                <input type="number" class="form-input" id="withdraw-galleons" min="0" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label class="form-label">西可</label>
+                <input type="number" class="form-input" id="withdraw-sickles" min="0" max="16" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label class="form-label">纳特</label>
+                <input type="number" class="form-input" id="withdraw-knuts" min="0" max="28" placeholder="0">
+              </div>
+            </div>
+            <button class="submit-btn" onclick="window.shopUIInstance.handleWithdraw()">确认取款</button>
+          </div>
+        `;
+        break;
+        
+      case 'statement':
+        const shop = this.shopManager.currentShop;
+        const accountInfo = shop.getAccountInfo();
+        const transactions = accountInfo.transactions || [];
+        
+        container.innerHTML = `
+          <div class="gringotts-transactions">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div class="transaction-header">📊 最近交易记录</div>
+              <button class="close-statement-btn" onclick="window.shopUIInstance.closeStatement()" style="padding: 4px 8px; background: #2a3b66; border: none; border-radius: 4px; color: #e6e6e6; font-size: 12px; cursor: pointer;">关闭</button>
+            </div>
+            <div class="transaction-list">
+              ${transactions.length > 0 ? transactions.map(t => `
+                <div class="transaction-item ${t.type}">
+                  <div class="desc">${t.description}</div>
+                  <div class="amount">${t.type === 'deposit' ? '+' : t.type === 'withdraw' ? '-' : '+'}${shop.formatKnuts(t.amount)}</div>
+                </div>
+              `).join('') : '<div style="text-align: center; padding: 20px; color: #8899aa;">暂无交易记录</div>'}
+            </div>
+          </div>
+        `;
+        break;
+    }
+    
+    window.shopUIInstance = this;
+  }
+  
+  handleDeposit() {
+    const g = parseInt(document.getElementById('deposit-galleons')?.value) || 0;
+    const s = parseInt(document.getElementById('deposit-sickles')?.value) || 0;
+    const k = parseInt(document.getElementById('deposit-knuts')?.value) || 0;
+    
+    const shop = this.shopManager.currentShop;
+    const result = shop.deposit(g, s, k);
+    
+    const container = this.container.querySelector('#gringotts-form-container');
+    if (container) {
+      container.innerHTML = `<div class="gringotts-message ${result.success ? 'success' : 'error'}">${result.message}</div>`;
+    }
+    
+    if (result.success) {
+      setTimeout(() => this.refresh(), 2000);
+    }
+  }
+  
+  handleWithdraw() {
+    const g = parseInt(document.getElementById('withdraw-galleons')?.value) || 0;
+    const s = parseInt(document.getElementById('withdraw-sickles')?.value) || 0;
+    const k = parseInt(document.getElementById('withdraw-knuts')?.value) || 0;
+    
+    const shop = this.shopManager.currentShop;
+    const result = shop.withdraw(g, s, k);
+    
+    const container = this.container.querySelector('#gringotts-form-container');
+    if (container) {
+      container.innerHTML = `<div class="gringotts-message ${result.success ? 'success' : 'error'}">${result.message}</div>`;
+    }
+    
+    if (result.success) {
+      setTimeout(() => this.refresh(), 2000);
+    }
+  }
+  
+  closeStatement() {
+    const container = this.container.querySelector('#gringotts-form-container');
+    if (container) {
+      container.innerHTML = '';
     }
   }
   

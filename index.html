@@ -169,6 +169,8 @@
         <button class="action-btn" onclick="window.openDuelPanel?.()">⚔️ 决斗俱乐部</button>
         <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
         <button class="action-btn" id="exploreBtn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
+        <button class="action-btn" id="adventureBtn" onclick="window.openAdventurePanel()" style="display: none;">🚪 外出探险</button>
+        <button class="action-btn" onclick="window.doNothing?.()">😴 什么也不做</button>
       </div>
     </div>
 
@@ -176,6 +178,12 @@
       <div class="title" id="exploreTitle">🗺️ 探索城堡</div>
       <div class="explore-container" id="explore-container"></div>
       <button class="action-btn back-btn" onclick="window.closeExplorePanel()">← 返回行动</button>
+    </div>
+
+    <div id="adventureMain" style="display: none;">
+      <div class="title" id="adventureTitle">🚪 外出探险</div>
+      <div class="explore-container" id="adventure-container"></div>
+      <button class="action-btn back-btn" onclick="window.closeAdventurePanel()">← 返回行动</button>
     </div>
   </div>
 
@@ -498,7 +506,11 @@ document.addEventListener('DOMContentLoaded', () => {
   <script type="module" src="course/subjects/english.js"></script>
   <script type="module" src="course/subjects/transfiguration.js"></script>
   <script type="module" src="course/subjects/charms.js"></script>
+  <script type="module" src="course/subjects/herbology.js"></script>
+  <script type="module" src="course/subjects/defense.js"></script>
   <script type="module" src="course/subjects/magic-history.js"></script>
+  <script type="module" src="course/subjects/astronomy.js"></script>
+  <script type="module" src="course/subjects/potions.js"></script>
   <script type="module" src="course/classroom.js"></script>
   <script type="module" src="course/course.js"></script>
 <script type="module" src="spell.js"></script>

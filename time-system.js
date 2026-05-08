@@ -59,6 +59,31 @@ export function costAction() {
   return true;
 }
 
+export function doNothing() {
+  if (!costAction()) return;
+  
+  const messages = [
+    "你决定今天什么也不做，好好休息一下。",
+    "你悠闲地度过了一段时间，什么也没做。",
+    "你找了个安静的角落发呆，时间就这样过去了。",
+    "你闭目养神，享受片刻的宁静。",
+    "什么也不做，有时候也是一种选择。",
+    "你放空自己，让身心都得到了放松。",
+    "你望着窗外发呆，不知不觉时间就过去了。",
+    "你决定给自己放个假，什么都不做。"
+  ];
+  
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+  
+  if (window.doExploreLog) {
+    window.doExploreLog(`😴 ${randomMessage}`);
+  }
+  
+  if (timeSystem.dailyActionLeft <= 0) {
+    nextDay();
+  }
+}
+
 export function nextDay() {
   let date = new Date(timeSystem.currentDate);
   if (isNaN(date.getTime())) {
@@ -112,20 +137,26 @@ const HOLIDAYS = [
 
 export function isHoliday(dateStr) {
   if (!dateStr) dateStr = timeSystem.currentDate;
-  const parts = dateStr.split('-');
-  const mm = parseInt(parts[1], 10);
-  const dd = parseInt(parts[2], 10);
-  const mmdd = mm * 100 + dd;
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return null;
+  
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
   for (const h of HOLIDAYS) {
     const [sm, sd] = h.start.split('-').map(Number);
     const [em, ed] = h.end.split('-').map(Number);
-    const start = sm * 100 + sd;
-    const end = em * 100 + ed;
-    if (start <= end) {
-      if (mmdd >= start && mmdd <= end) return h.name;
-    } else {
-      if (mmdd >= start || mmdd <= end) return h.name;
+    
+    let startDate = new Date(year, sm - 1, sd);
+    let endDate = new Date(year, em - 1, ed);
+    
+    if (endDate < startDate) {
+      endDate = new Date(year + 1, em - 1, ed);
+    }
+    
+    if (date >= startDate && date <= endDate) {
+      return h.name;
     }
   }
   return null;
@@ -158,8 +189,13 @@ function syncUI() {
 
   const exploreBtn = document.getElementById("exploreBtn");
   if (exploreBtn) {
+    exploreBtn.textContent = "🗺️ 探索城堡";
+  }
+  
+  const adventureBtn = document.getElementById("adventureBtn");
+  if (adventureBtn) {
     const holiday = isHoliday();
-    exploreBtn.textContent = holiday ? "🚪 出门探险" : "🗺️ 探索城堡";
+    adventureBtn.style.display = holiday ? "block" : "none";
   }
 }
 
@@ -169,6 +205,7 @@ window.nextTime = nextTime;
 window.nextDay = nextDay;
 window.syncActionUI = syncActionUI;
 window.loadTimeFromSave = loadTimeFromSave;
+window.doNothing = doNothing;
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTimeFromSave();

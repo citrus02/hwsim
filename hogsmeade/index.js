@@ -12,9 +12,26 @@ import { AncientBookshop } from './shops/ancientBookshop.js';
 import { ErmineTeahouse } from './shops/ermineTeahouse.js';
 import { HogsmeadePost } from './shops/hogsmeadePost.js';
 import { FurFeatherPet } from './shops/furFeatherPet.js';
+import { WeasleyWheezesShop } from './shops/weasleyWizardWheezes.js';
+
+// 对角巷商店
+import { OlivandersShop } from '../diagon-alley/shops/olivanders.js';
+import { GringottsBank } from '../diagon-alley/shops/gringotts.js';
+import { MalkinsShop } from '../diagon-alley/shops/malkins.js';
+import { FloreanShop } from '../diagon-alley/shops/florean.js';
+import { QuidditchShop } from '../diagon-alley/shops/quidditch.js';
+import { MagicalMenagerieShop } from '../diagon-alley/shops/magicalMenagerie.js';
+import { FlourishBlottsShop } from '../diagon-alley/shops/flourishBlotts.js';
+import { ApothecaryShop } from '../diagon-alley/shops/apothecary.js';
+
+// 翻倒巷商店
+import { BorginBurkesShop } from '../knockturn-alley/shops/borginBurkes.js';
+import { DarkApothecaryShop } from '../knockturn-alley/shops/darkApothecary.js';
+import { DarkWeaponsShop } from '../knockturn-alley/shops/darkWeapons.js';
 
 // 商店注册表
 const SHOP_REGISTRY = {
+  // 霍格莫德商店
   honeydukes: Honeydukes,
   three_broomsticks: ThreeBroomsticks,
   zonkos: ZonkosJokeShop,
@@ -24,7 +41,23 @@ const SHOP_REGISTRY = {
   ancient_bookshop: AncientBookshop,
   ermine_teahouse: ErmineTeahouse,
   hogsmeade_post: HogsmeadePost,
-  fur_feather_pet: FurFeatherPet
+  fur_feather_pet: FurFeatherPet,
+  weasley_wheezes: WeasleyWheezesShop,
+  
+  // 对角巷商店
+  olivanders: OlivandersShop,
+  gringotts: GringottsBank,
+  malkins: MalkinsShop,
+  florean: FloreanShop,
+  quidditch: QuidditchShop,
+  magical_menagerie: MagicalMenagerieShop,
+  flourish_blotts: FlourishBlottsShop,
+  diagon_apothecary: ApothecaryShop,
+  
+  // 翻倒巷商店
+  borgin_burkes: BorginBurkesShop,
+  dark_apothecary: DarkApothecaryShop,
+  dark_weapons: DarkWeaponsShop
 };
 
 // 商店管理器类
@@ -40,7 +73,12 @@ export class ShopManager {
   
   initShops() {
     for (const [id, ShopClass] of Object.entries(SHOP_REGISTRY)) {
-      this.shops[id] = new ShopClass();
+      try {
+        this.shops[id] = new ShopClass();
+        console.log(`✅ 商店初始化成功: ${id}`);
+      } catch (err) {
+        console.error(`❌ 商店初始化失败: ${id}`, err);
+      }
     }
   }
   

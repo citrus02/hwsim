@@ -33,10 +33,19 @@ export const HoneydukesConfig = {
   id: "honeydukes",
   name: "蜂蜜公爵糖果店",
   icon: "🍬",
-  description: "魔法世界最著名的糖果店，安布罗修·弗鲁姆夫妇经营，霍格莫德必逛之地",
-  owner: "安布罗修·弗鲁姆",
+  description: "霍格莫德最受欢迎的糖果店，韦斯莱兄弟的最爱",
+  owner: "弗洛林·弗洛比舍",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "糖果爱好者", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "甜点探索者", minPoints: 100, discount: 0.05, perks: ["5%折扣", "限量糖果优先购买"] },
+    { level: 3, name: "巧克力鉴赏家", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费巧克力蛙"] },
+    { level: 4, name: "糖果大师", minPoints: 600, discount: 0.15, perks: ["15%折扣", "隐藏商品解锁", "生日糖果礼盒"] },
+    { level: 5, name: "蜂蜜公爵VIP", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人定制糖果", "店主亲自招待"] },
+  ],
 
   items: [
 

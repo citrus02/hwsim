@@ -34,6 +34,15 @@ export const GladragsWizardwearConfig = {
   owner: "风雅氏夫人",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "时尚新手", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "潮流追随者", minPoints: 100, discount: 0.05, perks: ["5%折扣", "限量款式优先购买"] },
+    { level: 3, name: "风格达人", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费饰品清洁"] },
+    { level: 4, name: "时尚领袖", minPoints: 600, discount: 0.15, perks: ["15%折扣", "隐藏款式解锁", "专属造型顾问"] },
+    { level: 5, name: "风雅VIP", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人定制礼服", "风雅氏夫人亲自接待"] },
+  ],
 
   items: [
 

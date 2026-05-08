@@ -31,6 +31,19 @@ export const TIERS = [
   { tier: 5,  min: 80,   max: 100, label: "真正的关系" },
 ];
 
+// ── 好感度阶段奖励配置 ──────────────────────────────────────
+const TIER_REWARDS = [
+  {
+    character: 'severusSnape',
+    minTier: 5,
+    reward: {
+      type: 'item',
+      name: '混血王子的旧书',
+      message: '📕 斯内普教授对你的能力表示认可，将他珍藏的魔药课本送给了你——《混血王子的旧书》！'
+    }
+  }
+];
+
 export function getTierByValue(value) {
   return TIERS.findLast(t => value >= t.min) || TIERS[0];
 }
@@ -106,6 +119,30 @@ export function addAffinity(key, delta, source = '') {
   const tierUp = char.tier > oldTier;
   if (tierUp) {
     window._affinityOnTierUp?.(key, oldTier, char.tier, char.value);
+
+    for (const config of TIER_REWARDS) {
+      if (config.character !== key) continue;
+      if (char.tier < config.minTier) continue;
+      
+      const rewardFlag = `tier_reward_${config.minTier}`;
+      if (char.flags?.[rewardFlag]) continue;
+
+      const data = _load();
+      const charData = _getChar(data, key);
+      if (!charData.flags) charData.flags = {};
+      charData.flags[rewardFlag] = true;
+
+      if (config.reward.type === 'item') {
+        const items = data.bag?.item || [];
+        if (!items.some(item => item.name === config.reward.name)) {
+          if (!data.bag) data.bag = { material: [], potion: [], item: [] };
+          data.bag.item.push({ name: config.reward.name });
+        }
+        window.doStudyLog?.(config.reward.message);
+      }
+
+      writeSave(data);
+    }
   }
   return { tierUp, oldTier, newTier: char.tier, newValue: char.value };
 }
@@ -171,10 +208,10 @@ export const COURSE_TO_CHARACTER = {
   '变形术':     'minervaMcGonagall',
   '魔咒学':     'filiusFlitwick',
   '魔药学':     'severusSnape',
-  '黑魔法防御术': 'quirrell',
+  '黑魔法防御术': 'remusLupin',
   '草药学':     'pomonaSprout',
-  '魔法史':     'cuthbertBinns',
-  '天文学':     null,
+  '魔法史':     'herbertBinns',
+  '天文学':     'auroraSinistra',
   '飞行课':     'rolandaHooch',
   '占卜学':     'sybillTrelawney',
 };

@@ -31,6 +31,15 @@ export const DevisesAndBangsConfig = {
   owner: "德维斯与班斯先生",
   openYears: [1,2,3,4,5,6,7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "新学徒", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "魔法爱好者", minPoints: 100, discount: 0.05, perks: ["5%折扣", "限量商品优先购买"] },
+    { level: 3, name: "见习巫师", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费坩埚保养"] },
+    { level: 4, name: "资深巫师", minPoints: 600, discount: 0.15, perks: ["15%折扣", "隐藏商品解锁", "专属装备定制"] },
+    { level: 5, name: "大师级顾客", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人购物顾问", "终身保修服务"] },
+  ],
 
   items: [
 

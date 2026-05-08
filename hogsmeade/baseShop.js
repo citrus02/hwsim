@@ -4,15 +4,21 @@ import { addLog, getYearGrade, getPlayerHouse } from '../save-system.js';
 
 // 纳特数转人类可读价格
 function knutsToDisplay(knuts) {
-  const g = Math.floor(knuts / 493);
-  const rem = knuts % 493;
-  const s = Math.floor(rem / 29);
-  const n = rem % 29;
+  const { g, s, n } = knutsToCurrency(knuts);
   const parts = [];
   if (g > 0) parts.push(`${g}加隆`);
   if (s > 0) parts.push(`${s}西可`);
   if (n > 0) parts.push(`${n}纳特`);
   return parts.join(' ') || '0纳特';
+}
+
+// 纳特数转货币对象（加隆、西可、纳特）
+function knutsToCurrency(knuts) {
+  const g = Math.floor(knuts / 493);
+  const rem = knuts % 493;
+  const s = Math.floor(rem / 29);
+  const n = rem % 29;
+  return { g, s, n };
 }
 
 export class BaseShop {
@@ -86,18 +92,12 @@ export class BaseShop {
     // 用 currency.js 检查余额并扣款（统一用纳特计算）
     const totalKnutsOwned = window.currency?.getTotalKnuts?.() ?? 0;
     if (totalKnutsOwned < totalKnuts) {
-      const g = Math.floor(totalKnuts / 493);
-      const rem = totalKnuts % 493;
-      const s = Math.floor(rem / 29);
-      const n = rem % 29;
+      const { g, s, n } = knutsToCurrency(totalKnuts);
       return { success: false, message: `金币不足，需要 ${g>0?g+"加隆 ":""}${s>0?s+"西可 ":""}${n>0?n+"纳特":""}` };
     }
 
     // 扣款
-    const g = Math.floor(totalKnuts / 493);
-    const rem1 = totalKnuts % 493;
-    const s = Math.floor(rem1 / 29);
-    const n = rem1 % 29;
+    const { g, s, n } = knutsToCurrency(totalKnuts);
     window.currency?.spendMoney?.(g, s, n);
     const totalPrice = totalKnuts; // 保留变量供后续使用
     
@@ -181,6 +181,18 @@ export class BaseShop {
     const materials = data.bag?.material || [];
     const item = materials.find(i => i?.name === materialName);
     return item && (item.count || 1) >= quantity;
+  }
+  
+  getCurrentLoyaltyLevel() {
+    if (!this.loyaltyLevels || this.loyaltyLevels.length === 0) {
+      return { level: 1, name: '新顾客', minPoints: 0, discount: 0, perks: [] };
+    }
+    for (let i = this.loyaltyLevels.length - 1; i >= 0; i--) {
+      if (this.loyaltyPoints >= this.loyaltyLevels[i].minPoints) {
+        return this.loyaltyLevels[i];
+      }
+    }
+    return this.loyaltyLevels[0];
   }
   
   getWelcomeMessage(player) {

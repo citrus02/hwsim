@@ -22,7 +22,7 @@ export const ITEM_DATA = [
     icon: "🫘",
     category: "糖果",
     usable: true,
-    description: "每颗口味完全随机——草莓、薄荷等美味固然有，但耳垢、鼻涕、呕吐物的概率同样不低。韦斯莱兄弟是资深品鉴专家，哈利和罗恩在对角巷的糖果名声大振后就爱上了这个。",
+    description: "每颗口味完全随机——从香甜的草莓到恶心的耳屎，无奇不有。韦斯莱兄弟是这类糖果的资深品鉴专家，据说他们能分辨出两百多种不同口味。",
     effect: {
       type: "random_flavor",
       goodFlavors: [
@@ -34,6 +34,28 @@ export const ITEM_DATA = [
         { name: "巧克力", emoji: "🍫" },
         { name: "柠檬", emoji: "🍋" },
         { name: "蓝莓", emoji: "🫐" },
+        { name: "覆盆子", emoji: "🫒" },
+        { name: "桃子", emoji: "🍑" },
+        { name: "樱桃", emoji: "🍒" },
+        { name: "橙子", emoji: "🍊" },
+        { name: "葡萄", emoji: "🍇" },
+        { name: "芒果", emoji: "🥭" },
+        { name: "菠萝", emoji: "🍍" },
+        { name: "香草", emoji: "🍦" },
+        { name: "焦糖", emoji: "🍯" },
+        { name: "蜂蜜", emoji: "🐝" },
+        { name: "杏仁", emoji: "🥜" },
+        { name: "花生", emoji: "🥜" },
+        { name: "榛子", emoji: "🌰" },
+        { name: "开心果", emoji: "🥳" },
+        { name: "牛奶", emoji: "🥛" },
+        { name: "咖啡", emoji: "☕" },
+        { name: "红茶", emoji: "🍵" },
+        { name: "蜂蜜酒", emoji: "🍯" },
+        { name: "黄油啤酒", emoji: "🍺" },
+        { name: "草莓果酱", emoji: "🍓" },
+        { name: "柠檬蛋糕", emoji: "🍰" },
+        { name: "巧克力慕斯", emoji: "🍫" },
       ],
       badFlavors: [
         { name: "菠菜", emoji: "🥬" },
@@ -44,9 +66,63 @@ export const ITEM_DATA = [
         { name: "呕吐物", emoji: "🤢" },
         { name: "草坪剪草", emoji: "🌾" },
         { name: "腐鱼", emoji: "🐟" },
+        { name: "泥土", emoji: "🪴" },
+        { name: "蚯蚓", emoji: "🪱" },
+        { name: "蟑螂", emoji: "🪳" },
+        { name: "蜈蚣", emoji: "🦠" },
+        { name: "蜘蛛腿", emoji: "🕷️" },
+        { name: "蝙蝠粪", emoji: "🦇" },
+        { name: "老鼠尾巴", emoji: "🐀" },
+        { name: "青蛙卵", emoji: "🐸" },
+        { name: "蜗牛黏液", emoji: "🐌" },
+        { name: "鼻涕虫", emoji: "🪱" },
+        { name: "胆汁", emoji: "🩸" },
+        { name: "汗水", emoji: "💦" },
+        { name: "眼泪", emoji: "😢" },
+        { name: "鲜血", emoji: "🩸" },
+        { name: "铁锈", emoji: "🔩" },
+        { name: "煤烟", emoji: "♨️" },
+        { name: "灰烬", emoji: "🔥" },
+        { name: "硫磺", emoji: "💊" },
+        { name: "醋", emoji: "🍶" },
+        { name: "苦胆", emoji: "🩸" },
+        { name: "马粪", emoji: "💩" },
+      ],
+      normalFlavors: [
+        { name: "白开水", emoji: "💧" },
+        { name: "面包", emoji: "🍞" },
+        { name: "米饭", emoji: "🍚" },
+        { name: "土豆", emoji: "🥔" },
+        { name: "胡萝卜", emoji: "🥕" },
+        { name: "洋葱", emoji: "🧅" },
+        { name: "大蒜", emoji: "🧄" },
+        { name: "番茄", emoji: "🍅" },
+        { name: "黄瓜", emoji: "🥒" },
+        { name: "西兰花", emoji: "🥦" },
+        { name: "蘑菇", emoji: "🍄" },
+        { name: "奶酪", emoji: "🧀" },
+        { name: "鸡蛋", emoji: "🥚" },
+        { name: "培根", emoji: "🥓" },
+        { name: "香肠", emoji: "🌭" },
+        { name: "豆子", emoji: "🫘" },
+        { name: "玉米", emoji: "🌽" },
+        { name: "燕麦", emoji: "🌾" },
+        { name: "小麦", emoji: "🌾" },
+        { name: "黑麦", emoji: "🌾" },
+        { name: "大麦", emoji: "🌾" },
+        { name: "荞麦", emoji: "🌾" },
+        { name: "芝麻", emoji: "🌱" },
+        { name: "葵花籽", emoji: "🌻" },
+        { name: "南瓜籽", emoji: "🎃" },
+        { name: "西瓜籽", emoji: "🍉" },
+        { name: "苹果籽", emoji: "🍎" },
+        { name: "梨", emoji: "🍐" },
+        { name: "李子", emoji: "🫒" },
+        { name: "无花果", emoji: "🫒" },
       ],
       goodEffect: { actionDelta: 1 },
       badEffect: { actionDelta: -1 },
+      normalEffect: { actionDelta: 0 },
     },
     useLog: null, // 由逻辑动态生成
     source: "蜂蜜公爵糖果店 / 列车糖果车",
@@ -57,7 +133,7 @@ export const ITEM_DATA = [
     icon: "🐸",
     category: "糖果",
     usable: true,
-    description: "会跳的魔法巧克力，味道极佳。每盒附一张著名巫师收藏卡——邓布利多是最难抽到的之一。吃下后心情大好，适合作为考试后的犒劳。",
+    description: "会跳的魔法巧克力，味道极佳。每盒附一张著名巫师收藏卡——某些知名人物的卡片尤为稀有。吃下后心情大好，适合作为考试后的犒劳。",
     effect: {
       type: "chocolate_frog",
       actionDelta: 1,
@@ -251,7 +327,7 @@ export const ITEM_DATA = [
     icon: "🪄",
     category: "糖果",
     usable: true,
-    description: "甘草味软糖，形似魔杖。可以真正「挥动」一下才下口——没有任何魔法效果，纯粹好玩。赫敏第一次看到哈利和罗恩对着对方比划时，翻了个白眼。",
+    description: "甘草味软糖，形似魔杖。可以真正「挥动」一下才下口——没有任何魔法效果，纯粹好玩。有些学生喜欢拿着它对着同学比划。",
     effect: {
       type: "simple_restore",
       actionDelta: 1,
@@ -412,7 +488,7 @@ export const ITEM_DATA = [
     icon: "🌑",
     category: "恶作剧",
     usable: true,
-    description: "佐科从秘鲁进口的高档货，投掷后瞬间制造一片漆黑，范围约一个房间。德拉科在六年级曾用类似产品（博金-博克版）制造混乱，是史上最严重的恶作剧道具之一。",
+    description: "佐科从秘鲁进口的高档货，投掷后瞬间制造一片漆黑，范围约一个房间。因其制造混乱的效果，是非常受欢迎的恶作剧道具。",
     effect: {
       type: "darkness",
       actionDelta: 1,
@@ -570,7 +646,7 @@ export const ITEM_DATA = [
     icon: "🌿",
     category: "外伤药",
     usable: true,
-    description: "魔法世界最著名的外伤特效药——几滴就能止血生肌，防止留疤。圣芒戈医疗队和霍格沃茨医疗翼的标配。赫敏在逃亡途中随身携带了一瓶，在比尔·韦斯莱被狼人袭击后第一时间拿出来处理。",
+    description: "魔法世界最著名的外伤特效药——几滴就能止血生肌，防止留疤。圣芒戈医疗队和霍格沃茨医疗翼的标配。",
     effect: {
       type: "heal_wound",
       actionDelta: 2,
@@ -600,7 +676,7 @@ export const ITEM_DATA = [
     icon: "😌",
     category: "医药",
     usable: true,
-    description: "能有效缓解焦虑和紧张——O.W.L.s和N.E.W.T.s考试季卖得最快的东西。月桂先生说每次霍格沃茨大考前的周末他都得专门多熬三锅。赫敏表示「这是允许的，不算作弊」。",
+    description: "能有效缓解焦虑和紧张——O.W.L.s和N.E.W.T.s考试季卖得最快的东西。月桂先生说每次霍格沃茨大考前的周末他都得专门多熬三锅。",
     effect: {
       type: "calm",
       actionDelta: 1,
@@ -614,7 +690,7 @@ export const ITEM_DATA = [
     icon: "🧠",
     category: "医药",
     usable: true,
-    description: "一小口就能让注意力高度集中，适合考前通宵复习。但不建议喝太多，否则连窗外风声都觉得美妙到无法自拔。月桂先生建议配水稀释。赫敏对此药持保留意见，更信任正常睡眠。",
+    description: "一小口就能让注意力高度集中，适合考前通宵复习。但不建议喝太多，否则连窗外风声都觉得美妙到无法自拔。月桂先生建议配水稀释。",
     effect: {
       type: "focus",
       actionDelta: 2,
@@ -657,7 +733,7 @@ export const ITEM_DATA = [
     icon: "🦴",
     category: "医药",
     usable: true,
-    description: "重新长骨头的魔法药剂——必须整瓶喝完才有效。月桂先生诚实地说：「喝起来像在吞燃烧的木炭。」哈利在二年级被洛哈特误删手臂骨头后，在医疗翼喝了整瓶，痛苦地熬了一夜。",
+    description: "重新长骨头的魔法药剂——必须整瓶喝完才有效。月桂先生诚实地说：「喝起来像在吞燃烧的木炭。」整个过程相当痛苦，但疗效显著。",
     effect: {
       type: "bone_growth",
       actionDelta: -1,
@@ -672,7 +748,7 @@ export const ITEM_DATA = [
     icon: "🧯",
     category: "外伤药",
     usable: true,
-    description: "淡绿色药膏，装在锡管里，涂在烧伤处半分钟内止痛——无论是坩埚烫伤还是被火灰蛇喷到。魔药课学生几乎人手一管，赫敏的药箱里永远有备用。",
+    description: "淡绿色药膏，装在锡管里，涂在烧伤处半分钟内止痛——无论是坩埚烫伤还是被火灰蛇喷到。魔药课学生几乎人手一管。",
     effect: {
       type: "heal_burn",
       actionDelta: 1,
@@ -700,13 +776,13 @@ export const ITEM_DATA = [
     icon: "👻",
     category: "文具",
     usable: true,
-    description: "书写后墨迹消失，需要「现形」咒（Revelio）才能看见。秘密通讯专用，达芙妮·格林格拉斯在四年级时用它给她姐姐传递信息，被宿舍里的赫敏发现后两人关系极度尴尬了一个月。",
+    description: "书写后墨迹消失，需要「现形」咒（Revelio）才能看见。秘密通讯专用，常用于传递不想被他人看到的信息。",
     effect: {
       type: "invisible_ink",
       actionDelta: 0,
     },
     useLog: "👻 你用隐形墨水写下了一条信息——字迹刚落就消失了。只有知道咒语的人才能读到它。",
-    source: "德维斯与班斯商店 / 对角巷",
+    source: "德维斯与班斯商店",
   },
 
   {
@@ -728,7 +804,7 @@ export const ITEM_DATA = [
     icon: "🪞",
     category: "魔法道具",
     usable: false,
-    description: "成对使用的魔法镜子——对着一块镜子说出持有另一块的人名字，镜面就会呈现对方的脸。小天狼星把其中一块给了哈利，另一块留给自己，叮嘱哈利有危险就联系他。但哈利直到五年级末才理解它的意义，那时已经太晚了。",
+    description: "成对使用的魔法镜子——对着一块镜子说出持有另一块的人名字，镜面就会呈现对方的脸。常用于远距离通讯，是非常珍贵的魔法道具。",
     source: "小天狼星·布莱克（赠给哈利）",
   },
 
@@ -737,8 +813,22 @@ export const ITEM_DATA = [
     icon: "🪣",
     category: "魔法道具",
     usable: false,
-    description: "浅浅的石制盆，注满银白色液体可储存记忆。邓布利多用它回顾与伏地魔相关的关键记忆，也允许哈利进入其中亲历历史。斯内普在五年级乌姆里奇搜查期间将最私密的记忆倒入其中保护起来。",
+    description: "浅浅的石制盆，注满银白色液体可储存记忆。使用者可以将记忆存入其中，也可以进入其中亲历那段记忆。是极为罕见的魔法器具。",
     source: "邓布利多校长室 / 斯内普私藏",
+  },
+
+  {
+    name: "混血王子的旧书",
+    icon: "📕",
+    category: "魔法道具",
+    usable: false,
+    description: "一本破旧的《高级魔药制作》课本，封面上写着「混血王子」的署名。书页间布满了学生时代的手写笔记和配方改良——这些笔记能让持有者在制作魔药时获得不可思议的直觉，成功率达到100%。",
+    effect: {
+      type: "potion_mastery",
+      successRate: 1.0,
+      specialEffect: "cauldron_aura",
+    },
+    source: "斯内普教授好感度≥80",
   },
 
   {
@@ -746,7 +836,7 @@ export const ITEM_DATA = [
     icon: "⏳",
     category: "魔法道具",
     usable: false,
-    description: "金色的沙漏形装置，挂在脖子上，拨动可以逆转时间。魔法部严格管制，只在极少数情况下借出。赫敏在三年级借用它同时修多门课程——后来哈利和她用它回到过去救了巴克比克和小天狼星。",
+    description: "金色的沙漏形装置，挂在脖子上，拨动可以逆转时间。魔法部严格管制，只在极少数情况下借出。是极其稀有的时间魔法器具。",
     source: "魔法部（赫敏三年级借用）",
   },
 
@@ -755,7 +845,7 @@ export const ITEM_DATA = [
     icon: "🔮",
     category: "魔法道具",
     usable: false,
-    description: "储存预言的玻璃球，发光时代表其中封存有预言。只有预言所指之人才能拿取而不受伤害。伏地魔觊觎哈利的那颗——「既非能征服死亡者活命，也非那人，将被另一人所杀……」",
+    description: "储存预言的玻璃球，发光时代表其中封存有预言。只有预言所指之人才能拿取而不受伤害。",
     source: "神秘事务所 预言储存室",
   },
 
@@ -773,7 +863,7 @@ export const ITEM_DATA = [
     icon: "⚡",
     category: "收藏品",
     usable: false,
-    description: "微缩版金色飞贼，装在玻璃盒里，翅膀会轻微振动但无法飞走。哈利在一年级第一次参加魁地奇时，用那双没有接受训练的本能抓住了真实的飞贼——这个纪念版正是为了纪念那个传奇时刻。",
+    description: "微缩版金色飞贼，装在玻璃盒里，翅膀会轻微振动但无法飞走。是魁地奇爱好者的珍贵收藏品。",
     source: "对角巷魁地奇用品店 / 霍格莫德",
   },
 
@@ -782,7 +872,7 @@ export const ITEM_DATA = [
     icon: "📜",
     category: "收藏品",
     usable: false,
-    description: "由霍格沃茨猫头鹰送达的入学通知书，麦格教授亲笔签名，列有入学须知与所需书目。哈利的第一封被德思礼夫妇没收，但随后信件如潮水般涌来——壁炉里、门缝里、到处都是。",
+    description: "由霍格沃茨猫头鹰送达的入学通知书，列有入学须知与所需书目。是每一位霍格沃茨新生都会收到的珍贵信件。",
     source: "霍格沃茨校方（麦格教授）",
   },
 
@@ -804,8 +894,8 @@ export const ITEM_DATA = [
     icon: "🦄",
     category: "教材",
     usable: false,
-    description: "纽特·斯卡曼德著，神奇动物保护课必备。附有各类神奇动物的详细描述与危险等级（X至XXXXX）。哈利那本上被赫敏批满了工整笔记，被罗恩的版本上涂满了他哥哥的「补充内容」。",
-    source: "德维斯与班斯商店 / 对角巷佛鲁利许与布洛茨书店",
+    description: "纽特·斯卡曼德著，神奇动物保护课必备。附有各类神奇动物的详细描述与危险等级（X至XXXXX）。是巫师界最权威的神奇动物图鉴。",
+    source: "德维斯与班斯商店 / 佛鲁利许与布洛茨书店",
   },
 
   {
@@ -822,7 +912,7 @@ export const ITEM_DATA = [
     icon: "📕",
     category: "教材",
     usable: false,
-    description: "昆汀·特林博著，黑魔法防御术权威参考书。内容远比课堂讲授更深入全面，涵盖不可饶恕咒的历史、抵御方法和真实案例。卢平教授曾私下向哈利推荐过这本书。",
+    description: "昆汀·特林博著，黑魔法防御术权威参考书。内容远比课堂讲授更深入全面，涵盖不可饶恕咒的历史、抵御方法和真实案例。",
     source: "对角巷佛鲁利许与布洛茨书店",
   },
 
@@ -835,7 +925,7 @@ export const ITEM_DATA = [
     icon: "⏳",
     category: "稀有道具",
     usable: true,
-    description: "原著：Time-Turner。魔法部颁发的极其稀有且受严格管控的魔法器具，外形是一串沙漏挂坠，逆时针旋转即可回到过去的时间。赫敏·格兰杰在三年级时曾获准使用，以便同时修读更多课程。每次使用消耗一次机会，回到过去后每次行动都会询问是否返回原时间。",
+    description: "魔法部颁发的极其稀有且受严格管控的魔法器具，外形是一串沙漏挂坠，逆时针旋转即可回到过去的时间。每次使用消耗一次机会，回到过去后每次行动都会询问是否返回原时间。",
     effect: {
       type: "time_turner",
     },
@@ -847,7 +937,7 @@ export const ITEM_DATA = [
     icon: "✨",
     category: "稀有药剂",
     usable: true,
-    description: "原著：Felix Felicis。金黄色魔药，喝下后在药效持续时间内一切都会顺利如意。魔药世界最难熬制的魔药之一——失误会导致致命中毒。赫敏在六年级课上熬制出了完美版。",
+    description: "金黄色魔药，喝下后在药效持续时间内一切都会顺利如意。魔药世界最难熬制的魔药之一——失误会导致致命中毒。",
     effect: {
       type: "felix_felicis",
       actionDelta: 3,
@@ -881,7 +971,7 @@ export const ITEM_DATA = [
     icon: "📮",
     category: "信件",
     usable: true,
-    description: "用耀眼红纸写成的魔法书信，一旦被开封就会以原作者激愤的声调大声朗读——音量可以传遍整个大礼堂。罗恩在一年级因偷车飞天扫帚被他妈妈寄了一封，整个格兰芬多桌都听见了。",
+    description: "用耀眼红纸写成的魔法书信，一旦被开封就会以原作者激愤的声调大声朗读——音量可以传遍整个大礼堂。通常用于表达强烈的不满或警告。",
     effect: {
       type: "howler",
       actionDelta: -1,
@@ -930,14 +1020,32 @@ export function applyItemEffect(itemName, index) {
   // ── 特殊效果分支 ──────────────────────────
 
   if (ef?.type === "random_flavor") {
-    // 比比多味豆
-    const isGood = Math.random() < 0.5;
-    const pool = isGood ? ef.goodFlavors : ef.badFlavors;
-    const flavor = pool[Math.floor(Math.random() * pool.length)];
-    actionDelta = isGood ? (ef.goodEffect?.actionDelta || 1) : (ef.badEffect?.actionDelta || -1);
-    logMsg = isGood
-      ? `🫘 你吃了一颗比比多味豆——是${flavor.emoji} ${flavor.name}味！真幸运！行动次数 ${actionDelta > 0 ? "+" : ""}${actionDelta}`
-      : `🫘 你吃了一颗比比多味豆——天哪，是${flavor.emoji} ${flavor.name}味！你的表情扭曲了……行动次数 ${actionDelta}`;
+    // 比比多味豆 - 三种口味类型：好口味、一般口味、坏口味（各约33%概率）
+    const rand = Math.random();
+    let pool, effect, flavor;
+    
+    if (rand < 1/3) {
+      // 好口味
+      pool = ef.goodFlavors;
+      effect = ef.goodEffect;
+      flavor = pool[Math.floor(Math.random() * pool.length)];
+      actionDelta = effect?.actionDelta || 1;
+      logMsg = `🫘 你吃了一颗比比多味豆——是${flavor.emoji} ${flavor.name}味！真幸运！行动次数 +${actionDelta}`;
+    } else if (rand < 2/3) {
+      // 一般口味
+      pool = ef.normalFlavors;
+      effect = ef.normalEffect;
+      flavor = pool[Math.floor(Math.random() * pool.length)];
+      actionDelta = effect?.actionDelta || 0;
+      logMsg = `🫘 你吃了一颗比比多味豆——是${flavor.emoji} ${flavor.name}味。嗯，普普通通，没什么特别的。`;
+    } else {
+      // 坏口味
+      pool = ef.badFlavors;
+      effect = ef.badEffect;
+      flavor = pool[Math.floor(Math.random() * pool.length)];
+      actionDelta = effect?.actionDelta || -1;
+      logMsg = `🫘 你吃了一颗比比多味豆——天哪，是${flavor.emoji} ${flavor.name}味！你的表情扭曲了……行动次数 ${actionDelta}`;
+    }
   }
 
   else if (ef?.type === "random_effect") {

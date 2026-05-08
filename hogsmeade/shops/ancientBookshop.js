@@ -28,6 +28,15 @@ export const AncientBookshopConfig = {
   owner: "谢里达·莫克奇",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "见习学者", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "书虫", minPoints: 100, discount: 0.05, perks: ["5%折扣", "限量书籍优先购买"] },
+    { level: 3, name: "学者", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费书签"] },
+    { level: 4, name: "藏书家", minPoints: 600, discount: 0.15, perks: ["15%折扣", "隐藏书籍解锁", "专属找书服务"] },
+    { level: 5, name: "传奇学者", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人藏书室", "莫克奇女士亲自推荐"] },
+  ],
 
   items: [
 

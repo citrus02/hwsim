@@ -33,6 +33,15 @@ export const LaurelApothecaryConfig = {
   owner: "塞巴斯蒂安·月桂",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "初学魔药师", minPoints: 0, discount: 0, perks: ["基础商品购买权"] },
+    { level: 2, name: "学徒魔药师", minPoints: 100, discount: 0.05, perks: ["5%折扣", "稀有材料优先购买"] },
+    { level: 3, name: "进阶魔药师", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品抢先体验", "免费药材研磨"] },
+    { level: 4, name: "资深魔药师", minPoints: 600, discount: 0.15, perks: ["15%折扣", "隐藏材料解锁", "专属配方推荐"] },
+    { level: 5, name: "大师级魔药师", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "私人药材储备", "月桂先生亲自指导"] },
+  ],
 
   items: [
 

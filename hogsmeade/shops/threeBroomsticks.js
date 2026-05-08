@@ -26,10 +26,19 @@ export const ThreeBroomsticksConfig = {
   id: "three_broomsticks",
   name: "三把扫帚酒吧",
   icon: "🍺",
-  description: "霍格莫德最热闹的酒吧，罗斯默塔女士以迷人风度和一流饮品闻名。整个霍格沃茨的师生周末都在这里",
-  owner: "罗斯默塔女士",
+  description: "霍格莫德最受欢迎的巫师酒吧，黄油啤酒的故乡",
+  owner: "罗斯默塔夫人",
   openYears: [1, 2, 3, 4, 5, 6, 7],
   minLevel: 1,
+  
+  // 会员等级系统
+  loyaltyLevels: [
+    { level: 1, name: "新顾客", minPoints: 0, discount: 0, perks: ["基础饮品购买权"] },
+    { level: 2, name: "常客", minPoints: 100, discount: 0.05, perks: ["5%折扣", "优先座位"] },
+    { level: 3, name: "熟客", minPoints: 300, discount: 0.1, perks: ["10%折扣", "新品饮品抢先尝", "免费小吃"] },
+    { level: 4, name: "贵宾", minPoints: 600, discount: 0.15, perks: ["15%折扣", "私人包厢", "专属服务员"] },
+    { level: 5, name: "荣誉会员", minPoints: 1000, discount: 0.2, perks: ["20%折扣", "免费黄油啤酒", "罗斯默塔夫人特调"] },
+  ],
 
   items: [
 
