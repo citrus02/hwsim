@@ -12,6 +12,7 @@
  *   window.courseDefault.getProfessorComment / getMuggleStudiesEvent
  *   window.subject_math 等分科数据
  *   window.renderLevelFn（course.js 暴露的刷新当前层函数）
+ *   window.muggleSchedule（muggle-schedule.js 暴露的麻瓜课程表系统）
  */
 
 import { loadSave, writeSave } from './save-utils.js';
@@ -19,6 +20,7 @@ import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
 import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
 import { GestureWidget } from '../gesture-widget.js';
 import { getGestureById } from '../gesture-data.js';
+import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, getCurrentLesson as getMuggleCurrentLesson, advanceLesson } from './muggle-schedule.js';
 
 // ── 分科数据映射 ─────────────────────────────────────────
 const SUBJECT_WIN_KEY = {
@@ -33,9 +35,6 @@ const SUBJECT_WIN_KEY = {
   astronomy: "subject_astronomy",
   potions: "subject_potions",
 };
-
-// 麻瓜课程列表（用于过滤）
-const MUGGLE_SUBJECTS = new Set(['math', 'physics', 'chemistry', 'biology', 'history', 'civics', 'geography', 'literature', 'english']);
 
 // 从 SUBJECT_WIN_KEY 动态生成霍格沃茨魔法课程键名集合
 const HOGWARTS_SUBJECT_KEYS = new Set(Object.keys(SUBJECT_WIN_KEY).filter(k => !MUGGLE_SUBJECTS.has(k)));
@@ -53,6 +52,14 @@ function getCurrentLesson(subjectKey) {
   const data = getSubjectData(subjectKey);
   if (!data) return null;
   const all = getAllLessons(data.syllabus);
+  
+  // 麻瓜课程使用特殊课时逻辑：基于课程表和学习进度
+  if (MUGGLE_SUBJECTS.has(subjectKey)) {
+    const currentLessonNum = getMuggleCurrentLesson(subjectKey);
+    return all.find(l => l.lesson === currentLessonNum) || all[all.length - 1];
+  }
+  
+  // 霍格沃茨课程使用原有逻辑
   const done = loadSave().course?.muggleProgress?.[subjectKey]?.completed || [];
   return all.find(l => !done.includes(l.lesson)) || all[all.length - 1];
 }
@@ -332,16 +339,42 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
   _setPhase(0);
   const body = document.getElementById("cls-body");
   if (!body) return;
-  body.innerHTML = `
-    ${lesson.atmosphere ? `<div class="cls-atmosphere">${lesson.atmosphere}</div>` : ""}
-    <div class="cls-opening">
-      <div class="cls-opening-label">🎭 ${sd.subjectMeta.professor}</div>
-      <div class="cls-opening-text">${lesson.opening || "教授走进了教室。"}</div>
-    </div>
-    <div class="cls-nav">
-      <button class="cls-btn-advance" id="cls-start">开始上课 →</button>
-    </div>`;
-  document.getElementById("cls-start").onclick = () => _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
+  
+  // 检查是否是第一次上麻瓜课程（需要触发教授自我介绍）
+  const isMuggleFirstTime = MUGGLE_SUBJECTS.has(subjectKey) && !hasMetProfessor(subjectKey);
+  
+  if (isMuggleFirstTime) {
+    // 显示教授自我介绍
+    const intro = window.muggleSchedule?.professorIntroductions?.[subjectKey];
+    body.innerHTML = `
+      ${lesson.atmosphere ? `<div class="cls-atmosphere">${lesson.atmosphere}</div>` : ""}
+      <div class="cls-opening cls-opening-intro">
+        <div class="cls-opening-label">🎭 ${intro?.professor || sd.subjectMeta.professor}</div>
+        <div class="cls-opening-portrait">${intro?.portrait || ""}</div>
+        <div class="cls-opening-text cls-opening-intro-text">${intro?.introduction || "教授走进了教室。"}</div>
+      </div>
+      <div class="cls-nav">
+        <button class="cls-btn-advance" id="cls-start">开始上课 →</button>
+      </div>`;
+    
+    document.getElementById("cls-start").onclick = () => {
+      // 标记已见过教授
+      markMetProfessor(subjectKey);
+      _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
+    };
+  } else {
+    // 常规开场
+    body.innerHTML = `
+      ${lesson.atmosphere ? `<div class="cls-atmosphere">${lesson.atmosphere}</div>` : ""}
+      <div class="cls-opening">
+        <div class="cls-opening-label">🎭 ${sd.subjectMeta.professor}</div>
+        <div class="cls-opening-text">${lesson.opening || "教授走进了教室。"}</div>
+      </div>
+      <div class="cls-nav">
+        <button class="cls-btn-advance" id="cls-start">开始上课 →</button>
+      </div>`;
+    document.getElementById("cls-start").onclick = () => _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
+  }
 }
 
 // ── 第二阶段：讲课 ────────────────────────────────────────
@@ -538,6 +571,12 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   }
 
   saveProgress(subjectKey, lesson.lesson, rating);
+  
+  // 麻瓜课程：记录学习日期并推进课程进度
+  if (MUGGLE_SUBJECTS.has(subjectKey)) {
+    recordStudyDate(subjectKey);
+    advanceLesson(subjectKey);
+  }
 
   // ── 学生角色好感度系统（维度一 + 维度四）──────────────────
   if (rating) {

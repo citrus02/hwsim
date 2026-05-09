@@ -5,12 +5,17 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.7.2';
+export const CURRENT_VERSION = '1.7.3';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.3': [
+    '修复“学习课程”打不开的bug',
+    '新增麻瓜学术系课程表！',
+    '新增README.md',
+  ],
   '1.7.2': [
     '新增魔法史的好好学习版！',
     '新增黑魔法防御术的好好学习版！',

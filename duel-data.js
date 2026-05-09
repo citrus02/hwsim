@@ -104,26 +104,6 @@ export const CHARACTER_DUEL_STATS = {
 
   // ── 麻瓜研究教师组 ──────────────────────────────────────
 
-  sylviaMacmillan: {
-    name: "西尔维娅·麦克米兰",
-    portrait: "🪡",
-    role: "support",           // 偏好：优先治疗和防护
-    hp: 90,
-    spells: ["protego", "reparo", "accio", "expelliarmus"],
-    aiAccuracy: 0.72,
-    aiDelay: [900, 1500],
-    requiredTier: 2,           // 好感度≥2可邀请为队友
-    joinQuote: "「……好吧，我不确定这是个好主意，但我来了。」",
-    battleQuotes: [
-      "「注意你的站位——」",
-      "「盔甲护身！快！」",
-      "「这不是课堂，但原理是一样的。」",
-    ],
-    victoryQuote: "「……还不错。不过下次别让我这么担心。」",
-    defeatQuote: "「没关系，我们再来。」",
-    enemyFlavorText: "她站在对面，手持魔杖，表情比在课堂上严肃得多。",
-  },
-
   augustusFenwick: {
     name: "奥古斯都·芬威克",
     portrait: "🔢",
@@ -730,7 +710,6 @@ export function getAffinityBattleQuotes(characterKey, defaultQuotes) {
       pomonaSprout: "「像曼德拉草一样——扎根，不倒！」",
       filiusFlitwick: "「你的咒语越来越漂亮了！」",
       quirrell: "「我……我可以帮忙的……」",
-      sylviaMacmillan: "「别担心，我在看着呢。」",
       augustusFenwick: "「概率在我们这边！」",
       serafinaMoody: "「别磨蹭，冲！」",
       elizaLovegood: "「语言有力量——你的咒语也是。」",

@@ -5,9 +5,9 @@
  * 结构说明：
  *   一级：大类（必修核心 / 高阶选修 / 专精进阶）
  *   二级：具体科目
- *   三级（仅麻瓜研究）：九门独立分科，每门携带 muggleSubjectKey
+ *   三级（仅麻瓜学术系）：九门独立分科，每门携带 muggleSubjectKey
  *
- * 麻瓜研究分科键名：
+ * 麻瓜学术系分科键名：
  *   math / physics / chemistry / biology / history / civics / geography / literature / english
  *
  * 学习事件库与教授评语已统一至 course-default.js，本文件只负责数据结构。
@@ -16,10 +16,10 @@
 import { getMuggleStudiesEvent, getStudyEvent } from './course-default.js';
 
 // ============================================================
-// 麻瓜研究九门分科
+// 麻瓜学术系九门分科
 // ============================================================
 
-const muggleStudiesSubjects = [
+const muggleAcademicSubjects = [
   {
     level: 4,
     name: "数学",
@@ -156,12 +156,22 @@ export const courseData = [
         level: 4,
         name: "麻瓜研究",
         icon: "🌐",
-        desc: "麦克米兰教授主持·九门分科独立学习（限时解锁）",
+        desc: "了解麻瓜的日常生活、文化习俗与社会结构（原著课程）",
+        unlock: false,
+        studyRate: 0,
+        unlockGrade: 3,
+        hogwartsSubjectKey: "muggleStudies"
+      },
+      {
+        level: 4,
+        name: "麻瓜学术系",
+        icon: "📚",
+        desc: "深入学习麻瓜的科学、人文与社会学科（九门分科）",
         unlock: false,
         studyRate: 0,
         unlockGrade: 1,
         hasMuggleStudiesSystem: true,
-        children: muggleStudiesSubjects
+        children: muggleAcademicSubjects
       }
     ]
   },

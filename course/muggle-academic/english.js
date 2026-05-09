@@ -6,10 +6,10 @@
 
 export const subjectMeta = {
   key: "english",
-  name: "英语",
-  icon: "🔤",
+  name: "英语（英式）",
+  icon: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
   professor: "米兰达·珀西瓦尔",
-  desc: "词根、语法、词源——语言是最古老的魔法",
+  desc: "词根、语法、词源——语言是最古老的魔法，而这里是它的故乡",
   unlockGrade: 3,
   housePointsPerLesson: { O: 6, E: 5, A: 3, P: 1, D: -1, T: -3 }
 };
@@ -19,8 +19,8 @@ export const teachingStyle = {
   errorStyle:     "只重复一次正确版本，不解释，等你自己发现",
   officeHours:    "预约制，不接受临时来访",
   signature:      "把咒语词源写在黑板上，不带任何表情",
-  prop:           "细头钢笔，极其精确的批注",
-  catchphrase:    "语言是最古老的魔法，巫师只是把它说得更大声一点。"
+  prop:           "细头钢笔，极其精确的批注，牛津英语词典",
+  catchphrase:    "语言是最古老的魔法，而英国是它的故乡。"
 };
 
 export const syllabus = [
@@ -44,12 +44,12 @@ export const syllabus = [
       "时态选择与语义的关系"
     ]}
   ]},
-  { chapter: 2, title: "语音与发音", lessons: [
-    { lesson: 4, title: "英语语音系统", keyPoints: [
-      "元音与辅音的分类",
-      "国际音标（IPA）基础",
-      "重音规则与音节划分",
-      "发音与拼写的关系（不规则变化）"
+  { chapter: 2, title: "英式发音与语调", lessons: [
+    { lesson: 4, title: "标准英音（RP）", keyPoints: [
+      "Received Pronunciation：英国标准发音",
+      "伦敦音（Cockney）的特点",
+      "元音与辅音的英式发音",
+      "RP与其他方言的区别"
     ]},
     { lesson: 5, title: "语调与节奏", keyPoints: [
       "句子重音与信息焦点",
@@ -58,12 +58,12 @@ export const syllabus = [
       "节奏在交流中的作用"
     ]}
   ]},
-  { chapter: 3, title: "词源与文化", lessons: [
-    { lesson: 6, title: "拉丁语词源", keyPoints: [
-      "大量英语词汇来自拉丁语（法律、医学、科学领域）",
-      "魔法咒语的拉丁词根分析（Lumos, Accio, Expecto）",
-      "拉丁前缀与后缀",
-      "学习词源对理解词义的帮助"
+  { chapter: 3, title: "英式英语特色", lessons: [
+    { lesson: 6, title: "英式与美式词汇差异", keyPoints: [
+      "日常词汇差异：lift/elevator, tube/subway, petrol/gas",
+      "拼写差异：colour/color, centre/center, theatre/theater",
+      "习语差异：英式俚语与美式俚语",
+      "为什么会有这些差异"
     ]},
     { lesson: 7, title: "古英语与日耳曼词根", keyPoints: [
       "英语的历史层次：古英语、中古英语、现代英语",
@@ -71,11 +71,11 @@ export const syllabus = [
       "诺曼征服后法语词汇的大量涌入",
       "为什么英语有这么多近义词（猪pork/pig，牛beef/cow）"
     ]},
-    { lesson: 8, title: "英语的全球化", keyPoints: [
-      "英语成为全球通用语的历史原因",
-      "世界英语的变体：英式、美式、澳式等",
-      "英语对其他语言的借词与影响",
-      "语言霸权与文化多样性"
+    { lesson: 8, title: "英语的发源地——不列颠", keyPoints: [
+      "凯尔特语对英语的影响",
+      "盎格鲁-撒克逊时期的语言融合",
+      "伦敦作为英语中心的历史",
+      "牛津英语词典的权威地位"
     ]},
     { lesson: 9, title: "文体与写作风格", keyPoints: [
       "正式文体与非正式文体的区别",
@@ -97,10 +97,10 @@ export const questionBank = [
     { type: "choice", difficulty: "medium", text: "以下哪个句子是复合句（含从句）？", options: ["A. She sings and dances.", "B. She sings because she is happy.", "C. She is a singer.", "D. She sings well."], answer: "B", knowledgePoint: "句子类型", analysis: "复合句含有一个主句和至少一个从句，由连词连接。B中「because she is happy」是原因状语从句，所以B是复合句。A是并列句。" },
     { type: "choice", difficulty: "hard", text: "「The book that she recommended was excellent.」中，「that she recommended」是：", options: ["A. 主语", "B. 定语从句，修饰 book", "C. 宾语从句", "D. 状语从句"], answer: "B", knowledgePoint: "定语从句", analysis: "that she recommended 是关系从句，修饰名词 book（哪本书？她推荐的那本），是定语从句（关系从句）。" }
   ]},
-  { lesson: 6, title: "拉丁语词源", questions: [
-    { type: "choice", difficulty: "basic", text: "咒语「Lumos」（产生光）来自哪个拉丁词根？", options: ["A. lum-（光）", "B. lun-（月亮）", "C. lux-（豪华）", "D. lab-（工作）"], answer: "A", knowledgePoint: "咒语词源分析", analysis: "Lumos 来自拉丁语 lumen/lux（光），同源词有 illuminate（照亮）、luminous（发光的）、translucent（半透明的）。" },
-    { type: "choice", difficulty: "medium", text: "咒语「Accio」（召唤术）最接近哪个拉丁词的含义？", options: ["A. accipere（接受、取得）", "B. accusare（指控）", "C. acerbus（苦涩的）", "D. acetum（醋）"], answer: "A", knowledgePoint: "咒语拉丁词源", analysis: "Accio 来自拉丁语 accipere（接受、取得），表示让物品来到自己手中，即召唤。accipere 同源词有 accept（接受）。" },
-    { type: "choice", difficulty: "hard", text: "拉丁词根「port」出现在以下哪些单词中？（port=携带、运）", options: ["A. import, export, transport", "B. port（港口）, Portugal, portal", "C. report只有这一个", "D. portable, report, import, export（所有选项A的词加portable）"], answer: "D", knowledgePoint: "port词根应用", analysis: "port（携带）→ portable（可携带的）、import（输入）、export（输出）、transport（运输）、report（汇报，re-=回 + port=带回来）。A不完整，D最全面。" }
+  { lesson: 6, title: "英式与美式词汇差异", questions: [
+    { type: "choice", difficulty: "basic", text: "在英式英语中，「电梯」应该说：", options: ["A. elevator", "B. lift", "C. escalator", "D. staircase"], answer: "B", knowledgePoint: "英式美式词汇差异", analysis: "lift 是英式英语的说法，elevator 是美式英语。这种差异源于历史上不同的词汇发展路径。" },
+    { type: "choice", difficulty: "medium", text: "以下哪组拼写是英式英语的正确拼写？", options: ["A. color, center, theater", "B. colour, centre, theatre", "C. colour, center, theater", "D. color, centre, theatre"], answer: "B", knowledgePoint: "英式美式拼写差异", analysis: "英式英语保留了更多法语拼写特征：colour（美式color）、centre（美式center）、theatre（美式theater）。" },
+    { type: "choice", difficulty: "hard", text: "在英式英语中，「地铁」通常称为：", options: ["A. subway", "B. metro", "C. tube", "D. underground"], answer: "C", knowledgePoint: "英式英语特有词汇", analysis: "伦敦地铁被称为 the Tube（管子），因其隧道形状而得名。underground 也可使用，但 tube 是更具特色的称呼。" }
   ]},
   { lesson: 9, title: "文体与写作风格", questions: [
     { type: "choice", difficulty: "basic", text: "下列哪种表达属于正式文体？", options: ["A. gonna（要去）", "B. I'm going to", "C. I am going to", "D. wanna go"], answer: "C", knowledgePoint: "正式与非正式文体", analysis: "正式文体避免缩写和口语化表达，「I am going to」是完整形式，属正式文体。gonna/wanna是口语，I'm是缩写，在正式写作中应展开。" },
@@ -111,8 +111,8 @@ export const questionBank = [
 
 export const crossAnchors = [
   { concept: "拉丁词源与咒语", linkedSubject: "magic_spells_crossref", linkedLesson: "—", desc: "米兰达·珀西瓦尔会把魔咒学的咒语词源写在黑板上——Expecto（期待）Patronum（守护者），七年的咒语从这里开始有意义" },
-  { concept: "英语与文学语言", linkedSubject: "literature", linkedLesson: "第3课", desc: "伊莱莎从感知进入文学，米兰达从词根进入语言，两门课在莎士比亚的语言里相遇" },
-  { concept: "语言的全球化与历史", linkedSubject: "history", linkedLesson: "第5课", desc: "英语的全球化和帝国主义扩张密切相关——赫伯特从政治角度讲，米兰达从语言角度讲，是同一段历史" }
+  { concept: "英语与英国文学", linkedSubject: "literature", linkedLesson: "第3课", desc: "伊莱莎从感知进入文学，米兰达从词根进入语言，两门课在莎士比亚的语言里相遇" },
+  { concept: "英语的不列颠起源", linkedSubject: "history", linkedLesson: "第5课", desc: "从盎格鲁-撒克逊到日不落帝国——赫伯特从政治角度讲，米兰达从语言角度讲，是同一段历史" }
 ];
 
 window.subject_english = { subjectMeta, syllabus, questionBank, crossAnchors, teachingStyle };

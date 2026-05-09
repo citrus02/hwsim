@@ -256,48 +256,6 @@ export const DAILY_QUEST_POOL = [
 
 export const SIDE_QUESTS = [
 
-  // ── 西尔维娅·麦克米兰 ──────────────────────────────────
-
-  {
-    id: "side_sylvia_1",
-    characterKey: "sylviaMacmillan",
-    title: "一份借阅记录",
-    triggerType: "affinityTier",
-    triggerTier: 3,
-    npcMessage: "西尔维娅·麦克米兰有话和你说。",
-    desc: "麦克米兰教授想让你帮她去图书馆找一本关于麻瓜工业史的书，她说借阅记录上应该有。",
-    icon: "🪡",
-    condition: { type: "collectItem", name: "古籍墨粉", count: 3 },
-    conditionDesc: "收集 古籍墨粉 ×3（探索图书馆区域可获得）",
-    rewards: [
-      { type: "affinity", key: "sylviaMacmillan", delta: 8 },
-      { type: "material", name: "书页苔藓", count: 2 },
-      { type: "housePoint", amount: 5 },
-      { type: "log", text: "你把那本书交给麦克米兰教授，她翻了翻，没有说谢谢，但把书放在了桌子正中央。" },
-    ],
-    completionText: "「……在这里，」她把书推过来，「你找到了。」她的语气一如既往地平静，但你注意到她把书放在了桌子最显眼的位置。",
-    repeatable: false,
-  },
-  {
-    id: "side_sylvia_2",
-    characterKey: "sylviaMacmillan",
-    title: "实地报告的材料",
-    triggerType: "npcPublish",
-    triggerTier: 3,
-    npcMessage: "西尔维娅·麦克米兰正在准备一份报告，需要一些材料。",
-    desc: "她需要一些花茶原料——不是魔法用途，只是她在写一份关于麻瓜植物学的研究报告，想附上实物样本。",
-    icon: "📋",
-    condition: { type: "collectItem", name: "花茶原料", count: 4 },
-    conditionDesc: "收集 花茶原料 ×4（探索霍格莫德白鼬夫人茶屋可获得）",
-    rewards: [
-      { type: "affinity", key: "sylviaMacmillan", delta: 6 },
-      { type: "item", name: "黄油啤酒软糖", count: 2 },
-      { type: "log", text: "她收下材料，说了一句「这对报告很有帮助」。对她来说，这已经算是很多话了。" },
-    ],
-    completionText: "她检查了一下样本，放进文件袋里。「正好，」她说，「这对报告很有帮助。」你等了一下，以为她还有别的话——但她已经转回去继续写了。",
-    repeatable: false,
-  },
-
   // ── 斯内普 ────────────────────────────────────────────
 
   {

@@ -5,7 +5,7 @@
  * 导航层级：
  *   根层  → 大类（必修/选修/专精）
  *   二层  → 具体科目（点击非麻瓜研究直接学习）
- *   三层  → 麻瓜研究九门分科（点击麻瓜研究先进这一层）
+ *   三层  → 麻瓜学术系九门分科（点击麻瓜研究先进这一层）
  *
  * 依赖：
  *   course-data.js          → courseData / getStudyEvent / getMuggleStudiesEvent
@@ -319,6 +319,89 @@ function _renderSchedule(container) {
   container.innerHTML = html;
 }
 
+function _renderMuggleSchedule(container) {
+  const muggleSchedule = window.muggleSchedule;
+  if (!muggleSchedule || !muggleSchedule.WEEKLY_SCHEDULE) {
+    container.innerHTML = `<div style="padding:20px;text-align:center;color:#ff8888">⚠️ 麻瓜课程表系统未正确加载</div>`;
+    return;
+  }
+
+  const { WEEKLY_SCHEDULE, WEEKLY_HOURS, SUBJECT_NAMES, SUBJECT_ICONS } = muggleSchedule;
+  
+  const data = getSave();
+  const currentDate = data.time?.currentDate || "1991-09-02";
+  const dateObj = new Date(currentDate);
+  const dayOfWeek = isNaN(dateObj.getTime()) ? -1 : dateObj.getDay();
+  const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const todayDayName = dayNames[dayOfWeek] || "";
+  const holiday = isHoliday(currentDate);
+
+  let html = '';
+
+  html += `<div class="schedule-header">`;
+  html += `<div class="schedule-grade">📖 麻瓜学术系课程表（1991年·初一标准）</div>`;
+  html += `<div class="schedule-date">📅 ${currentDate} ${todayDayName}</div>`;
+  if (holiday) {
+    html += `<div class="schedule-holiday-tag">🏖️ ${holiday}</div>`;
+  }
+  html += `</div>`;
+
+  html += `<div class="schedule-table">`;
+  html += `<div class="schedule-row schedule-row-header">
+    <div class="schedule-cell schedule-cell-time">课时</div>
+    <div class="schedule-cell">周一</div>
+    <div class="schedule-cell">周二</div>
+    <div class="schedule-cell">周三</div>
+    <div class="schedule-cell">周四</div>
+    <div class="schedule-cell">周五</div>
+    <div class="schedule-cell schedule-cell-weekend">周六</div>
+    <div class="schedule-cell schedule-cell-weekend">周日</div>
+  </div>`;
+
+  const periods = [1, 2, 3];
+  const periodNames = ['早晨（第1节）', '下午（第2节）', '晚上（第3节）'];
+
+  periods.forEach((period, idx) => {
+    html += `<div class="schedule-row">`;
+    html += `<div class="schedule-cell schedule-cell-time">${periodNames[idx]}</div>`;
+    
+    for (const day of SCHOOL_DAYS) {
+      const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
+      const course = WEEKLY_SCHEDULE[day]?.find(c => c.period === period);
+      
+      if (course) {
+        const icon = SUBJECT_ICONS[course.subject] || '📚';
+        const name = SUBJECT_NAMES[course.subject] || course.subject;
+        const profFullName = muggleSchedule.professorIntroductions[course.subject]?.professor || '';
+        const lastName = profFullName.split('·').pop(); // 提取姓氏（最后一个·之后）
+        const prof = lastName ? `${lastName}教授` : '';
+        html += `<div class="${cls}"><div class="schedule-icon">${icon}</div><div class="schedule-name">${name}</div>${prof ? `<div class="schedule-prof">${prof}</div>` : ''}</div>`;
+      } else {
+        html += `<div class="${cls}"><div class="schedule-empty">—</div></div>`;
+      }
+    }
+    
+    html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">休息</div></div>`;
+    html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">休息</div></div>`;
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+
+  html += `<div class="schedule-holidays">`;
+  html += `<div class="schedule-holidays-title">📊 每周课时统计（共15节课）</div>`;
+  Object.entries(WEEKLY_HOURS).forEach(([key, hours]) => {
+    const icon = SUBJECT_ICONS[key] || '📚';
+    const name = SUBJECT_NAMES[key] || key;
+    html += `<div class="schedule-holiday-item">${icon} ${name}: ${hours}节/周</div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="schedule-note">💡 每天3节课，对应3次行动机会 · 周末和假期无课程 · 按现实初中进度教学</div>`;
+
+  container.innerHTML = html;
+}
+
 export function getCurrentGrade() {
   return getYearGrade();
 }
@@ -438,6 +521,7 @@ export function openCoursePanel() {
     <div class="course-tabs">
       <button class="course-tab active" id="courseTabList">📚 课程列表</button>
       <button class="course-tab" id="courseTabSchedule">📅 课程表</button>
+      <button class="course-tab" id="courseTabMuggleSchedule">📖 麻瓜课程表</button>
     </div>
     <div class="title" id="coursePanelTitle">🪶 学习课程</div>`;
 
@@ -451,6 +535,10 @@ export function openCoursePanel() {
   scheduleContainer.id = "schedule-container";
   scheduleContainer.style.display = "none";
 
+  const muggleScheduleContainer = document.createElement("div");
+  muggleScheduleContainer.id = "muggle-schedule-container";
+  muggleScheduleContainer.style.display = "none";
+
   const backBtn = document.createElement("button");
   backBtn.className = "action-btn";
   backBtn.innerText = "← 返回行动";
@@ -462,31 +550,50 @@ export function openCoursePanel() {
     card.appendChild(courseBox);
     courseBox.appendChild(container);
     courseBox.appendChild(scheduleContainer);
+    courseBox.appendChild(muggleScheduleContainer);
     courseBox.appendChild(backBtn);
   }
 
   const courseTabList = document.getElementById("courseTabList");
   const courseTabSchedule = document.getElementById("courseTabSchedule");
+  const courseTabMuggleSchedule = document.getElementById("courseTabMuggleSchedule");
   const coursePanelTitle = document.getElementById("coursePanelTitle");
   
   if (courseTabList) {
     courseTabList.addEventListener("click", () => {
       courseTabList.classList.add("active");
-      courseTabSchedule?.classList.remove("active");
-      coursePanelTitle?.textContent = "🪶 学习课程";
+      if (courseTabSchedule) courseTabSchedule.classList.remove("active");
+      if (courseTabMuggleSchedule) courseTabMuggleSchedule.classList.remove("active");
+      if (coursePanelTitle) coursePanelTitle.textContent = "🪶 学习课程";
       container.style.display = "grid";
       scheduleContainer.style.display = "none";
+      muggleScheduleContainer.style.display = "none";
     });
   }
 
   if (courseTabSchedule) {
     courseTabSchedule.addEventListener("click", () => {
       courseTabSchedule.classList.add("active");
-      courseTabList?.classList.remove("active");
-      coursePanelTitle?.textContent = "📅 课程表";
+      if (courseTabList) courseTabList.classList.remove("active");
+      if (courseTabMuggleSchedule) courseTabMuggleSchedule.classList.remove("active");
+      if (coursePanelTitle) coursePanelTitle.textContent = "📅 课程表";
       container.style.display = "none";
+      muggleScheduleContainer.style.display = "none";
       scheduleContainer.style.display = "block";
       _renderSchedule(scheduleContainer);
+    });
+  }
+
+  if (courseTabMuggleSchedule) {
+    courseTabMuggleSchedule.addEventListener("click", () => {
+      courseTabMuggleSchedule.classList.add("active");
+      if (courseTabList) courseTabList.classList.remove("active");
+      if (courseTabSchedule) courseTabSchedule.classList.remove("active");
+      if (coursePanelTitle) coursePanelTitle.textContent = "📖 麻瓜学术系课程表";
+      container.style.display = "none";
+      scheduleContainer.style.display = "none";
+      muggleScheduleContainer.style.display = "block";
+      _renderMuggleSchedule(muggleScheduleContainer);
     });
   }
 
@@ -550,7 +657,7 @@ function renderLevel(items, title) {
       return;
     }
 
-    // ── 麻瓜研究（hasMuggleStudiesSystem，有 children，有 unlockGrade）── 进入分科层
+    // ── 麻瓜学术系（hasMuggleStudiesSystem，有 children，有 unlockGrade）── 进入分科层
     if (item.hasMuggleStudiesSystem && item.children) {
       const locked = !item.unlock;
       const rateText = calcMuggleOverallRate(item.children);
@@ -570,7 +677,7 @@ function renderLevel(items, title) {
             return;
           }
           navStack.push({ items, title });
-          renderLevel(item.children, "麻瓜研究 · 分科");
+          renderLevel(item.children, "麻瓜学术系 · 分科");
         }
       );
       if (locked) { btn.style.opacity = "0.6"; btn.style.cursor = "not-allowed"; }
@@ -619,7 +726,7 @@ function renderLevel(items, title) {
 // 辅助函数
 // ============================================================
 
-/** 计算麻瓜研究总进度文本（九门均值） */
+/** 计算麻瓜学术系总进度文本（九门均值） */
 function calcMuggleOverallRate(subjects) {
   if (!subjects || subjects.length === 0) return "（0%）";
   const avg = subjects.reduce((s, c) => s + (c.studyRate || 0), 0) / subjects.length;
