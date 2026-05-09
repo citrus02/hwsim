@@ -321,8 +321,9 @@ function _renderSchedule(container) {
 
 function _renderMuggleSchedule(container) {
   const muggleSchedule = window.muggleSchedule;
-  if (!muggleSchedule || !muggleSchedule.WEEKLY_SCHEDULE) {
-    container.innerHTML = `<div style="padding:20px;text-align:center;color:#ff8888">⚠️ 麻瓜课程表系统未正确加载</div>`;
+  if (!muggleSchedule || typeof muggleSchedule !== 'object' || !muggleSchedule.WEEKLY_SCHEDULE) {
+    container.innerHTML = `<div style="padding:20px;text-align:center;color:#ff8888">⚠️ 麻瓜课程表系统加载失败</div>`;
+    console.error('[course.js] muggleSchedule module not properly loaded');
     return;
   }
 
