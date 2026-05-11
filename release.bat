@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 set /p version="Enter version number (example: 1.3.0): "
 
 set usb_drive=E:\

@@ -2,17 +2,39 @@
  * course.js
  * 课程系统主逻辑 & UI
  *
- * 导航层级：
- *   根层  → 大类（必修/选修/专精）
- *   二层  → 具体科目（点击非麻瓜研究直接学习）
- *   三层  → 麻瓜学术系九门分科（点击麻瓜研究先进这一层）
+ * =====================================================================
+ *  传统巫师课七年制 · 年级课时总表（开发完整度检查用）
+ * =====================================================================
  *
- * 依赖：
- *   course-data.js          → courseData / getStudyEvent / getMuggleStudiesEvent
- *   muggle-studies-system.js → unlockAchievement / addInternalPoints / SCORE_MAP
+ *  说明：
+ *  - 固定课程表定义在本文件 SCHEDULE 常量中。
+ *  - 目标课时 = 周课时 × 34周（每年级）。
+ *  - 当前课时 = syllabus / lessonMap / questionBank 三边现状。
+ *  - 质量优先：已移除批量生成稿，后续按手写课堂标准逐门补齐。
+ *
+ *  科目             年1 年2 年3 年4 年5 年6 年7   目标   当前
+ *  ─────────────────────────────────────────────────────────
+ *  变形术            2   2   1   1   1   1   1      306    42/24/42
+ *  魔咒学            2   2   1   1   1   1   1      306    42/42/42
+ *  魔药学            2   2   2   2   2   2   2      476    46/46/46
+ *  黑魔法防御术      2   2   2   2   2   2   2      476    42/42/42
+ *  草药学            2   1   1   1   1   1   —      238    31/31/31
+ *  魔法史            1   2   1   1   1   —   1      238    31/31/31
+ *  天文学            1   1   1   1   1   1   1      238    42/42/42
+ *  飞行课            1   1   —   —   —   —   —       68    68/68/68
+ *  占卜学            —   —   1   1   1   —   1      136    待手写
+ *  保护神奇动物      —   —   1   1   1   1   1      170    待手写
+ *  算术占卜          —   —   1   1   —   1   1      136    待手写
+ *  古代魔文          —   —   1   1   1   1   —      136    待手写
+ *  幻影移形          —   —   —   —   1   —   —       34    34/34/34
+ *  炼金术            —   —   —   —   —   1   1       68    待手写
+ *  ─────────────────────────────────────────────────────────
+ *  年级合计          13  13  13  13  13  13  13
+ *  年级目标课时      442 442 442 442 442 442 442
+ * =====================================================================
  */
 
-import { loadTimeFromSave, isHoliday } from '../time-system.js';
+import { loadTimeFromSave, isHoliday, getNoClassReason, isSchoolNoClassDate, isSchoolNoClassPeriod } from '../time-system.js';
 import { getYearGrade, getSave } from '../save-system.js';
 import { courseData, getStudyEvent } from './course-data.js';
 import { addInternalPoints } from './muggle-studies.js';
@@ -33,7 +55,7 @@ const SCHEDULE = {
     ],
     周三: [
       { time: "上午", subject: "黑魔法防御术", icon: "🛡️", prof: "奇洛教授" },
-      { time: "下午", subject: "飞行课", icon: "🧹", prof: "胡奇教授" },
+      { time: "下午", subject: "飞行课", icon: "🧹", prof: "霍琦教授" },
     ],
     周四: [
       { time: "上午", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
@@ -61,7 +83,7 @@ const SCHEDULE = {
       { time: "夜晚", subject: "天文学", icon: "🌌", prof: "辛尼斯特拉教授" },
     ],
     周四: [
-      { time: "上午", subject: "飞行课", icon: "🧹", prof: "胡奇教授" },
+      { time: "上午", subject: "飞行课", icon: "🧹", prof: "霍琦教授" },
       { time: "下午", subject: "变形术", icon: "🔁", prof: "麦格教授" },
       { time: "夜晚", subject: "魔药学", icon: "⚗️", prof: "斯内普教授" },
     ],
@@ -195,16 +217,375 @@ const SCHEDULE = {
   },
 };
 
-const HOLIDAYS_INFO = [
-  { start: "09-01", end: "09-01", name: "开学日", type: "special" },
-  { start: "10-31", end: "10-31", name: "万圣节", type: "holiday" },
-  { start: "12-20", end: "01-05", name: "圣诞假期", type: "holiday" },
-  { start: "02-14", end: "02-14", name: "情人节", type: "special" },
-  { start: "03-28", end: "04-14", name: "复活节假期", type: "holiday" },
-  { start: "06-15", end: "09-01", name: "暑假", type: "holiday" },
-];
-
 const SCHOOL_DAYS = ["周一", "周二", "周三", "周四", "周五"];
+const DAY_NAMES = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+const GRADE_TEXT = ["", "一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级"];
+const ACTION_PERIODS = {
+  3: { period: 1, time: "上午", label: "早晨" },
+  2: { period: 2, time: "下午", label: "中午" },
+  1: { period: 3, time: "夜晚", label: "夜晚" },
+};
+const SUBJECT_WIN_KEY = {
+  math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
+  biology:"subject_biology", history:"subject_history", civics:"subject_civics",
+  geography:"subject_geography", literature:"subject_literature", latin:"subject_latin",
+  transfiguration: "subject_transfiguration",
+  charms: "subject_charms",
+  magicHistory: "subject_magicHistory",
+  defense: "subject_defense",
+  herbology: "subject_herbology",
+  astronomy: "subject_astronomy",
+  potions: "subject_potions",
+  flight: "subject_flight",
+  muggleStudies: "subject_muggleStudies",
+  careOfMagicalCreatures: "subject_careOfMagicalCreatures",
+  apparition: "subject_apparition",
+  alchemy: "subject_alchemy",
+  divination: "subject_divination",
+  arithmancy: "subject_arithmancy",
+  ancientRunes: "subject_ancientRunes",
+};
+function getDayName(dateStr) {
+  const date = new Date(dateStr);
+  return isNaN(date.getTime()) ? "" : DAY_NAMES[date.getDay()];
+}
+
+function getSubjectData(subjectKey) {
+  return window[SUBJECT_WIN_KEY[subjectKey]] || null;
+}
+
+function getAllLessons(syllabus) {
+  const out = [];
+  (syllabus || []).forEach(ch => (ch.lessons || []).forEach(l => out.push(l)));
+  return out;
+}
+
+function getItemSubjectKey(item) {
+  return item?.muggleSubjectKey || item?.hogwartsSubjectKey || null;
+}
+
+function findCourseItemByName(name, items = courseData) {
+  for (const item of items) {
+    if (item.name === name) return item;
+    if (item.children) {
+      const found = findCourseItemByName(name, item.children);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function findCourseItemBySubjectKey(subjectKey, keyName, items = courseData) {
+  for (const item of items) {
+    if (item[keyName] === subjectKey) return item;
+    if (item.children) {
+      const found = findCourseItemBySubjectKey(subjectKey, keyName, item.children);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function getCurrentActionPeriod() {
+  const data = loadSave();
+  const left = window.timeSystem?.dailyActionLeft ?? data.time?.dailyActionLeft ?? 3;
+  return ACTION_PERIODS[left]?.period || null;
+}
+
+function openScheduledCourse({ type, day, period, subject, subjectKey }) {
+  const data = loadSave();
+  const today = window.timeSystem?.currentDate || data.time?.currentDate || "1991-09-02";
+  const todayDayName = getDayName(today);
+
+  if (day !== todayDayName || isSchoolNoClassPeriod(today, period)) {
+    window.doStudyLog?.(`📅 今天没有这门课：${subject}`);
+    return;
+  }
+
+  if (period !== getCurrentActionPeriod()) {
+    window.doStudyLog?.(`⏰ 现在不是【${subject}】的上课时间。窗口一过就不能补上这节课了。`);
+    return;
+  }
+
+  const item = type === "muggle"
+    ? findCourseItemBySubjectKey(subjectKey, "muggleSubjectKey")
+    : findCourseItemByName(subject);
+
+  if (!item) {
+    window.doStudyLog?.(`📅 没有找到这门课：${subject}`);
+    return;
+  }
+
+  showLearnChoiceModal(item, courseData, "课程表");
+}
+
+function bindScheduleCourseClicks(container) {
+  container.querySelectorAll(".schedule-course-cell").forEach(cell => {
+    cell.addEventListener("click", () => {
+      openScheduledCourse({
+        type: cell.dataset.courseType,
+        day: cell.dataset.day,
+        period: Number(cell.dataset.period),
+        subject: cell.dataset.subject,
+        subjectKey: cell.dataset.subjectKey || null,
+      });
+    });
+    cell.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        cell.click();
+      }
+    });
+  });
+}
+
+function getHogwartsTodaySchedule(dateStr = null) {
+  const data = loadSave();
+  const today = dateStr || data.time?.currentDate || "1991-09-02";
+  const dayName = getDayName(today);
+  if (!SCHOOL_DAYS.includes(dayName) || isSchoolNoClassDate(today)) return [];
+
+  const grade = getYearGrade();
+  const gradeSchedule = SCHEDULE[grade] || SCHEDULE[1];
+  return (gradeSchedule[dayName] || []).map(course => {
+    const item = findCourseItemByName(course.subject);
+    return {
+      ...course,
+      type: "hogwarts",
+      period: Object.values(ACTION_PERIODS).find(p => p.time === course.time)?.period || 0,
+      subjectKey: item?.hogwartsSubjectKey || null,
+    };
+  });
+}
+
+function getMuggleTodaySchedule(dateStr = null) {
+  const muggleSchedule = window.muggleSchedule;
+  const data = loadSave();
+  const today = dateStr || data.time?.currentDate || "1991-09-02";
+  if (isSchoolNoClassDate(today)) return [];
+  if (!muggleSchedule?.getTodaySchedule) return [];
+  return muggleSchedule.getTodaySchedule(today).map(course => ({
+    type: "muggle",
+    period: course.period,
+    time: Object.values(ACTION_PERIODS).find(p => p.period === course.period)?.time || "",
+    subject: muggleSchedule.SUBJECT_NAMES?.[course.subject] || course.subject,
+    subjectKey: course.subject,
+    icon: muggleSchedule.SUBJECT_ICONS?.[course.subject] || "📚",
+  }));
+}
+
+function getTodayScheduledCourses(dateStr = null) {
+  return [...getHogwartsTodaySchedule(dateStr), ...getMuggleTodaySchedule(dateStr)];
+}
+
+function getCurrentWindowCourses(dateStr = null, actionLeft = null) {
+  const data = loadSave();
+  const today = dateStr || data.time?.currentDate || "1991-09-02";
+  const left = actionLeft ?? data.time?.dailyActionLeft ?? window.timeSystem?.dailyActionLeft ?? 3;
+  const period = ACTION_PERIODS[left]?.period;
+  if (!period) return [];
+  if (isSchoolNoClassPeriod(today, period)) return [];
+  return getTodayScheduledCourses(today).filter(course => course.period === period);
+}
+
+function getAttendanceKey(course) {
+  return `${course.type}:${course.subjectKey || course.subject}:${course.period}`;
+}
+
+function ensureAttendance(data, dateStr) {
+  if (!data.course) data.course = {};
+  if (!data.course.attendance) data.course.attendance = {};
+  if (!data.course.attendance[dateStr]) data.course.attendance[dateStr] = {};
+  return data.course.attendance[dateStr];
+}
+
+function isCourseResolved(course, dateStr) {
+  const data = loadSave();
+  return !!data.course?.attendance?.[dateStr]?.[getAttendanceKey(course)];
+}
+
+function courseMatchesItem(course, item) {
+  const key = getItemSubjectKey(item);
+  if (item?.muggleSubjectKey) return course.type === "muggle" && course.subjectKey === key;
+  if (item?.hogwartsSubjectKey) return course.type === "hogwarts" && course.subjectKey === key;
+  return course.type === "hogwarts" && course.subject === item?.name;
+}
+
+function validateCourseAccess(item) {
+  if (!item) {
+    return { ok: false, message: "📅 没有找到这门课" };
+  }
+  const data = loadSave();
+  const today = data.time?.currentDate || "1991-09-02";
+  const allToday = getTodayScheduledCourses(today).filter(course => courseMatchesItem(course, item));
+  if (allToday.length === 0) {
+    return { ok: false, message: `📅 今天没有这门课：${item.name}` };
+  }
+
+  const current = getCurrentWindowCourses(today).find(course => courseMatchesItem(course, item));
+  if (!current) {
+    return { ok: false, message: `⏰ 现在不是【${item.name}】的上课时间。窗口一过就不能补上这节课了。` };
+  }
+
+  if (isCourseResolved(current, today)) {
+    return { ok: false, message: `✅ 今天这个时段的【${item.name}】已经处理过了。` };
+  }
+
+  return { ok: true, course: current };
+}
+
+function markAttended(item) {
+  const availability = validateCourseAccess(item);
+  if (!availability.ok) return false;
+
+  const data = loadSave();
+  const today = data.time?.currentDate || "1991-09-02";
+  const attendance = ensureAttendance(data, today);
+  attendance[getAttendanceKey(availability.course)] = "attended";
+  writeSave(data);
+  return true;
+}
+
+function advanceSkippedLesson(data, course) {
+  if (!data.course) data.course = {};
+
+  if (course.type === "muggle") {
+    const subjectData = getSubjectData(course.subjectKey);
+    if (!data.course.muggleProgress) data.course.muggleProgress = {};
+    if (!data.course.muggleProgress[course.subjectKey]) {
+      data.course.muggleProgress[course.subjectKey] = { completed: [], expired: [] };
+    }
+    if (!data.course.muggleSchedule) data.course.muggleSchedule = {};
+    if (!data.course.muggleSchedule[course.subjectKey]) {
+      data.course.muggleSchedule[course.subjectKey] = {
+        currentLesson: 1,
+        lastStudiedDate: null,
+        hasMetProfessor: false
+      };
+    }
+    const allLessons = getAllLessons(subjectData?.syllabus);
+    const currentLesson = data.course.muggleSchedule?.[course.subjectKey]?.currentLesson || 1;
+    const lesson = allLessons.find(l => l.lesson === currentLesson) || allLessons[allLessons.length - 1];
+    if (lesson && !data.course.muggleProgress[course.subjectKey].expired.includes(lesson.lesson)) {
+      data.course.muggleProgress[course.subjectKey].expired.push(lesson.lesson);
+    }
+    if (!allLessons.length || currentLesson < allLessons.length) {
+      data.course.muggleSchedule[course.subjectKey].currentLesson = currentLesson + 1;
+    }
+    if (allLessons.length > 0) {
+      const progressed = new Set([
+        ...(data.course.muggleProgress[course.subjectKey].completed || []),
+        ...(data.course.muggleProgress[course.subjectKey].expired || [])
+      ]).size;
+      data.course[course.subject] = Math.floor(progressed / allLessons.length * 100);
+    }
+    updateMuggleOverallProgress(data);
+    return;
+  }
+
+  const item = findCourseItemByName(course.subject);
+  const subjectKey = course.subjectKey || item?.hogwartsSubjectKey;
+  const subjectData = subjectKey ? getSubjectData(subjectKey) : null;
+  if (subjectData?.syllabus) {
+    if (!data.course.muggleProgress) data.course.muggleProgress = {};
+    if (!data.course.muggleProgress[subjectKey]) {
+      data.course.muggleProgress[subjectKey] = { completed: [], expired: [] };
+    }
+    const prog = data.course.muggleProgress[subjectKey];
+    const skipped = [...(prog.completed || []), ...(prog.expired || [])];
+    const lesson = getAllLessons(subjectData.syllabus).find(l => !skipped.includes(l.lesson));
+    if (lesson) prog.expired.push(lesson.lesson);
+    const total = getAllLessons(subjectData.syllabus).length;
+    const progressed = new Set([...(prog.completed || []), ...(prog.expired || [])]).size;
+    if (total > 0) data.course[course.subject] = Math.floor(progressed / total * 100);
+  } else {
+    data.course[course.subject] = Math.min(100, (data.course[course.subject] || 0) + 5);
+  }
+}
+
+function updateMuggleOverallProgress(data) {
+  const muggleKeys = ["math", "physics", "chemistry", "biology", "history", "civics", "geography", "literature", "latin"];
+  let totalRate = 0;
+  let counted = 0;
+
+  for (const key of muggleKeys) {
+    const subjectData = getSubjectData(key);
+    const lessons = getAllLessons(subjectData?.syllabus);
+    if (lessons.length === 0) continue;
+    const prog = data.course?.muggleProgress?.[key] || {};
+    const progressed = new Set([...(prog.completed || []), ...(prog.expired || [])]).size;
+    totalRate += Math.floor(progressed / lessons.length * 100);
+    counted++;
+  }
+
+  if (counted > 0) data.course["麻瓜研究"] = Math.round(totalRate / counted);
+}
+
+function remindCurrentWindowClasses() {
+  const data = loadSave();
+  const today = window.timeSystem?.currentDate || data.time?.currentDate || "1991-09-02";
+  const actionLeft = window.timeSystem?.dailyActionLeft ?? data.time?.dailyActionLeft ?? 3;
+  const windowInfo = ACTION_PERIODS[actionLeft];
+  if (!windowInfo) return;
+
+  const courses = getCurrentWindowCourses(today, actionLeft)
+    .filter(course => !data.course?.attendance?.[today]?.[getAttendanceKey(course)]);
+  if (courses.length === 0) return;
+
+  if (!data.course) data.course = {};
+  if (!data.course.scheduleReminders) data.course.scheduleReminders = {};
+  if (!data.course.scheduleReminders[today]) data.course.scheduleReminders[today] = {};
+  if (data.course.scheduleReminders[today][windowInfo.period]) return;
+
+  data.course.scheduleReminders[today][windowInfo.period] = true;
+  writeSave(data);
+
+  const names = courses.map(c => `${c.icon || "📚"}${c.subject}`).join("、");
+  window.doStudyLog?.(`🔔 ${windowInfo.label}有课：${names}。上课不消耗行动次数，窗口结束前记得去。`);
+}
+
+function recordMissedClassesForCurrentWindow() {
+  const data = loadSave();
+  const today = window.timeSystem?.currentDate || data.time?.currentDate || "1991-09-02";
+  const actionLeft = window.timeSystem?.dailyActionLeft ?? data.time?.dailyActionLeft ?? 3;
+  const windowInfo = ACTION_PERIODS[actionLeft];
+  if (!windowInfo) return;
+
+  const attendance = ensureAttendance(data, today);
+  const courses = getCurrentWindowCourses(today, actionLeft);
+  const missed = [];
+
+  for (const course of courses) {
+    const key = getAttendanceKey(course);
+    if (attendance[key]) continue;
+    attendance[key] = "missed";
+    advanceSkippedLesson(data, course);
+
+    if (!data.course.absenceStats) data.course.absenceStats = { total: 0, bySubject: {}, records: [] };
+    data.course.absenceStats.total = (data.course.absenceStats.total || 0) + 1;
+    if (!data.course.absenceStats.bySubject) data.course.absenceStats.bySubject = {};
+    data.course.absenceStats.bySubject[course.subject] = (data.course.absenceStats.bySubject[course.subject] || 0) + 1;
+    if (!Array.isArray(data.course.absenceStats.records)) data.course.absenceStats.records = [];
+    data.course.absenceStats.records.push({
+      date: today,
+      window: windowInfo.label,
+      period: course.period,
+      type: course.type,
+      subject: course.subject,
+      subjectKey: course.subjectKey || null,
+    });
+    data.course.absenceStats.records = data.course.absenceStats.records.slice(-200);
+    missed.push(course);
+  }
+
+  if (missed.length > 0) {
+    writeSave(data);
+    const names = missed.map(c => `${c.icon || "📚"}${c.subject}`).join("、");
+    window.doStudyLog?.(`⚠️ 你错过了${windowInfo.label}的课程：${names}。课程进度已照常推进，旷课次数已记录。`);
+    window.loadCourseProgressFromSave?.();
+    window.refreshAll?.();
+  }
+}
 
 function _renderSchedule(container) {
   const data = getSave();
@@ -218,31 +599,20 @@ function _renderSchedule(container) {
   const holiday = isHoliday(currentDate);
   const gradeSchedule = SCHEDULE[grade] || SCHEDULE[1];
 
-  const todayMD = currentDate.substring(5);
-  const todayDate = new Date(currentDate);
-  const todayHoliday = HOLIDAYS_INFO.find(h => {
-    const [sm, sd] = h.start.split('-').map(Number);
-    const [em, ed] = h.end.split('-').map(Number);
-    
-    const year = todayDate.getFullYear();
-    let startDate = new Date(year, sm - 1, sd);
-    let endDate = new Date(year, em - 1, ed);
-    
-    if (endDate < startDate) {
-      endDate = new Date(year + 1, em - 1, ed);
-    }
-    
-    return todayDate >= startDate && todayDate <= endDate;
-  });
-
   let html = '';
+  const gradeLabel = GRADE_TEXT[grade] || `${grade}年级`;
+
+  const allDayNoClass = getNoClassReason(currentDate);
+  const holidayTag = holiday
+    ? `<div class="schedule-holiday-tag">🏖️ ${holiday}</div>`
+    : allDayNoClass
+      ? `<div class="schedule-holiday-tag">⭐ ${allDayNoClass} · 无课</div>`
+      : `<div></div>`;
 
   html += `<div class="schedule-header">`;
-  html += `<div class="schedule-grade">📖 ${grade}年级课程表</div>`;
-  html += `<div class="schedule-date">📅 ${currentDate} ${todayDayName}</div>`;
-  if (holiday) {
-    html += `<div class="schedule-holiday-tag">🏖️ ${holiday}</div>`;
-  }
+  html += holidayTag;
+  html += `<div class="schedule-grade">📖 ${gradeLabel}课程表</div>`;
+  html += `<div></div>`;
   html += `</div>`;
 
   html += `<div class="schedule-table">`;
@@ -253,81 +623,79 @@ function _renderSchedule(container) {
     <div class="schedule-cell">周三</div>
     <div class="schedule-cell">周四</div>
     <div class="schedule-cell">周五</div>
-    <div class="schedule-cell schedule-cell-weekend">周六</div>
-    <div class="schedule-cell schedule-cell-weekend">周日</div>
   </div>`;
 
   html += `<div class="schedule-row">
     <div class="schedule-cell schedule-cell-time">上午</div>`;
   for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-    const course = gradeSchedule[day]?.find(c => c.time === "上午");
+    const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, 1) : "";
+    const isSpecialNoClassCell = !!noClassLabel;
+    const course = isSpecialNoClassCell ? null : gradeSchedule[day]?.find(c => c.time === "上午");
     if (course) {
-      html += `<div class="${cls}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+      const item = findCourseItemByName(course.subject);
+      html += `<div class="${cls} schedule-course-cell" role="button" tabindex="0" data-course-type="hogwarts" data-day="${day}" data-period="1" data-subject="${course.subject}" data-subject-key="${item?.hogwartsSubjectKey || ""}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+    } else if (isSpecialNoClassCell) {
+      html += `<div class="${cls}"><div class="schedule-empty">${noClassLabel}</div></div>`;
     } else {
       html += `<div class="${cls}"><div class="schedule-empty">—</div></div>`;
     }
   }
-  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
-  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
   html += `</div>`;
 
   html += `<div class="schedule-row">
     <div class="schedule-cell schedule-cell-time">下午</div>`;
   for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-    const course = gradeSchedule[day]?.find(c => c.time === "下午");
+    const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, 2) : "";
+    const isSpecialNoClassCell = !!noClassLabel;
+    const course = isSpecialNoClassCell ? null : gradeSchedule[day]?.find(c => c.time === "下午");
     if (course) {
-      html += `<div class="${cls}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+      const item = findCourseItemByName(course.subject);
+      html += `<div class="${cls} schedule-course-cell" role="button" tabindex="0" data-course-type="hogwarts" data-day="${day}" data-period="2" data-subject="${course.subject}" data-subject-key="${item?.hogwartsSubjectKey || ""}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+    } else if (isSpecialNoClassCell) {
+      html += `<div class="${cls}"><div class="schedule-empty">${noClassLabel}</div></div>`;
     } else {
       html += `<div class="${cls}"><div class="schedule-empty">—</div></div>`;
     }
   }
-  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
-  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
   html += `</div>`;
 
   html += `<div class="schedule-row">
     <div class="schedule-cell schedule-cell-time">夜晚</div>`;
   for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-    const course = gradeSchedule[day]?.find(c => c.time === "夜晚");
+    const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, 3) : "";
+    const isSpecialNoClassCell = !!noClassLabel;
+    const course = isSpecialNoClassCell ? null : gradeSchedule[day]?.find(c => c.time === "夜晚");
     if (course) {
-      html += `<div class="${cls}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+      const item = findCourseItemByName(course.subject);
+      html += `<div class="${cls} schedule-course-cell" role="button" tabindex="0" data-course-type="hogwarts" data-day="${day}" data-period="3" data-subject="${course.subject}" data-subject-key="${item?.hogwartsSubjectKey || ""}"><div class="schedule-icon">${course.icon}</div><div class="schedule-name">${course.subject}</div><div class="schedule-prof">${course.prof}</div></div>`;
+    } else if (isSpecialNoClassCell) {
+      html += `<div class="${cls}"><div class="schedule-empty">${noClassLabel}</div></div>`;
     } else {
       html += `<div class="${cls}"><div class="schedule-empty">自习</div></div>`;
     }
   }
-  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
-  html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">自由</div></div>`;
   html += `</div>`;
 
-  html += `</div>`;
-
-  html += `<div class="schedule-holidays">`;
-  html += `<div class="schedule-holidays-title">📆 学年重要日期</div>`;
-  HOLIDAYS_INFO.forEach(h => {
-    const isCurrent = todayHoliday && todayHoliday.name === h.name;
-    const tag = h.type === 'holiday' ? '🏖️' : '⭐';
-    const cls = isCurrent ? 'schedule-holiday-item schedule-holiday-current' : 'schedule-holiday-item';
-    html += `<div class="${cls}">${tag} ${h.start} ~ ${h.end}　${h.name}</div>`;
-  });
   html += `</div>`;
 
   html += `<div class="schedule-note">💡 周末和假期没有固定课程，可以自由探索、决斗或熬制魔药</div>`;
 
   container.innerHTML = html;
+  bindScheduleCourseClicks(container);
 }
 
 function _renderMuggleSchedule(container) {
   const muggleSchedule = window.muggleSchedule;
   if (!muggleSchedule || typeof muggleSchedule !== 'object' || !muggleSchedule.WEEKLY_SCHEDULE) {
-    container.innerHTML = `<div style="padding:20px;text-align:center;color:#ff8888">⚠️ 麻瓜课程表系统加载失败</div>`;
+    container.innerHTML = `<div style="padding:20px;text-align:center;color:#ff8888">⚠️ 麻瓜学术系系统加载失败</div>`;
     console.error('[course.js] muggleSchedule module not properly loaded');
     return;
   }
 
-  const { WEEKLY_SCHEDULE, WEEKLY_HOURS, SUBJECT_NAMES, SUBJECT_ICONS } = muggleSchedule;
+  const { WEEKLY_SCHEDULE, SUBJECT_NAMES, SUBJECT_ICONS } = muggleSchedule;
   
   const data = getSave();
   const currentDate = data.time?.currentDate || "1991-09-02";
@@ -336,15 +704,21 @@ function _renderMuggleSchedule(container) {
   const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   const todayDayName = dayNames[dayOfWeek] || "";
   const holiday = isHoliday(currentDate);
+  const grade = getYearGrade();
+  const gradeLabel = GRADE_TEXT[grade] || `${grade}年级`;
 
   let html = '';
 
+  const allDayNoClass = getNoClassReason(currentDate);
+  const muggleHolidayTag = holiday
+    ? `<div class="schedule-holiday-tag">🏖️ ${holiday}</div>`
+    : allDayNoClass
+      ? `<div class="schedule-holiday-tag">⭐ ${allDayNoClass} · 无课</div>`
+      : `<div></div>`;
   html += `<div class="schedule-header">`;
-  html += `<div class="schedule-grade">📖 麻瓜学术系课程表（1991年·初一标准）</div>`;
-  html += `<div class="schedule-date">📅 ${currentDate} ${todayDayName}</div>`;
-  if (holiday) {
-    html += `<div class="schedule-holiday-tag">🏖️ ${holiday}</div>`;
-  }
+  html += muggleHolidayTag;
+  html += `<div class="schedule-grade">📖 ${gradeLabel}课程表</div>`;
+  html += `<button id="muggle-exam-entry-btn" class="schedule-exam-entry-btn" title="GCSE 相当于 O.W.L.，A-Level 相当于 N.E.W.T.">🎓 GCSE · A-Level</button>`;
   html += `</div>`;
 
   html += `<div class="schedule-table">`;
@@ -355,12 +729,10 @@ function _renderMuggleSchedule(container) {
     <div class="schedule-cell">周三</div>
     <div class="schedule-cell">周四</div>
     <div class="schedule-cell">周五</div>
-    <div class="schedule-cell schedule-cell-weekend">周六</div>
-    <div class="schedule-cell schedule-cell-weekend">周日</div>
   </div>`;
 
   const periods = [1, 2, 3];
-  const periodNames = ['早晨（第1节）', '下午（第2节）', '晚上（第3节）'];
+  const periodNames = ['早晨（第1节）', '中午（第2节）', '夜晚（第3节）'];
 
   periods.forEach((period, idx) => {
     html += `<div class="schedule-row">`;
@@ -368,7 +740,9 @@ function _renderMuggleSchedule(container) {
     
     for (const day of SCHOOL_DAYS) {
       const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-      const course = WEEKLY_SCHEDULE[day]?.find(c => c.period === period);
+      const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, period) : "";
+      const isSpecialNoClassCell = !!noClassLabel;
+      const course = isSpecialNoClassCell ? null : WEEKLY_SCHEDULE[day]?.find(c => c.period === period);
       
       if (course) {
         const icon = SUBJECT_ICONS[course.subject] || '📚';
@@ -376,31 +750,251 @@ function _renderMuggleSchedule(container) {
         const profFullName = muggleSchedule.professorIntroductions[course.subject]?.professor || '';
         const lastName = profFullName.split('·').pop(); // 提取姓氏（最后一个·之后）
         const prof = lastName ? `${lastName}教授` : '';
-        html += `<div class="${cls}"><div class="schedule-icon">${icon}</div><div class="schedule-name">${name}</div>${prof ? `<div class="schedule-prof">${prof}</div>` : ''}</div>`;
+        html += `<div class="${cls} schedule-course-cell" role="button" tabindex="0" data-course-type="muggle" data-day="${day}" data-period="${period}" data-subject="${name}" data-subject-key="${course.subject}"><div class="schedule-icon">${icon}</div><div class="schedule-name">${name}</div>${prof ? `<div class="schedule-prof">${prof}</div>` : ''}</div>`;
+      } else if (isSpecialNoClassCell) {
+        html += `<div class="${cls}"><div class="schedule-empty">${noClassLabel}</div></div>`;
       } else {
         html += `<div class="${cls}"><div class="schedule-empty">—</div></div>`;
       }
     }
     
-    html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">休息</div></div>`;
-    html += `<div class="schedule-cell schedule-cell-weekend"><div class="schedule-empty">休息</div></div>`;
     html += `</div>`;
   });
 
   html += `</div>`;
 
-  html += `<div class="schedule-holidays">`;
-  html += `<div class="schedule-holidays-title">📊 每周课时统计（共15节课）</div>`;
-  Object.entries(WEEKLY_HOURS).forEach(([key, hours]) => {
-    const icon = SUBJECT_ICONS[key] || '📚';
-    const name = SUBJECT_NAMES[key] || key;
-    html += `<div class="schedule-holiday-item">${icon} ${name}: ${hours}节/周</div>`;
-  });
-  html += `</div>`;
-
-  html += `<div class="schedule-note">💡 每天3节课，对应3次行动机会 · 周末和假期无课程 · 按现实初中进度教学</div>`;
+  html += `<div class="schedule-note">💡 周末和假期没有固定课程，可以自由探索、决斗或熬制魔药</div>`;
 
   container.innerHTML = html;
+  bindScheduleCourseClicks(container);
+
+  const examEntryBtn = container.querySelector('#muggle-exam-entry-btn');
+  if (examEntryBtn) {
+    examEntryBtn.addEventListener('click', () => _renderMuggleExams(container));
+  }
+}
+
+// ============================================================
+// 麻瓜考试 UI
+// ============================================================
+
+/** 渲染考试报名总览（GCSE / A-Level 两区块） */
+function _renderMuggleExams(container) {
+  const examSys = window.muggleExam;
+  if (!examSys) {
+    container.innerHTML = `<div style="padding:20px;color:#ff8888">⚠️ 考试系统未加载</div>`;
+    return;
+  }
+
+  const grade = getYearGrade();
+  const subjectNames = window.muggleSchedule?.SUBJECT_NAMES ?? {};
+  const subjectIcons = window.muggleSchedule?.SUBJECT_ICONS ?? {};
+
+  function buildExamBlock(type, minGrade, title, subtitle) {
+    const list = examSys.getExamEligibilityList(type);
+    const { gcse, alevel } = examSys.getMuggleExams();
+    const results = type === 'gcse' ? gcse : alevel;
+
+    let html = `<div style="margin-bottom:16px">`;
+    html += `<div style="font-size:14px;font-weight:bold;color:#88f8d8;margin-bottom:4px">${title}</div>`;
+    html += `<div style="font-size:11px;color:#7ecdc8;margin-bottom:8px">${subtitle}</div>`;
+
+    if (grade < minGrade) {
+      html += `<div style="color:#ff8888;font-size:12px;padding:8px;background:#1a2a2a;border-radius:6px">🔒 需要 ${minGrade} 年级（当前 ${grade} 年级）</div>`;
+    } else {
+      html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">`;
+      list.forEach(({ subjectKey, name, eligible, reason }) => {
+        const result = results[subjectKey];
+        const icon = subjectIcons[subjectKey] ?? '📚';
+        const hasResult = !!result?.grade;
+        const gradeLabel = hasResult ? result.grade : '';
+        const gradeColor = hasResult
+          ? (examSys.PASSING_GRADES.has(result.grade) ? '#88f8d8' : '#ff8888')
+          : '#b2dfdb';
+
+        let btnStyle = `padding:8px;border-radius:6px;border:none;cursor:pointer;text-align:left;font-size:12px;`;
+        if (hasResult) {
+          btnStyle += `background:#1a3a1a;color:${gradeColor};`;
+        } else if (eligible) {
+          btnStyle += `background:#1d3b3a;color:#e0f7f5;`;
+        } else {
+          btnStyle += `background:#1a1a2a;color:#888;cursor:not-allowed;opacity:0.7;`;
+        }
+
+        html += `<button style="${btnStyle}"
+          data-exam-key="${subjectKey}" data-exam-type="${type}"
+          ${!eligible && !hasResult ? 'disabled' : ''}
+          title="${hasResult ? `${examSys.GRADE_NAMES[result.grade]}（${result.score}分）` : (eligible ? '点击参加考试' : reason)}">
+          <div>${icon} ${name}</div>
+          <div style="font-size:11px;margin-top:2px;color:${hasResult ? gradeColor : (eligible ? '#88f8d8' : '#666')}">
+            ${hasResult ? `${gradeLabel}（${result.score}分）` : (eligible ? '可报考 ▶' : '不可报考')}
+          </div>
+        </button>`;
+      });
+      html += `</div>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  container.innerHTML = `
+    <div style="padding:12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <button id="muggle-exam-back-btn" class="schedule-exam-entry-btn">← 返回课程表</button>
+        <div style="font-size:13px;color:#b2dfdb">麻瓜学术系资质考试</div>
+      </div>
+      <div style="font-size:11px;color:#7ecdc8;margin-bottom:12px;line-height:1.6">
+        <b style="color:#88f8d8">GCSE</b>（普通中等教育证书）· 5年级参加 · 对应 O.W.L.<br>
+        <b style="color:#88f8d8">A-Level</b>（高级水平证书）· 7年级参加 · 对应 N.E.W.T. · 需 GCSE 成绩 A 或以上
+      </div>
+      ${buildExamBlock('gcse', 5, '📋 GCSE（普通中等教育证书）', '需要 5 年级，且各科完成 60% 以上课程')}
+      ${buildExamBlock('alevel', 7, '🎓 A-Level（高级水平证书）', '需要 7 年级，且 GCSE 成绩达到 A 或以上')}
+    </div>`;
+
+  // 返回课程表
+  const backBtn = container.querySelector('#muggle-exam-back-btn');
+  if (backBtn) backBtn.addEventListener('click', () => _renderMuggleSchedule(container));
+
+  // 绑定点击事件
+  container.querySelectorAll('button[data-exam-key]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.examKey;
+      const type = btn.dataset.examType;
+      const result = type === 'gcse'
+        ? examSys.getMuggleExams().gcse[key]
+        : examSys.getMuggleExams().alevel[key];
+      if (result?.grade) {
+        // 已有成绩，显示历史记录
+        _showExamResult(container, key, type, result);
+      } else {
+        _renderExamSession(container, key, type);
+      }
+    });
+  });
+}
+
+/** 渲染答题页 */
+function _renderExamSession(container, subjectKey, type) {
+  const examSys = window.muggleExam;
+  const subjectData = window[`subject_${subjectKey}`];
+  const subjectName = window.muggleSchedule?.SUBJECT_NAMES?.[subjectKey] ?? subjectKey;
+  const examTypeName = type === 'gcse' ? 'GCSE' : 'A-Level';
+  const questionCount = type === 'alevel' ? 15 : 10;
+
+  // 从题库里随机抽题
+  const pool = (subjectData?.questionBank ?? []).flatMap(ch => ch.questions ?? []);
+  if (pool.length === 0) {
+    container.innerHTML = `<div style="padding:20px;color:#ff8888">⚠️ ${subjectName} 题库为空，无法开始考试</div>`;
+    return;
+  }
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  const questions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
+
+  let html = `
+    <div style="padding:12px">
+      <div style="font-size:14px;font-weight:bold;color:#88f8d8;margin-bottom:4px">
+        ${subjectName} · ${examTypeName} 考试
+      </div>
+      <div style="font-size:11px;color:#7ecdc8;margin-bottom:12px">
+        共 ${questions.length} 题，每题选择最符合的一项
+      </div>`;
+
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:14px;padding:10px;background:#1a2a2a;border-radius:6px" data-q="${i}">`;
+    html += `<div style="font-size:13px;color:#e0f7f5;margin-bottom:8px">${i + 1}. ${q.text}</div>`;
+    (q.options ?? []).forEach(opt => {
+      const val = opt.charAt(0); // "A", "B", "C", "D"
+      html += `<label style="display:block;padding:4px 6px;cursor:pointer;border-radius:4px;font-size:12px;color:#b2dfdb">
+        <input type="radio" name="q${i}" value="${val}" style="margin-right:6px">${opt}
+      </label>`;
+    });
+    html += `</div>`;
+  });
+
+  html += `
+    <div id="exam-warn" style="color:#ff8888;font-size:12px;display:none;margin-bottom:8px">⚠️ 请回答所有题目再提交</div>
+    <button id="exam-submit-btn" style="width:100%;padding:10px;background:#2b5654;color:#88f8d8;border:none;border-radius:6px;cursor:pointer;font-size:13px">
+      📝 提交答卷
+    </button>
+    <button id="exam-back-btn" style="width:100%;padding:8px;background:#1a1a2a;color:#888;border:none;border-radius:6px;cursor:pointer;font-size:12px;margin-top:6px">
+      ← 返回考试列表
+    </button>
+    </div>`;
+
+  container.innerHTML = html;
+
+  document.getElementById('exam-back-btn').addEventListener('click', () => {
+    _renderMuggleExams(container);
+  });
+
+  document.getElementById('exam-submit-btn').addEventListener('click', () => {
+    // 收集答案
+    let answered = 0;
+    let correct = 0;
+    questions.forEach((q, i) => {
+      const selected = container.querySelector(`input[name="q${i}"]:checked`);
+      if (selected) {
+        answered++;
+        if (selected.value === q.answer) correct++;
+      }
+    });
+
+    if (answered < questions.length) {
+      document.getElementById('exam-warn').style.display = 'block';
+      return;
+    }
+
+    const result = examSys.takeMuggleExam(subjectKey, type, correct);
+    if (result.error) {
+      container.innerHTML = `<div style="padding:20px;color:#ff8888">❌ ${result.error}</div>`;
+      return;
+    }
+    _showExamResult(container, subjectKey, type, result, { questions, correct });
+  });
+}
+
+/** 显示考试结果页 */
+function _showExamResult(container, subjectKey, type, result, detail = null) {
+  const examSys = window.muggleExam;
+  const subjectName = window.muggleSchedule?.SUBJECT_NAMES?.[subjectKey] ?? subjectKey;
+  const examTypeName = type === 'gcse' ? 'GCSE' : 'A-Level';
+  const passed = examSys.PASSING_GRADES.has(result.grade);
+  const gradeColor = passed ? '#88f8d8' : '#ff8888';
+
+  let detailHtml = '';
+  if (detail?.questions) {
+    detailHtml = `<div style="margin-top:12px;font-size:12px;color:#7ecdc8">答对 ${detail.correct} / ${detail.questions.length} 题</div>`;
+  } else if (result.correct !== undefined) {
+    detailHtml = `<div style="margin-top:12px;font-size:12px;color:#7ecdc8">答对 ${result.correct} / ${result.total} 题</div>`;
+  }
+
+  container.innerHTML = `
+    <div style="padding:16px">
+      <div style="font-size:14px;font-weight:bold;color:#88f8d8;margin-bottom:12px">
+        ${subjectName} · ${examTypeName} 成绩
+      </div>
+      <div style="text-align:center;padding:20px;background:#1a2a2a;border-radius:8px;margin-bottom:12px">
+        <div style="font-size:48px;font-weight:bold;color:${gradeColor}">${result.grade}</div>
+        <div style="font-size:13px;color:${gradeColor};margin-top:4px">${examSys.GRADE_NAMES[result.grade]}</div>
+        <div style="font-size:22px;color:#b2dfdb;margin-top:8px">${result.score} 分</div>
+        ${detailHtml}
+      </div>
+      <div style="font-size:12px;color:#b2dfdb;line-height:1.6;white-space:pre-line;padding:10px;background:#111;border-radius:6px;margin-bottom:12px">
+        ${result.narrative ?? ''}
+      </div>
+      <button id="exam-result-back" style="width:100%;padding:10px;background:#1d3b3a;color:#e0f7f5;border:none;border-radius:6px;cursor:pointer;font-size:13px">
+        ← 返回考试列表
+      </button>
+    </div>`;
+
+  document.getElementById('exam-result-back').addEventListener('click', () => {
+    _renderMuggleExams(container);
+  });
+
+  // 同步写入游戏日志
+  if (result.narrative) {
+    window.doStudyLog?.(result.narrative);
+  }
 }
 
 export function getCurrentGrade() {
@@ -520,25 +1114,24 @@ export function openCoursePanel() {
 
   const tabHtml = `
     <div class="course-tabs">
-      <button class="course-tab active" id="courseTabList">📚 课程列表</button>
-      <button class="course-tab" id="courseTabSchedule">📅 课程表</button>
-      <button class="course-tab" id="courseTabMuggleSchedule">📖 麻瓜课程表</button>
-    </div>
-    <div class="title" id="coursePanelTitle">🪶 学习课程</div>`;
+      <button class="course-tab active" id="courseTabSchedule">📅 传统课程表</button>
+      <button class="course-tab" id="courseTabMuggleSchedule">📖 麻瓜学术系</button>
+    </div>`;
 
   courseBox.innerHTML = tabHtml;
 
   const container = document.createElement("div");
   container.id = "course-container";
-  container.style.cssText = "max-height:400px;overflow:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;";
+  container.style.cssText = "max-height:400px;overflow:auto;display:none;grid-template-columns:repeat(3,1fr);gap:8px;";
 
   const scheduleContainer = document.createElement("div");
   scheduleContainer.id = "schedule-container";
-  scheduleContainer.style.display = "none";
+  scheduleContainer.style.display = "block";
 
   const muggleScheduleContainer = document.createElement("div");
   muggleScheduleContainer.id = "muggle-schedule-container";
   muggleScheduleContainer.style.display = "none";
+
 
   const backBtn = document.createElement("button");
   backBtn.className = "action-btn";
@@ -555,29 +1148,13 @@ export function openCoursePanel() {
     courseBox.appendChild(backBtn);
   }
 
-  const courseTabList = document.getElementById("courseTabList");
   const courseTabSchedule = document.getElementById("courseTabSchedule");
   const courseTabMuggleSchedule = document.getElementById("courseTabMuggleSchedule");
-  const coursePanelTitle = document.getElementById("coursePanelTitle");
-  
-  if (courseTabList) {
-    courseTabList.addEventListener("click", () => {
-      courseTabList.classList.add("active");
-      if (courseTabSchedule) courseTabSchedule.classList.remove("active");
-      if (courseTabMuggleSchedule) courseTabMuggleSchedule.classList.remove("active");
-      if (coursePanelTitle) coursePanelTitle.textContent = "🪶 学习课程";
-      container.style.display = "grid";
-      scheduleContainer.style.display = "none";
-      muggleScheduleContainer.style.display = "none";
-    });
-  }
 
   if (courseTabSchedule) {
     courseTabSchedule.addEventListener("click", () => {
       courseTabSchedule.classList.add("active");
-      if (courseTabList) courseTabList.classList.remove("active");
       if (courseTabMuggleSchedule) courseTabMuggleSchedule.classList.remove("active");
-      if (coursePanelTitle) coursePanelTitle.textContent = "📅 课程表";
       container.style.display = "none";
       muggleScheduleContainer.style.display = "none";
       scheduleContainer.style.display = "block";
@@ -588,9 +1165,7 @@ export function openCoursePanel() {
   if (courseTabMuggleSchedule) {
     courseTabMuggleSchedule.addEventListener("click", () => {
       courseTabMuggleSchedule.classList.add("active");
-      if (courseTabList) courseTabList.classList.remove("active");
       if (courseTabSchedule) courseTabSchedule.classList.remove("active");
-      if (coursePanelTitle) coursePanelTitle.textContent = "📖 麻瓜学术系课程表";
       container.style.display = "none";
       scheduleContainer.style.display = "none";
       muggleScheduleContainer.style.display = "block";
@@ -601,7 +1176,7 @@ export function openCoursePanel() {
   navStack = [];
   loadCourseProgressFromSave(); // 先读 studyRate
   autoUpdateCourseUnlock();     // 再计算 unlock（必须在 loadProgress 之后）
-  renderLevel(courseData, "课程列表");
+  _renderSchedule(scheduleContainer);
 }
 
 export function closeCoursePanel() {
@@ -761,10 +1336,36 @@ window.autoUpdateCourseUnlock = autoUpdateCourseUnlock;
 window.getCurrentGrade       = getCurrentGrade;
 window.renderLevelFn         = renderLevel;
 window.loadCourseProgressFromSave = loadCourseProgressFromSave;
+window.courseAttendance = {
+  getHogwartsTodaySchedule,
+  getMuggleTodaySchedule,
+  getTodayScheduledCourses,
+  getCurrentWindowCourses,
+  validateCourseAccess,
+  markAttended,
+  recordMissedClassesForCurrentWindow,
+  remindCurrentWindowClasses,
+  isSchoolNoClassDate,
+  isSchoolNoClassPeriod
+};
 
 export default {
   openCoursePanel,
   closeCoursePanel,
   autoUpdateCourseUnlock,
-  getCurrentGrade
+  getCurrentGrade,
+  getHogwartsTodaySchedule,
+  getMuggleTodaySchedule,
+  getTodayScheduledCourses,
+  getCurrentWindowCourses,
+  validateCourseAccess,
+  markAttended,
+  recordMissedClassesForCurrentWindow,
+  remindCurrentWindowClasses,
+  isSchoolNoClassDate,
+  isSchoolNoClassPeriod
 };
+
+setTimeout(() => {
+  window.courseAttendance?.remindCurrentWindowClasses?.();
+}, 0);

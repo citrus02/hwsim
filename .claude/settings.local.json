@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git mv *)",
+      "Bash(Move-Item course/muggle-academic/english-lesson.js course/muggle-academic/latin-lesson.js)",
+      "Bash(Move-Item course/muggle-academic/english-questionBank.js course/muggle-academic/latin-questionBank.js)"
+    ]
+  }
+}

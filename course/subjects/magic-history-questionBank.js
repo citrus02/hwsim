@@ -1,4 +1,4 @@
-/**
+﻿/**
  * magic-history-questionBank.js
  * 魔法史·随堂测验题库
  * 教授：卡斯伯特·宾斯（幽灵）

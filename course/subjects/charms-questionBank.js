@@ -1,4 +1,4 @@
-/**
+﻿/**
  * charms-questionBank.js
  * 魔咒学 · 随堂测验题库
  * 教授：菲利乌斯·弗立维
@@ -742,6 +742,546 @@ export const questionBank = [
         answer: "B",
         knowledgePoint: "魔咒学的学科地位",
         analysis: "弗立维的学科哲学：魔咒学不只是「一堆实用咒语」，而是研究魔力转化机制的基础学科——理解了意志、语言和手势如何组成「魔力语法」，才能从根本上理解其他所有魔法分支为什么能起作用。"
+      }
+    ]
+  },
+
+  {
+    lesson: 25, title: "高级防护咒：盔甲护身（Protego）",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "盔甲护身（Protego）与防水防湿这类被动属性咒最大的区别是：",
+        options: ["A. 盔甲护身只能在室内使用", "B. 盔甲护身需要施法者持续维持防护意志，防水防湿施放后可自行持续", "C. 盔甲护身不会消耗魔力", "D. 防水防湿比盔甲护身更适合决斗"],
+        answer: "B",
+        knowledgePoint: "主动防护与被动属性",
+        analysis: "弗立维强调：盔甲护身是主动防护结构，施法者的意志持续支撑护盾；防水防湿则是一次性附加斥水属性，运行模式不同。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "护盾咒在面对连续攻击时，最容易被击穿的原因通常是：",
+        options: ["A. 咒语名字太短", "B. 施法者没有调整护盾角度和魔力分配，只把护盾当作固定墙面", "C. 护盾咒只能挡第一下", "D. 护盾咒只能抵挡物理攻击"],
+        answer: "B",
+        knowledgePoint: "护盾动态调整",
+        analysis: "盔甲护身不是一堵死墙。攻击角度和强度变化时，施法者需要微调护盾的朝向与厚度，否则连续冲击会集中在薄弱点。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "弗立维让学生先练「短时间稳定护盾」而不是一开始追求巨大护盾，是因为：",
+        options: ["A. 巨大护盾不属于魔咒学", "B. 护盾面积越大，意志覆盖越分散，初学者更容易出现局部薄弱", "C. 小护盾评分更高", "D. 巨大护盾只能由多人施放"],
+        answer: "B",
+        knowledgePoint: "护盾面积与意志覆盖",
+        analysis: "护盾越大，施法者需要维持的边界越长、受力点越多。弗立维先要求稳定小护盾，是为了训练意志覆盖的均匀性。"
+      }
+    ]
+  },
+
+  {
+    lesson: 26, title: "盔甲护身的反弹机制",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "盔甲护身有时会让来袭咒语偏转，其根本原因是：",
+        options: ["A. 护盾把所有咒语都复制一遍", "B. 护盾表面的魔力张力改变了来袭魔力的方向", "C. 施法者念咒声音更大", "D. 攻击者自己失误"],
+        answer: "B",
+        knowledgePoint: "护盾偏转",
+        analysis: "反弹不是自动复仇，而是来袭魔力遇到护盾表面张力后被改变方向。护盾角度决定偏转方向。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "为什么弗立维不鼓励学生在课堂上刻意追求「把咒语反弹回去」？",
+        options: ["A. 反弹完全不可能", "B. 初学者容易为了反弹而牺牲基础防护角度，反而让护盾变薄", "C. 反弹咒语违法", "D. 反弹只能用变形术完成"],
+        answer: "B",
+        knowledgePoint: "反弹风险",
+        analysis: "弗立维的标准很清楚：先挡住，再考虑偏转。为了漂亮反弹而改变护盾角度，常常会暴露施法者本来要保护的位置。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "面对未知咒语时，最稳妥的护盾策略是：",
+        options: ["A. 把护盾做得尽可能亮", "B. 选择保守角度，优先偏开来袭轨迹，而不是试图完全吸收或反弹", "C. 取消护盾改用攻击", "D. 站着不动观察效果"],
+        answer: "B",
+        knowledgePoint: "未知咒语防护策略",
+        analysis: "未知咒语的性质不可预判，完全吸收可能导致护盾过载。保守偏转能降低正面承压，是弗立维在高阶防护里强调的稳妥策略。"
+      }
+    ]
+  },
+
+  {
+    lesson: 27, title: "除你武器（Expelliarmus）：缴械咒",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "除你武器的直接目标是：",
+        options: ["A. 伤害对手手臂", "B. 解除目标与其持握物之间的持握关系", "C. 把目标击昏", "D. 破坏对方魔杖核心"],
+        answer: "B",
+        knowledgePoint: "缴械咒基本机制",
+        analysis: "缴械咒不是伤害咒。它作用于「持握关系」，让目标失去手中的魔杖或武器，因此在防御术和魔咒学中都有重要地位。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "缴械咒和力松劲泄的区别最准确的是：",
+        options: ["A. 没有区别", "B. 力松劲泄偏向解除抓握或束缚，缴械咒更专门针对武器/魔杖的持握关系，并带有更强的位移效果", "C. 缴械咒只能对麻瓜武器使用", "D. 力松劲泄一定比缴械咒强"],
+        answer: "B",
+        knowledgePoint: "解除类魔咒比较",
+        analysis: "二者都涉及解除持握，但缴械咒的战术目标更明确：让对方失去武器。弗立维会把它放在魔咒机制里讲，而防御术会把它放在实战节奏里讲。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "为什么弗立维说缴械咒的难点不是「打中」，而是「打中正确的关系」？",
+        options: ["A. 因为缴械咒不需要瞄准", "B. 因为咒语必须锁定目标、持握物和二者之间的连接，锁定错误会导致效果偏弱或偏向其他物品", "C. 因为缴械咒只看运气", "D. 因为魔杖会自己选择目标"],
+        answer: "B",
+        knowledgePoint: "关系锁定",
+        analysis: "缴械咒锁定的是人和武器之间的关系，而非单纯撞击某个物体。高阶缴械强调意志锁定的精度。"
+      }
+    ]
+  },
+
+  {
+    lesson: 28, title: "缴械咒与防御术的交叉",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "在防御场景中，缴械咒最适合用于：",
+        options: ["A. 让对手永久失去施法能力", "B. 在不造成直接伤害的情况下中断对方攻击能力", "C. 替代所有防护咒", "D. 修复受损魔杖"],
+        answer: "B",
+        knowledgePoint: "缴械咒防御用途",
+        analysis: "缴械咒的价值在于降低冲突强度：解除武器，阻断攻击，而不是直接伤害对方。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "弗立维强调，缴械咒在实战中的施放时机通常应当：",
+        options: ["A. 越早越好，不管对方是否已攻击", "B. 在确认对方攻击意图或持械威胁后，配合防护或躲避使用", "C. 等自己完全没有退路时再用", "D. 只在课堂上使用"],
+        answer: "B",
+        knowledgePoint: "缴械时机",
+        analysis: "缴械咒不是挑衅工具，而是防御工具。确认威胁、保护自身、再解除对方武器，是更稳妥的顺序。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "如果对方已经用双手紧握魔杖并主动抵抗，缴械咒效果会如何变化？",
+        options: ["A. 完全无效", "B. 需要更强的意志锁定和魔力输出，因为咒语要对抗对方的持握意志与物理力量", "C. 自动变成攻击咒", "D. 会优先缴械施法者自己"],
+        answer: "B",
+        knowledgePoint: "持握抵抗",
+        analysis: "缴械不是无条件生效。对方持握越稳定、抵抗越主动，施法者越需要更强的锁定与输出。"
+      }
+    ]
+  },
+
+  {
+    lesson: 29, title: "混淆咒（Confundus）与认知干扰",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "混淆咒主要影响的是目标的：",
+        options: ["A. 体温", "B. 判断与注意力组织能力", "C. 魔杖材质", "D. 物理重量"],
+        answer: "B",
+        knowledgePoint: "混淆咒基本效果",
+        analysis: "混淆咒不直接控制身体，而是干扰目标的判断、选择和注意力组织，使其更容易做出错误反应。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "为什么弗立维把混淆咒列为伦理风险较高的魔咒？",
+        options: ["A. 因为它颜色不好看", "B. 因为它干扰目标的自主判断，可能在未造成外伤的情况下侵犯对方意志", "C. 因为它只能用于考试作弊", "D. 因为它没有反咒"],
+        answer: "B",
+        knowledgePoint: "认知魔咒伦理",
+        analysis: "影响判断的魔咒涉及意志自主权。弗立维讲这类咒语时会特别强调使用边界。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "课堂上判断一个学生是否被混淆咒影响，最可靠的早期迹象是：",
+        options: ["A. 立刻昏倒", "B. 能说话但选择顺序、注意焦点或简单判断出现不合逻辑偏移", "C. 魔杖变色", "D. 头发竖起来"],
+        answer: "B",
+        knowledgePoint: "认知干扰识别",
+        analysis: "混淆咒的早期表现常常不是剧烈症状，而是判断链条变得奇怪：把重要信息排到后面、忽略明显危险、回答和问题错位。"
+      }
+    ]
+  },
+
+  {
+    lesson: 30, title: "记忆魔咒与除忆边界",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "除忆咒（Obliviate）作用的对象是：",
+        options: ["A. 目标的肌肉动作", "B. 目标的记忆内容或记忆通路", "C. 目标的衣物", "D. 目标周围的声音"],
+        answer: "B",
+        knowledgePoint: "除忆咒基本对象",
+        analysis: "除忆咒处理的是记忆。正因为它碰到人的心智结构，弗立维在课堂上只讲理论和法律边界，不让学生实际练习。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "为什么除忆咒需要严格授权？",
+        options: ["A. 因为它施法手势太难", "B. 因为未经同意修改他人记忆会侵犯人格和自主权，并可能造成长期心理损伤", "C. 因为它只能对麻瓜使用", "D. 因为它会消耗魔杖"],
+        answer: "B",
+        knowledgePoint: "除忆咒法律边界",
+        analysis: "记忆不是普通信息。未经授权修改他人记忆，既是法律问题，也是严重伦理问题。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "弗立维说，粗暴除忆最危险的后果不是「忘记某件事」，而是：",
+        options: ["A. 立刻长高", "B. 记忆网络被撕裂，相关经历、情绪和判断能力一起受损", "C. 魔杖失效", "D. 变得不会说话"],
+        answer: "B",
+        knowledgePoint: "记忆网络损伤",
+        analysis: "记忆不是一本可以抽掉某页的书。相关情绪、地点、人物和判断会互相连接，粗暴删除会撕裂整片网络。"
+      }
+    ]
+  },
+
+  {
+    lesson: 31, title: "守护神咒（Expecto Patronum）理论",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "守护神咒与普通魔咒三要素排序最大的不同是：",
+        options: ["A. 不需要魔杖", "B. 情感记忆成为主导构建要素，优先级高于普通意志集中", "C. 只需要发音", "D. 只看施法者年龄"],
+        answer: "B",
+        knowledgePoint: "守护神咒情感核心",
+        analysis: "守护神咒是魔咒体系中的异类。它需要强烈、稳定、正面的情感记忆来构建形态，普通的专注不足以支撑完整守护神。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "为什么弗立维说守护神咒很难「按步骤」教会？",
+        options: ["A. 因为咒语没有发音", "B. 因为教授可以纠正手势和发音，却无法替学生找到真正能支撑咒语的记忆", "C. 因为守护神咒不属于魔咒学", "D. 因为它只能在夜晚使用"],
+        answer: "B",
+        knowledgePoint: "守护神教学难点",
+        analysis: "守护神咒的技术部分可以教，但情感核心无法替代。每个学生必须自己找到能抵抗恐惧的记忆。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "肉身守护神与银雾状态守护神的区别在于：",
+        options: ["A. 银雾更强", "B. 肉身守护神具有稳定形态和更强的自主防御能力，说明情感结构更完整", "C. 肉身守护神只能由成年人施放", "D. 两者只是颜色不同"],
+        answer: "B",
+        knowledgePoint: "守护神形态稳定性",
+        analysis: "银雾说明咒语已经建立，但结构未完全稳定。肉身守护神拥有明确形态，代表情感、意志和魔力构成了完整防御结构。"
+      }
+    ]
+  },
+
+  {
+    lesson: 32, title: "控制类魔咒：锁腿咒与舞步咒",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "锁腿咒（Locomotor Mortis）的效果是：",
+        options: ["A. 让目标双腿锁定，限制其移动", "B. 让目标昏睡", "C. 修复目标腿部伤口", "D. 提高目标速度"],
+        answer: "A",
+        knowledgePoint: "锁腿咒基本效果",
+        analysis: "锁腿咒是抑制型控制咒，限制目标移动能力，但不以直接伤害为目的。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "锁腿咒与舞步咒的关键区别是：",
+        options: ["A. 锁腿咒冻结运动，舞步咒劫持运动控制", "B. 舞步咒完全无害所以可以随便使用", "C. 锁腿咒属于魔药学", "D. 两者都是开锁咒"],
+        answer: "A",
+        knowledgePoint: "抑制型与劫持型控制",
+        analysis: "锁腿咒让目标不能动；舞步咒让目标不得不动。两者控制方向相反，解除方式也不同。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "为什么不能在同一目标上同时施加锁腿咒和舞步咒？",
+        options: ["A. 会让咒语变漂亮", "B. 两个相反运动属性在同一轨道冲突，可能导致剧烈颤抖或伤害", "C. 这样会自动加分", "D. 因为两个咒语发音相同"],
+        answer: "B",
+        knowledgePoint: "属性轨道冲突",
+        analysis: "不可移动与强制运动是矛盾指令。它们不是简单抵消，而是在目标身体里产生冲突。"
+      }
+    ]
+  },
+
+  {
+    lesson: 33, title: "修复咒（Reparo）与魔力记忆",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "修复咒主要依赖物品的什么来还原损坏结构？",
+        options: ["A. 物品价格", "B. 魔力记忆", "C. 施法者身高", "D. 室内温度"],
+        answer: "B",
+        knowledgePoint: "魔力记忆",
+        analysis: "弗立维把魔力记忆比作物品完整状态的记录。修复咒读取这些记录，再把损坏结构拼回去。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "被魔法火焰烧毁的页面为什么难以用修复咒完整恢复？",
+        options: ["A. 因为纸太轻", "B. 魔法火焰可能同时摧毁物理结构和魔力记忆，修复咒失去参照", "C. 因为书本不能被魔法影响", "D. 因为修复咒只对玻璃有效"],
+        answer: "B",
+        knowledgePoint: "修复咒极限",
+        analysis: "修复咒需要知道要修成什么样。魔力记忆被抹掉后，咒语没有完整参照。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "反复损坏再修复同一物品，修复质量可能逐渐下降，是因为：",
+        options: ["A. 咒语会厌倦", "B. 每次损坏都会损失部分原始魔力记忆，细节参照越来越弱", "C. 物品会变重", "D. 施法者会忘记咒语"],
+        answer: "B",
+        knowledgePoint: "魔力记忆损耗",
+        analysis: "修复并不能完全恢复已经丢失的魔力记忆。反复损坏会让参照逐渐模糊。"
+      }
+    ]
+  },
+
+  {
+    lesson: 34, title: "尺度变换：速速变大与速速缩小",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "速速变大与速速缩小作用于同一属性轨道，这个属性是：",
+        options: ["A. 颜色", "B. 体积", "C. 声音", "D. 记忆"],
+        answer: "B",
+        knowledgePoint: "体积属性轨道",
+        analysis: "Engorgio和Reducio是一对体积方向相反的对偶咒。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "对活体随意使用速速变大最危险的原因是：",
+        options: ["A. 活体会变得更可爱", "B. 体积增大但内部结构未等比强化，器官和骨骼可能承受不了", "C. 咒语完全无效", "D. 活体会自动学会说话"],
+        answer: "B",
+        knowledgePoint: "活体尺度风险",
+        analysis: "魔咒附加体积属性，不等于重构完整生理结构。活体放大涉及严重安全风险。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "速速变大与变形术中的放大最本质的差别是：",
+        options: ["A. 没有差别", "B. 速速变大偏向表层属性附加，变形术放大修改目标存在定义和内部结构", "C. 速速变大只能对南瓜使用", "D. 变形术不需要魔力"],
+        answer: "B",
+        knowledgePoint: "魔咒与变形术边界",
+        analysis: "弗立维会把速速变大视为属性附加；麦格教授的变形术则更接近本质结构修改。"
+      }
+    ]
+  },
+
+  {
+    lesson: 35, title: "消隐术与存在性操作",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "消隐术（Evanesco）与隐形咒的区别是：",
+        options: ["A. 消隐术让物体不可见但仍在原地", "B. 消隐术使目标从当前空间中消失，隐形咒只修改可见性属性", "C. 隐形咒更危险所以禁用", "D. 两者只是发音不同"],
+        answer: "B",
+        knowledgePoint: "消隐与隐形区别",
+        analysis: "隐形咒操作的是可见性属性；消隐术操作的是存在层面。两者等级完全不同。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "为什么消隐术在考试中通常限定对无生命物体使用？",
+        options: ["A. 因为生命体太重", "B. 生命体的存在结构复杂，后果不可预测且可能不可逆", "C. 因为无生命物体更好看", "D. 因为学生不喜欢动物"],
+        answer: "B",
+        knowledgePoint: "生命体消隐风险",
+        analysis: "生命体不是简单物件。对生命体进行存在性操作，后果超出课堂安全边界。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "弗立维说「消隐术不是隐藏」，这一判断的证据是：",
+        options: ["A. 消隐后仍能摸到物体", "B. 踪影检查不到目标仍在原处的魔力残留或可见性遮蔽结构", "C. 物体颜色变浅", "D. 物体会发出声音"],
+        answer: "B",
+        knowledgePoint: "存在性判断",
+        analysis: "如果只是隐藏，目标仍在原地，应有遮蔽或可见性修改痕迹。消隐术的重点是目标不再位于当前空间。"
+      }
+    ]
+  },
+
+  {
+    lesson: 36, title: "魔咒分类图谱综合",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "弗立维要求遇到新咒语时，第一步先判断：",
+        options: ["A. 咒语名字长不长", "B. 它操作的是属性、控制、存在性还是范围效果等哪个层面", "C. 谁发明了它", "D. 它是不是很漂亮"],
+        answer: "B",
+        knowledgePoint: "咒语分类分析",
+        analysis: "分类决定限制和应对方式。先判断操作层面，比死记咒语名更可靠。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "面对锁腿咒这类控制咒，安全顺序通常是：",
+        options: ["A. 先用相反控制咒硬碰硬", "B. 先确保防护安全，再解除控制效果", "C. 立刻使用消隐术", "D. 等咒语自己消失"],
+        answer: "B",
+        knowledgePoint: "控制咒应对顺序",
+        analysis: "弗立维强调：先保安全，再解决问题。对立控制咒可能造成属性轨道冲突。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "六年级魔咒学从「执行已知」转向「推导未知」，意味着学生需要：",
+        options: ["A. 背更多咒语名称", "B. 根据结构、效果和情境推断陌生咒语的分类、弱点和应对方式", "C. 放弃基础咒语", "D. 只练决斗速度"],
+        answer: "B",
+        knowledgePoint: "推导未知",
+        analysis: "高阶魔咒学看重迁移能力。会施放已学咒语只是基础，能分析未知才是六年级水平。"
+      }
+    ]
+  },
+
+  {
+    lesson: 37, title: "不可破誓言理论",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "不可破誓言最核心的担保物是：",
+        options: ["A. 金加隆", "B. 立誓者的生命力", "C. 一根羽毛", "D. 魔杖盒"],
+        answer: "B",
+        knowledgePoint: "不可破誓言核心",
+        analysis: "不可破誓言将誓言绑定在生命力上，因此违背誓言的后果极端严重。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "不可破誓言中的见证人作用是：",
+        options: ["A. 只负责旁观", "B. 作为第三方魔力锚点，将誓言内容与立誓者生命力绑定", "C. 负责记录分数", "D. 替立誓者承担后果"],
+        answer: "B",
+        knowledgePoint: "见证人锚点",
+        analysis: "见证人不是装饰。他提供魔力锚点，使契约结构成立。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "为什么弗立维称不可破誓言的「不可破」是一种逻辑限制？",
+        options: ["A. 因为没人试过", "B. 破除誓言等于同时破除维持誓言的生命力绑定，目的和手段互相矛盾", "C. 因为咒语太长", "D. 因为魔法部不喜欢"],
+        answer: "B",
+        knowledgePoint: "不可破的逻辑结构",
+        analysis: "你要解除的结构和要保住的生命力绑定在一起。破除动作本身会摧毁担保物，因此在逻辑上自相矛盾。"
+      }
+    ]
+  },
+
+  {
+    lesson: 38, title: "门钥匙与空间传送魔咒",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "门钥匙的基本功能是：",
+        options: ["A. 让物品变成钥匙", "B. 将空间传送功能附加在普通物品上，触碰者被送往预设地点", "C. 打开所有门", "D. 让人隐形"],
+        answer: "B",
+        knowledgePoint: "门钥匙基本机制",
+        analysis: "门钥匙把复杂空间魔法压缩进物品触发机制，使用者只需触碰。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "门钥匙与幻影移形的关键区别是：",
+        options: ["A. 门钥匙需要使用者自己完成空间定位", "B. 门钥匙目的地预设，使用者不需要掌握空间魔法；幻影移形需要施法者主动定位和控制", "C. 幻影移形只能使用旧靴子", "D. 两者没有区别"],
+        answer: "B",
+        knowledgePoint: "门钥匙与幻影移形比较",
+        analysis: "门钥匙的复杂工作由制作者完成；幻影移形的复杂工作由移动者本人完成。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "门钥匙制作最容易造成危险事故的环节是：",
+        options: ["A. 物品外观不够旧", "B. 目的地空间坐标编码错误，导致传送偏移", "C. 使用者鞋带没系好", "D. 门钥匙颜色不合适"],
+        answer: "B",
+        knowledgePoint: "空间坐标编码",
+        analysis: "门钥匙需要精确编码三维空间坐标。偏差可能把使用者送到危险地点，因此受到魔法部严格管控。"
+      }
+    ]
+  },
+
+  {
+    lesson: 39, title: "咒语创新与魔咒发明理论",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "发明新咒语的第一步应该是：",
+        options: ["A. 先起一个好听的名字", "B. 明确定义期望效果，并判断它属于哪种属性或操作类型", "C. 立刻找同学试验", "D. 随便拼几个音节"],
+        answer: "B",
+        knowledgePoint: "效果定义",
+        analysis: "弗立维强调：新咒语先定义效果，再考虑词、手势和魔力结构。否则就是危险试错。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "新咒语词不能与已有咒语频率太接近，原因是：",
+        options: ["A. 听起来不好听", "B. 可能与已有咒语产生谐振干扰，导致效果不可预测", "C. 魔法部要求所有咒语押韵", "D. 会让教授记混"],
+        answer: "B",
+        knowledgePoint: "咒语谐振干扰",
+        analysis: "咒语音节结构对应魔力共振。频率太接近，可能互相牵连或干扰。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "魔法部审查新咒语时，最关注的是：",
+        options: ["A. 发明者是否有名", "B. 正常成功时好不好看", "C. 失误概率与失误后果严重度", "D. 咒语是否足够长"],
+        answer: "C",
+        knowledgePoint: "新咒语安全审查",
+        analysis: "安全审查看的是失控时会发生什么，而不只是正常使用时效果如何。"
+      }
+    ]
+  },
+
+  {
+    lesson: 40, title: "多重施法与连锁咒术",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "多重施法与连锁咒术的区别是：",
+        options: ["A. 多重施法并行维持多个独立咒语，连锁咒术按因果顺序串行施放", "B. 两者完全相同", "C. 连锁咒术不需要意志", "D. 多重施法只能用于清洁"],
+        answer: "A",
+        knowledgePoint: "并行与串行",
+        analysis: "多重施法难在意志并行；连锁咒术难在时机和因果顺序。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "多数巫师难以同时维持多个咒语，瓶颈主要在于：",
+        options: ["A. 魔杖太短", "B. 意志并行处理能力有限", "C. 咒语太押韵", "D. 教室太小"],
+        answer: "B",
+        knowledgePoint: "意志并行瓶颈",
+        analysis: "多个独立咒语需要多个清晰意志结构同时运行。魔力不是唯一限制，注意力和意志结构更关键。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "一个优秀的连锁咒术设计应当满足：",
+        options: ["A. 每个咒语互不相关", "B. 前一个效果为后一个创造更安全或更有效的条件", "C. 咒语越多越好", "D. 全部咒语必须同一颜色"],
+        answer: "B",
+        knowledgePoint: "连锁因果",
+        analysis: "连锁咒术不是堆咒语，而是构造因果链：A让B更容易，B让C更安全。"
+      }
+    ]
+  },
+
+  {
+    lesson: 41, title: "魔咒学前沿：跨学科融合",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "魔咒学与魔药学的交叉应用之一是：",
+        options: ["A. 魔药制作中用魔咒控制反应条件", "B. 魔药学完全不使用魔咒", "C. 魔咒学只能研究声音", "D. 魔药能替代所有咒语"],
+        answer: "A",
+        knowledgePoint: "魔咒与魔药交叉",
+        analysis: "温度控制、悬浮搅拌、防护处理等都可能让魔咒进入魔药实践。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "芬威克教授用函数类比魔咒学与变形术，是为了说明：",
+        options: ["A. 两门课都不用学", "B. 魔咒学更像给目标附加属性，变形术更像修改目标本身定义", "C. 变形术只和数学有关", "D. 魔咒学不能被抽象分析"],
+        answer: "B",
+        knowledgePoint: "属性操作抽象",
+        analysis: "魔咒学常保留目标本体并附加功能；变形术改变目标是什么。这种差异可以被抽象成不同的属性操作模型。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "弗立维认为「自适应魔咒」需要哪些学科共同支持？",
+        options: ["A. 只需要魔咒学", "B. 魔咒结构设计、算术占卜建模和古代魔文频率分析等多学科合作", "C. 只需要魁地奇训练", "D. 只需要魔药考试"],
+        answer: "B",
+        knowledgePoint: "自适应魔咒",
+        analysis: "自适应魔咒要求咒语能根据环境调整参数，这不是单一学科能轻易完成的。"
+      }
+    ]
+  },
+
+  {
+    lesson: 42, title: "N.E.W.T.终极综合考核",
+    questions: [
+      {
+        type: "choice", difficulty: "basic",
+        text: "弗立维区分 E 级与 O 级时，最核心的标准是：",
+        options: ["A. E级会背，O级声音更大", "B. E级能稳定执行已知，O级能把原理应用到未知情境", "C. O级一定从不失误", "D. E级不能施法"],
+        answer: "B",
+        knowledgePoint: "O与E的区别",
+        analysis: "弗立维的说法是：E是优秀执行者，O是潜在创造者。O要求面对新情境仍能推导。"
+      },
+      {
+        type: "choice", difficulty: "medium",
+        text: "面对未知魔法物品，标准分析流程是：",
+        options: ["A. 直接强力破解", "B. 观察魔力痕迹 → 推断附魔类型 → 低风险验证", "C. 先摔一下", "D. 交给同学"],
+        answer: "B",
+        knowledgePoint: "未知物品分析流程",
+        analysis: "观察、推断、验证，是弗立维强调的巫师思维方式。直接破解可能触发未知防护。"
+      },
+      {
+        type: "choice", difficulty: "hard",
+        text: "弗立维最后一课说，魔咒学的终点不是掌握更多咒语，而是：",
+        options: ["A. 记住所有咒语表", "B. 理解魔力的语言，掌握创造和推导的工具", "C. 赢得所有决斗", "D. 永远不用复习"],
+        answer: "B",
+        knowledgePoint: "魔咒学终极理念",
+        analysis: "魔咒学最终教的是魔力如何通过意志、语言和手势编织现实。理解底层语言，才有能力创造与推导。"
       }
     ]
   }

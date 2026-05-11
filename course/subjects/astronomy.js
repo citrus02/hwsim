@@ -1,4 +1,4 @@
-/**
+﻿/**
  * subjects/astronomy.js
  * 天文学分科
  * 教授：辛尼斯特拉教授

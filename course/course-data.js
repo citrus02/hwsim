@@ -8,7 +8,7 @@
  *   三级（仅麻瓜学术系）：九门独立分科，每门携带 muggleSubjectKey
  *
  * 麻瓜学术系分科键名：
- *   math / physics / chemistry / biology / history / civics / geography / literature / english
+ *   math / physics / chemistry / biology / history / civics / geography / literature / latin
  *
  * 学习事件库与教授评语已统一至 course-default.js，本文件只负责数据结构。
  */
@@ -77,9 +77,9 @@ const muggleAcademicSubjects = [
   },
   {
     level: 4,
-    name: "道德与法治",
+    name: "哲学与伦理",
     icon: "⚖️",
-    desc: "康斯坦丝·沙克博特教授·制度、法律、权力——不要同情，要理解",
+    desc: "康斯坦丝·沙克博特教授·论证、正义、意识——学会思考「为什么」",
     unlock: false,
     studyRate: 0,
     unlockGrade: 1,
@@ -110,13 +110,13 @@ const muggleAcademicSubjects = [
   },
   {
     level: 4,
-    name: "英语",
-    icon: "🔤",
-    desc: "米兰达·珀西瓦尔教授·语言学、词源——巫师咒语最古老的来源",
+    name: "拉丁语",
+    icon: "🏛️",
+    desc: "米兰达·珀西瓦尔教授·词根、格变、词源——所有咒语的母语",
     unlock: false,
     studyRate: 0,
     unlockGrade: 1,
-    muggleSubjectKey: "english",
+    muggleSubjectKey: "latin",
     professor: "米兰达·珀西瓦尔"
   }
 ];
@@ -139,7 +139,7 @@ export const courseData = [
       { level: 4, name: "草药学",      icon: "🌿", desc: "培育、识别与使用魔法植物",         unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "herbology" },
       { level: 4, name: "魔法史",      icon: "📜", desc: "巫师世界千年历史与大事件",         unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "magicHistory" },
       { level: 4, name: "天文学",      icon: "🌌", desc: "星辰观测与星象魔法理论",           unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "astronomy" },
-      { level: 4, name: "飞行课",      icon: "🧹", desc: "扫帚飞行基础与空中操控",           unlock: false, studyRate: 0, unlockGrade: 1 }
+      { level: 4, name: "飞行课",      icon: "🧹", desc: "扫帚飞行基础与空中操控",           unlock: false, studyRate: 0, unlockGrade: 1, hogwartsSubjectKey: "flight" }
     ]
   },
   {
@@ -148,10 +148,10 @@ export const courseData = [
     icon: "🔮",
     desc: "三年级以上可选修的进阶课程",
     children: [
-      { level: 4, name: "算术占卜",    icon: "🔢", desc: "数字命理与未来推算",               unlock: false, studyRate: 0, unlockGrade: 3 },
-      { level: 4, name: "古代魔文",    icon: "𓂀", desc: "远古符文与魔法文字破译",           unlock: false, studyRate: 0, unlockGrade: 3 },
-      { level: 4, name: "占卜学",      icon: "🔮", desc: "水晶球、茶叶、手相预言",           unlock: false, studyRate: 0, unlockGrade: 3 },
-      { level: 4, name: "保护神奇动物", icon: "🦎", desc: "认识、驯养与保护魔法生物",        unlock: false, studyRate: 0, unlockGrade: 3 },
+      { level: 4, name: "算术占卜",    icon: "🔢", desc: "数字命理与未来推算",               unlock: false, studyRate: 0, unlockGrade: 3, hogwartsSubjectKey: "arithmancy" },
+      { level: 4, name: "古代魔文",    icon: "𓂀", desc: "远古符文与魔法文字破译",           unlock: false, studyRate: 0, unlockGrade: 3, hogwartsSubjectKey: "ancientRunes" },
+      { level: 4, name: "占卜学",      icon: "🔮", desc: "水晶球、茶叶、手相预言",           unlock: false, studyRate: 0, unlockGrade: 3, hogwartsSubjectKey: "divination" },
+      { level: 4, name: "保护神奇动物", icon: "🦎", desc: "认识、驯养与保护魔法生物",        unlock: false, studyRate: 0, unlockGrade: 3, hogwartsSubjectKey: "careOfMagicalCreatures" },
       {
         level: 4,
         name: "麻瓜研究",
@@ -181,8 +181,8 @@ export const courseData = [
     icon: "📑",
     desc: "高年级限定的顶尖魔法学科",
     children: [
-      { level: 4, name: "幻影移形", icon: "💨", desc: "巫师瞬间移动魔法",      unlock: false, studyRate: 0, unlockGrade: 5 },
-      { level: 4, name: "炼金术",   icon: "🥇", desc: "物质转化与贤者之石研究", unlock: false, studyRate: 0, unlockGrade: 6 }
+      { level: 4, name: "幻影移形", icon: "💨", desc: "巫师瞬间移动魔法",      unlock: false, studyRate: 0, unlockGrade: 5, hogwartsSubjectKey: "apparition" },
+      { level: 4, name: "炼金术",   icon: "🥇", desc: "物质转化与贤者之石研究", unlock: false, studyRate: 0, unlockGrade: 6, hogwartsSubjectKey: "alchemy" }
     ]
   }
 ];

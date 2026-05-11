@@ -5,12 +5,23 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.7.4';
+export const CURRENT_VERSION = '1.7.5';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.5': [
+    '新增炼金术、占卜学、算术占卜、古代魔文、保护神奇动物等课程的好好学习内容！',
+    '麻瓜学术系改为英国Year 7课程体系，英语调整为拉丁语，语文与文学调整为英语文学',
+    '道德与法治调整为哲学与伦理，并更新课程事件与教授介绍',
+    '完善麻瓜学术系九门课程的课文、题库、考试系统与课程表安排',
+    '课程表现在会按日期和当前行动时段开放对应课程',
+    '新增飞行课与幻影移形的好好学习内容、题库和课程接入',
+    '补充魔咒学、魔药学等霍格沃茨课程题库内容',
+    '新增无课日期提示与节假日课程限制',
+    '优化存档读取入口与存档槽位识别',
+  ],
   '1.7.4': [
     '修复了一些不知道什么bug！',
   ],

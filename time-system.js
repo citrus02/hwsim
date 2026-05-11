@@ -34,7 +34,7 @@ export function loadTimeFromSave() {
   const data = window.saveSys.getSave();
   if (data.time) {
     timeSystem.dailyActionLeft = data.time.dailyActionLeft ?? 3;
-    timeSystem.nowTime = data.time.nowTime ?? "早晨";
+    timeSystem.nowTime = data.time.nowTime ?? "上午";
     timeSystem.currentDate = data.time.currentDate ?? "1991-09-02";
     if (data.time.year !== undefined) timeSystem.year = data.time.year;
     if (data.time.month !== undefined) timeSystem.month = data.time.month;
@@ -44,18 +44,20 @@ export function loadTimeFromSave() {
 }
 
 function updateTimeByActions() {
-  if (timeSystem.dailyActionLeft >= 3) timeSystem.nowTime = "早晨";
-  else if (timeSystem.dailyActionLeft === 2) timeSystem.nowTime = "中午";
+  if (timeSystem.dailyActionLeft >= 3) timeSystem.nowTime = "上午";
+  else if (timeSystem.dailyActionLeft === 2) timeSystem.nowTime = "下午";
   else if (timeSystem.dailyActionLeft === 1) timeSystem.nowTime = "夜晚";
   else timeSystem.nowTime = "深夜";
 }
 
 export function costAction() {
   if (timeSystem.dailyActionLeft <= 0) return false;
+  window.courseAttendance?.recordMissedClassesForCurrentWindow?.();
   timeSystem.dailyActionLeft--;
   updateTimeByActions();
   syncUI();
   saveTimeToSave();
+  window.courseAttendance?.remindCurrentWindowClasses?.();
   return true;
 }
 
@@ -85,6 +87,11 @@ export function doNothing() {
 }
 
 export function nextDay() {
+  while (timeSystem.dailyActionLeft > 0) {
+    window.courseAttendance?.recordMissedClassesForCurrentWindow?.();
+    timeSystem.dailyActionLeft--;
+  }
+
   let date = new Date(timeSystem.currentDate);
   if (isNaN(date.getTime())) {
     console.warn(`⚠️ 无效的日期格式：${timeSystem.currentDate}，使用默认日期`);
@@ -97,9 +104,10 @@ export function nextDay() {
   timeSystem.month = date.getMonth() + 1;
   timeSystem.day = date.getDate();
   timeSystem.dailyActionLeft = 3;
-  timeSystem.nowTime = "早晨";
+  timeSystem.nowTime = "上午";
   syncUI();
   saveTimeToSave();
+  window.courseAttendance?.remindCurrentWindowClasses?.();
 
   setTimeout(() => {
     if (window.checkTimeTurnerAutoEnd) window.checkTimeTurnerAutoEnd();
@@ -131,9 +139,39 @@ export function syncActionUI() { syncUI(); }
 
 const HOLIDAYS = [
   { start: "12-20", end: "01-05", name: "圣诞假期" },
-  { start: "03-28", end: "04-14", name: "复活节假期" },
   { start: "06-15", end: "09-01", name: "暑假" },
 ];
+
+const DATE_EVENTS = [
+  { exactDate: "1991-09-02", name: "开学日", noClass: true, noClassLabel: "开学日" },
+  { date: "10-31", name: "万圣节", noClassPeriods: [3], noClassLabel: "万圣节宴会" },
+  { date: "02-14", name: "情人节" },
+];
+
+function getEasterDate(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31);
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(year, month - 1, day);
+}
+
+function getDateEvent(dateStr) {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return null;
+  const md = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  return DATE_EVENTS.find(e => e.exactDate === dateStr) || DATE_EVENTS.find(e => e.date === md) || null;
+}
 
 export function isHoliday(dateStr) {
   if (!dateStr) dateStr = timeSystem.currentDate;
@@ -159,7 +197,44 @@ export function isHoliday(dateStr) {
       return h.name;
     }
   }
+
+  const easter = getEasterDate(year);
+  const easterStart = new Date(easter);
+  easterStart.setDate(easter.getDate() - 7);
+  const easterEnd = new Date(easter);
+  easterEnd.setDate(easter.getDate() + 7);
+  if (date >= easterStart && date <= easterEnd) {
+    return "复活节假期";
+  }
+
   return null;
+}
+
+export function getDateEventName(dateStr) {
+  if (!dateStr) dateStr = timeSystem.currentDate;
+  const event = getDateEvent(dateStr);
+  if (event) return event.name;
+  return isHoliday(dateStr) || "";
+}
+
+export function getNoClassReason(dateStr, period = null) {
+  if (!dateStr) dateStr = timeSystem.currentDate;
+  const holiday = isHoliday(dateStr);
+  if (holiday) return holiday;
+
+  const event = getDateEvent(dateStr);
+  if (!event) return "";
+  if (event.noClass) return event.noClassLabel || event.name;
+  if (period && event.noClassPeriods?.includes(period)) return event.noClassLabel || event.name;
+  return "";
+}
+
+export function isSchoolNoClassDate(dateStr) {
+  return !!getNoClassReason(dateStr);
+}
+
+export function isSchoolNoClassPeriod(dateStr, period) {
+  return !!getNoClassReason(dateStr, period);
 }
 
 export function isHogsmeadeWeekend(dateStr) {
@@ -177,15 +252,27 @@ export function isHogsmeadeWeekend(dateStr) {
 }
 
 window.isHoliday = isHoliday;
+window.getDateEventName = getDateEventName;
+window.getNoClassReason = getNoClassReason;
+window.isSchoolNoClassDate = isSchoolNoClassDate;
+window.isSchoolNoClassPeriod = isSchoolNoClassPeriod;
 window.isHogsmeadeWeekend = isHogsmeadeWeekend;
 
 function syncUI() {
   const a = document.getElementById("actions");
   const t = document.getElementById("timeOfDay");
   const d = document.getElementById("date");
+  const w = document.getElementById("weekday");
+  const e = document.getElementById("dateEvent");
   if (a) a.textContent = timeSystem.dailyActionLeft;
   if (t) t.textContent = timeSystem.nowTime;
   if (d) d.textContent = timeSystem.currentDate;
+  if (w) {
+    const weekdays = ["周日","周一","周二","周三","周四","周五","周六"];
+    const dateObj = new Date(timeSystem.currentDate);
+    w.textContent = isNaN(dateObj.getTime()) ? "" : weekdays[dateObj.getDay()];
+  }
+  if (e) e.textContent = getDateEventName(timeSystem.currentDate);
 
   const exploreBtn = document.getElementById("exploreBtn");
   if (exploreBtn) {

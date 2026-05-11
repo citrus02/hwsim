@@ -1,4 +1,4 @@
-/**
+﻿/**
  * subjects/transfiguration.js
  * 变形术分科
  * 教授：米勒娃·麦格

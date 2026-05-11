@@ -433,16 +433,18 @@
 }
 
 .schedule-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
-  flex-wrap: wrap;
 }
 .schedule-grade {
   font-size: 15px;
   font-weight: bold;
   color: #f8c850;
+  justify-self: center;
+  grid-column: 2;
 }
 .schedule-date {
   font-size: 12px;
@@ -455,6 +457,28 @@
   border: 1px solid rgba(92,184,92,0.25);
   border-radius: 4px;
   padding: 2px 8px;
+  grid-column: 1;
+  justify-self: start;
+}
+
+.schedule-exam-entry-btn {
+  justify-self: end;
+  grid-column: 3;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(248,200,80,0.35);
+  background: rgba(248,200,80,0.08);
+  color: #f8c850;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  flex: none;
+  min-width: unset;
+}
+.schedule-exam-entry-btn:hover {
+  background: rgba(248,200,80,0.18);
+  border-color: rgba(248,200,80,0.6);
 }
 
 .schedule-table {
@@ -488,6 +512,19 @@
 }
 .schedule-cell-weekend {
   background: rgba(255,255,255,0.02);
+}
+.schedule-course-cell {
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+.schedule-course-cell:hover,
+.schedule-course-cell:focus-visible {
+  background: rgba(248,200,80,0.16);
+  border-color: rgba(248,200,80,0.42);
+  outline: none;
+}
+.schedule-course-cell:active {
+  transform: translateY(1px);
 }
 .schedule-cell-today {
   background: rgba(248,200,80,0.1);

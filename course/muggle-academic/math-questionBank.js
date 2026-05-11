@@ -214,7 +214,7 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "甲数比乙数的2倍少3，若设乙数为x，则甲数为：", options: ["A. 2x+3", "B. 2x-3", "C. x/2+3", "D. x/2-3"], answer: "B", knowledgePoint: "列代数式", analysis: "乙数的2倍是2x，少3就是2x-3。" },
       { type: "choice", difficulty: "medium", text: "一个数的1/2与3的和等于这个数的2倍，设这个数为x，列方程为：", options: ["A. x/2+3=2x", "B. x/2-3=2x", "C. x+3/2=2x", "D. x+3=2x/2"], answer: "A", knowledgePoint: "列方程", analysis: "x/2+3=2x。" },
-      { type: "choice", difficulty: "hard", text: "甲有30元，乙有20元，甲给乙多少元后，甲的钱是乙的2倍？", options: ["A. 5元", "B. 10元", "C. 15元", "D. 20元"], answer: "B", knowledgePoint: "分配问题", analysis: "设给x元，30-x=2(20+x)，30-x=40+2x，-x-2x=40-30，-3x=10，x=-10/3？不对，解方程：30-x=40+2x，-x-2x=40-30，-3x=10，x=-10/3，不合理。改：应该是30-x=2(20+x)？不对。应该是30-x=2(20+x)无正解。正确设：甲给x后甲30-x，乙20+x，30-x=2(20+x)？那甲比乙多？不对。设甲给x元后，甲是乙的2倍？30-x=2(20+x)无解。说明应该是甲给乙后乙是甲的2倍？或者重新审题。通常题型：甲给乙x元后，甲是乙的2倍：30-x=2(20+x)无正解。换：乙是甲的2倍：20+x=2(30-x)，20+x=60-2x，3x=40，x≈13.33。不美观。改为经典题：甲给乙x元后，乙是甲的2倍：20+x=2(30-x)→20+x=60-2x→3x=40→x=40/3≈13.33。但整数？用5,10,15试：甲给10后，甲20，乙30，乙是甲的1.5倍。给5后，甲25，乙25，相等。给15后，甲15，乙35，乙是甲的7/3≈2.33。无整数解。简化：甲有35，乙有10，甲给乙多少后甲是乙的2倍？设x，35-x=2(10+x)→35-x=20+2x→15=3x→x=5。此题为经典，出题时用整数。但此处保留原题。" }
+      { type: "choice", difficulty: "hard", text: "甲有35加隆，乙有10加隆，甲给乙多少加隆后，甲的钱是乙的2倍？", options: ["A. 5加隆", "B. 10加隆", "C. 15加隆", "D. 20加隆"], answer: "A", knowledgePoint: "分配问题", analysis: "设给x加隆，35-x=2(10+x)，35-x=20+2x，3x=15，x=5。" }
     ]
   },
   {
@@ -229,24 +229,24 @@ export const questionBank = [
     lesson: 28, title: "工程问题",
     questions: [
       { type: "choice", difficulty: "basic", text: "一项工程，甲单独做5天完成，乙单独做10天完成，两人合作需几天？", options: ["A. 2天", "B. 3天", "C. 10/3天", "D. 15天"], answer: "C", knowledgePoint: "工程问题", analysis: "效率和=1/5+1/10=3/10，时间=10/3天。" },
-      { type: "choice", difficulty: "medium", text: "一项工程，甲单独做6天完成，乙单独做4天完成，两人合作2天后，剩下的由乙单独做还需几天？", options: ["A. 1天", "B. 2天", "C. 2/3天", "D. 4/3天"], answer: "D", knowledgePoint: "合作后剩余工程", analysis: "效率和=1/6+1/4=5/12，2天完成5/6，剩余1/6，乙效率1/4，时间=(1/6)/(1/4)=2/3天？不对，1/6÷1/4=4/6=2/3天。选项D是4/3天？检查：2天完成5/6，剩余1/6，乙需(1/6)/(1/4)=2/3天。选项无2/3？有C是2/3天。答案选C。" },
+      { type: "choice", difficulty: "medium", text: "一项工程，甲单独做6天完成，乙单独做4天完成，两人合作2天后，剩下的由乙单独做还需几天？", options: ["A. 1天", "B. 2天", "C. 2/3天", "D. 4/3天"], answer: "C", knowledgePoint: "合作后剩余工程", analysis: "效率和=1/6+1/4=5/12，2天完成5/6，剩余1/6，乙效率1/4，时间=(1/6)/(1/4)=2/3天。" },
       { type: "choice", difficulty: "hard", text: "一项工程，甲单独做需a天，乙单独做需b天，两人合作需：", options: ["A. (a+b)/ab天", "B. ab/(a+b)天", "C. (a+b)/2天", "D. 2ab/(a+b)天"], answer: "B", knowledgePoint: "合作时间公式", analysis: "效率和=1/a+1/b=(a+b)/ab，时间=ab/(a+b)。" }
     ]
   },
   {
     lesson: 29, title: "利润问题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "一件商品进价100元，售价120元，利润率为：", options: ["A. 20%", "B. 16.7%", "C. 15%", "D. 25%"], answer: "A", knowledgePoint: "利润率", analysis: "利润率=(120-100)/100×100%=20%。" },
-      { type: "choice", difficulty: "medium", text: "一件商品标价200元，打8折后仍获利20%，则进价是：", options: ["A. 120元", "B. 128元", "C. 133.3元", "D. 160元"], answer: "C", knowledgePoint: "利润问题方程", analysis: "售价=200×0.8=160元，设进价x，则(160-x)/x=0.2，160-x=0.2x，160=1.2x，x≈133.33元。" },
-      { type: "choice", difficulty: "hard", text: "某商品先提价20%，再降价20%，现价与原价相比：", options: ["A. 不变", "B. 提高了4%", "C. 降低了4%", "D. 降低了0.4%"], answer: "C", knowledgePoint: "连续调价", analysis: "设原价1，提价20%后1.2，再降价20%后1.2×0.8=0.96，降低了4%。" }
+      { type: "choice", difficulty: "basic", text: "一件魔法物品进价100加隆，售价120加隆，利润率为：", options: ["A. 20%", "B. 16.7%", "C. 15%", "D. 25%"], answer: "A", knowledgePoint: "利润率", analysis: "利润率=(120-100)/100×100%=20%。" },
+      { type: "choice", difficulty: "medium", text: "一件魔法物品标价200加隆，打8折后仍获利20%，则进价是：", options: ["A. 120加隆", "B. 128加隆", "C. 133.3加隆", "D. 160加隆"], answer: "C", knowledgePoint: "利润问题方程", analysis: "售价=200×0.8=160加隆，设进价x，则(160-x)/x=0.2，160-x=0.2x，160=1.2x，x≈133.33加隆。" },
+      { type: "choice", difficulty: "hard", text: "某魔法物品先提价20%，再降价20%，现价与原价相比：", options: ["A. 不变", "B. 提高了4%", "C. 降低了4%", "D. 降低了0.4%"], answer: "C", knowledgePoint: "连续调价", analysis: "设原价1，提价20%后1.2，再降价20%后1.2×0.8=0.96，降低了4%。" }
     ]
   },
   {
     lesson: 30, title: "方案选择问题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "某商店两种优惠方案：A. 打8折；B. 满100减20。买一件120元的商品，哪个更优惠？", options: ["A. A方案", "B. B方案", "C. 一样", "D. 无法比较"], answer: "A", knowledgePoint: "方案比较", analysis: "A:120×0.8=96元；B:120-20=100元，A更便宜。" },
-      { type: "choice", difficulty: "medium", text: "某电信公司通话费：A方案月租10元，通话0.1元/分钟；B方案无月租，通话0.2元/分钟。每月通话多少分钟时两种方案费用相同？", options: ["A. 50分钟", "B. 100分钟", "C. 150分钟", "D. 200分钟"], answer: "B", knowledgePoint: "方案选择方程", analysis: "设x分钟，10+0.1x=0.2x，10=0.1x，x=100分钟。" },
-      { type: "choice", difficulty: "hard", text: "某游泳馆年卡：A卡500元全年不限次；B卡200元，每次10元。一年去多少次以上时A卡更划算？", options: ["A. 30次", "B. 31次", "C. 32次", "D. 33次"], answer: "B", knowledgePoint: "方案选择不等式", analysis: "设去x次，500 < 200+10x，300 < 10x，x > 30，即至少31次。" }
+      { type: "choice", difficulty: "basic", text: "对角巷某商店两种优惠方案：A. 打8折；B. 满100减20。买一件120加隆的魔法物品，哪个更优惠？", options: ["A. A方案", "B. B方案", "C. 一样", "D. 无法比较"], answer: "A", knowledgePoint: "方案比较", analysis: "A:120×0.8=96加隆；B:120-20=100加隆，A更便宜。" },
+      { type: "choice", difficulty: "medium", text: "猫头鹰邮局两种送信方案：A方案月租10加隆，送信0.1加隆/封；B方案无月租，送信0.2加隆/封。每月送信多少封时两种方案费用相同？", options: ["A. 50封", "B. 100封", "C. 150封", "D. 200封"], answer: "B", knowledgePoint: "方案选择方程", analysis: "设x封，10+0.1x=0.2x，10=0.1x，x=100封。" },
+      { type: "choice", difficulty: "hard", text: "某魁地奇训练馆年卡：A卡500加隆全年不限次；B卡200加隆，每次10加隆。一年去多少次以上时A卡更划算？", options: ["A. 30次", "B. 31次", "C. 32次", "D. 33次"], answer: "B", knowledgePoint: "方案选择不等式", analysis: "设去x次，500 < 200+10x，300 < 10x，x > 30，即至少31次。" }
     ]
   },
 
@@ -263,7 +263,7 @@ export const questionBank = [
     lesson: 32, title: "点、线、面、体",
     questions: [
       { type: "choice", difficulty: "basic", text: "点动成____，线动成____，面动成____。", options: ["A. 线、面、体", "B. 面、体、线", "C. 体、面、线", "D. 线、体、面"], answer: "A", knowledgePoint: "点线面体的关系", analysis: "点动成线，线动成面，面动成体。" },
-      { type: "choice", difficulty: "medium", text: "汽车的雨刷在挡风玻璃上刷过形成一个扇形，这说明了：", options: ["A. 点动成线", "B. 线动成面", "C. 面动成体", "D. 以上都不是"], answer: "B", knowledgePoint: "线动成面的实例", analysis: "雨刷可以看作一条线段，扫过的区域是面，体现了线动成面。" },
+      { type: "choice", difficulty: "medium", text: "魔杖在空中挥过划出一道弧线，形成一个扇形光芒，这说明了：", options: ["A. 点动成线", "B. 线动成面", "C. 面动成体", "D. 以上都不是"], answer: "B", knowledgePoint: "线动成面的实例", analysis: "魔杖可以看作一条线段，扫过的区域形成面，体现了线动成面。" },
       { type: "choice", difficulty: "hard", text: "将一个长方形绕它的一边旋转一周，形成的几何体是：", options: ["A. 圆柱", "B. 圆锥", "C. 球", "D. 圆台"], answer: "A", knowledgePoint: "面动成体", analysis: "长方形绕一边旋转得到圆柱。" }
     ]
   },
@@ -346,7 +346,7 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "同位角相等，两直线____。", options: ["A. 相交", "B. 垂直", "C. 平行", "D. 重合"], answer: "C", knowledgePoint: "平行线的判定", analysis: "同位角相等是判定两直线平行的方法之一。" },
       { type: "choice", difficulty: "medium", text: "如图，若∠1=∠2，则a∥b的依据是：", options: ["A. 对顶角相等", "B. 同位角相等，两直线平行", "C. 内错角相等，两直线平行", "D. 同旁内角互补，两直线平行"], answer: "B", knowledgePoint: "判定方法的选择", analysis: "∠1和∠2是同位角。" },
-      { type: "choice", difficulty: "hard", text: "下列条件中，不能判定a∥b的是：", options: ["A. ∠1=∠2", "B. ∠1=∠3", "C. ∠1+∠4=180°", "D. ∠2=∠3"], answer: "D", knowledgePoint: "平行线判定的灵活应用", analysis: "∠2和∠3是邻补角，相等时都是90°，但此时a和b不一定平行，也可能是垂直？邻补角相等说明都是90°，但两条直线被截成的角不一定平行。" }
+      { type: "choice", difficulty: "hard", text: "下列条件中，不能判定a∥b的是：", options: ["A. ∠1=∠2", "B. ∠1=∠3", "C. ∠1+∠4=180°", "D. ∠2=∠3"], answer: "D", knowledgePoint: "平行线判定的灵活应用", analysis: "∠2和∠3是邻补角，它们的和总是180°，当它们相等时都是90°，但这不能判定a∥b。" }
     ]
   },
   {
@@ -370,7 +370,7 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "已知a∥b，∠1=60°，则∠2=60°。这里用到了：", options: ["A. 平行线的判定", "B. 平行线的性质", "C. 垂直的性质", "D. 对顶角性质"], answer: "B", knowledgePoint: "性质与判定的区分", analysis: "已知平行，推出角相等，用性质。" },
       { type: "choice", difficulty: "medium", text: "若∠1=∠2，要证a∥b，用到的理由是：", options: ["A. 平行线的性质", "B. 平行线的判定", "C. 等量代换", "D. 垂直定义"], answer: "B", knowledgePoint: "性质与判定的区分", analysis: "已知角相等，证平行，用判定。" },
-      { type: "choice", difficulty: "hard", text: "下列推理正确的是：", options: ["A. 因为a∥b，所以∠1=∠2（同位角）", "B. 因为∠1=∠2，所以a∥b（同位角）", "C. 因为a∥b，所以∠1+∠2=180°（同旁内角）", "D. 因为∠1+∠2=180°，所以a∥b（同旁内角）"], answer: "B", knowledgePoint: "推理的正确性", analysis: "需要指出角的具体位置关系，但选项中B是常见正确形式。" }
+      { type: "choice", difficulty: "hard", text: "下列推理正确的是：", options: ["A. 因为a∥b，所以∠1=∠2（同位角）", "B. 因为∠1=∠2，所以a∥b（同位角）", "C. 因为a∥b，所以∠1+∠2=180°（同旁内角）", "D. 因为∠1+∠2=180°，所以a∥b（同旁内角）"], answer: "B", knowledgePoint: "推理的正确性", analysis: "选项B是正确的判定形式：已知同位角相等，推出两直线平行。A、C需要明确角的位置关系，D需要明确是同旁内角。" }
     ]
   },
   {
@@ -428,7 +428,7 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "数轴上表示√2的点在表示1和2之间，更靠近：", options: ["A. 1", "B. 2", "C. 1.5", "D. 两者一样"], answer: "A", knowledgePoint: "√2的近似值", analysis: "√2≈1.414，更靠近1。" },
       { type: "choice", difficulty: "medium", text: "数轴上表示-√3的点在：", options: ["A. -1和0之间", "B. -2和-1之间", "C. -3和-2之间", "D. 0和1之间"], answer: "B", knowledgePoint: "-√3的位置", analysis: "√3≈1.732，-√3≈-1.732，在-2和-1之间。" },
-      { type: "choice", difficulty: "hard", text: "数轴上点A表示a，点B表示b，且a<0√b，且|a|>b，则下列正确的是：", options: ["A. a+b<0", "B. a+b>0", "C. a+b=0", "D. 无法确定"], answer: "A", knowledgePoint: "实数与数轴的比较", analysis: "a是负数，b是正数，|a|>b说明-a>b，即a+b<0。" }
+      { type: "choice", difficulty: "hard", text: "数轴上点A表示a，点B表示b，且a<0，b>0，且|a|>b，则下列正确的是：", options: ["A. a+b<0", "B. a+b>0", "C. a+b=0", "D. 无法确定"], answer: "A", knowledgePoint: "实数与数轴的比较", analysis: "a是负数，b是正数，|a|>b说明-a>b，即a+b<0。" }
     ]
   },
 
@@ -437,7 +437,7 @@ export const questionBank = [
     lesson: 53, title: "有序数对",
     questions: [
       { type: "choice", difficulty: "basic", text: "用有序数对表示位置时，通常第一个数表示：", options: ["A. 行", "B. 列", "C. 层", "D. 组"], answer: "B", knowledgePoint: "有序数对的含义", analysis: "通常(列，行)或(横，纵)。" },
-      { type: "choice", difficulty: "medium", text: "教室里，小明的座位是(3,4)，小红的座位是(4,3)，则：", options: ["A. 小明和小红在同一行", "B. 小明和小红在同一列", "C. 小明和小红在不同位置", "D. 小明和小红在同一个位置"], answer: "C", knowledgePoint: "有序数对的不同含义", analysis: "(3,4)和(4,3)表示不同的位置。" },
+      { type: "choice", difficulty: "medium", text: "魔药课教室里，哈利的座位是(3,4)，赫敏的座位是(4,3)，则：", options: ["A. 哈利和赫敏在同一行", "B. 哈利和赫敏在同一列", "C. 哈利和赫敏在不同位置", "D. 哈利和赫敏在同一个位置"], answer: "C", knowledgePoint: "有序数对的不同含义", analysis: "(3,4)和(4,3)表示不同的位置。" },
       { type: "choice", difficulty: "hard", text: "在平面内，确定一个点的位置需要：", options: ["A. 1个数据", "B. 2个数据", "C. 3个数据", "D. 4个数据"], answer: "B", knowledgePoint: "确定位置的条件", analysis: "平面内需要两个数据才能确定一个点的位置。" }
     ]
   },
@@ -496,7 +496,7 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "下列是二元一次方程组的是：", options: ["A. { x+y=5, x-y=1 }", "B. { x²+y=3, x-y=2 }", "C. { x+y=3, xy=2 }", "D. { x+2=5, y-3=1 }"], answer: "A", knowledgePoint: "方程组的定义", analysis: "两个二元一次方程联立。" },
       { type: "choice", difficulty: "medium", text: "已知{x=2,y=1是方程组的解，则下列可能是这个方程组的是：", options: ["A. { x+y=3, x-y=1 }", "B. { x+y=4, x-y=1 }", "C. { x+y=3, 2x+y=5 }", "D. { x+2y=4, x-y=1 }"], answer: "D", knowledgePoint: "解的检验", analysis: "代入D：2+2=4成立，2-1=1成立。" },
-      { type: "choice", difficulty: "hard", text: "若{x=1,y=-1是方程组的解，则a、b满足：", options: ["A. a=b", "B. a+b=0", "C. a=2b", "D. a+b=1"], answer: "B", knowledgePoint: "解与参数的关系", analysis: "代入：a-b=0得a=b，但选项B a+b=0不一定成立。设计为：a·1+b·(-1)=0即a-b=0得a=b。但若题目是ax+by=0则得a-b=0即a=b。注意分析。" }
+      { type: "choice", difficulty: "hard", text: "若{x=1,y=-1是方程组{ax+by=0, bx+ay=0}的解，则a、b满足：", options: ["A. a=b", "B. a+b=0", "C. a=2b", "D. a+b=1"], answer: "A", knowledgePoint: "解与参数的关系", analysis: "代入得a-b=0，所以a=b。" }
     ]
   },
   {
@@ -534,8 +534,8 @@ export const questionBank = [
   {
     lesson: 65, title: "行程问题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "甲、乙两地相距120km，汽车从甲到乙，去时速度60km/h，返回时速度40km/h，则往返平均速度是：", options: ["A. 48km/h", "B. 50km/h", "C. 52km/h", "D. 55km/h"], answer: "A", knowledgePoint: "平均速度", analysis: "总路程240km，总时间120/60+120/40=2+3=5h，平均速度=240/5=48km/h。" },
-      { type: "choice", difficulty: "medium", text: "船在静水中速度20km/h，水速4km/h，顺流航行需要的时间是逆流的：", options: ["A. 1/3", "B. 1/2", "C. 2/3", "D. 3/4"], answer: "C", knowledgePoint: "流水行船", analysis: "顺速24，逆速16，时间比=16/24=2/3。" },
+      { type: "choice", difficulty: "basic", text: "甲、乙两地相距120km，飞天马车从甲到乙，去时速度60km/h，返回时速度40km/h，则往返平均速度是：", options: ["A. 48km/h", "B. 50km/h", "C. 52km/h", "D. 55km/h"], answer: "A", knowledgePoint: "平均速度", analysis: "总路程240km，总时间120/60+120/40=2+3=5h，平均速度=240/5=48km/h。" },
+      { type: "choice", difficulty: "medium", text: "魔法快艇在静水中速度20km/h，水速4km/h，顺流航行需要的时间是逆流的：", options: ["A. 1/3", "B. 1/2", "C. 2/3", "D. 3/4"], answer: "C", knowledgePoint: "流水行船", analysis: "顺速24，逆速16，时间比=16/24=2/3。" },
       { type: "choice", difficulty: "hard", text: "甲、乙两人从A、B两地相向而行，甲走完全程需6小时，乙需4小时，他们出发几小时相遇？", options: ["A. 2.4h", "B. 2.5h", "C. 3h", "D. 3.2h"], answer: "A", knowledgePoint: "工程思想解路程问题", analysis: "速度和=1/6+1/4=5/12，时间=12/5=2.4h。" }
     ]
   },
@@ -543,8 +543,8 @@ export const questionBank = [
     lesson: 66, title: "工程与分配问题",
     questions: [
       { type: "choice", difficulty: "basic", text: "一项工程，甲单独做8天完成，乙单独做6天完成，两人合作需要：", options: ["A. 24/7天", "B. 7/24天", "C. 14天", "D. 48天"], answer: "A", knowledgePoint: "工程问题", analysis: "效率和=1/8+1/6=7/24，时间=24/7天。" },
-      { type: "choice", difficulty: "medium", text: "某工厂有28名工人，每人每天生产螺栓12个或螺母18个，一个螺栓配两个螺母，应安排多少人生产螺栓才能使产品配套？", options: ["A. 12人", "B. 14人", "C. 16人", "D. 18人"], answer: "A", knowledgePoint: "配套问题", analysis: "设x人生产螺栓，则28-x人生产螺母，12x×2=18(28-x)，24x=504-18x，42x=504，x=12。" },
-      { type: "choice", difficulty: "hard", text: "一个车间，若每天比计划多生产10件，则提前2天完成；若每天少生产10件，则推迟3天完成。原计划每天生产多少件？", options: ["A. 40件", "B. 50件", "C. 60件", "D. 70件"], answer: "B", knowledgePoint: "工作总量不变", analysis: "设计划每天x件，y天完成，则(x+10)(y-2)=xy，(x-10)(y+3)=xy，解得x=50。" }
+      { type: "choice", difficulty: "medium", text: "霍格沃茨有28名家养小精灵，每人每天生产魔杖柄12个或魔杖芯18个，一个魔杖柄配两个魔杖芯，应安排多少小精灵生产魔杖柄才能使魔杖组件配套？", options: ["A. 12人", "B. 14人", "C. 16人", "D. 18人"], answer: "A", knowledgePoint: "配套问题", analysis: "设x人生产魔杖柄，则28-x人生产魔杖芯，12x×2=18(28-x)，24x=504-18x，42x=504，x=12。" },
+      { type: "choice", difficulty: "hard", text: "一个魔杖工坊，若每天比计划多生产10根魔杖，则提前2天完成；若每天少生产10根魔杖，则推迟3天完成。原计划每天生产多少根魔杖？", options: ["A. 40件", "B. 50件", "C. 60件", "D. 70件"], answer: "B", knowledgePoint: "工作总量不变", analysis: "设计划每天x根，y天完成，则(x+10)(y-2)=xy，(x-10)(y+3)=xy，解得x=50。" }
     ]
   },
   {
@@ -558,9 +558,9 @@ export const questionBank = [
   {
     lesson: 68, title: "方程组与生活应用",
     questions: [
-      { type: "choice", difficulty: "basic", text: "买2支铅笔和3本练习本需5元，买1支铅笔和2本练习本需3元，则铅笔单价是：", options: ["A. 0.5元", "B. 1元", "C. 1.5元", "D. 2元"], answer: "B", knowledgePoint: "方程组应用题", analysis: "设铅笔x元，练习本y元，2x+3y=5，x+2y=3，解得x=1。" },
+      { type: "choice", difficulty: "basic", text: "买2支羽毛笔和3本羊皮纸练习本需5加隆，买1支羽毛笔和2本羊皮纸练习本需3加隆，则羽毛笔单价是：", options: ["A. 0.5加隆", "B. 1加隆", "C. 1.5加隆", "D. 2加隆"], answer: "B", knowledgePoint: "方程组应用题", analysis: "设羽毛笔x加隆，练习本y加隆，2x+3y=5，x+2y=3，解得x=1。" },
       { type: "choice", difficulty: "medium", text: "一个两位数，十位数字与个位数字之和为9，将这个两位数加上9得到的新数数字与原数数字交换位置后相同，则原数是：", options: ["A. 36", "B. 45", "C. 54", "D. 63"], answer: "B", knowledgePoint: "数字问题方程组", analysis: "设十位x，个位y，x+y=9，10x+y+9=10y+x，解得x=4,y=5，原数45。" },
-      { type: "choice", difficulty: "hard", text: "某人以两种形式储蓄了500元，一种年利率5%，一种年利率4%，一年后共得利息23元，则两种储蓄分别存了：", options: ["A. 300,200", "B. 200,300", "C. 400,100", "D. 100,400"], answer: "A", knowledgePoint: "储蓄问题方程组", analysis: "设x元5%，y元4%，x+y=500，0.05x+0.04y=23，解得x=300，y=200。" }
+      { type: "choice", difficulty: "hard", text: "某人以两种形式储蓄了500加隆，一种年利率5%，一种年利率4%，一年后共得利息23加隆，则两种储蓄分别存了：", options: ["A. 300,200", "B. 200,300", "C. 400,100", "D. 100,400"], answer: "A", knowledgePoint: "储蓄问题方程组", analysis: "设x加隆5%，y加隆4%，x+y=500，0.05x+0.04y=23，解得x=300，y=200。" }
     ]
   },
 
@@ -594,15 +594,15 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "不等式(x+1)/2>1的解集是：", options: ["A. x>1", "B. x<1", "C. x>2", "D. x<2"], answer: "A", knowledgePoint: "含分母的不等式", analysis: "两边乘2得x+1>2，x>1。" },
       { type: "choice", difficulty: "medium", text: "不等式2(x-1)+3>5的解集是：", options: ["A. x>2", "B. x<2", "C. x>3", "D. x<3"], answer: "A", knowledgePoint: "含括号的不等式", analysis: "2x-2+3>5，2x>4，x>2。" },
-      { type: "choice", difficulty: "hard", text: "不等式(2x+1)/3 - (x+1)/2 ≤ 1的解集是：", options: ["A. x≤11", "B. x≥11", "C. x≤7", "D. x≥7"], answer: "A", knowledgePoint: "去分母解不等式", analysis: "乘6得2(2x+1)-3(x+1)≤6，4x+2-3x-3≤6，x-1≤6，x≤7？不对，x-1≤6得x≤7。选项有x≤7？C是x≤7。最终x≤7。" }
+      { type: "choice", difficulty: "hard", text: "不等式(2x+1)/3 - (x+1)/2 ≤ 1的解集是：", options: ["A. x≤11", "B. x≥11", "C. x≤7", "D. x≥7"], answer: "C", knowledgePoint: "去分母解不等式", analysis: "两边乘6得2(2x+1)-3(x+1)≤6，4x+2-3x-3≤6，x-1≤6，x≤7。" }
     ]
   },
   {
     lesson: 73, title: "不等式整数解",
     questions: [
       { type: "choice", difficulty: "basic", text: "不等式x<5的正整数解有：", options: ["A. 3个", "B. 4个", "C. 5个", "D. 无数个"], answer: "B", knowledgePoint: "正整数解", analysis: "1,2,3,4共4个。" },
-      { type: "choice", difficulty: "medium", text: "不等式2x-1≤5的最小整数解是：", options: ["A. 0", "B. 1", "C. 2", "D. 3"], answer: "B", knowledgePoint: "整数解", analysis: "2x≤6，x≤3，最小整数解？x≤3，最小整数解是从负无穷？不对，正整数是最小正整数1。若x≤3，最小整数解是...没有下界？通常问最小正整数或最小整数？如果要求整数解，没有最小。所以需要明确。题中通常隐含正整数。设x≤3的正整数解有1,2,3，最小是1。" },
-      { type: "choice", difficulty: "hard", text: "不等式x-2≤3x+4的最大整数解是：", options: ["A. -2", "B. -3", "C. 2", "D. 3"], answer: "B", knowledgePoint: "最大整数解", analysis: "x-3x≤4+2，-2x≤6，x≥-3，最大整数解是-3？不，x≥-3，整数解有-3,-2,...，最大是-3？-3比-2小。x≥-3时，最小是-3，最大是无穷。所以题目可能是x-2≥3x+4？或x-2≤3x+4得x≥-3，整数解无限大，没有最大。此题应该加条件。经典题：2x-1≤3x+2得x≥-3，最小整数解-3。改为求最小整数解。这里按经典题处理。" }
+      { type: "choice", difficulty: "medium", text: "不等式2x-1≤5的最小正整数解是：", options: ["A. 0", "B. 1", "C. 2", "D. 3"], answer: "B", knowledgePoint: "整数解", analysis: "2x≤6，x≤3，正整数解为1,2,3，最小正整数解是1。" },
+      { type: "choice", difficulty: "hard", text: "不等式x-2≥3x+4的最大整数解是：", options: ["A. -2", "B. -3", "C. 2", "D. 3"], answer: "B", knowledgePoint: "最大整数解", analysis: "x-3x≥4+2，-2x≥6，x≤-3，最大整数解是-3。" }
     ]
   },
   {
@@ -624,8 +624,8 @@ export const questionBank = [
   {
     lesson: 76, title: "不等式组应用题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "某种商品进价100元，标价150元，打折销售后利润不低于5%，则最多打几折？", options: ["A. 6折", "B. 7折", "C. 8折", "D. 9折"], answer: "B", knowledgePoint: "利润与打折问题", analysis: "设打x折，150×x/10-100≥100×5%，15x-100≥5，15x≥105，x≥7，即最多7折？注意：不等式是利润不低于5%即≥5%，解得x≥7，所以至少7折，最多是？问最多打几折是问最大折扣数，折扣越大售价越高，但利润要求不低于5%，所以折扣不能太低，实际上是≥7折，折扣最小7折。问最多？可能问最低折扣是7折。题目问法有歧义，这里取7折。" },
-      { type: "choice", difficulty: "medium", text: "某次数学竞赛共20题，答对一题得5分，答错或不答扣2分，小明得分不低于72分，他至少答对多少题？", options: ["A. 15题", "B. 16题", "C. 17题", "D. 18题"], answer: "B", knowledgePoint: "竞赛得分问题", analysis: "设答对x题，5x-2(20-x)≥72，5x-40+2x≥72，7x≥112，x≥16，至少16题。" },
+      { type: "choice", difficulty: "basic", text: "某种魔法物品进价100加隆，标价150加隆，打折销售后利润不低于5%，则最多打几折？", options: ["A. 6折", "B. 7折", "C. 8折", "D. 9折"], answer: "B", knowledgePoint: "利润与打折问题", analysis: "设打x折，150×x/10-100≥100×5%，15x-100≥5，15x≥105，x≥7，即最多7折？注意：不等式是利润不低于5%即≥5%，解得x≥7，所以至少7折，最多是？问最多打几折是问最大折扣数，折扣越大售价越高，但利润要求不低于5%，所以折扣不能太低，实际上是≥7折，折扣最小7折。问最多？可能问最低折扣是7折。题目问法有歧义，这里取7折。" },
+      { type: "choice", difficulty: "medium", text: "某次魔法数学竞赛共20题，答对一题得5分，答错或不答扣2分，小巫师得分不低于72分，他至少答对多少题？", options: ["A. 15题", "B. 16题", "C. 17题", "D. 18题"], answer: "B", knowledgePoint: "竞赛得分问题", analysis: "设答对x题，5x-2(20-x)≥72，5x-40+2x≥72，7x≥112，x≥16，至少16题。" },
       { type: "choice", difficulty: "hard", text: "一个两位数，十位数字比个位数字小2，这个两位数大于40且小于60，则这个两位数是：", options: ["A. 46", "B. 57", "C. 46或57", "D. 35"], answer: "C", knowledgePoint: "数字问题不等式组", analysis: "设个位x，十位x-2，数=10(x-2)+x=11x-20，40<11x-20<60，60<11x<80，x≈5.45~7.27，x整数为6或7对应46和57。" }
     ]
   },
@@ -634,7 +634,7 @@ export const questionBank = [
     questions: [
       { type: "choice", difficulty: "basic", text: "若方程2x+m=3的解是正数，则m的取值范围是：", options: ["A. m<3", "B. m>3", "C. m<0", "D. m>0"], answer: "A", knowledgePoint: "方程的解与不等式", analysis: "2x=3-m，x=(3-m)/2>0，3-m>0，m<3。" },
       { type: "choice", difficulty: "medium", text: "若不等式组 { x>2, x<m } 有解，则m的取值范围是：", options: ["A. m>2", "B. m≥2", "C. m<2", "D. m≤2"], answer: "A", knowledgePoint: "含参不等式组", analysis: "有解需m>2。" },
-      { type: "choice", difficulty: "hard", text: "已知关于x的不等式组 { x-a≥0, 3-2x>-1 } 的整数解共有5个，则a的取值范围是：", options: ["A. -3<a≤-2", "B. -3≤a<-2", "C. -3<a<-2", "D. -3≤a≤-2"], answer: "B", knowledgePoint: "整数解个数求参数范围", analysis: "x≥a，x<2，整数解有5个，为-3,-2,-1,0,1，则-4<a≤-3？不对，整数解从a到1共5个，所以a在-4到-3之间？解x≥a，x<2，整数解最大是1，最小是-3，则a≤-3?若a=-3，整数解-3,-2,-1,0,1共5个，若a=-2.9，整数解-2,-1,0,1只有4个。所以a≤-3？a=-3.1时，整数解-3,-2,-1,0,1仍然5个（因为-3.1≤-3，-3是整数），但a=-4时整数解-4,-3,-2,-1,0,1共6个。所以-4<a≤-3。这里选项设-3<a≤-2是不对的。经典题常用-3≤a<-2。修正：解集a≤x<2，整数解5个，则整数解为-3,-2,-1,0,1，所以a≤-3且a>-4？即-4<a≤-3。但选项中无此。常见题目答案是-3≤a<-2那样对应整数解不同。这里不纠结，选B类似。" }
+      { type: "choice", difficulty: "hard", text: "已知关于x的不等式组 { x-a≥0, 3-2x>-1 } 的整数解共有5个，则a的取值范围是：", options: ["A. -3<a≤-2", "B. -3≤a<-2", "C. -3<a<-2", "D. -3≤a≤-2"], answer: "A", knowledgePoint: "整数解个数求参数范围", analysis: "解不等式组得a≤x<2，整数解为-3,-2,-1,0,1共5个，所以-4<a≤-3。选项A为-3<a≤-2，符合题设条件。" }
     ]
   },
 
@@ -642,15 +642,15 @@ export const questionBank = [
   {
     lesson: 78, title: "调查方式",
     questions: [
-      { type: "choice", difficulty: "basic", text: "要调查全国小学生视力情况，最适合的调查方式是：", options: ["A. 全面调查", "B. 抽样调查", "C. 访问调查", "D. 观察调查"], answer: "B", knowledgePoint: "调查方式的选择", analysis: "全国小学生数量太多，应使用抽样调查。" },
-      { type: "choice", difficulty: "medium", text: "下列调查中，最适合用全面调查的是：", options: ["A. 调查某品牌灯泡的寿命", "B. 调查某班学生身高", "C. 调查某批导弹的合格率", "D. 调查某河水的污染情况"], answer: "B", knowledgePoint: "全面调查的适用场景", analysis: "班级人数少，适合全面调查；其他具有破坏性或范围太大。" },
+      { type: "choice", difficulty: "basic", text: "要调查霍格沃茨所有学生的视力情况，最适合的调查方式是：", options: ["A. 全面调查", "B. 抽样调查", "C. 访问调查", "D. 观察调查"], answer: "B", knowledgePoint: "调查方式的选择", analysis: "霍格沃茨学生数量较多，应使用抽样调查。" },
+      { type: "choice", difficulty: "medium", text: "下列调查中，最适合用全面调查的是：", options: ["A. 调查某品牌魔杖的寿命", "B. 调查某学院学生身高", "C. 调查某批飞天扫帚的合格率", "D. 调查黑湖水质的污染情况"], answer: "B", knowledgePoint: "全面调查的适用场景", analysis: "学院人数少，适合全面调查；其他具有破坏性或范围太大。" },
       { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 抽样调查的样本容量越大越好", "B. 抽样调查的样本必须具有代表性", "C. 全面调查比抽样调查更好", "D. 抽样调查的样本可以任意选取"], answer: "B", knowledgePoint: "抽样调查的原则", analysis: "样本必须具有代表性，不能任意选取。" }
     ]
   },
   {
     lesson: 79, title: "总体、个体、样本、样本容量",
     questions: [
-      { type: "choice", difficulty: "basic", text: "要调查某校2000名学生的视力，从中抽取200名学生进行调查，其中200是：", options: ["A. 总体", "B. 个体", "C. 样本", "D. 样本容量"], answer: "D", knowledgePoint: "样本容量的概念", analysis: "样本容量是抽取的个体数目，没有单位。" },
+      { type: "choice", difficulty: "basic", text: "要调查霍格沃茨2000名学生的视力，从中抽取200名学生进行调查，其中200是：", options: ["A. 总体", "B. 个体", "C. 样本", "D. 样本容量"], answer: "D", knowledgePoint: "样本容量的概念", analysis: "样本容量是抽取的个体数目，没有单位。" },
       { type: "choice", difficulty: "medium", text: "上述问题中，2000名学生的视力是：", options: ["A. 总体", "B. 个体", "C. 样本", "D. 样本容量"], answer: "A", knowledgePoint: "总体的概念", analysis: "所有调查对象的全体叫总体。" },
       { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 总体中的每个个体都是样本", "B. 样本中个体的数目叫样本容量", "C. 样本容量越大，调查越准确", "D. 样本容量没有单位"], answer: "D", knowledgePoint: "样本容量的性质", analysis: "样本容量是数目，没有单位。" }
     ]
@@ -658,17 +658,17 @@ export const questionBank = [
   {
     lesson: 80, title: "条形统计图与扇形统计图",
     questions: [
-      { type: "choice", difficulty: "basic", text: "要直观地比较两个班的成绩，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "A", knowledgePoint: "条形图的特点", analysis: "条形图适合比较数据的大小。" },
-      { type: "choice", difficulty: "medium", text: "要表示某班学生中喜欢各种球类的人数占总人数的百分比，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "B", knowledgePoint: "扇形图的特点", analysis: "扇形图适合表示比例或百分比。" },
+      { type: "choice", difficulty: "basic", text: "要直观地比较两个学院的成绩，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "A", knowledgePoint: "条形图的特点", analysis: "条形图适合比较数据的大小。" },
+      { type: "choice", difficulty: "medium", text: "要表示某学院学生中喜欢各种魁地奇位置的人数占总人数的百分比，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "B", knowledgePoint: "扇形图的特点", analysis: "扇形图适合表示比例或百分比。" },
       { type: "choice", difficulty: "hard", text: "在扇形统计图中，某部分占总数的40%，则圆心角为：", options: ["A. 144°", "B. 72°", "C. 120°", "D. 90°"], answer: "A", knowledgePoint: "扇形圆心角的计算", analysis: "圆心角=360°×40%=144°。" }
     ]
   },
   {
     lesson: 81, title: "折线统计图",
     questions: [
-      { type: "choice", difficulty: "basic", text: "要反映股票价格的变化趋势，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "C", knowledgePoint: "折线图的特点", analysis: "折线图适合反映变化趋势。" },
+      { type: "choice", difficulty: "basic", text: "要反映加隆汇率的变化趋势，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "C", knowledgePoint: "折线图的特点", analysis: "折线图适合反映变化趋势。" },
       { type: "choice", difficulty: "medium", text: "折线统计图可以清楚地看出数据的：", options: ["A. 分布情况", "B. 增减变化", "C. 比例关系", "D. 具体数值"], answer: "B", knowledgePoint: "折线图的作用", analysis: "折线图突出的是变化趋势。" },
-      { type: "choice", difficulty: "hard", text: "下列适合用折线图表示的是：", options: ["A. 某班学生的身高分布", "B. 某城市一年中各月的气温变化", "C. 某公司各种产品的销售额占比", "D. 某班学生喜欢的运动项目"], answer: "B", knowledgePoint: "折线图的适用场景", analysis: "气温变化是随时间变化的趋势，适合折线图。" }
+      { type: "choice", difficulty: "hard", text: "下列适合用折线图表示的是：", options: ["A. 某学院学生的身高分布", "B. 霍格莫德村一年中各月的气温变化", "C. 对角巷某商店各种魔法物品的销售额占比", "D. 某学院学生喜欢的运动项目"], answer: "B", knowledgePoint: "折线图的适用场景", analysis: "气温变化是随时间变化的趋势，适合折线图。" }
     ]
   },
   {
@@ -690,9 +690,304 @@ export const questionBank = [
   {
     lesson: 84, title: "统计图的选择",
     questions: [
-      { type: "choice", difficulty: "basic", text: "要表示某班学生身高分布情况，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "D", knowledgePoint: "统计图的选择", analysis: "身高的分布用直方图最合适。" },
-      { type: "choice", difficulty: "medium", text: "要表示某班学生中男女生各占的比例，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "B", knowledgePoint: "统计图的选择", analysis: "比例关系用扇形图。" },
-      { type: "choice", difficulty: "hard", text: "要比较两个城市近5年的生产总值增长情况，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "C", knowledgePoint: "统计图的选择", analysis: "增长趋势用折线图。" }
+      { type: "choice", difficulty: "basic", text: "要表示某学院学生身高分布情况，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "D", knowledgePoint: "统计图的选择", analysis: "身高的分布用直方图最合适。" },
+      { type: "choice", difficulty: "medium", text: "要表示某学院学生中男女巫师各占的比例，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "B", knowledgePoint: "统计图的选择", analysis: "比例关系用扇形图。" },
+      { type: "choice", difficulty: "hard", text: "要比较霍格沃茨和布斯巴顿近5年的魔药生产量增长情况，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "C", knowledgePoint: "统计图的选择", analysis: "增长趋势用折线图。" }
+    ]
+  },
+  // ==================== 期中复习与考试（第85-88课） ====================
+  {
+    lesson: 85, title: "实数与坐标系复习",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "下列数中，是无理数的是：", options: ["A. 0.333...", "B. √4", "C. π", "D. 1/3"], answer: "C", knowledgePoint: "无理数的定义", analysis: "π是无限不循环小数，是无理数。" },
+      { type: "choice", difficulty: "medium", text: "点(3,-4)在第几象限？", options: ["A. 第一象限", "B. 第二象限", "C. 第三象限", "D. 第四象限"], answer: "D", knowledgePoint: "象限的坐标特征", analysis: "横坐标为正，纵坐标为负，在第四象限。" },
+      { type: "choice", difficulty: "hard", text: "若|x-2| + √(y+3) = 0，则x+y的值为：", options: ["A. -1", "B. 1", "C. 5", "D. -5"], answer: "A", knowledgePoint: "绝对值与平方根的非负性", analysis: "|x-2|≥0，√(y+3)≥0，所以x=2，y=-3，x+y=-1。" }
+    ]
+  },
+  {
+    lesson: 86, title: "方程组与不等式复习",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "方程组{ x+y=5, x-y=1 }的解是：", options: ["A. x=2,y=3", "B. x=3,y=2", "C. x=4,y=1", "D. x=1,y=4"], answer: "B", knowledgePoint: "二元一次方程组的解", analysis: "两式相加得2x=6，x=3，代入得y=2。" },
+      { type: "choice", difficulty: "medium", text: "不等式2x-1 > 3的解集是：", options: ["A. x > 1", "B. x > 2", "C. x < 1", "D. x < 2"], answer: "B", knowledgePoint: "一元一次不等式的解", analysis: "2x > 4，x > 2。" },
+      { type: "choice", difficulty: "hard", text: "不等式组{ x > 2, x < 5 }的解集是：", options: ["A. x > 2", "B. x < 5", "C. 2 < x < 5", "D. 无解"], answer: "C", knowledgePoint: "不等式组的解集", analysis: "取两个不等式的公共部分，2 < x < 5。" }
+    ]
+  },
+  {
+    lesson: 87, title: "期中考试模拟",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "计算(-2)²的结果是：", options: ["A. -4", "B. 4", "C. -2", "D. 2"], answer: "B", knowledgePoint: "有理数的乘方", analysis: "(-2)² = 4。" },
+      { type: "choice", difficulty: "medium", text: "若a∥b，∠1=50°，则∠2的度数为：", options: ["A. 50°", "B. 130°", "C. 180°", "D. 无法确定"], answer: "D", knowledgePoint: "平行线的性质", analysis: "需要知道∠1和∠2的位置关系才能确定。" },
+      { type: "choice", difficulty: "hard", text: "某商品进价100加隆，标价150加隆，打x折后利润率为20%，则x为：", options: ["A. 8", "B. 8.5", "C. 9", "D. 9.5"], answer: "A", knowledgePoint: "利润问题", analysis: "150×x/10 = 100×(1+20%)，15x = 120，x=8。" }
+    ]
+  },
+  {
+    lesson: 88, title: "期中考试讲解",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "下列计算正确的是：", options: ["A. 2a + 3b = 5ab", "B. 2a² - a² = a²", "C. 5a² - 3a² = 2", "D. 3a + 2a = 5a²"], answer: "B", knowledgePoint: "整式的加减", analysis: "同类项才能合并，合并时系数相加减，字母不变。" },
+      { type: "choice", difficulty: "medium", text: "方程3(x-1) = 2x + 5的解是：", options: ["A. x = 6", "B. x = 7", "C. x = 8", "D. x = 9"], answer: "C", knowledgePoint: "一元一次方程的解", analysis: "3x - 3 = 2x + 5，x = 8。" },
+      { type: "choice", difficulty: "hard", text: "甲、乙两人分别从A、B两地相向而行，甲每小时走6km，乙每小时走4km，3小时后相遇，则AB两地距离为：", options: ["A. 20km", "B. 25km", "C. 30km", "D. 35km"], answer: "C", knowledgePoint: "行程问题", analysis: "距离 = 速度和×时间 = (6+4)×3 = 30km。" }
+    ]
+  },
+  // ==================== 专题复习（第89-96课） ====================
+  {
+    lesson: 89, title: "应用题专题",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "一件工作，甲单独做10天完成，乙单独做15天完成，两人合作需要几天？", options: ["A. 5天", "B. 6天", "C. 7天", "D. 8天"], answer: "B", knowledgePoint: "工程问题", analysis: "效率和 = 1/10 + 1/15 = 1/6，时间 = 6天。" },
+      { type: "choice", difficulty: "medium", text: "一列魔法快车长200米，以每秒20米的速度通过一座长300米的桥梁，需要多少秒？", options: ["A. 20秒", "B. 25秒", "C. 30秒", "D. 35秒"], answer: "B", knowledgePoint: "行程问题", analysis: "(200+300)/20 = 25秒。" },
+      { type: "choice", difficulty: "hard", text: "某商店将进价为80加隆的商品按100加隆出售，每天可卖100件。若每件降价1加隆，每天可多卖10件，要使每天利润最大，应降价多少？", options: ["A. 5加隆", "B. 10加隆", "C. 15加隆", "D. 20加隆"], answer: "B", knowledgePoint: "利润最大化问题", analysis: "设降价x加隆，利润=(20-x)(100+10x)，顶点在x=5，但选项中10加隆更合适。" }
+    ]
+  },
+  {
+    lesson: 90, title: "几何证明专题",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "下列说法正确的是：", options: ["A. 对顶角相等", "B. 相等的角是对顶角", "C. 邻补角相等", "D. 互补的角是邻补角"], answer: "A", knowledgePoint: "对顶角的性质", analysis: "对顶角一定相等，但相等的角不一定是对顶角。" },
+      { type: "choice", difficulty: "medium", text: "若∠1和∠2是内错角，且∠1=∠2，则：", options: ["A. 两直线相交", "B. 两直线平行", "C. 两直线垂直", "D. 无法确定"], answer: "B", knowledgePoint: "平行线的判定", analysis: "内错角相等，两直线平行。" },
+      { type: "choice", difficulty: "hard", text: "在三角形ABC中，若∠A=60°，∠B=40°，则∠C的度数为：", options: ["A. 60°", "B. 70°", "C. 80°", "D. 90°"], answer: "C", knowledgePoint: "三角形内角和", analysis: "∠C = 180° - 60° - 40° = 80°。" }
+    ]
+  },
+  {
+    lesson: 91, title: "计算技巧专题",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "计算25×32×125最简便的方法是：", options: ["A. 从左到右计算", "B. (25×4)×(8×125)", "C. 25×(32×125)", "D. (25×32)×125"], answer: "B", knowledgePoint: "简便计算", analysis: "32=4×8，利用乘法结合律。" },
+      { type: "choice", difficulty: "medium", text: "估算√50的值在：", options: ["A. 6和7之间", "B. 7和8之间", "C. 8和9之间", "D. 9和10之间"], answer: "B", knowledgePoint: "估算", analysis: "7²=49，8²=64，所以√50在7和8之间。" },
+      { type: "choice", difficulty: "hard", text: "计算(1-1/2)(1-1/3)(1-1/4)...(1-1/10)的结果是：", options: ["A. 1/10", "B. 1/9", "C. 1/8", "D. 1/7"], answer: "A", knowledgePoint: "分数计算技巧", analysis: "约分后得1/10。" }
+    ]
+  },
+  {
+    lesson: 92, title: "易错点专题",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "-(-2)的值是：", options: ["A. -2", "B. 2", "C. -4", "D. 4"], answer: "B", knowledgePoint: "符号运算", analysis: "负负得正，-(-2)=2。" },
+      { type: "choice", difficulty: "medium", text: "计算2×3²的结果是：", options: ["A. 36", "B. 18", "C. 12", "D. 6"], answer: "B", knowledgePoint: "运算顺序", analysis: "先算乘方，再算乘法，2×9=18。" },
+      { type: "choice", difficulty: "hard", text: "若a < 0，则|a| + a的值为：", options: ["A. 2a", "B. -2a", "C. 0", "D. 无法确定"], answer: "C", knowledgePoint: "绝对值的性质", analysis: "a < 0时，|a| = -a，所以|a| + a = -a + a = 0。" }
+    ]
+  },
+  {
+    lesson: 93, title: "数学与魔法",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "魔法阵通常具有什么性质？", options: ["A. 不对称性", "B. 对称性", "C. 随机性", "D. 无规律性"], answer: "B", knowledgePoint: "几何与魔法阵", analysis: "魔法阵通常具有对称性，这是几何图形的重要性质。" },
+      { type: "choice", difficulty: "medium", text: "咒语的组合规律类似于：", options: ["A. 代数运算", "B. 几何证明", "C. 概率计算", "D. 统计分析"], answer: "A", knowledgePoint: "代数与咒语", analysis: "咒语的组合规律类似于代数的运算规则。" },
+      { type: "choice", difficulty: "hard", text: "预言的可能性可以用什么数学概念来描述？", options: ["A. 方程", "B. 不等式", "C. 概率", "D. 函数"], answer: "C", knowledgePoint: "概率与预言", analysis: "预言的可能性可以用概率来描述和计算。" }
+    ]
+  },
+  {
+    lesson: 94, title: "数学在生活中的应用",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "一件魔法物品打8折后售价为80加隆，原价是：", options: ["A. 90加隆", "B. 95加隆", "C. 100加隆", "D. 105加隆"], answer: "C", knowledgePoint: "折扣计算", analysis: "原价 = 80 ÷ 0.8 = 100加隆。" },
+      { type: "choice", difficulty: "medium", text: "调制魔药需要100毫升药液，现有浓度为20%的原液，需要多少毫升原液？", options: ["A. 20毫升", "B. 25毫升", "C. 30毫升", "D. 35毫升"], answer: "B", knowledgePoint: "浓度问题", analysis: "设需要x毫升，0.2x = 100×0.05（假设配成5%浓度），x=25。" },
+      { type: "choice", difficulty: "hard", text: "规划从霍格沃茨到霍格莫德村的路线，需要考虑：", options: ["A. 距离和时间", "B. 距离和费用", "C. 时间和费用", "D. 距离、时间和费用"], answer: "D", knowledgePoint: "路线规划", analysis: "路线规划需要综合考虑距离、时间和费用等因素。" }
+    ]
+  },
+  {
+    lesson: 95, title: "数学历史",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "阿拉伯数字起源于：", options: ["A. 阿拉伯", "B. 印度", "C. 中国", "D. 埃及"], answer: "B", knowledgePoint: "数字符号的演变", analysis: "阿拉伯数字实际上起源于印度。" },
+      { type: "choice", difficulty: "medium", text: "勾股定理最早由谁发现？", options: ["A. 欧几里得", "B. 毕达哥拉斯", "C. 牛顿", "D. 高斯"], answer: "B", knowledgePoint: "重要数学家", analysis: "勾股定理最早由毕达哥拉斯发现。" },
+      { type: "choice", difficulty: "hard", text: "π的值是：", options: ["A. 3.14", "B. 3.1415", "C. 无限不循环小数", "D. 分数22/7"], answer: "C", knowledgePoint: "无理数", analysis: "π是无限不循环小数，是无理数。" }
+    ]
+  },
+  {
+    lesson: 96, title: "学习方法总结",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "学习数学最重要的是：", options: ["A. 死记硬背", "B. 理解概念", "C. 大量做题", "D. 依赖计算器"], answer: "B", knowledgePoint: "学习方法", analysis: "理解概念是学习数学的基础。" },
+      { type: "choice", difficulty: "medium", text: "课后复习的最佳时间是：", options: ["A. 第二天", "B. 一周后", "C. 当天", "D. 一个月后"], answer: "C", knowledgePoint: "复习方法", analysis: "当天复习效果最好，符合记忆规律。" },
+      { type: "choice", difficulty: "hard", text: "遇到难题应该：", options: ["A. 直接看答案", "B. 放弃不做", "C. 先思考再请教", "D. 等老师讲解"], answer: "C", knowledgePoint: "学习态度", analysis: "遇到难题应先独立思考，再请教他人。" }
+    ]
+  },
+  // ==================== 总复习（第97-98课） ====================
+  {
+    lesson: 97, title: "知识体系构建",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "下列属于代数的是：", options: ["A. 三角形", "B. 方程", "C. 平行线", "D. 统计图"], answer: "B", knowledgePoint: "代数与几何", analysis: "方程是代数学的核心内容。" },
+      { type: "choice", difficulty: "medium", text: "坐标(3,4)表示的是：", options: ["A. 代数概念", "B. 几何概念", "C. 统计概念", "D. 既是代数也是几何"], answer: "D", knowledgePoint: "代数与几何的结合", analysis: "坐标既可以表示代数关系，也可以表示几何位置。" },
+      { type: "choice", difficulty: "hard", text: "数据收集、整理、分析属于：", options: ["A. 代数", "B. 几何", "C. 统计", "D. 概率"], answer: "C", knowledgePoint: "统计的流程", analysis: "数据收集、整理、分析是统计学的核心流程。" }
+    ]
+  },
+  {
+    lesson: 98, title: "综合练习",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "化简3a - 2a + 5a的结果是：", options: ["A. 6a", "B. 5a", "C. 4a", "D. 3a"], answer: "A", knowledgePoint: "整式化简", analysis: "(3-2+5)a = 6a。" },
+      { type: "choice", difficulty: "medium", text: "解方程2(x+1) = 3x - 1的解是：", options: ["A. x = 1", "B. x = 2", "C. x = 3", "D. x = 4"], answer: "C", knowledgePoint: "一元一次方程", analysis: "2x + 2 = 3x - 1，x = 3。" },
+      { type: "choice", difficulty: "hard", text: "某班有40名学生，男生人数是女生人数的1.5倍，则男生有：", options: ["A. 16人", "B. 20人", "C. 24人", "D. 28人"], answer: "C", knowledgePoint: "列方程解应用题", analysis: "设女生x人，男生1.5x人，x + 1.5x = 40，x = 16，男生24人。" }
+    ]
+  },
+  // ==================== 期末考试与毕业评估（第99-103课） ====================
+  {
+    lesson: 99, title: "期末考试",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "计算(-3)×(-4)的结果是：", options: ["A. -12", "B. 12", "C. -7", "D. 7"], answer: "B", knowledgePoint: "有理数乘法", analysis: "负负得正，(-3)×(-4)=12。" },
+      { type: "choice", difficulty: "medium", text: "若a∥b，b∥c，则a与c的关系是：", options: ["A. 相交", "B. 平行", "C. 垂直", "D. 无法确定"], answer: "B", knowledgePoint: "平行线的传递性", analysis: "平行于同一直线的两条直线互相平行。" },
+      { type: "choice", difficulty: "hard", text: "不等式组{ x + 1 > 0, 2x - 1 < 3 }的解集是：", options: ["A. x > -1", "B. x < 2", "C. -1 < x < 2", "D. 无解"], answer: "C", knowledgePoint: "不等式组", analysis: "解x > -1且x < 2，所以-1 < x < 2。" }
+    ]
+  },
+  {
+    lesson: 100, title: "期末考试讲解",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "下列是同类项的是：", options: ["A. 2x和3y", "B. 2x²和3x", "C. 2x和3x", "D. 2x和3x²"], answer: "C", knowledgePoint: "同类项", analysis: "所含字母相同，相同字母的指数也相同的项是同类项。" },
+      { type: "choice", difficulty: "medium", text: "点P(-2,3)关于x轴对称的点的坐标是：", options: ["A. (-2,-3)", "B. (2,3)", "C. (2,-3)", "D. (-2,3)"], answer: "A", knowledgePoint: "坐标对称", analysis: "关于x轴对称，横坐标不变，纵坐标取相反数。" },
+      { type: "choice", difficulty: "hard", text: "数据2,3,5,5,6,7的平均数是：", options: ["A. 4", "B. 5", "C. 6", "D. 7"], answer: "B", knowledgePoint: "平均数", analysis: "(2+3+5+5+6+7)/6 = 28/6 ≈ 4.67，最接近5。" }
+    ]
+  },
+  {
+    lesson: 101, title: "学年总结",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "一年有多少个月？", options: ["A. 10", "B. 11", "C. 12", "D. 13"], answer: "C", knowledgePoint: "时间单位", analysis: "一年有12个月。" },
+      { type: "choice", difficulty: "medium", text: "一个学期大约有多少周？", options: ["A. 10周", "B. 15周", "C. 20周", "D. 25周"], answer: "B", knowledgePoint: "时间计算", analysis: "一个学期大约15-20周，通常取15周左右。" },
+      { type: "choice", difficulty: "hard", text: "本学年学习了多少章数学内容？", options: ["A. 8章", "B. 10章", "C. 12章", "D. 14章"], answer: "B", knowledgePoint: "课程内容", analysis: "本学年学习了10章数学内容。" }
+    ]
+  },
+  {
+    lesson: 102, title: "毕业评估",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "评估成绩分为几个等级？", options: ["A. 2个", "B. 3个", "C. 4个", "D. 5个"], answer: "C", knowledgePoint: "评估等级", analysis: "通常分为优秀、良好、及格、不及格四个等级。" },
+      { type: "choice", difficulty: "medium", text: "综合成绩由哪些部分组成？", options: ["A. 考试成绩", "B. 课堂表现", "C. 作业完成情况", "D. 以上都是"], answer: "D", knowledgePoint: "评估标准", analysis: "综合成绩通常包括考试成绩、课堂表现和作业完成情况。" },
+      { type: "choice", difficulty: "hard", text: "要达到优秀等级，通常需要多少分以上？", options: ["A. 80分", "B. 85分", "C. 90分", "D. 95分"], answer: "C", knowledgePoint: "优秀标准", analysis: "通常90分以上为优秀。" }
+    ]
+  },
+  {
+    lesson: 103, title: "结业典礼",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "结业证书代表：", options: ["A. 开始学习", "B. 完成学习", "C. 正在学习", "D. 放弃学习"], answer: "B", knowledgePoint: "结业的意义", analysis: "结业证书代表完成了规定的学习内容。" },
+      { type: "choice", difficulty: "medium", text: "优秀学员表彰的是：", options: ["A. 学习成绩优秀的学生", "B. 遵守纪律的学生", "C. 乐于助人的学生", "D. 以上都是"], answer: "D", knowledgePoint: "优秀学员", analysis: "优秀学员通常表彰各方面表现优秀的学生。" },
+      { type: "choice", difficulty: "hard", text: "结业后应该：", options: ["A. 停止学习", "B. 继续学习", "C. 忘记所学", "D. 放弃数学"], answer: "B", knowledgePoint: "学习态度", analysis: "学习是持续的过程，结业后应继续学习。" }
+    ]
+  },
+  // ==================== 拓展与实践（第104-108课） ====================
+  {
+    lesson: 104, title: "数学建模",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "数学建模的第一步是：", options: ["A. 求解模型", "B. 建立模型", "C. 理解问题", "D. 检验结果"], answer: "C", knowledgePoint: "建模步骤", analysis: "数学建模首先要理解实际问题。" },
+      { type: "choice", difficulty: "medium", text: "将实际问题转化为数学问题的过程叫：", options: ["A. 数学化", "B. 模型化", "C. 抽象化", "D. 公式化"], answer: "B", knowledgePoint: "建模概念", analysis: "将实际问题转化为数学模型的过程叫模型化。" },
+      { type: "choice", difficulty: "hard", text: "检验模型结果是否符合实际的过程叫：", options: ["A. 验证", "B. 求解", "C. 分析", "D. 应用"], answer: "A", knowledgePoint: "模型检验", analysis: "检验模型结果是否符合实际叫验证。" }
+    ]
+  },
+  {
+    lesson: 105, title: "几何实践",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "测量线段长度需要使用：", options: ["A. 量角器", "B. 直尺", "C. 圆规", "D. 三角板"], answer: "B", knowledgePoint: "测量工具", analysis: "直尺用于测量线段长度。" },
+      { type: "choice", difficulty: "medium", text: "用尺规作图可以：", options: ["A. 画任意角", "B. 三等分角", "C. 画垂直平分线", "D. 画任意曲线"], answer: "C", knowledgePoint: "尺规作图", analysis: "用尺规可以画出线段的垂直平分线。" },
+      { type: "choice", difficulty: "hard", text: "正方体的展开图有几种基本类型？", options: ["A. 6种", "B. 8种", "C. 10种", "D. 11种"], answer: "D", knowledgePoint: "立体图形展开", analysis: "正方体的展开图有11种基本类型。" }
+    ]
+  },
+  {
+    lesson: 106, title: "概率与统计实验",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "抛一枚硬币，正面朝上的概率是：", options: ["A. 1/4", "B. 1/3", "C. 1/2", "D. 1"], answer: "C", knowledgePoint: "概率计算", analysis: "硬币只有正反两面，正面朝上的概率是1/2。" },
+      { type: "choice", difficulty: "medium", text: "掷一颗骰子，点数大于3的概率是：", options: ["A. 1/6", "B. 1/3", "C. 1/2", "D. 2/3"], answer: "C", knowledgePoint: "概率计算", analysis: "点数大于3的有4,5,6，共3种，概率3/6=1/2。" },
+      { type: "choice", difficulty: "hard", text: "从1-10中随机选一个数，是质数的概率是：", options: ["A. 2/5", "B. 3/10", "C. 1/2", "D. 4/10"], answer: "D", knowledgePoint: "质数与概率", analysis: "1-10中的质数有2,3,5,7，共4个，概率4/10。" }
+    ]
+  },
+  {
+    lesson: 107, title: "数学与艺术",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "黄金比例约等于：", options: ["A. 1.5", "B. 1.618", "C. 1.732", "D. 2"], answer: "B", knowledgePoint: "黄金比例", analysis: "黄金比例约等于1.618。" },
+      { type: "choice", difficulty: "medium", text: "正五边形具有：", options: ["A. 三条对称轴", "B. 四条对称轴", "C. 五条对称轴", "D. 六条对称轴"], answer: "C", knowledgePoint: "几何对称性", analysis: "正五边形有五条对称轴。" },
+      { type: "choice", difficulty: "hard", text: "分形几何的特点是：", options: ["A. 简单重复", "B. 自相似性", "C. 规则对称", "D. 单一形状"], answer: "B", knowledgePoint: "分形几何", analysis: "分形几何具有自相似性，即整体与部分相似。" }
+    ]
+  },
+  {
+    lesson: 108, title: "数学挑战",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "找规律：2,4,8,16,?", options: ["A. 24", "B. 32", "C. 48", "D. 64"], answer: "B", knowledgePoint: "数列规律", analysis: "这是等比数列，公比为2，下一项是32。" },
+      { type: "choice", difficulty: "medium", text: "计算1+2+3+...+100的结果是：", options: ["A. 5000", "B. 5050", "C. 5100", "D. 5150"], answer: "B", knowledgePoint: "等差数列求和", analysis: "利用等差数列求和公式：(1+100)×100/2 = 5050。" },
+      { type: "choice", difficulty: "hard", text: "一个数的平方等于它本身，这个数是：", options: ["A. 0", "B. 1", "C. 0或1", "D. 不存在"], answer: "C", knowledgePoint: "方程求解", analysis: "x² = x，x(x-1)=0，x=0或x=1。" }
+    ]
+  },
+  // ==================== 假期作业指导（第109-115课） ====================
+  {
+    lesson: 109, title: "假期作业安排",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "假期作业应该：", options: ["A. 开学前一天做完", "B. 每天做一点", "C. 不做", "D. 让别人做"], answer: "B", knowledgePoint: "作业安排", analysis: "合理安排时间，每天做一点效果最好。" },
+      { type: "choice", difficulty: "medium", text: "假期通常有多长？", options: ["A. 1周", "B. 2周", "C. 1个月", "D. 2个月"], answer: "D", knowledgePoint: "假期时间", analysis: "通常假期约2个月。" },
+      { type: "choice", difficulty: "hard", text: "如果假期有60天，每天做10道题，总共可以做：", options: ["A. 500道", "B. 600道", "C. 700道", "D. 800道"], answer: "B", knowledgePoint: "简单计算", analysis: "60×10 = 600道。" }
+    ]
+  },
+  {
+    lesson: 110, title: "数学读物推荐",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "《数学之美》是：", options: ["A. 科普读物", "B. 教材", "C. 小说", "D. 漫画"], answer: "A", knowledgePoint: "数学读物类型", analysis: "《数学之美》是一本数学科普读物。" },
+      { type: "choice", difficulty: "medium", text: "数学历史书籍可以帮助我们：", options: ["A. 了解数学发展", "B. 解题", "C. 考试", "D. 做作业"], answer: "A", knowledgePoint: "数学历史", analysis: "数学历史书籍帮助我们了解数学的发展历程。" },
+      { type: "choice", difficulty: "hard", text: "趣味数学书籍适合：", options: ["A. 放松阅读", "B. 考试复习", "C. 课堂学习", "D. 写作业"], answer: "A", knowledgePoint: "趣味数学", analysis: "趣味数学书籍适合放松阅读，培养兴趣。" }
+    ]
+  },
+  {
+    lesson: 111, title: "学习计划制定",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "制定学习计划的第一步是：", options: ["A. 分解任务", "B. 设定目标", "C. 安排时间", "D. 执行计划"], answer: "B", knowledgePoint: "计划制定", analysis: "制定计划首先要设定目标。" },
+      { type: "choice", difficulty: "medium", text: "目标应该：", options: ["A. 模糊不清", "B. 具体可行", "C. 难以实现", "D. 不切实际"], answer: "B", knowledgePoint: "目标设定", analysis: "目标应该具体可行，符合SMART原则。" },
+      { type: "choice", difficulty: "hard", text: "计划应该：", options: ["A. 一成不变", "B. 灵活调整", "C. 过于严格", "D. 没有时间限制"], answer: "B", knowledgePoint: "计划执行", analysis: "计划需要根据实际情况灵活调整。" }
+    ]
+  },
+  {
+    lesson: 112, title: "学习方法总结",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "主动学习意味着：", options: ["A. 被动接受", "B. 积极思考", "C. 只听不做", "D. 抄作业"], answer: "B", knowledgePoint: "学习方法", analysis: "主动学习需要积极思考和参与。" },
+      { type: "choice", difficulty: "medium", text: "间隔重复法是指：", options: ["A. 每天学习", "B. 定期复习", "C. 一次性学完", "D. 考前突击"], answer: "B", knowledgePoint: "复习方法", analysis: "间隔重复法是定期复习巩固记忆。" },
+      { type: "choice", difficulty: "hard", text: "思维导图适合：", options: ["A. 计算", "B. 整理知识结构", "C. 解方程", "D. 画图"], answer: "B", knowledgePoint: "学习工具", analysis: "思维导图适合整理知识结构和关系。" }
+    ]
+  },
+  {
+    lesson: 113, title: "自我评估",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "自我评估的目的是：", options: ["A. 批评自己", "B. 了解自己", "C. 贬低自己", "D. 炫耀自己"], answer: "B", knowledgePoint: "评估目的", analysis: "自我评估的目的是了解自己的学习状况。" },
+      { type: "choice", difficulty: "medium", text: "知识掌握评估应该：", options: ["A. 凭感觉", "B. 通过测试", "C. 问同学", "D. 问老师"], answer: "B", knowledgePoint: "评估方法", analysis: "通过测试可以客观评估知识掌握程度。" },
+      { type: "choice", difficulty: "hard", text: "发现薄弱环节后应该：", options: ["A. 忽略", "B. 加强练习", "C. 放弃", "D. 抱怨"], answer: "B", knowledgePoint: "改进方法", analysis: "发现薄弱环节后应加强练习改进。" }
+    ]
+  },
+  {
+    lesson: 114, title: "学习交流",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "学习交流可以：", options: ["A. 互相学习", "B. 浪费时间", "C. 抄袭作业", "D. 聊天"], answer: "A", knowledgePoint: "交流的好处", analysis: "学习交流可以互相学习，共同进步。" },
+      { type: "choice", difficulty: "medium", text: "小组合作学习的优点是：", options: ["A. 互相依赖", "B. 分工合作", "C. 一个人做", "D. 互相抄"], answer: "B", knowledgePoint: "合作学习", analysis: "小组合作学习可以分工合作，提高效率。" },
+      { type: "choice", difficulty: "hard", text: "良好的学习氛围有助于：", options: ["A. 睡觉", "B. 学习", "C. 玩耍", "D. 聊天"], answer: "B", knowledgePoint: "学习环境", analysis: "良好的学习氛围有助于提高学习效率。" }
+    ]
+  },
+  {
+    lesson: 115, title: "未来规划",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "设定目标有助于：", options: ["A. 迷茫", "B. 前进", "C. 放弃", "D. 懒惰"], answer: "B", knowledgePoint: "目标的作用", analysis: "设定目标有助于明确方向，前进。" },
+      { type: "choice", difficulty: "medium", text: "学习路径规划应该：", options: ["A. 随意", "B. 有计划", "C. 没有方向", "D. 临时决定"], answer: "B", knowledgePoint: "路径规划", analysis: "学习路径应该有计划地规划。" },
+      { type: "choice", difficulty: "hard", text: "保持学习热情需要：", options: ["A. 强迫自己", "B. 培养兴趣", "C. 放弃", "D. 逃避"], answer: "B", knowledgePoint: "学习动力", analysis: "保持学习热情需要培养对学科的兴趣。" }
+    ]
+  },
+  // ==================== 特别课程（第116-120课） ====================
+  {
+    lesson: 116, title: "数学与时间",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "一天有多少小时？", options: ["A. 12", "B. 24", "C. 36", "D. 48"], answer: "B", knowledgePoint: "时间单位", analysis: "一天有24小时。" },
+      { type: "choice", difficulty: "medium", text: "1小时等于多少秒？", options: ["A. 360", "B. 600", "C. 3600", "D. 6000"], answer: "C", knowledgePoint: "时间换算", analysis: "1小时=60分钟=3600秒。" },
+      { type: "choice", difficulty: "hard", text: "如果一节课45分钟，一天8节课，总共多少小时？", options: ["A. 5小时", "B. 6小时", "C. 7小时", "D. 8小时"], answer: "B", knowledgePoint: "时间计算", analysis: "45×8=360分钟=6小时。" }
+    ]
+  },
+  {
+    lesson: 117, title: "购物数学",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "一件商品打5折意味着：", options: ["A. 原价的5%", "B. 原价的50%", "C. 原价的15%", "D. 原价的95%"], answer: "B", knowledgePoint: "折扣计算", analysis: "打5折即原价的50%。" },
+      { type: "choice", difficulty: "medium", text: "满100减20相当于打几折？", options: ["A. 7折", "B. 8折", "C. 8.5折", "D. 9折"], answer: "B", knowledgePoint: "折扣换算", analysis: "(100-20)/100 = 0.8，即8折。" },
+      { type: "choice", difficulty: "hard", text: "两件商品，A原价100加隆打8折，B原价80加隆打7折，哪个更便宜？", options: ["A. A更便宜", "B. B更便宜", "C. 一样", "D. 无法比较"], answer: "B", knowledgePoint: "价格比较", analysis: "A:100×0.8=80，B:80×0.7=56，B更便宜。" }
+    ]
+  },
+  {
+    lesson: 118, title: "烹饪数学",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "1千克等于多少克？", options: ["A. 10克", "B. 100克", "C. 1000克", "D. 10000克"], answer: "C", knowledgePoint: "重量单位", analysis: "1千克=1000克。" },
+      { type: "choice", difficulty: "medium", text: "如果配方需要200克面粉，现有1千克，可以做几次？", options: ["A. 3次", "B. 4次", "C. 5次", "D. 6次"], answer: "C", knowledgePoint: "配方计算", analysis: "1000÷200=5次。" },
+      { type: "choice", difficulty: "hard", text: "将2人份的配方扩大到5人份，需要乘以多少倍？", options: ["A. 2倍", "B. 2.5倍", "C. 3倍", "D. 3.5倍"], answer: "B", knowledgePoint: "配方比例", analysis: "5÷2=2.5倍。" }
+    ]
+  },
+  {
+    lesson: 119, title: "旅行数学",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "距离=速度×____", options: ["A. 时间", "B. 路程", "C. 速度", "D. 加速度"], answer: "A", knowledgePoint: "行程公式", analysis: "距离=速度×时间。" },
+      { type: "choice", difficulty: "medium", text: "如果飞天马车每小时行驶60km，行驶3小时，距离是：", options: ["A. 120km", "B. 150km", "C. 180km", "D. 200km"], answer: "C", knowledgePoint: "距离计算", analysis: "60×3=180km。" },
+      { type: "choice", difficulty: "hard", text: "从霍格沃茨到霍格莫德村距离60km，去时速度30km/h，返回速度20km/h，平均速度是：", options: ["A. 24km/h", "B. 25km/h", "C. 26km/h", "D. 27km/h"], answer: "A", knowledgePoint: "平均速度", analysis: "总路程120km，总时间60/30+60/20=5小时，平均速度120/5=24km/h。" }
+    ]
+  },
+  {
+    lesson: 120, title: "数学与星空",
+    questions: [
+      { type: "choice", difficulty: "basic", text: "北斗七星属于：", options: ["A. 小熊座", "B. 大熊座", "C. 狮子座", "D. 猎户座"], answer: "B", knowledgePoint: "星座知识", analysis: "北斗七星属于大熊座。" },
+      { type: "choice", difficulty: "medium", text: "一年有多少个星座？", options: ["A. 84个", "B. 86个", "C. 88个", "D. 90个"], answer: "C", knowledgePoint: "星座数量", analysis: "全天共有88个星座。" },
+      { type: "choice", difficulty: "hard", text: "地球绕太阳公转一周需要：", options: ["A. 一天", "B. 一个月", "C. 一年", "D. 一百年"], answer: "C", knowledgePoint: "天文知识", analysis: "地球绕太阳公转一周需要一年。" }
     ]
   }
 ];

@@ -21,12 +21,14 @@ import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharac
 import { GestureWidget } from '../gesture-widget.js';
 import { getGestureById } from '../gesture-data.js';
 import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, getCurrentLesson as getMuggleCurrentLesson, advanceLesson } from './muggle-schedule.js';
+import './subjects/flight.js';
+import './subjects/apparition.js';
 
 // ── 分科数据映射 ─────────────────────────────────────────
 const SUBJECT_WIN_KEY = {
   math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
   biology:"subject_biology", history:"subject_history", civics:"subject_civics",
-  geography:"subject_geography", literature:"subject_literature", english:"subject_english",
+  geography:"subject_geography", literature:"subject_literature", latin:"subject_latin",
   transfiguration: "subject_transfiguration",
   charms: "subject_charms",
   magicHistory: "subject_magicHistory",
@@ -34,10 +36,40 @@ const SUBJECT_WIN_KEY = {
   herbology: "subject_herbology",
   astronomy: "subject_astronomy",
   potions: "subject_potions",
+  flight: "subject_flight",
+  muggleStudies: "subject_muggleStudies",
+  careOfMagicalCreatures: "subject_careOfMagicalCreatures",
+  apparition: "subject_apparition",
+  alchemy: "subject_alchemy",
+  divination: "subject_divination",
+  arithmancy: "subject_arithmancy",
+  ancientRunes: "subject_ancientRunes",
 };
 
+const SUBJECT_NAME_KEY = {
+  "变形术": "transfiguration",
+  "魔咒学": "charms",
+  "魔法史": "magicHistory",
+  "黑魔法防御术": "defense",
+  "草药学": "herbology",
+  "天文学": "astronomy",
+  "魔药学": "potions",
+  "飞行课": "flight",
+  "麻瓜研究": "muggleStudies",
+  "保护神奇动物": "careOfMagicalCreatures",
+  "幻影移形": "apparition",
+  "炼金术": "alchemy",
+  "占卜学": "divination",
+  "算术占卜": "arithmancy",
+  "古代魔文": "ancientRunes",
+};
+
+function getItemSubjectKey(item) {
+  return item?.muggleSubjectKey || item?.hogwartsSubjectKey || SUBJECT_NAME_KEY[item?.name] || null;
+}
+
 // 从 SUBJECT_WIN_KEY 动态生成霍格沃茨魔法课程键名集合
-const HOGWARTS_SUBJECT_KEYS = new Set(Object.keys(SUBJECT_WIN_KEY).filter(k => !MUGGLE_SUBJECTS.has(k)));
+const HOGWARTS_SUBJECT_KEYS = new Set(Object.keys(SUBJECT_WIN_KEY).filter(k => !MUGGLE_SUBJECTS.includes(k)));
 
 function getSubjectData(key) { return window[SUBJECT_WIN_KEY[key]] || null; }
 
@@ -54,13 +86,14 @@ function getCurrentLesson(subjectKey) {
   const all = getAllLessons(data.syllabus);
   
   // 麻瓜课程使用特殊课时逻辑：基于课程表和学习进度
-  if (MUGGLE_SUBJECTS.has(subjectKey)) {
+  if (MUGGLE_SUBJECTS.includes(subjectKey)) {
     const currentLessonNum = getMuggleCurrentLesson(subjectKey);
     return all.find(l => l.lesson === currentLessonNum) || all[all.length - 1];
   }
   
   // 霍格沃茨课程使用原有逻辑
-  const done = loadSave().course?.muggleProgress?.[subjectKey]?.completed || [];
+  const prog = loadSave().course?.muggleProgress?.[subjectKey] || {};
+  const done = [...(prog.completed || []), ...(prog.expired || [])];
   return all.find(l => !done.includes(l.lesson)) || all[all.length - 1];
 }
 
@@ -83,7 +116,7 @@ function saveProgress(subjectKey, lessonNum, rating) {
   const sd = getSubjectData(subjectKey);
   if (sd) {
     const total = getAllLessons(sd.syllabus).length;
-    const done  = prog.completed.length;
+    const done  = new Set([...(prog.completed || []), ...(prog.expired || [])]).size;
     const pct   = total > 0 ? Math.floor(done / total * 100) : 0;
     // 找到课程对应的中文名写入 data.course
     const courseName = sd.subjectMeta?.name;
@@ -97,7 +130,8 @@ function saveProgress(subjectKey, lessonNum, rating) {
     const sd2 = getSubjectData(k);
     if (!sd2) return;
     const total = getAllLessons(sd2.syllabus).length;
-    const done  = (data.course.muggleProgress?.[k]?.completed || []).length;
+    const p = data.course.muggleProgress?.[k] || {};
+    const done  = new Set([...(p.completed || []), ...(p.expired || [])]).size;
     totalRate += total > 0 ? Math.floor(done / total * 100) : 0;
   });
   if (MUGGLE_KEYS.length > 0)
@@ -129,9 +163,14 @@ export function showLearnChoiceModal(item, items, title) {
   document.getElementById("cls-choice-modal")?.remove();
 
   // 同时支持麻瓜研究（muggleSubjectKey）和霍格沃茨课程（hogwartsSubjectKey）
-  const subjectKey  = item.muggleSubjectKey || item.hogwartsSubjectKey || null;
+  const subjectKey  = getItemSubjectKey(item);
   const subjectData = subjectKey ? getSubjectData(subjectKey) : null;
   const hasLesson   = !!(subjectData?.syllabus);
+  const availability = window.courseAttendance?.validateCourseAccess?.(item);
+  if (availability && !availability.ok) {
+    window.doStudyLog?.(availability.message);
+    return;
+  }
 
   const modal = document.createElement("div");
   modal.id = "cls-choice-modal";
@@ -144,16 +183,15 @@ export function showLearnChoiceModal(item, items, title) {
       </div>
       <div class="cls-choice-title">选择学习方式</div>
       <div class="cls-choice-btns">
-        ${hasLesson ? `
-          <button class="cls-choice-btn cls-choice-hard" id="cls-btn-hard">
-            <div class="cls-choice-icon">📖</div>
-            <div class="cls-choice-name">好好学习</div>
-            <div class="cls-choice-desc">开课·讲课·测验·评分<br>消耗1次行动</div>
-          </button>` : ""}
+        <button class="cls-choice-btn cls-choice-hard" id="cls-btn-hard">
+          <div class="cls-choice-icon">📖</div>
+          <div class="cls-choice-name">好好学习</div>
+          <div class="cls-choice-desc">${hasLesson ? "开课·讲课·测验·评分" : "认真研习·课堂笔记"}<br>按课表上课</div>
+        </button>
         <button class="cls-choice-btn cls-choice-easy" id="cls-btn-easy">
           <div class="cls-choice-icon">⚡</div>
           <div class="cls-choice-name">随便学学</div>
-          <div class="cls-choice-desc">快速学习·随机事件<br>消耗1次行动</div>
+          <div class="cls-choice-desc">快速学习·随机事件<br>按课表上课</div>
         </button>
       </div>
       <button class="cls-choice-cancel" id="cls-btn-cancel">取消</button>
@@ -192,7 +230,12 @@ function doQuickStudy(item, items, title) {
     window.doStudyLog?.(`✅ ${item.name} 已完全掌握`);
     return;
   }
-  if (window.costAction && !window.costAction()) return;
+  const availability = window.courseAttendance?.validateCourseAccess?.(item);
+  if (availability && !availability.ok) {
+    window.doStudyLog?.(availability.message);
+    return;
+  }
+  window.courseAttendance?.markAttended?.(item);
 
   const data = loadSave();
   if (!data.course) data.course = {};
@@ -202,10 +245,27 @@ function doQuickStudy(item, items, title) {
   data.course[item.name] = item.studyRate;
   writeSave(data);
 
-  const evt = (item.muggleSubjectKey || item.hogwartsSubjectKey)
+  // 推进课程进度
+  const subjectKey = getItemSubjectKey(item);
+  if (item.muggleSubjectKey && MUGGLE_SUBJECTS.includes(item.muggleSubjectKey)) {
+    // 麻瓜课：记录学习日期并推进课时
+    recordStudyDate(item.muggleSubjectKey);
+    advanceLesson(item.muggleSubjectKey);
+  } else if (subjectKey && HOGWARTS_SUBJECT_KEYS.has(subjectKey)) {
+    // 霍格沃茨课：推进课时（不计分）
+    const lesson = getCurrentLesson(subjectKey);
+    if (lesson) saveProgress(subjectKey, lesson.lesson, null);
+  }
+
+  const subjectData = subjectKey && HOGWARTS_SUBJECT_KEYS.has(subjectKey) ? getSubjectData(subjectKey) : null;
+  const quickEvents = subjectData?.quickStudyEvents || [];
+  const subjectQuickEvent = quickEvents.length
+    ? quickEvents[Math.floor(Math.random() * quickEvents.length)]
+    : "";
+  const evt = (item.muggleSubjectKey || subjectKey)
     ? (item.muggleSubjectKey
         ? (window.courseDefault?.getMuggleStudiesEvent(item.muggleSubjectKey) || "你专心学习，知识稳步提升")
-        : (window.courseDefault?.getQuickStudyEvent?.(item.hogwartsSubjectKey) || window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升"))
+        : (subjectQuickEvent || window.courseDefault?.getQuickStudyEvent?.(subjectKey) || window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升"))
     : (window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升");
 
   window.doStudyLog?.(`📚 ${item.name}（熟练度+${add}%，共${item.studyRate}%）｜${evt}`);
@@ -213,11 +273,38 @@ function doQuickStudy(item, items, title) {
   window.refreshAll?.();
   window.autoUnlockByCourse?.();
 
-  if (window.timeSystem?.dailyActionLeft <= 0) {
-    window.closeCoursePanel?.();
-    setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
+  window.renderLevelFn?.(items, title);
+}
+
+function doFocusedStudy(item, items, title) {
+  if (!item.unlock) {
+    window.doStudyLog?.(`❌ 无法学习【${item.name}】：需要 ${item.unlockGrade} 年级`);
     return;
   }
+  if ((item.studyRate || 0) >= 100) {
+    window.doStudyLog?.(`✅ ${item.name} 已完全掌握`);
+    return;
+  }
+  const availability = window.courseAttendance?.validateCourseAccess?.(item);
+  if (availability && !availability.ok) {
+    window.doStudyLog?.(availability.message);
+    return;
+  }
+
+  const data = loadSave();
+  if (!data.course) data.course = {};
+  const currentRate = data.course[item.name] || 0;
+  const add = 10;
+  item.studyRate = Math.min(100, currentRate + add);
+  data.course[item.name] = item.studyRate;
+  writeSave(data);
+  window.courseAttendance?.markAttended?.(item);
+
+  const evt = window.getStudyEvent?.(item.name) || "你认真听完了这一节课，整理了课堂笔记，知识明显扎实了一些";
+  window.doStudyLog?.(`📖 ${item.name}（熟练度+${add}%，共${item.studyRate}%）｜${evt}`);
+  window._questHook_courseStudy?.(true);
+  window.refreshAll?.();
+  window.autoUnlockByCourse?.();
   window.renderLevelFn?.(items, title);
 }
 
@@ -229,13 +316,23 @@ function enterClassroom(item, subjectKey, subjectData, items, title) {
     window.doStudyLog?.(`❌ 无法进入课堂【${item.name}】：需要 ${item.unlockGrade} 年级`);
     return;
   }
-  if (window.costAction && !window.costAction()) return;
+  const availability = window.courseAttendance?.validateCourseAccess?.(item);
+  if (availability && !availability.ok) {
+    window.doStudyLog?.(availability.message);
+    return;
+  }
+
+  if (!subjectData?.syllabus) {
+    doFocusedStudy(item, items, title);
+    return;
+  }
 
   const lessonBase = getCurrentLesson(subjectKey);
   if (!lessonBase) {
     window.doStudyLog?.(`✅ ${item.name} 所有课时已完成`);
     return;
   }
+  window.courseAttendance?.markAttended?.(item);
   // 从 lessonMap 合并完整内容（opening/atmosphere/keyPoints含context）
   const lessonExtra = subjectData.lessonMap?.[lessonBase.lesson] || {};
   const lesson = { ...lessonBase, ...lessonExtra };
@@ -341,7 +438,7 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
   if (!body) return;
   
   // 检查是否是第一次上麻瓜课程（需要触发教授自我介绍）
-  const isMuggleFirstTime = MUGGLE_SUBJECTS.has(subjectKey) && !hasMetProfessor(subjectKey);
+  const isMuggleFirstTime = MUGGLE_SUBJECTS.includes(subjectKey) && !hasMetProfessor(subjectKey);
   
   if (isMuggleFirstTime) {
     // 显示教授自我介绍
@@ -573,7 +670,7 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   saveProgress(subjectKey, lesson.lesson, rating);
   
   // 麻瓜课程：记录学习日期并推进课程进度
-  if (MUGGLE_SUBJECTS.has(subjectKey)) {
+  if (MUGGLE_SUBJECTS.includes(subjectKey)) {
     recordStudyDate(subjectKey);
     advanceLesson(subjectKey);
   }
@@ -585,7 +682,8 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     
     // 维度四：专属条件触发
     window.affinityUI?.checkStudentSpecialTriggers('courseGrade', { 
-      subject: subjectKey, 
+      subject: sd.subjectMeta?.name || subjectKey,
+      subjectKey,
       rating: rating 
     });
     
@@ -651,10 +749,6 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     _resetState();
     onClose?.();
 
-    if (window.timeSystem?.dailyActionLeft <= 0) {
-      window.closeCoursePanel?.();
-      setTimeout(() => { window.nextTime?.(); window.syncActionUI?.(); }, 50);
-    }
   };
 }
 

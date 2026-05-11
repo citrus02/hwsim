@@ -1,44 +1,111 @@
 /**
  * muggle-schedule.js
  * 麻瓜学术系九门课程特殊课程表系统（现实学校模式）
- * 
+ *
  * 核心特性：
  *   1. 参考现实初中课程表，每周固定安排课程
  *   2. 1991年霍格沃茨1年级对照初一课程安排
  *   3. 第一次上某门课时触发教授自我介绍
- * 
- * 课程安排（参考初一标准）：
- *   - 数学：每周4节
- *   - 语文与文学：每周4节
- *   - 英语：每周4节
- *   - 物理：每周3节
- *   - 化学：每周3节
- *   - 生物：每周2节
- *   - 历史：每周2节
- *   - 地理：每周2节
- *   - 道德与法治：每周1节
+ *   4. 每天3节课，周一至周五上课，周六周日不上课
+ *
+ * 课程安排（参考英国Year 7（11-12岁）标准，周一至周五上课，共15节/周）：
+ *   周一：数学（1）、英语（2）、英语文学（3）
+ *   周二：数学（1）、英语（2）、历史（3）
+ *   周三：英语（1）、地理（2）、生物（3）
+ *   周四：数学（1）、英语（2）、化学（3）
+ *   周五：数学（1）、物理（2）、道德与法治（3）
+ *
+ *   英语4 + 数学4 + 物理1 + 化学1 + 生物1 + 历史1 + 地理1 + 英语文学1 + 道德与法治1 = 15
+ *
+ *   【英国Year 7课表核心逻辑】
+ *   英国 vs 中国初一最大区别：
+ *   1. 英语（English）是母语课，节数最多（英国通常5节/周，游戏适配为4节）
+ *   2. 没有独立"语文"科目——阅读/写作/文学全归入 English 体系
+ *      → literature 科目重新定位为"英语文学"课（English Literature）
+ *   3. 历史与地理在英国Year 7受到更高重视（各2节/周，游戏压缩至1节）
+ *   4. 自然科学在英国Year 7通常作综合科学教授，但霍格沃茨麻瓜学术系
+ *      保留了物理/化学/生物三科分设的传统（与英国私立学校做法一致）
+ *   5. 道德与法治对应英国 RE（Religious Education）+ PSHE 课程性质
+ *
+ * =====================================================================
+ *  麻瓜学术系七年制 · 年级课时总表  （开发完整度检查用）
+ *  说明：Year 1 数据实际采集自各科目 .js 文件，Year 2-7 为规划目标
+ * =====================================================================
+ *
+ *  学年有效教学周：约34周（37校历周 - 圣诞2.5周 - 复活节1周 - 考试约0.5周）
+ *  目标课时 = 周课时 × 34周（每年级）
+ *  实际课时 = 各科目 .js 文件中最大 lesson 编号（仅 Year 1 已实现）
+ *
+ *  科目         周时  年1目标/实现     年2    年3    年4    年5    年6    年7
+ *  ─────────────────────────────────────────────────────────────────────
+ *  数学           4   136 / 110 ⚠   136    136    136    136    136    —
+ *  语文与文学      3   102 /  48 ❌   102    102    102    102    102    —
+ *  英语            2    68 /  75 ✅    68     68     68     68     68    —
+ *  物理            1    34 /  60 ⚠    34     34     34     34     34    —
+ *  化学            1    34 /  56 ⚠    34     34     34     34     34    —
+ *  生物            1    34 /  34 ✅    34     34     —      —      —     —
+ *  历史            1    34 /  45 ⚠    34     34     34     34     —     —
+ *  地理            1    34 /  69 ⚠    34     —      —      —      —     —
+ *  道德与法治       1    34 /  45 ⚠    34     34     —      —      —     —
+ *  ─────────────────────────────────────────────────────────────────────
+ *  年级合计      15   510 / 482      510    476    408    374    374    —
+ *
+ *  ✅ 达标   ⚠ 偏差（超出或不足）   ❌ 严重不足   — 该年级无此科目
+ *
+ *  【各年级科目规划（对应中国学制）】
+ *  年1（初一）：全9科开放
+ *  年2（初二）：全9科，地理内容压缩进阶
+ *  年3（初三）：8科（地理结束，理化生深化，道德继续）
+ *  年4（高一）：7科（道德与法治结束，转为政治选修；理化生高中版本）
+ *  年5（高二）：6科（生物选修化；O.W.L.考试年）
+ *  年6（高三）：5科（选修制深化；N.E.W.T.准备）
+ *  年7（毕业年）：无麻瓜学术必修课，N.E.W.T.另立
+ *
+ *  【Year 1 各科目完整度诊断】
+ *  数学   (110课)：目标136，缺26课 ——初一下学期部分知识点可补充
+ *  语文   ( 48课)：目标102，缺54课 ——水课已清除，真实章节内容待大量补充
+ *  英语   ( 75课)：目标 68，超  7课 ——可接受，含复习和拓展
+ *  物理   ( 60课)：目标 34，超 26课 ——建议视为Year1+Year2联合内容
+ *  化学   ( 56课)：目标 34，超 22课 ——建议视为Year1+Year2联合内容
+ *  生物   ( 34课)：目标 34，精确对齐✅
+ *  历史   ( 45课)：目标 34，超 11课 ——约含Year2初期内容
+ *  地理   ( 69课)：目标 34，超 35课 ——约覆盖Year1+Year2全部
+ *  道德   ( 45课)：目标 34，超 11课 ——约含Year2初期内容
+ *
+ *  【内容文件位置】
+ *  course/muggle-academic/math.js / math-lesson.js / math-questionBank.js
+ *  course/muggle-academic/literature.js / literature-lesson.js
+ *  course/muggle-academic/latin.js / latin-questionBank.js / latin-lesson.js
+ *  course/muggle-academic/physics.js / physics-lesson.js / physics-questionBank.js
+ *  course/muggle-academic/chemistry.js / chemistry-lesson.js / chemistry-questionBank.js
+ *  course/muggle-academic/biology.js / biology-lesson.js / biology-questionBank.js
+ *  course/muggle-academic/history.js / history-lesson.js / history-questionBank.js
+ *  course/muggle-academic/geography.js / geography-questionBank.js
+ *  course/muggle-academic/civics.js / civics-lesson.js / civics-questionBank.js
+ * =====================================================================
  */
 
 import { loadSave, writeSave } from './save-utils.js';
-import { isHoliday } from '../time-system.js';
+import { isHoliday, isSchoolNoClassDate } from '../time-system.js';
 
 // ── 九门麻瓜课程键名 ────────────────────────────────────────
 export const MUGGLE_SUBJECTS = [
   'math', 'physics', 'chemistry', 'biology', 
-  'history', 'civics', 'geography', 'literature', 'english'
+  'history', 'civics', 'geography', 'literature', 'latin'
 ];
 
 // ── 课程显示名称映射 ────────────────────────────────────────
+// 基于英国Year 7课程体系：英语文学作为独立科目；道德与法治对应RE+PSHE
 export const SUBJECT_NAMES = {
   math: '数学',
   physics: '物理',
   chemistry: '化学',
   biology: '生物',
   history: '历史',
-  civics: '道德与法治',
+  civics: '哲学与伦理',
   geography: '地理',
-  literature: '语文与文学',
-  english: '英语'
+  literature: '英语文学',
+  latin: '拉丁语'
 };
 
 // ── 课程图标映射 ────────────────────────────────────────────
@@ -51,52 +118,52 @@ export const SUBJECT_ICONS = {
   civics: '⚖️',
   geography: '🗺️',
   literature: '📖',
-  english: '🔤'
+  latin: '🏛️'
 };
 
-// ── 每周固定课程表（初一标准，每天3节课）───────────────────────
-// 1991年霍格沃茨1年级 = 现实初中1年级
-// 每天3节课，对应每天3次行动
-// 全周15节课，完整覆盖九门学科
+// ── Year 7每周固定课程表（1991年霍格沃茨1年级·英国课程体系）──────
+// 每天3节课，周一至周五上课，周六周日休息，总计15节/周
+// 英语（4节）= 数学（4节），英语为母语主科；三门自然科学各1节分散全周
 export const WEEKLY_SCHEDULE = {
   周一: [
     { period: 1, subject: 'math' },
-    { period: 2, subject: 'literature' },
-    { period: 3, subject: 'english' },
+    { period: 2, subject: 'latin' },
+    { period: 3, subject: 'literature' },  // English Literature（英语文学）
   ],
   周二: [
-    { period: 1, subject: 'physics' },
-    { period: 2, subject: 'chemistry' },
-    { period: 3, subject: 'biology' },
-  ],
-  周三: [
     { period: 1, subject: 'math' },
-    { period: 2, subject: 'literature' },
+    { period: 2, subject: 'latin' },
     { period: 3, subject: 'history' },
   ],
-  周四: [
-    { period: 1, subject: 'english' },
+  周三: [
+    { period: 1, subject: 'latin' },
     { period: 2, subject: 'geography' },
-    { period: 3, subject: 'civics' },
+    { period: 3, subject: 'biology' },
+  ],
+  周四: [
+    { period: 1, subject: 'math' },
+    { period: 2, subject: 'latin' },
+    { period: 3, subject: 'chemistry' },
   ],
   周五: [
     { period: 1, subject: 'math' },
-    { period: 2, subject: 'english' },
-    { period: 3, subject: 'chemistry' },
+    { period: 2, subject: 'physics' },
+    { period: 3, subject: 'civics' },  // RE + PSHE（宗教教育与公民课）
   ],
 };
 
-// ── 每周课时统计（总计15节课/周）────────────────────────────────
+// ── 每周课时统计（总计15节课/周，周一至周五）───────────────────────
+// 英国Year 7：英语与数学并列最高（各4节），理科三门各1节分布全周
 export const WEEKLY_HOURS = {
-  math: 3,       // 周一、周三、周五
-  literature: 2, // 周一、周三
-  english: 3,    // 周一、周四、周五
-  physics: 1,    // 周二
-  chemistry: 2,  // 周二、周五
-  biology: 1,    // 周二
-  history: 1,    // 周三
-  geography: 1,  // 周四
-  civics: 1      // 周四
+  math: 4,       // 周一、周二、周四、周五
+  latin: 4,      // 周一、周二、周三、周四（英国Year 7母语科，与数学并列）
+  literature: 1, // 周一（English Literature，英语文学专课）
+  history: 1,    // 周二
+  geography: 1,  // 周三
+  biology: 1,    // 周三
+  chemistry: 1,  // 周四
+  physics: 1,    // 周五
+  civics: 1      // 周五（RE + PSHE）
 };
 
 // ── 教授自我介绍数据 ────────────────────────────────────────
@@ -133,9 +200,9 @@ export const professorIntroductions = {
   },
   civics: {
     professor: "康斯坦丝·沙克博特",
-    title: "道德与法治教授",
-    introduction: "「康斯坦丝·沙克博特。」她在讲台后坐下，合上手中的书。「这门课不教同情，教理解。」她的目光锐利，「你们会学到制度、法律、权力——以及它们如何塑造这个世界。不要带着偏见来上课。」",
-    portrait: "一位冷峻的女巫，穿着一丝不苟的深蓝色长袍，说话简洁有力，眼神总能看穿人心"
+    title: "哲学与伦理教授",
+    introduction: "「康斯坦丝·沙克博特。」她在讲台后坐下，把一本书翻到某页，推到最近的桌上。「电车失控，轨道上有五个人。你可以拉变轨杆，把它转向另一条轨道，但那里有一个人。」她抬起眼，「你拉吗？」全班沉默。她等了十秒。「好。我们开始上课了。」",
+    portrait: "一位冷峻的女巫，穿着一丝不苟的深蓝色长袍，讲台上只有一本空白笔记本和一根粉笔，从不提前准备讲义"
   },
   geography: {
     professor: "菲利克斯·韦斯利",
@@ -145,15 +212,15 @@ export const professorIntroductions = {
   },
   literature: {
     professor: "伊莱莎·洛夫古德",
-    title: "语文与文学教授",
-    introduction: "「……」她闭上眼睛，轻声念了一句什么，然后睁开眼微笑。「伊莱莎·洛夫古德。」她从窗台取下一本诗集，「文字是没有魔力的魔法。今天，我们来听听它们在说什么。」",
-    portrait: "一位气质优雅的女巫，穿着淡紫色长袍，头发上总别着一朵干花，教室角落堆满了麻瓜书籍"
+    title: "英语文学教授",
+    introduction: "「……」她闭上眼睛，轻声念了一句什么，然后睁开眼微笑。「伊莱莎·洛夫古德。」她从窗台取下一本诗集，「莎士比亚、狄更斯、奥斯汀——麻瓜把灵魂写进了书里。」她把书推到第一排桌上，「今天，我们来听听它们在说什么。」",
+    portrait: "一位气质优雅的女巫，穿着淡紫色长袍，头发上总别着一朵干花，教室角落堆满了英国文学经典原著"
   },
-  english: {
+  latin: {
     professor: "米兰达·珀西瓦尔",
-    title: "英语教授",
-    introduction: "「米兰达·珀西瓦尔。」她的发音清晰得像水晶。「英语不仅仅是麻瓜的语言——它是巫师咒语最古老的来源之一。」她在黑板上写下一个咒语词源，「今天，我们从词根开始。」",
-    portrait: "一位严谨的女巫，穿着整洁的白色衬衫和深色马甲，讲课时语调平稳，批改作业用细头钢笔"
+    title: "拉丁语教授",
+    introduction: "「米兰达·珀西瓦尔。」她的发音清晰得像水晶，清晰到每个音节都有自己的重量。「拉丁语是死的语言——」她在黑板上写下 *Expelliarmus*，「但它从未停止说话。」她顿了顿，「今天，我们来看看它说了什么。」",
+    portrait: "一位严谨的女巫，穿着整洁的白色衬衫和深色马甲，讲台上永远放着拉丁语词典和一本磨旧的咒语词源手册，批改作业用细头钢笔"
   }
 };
 
@@ -175,13 +242,13 @@ export function getTodaySchedule(dateStr = null) {
   
   const dayOfWeek = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()];
   
-  // 周末没有课程
-  if (dayOfWeek === '周六' || dayOfWeek === '周日') {
+  // 周六周日均无课
+  if (dayOfWeek === '周日' || dayOfWeek === '周六') {
     return [];
   }
   
   // 检查是否是假期
-  if (isHoliday(today)) {
+  if (isHoliday(today) || isSchoolNoClassDate(today)) {
     return [];
   }
   
@@ -192,9 +259,9 @@ export function getTodaySchedule(dateStr = null) {
 /**
  * 获取当前行动次数对应的课程
  * 每天3次行动 = 3节课
- * actionLeft=3 → 第1节（早晨）
+ * actionLeft=3 → 第1节（上午）
  * actionLeft=2 → 第2节（下午）
- * actionLeft=1 → 第3节（傍晚）
+ * actionLeft=1 → 第3节（夜晚）
  * @returns {Object|null} 当前课程信息 { period, subject, subjectKey, icon, isAvailable }
  */
 export function getCurrentPeriodCourse() {
@@ -207,9 +274,9 @@ export function getCurrentPeriodCourse() {
   const actionLeft = data.time?.dailyActionLeft || 3;
   
   // 行动次数倒推当前课时：剩余次数越多，当前课时越早
-  // actionLeft = 3 → period = 1（第一节/早晨）
+  // actionLeft = 3 → period = 1（第一节/上午）
   // actionLeft = 2 → period = 2（第二节/下午）
-  // actionLeft = 1 → period = 3（第三节/晚上）
+  // actionLeft = 1 → period = 3（第三节/夜晚）
   const period = 4 - actionLeft;
   
   // 找到对应课时的课程
@@ -426,9 +493,9 @@ export function getWeeklyScheduleText() {
  */
 function getPeriodName(period) {
   const names = {
-    1: '早晨（第1节）',
+    1: '上午（第1节）',
     2: '下午（第2节）',
-    3: '傍晚（第3节）'
+    3: '夜晚（第3节）'
   };
   return names[period] || `第${period}节`;
 }

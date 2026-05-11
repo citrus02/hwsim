@@ -12,6 +12,8 @@ const allCourseList = [
 function getDefaultSave() {
   const course = {};
   allCourseList.forEach(c => course[c] = 0);
+  course.absenceStats = { total: 0, bySubject: {}, records: [] };
+  course.attendance = {};
   return {
     year: 1991, month: 9, day: 2, actions: 1,
     log: [], timeline: [],
@@ -41,6 +43,12 @@ export function getSave() {
     if (!save.explore) save.explore = {};
     if (!save.story) save.story = { completed: {}, active: null };
     if (!save.bag) save.bag = { material: [], potion: [], item: [], wizardCard: [] };
+    if (!save.course) save.course = {};
+    if (!save.course.absenceStats) save.course.absenceStats = { total: 0, bySubject: {}, records: [] };
+    if (!save.course.attendance) save.course.attendance = {};
+    if (!save.course.muggleExams) save.course.muggleExams = { gcse: {}, alevel: {} };
+    if (!save.course.muggleExams.gcse) save.course.muggleExams.gcse = {};
+    if (!save.course.muggleExams.alevel) save.course.muggleExams.alevel = {};
     
     return save;
   } catch (e) { return getDefaultSave(); }
@@ -57,6 +65,8 @@ export function restartGame() {
   const old = getSave();
   const course = {};
   allCourseList.forEach(c => course[c] = 0);
+  course.absenceStats = { total: 0, bySubject: {}, records: [] };
+  course.attendance = {};
   const fresh = {
     player: { name: "无名巫师", era: "", house: "", blood: "", wand: "", wandAccepted: true, galleons: 10, sickles: 0, knuts: 0 },
     time: { year: 1991, month: 9, day: 2, dailyActionLeft: 1, nowTime: "夜晚", currentDate: "1991-09-02" },
@@ -164,7 +174,7 @@ export function addLog(text, type = 'player', house = '') {
   const d = getSave();
   if (!d.log) d.log = [];
   const curDate = d.time?.currentDate || "1991-09-02";
-  const curTime = d.time?.nowTime || "早晨";
+  const curTime = d.time?.nowTime || "上午";
   const typeTag = type === 'player' ? '' : `[${type}]`;
   const houseTag = house ? `[${house}]` : '';
   d.log.push(`[${curDate} ${curTime}] ${typeTag}${houseTag} ${text}`);

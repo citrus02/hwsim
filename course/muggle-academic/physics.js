@@ -2,8 +2,20 @@
  * subjects/physics.js
  * 麻瓜研究 · 物理分科
  * 教授：塞拉菲娜·穆迪
+ *
+ * 包含：
+ *   subjectMeta      科目元数据
+ *   syllabus         课程大纲（章节+知识点）
+ *   crossAnchors     跨学科锚点
+ *   teachingStyle    教学风格常量
+ *   examSchedule     考试安排
+ *   holidayNotes     假期安排
  */
 
+import { lessonMap } from './physics-lesson.js';
+import { questionBank } from './physics-questionBank.js';
+
+// ── 元数据 ────────────────────────────────────────────────────
 export const subjectMeta = {
   key: "physics",
   name: "物理",
@@ -14,6 +26,7 @@ export const subjectMeta = {
   housePointsPerLesson: { O: 6, E: 5, A: 3, P: 1, D: -1, T: -3 }
 };
 
+// ── 教学风格常量 ───────────────────────────────────────────────
 export const teachingStyle = {
   praiseStyle:    "大声喊「漂亮！就是它！」，有时拍手",
   errorStyle:     "「炸了不过炸也是数据」，立刻分析原因",
@@ -23,415 +36,263 @@ export const teachingStyle = {
   catchphrase:    "炸了不过炸也是数据"
 };
 
+// ── 课程大纲 ─────────────────────────────────────────────────
+// year:1  Ch1-7  L1-26   一年级教学内容（34周目标中的26课时）
+// year:2  Ch8-17 L27-60  二年级教学内容（延续深化）
 export const syllabus = [
   {
     chapter: 1,
-    title: "力与运动",
+    year: 1,
+    title: "机械运动",
     lessons: [
-      {
-        lesson: 1,
-        title: "力的基本概念",
-        keyPoints: [
-          "力是物体对物体的作用",
-          "力的三要素：大小、方向、作用点",
-          "力的单位：牛顿（N）",
-          "力的效果：改变形状或改变运动状态"
-        ]
-      },
-      {
-        lesson: 2,
-        title: "重力与弹力",
-        keyPoints: [
-          "重力：地球对物体的引力，方向竖直向下",
-          "重力加速度 g ≈ 9.8 m/s²",
-          "弹力：形变产生的力",
-          "弹簧的弹力与形变量成正比（胡克定律）"
-        ]
-      },
-      {
-        lesson: 3,
-        title: "摩擦力",
-        keyPoints: [
-          "摩擦力阻碍物体间的相对运动",
-          "静摩擦力与滑动摩擦力",
-          "影响摩擦力的因素：压力大小和接触面粗糙程度",
-          "麻瓜生活中的摩擦力应用"
-        ]
-      }
+      { lesson: 1, title: "长度和时间的测量", keyPoints: ["测量的意义：没有测量就没有科学", "长度单位：米（m）、千米（km）、厘米（cm）、毫米（mm）", "时间单位：秒（s）、分钟（min）、小时（h）", "刻度尺和秒表的正确使用方法"] },
+      { lesson: 2, title: "运动的描述", keyPoints: ["机械运动：物体位置随时间的变化", "参照物：描述运动时选作标准的物体", "运动和静止的相对性", "选择不同参照物，物体运动状态可能不同"] },
+      { lesson: 3, title: "运动的快慢", keyPoints: ["速度：描述物体运动快慢的物理量", "速度公式：v = s/t", "速度单位：米每秒（m/s）、千米每小时（km/h）", "匀速直线运动与变速运动"] },
+      { lesson: 4, title: "测量平均速度", keyPoints: ["平均速度的概念", "实验原理：v = s/t", "实验器材：刻度尺、秒表、斜面、小车", "实验步骤与数据记录"] }
     ]
   },
   {
     chapter: 2,
-    title: "声与热",
+    year: 1,
+    title: "声现象",
     lessons: [
-      {
-        lesson: 4,
-        title: "声音的产生与传播",
-        keyPoints: [
-          "声音由物体振动产生",
-          "声音的传播需要介质，真空不能传声",
-          "声速在不同介质中不同，固体>液体>气体",
-          "音调、响度、音色三要素"
-        ]
-      },
-      {
-        lesson: 5,
-        title: "热与温度",
-        keyPoints: [
-          "温度：物体冷热程度的量度",
-          "温度计的原理：液体热胀冷缩",
-          "摄氏温标与热力学温标",
-          "热量的传递方式：传导、对流、辐射"
-        ]
-      }
+      { lesson: 5, title: "声音的产生与传播", keyPoints: ["声音由物体振动产生", "声音的传播需要介质，真空不能传声", "声速：固体>液体>气体", "常见介质中的声速"] },
+      { lesson: 6, title: "声音的特性", keyPoints: ["音调：由频率决定，频率高音调高", "响度：由振幅决定，振幅大响度大", "音色：由发声体本身决定，区分不同声音", "噪声的危害与控制"] },
+      { lesson: 7, title: "声的利用", keyPoints: ["声音传递信息：回声定位、B超", "声音传递能量：超声波清洗、碎石", "超声波与次声波", "噪声的防治方法"] }
     ]
   },
   {
     chapter: 3,
-    title: "电与磁",
+    year: 1,
+    title: "物态变化",
     lessons: [
-      {
-        lesson: 6,
-        title: "电流与电路",
-        keyPoints: [
-          "电流：电荷的定向移动",
-          "电路的基本组成：电源、导线、开关、用电器",
-          "串联与并联的区别",
-          "导体与绝缘体"
-        ]
-      },
-      {
-        lesson: 7,
-        title: "欧姆定律",
-        keyPoints: [
-          "欧姆定律：I = U/R",
-          "电压、电流、电阻的关系",
-          "电阻的影响因素：材料、长度、截面积、温度",
-          "灯泡发光的原理：电阻产生热量"
-        ]
-      },
-      {
-        lesson: 8,
-        title: "磁场与电磁感应",
-        keyPoints: [
-          "磁场的基本性质与磁感线",
-          "地球磁场与指南针",
-          "电生磁：奥斯特发现",
-          "磁生电：电磁感应现象"
-        ]
-      }
+      { lesson: 8, title: "温度", keyPoints: ["温度：物体冷热程度的量度", "温度计的原理：液体热胀冷缩", "摄氏温标：0°C（冰水混合物）、100°C（沸水）", "温度计的正确使用方法"] },
+      { lesson: 9, title: "熔化和凝固", keyPoints: ["熔化：固态→液态，吸热", "凝固：液态→固态，放热", "晶体与非晶体的区别", "熔点与凝固点"] },
+      { lesson: 10, title: "汽化和液化", keyPoints: ["汽化：液态→气态，吸热", "蒸发与沸腾的区别", "液化：气态→液态，放热", "液化的两种方式：降温、压缩体积"] },
+      { lesson: 11, title: "升华和凝华", keyPoints: ["升华：固态→气态，吸热", "凝华：气态→固态，放热", "生活中的升华和凝华现象", "物态变化的循环"] }
     ]
   },
   {
     chapter: 4,
-    title: "能量守恒",
+    year: 1,
+    title: "光现象",
     lessons: [
-      {
-        lesson: 9,
-        title: "能量与能量守恒定律",
-        keyPoints: [
-          "能量的形式：动能、势能、热能、电能、光能",
-          "能量守恒定律：能量不生不灭，只转化",
-          "机械能守恒",
-          "麻瓜能源利用与转化链"
-        ]
-      }
+      { lesson: 12, title: "光的直线传播", keyPoints: ["光源：能发光的物体", "光在同种均匀介质中沿直线传播", "影子、日食、月食的成因", "光速：约3×10⁸m/s"] },
+      { lesson: 13, title: "光的反射", keyPoints: ["光的反射定律：反射光线、入射光线、法线在同一平面", "反射角等于入射角", "镜面反射与漫反射", "平面镜成像特点"] },
+      { lesson: 14, title: "光的折射", keyPoints: ["光的折射定律", "光从空气进入水中的折射现象", "折射角与入射角的关系", "生活中的折射现象"] }
     ]
-  }
+  },
+  {
+    chapter: 5,
+    year: 1,
+    title: "透镜及其应用",
+    lessons: [
+      { lesson: 15, title: "透镜", keyPoints: ["凸透镜：中间厚边缘薄，对光有会聚作用", "凹透镜：中间薄边缘厚，对光有发散作用", "焦点、焦距的概念", "透镜的三条特殊光线"] },
+      { lesson: 16, title: "生活中的透镜", keyPoints: ["照相机：利用凸透镜成倒立缩小实像", "投影仪：利用凸透镜成倒立放大实像", "放大镜：利用凸透镜成正立放大虚像", "眼睛的结构与功能"] },
+      { lesson: 17, title: "凸透镜成像规律", keyPoints: ["u > 2f：倒立、缩小、实像（照相机）", "f < u < 2f：倒立、放大、实像（投影仪）", "u < f：正立、放大、虚像（放大镜）", "u = 2f：倒立、等大、实像", "u = f：不成像"] }
+    ]
+  },
+  {
+    chapter: 6,
+    year: 1,
+    title: "质量与密度",
+    lessons: [
+      { lesson: 18, title: "质量", keyPoints: ["质量：物体所含物质的多少", "质量单位：千克（kg）、克（g）、吨（t）", "质量的特性：不随形状、状态、位置改变", "天平的使用方法"] },
+      { lesson: 19, title: "密度", keyPoints: ["密度：单位体积物质的质量", "密度公式：ρ = m/V", "密度单位：千克/立方米（kg/m³）、克/立方厘米（g/cm³）", "密度是物质的特性"] },
+      { lesson: 20, title: "测量物质的密度", keyPoints: ["实验原理：ρ = m/V", "测量工具：天平、量筒", "实验步骤：测质量、测体积、算密度", "误差分析"] },
+      { lesson: 21, title: "密度与社会生活", keyPoints: ["密度的应用：鉴别物质", "密度与温度的关系", "水的反常膨胀", "密度知识的实际应用"] }
+    ]
+  },
+  {
+    chapter: 7,
+    year: 1,
+    title: "期中复习与考试",
+    lessons: [
+      { lesson: 22, title: "机械运动与声现象复习", keyPoints: ["速度公式及其应用", "参照物的选择", "声音的三要素", "声速与介质的关系"] },
+      { lesson: 23, title: "物态变化与光现象复习", keyPoints: ["六种物态变化及吸放热情况", "温度计的使用", "光的直线传播、反射、折射", "平面镜成像特点"] },
+      { lesson: 24, title: "透镜与密度复习", keyPoints: ["凸透镜成像规律", "生活中的透镜应用", "密度公式与计算", "密度测量实验"] },
+      { lesson: 25, title: "综合练习", keyPoints: ["选择题专项练习", "填空题专项练习", "实验题专项练习", "计算题专项练习"] },
+      { lesson: 26, title: "期中考试", keyPoints: ["考试范围：第1-6章", "题型：选择、填空、实验、计算", "考试时间：120分钟", "评分标准"] }
+    ]
+  },
+  {
+    chapter: 8,
+    year: 2,
+    title: "力",
+    lessons: [
+      { lesson: 27, title: "力的概念", keyPoints: ["力是物体对物体的作用", "力的三要素：大小、方向、作用点", "力的单位：牛顿（N）", "力的作用效果：改变形状、改变运动状态"] },
+      { lesson: 28, title: "弹力", keyPoints: ["弹力：物体发生弹性形变时产生的力", "弹力的产生条件", "弹簧测力计的原理与使用", "胡克定律：F = kx"] },
+      { lesson: 29, title: "重力", keyPoints: ["重力：地球对物体的吸引力", "重力方向：竖直向下", "重力公式：G = mg（g≈9.8N/kg）", "重心的概念"] },
+      { lesson: 30, title: "摩擦力", keyPoints: ["摩擦力：阻碍物体相对运动的力", "滑动摩擦与静摩擦", "影响摩擦力的因素：压力、接触面粗糙程度", "增大和减小摩擦的方法"] }
+    ]
+  },
+  {
+    chapter: 9,
+    year: 2,
+    title: "运动和力",
+    lessons: [
+      { lesson: 31, title: "牛顿第一定律", keyPoints: ["一切物体在没有受到力的作用时，保持静止或匀速直线运动", "惯性：物体保持原来运动状态的性质", "惯性现象的解释", "惯性的利用与防范"] },
+      { lesson: 32, title: "二力平衡", keyPoints: ["二力平衡的条件：大小相等、方向相反、同一直线、同一物体", "平衡力与相互作用力的区别", "物体处于平衡状态的条件", "二力平衡的应用"] },
+      { lesson: 33, title: "力与运动的关系", keyPoints: ["力是改变物体运动状态的原因", "物体不受力或受平衡力时保持静止或匀速直线运动", "物体受非平衡力时运动状态改变", "合力的概念"] }
+    ]
+  },
+  {
+    chapter: 10,
+    year: 2,
+    title: "压强",
+    lessons: [
+      { lesson: 34, title: "压强", keyPoints: ["压强：单位面积上受到的压力", "压强公式：p = F/S", "压强单位：帕斯卡（Pa）", "增大和减小压强的方法"] },
+      { lesson: 35, title: "液体的压强", keyPoints: ["液体压强的特点：向各个方向都有压强", "液体压强公式：p = ρgh", "液体压强与深度、密度的关系", "连通器原理"] },
+      { lesson: 36, title: "大气压强", keyPoints: ["大气压的存在：马德堡半球实验", "大气压的测量：托里拆利实验", "标准大气压：约1.01×10⁵Pa", "大气压与高度的关系"] }
+    ]
+  },
+  {
+    chapter: 11,
+    year: 2,
+    title: "浮力",
+    lessons: [
+      { lesson: 37, title: "浮力", keyPoints: ["浮力：液体或气体对物体的向上托力", "浮力的方向：竖直向上", "浮力产生的原因：上下表面压力差", "物体的浮沉条件"] },
+      { lesson: 38, title: "阿基米德原理", keyPoints: ["阿基米德原理：浮力等于排开液体的重力", "公式：F浮 = G排 = ρ液gV排", "阿基米德原理的应用", "浮力的计算"] },
+      { lesson: 39, title: "浮力的应用", keyPoints: ["轮船：空心增大排液体积", "潜水艇：改变自身重力实现浮沉", "气球和飞艇：利用空气浮力", "密度计的原理"] }
+    ]
+  },
+  {
+    chapter: 12,
+    year: 2,
+    title: "功和机械能",
+    lessons: [
+      { lesson: 40, title: "功", keyPoints: ["功的概念：力与在力的方向上移动距离的乘积", "功的公式：W = Fs", "功的单位：焦耳（J）", "不做功的情况"] },
+      { lesson: 41, title: "功率", keyPoints: ["功率：单位时间内做的功", "功率公式：P = W/t", "功率单位：瓦特（W）", "功率表示做功的快慢"] },
+      { lesson: 42, title: "动能和势能", keyPoints: ["动能：物体由于运动而具有的能量", "动能与质量、速度的关系", "势能：重力势能和弹性势能", "机械能：动能与势能的总和"] },
+      { lesson: 43, title: "机械能及其转化", keyPoints: ["动能与势能的相互转化", "机械能守恒定律：只有重力做功时，机械能守恒", "能量转化的实例分析", "能量守恒定律"] }
+    ]
+  },
+  {
+    chapter: 13,
+    year: 2,
+    title: "简单机械",
+    lessons: [
+      { lesson: 44, title: "杠杆", keyPoints: ["杠杆的五要素：支点、动力、阻力、动力臂、阻力臂", "杠杆平衡条件：F₁L₁ = F₂L₂", "杠杆的分类：省力杠杆、费力杠杆、等臂杠杆", "杠杆的应用"] },
+      { lesson: 45, title: "滑轮", keyPoints: ["定滑轮：不省力，改变力的方向", "动滑轮：省一半力，不改变方向", "滑轮组：既省力又改变方向", "滑轮组的绕线方法"] },
+      { lesson: 46, title: "机械效率", keyPoints: ["有用功、额外功、总功", "机械效率公式：η = W有用/W总 × 100%", "影响机械效率的因素", "提高机械效率的方法"] }
+    ]
+  },
+  {
+    chapter: 14,
+    year: 2,
+    title: "电与磁",
+    lessons: [
+      { lesson: 47, title: "电流与电路", keyPoints: ["电流：电荷的定向移动", "电路的组成：电源、导线、开关、用电器", "串联电路与并联电路", "导体与绝缘体"] },
+      { lesson: 48, title: "欧姆定律", keyPoints: ["欧姆定律：I = U/R", "电压、电流、电阻的关系", "电阻的影响因素：材料、长度、横截面积、温度", "欧姆定律的应用"] },
+      { lesson: 49, title: "磁场与电磁感应", keyPoints: ["磁场的基本性质", "磁感线的概念", "电流的磁效应（奥斯特实验）", "电磁感应现象"] }
+    ]
+  },
+  {
+    chapter: 15,
+    year: 2,
+    title: "期末复习与考试",
+    lessons: [
+      { lesson: 50, title: "力与运动专题复习", keyPoints: ["力的概念与分类", "牛顿第一定律与惯性", "二力平衡条件", "力与运动的关系"] },
+      { lesson: 51, title: "压强与浮力专题复习", keyPoints: ["压强公式与应用", "液体压强特点", "大气压的应用", "浮力与浮沉条件"] },
+      { lesson: 52, title: "功与机械能专题复习", keyPoints: ["功和功率的计算", "动能与势能的转化", "机械能守恒定律", "简单机械与机械效率"] },
+      { lesson: 53, title: "综合练习", keyPoints: ["综合题型练习", "易错题回顾", "压轴题讲解", "解题策略分享"] },
+      { lesson: 54, title: "期末考试", keyPoints: ["考试范围：全学期内容", "题型：选择、填空、实验、计算", "考试时间：150分钟", "评分标准"] }
+    ]
+  },
+  {
+    chapter: 16,
+    year: 2,
+    title: "专题复习",
+    lessons: [
+      { lesson: 55, title: "实验专题", keyPoints: ["测量平均速度实验", "密度测量实验", "摩擦力影响因素实验", "凸透镜成像实验"] },
+      { lesson: 56, title: "计算题专题", keyPoints: ["速度、密度计算", "压强、浮力计算", "功、功率计算", "综合计算技巧"] },
+      { lesson: 57, title: "图像专题", keyPoints: ["s-t图像与v-t图像", "温度-时间图像", "压强-深度图像", "图像信息提取"] }
+    ]
+  },
+  {
+    chapter: 17,
+    year: 2,
+    title: "知识拓展",
+    lessons: [
+      { lesson: 58, title: "物理与魔法的联系", keyPoints: ["魔法与物理的相似之处", "能量守恒与魔力守恒", "魔法物品的物理原理", "麻瓜技术与魔法的互补"] },
+      { lesson: 59, title: "物理学史", keyPoints: ["经典力学的建立", "电磁学的发展", "伟大物理学家的贡献", "物理学的前沿"] },
+      { lesson: 60, title: "生活中的物理", keyPoints: ["交通工具中的物理", "家用电器的原理", "体育运动中的物理", "日常现象的解释"] }
+    ]
+  },
 ];
 
-export const questionBank = [
-  {
-    lesson: 1,
-    title: "力的基本概念",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "下列关于力的说法，正确的是：",
-        options: ["A. 力可以脱离物体单独存在", "B. 力是物体对物体的作用", "C. 只有接触的物体间才有力", "D. 力只能改变物体形状"],
-        answer: "B",
-        knowledgePoint: "力的定义",
-        analysis: "力是物体对物体的作用，力不能脱离物体存在，也有不接触的力（如重力）。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "用手推墙，墙不动，手感到疼。这说明：",
-        options: ["A. 手对墙有力，墙对手没有力", "B. 手对墙的力大于墙对手的力", "C. 力的作用是相互的", "D. 手比墙软，所以手疼"],
-        answer: "C",
-        knowledgePoint: "力的相互性",
-        analysis: "力的作用是相互的，手推墙时墙也在推手，两力大小相等方向相反。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "一个物体同时受到两个力，这两个力的合力：",
-        options: ["A. 一定比每个力都大", "B. 一定比每个力都小", "C. 可能为零", "D. 一定不为零"],
-        answer: "C",
-        knowledgePoint: "力的合成",
-        analysis: "两个力大小相等、方向相反时，合力为零。合力可以比每个分力大、小或等于。"
-      }
-    ]
-  },
-  {
-    lesson: 2,
-    title: "重力与弹力",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "重力的方向是：",
-        options: ["A. 指向地心", "B. 垂直向下", "C. 竖直向下", "D. 与地面平行"],
-        answer: "C",
-        knowledgePoint: "重力方向",
-        analysis: "重力方向竖直向下，而不是垂直于地面（斜面上的物体垂直于斜面的方向与竖直向下不同）。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "质量为10kg的物体，受到的重力约为（g=10N/kg）：",
-        options: ["A. 1N", "B. 10N", "C. 100N", "D. 1000N"],
-        answer: "C",
-        knowledgePoint: "重力计算",
-        analysis: "G = mg = 10kg × 10N/kg = 100N。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "弹簧被压缩，产生弹力的原因是：",
-        options: ["A. 弹簧有弹性", "B. 弹簧发生了弹性形变", "C. 弹簧受到了外力", "D. 弹簧想恢复原状"],
-        answer: "B",
-        knowledgePoint: "弹力产生条件",
-        analysis: "弹力产生的根本原因是弹性形变。只有在弹性限度内，形变才能产生弹力。"
-      }
-    ]
-  },
-  {
-    lesson: 3,
-    title: "摩擦力",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "以下哪种情况会增大摩擦力？",
-        options: ["A. 在机器齿轮上加润滑油", "B. 把轮子做成圆形", "C. 在冰鞋底部加装刀片", "D. 在轮胎上加防滑链"],
-        answer: "D",
-        knowledgePoint: "摩擦力的影响因素",
-        analysis: "加防滑链增大了接触面的粗糙程度，从而增大摩擦力，其余选项都是减小摩擦力。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "一本书放在桌上静止不动，书受到的摩擦力：",
-        options: ["A. 方向向右", "B. 方向向左", "C. 大小为零", "D. 大小等于书的重力"],
-        answer: "C",
-        knowledgePoint: "静摩擦力",
-        analysis: "静止的书没有运动趋势，静摩擦力为零。摩擦力只在有相对运动或运动趋势时存在。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "用相同的力推重量不同的两个箱子，哪个受到的摩擦力更大？",
-        options: ["A. 重的箱子", "B. 轻的箱子", "C. 一样大", "D. 取决于箱子材质"],
-        answer: "A",
-        knowledgePoint: "压力与摩擦力",
-        analysis: "在接触面相同的情况下，压力越大（重的物体对地面压力更大），摩擦力越大。"
-      }
-    ]
-  },
-  {
-    lesson: 4,
-    title: "声音的产生与传播",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "声音产生的原因是：",
-        options: ["A. 物体运动", "B. 物体振动", "C. 空气流动", "D. 能量传递"],
-        answer: "B",
-        knowledgePoint: "声音产生",
-        analysis: "声音由物体振动产生，振动停止，声音也停止。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "在月球上，两名宇航员面对面无法直接对话，原因是：",
-        options: ["A. 月球上没有空气传播声音", "B. 月球太冷声音被冻住了", "C. 宇航服太厚", "D. 月球引力太大"],
-        answer: "A",
-        knowledgePoint: "声音传播需要介质",
-        analysis: "声音传播需要介质，月球表面是真空，没有介质，声音无法传播。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "同一声源发出的声音，在以下哪种介质中传播最快？",
-        options: ["A. 空气", "B. 水", "C. 木头", "D. 真空"],
-        answer: "C",
-        knowledgePoint: "声速与介质",
-        analysis: "声速在固体>液体>气体，真空中声音无法传播。木头是固体，所以传播最快。"
-      }
-    ]
-  },
-  {
-    lesson: 5,
-    title: "热与温度",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "温度计的工作原理是：",
-        options: ["A. 液体热胀冷缩", "B. 液体热缩冷胀", "C. 气体热胀冷缩", "D. 金属导热"],
-        answer: "A",
-        knowledgePoint: "温度计原理",
-        analysis: "温度计利用液体（通常是酒精或汞）热胀冷缩的性质来测量温度。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "热量从高温物体传向低温物体，直到两者温度相同，这个过程叫：",
-        options: ["A. 热平衡", "B. 热传导", "C. 热对流", "D. 热辐射"],
-        answer: "A",
-        knowledgePoint: "热平衡",
-        analysis: "两个温度不同的物体接触后，热量传递直到温度相同，达到热平衡。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "下列现象中，通过对流传热的是：",
-        options: ["A. 太阳照射地球", "B. 炉子旁边的人感到热", "C. 用热水袋暖手", "D. 烧水时锅底的水上升"],
-        answer: "D",
-        knowledgePoint: "热传递方式",
-        analysis: "对流是流体（液体和气体）通过流动传递热量。烧水时底部水受热密度变小上升，形成对流。"
-      }
-    ]
-  },
-  {
-    lesson: 6,
-    title: "电流与电路",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "下列物质中，属于导体的是：",
-        options: ["A. 橡皮", "B. 玻璃", "C. 铜", "D. 陶瓷"],
-        answer: "C",
-        knowledgePoint: "导体与绝缘体",
-        analysis: "铜是金属，金属中有自由电子，容易导电，是导体。其余都是绝缘体。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "并联电路中，两个灯泡：",
-        options: ["A. 亮度相同，一个断路另一个也灭", "B. 各自独立，一个断路另一个仍亮", "C. 串联在一起", "D. 无法同时发光"],
-        answer: "B",
-        knowledgePoint: "并联特性",
-        analysis: "并联电路各支路独立，一条支路断路不影响其他支路，这也是家庭电路采用并联的原因。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "手电筒里的两节电池串联，每节电压1.5V，则总电压为：",
-        options: ["A. 1.5V", "B. 0.75V", "C. 3V", "D. 无法确定"],
-        answer: "C",
-        knowledgePoint: "串联电压",
-        analysis: "串联电路总电压等于各部分电压之和，1.5V + 1.5V = 3V。"
-      }
-    ]
-  },
-  {
-    lesson: 7,
-    title: "欧姆定律",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "欧姆定律的公式是：",
-        options: ["A. I = U/R", "B. I = R/U", "C. U = I/R", "D. R = I×U"],
-        answer: "A",
-        knowledgePoint: "欧姆定律公式",
-        analysis: "欧姆定律：电流I等于电压U除以电阻R，即I = U/R。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "电阻为10Ω，两端电压为5V，通过的电流为：",
-        options: ["A. 50A", "B. 2A", "C. 0.5A", "D. 0.2A"],
-        answer: "C",
-        knowledgePoint: "欧姆定律计算",
-        analysis: "I = U/R = 5V ÷ 10Ω = 0.5A。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "将电阻R接在电路中，电压不变，若将R增大为原来的2倍，则电流变为原来的：",
-        options: ["A. 2倍", "B. 4倍", "C. 1/2倍", "D. 1/4倍"],
-        answer: "C",
-        knowledgePoint: "欧姆定律比例关系",
-        analysis: "U不变，R增大2倍，由I=U/R，I减小为原来的1/2。"
-      }
-    ]
-  },
-  {
-    lesson: 8,
-    title: "磁场与电磁感应",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "指南针能指向南北，是因为：",
-        options: ["A. 地球是一块大磁铁", "B. 地球有引力", "C. 指南针有魔力", "D. 太阳的引力"],
-        answer: "A",
-        knowledgePoint: "地球磁场",
-        analysis: "地球本身是一个巨大的磁体，地磁场使指南针的N极指向地理南方（地磁北方）。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "奥斯特发现了电流能够：",
-        options: ["A. 产生引力", "B. 产生磁场", "C. 产生光", "D. 产生声音"],
-        answer: "B",
-        knowledgePoint: "电流的磁效应",
-        analysis: "丹麦物理学家奥斯特发现导线通电时附近磁针偏转，证明电流能产生磁场。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "发电机的工作原理是：",
-        options: ["A. 电流产生磁场", "B. 磁场产生电流（电磁感应）", "C. 机械能直接变成电能", "D. 化学能转化为电能"],
-        answer: "B",
-        knowledgePoint: "电磁感应",
-        analysis: "发电机利用电磁感应原理，导体在磁场中运动产生电流，将机械能转化为电能。"
-      }
-    ]
-  },
-  {
-    lesson: 9,
-    title: "能量与能量守恒定律",
-    questions: [
-      {
-        type: "choice", difficulty: "basic",
-        text: "下列能量转化，正确描述电灯工作过程的是：",
-        options: ["A. 光能→电能", "B. 电能→热能+光能", "C. 化学能→光能", "D. 电能→动能"],
-        answer: "B",
-        knowledgePoint: "能量转化",
-        analysis: "电灯工作时，电能转化为热能和光能（灯丝电阻发热发光）。"
-      },
-      {
-        type: "choice", difficulty: "medium",
-        text: "能量守恒定律的含义是：",
-        options: ["A. 能量会消失", "B. 能量会凭空产生", "C. 能量只能转化，总量不变", "D. 能量转化会有损耗"],
-        answer: "C",
-        knowledgePoint: "能量守恒定律",
-        analysis: "能量守恒定律：能量既不能凭空产生，也不能凭空消失，只能从一种形式转化为另一种形式，总量守恒。"
-      },
-      {
-        type: "choice", difficulty: "hard",
-        text: "永动机（不消耗能量但持续做功的机器）不可能存在，原因是：",
-        options: ["A. 技术不够先进", "B. 材料不够好", "C. 违反了能量守恒定律", "D. 理论上可能，实践上不行"],
-        answer: "C",
-        knowledgePoint: "能量守恒与永动机",
-        analysis: "永动机违背了能量守恒定律，做功需要消耗能量，没有能量输入就无法持续做功。"
-      }
-    ]
-  }
-];
-
+// ── 跨学科知识锚点 ─────────────────────────────────────────────
 export const crossAnchors = [
   {
-    concept: "正负数与温度计",
+    concept: "数轴与温度计",
     linkedSubject: "math",
-    linkedLesson: "第1课",
-    desc: "芬威克讲正负数时，塞拉菲娜的温度计刻度就是最好的现实案例——两者逻辑完全相同"
+    linkedLesson: "数轴（第3课）",
+    desc: "芬威克讲数轴时，温度计刻度就是最直观的物理模型：0°C是原点，正数向上，负数向下，数轴上每一格对应温度的每一度"
   },
   {
-    concept: "工业革命与能量利用",
+    concept: "蒸汽机与热能转化",
     linkedSubject: "history",
-    linkedLesson: "第2课",
-    desc: "赫伯特讲工业革命时，塞拉菲娜会从能量转化角度重新讲蒸汽机——同一段历史，两种解读"
+    linkedLesson: "工业革命的开端（第1课）",
+    desc: "赫伯特讲瓦特改良蒸汽机时，塞拉菲娜会从热→机械能转化角度补充——同一台蒸汽机，历史课看它改变了社会，物理课看它怎么把热变成力"
   },
   {
-    concept: "电路与逻辑推导",
+    concept: "欧姆定律与方程求解",
     linkedSubject: "math",
-    linkedLesson: "第9课",
-    desc: "方程求解和电路分析都需要同样的逻辑推导能力——找未知量，建立等式，求解"
+    linkedLesson: "方程与解（第21课）",
+    desc: "解电路题和解方程完全是同一件事：找未知量（电流/电压/电阻），建立等式（I=U/R），代入求解——数学方法直接迁移到物理计算"
+  },
+  {
+    concept: "燃料燃烧与热能",
+    linkedSubject: "chemistry",
+    linkedLesson: "燃料及其利用（第26课）",
+    desc: "普里姆罗斯讲燃烧热值时，塞拉菲娜会解释化学能→热能的转化过程——化学描述「发生了什么反应」，物理解释「能量去哪里了」"
+  },
+  {
+    concept: "生态系统与能量流动",
+    linkedSubject: "biology",
+    linkedLesson: "生态系统的组成（第6课）",
+    desc: "塔维什讲食物链中能量逐级递减时，塞拉菲娜会补充热力学背景：每次能量传递都有热能散失，这不是浪费而是物理定律"
   }
 ];
 
-window.subject_physics = { subjectMeta, syllabus, questionBank, crossAnchors, teachingStyle };
+// ── 考试安排 ──────────────────────────────────────────────────
+export const examSchedule = {
+  midterm: {
+    date: "1991-11-07",
+    duration: "2课时",
+    format: "理论考试 + 实验操作",
+    coverage: ["第1-6章"],
+    description: "期中考试将全面考查前半学期的知识，包括机械运动、声现象、物态变化、光现象、透镜应用、质量与密度等核心内容。实验操作部分将使用麻瓜仪器进行测量和记录。"
+  },
+  final: {
+    date: "1992-06-10",
+    duration: "3课时",
+    format: "综合笔试 + 实验设计",
+    coverage: ["全学期内容"],
+    description: "期末考试将综合考查全学期知识，注重知识的整合与应用。实验设计部分要求学生独立设计一个简单的物理实验方案。"
+  }
+};
+
+// ── 假期安排 ──────────────────────────────────────────────────
+export const holidayNotes = [
+  { date: "1991-09-02", note: "开学日，不上课" },
+  { date: "1991-10-31", note: "万圣节，夜晚课程取消" },
+  { date: "1991-12-20", note: "圣诞假期开始，课程暂停" },
+  { date: "1992-01-05", note: "圣诞假期结束，恢复上课" },
+  { date: "1992-03-29", note: "复活节假期开始" },
+  { date: "1992-04-05", note: "复活节假期结束" },
+  { date: "1992-06-15", note: "暑假开始，课程暂停" },
+  { date: "1992-09-01", note: "暑假结束，新学年开始" }
+];
+
+// ── 全局挂载 ─────────────────────────────────────────────────
+window.subject_physics = {
+  subjectMeta,
+  syllabus,
+  crossAnchors,
+  teachingStyle,
+  examSchedule,
+  holidayNotes,
+  lessonMap,
+  questionBank
+};

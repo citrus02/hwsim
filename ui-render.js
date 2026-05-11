@@ -1,6 +1,7 @@
 // ui-render.js — UI 渲染 + 全局刷新 + 标签页初始化
 
 import { getSave, setSave, addLog, renderLog, renderTimeline } from './save-system.js';
+import { getDateEventName } from './time-system.js';
 
 const allCourseList = [
   "变形术","魔咒学","魔药学","黑魔法防御术","草药学","魔法史","天文学","飞行课",
@@ -41,6 +42,7 @@ export function refreshAll() {
   const curDate = data.time?.currentDate || "1991-09-02";
   setText("date", curDate);
   setText("timeOfDay", data.time?.nowTime || "早晨");
+  setText("dateEvent", getDateEventName(curDate));
   setText("actions", data.time?.dailyActionLeft ?? 3);
 
   const weekdays = ["周日","周一","周二","周三","周四","周五","周六"];
@@ -63,14 +65,17 @@ export function refreshAll() {
   const dateEl = document.getElementById("date");
   const weekdayEl = document.getElementById("weekday");
   const todEl = document.getElementById("timeOfDay");
+  const eventEl = document.getElementById("dateEvent");
   if (dateEl && data.timeTurner?.isTraveling) {
     dateEl.style.color = "#c9a84c";
     if (weekdayEl) weekdayEl.style.color = "#c9a84c";
     if (todEl) todEl.style.color = "#c9a84c";
+    if (eventEl) eventEl.style.color = "#c9a84c";
   } else if (dateEl) {
     dateEl.style.color = "";
     if (weekdayEl) weekdayEl.style.color = "";
     if (todEl) todEl.style.color = "";
+    if (eventEl) eventEl.style.color = "";
   }
 
   if (window.storyEngine?.hasActiveStory?.()) {
@@ -167,19 +172,19 @@ export function openProfilePanel() {
     <div class="info-grid-2x2">
       <div class="ig-cell">
         <div class="ig-label">姓名</div>
-        <div class="ig-value" id="stat-name">${p.name || '—'}</div>
+        <div class="ig-value" id="stat-name"></div>
       </div>
       <div class="ig-cell">
         <div class="ig-label">出身</div>
-        <div class="ig-value" id="stat-blood">${p.blood || '—'}</div>
+        <div class="ig-value" id="stat-blood"></div>
       </div>
       <div class="ig-cell">
         <div class="ig-label">学院</div>
-        <div class="ig-value" id="stat-house" style="display:flex;align-items:center;justify-content:space-between">${p.house || '—'}<span style="font-size:2.4em;line-height:1">${{ '格兰芬多': '🦁', '斯莱特林': '🐍', '拉文克劳': '🦅', '赫奇帕奇': '🦡' }[p.house] || ''}</span></div>
+        <div class="ig-value" id="stat-house" style="display:flex;align-items:center;justify-content:space-between"><span id="stat-house-name"></span><span id="stat-house-icon" style="font-size:2.4em;line-height:1"></span></div>
       </div>
       <div class="ig-cell">
         <div class="ig-label">魔杖</div>
-        <div class="ig-value" id="stat-wand">${p.wand || '—'}</div>
+        <div class="ig-value" id="stat-wand"></div>
       </div>
     </div>
     <div class="house-points-detail">
@@ -231,6 +236,16 @@ export function openProfilePanel() {
 
   overlay.appendChild(panel);
   document.body.appendChild(overlay);
+  const houseIcons = { '格兰芬多': '🦁', '斯莱特林': '🐍', '拉文克劳': '🦅', '赫奇帕奇': '🦡' };
+  const setProfileText = (id, value, fallback = '—') => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || fallback;
+  };
+  setProfileText("stat-name", p.name);
+  setProfileText("stat-blood", p.blood);
+  setProfileText("stat-house-name", p.house);
+  setProfileText("stat-wand", p.wand);
+  setProfileText("stat-house-icon", houseIcons[p.house] || '', '');
   window.housePoints?.refreshHousePointsUI?.();
 }
 

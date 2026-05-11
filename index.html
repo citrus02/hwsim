@@ -95,7 +95,7 @@
     </div>
     <div id="saveBox-create" style="display:none; margin-top:12px;">
       <div class="save-btn-row">
-        <button class="save-btn load" onclick="window.openLoad()">📂 读取存档</button>
+        <button class="save-btn load" onclick="window.openCreateLoad?.()">📂 读取存档</button>
         <button class="save-btn reset" onclick="window.resetGame()">🔄 重置游戏</button>
       </div>
       <div id="slotBox-create"></div>
@@ -124,7 +124,7 @@
     <!-- 行动日常 -->
     <div class="tab-screen active" id="tab-daily">
       <div class="status-grid">
-        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">早晨</span></span>
+        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">早晨</span> <span id="dateEvent"></span></span>
         <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分 <span id="profileBtn" onclick="window.openProfilePanel?.()" class="info-emoji-btn" title="角色信息">📋</span></span>
         <span class="sg-left">今日行动次数：<span id="actions">3</span>/3 <span id="timeTurnerBtn" onclick="window.openTimeTurnerPanel?.()" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
         <span class="sg-right sg-currency">
@@ -348,24 +348,7 @@ function toggleCreateSaveBox() {
   const box = document.getElementById('saveBox-create');
   box.style.display = box.style.display === 'none' ? 'block' : 'none';
   if (box.style.display === 'block') {
-    window.openLoad();
-    setTimeout(() => {
-      const source = document.getElementById('slotBox');
-      const target = document.getElementById('slotBox-create');
-      if (source && target) {
-        target.innerHTML = source.innerHTML;
-        target.querySelectorAll('.save-slot').forEach(slot => {
-          slot.onclick = () => {
-            const key = slot.getAttribute('data-slot');
-            const data = localStorage.getItem('save_' + key);
-            if (data) {
-              localStorage.setItem('hogwarts', data);
-              location.reload();
-            }
-          };
-        });
-      }
-    }, 100);
+    window.openCreateLoad?.();
   }
 }
 
@@ -376,7 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hasSave = () => {
     if (localStorage.getItem('hogwarts')) return true;
-    for (let i = 1; i <= 9; i++) {
+    try {
+      const slots = JSON.parse(localStorage.getItem('hogwarts_slots') || '[]');
+      if (Array.isArray(slots) && slots.some(Boolean)) return true;
+    } catch (e) {}
+    for (let i = 1; i <= 10; i++) {
       if (localStorage.getItem('save_' + i)) return true;
     }
     return false;
@@ -503,14 +490,23 @@ document.addEventListener('DOMContentLoaded', () => {
   <script type="module" src="course/muggle-academic/civics.js"></script>
   <script type="module" src="course/muggle-academic/geography.js"></script>
   <script type="module" src="course/muggle-academic/literature.js"></script>
-  <script type="module" src="course/muggle-academic/english.js"></script>
+  <script type="module" src="course/muggle-academic/latin.js"></script>
+  <script type="module" src="course/muggle-exam.js"></script>
   <script type="module" src="course/subjects/transfiguration.js"></script>
   <script type="module" src="course/subjects/charms.js"></script>
   <script type="module" src="course/subjects/herbology.js"></script>
   <script type="module" src="course/subjects/defense.js"></script>
   <script type="module" src="course/subjects/magic-history.js"></script>
+  <script type="module" src="course/subjects/muggleStudies.js"></script>
   <script type="module" src="course/subjects/astronomy.js"></script>
   <script type="module" src="course/subjects/potions.js"></script>
+  <script type="module" src="course/subjects/flight.js"></script>
+  <script type="module" src="course/subjects/arithmancy.js"></script>
+  <script type="module" src="course/subjects/ancientRunes.js"></script>
+  <script type="module" src="course/subjects/care-of-magical-creatures.js"></script>
+  <script type="module" src="course/subjects/apparition.js"></script>
+  <script type="module" src="course/subjects/alchemy.js"></script>
+  <script type="module" src="course/subjects/divination.js"></script>
   <script type="module" src="course/muggle-schedule.js"></script>
   <script type="module" src="course/classroom.js"></script>
   <script type="module" src="course/course.js"></script>

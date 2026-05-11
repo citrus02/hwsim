@@ -98,13 +98,13 @@ const REGULAR_ACHIEVEMENTS = [
     condition: "literature studyRate >= 50"
   },
   {
-    id: "english_mastered",
+    id: "latin_mastered",
     name: "不错",
-    desc: "将英语分科学习进度提升至50%",
-    icon: "🔤",
+    desc: "将拉丁语分科学习进度提升至50%",
+    icon: "🏛️",
     points: 10,
     hidden: false,
-    condition: "english studyRate >= 50"
+    condition: "latin studyRate >= 50"
   },
   {
     id: "all_subjects_started",
@@ -376,7 +376,7 @@ export function checkAchievementByStudy(subjectKey, studyRate, rating) {
     chemistry: "chemistry_mastered", biology: "biology_mastered",
     history: "history_mastered", civics: "civics_mastered",
     geography: "geography_mastered", literature: "literature_mastered",
-    english: "english_mastered"
+    latin: "latin_mastered"
   };
   if (studyRate >= 50 && masteryMap[subjectKey]) {
     const r = unlockAchievement(masteryMap[subjectKey]);

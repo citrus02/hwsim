@@ -11,7 +11,7 @@ const CARD_BORDER = "#2a3b66";
 const TEXT_COLOR = "#e6e6e6";
 const TITLE_COLOR = "#f8c850";
 
-function createSlotCard(i, slots, mode) {
+function createSlotCard(i, slots, mode, options = {}) {
   const item = document.createElement("div");
   Object.assign(item.style, {
     background: CARD_BG, border: `1px solid ${CARD_BORDER}`,
@@ -56,15 +56,34 @@ function createSlotCard(i, slots, mode) {
       setSave(slots[i]);
       const duelMain = document.getElementById("duelMain");
       if (duelMain) { duelMain.remove(); const am = document.getElementById("actionMain"); if (am) am.style.display = "block"; }
+      if (options.activateMainScreen) {
+        document.getElementById("screen-create")?.classList.remove("active");
+        document.getElementById("screen-main")?.classList.add("active");
+      }
       if (window.refreshAll) window.refreshAll();
       addLog(`📥 已读取【存档${i + 1}】`);
     };
-    delBtn.onclick = () => { slots[i] = null; saveAllSlots(slots); window.openLoad(); addLog(`🗑️ 已清空【存档${i + 1}】`); };
+    delBtn.onclick = () => {
+      slots[i] = null;
+      saveAllSlots(slots);
+      renderLoadSlots(options.targetId || "slotBox", options);
+      addLog(`🗑️ 已清空【存档${i + 1}】`);
+    };
     wrap.appendChild(loadBtn);
     wrap.appendChild(delBtn);
     item.appendChild(wrap);
   }
   return item;
+}
+
+function renderLoadSlots(targetId = "slotBox", options = {}) {
+  const slots = getAllSlots();
+  const slotBox = document.getElementById(targetId);
+  if (!slotBox) return;
+  slotBox.innerHTML = "";
+  for (let i = 0; i < 10; i++) {
+    slotBox.appendChild(createSlotCard(i, slots, "load", { ...options, targetId }));
+  }
 }
 
 window.openSave = function () {
@@ -76,11 +95,11 @@ window.openSave = function () {
 };
 
 window.openLoad = function () {
-  const slots = getAllSlots();
-  const slotBox = document.getElementById("slotBox");
-  if (!slotBox) return;
-  slotBox.innerHTML = "";
-  for (let i = 0; i < 10; i++) slotBox.appendChild(createSlotCard(i, slots, "load"));
+  renderLoadSlots("slotBox");
+};
+
+window.openCreateLoad = function () {
+  renderLoadSlots("slotBox-create", { activateMainScreen: true });
 };
 
 window.resetGame = function () {
