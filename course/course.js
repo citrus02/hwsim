@@ -689,22 +689,40 @@ function _renderSchedule(container) {
 
 function _renderMuggleSchedule(container) {
   const muggleSchedule = window.muggleSchedule;
-  if (!muggleSchedule || typeof muggleSchedule !== 'object' || !muggleSchedule.WEEKLY_SCHEDULE) {
+  if (!muggleSchedule || typeof muggleSchedule !== 'object') {
     container.innerHTML = `<div style="padding:20px;text-align:center;color:#ff8888">⚠️ 麻瓜学术系系统加载失败</div>`;
     console.error('[course.js] muggleSchedule module not properly loaded');
     return;
   }
 
-  const { WEEKLY_SCHEDULE, SUBJECT_NAMES, SUBJECT_ICONS } = muggleSchedule;
-  
+  const { SUBJECT_NAMES, SUBJECT_ICONS, getWeeklySchedule, WEEKLY_SCHEDULE } = muggleSchedule;
+
   const data = getSave();
+  const grade = getYearGrade();
+
+  // 4 年级首次进入：触发人文选科
+  if (grade >= 4 && data.course?.muggleHumanities == null) {
+    _renderHumanitiesChoice(container);
+    return;
+  }
+
+  // 6 年级首次进入：触发 A-Level 选科
+  if (grade >= 6 && (!data.course?.aLevelSubjects || data.course.aLevelSubjects.length === 0)) {
+    _renderALevelChoice(container);
+    return;
+  }
+
+  // 根据年级和存档选取对应课表
+  const ACTIVE_SCHEDULE = getWeeklySchedule
+    ? getWeeklySchedule(grade, data.course)
+    : (WEEKLY_SCHEDULE || {});
+
   const currentDate = data.time?.currentDate || "1991-09-02";
   const dateObj = new Date(currentDate);
   const dayOfWeek = isNaN(dateObj.getTime()) ? -1 : dateObj.getDay();
   const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   const todayDayName = dayNames[dayOfWeek] || "";
   const holiday = isHoliday(currentDate);
-  const grade = getYearGrade();
   const gradeLabel = GRADE_TEXT[grade] || `${grade}年级`;
 
   let html = '';
@@ -742,7 +760,7 @@ function _renderMuggleSchedule(container) {
       const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
       const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, period) : "";
       const isSpecialNoClassCell = !!noClassLabel;
-      const course = isSpecialNoClassCell ? null : WEEKLY_SCHEDULE[day]?.find(c => c.period === period);
+      const course = isSpecialNoClassCell ? null : ACTIVE_SCHEDULE[day]?.find(c => c.period === period);
       
       if (course) {
         const icon = SUBJECT_ICONS[course.subject] || '📚';
@@ -772,6 +790,145 @@ function _renderMuggleSchedule(container) {
   if (examEntryBtn) {
     examEntryBtn.addEventListener('click', () => _renderMuggleExams(container));
   }
+}
+
+// ============================================================
+// 麻瓜学术系 · 选科 UI
+// ============================================================
+
+/** 4 年级：人文方向二选一（历史 or 地理） */
+function _renderHumanitiesChoice(container) {
+  const choices = [
+    {
+      key: 'history',
+      icon: '📜',
+      name: '历史',
+      desc: '从诺曼征服到冷战，赫伯特·宾斯二世教授带你走过麻瓜文明的风暴与变革',
+    },
+    {
+      key: 'geography',
+      icon: '🌍',
+      name: '地理',
+      desc: '板块运动、城市化、气候变迁，菲利克斯·韦斯莱教授带你丈量麻瓜的世界',
+    },
+  ];
+
+  let html = `<div style="padding:14px">
+    <div style="font-size:14px;font-weight:bold;color:#88f8d8;margin-bottom:6px">选择你的人文方向（此后不可更改）</div>
+    <div style="font-size:11px;color:#ff8888;margin-bottom:14px;padding:8px;background:#1a1a2a;border-radius:6px">
+      ⚠️ 进入 4 年级后仅此一次选择机会，未选科目无法报考 GCSE / A-Level
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">`;
+
+  choices.forEach(c => {
+    html += `<button data-choice="${c.key}" style="padding:18px 14px;background:#1d3b3a;border:2px solid #2b5654;border-radius:8px;cursor:pointer;text-align:left;color:#e0f7f5">
+      <div style="font-size:28px;margin-bottom:8px">${c.icon}</div>
+      <div style="font-size:14px;font-weight:bold;color:#88f8d8;margin-bottom:4px">${c.name}</div>
+      <div style="font-size:11px;color:#7ecdc8;line-height:1.6">${c.desc}</div>
+    </button>`;
+  });
+
+  html += `</div></div>`;
+  container.innerHTML = html;
+
+  container.querySelectorAll('button[data-choice]').forEach(btn => {
+    btn.addEventListener('mouseover', () => { btn.style.borderColor = '#88f8d8'; });
+    btn.addEventListener('mouseout',  () => { btn.style.borderColor = '#2b5654'; });
+    btn.addEventListener('click', () => {
+      const data = loadSave();
+      if (!data.course) data.course = {};
+      data.course.muggleHumanities = btn.dataset.choice;
+      writeSave(data);
+      _renderMuggleSchedule(container);
+    });
+  });
+}
+
+/** 6 年级：A-Level 选科（最多 3 科，须 GCSE ≥ A） */
+function _renderALevelChoice(container) {
+  const muggleSchedule = window.muggleSchedule;
+  const examSys = window.muggleExam;
+  const subjectNames = muggleSchedule?.SUBJECT_NAMES ?? {};
+  const subjectIcons = muggleSchedule?.SUBJECT_ICONS ?? {};
+  const allSubjects  = muggleSchedule?.MUGGLE_SUBJECTS ?? [];
+  const gcse = examSys?.getMuggleExams?.()?.gcse ?? {};
+  const MAX_PICK = 3;
+
+  const subjects = allSubjects.map(key => {
+    const result = gcse[key];
+    // 合格 = O / E / A（PASSING_GRADES），且不是 P/D/T
+    const qualifying = result?.grade && examSys?.PASSING_GRADES?.has(result.grade);
+    return { key, name: subjectNames[key] ?? key, icon: subjectIcons[key] ?? '📚', gcseGrade: result?.grade ?? null, qualifying: !!qualifying };
+  });
+
+  let html = `<div style="padding:14px">
+    <div style="font-size:14px;font-weight:bold;color:#88f8d8;margin-bottom:6px">选择 A-Level 科目（最多 ${MAX_PICK} 科）</div>
+    <div style="font-size:11px;color:#7ecdc8;margin-bottom:12px;line-height:1.6">
+      只有 GCSE 成绩达到 A 或以上的科目可以选择，未合格的科目灰显。
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px" id="alevel-grid">`;
+
+  subjects.forEach(s => {
+    const gradeText = s.gcseGrade ? `GCSE: ${s.gcseGrade}` : '未参加 GCSE';
+    const available = s.qualifying;
+    html += `<button data-subject="${s.key}"
+      style="padding:10px 8px;background:${available ? '#1d3b3a' : '#1a1a1a'};border:2px solid transparent;border-radius:6px;cursor:${available ? 'pointer' : 'default'};text-align:center;color:${available ? '#e0f7f5' : '#555'};opacity:${available ? '1' : '0.5'}"
+      ${available ? '' : 'disabled'}>
+      <div style="font-size:20px">${s.icon}</div>
+      <div style="font-size:12px;margin-top:4px">${s.name}</div>
+      <div style="font-size:10px;color:#7ecdc8;margin-top:2px">${gradeText}</div>
+    </button>`;
+  });
+
+  html += `</div>
+    <div id="alevel-count" style="font-size:12px;color:#7ecdc8;margin-bottom:10px">已选：0 / ${MAX_PICK}</div>
+    <button id="alevel-confirm" disabled style="width:100%;padding:10px;background:#1a2a1a;color:#666;border:none;border-radius:6px;cursor:not-allowed;font-size:13px">
+      确认选科
+    </button>
+  </div>`;
+
+  container.innerHTML = html;
+
+  const selected  = new Set();
+  const countEl   = container.querySelector('#alevel-count');
+  const confirmBtn = container.querySelector('#alevel-confirm');
+
+  function refreshConfirm() {
+    countEl.textContent = `已选：${selected.size} / ${MAX_PICK}`;
+    if (selected.size > 0) {
+      confirmBtn.disabled = false;
+      confirmBtn.style.cssText = 'width:100%;padding:10px;background:#2b5654;color:#88f8d8;border:none;border-radius:6px;cursor:pointer;font-size:13px';
+    } else {
+      confirmBtn.disabled = true;
+      confirmBtn.style.cssText = 'width:100%;padding:10px;background:#1a2a1a;color:#666;border:none;border-radius:6px;cursor:not-allowed;font-size:13px';
+    }
+  }
+
+  container.querySelectorAll('button[data-subject]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.subject;
+      if (selected.has(key)) {
+        selected.delete(key);
+        btn.style.borderColor = 'transparent';
+        btn.style.background = '#1d3b3a';
+      } else {
+        if (selected.size >= MAX_PICK) return;
+        selected.add(key);
+        btn.style.borderColor = '#88f8d8';
+        btn.style.background = '#1a3b2a';
+      }
+      refreshConfirm();
+    });
+  });
+
+  confirmBtn.addEventListener('click', () => {
+    if (selected.size === 0) return;
+    const data = loadSave();
+    if (!data.course) data.course = {};
+    data.course.aLevelSubjects = [...selected];
+    writeSave(data);
+    _renderMuggleSchedule(container);
+  });
 }
 
 // ============================================================

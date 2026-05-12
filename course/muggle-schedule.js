@@ -87,6 +87,7 @@
 
 import { loadSave, writeSave } from './save-utils.js';
 import { isHoliday, isSchoolNoClassDate } from '../time-system.js';
+import { getYearGrade } from '../save-system.js';
 
 // ── 九门麻瓜课程键名 ────────────────────────────────────────
 export const MUGGLE_SUBJECTS = [
@@ -112,16 +113,29 @@ export const SUBJECT_NAMES = {
 export const SUBJECT_ICONS = {
   math: '🔢',
   physics: '⚡',
-  chemistry: '🧪',
-  biology: '🔬',
+  chemistry: '⚗️',
+  biology: '🌿',
   history: '📜',
   civics: '⚖️',
-  geography: '🗺️',
+  geography: '🌍',
   literature: '📖',
   latin: '🏛️'
 };
 
-// ── Year 7每周固定课程表（1991年霍格沃茨1年级·英国课程体系）──────
+// ── 人文选科科目（4年级触发，二选一）──────────────────────────
+export const HUMANITIES_CHOICE_SUBJECTS = ['history', 'geography'];
+
+// ── A-Level 课表槽位模板（每科5节/周，共3科×5=15节）──────────────
+// 科目A=aLevelSubjects[0]，B=[1]，C=[2]
+export const ALEVEL_SLOT_TEMPLATE = {
+  周一: [{ period: 1, slot: 'A' }, { period: 2, slot: 'B' }, { period: 3, slot: 'C' }],
+  周二: [{ period: 1, slot: 'A' }, { period: 2, slot: 'C' }, { period: 3, slot: 'B' }],
+  周三: [{ period: 1, slot: 'B' }, { period: 2, slot: 'A' }, { period: 3, slot: 'C' }],
+  周四: [{ period: 1, slot: 'A' }, { period: 2, slot: 'B' }, { period: 3, slot: 'C' }],
+  周五: [{ period: 1, slot: 'C' }, { period: 2, slot: 'A' }, { period: 3, slot: 'B' }],
+};
+
+// ── KS3 课表（1–3年级，全科，math×4 latin×4 其余各×1）──────────────
 // 每天3节课，周一至周五上课，周六周日休息，总计15节/周
 // 英语（4节）= 数学（4节），英语为母语主科；三门自然科学各1节分散全周
 export const WEEKLY_SCHEDULE = {
@@ -166,6 +180,60 @@ export const WEEKLY_HOURS = {
   civics: 1      // 周五（RE + PSHE）
 };
 
+// ── GCSE 课表（4–5年级，选 history）──────────────────────────────
+// math×5, latin×4, biology×2, literature/history/chemistry/physics 各×1
+const GCSE_HISTORY_SCHEDULE = {
+  周一: [{ period: 1, subject: 'math' }, { period: 2, subject: 'latin' },    { period: 3, subject: 'literature' }],
+  周二: [{ period: 1, subject: 'math' }, { period: 2, subject: 'latin' },    { period: 3, subject: 'history' }],
+  周三: [{ period: 1, subject: 'latin' },{ period: 2, subject: 'biology' },  { period: 3, subject: 'biology' }],
+  周四: [{ period: 1, subject: 'math' }, { period: 2, subject: 'latin' },    { period: 3, subject: 'chemistry' }],
+  周五: [{ period: 1, subject: 'math' }, { period: 2, subject: 'physics' },  { period: 3, subject: 'math' }],
+};
+
+// ── GCSE 课表（4–5年级，选 geography）──────────────────────────
+const GCSE_GEOGRAPHY_SCHEDULE = {
+  周一: [{ period: 1, subject: 'math' }, { period: 2, subject: 'latin' },    { period: 3, subject: 'literature' }],
+  周二: [{ period: 1, subject: 'math' }, { period: 2, subject: 'latin' },    { period: 3, subject: 'geography' }],
+  周三: [{ period: 1, subject: 'latin' },{ period: 2, subject: 'biology' },  { period: 3, subject: 'biology' }],
+  周四: [{ period: 1, subject: 'math' }, { period: 2, subject: 'latin' },    { period: 3, subject: 'chemistry' }],
+  周五: [{ period: 1, subject: 'math' }, { period: 2, subject: 'physics' },  { period: 3, subject: 'math' }],
+};
+
+// ── 获取指定年级和存档数据对应的每周课表 ──────────────────────────
+/**
+ * @param {number} yearGrade  当前年级（1–7）
+ * @param {Object} saveData   存档对象（data.course 下的字段）
+ * @returns {Object} 当周课表，格式同 WEEKLY_SCHEDULE
+ */
+export function getWeeklySchedule(yearGrade, saveData) {
+  // 1–3年级：KS3 固定课表
+  if (yearGrade <= 3) {
+    return WEEKLY_SCHEDULE;
+  }
+
+  // 4–5年级：GCSE，按人文选科返回对应课表
+  if (yearGrade <= 5) {
+    const humanities = saveData?.muggleHumanities;
+    if (humanities === 'geography') return GCSE_GEOGRAPHY_SCHEDULE;
+    // 未选或选了 history，都用 history 课表（选科界面由 course.js 处理）
+    return GCSE_HISTORY_SCHEDULE;
+  }
+
+  // 6–7年级：A-Level，按选科动态生成课表
+  const subjects = saveData?.aLevelSubjects || [];
+  if (subjects.length === 0) return {};
+
+  const [A, B, C] = subjects;
+  const schedule = {};
+  for (const [day, slots] of Object.entries(ALEVEL_SLOT_TEMPLATE)) {
+    schedule[day] = slots.map(({ period, slot }) => {
+      const subject = slot === 'A' ? A : slot === 'B' ? (B || A) : (C || B || A);
+      return { period, subject };
+    });
+  }
+  return schedule;
+}
+
 // ── 教授自我介绍数据 ────────────────────────────────────────
 export const professorIntroductions = {
   math: {
@@ -205,9 +273,9 @@ export const professorIntroductions = {
     portrait: "一位冷峻的女巫，穿着一丝不苟的深蓝色长袍，讲台上只有一本空白笔记本和一根粉笔，从不提前准备讲义"
   },
   geography: {
-    professor: "菲利克斯·韦斯利",
+    professor: "菲利克斯·韦斯莱",
     title: "地理教授",
-    introduction: "「嘿！我是菲利克斯·韦斯利！」他抱着一叠巨大的麻瓜地图走进来，眼睛亮晶晶的，「你们知道吗？麻瓜用两条腿走遍了整个世界！今天我们就从这张世界地图开始——来找找霍格沃茨在哪里！」",
+    introduction: "「嘿！我是菲利克斯·韦斯莱！」他抱着一叠巨大的麻瓜地图走进来，眼睛亮晶晶的，「你们知道吗？麻瓜用两条腿走遍了整个世界！今天我们就从这张世界地图开始——来找找霍格沃茨在哪里！」",
     portrait: "一位年轻充满活力的男巫，总穿着旅行靴，随身携带麻瓜指南针，讲台上铺满各种地图"
   },
   literature: {
@@ -233,26 +301,28 @@ export const professorIntroductions = {
 export function getTodaySchedule(dateStr = null) {
   const data = loadSave();
   const today = dateStr || data.time?.currentDate || '1991-09-02';
-  
+
   const date = new Date(today);
   if (isNaN(date.getTime())) {
     console.warn('Invalid date:', today);
     return [];
   }
-  
+
   const dayOfWeek = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()];
-  
+
   // 周六周日均无课
   if (dayOfWeek === '周日' || dayOfWeek === '周六') {
     return [];
   }
-  
+
   // 检查是否是假期
   if (isHoliday(today) || isSchoolNoClassDate(today)) {
     return [];
   }
-  
-  return WEEKLY_SCHEDULE[dayOfWeek] || [];
+
+  const yearGrade = getYearGrade();
+  const schedule = getWeeklySchedule(yearGrade, data.course);
+  return schedule[dayOfWeek] || [];
 }
 
 // ── 获取当前课时对应的课程 ──────────────────────────────────
@@ -468,23 +538,24 @@ export function advanceLesson(subjectKey) {
  * @returns {string} 课程表文本
  */
 export function getWeeklyScheduleText() {
+  const data = loadSave();
+  const yearGrade = getYearGrade();
+  const schedule = getWeeklySchedule(yearGrade, data.course);
+
   const days = ['周一', '周二', '周三', '周四', '周五'];
   let text = '📅 本周麻瓜学术系课程表\n\n';
-  
+
   days.forEach(day => {
+    const daySchedule = schedule[day] || [];
+    if (daySchedule.length === 0) return;
     text += `${day}:\n`;
-    WEEKLY_SCHEDULE[day].forEach(course => {
+    daySchedule.forEach(course => {
       const periodName = getPeriodName(course.period);
-      text += `  ${periodName} ${SUBJECT_ICONS[course.subject]} ${SUBJECT_NAMES[course.subject]}\n`;
+      text += `  ${periodName} ${SUBJECT_ICONS[course.subject] || ''} ${SUBJECT_NAMES[course.subject] || course.subject}\n`;
     });
     text += '\n';
   });
-  
-  text += '📊 每周课时统计：\n';
-  Object.entries(WEEKLY_HOURS).forEach(([key, hours]) => {
-    text += `  ${SUBJECT_ICONS[key]} ${SUBJECT_NAMES[key]}: ${hours}节/周\n`;
-  });
-  
+
   return text;
 }
 
@@ -507,6 +578,9 @@ window.muggleSchedule = {
   SUBJECT_ICONS,
   WEEKLY_SCHEDULE,
   WEEKLY_HOURS,
+  HUMANITIES_CHOICE_SUBJECTS,
+  ALEVEL_SLOT_TEMPLATE,
+  getWeeklySchedule,
   professorIntroductions,
   getTodaySchedule,
   getCurrentPeriodCourse,
@@ -527,6 +601,9 @@ export default {
   SUBJECT_ICONS,
   WEEKLY_SCHEDULE,
   WEEKLY_HOURS,
+  HUMANITIES_CHOICE_SUBJECTS,
+  ALEVEL_SLOT_TEMPLATE,
+  getWeeklySchedule,
   professorIntroductions,
   getTodaySchedule,
   getCurrentPeriodCourse,

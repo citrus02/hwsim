@@ -2,310 +2,459 @@
  * history-questionBank.js
  * 麻瓜学术 · 历史分科 · 题库
  * 教授：赫伯特·宾斯二世
+ * 每课 3 题（难度 basic/medium/hard），共 210 题
  */
 
 export const questionBank = [
-  // ════════════════════════════════════════
-  // 第一章：工业革命的兴起
-  // ════════════════════════════════════════
-  
-  { lesson: 1, title: "工业革命的开端", questions: [
-    { type: "choice", difficulty: "basic", text: "工业革命最早发生在：", options: ["A. 法国", "B. 德国", "C. 英国", "D. 美国"], answer: "C", knowledgePoint: "工业革命起源地", analysis: "18世纪下半叶工业革命首先发生在英国，得益于英国的煤炭资源、海外贸易、劳动力和技术积累等条件。" },
-    { type: "choice", difficulty: "medium", text: "瓦特改良蒸汽机的最重要意义是：", options: ["A. 发明了热量", "B. 使蒸汽机能广泛应用于各种机器", "C. 节省了煤炭", "D. 取代了人力"], answer: "B", knowledgePoint: "蒸汽机的意义", analysis: "瓦特将蒸汽机改良为双向运动并增加离心节速器，使蒸汽机能驱动各种机器，成为工业革命的动力核心。" },
-    { type: "choice", difficulty: "hard", text: "工厂制度取代手工作坊，最根本的原因是：", options: ["A. 工厂更漂亮", "B. 机器生产效率更高、成本更低", "C. 国王强制推行", "D. 工人喜欢工厂"], answer: "B", knowledgePoint: "工厂制度兴起原因", analysis: "工厂制度的扩展是市场竞争的结果——机器大生产效率高、成本低，能在竞争中胜出手工作坊，因此市场自然推动了工厂制度的扩张。" }
-  ]},
-  { lesson: 2, title: "工业革命的社会影响", questions: [
-    { type: "choice", difficulty: "basic", text: "工业革命时期，大量人口从农村涌向城市，这一现象被称为：", options: ["A. 城市化", "B. 工业化", "C. 商业化", "D. 现代化"], answer: "A", knowledgePoint: "城市化", analysis: "工业革命推动了城市化进程，大量农村人口进入城市寻找工作机会，城市规模迅速扩大。" },
-    { type: "choice", difficulty: "medium", text: "工业革命时期出现的新社会阶层是：", options: ["A. 贵族和农民", "B. 工业资产阶级和工人阶级", "C. 地主和商人", "D. 教士和骑士"], answer: "B", knowledgePoint: "社会阶层变化", analysis: "工业革命催生了工业资产阶级（工厂主）和工人阶级（无产阶级），这两个新阶层成为现代社会的重要组成部分。" },
-    { type: "choice", difficulty: "hard", text: "工业革命早期，工人工作条件恶劣的根本原因是：", options: ["A. 工人懒惰", "B. 资本家追求利润最大化", "C. 技术水平低下", "D. 政府不管"], answer: "B", knowledgePoint: "工人处境", analysis: "资本家为了追求最大利润，尽可能降低成本，导致工人工作时间长、工资低、工作环境恶劣，这是资本主义早期的典型特征。" }
-  ]},
-  { lesson: 3, title: "技术革命与科学进步", questions: [
-    { type: "choice", difficulty: "basic", text: "1825年，第一条蒸汽铁路在哪个国家开通？", options: ["A. 法国", "B. 美国", "C. 英国", "D. 德国"], answer: "C", knowledgePoint: "铁路发展", analysis: "1825年，英国建成了世界上第一条蒸汽铁路，标志着铁路时代的开始。" },
-    { type: "choice", difficulty: "medium", text: "电磁感应现象的发现者是：", options: ["A. 牛顿", "B. 法拉第", "C. 爱因斯坦", "D. 瓦特"], answer: "B", knowledgePoint: "电磁学发展", analysis: "1831年法拉第发现电磁感应现象，为发电机和电动机的发明奠定了基础，推动了第二次工业革命。" },
-    { type: "choice", difficulty: "hard", text: "电报的发明对社会的最大影响是：", options: ["A. 让人们能更快地交流", "B. 增加了就业机会", "C. 促进了铁路建设", "D. 改变了战争方式"], answer: "A", knowledgePoint: "通信革命", analysis: "电报实现了远距离即时通信，改变了人们传递信息的方式，缩短了时空距离，对商业、政治和军事都产生了深远影响。" }
+
+  // ── 第1章 中世纪英格兰 ──────────────────────────────────────────
+
+  { lesson: 1, title: "诺曼征服1066", questions: [
+    { type: "choice", difficulty: 1, text: "黑斯廷斯战役发生在哪一年？", options: ["A. 1066年", "B. 1086年", "C. 1166年", "D. 1215年"], answer: "A", knowledgePoint: "黑斯廷斯战役时间", analysis: "1066年10月14日，诺曼公爵威廉在黑斯廷斯击败盎格鲁-撒克逊国王哈罗德二世，标志着诺曼征服的开始。" },
+    { type: "choice", difficulty: 2, text: "威廉一世在英国建立的制度是？", options: ["A. 民主制度", "B. 封建制度", "C. 资本主义制度", "D. 社会主义制度"], answer: "B", knowledgePoint: "封建制度的建立", analysis: "威廉一世引入了欧洲大陆的封建制度，确立了国王、贵族、骑士之间的等级关系和土地分封体系。" },
+    { type: "choice", difficulty: 3, text: "诺曼征服对英国文化的影响不包括：", options: ["A. 法语词汇进入英语", "B. 封建制度的建立", "C. 罗马天主教会的衰落", "D. 庄园经济的发展"], answer: "C", knowledgePoint: "诺曼征服的影响", analysis: "诺曼征服加强了罗马天主教会在英国的势力，而非导致其衰落。教会在中世纪是政治、经济和文化的中心。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第二章：民族国家与帝国主义
-  // ════════════════════════════════════════
-  
-  { lesson: 4, title: "民族主义的兴起", questions: [
-    { type: "choice", difficulty: "basic", text: "德意志统一的领导人是：", options: ["A. 拿破仑", "B. 俾斯麦", "C. 希特勒", "D. 威廉二世"], answer: "B", knowledgePoint: "德意志统一", analysis: "俾斯麦通过「铁血政策」完成了德意志的统一，1871年德意志帝国成立。" },
-    { type: "choice", difficulty: "medium", text: "1848年欧洲革命的主要目标是：", options: ["A. 推翻君主制", "B. 实现民族统一和民主权利", "C. 建立社会主义", "D. 恢复封建制度"], answer: "B", knowledgePoint: "1848年革命", analysis: "1848年欧洲革命浪潮中，人民要求民族独立、统一和民主权利，虽然大多数革命失败，但推动了社会变革。" },
-    { type: "choice", difficulty: "hard", text: "民族主义与帝国主义的关系是：", options: ["A. 完全对立", "B. 民族主义是帝国主义的基础之一", "C. 没有关系", "D. 帝国主义反对民族主义"], answer: "B", knowledgePoint: "民族主义与帝国主义", analysis: "民族主义激发了民族自豪感，促使统一后的国家向外扩张，寻求殖民地和霸权，成为帝国主义的重要驱动力。" }
-  ]},
-  { lesson: 5, title: "帝国主义时代", questions: [
-    { type: "choice", difficulty: "basic", text: "19世纪末被称为「非洲的瓜分」时期，主要是哪个国家主导的？", options: ["A. 美国", "B. 日本", "C. 欧洲列强", "D. 中国"], answer: "C", knowledgePoint: "非洲瓜分", analysis: "1884-1885年柏林会议后，欧洲列强（英国、法国、德国等）划分了在非洲的势力范围，掀起了瓜分非洲的狂潮。" },
-    { type: "choice", difficulty: "medium", text: "殖民扩张的根本原因是：", options: ["A. 传播宗教", "B. 寻找原料产地和商品市场", "C. 帮助落后国家", "D. 炫耀武力"], answer: "B", knowledgePoint: "殖民动因", analysis: "资本主义发展需要大量原料和广阔市场，这是殖民扩张的根本经济动因，军事和文化因素是次要的。" },
-    { type: "choice", difficulty: "hard", text: "殖民主义对被殖民地区的影响是：", options: ["A. 只有坏处", "B. 只有好处", "C. 既有破坏性也有建设性", "D. 没有影响"], answer: "C", knowledgePoint: "殖民主义影响", analysis: "殖民主义破坏了当地传统经济和文化，但也带来了现代教育、医疗和基础设施，对被殖民地区的影响是复杂的，需要多角度评价。" }
-  ]},
-  { lesson: 6, title: "全球联系的加强", questions: [
-    { type: "choice", difficulty: "basic", text: "苏伊士运河开通于哪一年？", options: ["A. 1859年", "B. 1869年", "C. 1879年", "D. 1889年"], answer: "B", knowledgePoint: "苏伊士运河", analysis: "苏伊士运河1869年开通，连接地中海和红海，大大缩短了欧洲到亚洲的航程。" },
-    { type: "choice", difficulty: "medium", text: "资本主义世界市场形成的主要标志是：", options: ["A. 新航路开辟", "B. 工业革命完成", "C. 世界被瓜分完毕", "D. 国际贸易全球化"], answer: "D", knowledgePoint: "世界市场形成", analysis: "19世纪末20世纪初，国际贸易和资本输出遍及全球，世界各国经济紧密联系，标志着资本主义世界市场最终形成。" },
-    { type: "choice", difficulty: "hard", text: "国际巫师联合会成立于哪一年？", options: ["A. 1850年", "B. 1870年", "C. 1890年", "D. 1910年"], answer: "C", knowledgePoint: "魔法界国际合作", analysis: "1890年国际巫师联合会召开第一次大会，标志着魔法界国际合作的开始，以应对麻瓜世界全球化带来的挑战。" }
+  { lesson: 2, title: "封建制度", questions: [
+    { type: "choice", difficulty: 1, text: "封建制度的核心是：", options: ["A. 金钱关系", "B. 土地与义务", "C. 民主选举", "D. 商业贸易"], answer: "B", knowledgePoint: "封建制度的核心", analysis: "封建制度以土地为核心，通过分封建立起封君封臣关系，双方互有权利和义务。" },
+    { type: "choice", difficulty: 2, text: "封臣对封君的主要义务是：", options: ["A. 缴纳金钱", "B. 提供军事服务", "C. 耕种土地", "D. 传授知识"], answer: "B", knowledgePoint: "封君封臣关系", analysis: "封臣向封君宣誓效忠，主要义务是提供军事服务，跟随封君作战。" },
+    { type: "choice", difficulty: 3, text: "庄园经济的特点是：", options: ["A. 商品经济发达", "B. 自给自足", "C. 对外贸易频繁", "D. 工业化生产"], answer: "B", knowledgePoint: "庄园经济", analysis: "庄园是封建经济的基本单位，实行自给自足，生产自己所需的大部分物品。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第三章：第一次世界大战
-  // ════════════════════════════════════════
-  
-  { lesson: 7, title: "战争的爆发", questions: [
-    { type: "choice", difficulty: "basic", text: "第一次世界大战的导火索是：", options: ["A. 德国入侵波兰", "B. 萨拉热窝事件", "C. 奥匈帝国宣战", "D. 普法战争"], answer: "B", knowledgePoint: "一战导火索", analysis: "1914年6月，奥匈帝国皇位继承人斐迪南大公在萨拉热窝被刺杀，引发了第一次世界大战。" },
-    { type: "choice", difficulty: "medium", text: "第一次世界大战是历史上第一次大规模使用：", options: ["A. 骑兵", "B. 化学武器", "C. 弓箭", "D. 大炮"], answer: "B", knowledgePoint: "一战新式武器", analysis: "一战中氯气、芥子气等化学武器首次大规模使用，造成了巨大的人员伤亡和心理创伤。" },
-    { type: "choice", difficulty: "hard", text: "一战中的堑壕战（阵地战）说明：", options: ["A. 士兵都懒得进攻", "B. 防御技术进步超过了进攻技术", "C. 军队缺乏弹药", "D. 双方协议不进攻"], answer: "B", knowledgePoint: "堑壕战原因", analysis: "铁丝网、机关枪等防御性武器的发展使进攻方伤亡惨重，防御优势超过进攻优势，导致战线长期僵持，形成堑壕战。" }
-  ]},
-  { lesson: 8, title: "战争的进程", questions: [
-    { type: "choice", difficulty: "basic", text: "一战的主战场在：", options: ["A. 非洲", "B. 亚洲", "C. 欧洲", "D. 美洲"], answer: "C", knowledgePoint: "一战主战场", analysis: "第一次世界大战的主战场在欧洲，主要分为西线、东线和南线战场，其中西线最为惨烈。" },
-    { type: "choice", difficulty: "medium", text: "坦克首次投入使用是在哪个战役？", options: ["A. 马恩河战役", "B. 凡尔登战役", "C. 索姆河战役", "D. 日德兰海战"], answer: "C", knowledgePoint: "坦克的使用", analysis: "1916年索姆河战役中，英军首次使用坦克，这是装甲作战的开端。" },
-    { type: "choice", difficulty: "hard", text: "一战中，德国实施的「无限制潜艇战」导致哪个国家参战？", options: ["A. 法国", "B. 英国", "C. 美国", "D. 俄国"], answer: "C", knowledgePoint: "美国参战原因", analysis: "德国的无限制潜艇战威胁到美国的航运利益，加上 Zimmerman Telegram事件，促使美国于1917年参战。" }
-  ]},
-  { lesson: 9, title: "战争的结束与影响", questions: [
-    { type: "choice", difficulty: "basic", text: "第一次世界大战结束于哪一年？", options: ["A. 1916年", "B. 1917年", "C. 1918年", "D. 1919年"], answer: "C", knowledgePoint: "一战结束时间", analysis: "1918年11月11日，德国签署停战协定，第一次世界大战正式结束。" },
-    { type: "choice", difficulty: "medium", text: "凡尔赛条约对德国的制裁不包括：", options: ["A. 割让领土", "B. 支付巨额赔款", "C. 允许拥有强大军队", "D. 承认奥地利独立"], answer: "C", knowledgePoint: "凡尔赛条约", analysis: "凡尔赛条约限制德国军队规模不得超过10万人，禁止拥有重型武器和空军，因此C选项是错误的。" },
-    { type: "choice", difficulty: "hard", text: "一战后，奥匈帝国解体为多个国家，不包括：", options: ["A. 奥地利", "B. 匈牙利", "C. 捷克斯洛伐克", "D. 波兰"], answer: "D", knowledgePoint: "奥匈帝国解体", analysis: "波兰是在一战后复国的，并非从奥匈帝国分裂出来，而奥地利、匈牙利、捷克斯洛伐克都是奥匈帝国解体后的新国家。" }
+  { lesson: 3, title: "黑死病", questions: [
+    { type: "choice", difficulty: 1, text: "黑死病传入英国的时间是：", options: ["A. 1348年", "B. 1448年", "C. 1548年", "D. 1648年"], answer: "A", knowledgePoint: "黑死病传入时间", analysis: "1348年，黑死病通过贸易路线传入英国，在接下来的三年里导致约三分之一的人口死亡。" },
+    { type: "choice", difficulty: 2, text: "黑死病对社会的影响是：", options: ["A. 劳动力短缺", "B. 人口增加", "C. 封建制度加强", "D. 经济繁荣"], answer: "A", knowledgePoint: "黑死病的社会影响", analysis: "人口锐减导致劳动力短缺，农奴的议价能力提高，为社会变革创造了条件。" },
+    { type: "choice", difficulty: 3, text: "黑死病后，农奴地位变化的根本原因是：", options: ["A. 国王的仁慈", "B. 劳动力稀缺", "C. 教会的干预", "D. 法律的改革"], answer: "B", knowledgePoint: "农奴地位变化", analysis: "劳动力稀缺使农奴能够要求更高的工资和更好的待遇，甚至获得人身自由，这是黑死病后社会结构变化的根本原因。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第五章：战间期与极权主义
-  // ════════════════════════════════════════
-  
-  { lesson: 13, title: "战后的和平与动荡", questions: [
-    { type: "choice", difficulty: "basic", text: "1929年经济大危机首先爆发于哪个国家？", options: ["A. 英国", "B. 德国", "C. 美国", "D. 法国"], answer: "C", knowledgePoint: "大萧条起源", analysis: "1929年10月24日，美国华尔街股市崩盘，引发了全球性的经济大危机。" },
-    { type: "choice", difficulty: "medium", text: "魏玛共和国是哪个国家的 Weimar Republic？", options: ["A. 法国", "B. 德国", "C. 意大利", "D. 奥地利"], answer: "B", knowledgePoint: "魏玛共和国", analysis: "魏玛共和国是1919-1933年德国的共和制政权，因宪法在魏玛制定而得名。" },
-    { type: "choice", difficulty: "hard", text: "大萧条对魔法界的影响是：", options: ["A. 没有影响", "B. 魔法部限制与麻瓜世界的经济往来", "C. 巫师纷纷破产", "D. 魔法货币贬值"], answer: "B", knowledgePoint: "魔法界应对危机", analysis: "大萧条期间，魔法部限制了与麻瓜世界的经济往来，加强了对巫师银行的监管，以保护巫师世界的经济稳定。" }
-  ]},
-  { lesson: 14, title: "法西斯主义的兴起", questions: [
-    { type: "choice", difficulty: "basic", text: "意大利法西斯党的领导人是：", options: ["A. 希特勒", "B. 墨索里尼", "C. 东条英机", "D. 佛朗哥"], answer: "B", knowledgePoint: "意大利法西斯", analysis: "贝尼托·墨索里尼是意大利法西斯党的创始人，1922年上台执政。" },
-    { type: "choice", difficulty: "medium", text: "纳粹党上台的时间是：", options: ["A. 1929年", "B. 1933年", "C. 1936年", "D. 1939年"], answer: "B", knowledgePoint: "纳粹掌权", analysis: "1933年，希特勒被任命为德国总理，纳粹党开始在德国掌权。" },
-    { type: "choice", difficulty: "hard", text: "绥靖政策的本质是：", options: ["A. 坚决抵抗侵略", "B. 通过妥协避免战争", "C. 支持法西斯扩张", "D. 中立观望"], answer: "B", knowledgePoint: "绥靖政策", analysis: "绥靖政策是指英国、法国等国通过牺牲小国利益、对法西斯妥协退让来避免战争的政策，最终助长了侵略者的野心。" }
-  ]},
-  { lesson: 15, title: "战争阴云的聚集", questions: [
-    { type: "choice", difficulty: "basic", text: "德国入侵波兰的时间是：", options: ["A. 1938年", "B. 1939年", "C. 1940年", "D. 1941年"], answer: "B", knowledgePoint: "二战爆发", analysis: "1939年9月1日，德国入侵波兰，标志着第二次世界大战正式爆发。" },
-    { type: "choice", difficulty: "medium", text: "轴心国不包括：", options: ["A. 德国", "B. 意大利", "C. 日本", "D. 苏联"], answer: "D", knowledgePoint: "轴心国", analysis: "轴心国是二战中德国、意大利、日本组成的军事同盟，苏联属于反法西斯同盟。" },
-    { type: "choice", difficulty: "hard", text: "苏德互不侵犯条约签订于哪一年？", options: ["A. 1938年", "B. 1939年", "C. 1940年", "D. 1941年"], answer: "B", knowledgePoint: "苏德条约", analysis: "1939年8月，苏联与德国签订互不侵犯条约，双方划分了在东欧的势力范围，该条约在1941年德国入侵苏联时失效。" }
+  { lesson: 4, title: "教会的权力", questions: [
+    { type: "choice", difficulty: 1, text: "中世纪教会的最高领袖是：", options: ["A. 国王", "B. 教皇", "C. 大主教", "D. 骑士"], answer: "B", knowledgePoint: "教会的权力结构", analysis: "教皇是罗马天主教会的最高领袖，在中世纪拥有巨大的宗教和政治权力。" },
+    { type: "choice", difficulty: 2, text: "十字军东征的主要动机是：", options: ["A. 寻找财富", "B. 收复圣地", "C. 传播文化", "D. 科学探索"], answer: "B", knowledgePoint: "十字军东征", analysis: "十字军东征的主要动机是宗教信仰，即收复被穆斯林占领的圣地耶路撒冷。" },
+    { type: "choice", difficulty: 3, text: "教会与王权冲突的实质是：", options: ["A. 个人恩怨", "B. 权力争夺", "C. 文化差异", "D. 经济纠纷"], answer: "B", knowledgePoint: "教会与王权的冲突", analysis: "教会与王权的冲突本质上是权力争夺，双方都试图扩大自己的影响力和控制范围。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第六章：第二次世界大战
-  // ════════════════════════════════════════
-  
-  { lesson: 16, title: "战争的全面爆发", questions: [
-    { type: "choice", difficulty: "basic", text: "日本偷袭珍珠港的时间是：", options: ["A. 1940年12月", "B. 1941年12月", "C. 1942年12月", "D. 1943年12月"], answer: "B", knowledgePoint: "珍珠港事件", analysis: "1941年12月7日，日本偷袭美国珍珠港海军基地，美国次日对日宣战，太平洋战争爆发。" },
-    { type: "choice", difficulty: "medium", text: "二战中，德国的「闪电战」战术主要应用于：", options: ["A. 海战", "B. 空战", "C. 陆战", "D. 游击战"], answer: "C", knowledgePoint: "闪电战", analysis: "闪电战是德国在二战初期使用的快速进攻战术，集中装甲部队和空军迅速突破敌方防线。" },
-    { type: "choice", difficulty: "hard", text: "二战参战国超过多少个？", options: ["A. 40个", "B. 50个", "C. 60个", "D. 70个"], answer: "C", knowledgePoint: "二战规模", analysis: "第二次世界大战是人类历史上规模最大的战争，参战国超过60个，涉及人口超过20亿。" }
-  ]},
-  { lesson: 17, title: "战争的转折", questions: [
-    { type: "choice", difficulty: "basic", text: "斯大林格勒战役发生在哪一年？", options: ["A. 1941年", "B. 1942年", "C. 1943年", "D. 1944年"], answer: "B", knowledgePoint: "斯大林格勒战役", analysis: "1942年7月至1943年2月的斯大林格勒战役是二战的转折点，苏军击败德军，开始反攻。" },
-    { type: "choice", difficulty: "medium", text: "中途岛海战中，美国海军击沉了日本几艘航空母舰？", options: ["A. 2艘", "B. 3艘", "C. 4艘", "D. 5艘"], answer: "C", knowledgePoint: "中途岛海战", analysis: "1942年中途岛海战中，美国海军击沉日本4艘航空母舰，取得太平洋战场的决定性胜利。" },
-    { type: "choice", difficulty: "hard", text: "诺曼底登陆的代号是：", options: ["A. 霸王行动", "B. 市场花园行动", "C. 火炬行动", "D. 巴巴罗萨行动"], answer: "A", knowledgePoint: "诺曼底登陆", analysis: "1944年6月6日的诺曼底登陆行动代号为「霸王行动」，是历史上最大规模的两栖登陆作战。" }
-  ]},
-  { lesson: 18, title: "战争的结束", questions: [
-    { type: "choice", difficulty: "basic", text: "第二次世界大战结束的年份是：", options: ["A. 1943年", "B. 1944年", "C. 1945年", "D. 1946年"], answer: "C", knowledgePoint: "二战结束时间", analysis: "1945年5月德国投降，1945年8月日本投降，第二次世界大战结束。" },
-    { type: "choice", difficulty: "medium", text: "大屠杀（Holocaust）指二战中纳粹德国对哪个群体的系统性种族灭绝？", options: ["A. 波兰人", "B. 犹太人", "C. 苏联人", "D. 法国人"], answer: "B", knowledgePoint: "大屠杀", analysis: "大屠杀（Holocaust）是纳粹德国对犹太人（及其他群体）进行的系统性种族灭绝，约600万犹太人遇难。" },
-    { type: "choice", difficulty: "hard", text: "二战后建立的联合国，其最主要目的是：", options: ["A. 统一世界政府", "B. 维护国际和平与安全", "C. 管理殖民地", "D. 推广英语"], answer: "B", knowledgePoint: "联合国成立目的", analysis: "联合国1945年成立，主要目的是维护国际和平与安全，解决国际争端，促进国际合作，避免战争的再次爆发。" }
+  { lesson: 5, title: "大宪章与议会起源", questions: [
+    { type: "choice", difficulty: 1, text: "大宪章签署于哪一年？", options: ["A. 1215年", "B. 1315年", "C. 1415年", "D. 1515年"], answer: "A", knowledgePoint: "大宪章", analysis: "1215年，约翰国王被迫签署大宪章，确立了国王必须遵守法律的原则。" },
+    { type: "choice", difficulty: 2, text: "大宪章的核心原则是：", options: ["A. 王权至上", "B. 法律至上", "C. 贵族专权", "D. 民主选举"], answer: "B", knowledgePoint: "大宪章的原则", analysis: "大宪章确立了法律至上的原则，限制了王权，为后来的宪政发展奠定了基础。" },
+    { type: "choice", difficulty: 3, text: "议会制度的萌芽来自：", options: ["A. 大宪章的规定", "B. 国王的命令", "C. 人民的起义", "D. 教会的倡议"], answer: "A", knowledgePoint: "议会制度起源", analysis: "大宪章要求国王定期召开会议听取贵族意见，这是议会制度的开端。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第八章：冷战与两极格局
-  // ════════════════════════════════════════
-  
-  { lesson: 22, title: "冷战的形成", questions: [
-    { type: "choice", difficulty: "basic", text: "冷战开始的标志是：", options: ["A. 杜鲁门主义出台", "B. 马歇尔计划实施", "C. 北约成立", "D. 华约成立"], answer: "A", knowledgePoint: "冷战开始标志", analysis: "1947年杜鲁门主义出台，标志着冷战的正式开始，美国开始推行遏制苏联的政策。" },
-    { type: "choice", difficulty: "medium", text: "冷战时期的两大军事集团是：", options: ["A. 同盟国与协约国", "B. 北约与华约", "C. 轴心国与反法西斯同盟", "D. 三国同盟与三国协约"], answer: "B", knowledgePoint: "冷战军事集团", analysis: "北约（北大西洋公约组织）和华约（华沙条约组织）是冷战时期对峙的两大军事集团。" },
-    { type: "choice", difficulty: "hard", text: "冷战结束的标志是：", options: ["A. 柏林墙倒塌", "B. 苏联解体", "C. 华约解散", "D. 德国统一"], answer: "B", knowledgePoint: "冷战结束标志", analysis: "1991年苏联解体标志着冷战的正式结束，两极格局瓦解，世界进入多极化时代。" }
-  ]},
-  { lesson: 23, title: "冷战的对抗", questions: [
-    { type: "choice", difficulty: "basic", text: "朝鲜战争爆发于哪一年？", options: ["A. 1949年", "B. 1950年", "C. 1951年", "D. 1952年"], answer: "B", knowledgePoint: "朝鲜战争", analysis: "1950年6月，朝鲜战争爆发，这是冷战中的第一次大规模热战。" },
-    { type: "choice", difficulty: "medium", text: "古巴导弹危机发生在哪一年？", options: ["A. 1960年", "B. 1961年", "C. 1962年", "D. 1963年"], answer: "C", knowledgePoint: "古巴导弹危机", analysis: "1962年的古巴导弹危机是冷战中美苏最接近核战争的一次危机，最终通过外交途径解决。" },
-    { type: "choice", difficulty: "hard", text: "太空竞赛中，苏联首先发射的人造卫星名为：", options: ["A. 阿波罗", "B. 东方号", "C. 斯普特尼克", "D. 挑战者"], answer: "C", knowledgePoint: "太空竞赛", analysis: "1957年，苏联发射了世界上第一颗人造卫星「斯普特尼克1号」，开启了太空竞赛。" }
-  ]},
-  { lesson: 24, title: "冷战的缓和与结束", questions: [
-    { type: "choice", difficulty: "basic", text: "柏林墙倒塌于哪一年？", options: ["A. 1988年", "B. 1989年", "C. 1990年", "D. 1991年"], answer: "B", knowledgePoint: "柏林墙倒塌", analysis: "1989年11月9日，柏林墙倒塌，象征着冷战的结束和德国统一的开始。" },
-    { type: "choice", difficulty: "medium", text: "détente（缓和）时期主要发生在：", options: ["A. 20世纪50年代", "B. 20世纪60年代", "C. 20世纪70年代", "D. 20世纪80年代"], answer: "C", knowledgePoint: "冷战缓和", analysis: "20世纪70年代是冷战的缓和时期，美苏签署了一系列限制核武器的条约。" },
-    { type: "choice", difficulty: "hard", text: "苏联解体后分裂成多少个国家？", options: ["A. 12个", "B. 13个", "C. 14个", "D. 15个"], answer: "D", knowledgePoint: "苏联解体", analysis: "1991年苏联解体，分裂成15个独立国家，包括俄罗斯、乌克兰、白俄罗斯等。" }
+  // ── 第2章 探索与变革 ──────────────────────────────────────────
+
+  { lesson: 6, title: "十字军东征", questions: [
+    { type: "choice", difficulty: 1, text: "十字军东征持续了多长时间？", options: ["A. 约100年", "B. 约200年", "C. 约300年", "D. 约400年"], answer: "B", knowledgePoint: "十字军东征的时间", analysis: "十字军东征从1096年开始，到1291年结束，持续了近两个世纪。" },
+    { type: "choice", difficulty: 2, text: "十字军东征的结果是：", options: ["A. 成功收复圣地", "B. 最终失败", "C. 建立永久统治", "D. 消灭伊斯兰教"], answer: "B", knowledgePoint: "十字军东征的结果", analysis: "尽管十字军初期取得一些胜利，但最终未能长期控制圣地，1291年最后一个十字军国家被消灭。" },
+    { type: "choice", difficulty: 3, text: "十字军东征的文化影响是：", options: ["A. 阻碍东西方交流", "B. 促进文化传播", "C. 消灭东方文化", "D. 封闭西方思想"], answer: "B", knowledgePoint: "十字军东征的文化影响", analysis: "十字军带回了东方的知识、技术和商品，促进了东西方文化交流，为文艺复兴奠定了基础。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第九章：当代世界的发展
-  // ════════════════════════════════════════
-  
-  { lesson: 25, title: "全球化与经济发展", questions: [
-    { type: "choice", difficulty: "basic", text: "欧盟成立于哪一年？", options: ["A. 1990年", "B. 1992年", "C. 1993年", "D. 1995年"], answer: "C", knowledgePoint: "欧盟成立", analysis: "1993年11月1日，欧盟正式成立，标志着欧洲一体化进程进入新阶段。" },
-    { type: "choice", difficulty: "medium", text: "世界贸易组织（WTO）成立于哪一年？", options: ["A. 1993年", "B. 1994年", "C. 1995年", "D. 1996年"], answer: "C", knowledgePoint: "WTO成立", analysis: "1995年1月1日，世界贸易组织成立，取代了关贸总协定，成为全球贸易的主要管理机构。" },
-    { type: "choice", difficulty: "hard", text: "全球化的主要载体是：", options: ["A. 国家政府", "B. 跨国公司", "C. 国际组织", "D. 非政府组织"], answer: "B", knowledgePoint: "全球化载体", analysis: "跨国公司在全球范围内生产和销售，是经济全球化的主要载体，推动了国际贸易和资本流动。" }
-  ]},
-  { lesson: 26, title: "社会与文化变迁", questions: [
-    { type: "choice", difficulty: "basic", text: "马丁·路德·金是哪个运动的领袖？", options: ["A. 女权运动", "B. 民权运动", "C. 反战运动", "D. 环保运动"], answer: "B", knowledgePoint: "民权运动", analysis: "马丁·路德·金是美国民权运动的领袖，为黑人争取平等权利做出了重要贡献。" },
-    { type: "choice", difficulty: "medium", text: "《世界人权宣言》通过于哪一年？", options: ["A. 1945年", "B. 1946年", "C. 1947年", "D. 1948年"], answer: "D", knowledgePoint: "人权宣言", analysis: "1948年12月10日，联合国通过《世界人权宣言》，确立了人类普遍的权利标准。" },
-    { type: "choice", difficulty: "hard", text: "文化多元化的核心是：", options: ["A. 文化同化", "B. 文化冲突", "C. 文化尊重与包容", "D. 文化排斥"], answer: "C", knowledgePoint: "文化多元化", analysis: "文化多元化强调不同文化之间的尊重、理解和包容，促进文化交流与融合。" }
-  ]},
-  { lesson: 27, title: "环境与发展", questions: [
-    { type: "choice", difficulty: "basic", text: "巴黎协定签署于哪一年？", options: ["A. 2014年", "B. 2015年", "C. 2016年", "D. 2017年"], answer: "B", knowledgePoint: "巴黎协定", analysis: "2015年12月，联合国气候变化大会通过《巴黎协定》，旨在应对全球气候变化。" },
-    { type: "choice", difficulty: "medium", text: "可持续发展的三大支柱是：", options: ["A. 经济、社会、环境", "B. 政治、经济、文化", "C. 科技、教育、环保", "D. 人口、资源、环境"], answer: "A", knowledgePoint: "可持续发展", analysis: "可持续发展包括经济可持续、社会可持续和环境可持续三个方面，强调三者的协调发展。" },
-    { type: "choice", difficulty: "hard", text: "麻瓜与魔法界在环保方面的合作主要体现在：", options: ["A. 共享魔法资源", "B. 秘密合作项目", "C. 公开技术交流", "D. 联合环保组织"], answer: "B", knowledgePoint: "魔法与麻瓜环保合作", analysis: "巫师拥有独特的魔法能力，可以在环境保护中发挥作用，已经有巫师组织与麻瓜环保组织开展秘密合作项目。" }
+  { lesson: 7, title: "文艺复兴", questions: [
+    { type: "choice", difficulty: 1, text: "文艺复兴起源于哪个国家？", options: ["A. 法国", "B. 意大利", "C. 德国", "D. 英国"], answer: "B", knowledgePoint: "文艺复兴起源", analysis: "文艺复兴起源于14世纪的意大利，尤其是佛罗伦萨、威尼斯等城市。" },
+    { type: "choice", difficulty: 2, text: "人文主义的核心是：", options: ["A. 神本主义", "B. 人本主义", "C. 物质主义", "D. 虚无主义"], answer: "B", knowledgePoint: "人文主义", analysis: "人文主义强调人的价值和尊严，主张研究古典文化，是文艺复兴的核心思想。" },
+    { type: "choice", difficulty: 3, text: "文艺复兴时期的艺术特点是：", options: ["A. 抽象风格", "B. 写实与透视", "C. 几何图案", "D. 单色绘画"], answer: "B", knowledgePoint: "文艺复兴艺术", analysis: "文艺复兴艺术家如达芬奇、米开朗基罗强调写实、透视和人体比例，创造了逼真的艺术作品。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第十一章：历史学习方法与专题
-  // ════════════════════════════════════════
-  
-  { lesson: 31, title: "史料的解读与运用", questions: [
-    { type: "choice", difficulty: "basic", text: "第一手史料是指：", options: ["A. 后人写的历史书", "B. 原始的历史材料", "C. 历史老师的讲义", "D. 历史纪录片"], answer: "B", knowledgePoint: "史料类型", analysis: "第一手史料是指直接来自历史事件的原始材料，如日记、信件、官方文件等，具有较高的可信度。" },
-    { type: "choice", difficulty: "medium", text: "鉴别史料真伪的方法不包括：", options: ["A. 考察史料的出处", "B. 比对不同来源的史料", "C. 凭感觉判断", "D. 分析史料的写作背景"], answer: "C", knowledgePoint: "史料鉴别", analysis: "鉴别史料需要科学的方法，包括考察出处、比对来源、分析背景等，凭感觉判断是不科学的。" },
-    { type: "choice", difficulty: "hard", text: "从巫师视角解读历史的优势在于：", options: ["A. 可以使用魔法修改历史", "B. 了解魔法世界与麻瓜世界的交集", "C. 可以穿越时空", "D. 记忆力更好"], answer: "B", knowledgePoint: "巫师视角", analysis: "巫师了解魔法世界的存在，可以从独特的角度解读历史事件，特别是魔法与麻瓜世界的互动。" }
-  ]},
-  { lesson: 32, title: "历史人物评价", questions: [
-    { type: "choice", difficulty: "basic", text: "评价历史人物的标准不包括：", options: ["A. 是否推动历史进步", "B. 是否符合人民利益", "C. 外貌是否英俊", "D. 是否顺应时代潮流"], answer: "C", knowledgePoint: "评价标准", analysis: "评价历史人物应看其历史贡献和影响，外貌不是评价的标准。" },
-    { type: "choice", difficulty: "medium", text: "多角度评价历史人物意味着：", options: ["A. 只看优点", "B. 只看缺点", "C. 从不同角度全面看待", "D. 只看经济角度"], answer: "C", knowledgePoint: "多角度评价", analysis: "多角度评价要求从政治、经济、文化等不同角度全面看待历史人物，避免片面性。" },
-    { type: "choice", difficulty: "hard", text: "评价历史人物应结合：", options: ["A. 时代背景", "B. 个人喜好", "C. 现代价值观", "D. 道听途说"], answer: "A", knowledgePoint: "评价方法", analysis: "评价历史人物必须结合其所处的时代背景，不能用现代标准苛求古人。" }
-  ]},
-  { lesson: 33, title: "历史事件的因果分析", questions: [
-    { type: "choice", difficulty: "basic", text: "历史事件的原因通常是：", options: ["A. 单一的", "B. 多种因素共同作用的", "C. 偶然的", "D. 无法分析的"], answer: "B", knowledgePoint: "因果关系", analysis: "历史事件的发生往往是政治、经济、社会等多种因素共同作用的结果。" },
-    { type: "choice", difficulty: "medium", text: "直接原因与根本原因的区别在于：", options: ["A. 没有区别", "B. 直接原因是表面的，根本原因是深层次的", "C. 根本原因是表面的，直接原因是深层次的", "D. 直接原因更重要"], answer: "B", knowledgePoint: "原因类型", analysis: "直接原因是引发事件的直接因素，根本原因是导致事件发生的深层次因素，根本原因更为重要。" },
-    { type: "choice", difficulty: "hard", text: "历史的偶然性与必然性的关系是：", options: ["A. 完全对立", "B. 相互依存", "C. 没有关系", "D. 偶然性决定必然性"], answer: "B", knowledgePoint: "偶然与必然", analysis: "历史发展有其必然性，但具体事件的发生可能带有偶然性，两者相互依存、相互作用。" }
+  { lesson: 8, title: "印刷术革命", questions: [
+    { type: "choice", difficulty: 1, text: "古腾堡印刷机发明于哪一年？", options: ["A. 1440年", "B. 1540年", "C. 1640年", "D. 1740年"], answer: "A", knowledgePoint: "印刷术发明", analysis: "1440年左右，约翰内斯·古腾堡发明了活字印刷术，引发了知识传播的革命。" },
+    { type: "choice", difficulty: 2, text: "印刷术的影响是：", options: ["A. 知识垄断加强", "B. 知识民主化", "C. 书籍减少", "D. 文盲增加"], answer: "B", knowledgePoint: "印刷术的影响", analysis: "印刷术使书籍变得更便宜、更普及，知识不再是贵族的专利，实现了知识的民主化。" },
+    { type: "choice", difficulty: 3, text: "印刷术对宗教改革的作用是：", options: ["A. 阻碍改革", "B. 推动改革", "C. 无关紧要", "D. 消灭宗教"], answer: "B", knowledgePoint: "印刷术与宗教改革", analysis: "印刷术使马丁·路德的著作迅速传播，扩大了宗教改革的影响，推动了新教的发展。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第十二章：麻瓜与魔法世界的历史交汇
-  // ════════════════════════════════════════
-  
-  { lesson: 34, title: "魔法与麻瓜的历史交集", questions: [
-    { type: "choice", difficulty: "basic", text: "麻瓜保护法的主要目的是：", options: ["A. 攻击麻瓜", "B. 保护巫师世界的秘密", "C. 限制巫师使用魔法", "D. 促进魔法与麻瓜通婚"], answer: "B", knowledgePoint: "麻瓜保护法", analysis: "麻瓜保护法的主要目的是保护巫师世界的存在不被麻瓜发现，维护保密状态。" },
-    { type: "choice", difficulty: "medium", text: "中世纪猎巫运动对巫师世界的影响是：", options: ["A. 没有影响", "B. 促使巫师更加隐蔽", "C. 巫师公开反抗", "D. 巫师与麻瓜和平共处"], answer: "B", knowledgePoint: "猎巫运动", analysis: "中世纪的猎巫运动迫使巫师更加隐蔽，加强了保密措施，对巫师世界的生存策略产生了深远影响。" },
-    { type: "choice", difficulty: "hard", text: "魔法部的职责不包括：", options: ["A. 维护保密法", "B. 处理与麻瓜的关系", "C. 管理霍格沃茨", "D. 制定魔法法律"], answer: "C", knowledgePoint: "魔法部职责", analysis: "霍格沃茨由董事会管理，魔法部不直接管理学校，但负责监督和支持。" }
-  ]},
-  { lesson: 35, title: "近现代的互动", questions: [
-    { type: "choice", difficulty: "basic", text: "工业革命时期，巫师对麻瓜技术的态度是：", options: ["A. 完全反对", "B. 完全支持", "C. 既观察又谨慎", "D. 漠不关心"], answer: "C", knowledgePoint: "巫师态度", analysis: "巫师对麻瓜的工业革命保持观察，既好奇又谨慎，部分巫师偷偷帮助改进技术。" },
-    { type: "choice", difficulty: "medium", text: "两次世界大战期间，魔法界的立场是：", options: ["A. 积极参战", "B. 严格中立", "C. 支持同盟国", "D. 支持轴心国"], answer: "B", knowledgePoint: "魔法界立场", analysis: "魔法部在两次世界大战期间保持严格中立，禁止巫师参与麻瓜的战争，以保护巫师世界的安全。" },
-    { type: "choice", difficulty: "hard", text: "当代魔法与麻瓜的合作主要在哪些领域？", options: ["A. 军事领域", "B. 环境保护和医疗救助", "C. 商业贸易", "D. 文化娱乐"], answer: "B", knowledgePoint: "当代合作", analysis: "在环境保护和医疗救助等领域，巫师和麻瓜已经开展了一些秘密合作项目。" }
-  ]},
-  { lesson: 36, title: "历史的共同未来", questions: [
-    { type: "choice", difficulty: "basic", text: "学习历史的意义在于：", options: ["A. 记住年份和事件", "B. 理解现在，展望未来", "C. 应付考试", "D. 炫耀知识"], answer: "B", knowledgePoint: "历史意义", analysis: "学习历史是为了理解现在，从历史中吸取教训，更好地展望未来。" },
-    { type: "choice", difficulty: "medium", text: "魔法世界与麻瓜世界共同发展的基础是：", options: ["A. 相互尊重与理解", "B. 魔法统治麻瓜", "C. 麻瓜消灭魔法", "D. 互不往来"], answer: "A", knowledgePoint: "共同发展", analysis: "两个世界的共同发展需要建立在相互尊重和理解的基础上，尊重彼此的差异和存在。" },
-    { type: "choice", difficulty: "hard", text: "我们的历史责任是：", options: ["A. 忘记历史", "B. 传承历史，开创未来", "C. 回到过去", "D. 只关注现在"], answer: "B", knowledgePoint: "历史责任", analysis: "作为年轻的巫师，传承历史、开创未来是我们的责任，为两个世界的和平与发展贡献力量。" }
+  { lesson: 9, title: "地理大发现", questions: [
+    { type: "choice", difficulty: 1, text: "哥伦布发现美洲是在哪一年？", options: ["A. 1492年", "B. 1592年", "C. 1692年", "D. 1792年"], answer: "A", knowledgePoint: "哥伦布发现美洲", analysis: "1492年，哥伦布率领船队到达美洲，开启了地理大发现的时代。" },
+    { type: "choice", difficulty: 2, text: "地理大发现的动机是：", options: ["A. 科学探索", "B. 寻找新航路", "C. 逃避战乱", "D. 传播宗教"], answer: "B", knowledgePoint: "地理大发现的动机", analysis: "欧洲人寻找通往东方的新航路，以获取香料和财富，这是地理大发现的主要动机。" },
+    { type: "choice", difficulty: 3, text: "地理大发现的后果不包括：", options: ["A. 殖民扩张", "B. 全球化开始", "C. 文化交流", "D. 世界和平"], answer: "D", knowledgePoint: "地理大发现的后果", analysis: "地理大发现开启了欧洲的殖民扩张，带来了全球化和文化交流，但也引发了长期的冲突和不平等。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第四章：期中复习与考试
-  // ════════════════════════════════════════
-  
-  { lesson: 10, title: "工业革命专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "工业革命发生的根本原因是：", options: ["A. 瓦特发明蒸汽机", "B. 资本主义经济的发展", "C. 国王的命令", "D. 工人的要求"], answer: "B", knowledgePoint: "工业革命原因", analysis: "资本主义经济的发展需要更高效的生产方式，这是工业革命发生的根本原因。" },
-    { type: "choice", difficulty: "medium", text: "工业革命对魔法世界的影响是：", options: ["A. 没有影响", "B. 促使魔法部加强保密", "C. 巫师全部搬到麻瓜世界", "D. 魔法消失了"], answer: "B", knowledgePoint: "工业革命与魔法界", analysis: "工业革命使麻瓜世界发生巨大变化，促使魔法部加强保密措施，防止巫师世界被发现。" },
-    { type: "choice", difficulty: "hard", text: "工业革命与魔法的相似之处是：", options: ["A. 都能让人飞", "B. 都是对自然力量的利用", "C. 都不需要学习", "D. 都很危险"], answer: "B", knowledgePoint: "工业革命与魔法", analysis: "工业革命利用科学技术改造自然，魔法利用魔力改造自然，两者都是对自然力量的利用。" }
-  ]},
-  { lesson: 11, title: "帝国主义与一战专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "帝国主义的本质是：", options: ["A. 帮助落后国家", "B. 对外扩张和掠夺", "C. 传播文化", "D. 促进和平"], answer: "B", knowledgePoint: "帝国主义本质", analysis: "帝国主义的本质是垄断资本主义国家对外扩张和掠夺，争夺殖民地和世界霸权。" },
-    { type: "choice", difficulty: "medium", text: "一战的性质是：", options: ["A. 正义的战争", "B. 帝国主义战争", "C. 民族解放战争", "D. 宗教战争"], answer: "B", knowledgePoint: "一战性质", analysis: "第一次世界大战是一场帝国主义国家之间争夺霸权和殖民地的非正义战争。" },
-    { type: "choice", difficulty: "hard", text: "凡尔赛条约的最大问题是：", options: ["A. 太宽松", "B. 过于苛刻，埋下复仇种子", "C. 没有惩罚德国", "D. 让美国受益"], answer: "B", knowledgePoint: "凡尔赛条约", analysis: "凡尔赛条约对德国过于苛刻，巨额赔款和领土割让激起了德国民众的不满，为二战埋下了伏笔。" }
-  ]},
-  { lesson: 12, title: "期中考试", questions: [
-    { type: "choice", difficulty: "basic", text: "期中考试的范围是：", options: ["A. 第1-2章", "B. 第1-3章", "C. 第1-4章", "D. 全学期"], answer: "B", knowledgePoint: "考试范围", analysis: "期中考试范围是第1-3章，包括工业革命、民族国家与帝国主义、第一次世界大战。" },
-    { type: "choice", difficulty: "medium", text: "论述题的答题技巧不包括：", options: ["A. 论点明确", "B. 论据充分", "C. 字迹潦草", "D. 逻辑清晰"], answer: "C", knowledgePoint: "答题技巧", analysis: "论述题答题应论点明确、论据充分、逻辑清晰，字迹潦草会影响评分。" },
-    { type: "choice", difficulty: "hard", text: "材料分析题的关键是：", options: ["A. 只看材料", "B. 只背知识点", "C. 结合材料和知识点", "D. 随意发挥"], answer: "C", knowledgePoint: "材料分析", analysis: "材料分析题需要结合材料内容和所学知识点，不能只看材料或只背知识点。" }
+  { lesson: 10, title: "宗教改革", questions: [
+    { type: "choice", difficulty: 1, text: "马丁·路德发表九十五条论纲是在哪一年？", options: ["A. 1517年", "B. 1617年", "C. 1717年", "D. 1817年"], answer: "A", knowledgePoint: "宗教改革开始", analysis: "1517年，马丁·路德将九十五条论纲钉在维滕贝格教堂门上，标志着宗教改革的开始。" },
+    { type: "choice", difficulty: 2, text: "英国国教的建立者是：", options: ["A. 亨利八世", "B. 伊丽莎白一世", "C. 查理一世", "D. 詹姆士一世"], answer: "A", knowledgePoint: "英国国教", analysis: "亨利八世为了离婚与罗马教廷决裂，建立了英国国教，自己成为教会领袖。" },
+    { type: "choice", difficulty: 3, text: "宗教改革的影响是：", options: ["A. 统一基督教", "B. 分裂基督教", "C. 消灭宗教", "D. 加强教皇权力"], answer: "B", knowledgePoint: "宗教改革的影响", analysis: "宗教改革导致基督教分裂为天主教和新教两大阵营，形成了不同的教派。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第七章：第一学期期末复习与考试
-  // ════════════════════════════════════════
-  
-  { lesson: 19, title: "二战专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "二战爆发的根本原因是：", options: ["A. 德国入侵波兰", "B. 凡尔赛条约的苛刻条款", "C. 日本偷袭珍珠港", "D. 苏联解体"], answer: "B", knowledgePoint: "二战原因", analysis: "凡尔赛条约的苛刻条款导致德国民族主义和复仇情绪高涨，是二战爆发的根本原因。" },
-    { type: "choice", difficulty: "medium", text: "二战的转折点是：", options: ["A. 珍珠港事件", "B. 斯大林格勒战役", "C. 诺曼底登陆", "D. 柏林战役"], answer: "B", knowledgePoint: "二战转折", analysis: "斯大林格勒战役是二战的转折点，苏军击败德军，开始战略反攻。" },
-    { type: "choice", difficulty: "hard", text: "二战的性质是：", options: ["A. 帝国主义战争", "B. 反法西斯战争", "C. 宗教战争", "D. 内战"], answer: "B", knowledgePoint: "二战性质", analysis: "第二次世界大战是一场反法西斯的正义战争，世界各国人民联合起来对抗法西斯侵略。" }
-  ]},
-  { lesson: 20, title: "第一学期总复习", questions: [
-    { type: "choice", difficulty: "basic", text: "近代史的时间范围是：", options: ["A. 古代到中世纪", "B. 16世纪到18世纪", "C. 18世纪下半叶至今", "D. 未来"], answer: "C", knowledgePoint: "近代史范围", analysis: "近代史通常指从18世纪下半叶工业革命开始至今的历史时期。" },
-    { type: "choice", difficulty: "medium", text: "历史发展的根本动力是：", options: ["A. 英雄人物", "B. 生产力的发展", "C. 战争", "D. 魔法"], answer: "B", knowledgePoint: "历史动力", analysis: "生产力的发展是历史发展的根本动力，推动着社会经济和政治的变革。" },
-    { type: "choice", difficulty: "hard", text: "跨章节联系的意义是：", options: ["A. 增加学习难度", "B. 形成完整的知识体系", "C. 浪费时间", "D. 考试不考"], answer: "B", knowledgePoint: "跨章节联系", analysis: "跨章节联系有助于形成完整的知识体系，更好地理解历史发展的脉络。" }
-  ]},
-  { lesson: 21, title: "第一学期期末考试", questions: [
-    { type: "choice", difficulty: "basic", text: "第一学期期末考试的范围是：", options: ["A. 第1-3章", "B. 第1-6章", "C. 第4-6章", "D. 第1-7章"], answer: "B", knowledgePoint: "考试范围", analysis: "第一学期期末考试范围是第1-6章，包括工业革命到第二次世界大战。" },
-    { type: "choice", difficulty: "medium", text: "考试时间是：", options: ["A. 60分钟", "B. 90分钟", "C. 120分钟", "D. 150分钟"], answer: "C", knowledgePoint: "考试时间", analysis: "第一学期期末考试时间为120分钟，需合理安排答题时间。" },
-    { type: "choice", difficulty: "hard", text: "评分标准中，论述题的重点是：", options: ["A. 字数多少", "B. 论点、论据和逻辑", "C. 字体大小", "D. 答题速度"], answer: "B", knowledgePoint: "评分标准", analysis: "论述题评分主要看论点是否明确、论据是否充分、逻辑是否清晰。" }
+  // ── 第3章 英国革命 ──────────────────────────────────────────
+
+  { lesson: 11, title: "都铎王朝崛起", questions: [
+    { type: "choice", difficulty: 1, text: "都铎王朝的建立者是：", options: ["A. 亨利七世", "B. 亨利八世", "C. 伊丽莎白一世", "D. 詹姆士一世"], answer: "A", knowledgePoint: "都铎王朝建立", analysis: "1485年，亨利·都铎在博斯沃思战役中击败理查三世，建立了都铎王朝。" },
+    { type: "choice", difficulty: 2, text: "玫瑰战争是哪两个家族的斗争？", options: ["A. 约克和兰开斯特", "B. 都铎和斯图亚特", "C. 金雀花和诺曼", "D. 安茹和卡佩"], answer: "A", knowledgePoint: "玫瑰战争", analysis: "玫瑰战争是约克家族（白玫瑰）和兰开斯特家族（红玫瑰）为争夺王位进行的长达30年的战争。" },
+    { type: "choice", difficulty: 3, text: "都铎王朝的特点是：", options: ["A. 王权削弱", "B. 专制加强", "C. 民主兴起", "D. 教会独立"], answer: "B", knowledgePoint: "都铎专制", analysis: "都铎王朝加强了王权，建立了强大的中央集权，议会成为国王的工具。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第十章：第二学期期中复习与考试
-  // ════════════════════════════════════════
-  
-  { lesson: 28, title: "冷战专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "冷战的本质是：", options: ["A. 热战", "B. 意识形态对抗", "C. 经济合作", "D. 文化交流"], answer: "B", knowledgePoint: "冷战本质", analysis: "冷战是美苏之间的意识形态对抗，双方在政治、经济、军事等领域进行竞争。" },
-    { type: "choice", difficulty: "medium", text: "北约成立于哪一年？", options: ["A. 1945年", "B. 1949年", "C. 1955年", "D. 1960年"], answer: "B", knowledgePoint: "北约成立", analysis: "北约（北大西洋公约组织）成立于1949年，是冷战时期西方的军事同盟。" },
-    { type: "choice", difficulty: "hard", text: "冷战结束的根本原因是：", options: ["A. 柏林墙倒塌", "B. 苏联解体", "C. 美国胜利", "D. 经济因素"], answer: "D", knowledgePoint: "冷战结束原因", analysis: "苏联经济衰退、体制僵化是冷战结束的根本原因，柏林墙倒塌和苏联解体是具体表现。" }
-  ]},
-  { lesson: 29, title: "当代世界专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "全球化的核心是：", options: ["A. 文化隔离", "B. 经济全球化", "C. 政治分裂", "D. 军事对抗"], answer: "B", knowledgePoint: "全球化核心", analysis: "经济全球化是全球化的核心，表现为国际贸易、投资和生产的全球化。" },
-    { type: "choice", difficulty: "medium", text: "可持续发展的目标是：", options: ["A. 只追求经济增长", "B. 经济、社会、环境协调发展", "C. 牺牲环境换发展", "D. 回到原始社会"], answer: "B", knowledgePoint: "可持续发展", analysis: "可持续发展追求经济增长、社会进步和环境保护的协调统一。" },
-    { type: "choice", difficulty: "hard", text: "当代世界的时代特征是：", options: ["A. 单极化", "B. 多极化", "C. 两极化", "D. 无极化"], answer: "B", knowledgePoint: "时代特征", analysis: "当代世界呈现多极化趋势，美国、欧盟、中国、俄罗斯等多个力量中心并存。" }
-  ]},
-  { lesson: 30, title: "第二学期期中考试", questions: [
-    { type: "choice", difficulty: "basic", text: "第二学期期中考试范围是：", options: ["A. 第8-9章", "B. 第7-9章", "C. 第8-10章", "D. 全学期"], answer: "A", knowledgePoint: "考试范围", analysis: "第二学期期中考试范围是第8-9章，包括冷战与两极格局、当代世界的发展。" },
-    { type: "choice", difficulty: "medium", text: "选择题的答题技巧是：", options: ["A. 随意选择", "B. 排除错误选项", "C. 只看第一个选项", "D. 不看题目"], answer: "B", knowledgePoint: "答题技巧", analysis: "选择题可通过排除明显错误选项来提高正确率。" },
-    { type: "choice", difficulty: "hard", text: "材料分析题的步骤是：", options: ["A. 直接写答案", "B. 阅读材料→提取信息→结合知识点→组织答案", "C. 只抄材料", "D. 只背知识点"], answer: "B", knowledgePoint: "答题步骤", analysis: "材料分析题应先阅读材料提取关键信息，再结合知识点组织答案。" }
+  { lesson: 12, title: "亨利八世", questions: [
+    { type: "choice", difficulty: 1, text: "亨利八世有几位妻子？", options: ["A. 4位", "B. 5位", "C. 6位", "D. 7位"], answer: "C", knowledgePoint: "亨利八世的婚姻", analysis: "亨利八世有六位妻子，其中两位被处决，两位被离婚，一位去世，一位存活。" },
+    { type: "choice", difficulty: 2, text: "亨利八世宗教改革的原因是：", options: ["A. 宗教信仰", "B. 离婚问题", "C. 经济利益", "D. 人民要求"], answer: "B", knowledgePoint: "英国宗教改革原因", analysis: "亨利八世为了与凯瑟琳王后离婚，与罗马教廷决裂，推动了英国宗教改革。" },
+    { type: "choice", difficulty: 3, text: "解散修道院的影响是：", options: ["A. 削弱王权", "B. 充实王室财政", "C. 加强教会", "D. 减少土地"], answer: "B", knowledgePoint: "解散修道院", analysis: "亨利八世解散修道院，没收其财产，充实了王室财政，削弱了教会势力。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第十三章：专题复习
-  // ════════════════════════════════════════
-  
-  { lesson: 37, title: "工业时代以来的科技进步", questions: [
-    { type: "choice", difficulty: "basic", text: "第一次工业革命的标志是：", options: ["A. 电力的使用", "B. 蒸汽机的改良", "C. 计算机的发明", "D. 核能的利用"], answer: "B", knowledgePoint: "第一次工业革命", analysis: "蒸汽机的改良是第一次工业革命的标志，推动了机器大工业的发展。" },
-    { type: "choice", difficulty: "medium", text: "第二次工业革命的标志是：", options: ["A. 蒸汽机", "B. 电力和内燃机", "C. 计算机", "D. 互联网"], answer: "B", knowledgePoint: "第二次工业革命", analysis: "电力和内燃机的发明与应用是第二次工业革命的标志。" },
-    { type: "choice", difficulty: "hard", text: "科技与人文的关系是：", options: ["A. 对立的", "B. 相辅相成的", "C. 科技不重要", "D. 人文不重要"], answer: "B", knowledgePoint: "科技与人文", analysis: "科技发展需要人文关怀，人文精神需要科技支撑，两者相辅相成。" }
-  ]},
-  { lesson: 38, title: "战争与和平", questions: [
-    { type: "choice", difficulty: "basic", text: "战争的根源是：", options: ["A. 人性本恶", "B. 利益冲突", "C. 天气不好", "D. 魔法作怪"], answer: "B", knowledgePoint: "战争根源", analysis: "战争的根源是利益冲突，包括领土、资源、意识形态等方面的矛盾。" },
-    { type: "choice", difficulty: "medium", text: "联合国的主要作用是：", options: ["A. 发动战争", "B. 维护国际和平与安全", "C. 干涉他国内政", "D. 推广英语"], answer: "B", knowledgePoint: "联合国作用", analysis: "联合国的主要宗旨是维护国际和平与安全，促进国际合作。" },
-    { type: "choice", difficulty: "hard", text: "维护和平的途径是：", options: ["A. 军备竞赛", "B. 对话与合作", "C. 孤立他国", "D. 发动战争"], answer: "B", knowledgePoint: "维护和平", analysis: "通过对话、协商和国际合作来解决争端，是维护和平的有效途径。" }
-  ]},
-  { lesson: 39, title: "社会变迁与文明进步", questions: [
-    { type: "choice", difficulty: "basic", text: "文明进步的标志是：", options: ["A. 建筑高度", "B. 社会公平与发展", "C. 武器先进程度", "D. 人口数量"], answer: "B", knowledgePoint: "文明进步", analysis: "文明进步的标志是社会公平、经济发展、文化繁荣和人民生活水平的提高。" },
-    { type: "choice", difficulty: "medium", text: "社会结构变化的根本原因是：", options: ["A. 政府政策", "B. 生产力发展", "C. 文化传统", "D. 气候变化"], answer: "B", knowledgePoint: "社会结构变化", analysis: "生产力的发展是社会结构变化的根本原因，推动着生产关系和社会关系的变革。" },
-    { type: "choice", difficulty: "hard", text: "人类的共同追求是：", options: ["A. 战争与冲突", "B. 和平、发展、公平、正义", "C. 霸权与统治", "D. 孤立与封闭"], answer: "B", knowledgePoint: "共同追求", analysis: "和平、发展、公平、正义是人类社会的共同追求，也是历史发展的潮流。" }
+  { lesson: 13, title: "伊丽莎白一世时代", questions: [
+    { type: "choice", difficulty: 1, text: "伊丽莎白一世统治时期被称为：", options: ["A. 黑暗时代", "B. 黄金时代", "C. 动荡时代", "D. 革命时代"], answer: "B", knowledgePoint: "伊丽莎白时代", analysis: "伊丽莎白一世统治时期（1558-1603）被称为英国的黄金时代，经济繁荣，文化昌盛。" },
+    { type: "choice", difficulty: 2, text: "英国击败西班牙无敌舰队是在哪一年？", options: ["A. 1588年", "B. 1688年", "C. 1788年", "D. 1888年"], answer: "A", knowledgePoint: "无敌舰队", analysis: "1588年，英国海军击败西班牙无敌舰队，确立了海上霸权。" },
+    { type: "choice", difficulty: 3, text: "伊丽莎白时代的文化成就包括：", options: ["A. 莎士比亚的戏剧", "B. 牛顿的科学发现", "C. 工业革命", "D. 计算机发明"], answer: "A", knowledgePoint: "伊丽莎白时代文化", analysis: "莎士比亚、马洛、斯宾塞等文学巨匠活跃在伊丽莎白时代，创造了不朽的文学作品。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第十四章：总复习
-  // ════════════════════════════════════════
-  
-  { lesson: 40, title: "近代史总框架", questions: [
-    { type: "choice", difficulty: "basic", text: "近代史的起点是：", options: ["A. 古代", "B. 工业革命", "C. 二战", "D. 冷战"], answer: "B", knowledgePoint: "近代史起点", analysis: "近代史通常以18世纪下半叶的工业革命为起点，标志着人类进入现代社会。" },
-    { type: "choice", difficulty: "medium", text: "近代史的核心主题是：", options: ["A. 农业发展", "B. 现代化与全球化", "C. 封建统治", "D. 魔法复兴"], answer: "B", knowledgePoint: "核心主题", analysis: "近代史的核心主题是现代化（工业化、民主化）和全球化（经济、文化联系加强）。" },
-    { type: "choice", difficulty: "hard", text: "历史时间线的作用是：", options: ["A. 记住年份", "B. 理解历史发展脉络", "C. 增加负担", "D. 没用"], answer: "B", knowledgePoint: "时间线作用", analysis: "历史时间线帮助我们理解事件的先后顺序和因果关系，把握历史发展脉络。" }
-  ]},
-  { lesson: 41, title: "重难点突破", questions: [
-    { type: "choice", difficulty: "basic", text: "高频考点通常是：", options: ["A. 不重要的内容", "B. 核心知识点", "C. 边缘知识", "D. 冷门内容"], answer: "B", knowledgePoint: "高频考点", analysis: "高频考点通常是课程的核心知识点，需要重点掌握。" },
-    { type: "choice", difficulty: "medium", text: "易错点的特点是：", options: ["A. 容易理解", "B. 容易混淆", "C. 简单", "D. 不重要"], answer: "B", knowledgePoint: "易错点", analysis: "易错点通常是相似概念或易混淆的知识点，需要特别注意区分。" },
-    { type: "choice", difficulty: "hard", text: "答题技巧的核心是：", options: ["A. 死记硬背", "B. 理解与应用", "C. 作弊", "D. 不答题"], answer: "B", knowledgePoint: "答题技巧", analysis: "答题技巧的核心是理解知识点并能灵活应用，而不是死记硬背。" }
-  ]},
-  { lesson: 42, title: "综合练习与讲评", questions: [
-    { type: "choice", difficulty: "basic", text: "模拟练习的目的是：", options: ["A. 浪费时间", "B. 熟悉题型和考试节奏", "C. 增加压力", "D. 不做也行"], answer: "B", knowledgePoint: "模拟练习", analysis: "模拟练习有助于熟悉考试题型和节奏，提高答题速度和准确性。" },
-    { type: "choice", difficulty: "medium", text: "错题分析的意义是：", options: ["A. 打击自信心", "B. 找出薄弱环节", "C. 浪费时间", "D. 没用"], answer: "B", knowledgePoint: "错题分析", analysis: "错题分析能帮助找出知识薄弱环节，有针对性地进行复习。" },
-    { type: "choice", difficulty: "hard", text: "考试准备包括：", options: ["A. 熬夜复习", "B. 制定计划、查漏补缺、调整心态", "C. 不复习", "D. 作弊"], answer: "B", knowledgePoint: "考试准备", analysis: "考试准备应包括制定复习计划、查漏补缺和调整心态，保持良好状态。" }
+  { lesson: 14, title: "清教徒革命", questions: [
+    { type: "choice", difficulty: 1, text: "英国内战爆发于哪一年？", options: ["A. 1642年", "B. 1742年", "C. 1842年", "D. 1942年"], answer: "A", knowledgePoint: "英国内战", analysis: "1642年，查理一世向议会宣战，英国内战正式爆发。" },
+    { type: "choice", difficulty: 2, text: "议会军的领袖是：", options: ["A. 查理一世", "B. 奥利弗·克伦威尔", "C. 詹姆士二世", "D. 威廉三世"], answer: "B", knowledgePoint: "克伦威尔", analysis: "奥利弗·克伦威尔率领新模范军击败国王军队，成为议会军的领袖。" },
+    { type: "choice", difficulty: 3, text: "查理一世被处决是在哪一年？", options: ["A. 1649年", "B. 1659年", "C. 1669年", "D. 1679年"], answer: "A", knowledgePoint: "查理一世被处决", analysis: "1649年，查理一世被议会处决，英国成为共和国，这是英国历史上唯一一次废除君主制。" }
   ]},
 
-  // ════════════════════════════════════════
-  // 第十五章：期末考试与总结
-  // ════════════════════════════════════════
-  
-  { lesson: 43, title: "期末考试", questions: [
-    { type: "choice", difficulty: "basic", text: "期末考试的范围是：", options: ["A. 第一学期", "B. 第二学期", "C. 全学年", "D. 随机"], answer: "C", knowledgePoint: "考试范围", analysis: "期末考试范围是全学年内容，涵盖第一学期和第二学期的所有知识点。" },
-    { type: "choice", difficulty: "medium", text: "期末考试时间是：", options: ["A. 90分钟", "B. 120分钟", "C. 150分钟", "D. 60分钟"], answer: "C", knowledgePoint: "考试时间", analysis: "期末考试时间为150分钟，需合理分配时间完成各类题型。" },
-    { type: "choice", difficulty: "hard", text: "论述题的结构应包括：", options: ["A. 只有论点", "B. 论点、论据、结论", "C. 只有论据", "D. 随意写"], answer: "B", knowledgePoint: "论述题结构", analysis: "论述题应包括明确的论点、充分的论据和合理的结论，结构完整。" }
+  { lesson: 15, title: "克伦威尔与共和国", questions: [
+    { type: "choice", difficulty: 1, text: "克伦威尔的称号是：", options: ["A. 国王", "B. 护国公", "C. 总统", "D. 首相"], answer: "B", knowledgePoint: "护国公", analysis: "克伦威尔成为护国公，实行军事独裁统治，掌握国家实权。" },
+    { type: "choice", difficulty: 2, text: "斯图亚特复辟是在哪一年？", options: ["A. 1660年", "B. 1670年", "C. 1680年", "D. 1690年"], answer: "A", knowledgePoint: "斯图亚特复辟", analysis: "1660年，查理二世回到英国，斯图亚特王朝复辟，结束了共和国时期。" },
+    { type: "choice", difficulty: 3, text: "共和国失败的原因是：", options: ["A. 经济繁荣", "B. 缺乏合法性", "C. 人民支持", "D. 外部援助"], answer: "B", knowledgePoint: "共和国失败", analysis: "克伦威尔的独裁统治缺乏广泛支持，他去世后政权陷入混乱，最终导致斯图亚特王朝复辟。" }
   ]},
-  { lesson: 44, title: "试卷讲评", questions: [
-    { type: "choice", difficulty: "basic", text: "试卷讲评的目的是：", options: ["A. 批评学生", "B. 分析试题和答题情况", "C. 浪费时间", "D. 念答案"], answer: "B", knowledgePoint: "试卷讲评", analysis: "试卷讲评的目的是分析试题特点和学生答题情况，帮助学生理解错误原因。" },
-    { type: "choice", difficulty: "medium", text: "常见错误的类型包括：", options: ["A. 只有粗心", "B. 概念不清、审题错误、分析不深入", "C. 只有不会", "D. 没有错误"], answer: "B", knowledgePoint: "常见错误", analysis: "常见错误包括概念理解不清、审题错误、分析不深入等多种类型。" },
-    { type: "choice", difficulty: "hard", text: "改进建议的核心是：", options: ["A. 多做题", "B. 理解知识点、总结方法、加强练习", "C. 只背答案", "D. 不学习"], answer: "B", knowledgePoint: "改进建议", analysis: "改进学习的核心是理解知识点、总结答题方法并加强针对性练习。" }
+
+  // ── 第4章 工业革命 ──────────────────────────────────────────
+
+  { lesson: 16, title: "蒸汽机", questions: [
+    { type: "choice", difficulty: 1, text: "瓦特改良蒸汽机是在哪一年获得专利？", options: ["A. 1775年", "B. 1875年", "C. 1975年", "D. 1675年"], answer: "A", knowledgePoint: "瓦特蒸汽机", analysis: "1775年，詹姆斯·瓦特获得了蒸汽机的专利，这是工业革命的关键发明。" },
+    { type: "choice", difficulty: 2, text: "蒸汽机的能源是：", options: ["A. 石油", "B. 煤炭", "C. 天然气", "D. 电力"], answer: "B", knowledgePoint: "蒸汽机的能源", analysis: "蒸汽机使用煤炭作为能源，开启了化石燃料时代，推动了工业革命。" },
+    { type: "choice", difficulty: 3, text: "蒸汽机对工业的影响是：", options: ["A. 手工生产延续", "B. 工厂制度建立", "C. 农业复兴", "D. 商业衰退"], answer: "B", knowledgePoint: "蒸汽机的影响", analysis: "蒸汽机为工厂提供了动力，工厂制度取代了手工工场，改变了生产方式。" }
   ]},
-  { lesson: 45, title: "学年总结与展望", questions: [
-    { type: "choice", difficulty: "basic", text: "历史思维包括：", options: ["A. 只记年份", "B. 辩证思维、因果分析、史料解读", "C. 不思考", "D. 死记硬背"], answer: "B", knowledgePoint: "历史思维", analysis: "历史思维包括辩证思维、因果分析、史料解读等能力，帮助我们理解和分析历史。" },
-    { type: "choice", difficulty: "medium", text: "学习历史的意义是：", options: ["A. 应付考试", "B. 理解现在、展望未来", "C. 没用", "D. 浪费时间"], answer: "B", knowledgePoint: "学习意义", analysis: "学习历史能帮助我们理解现在的世界，从历史中吸取教训，更好地展望未来。" },
-    { type: "choice", difficulty: "hard", text: "未来学习历史的方法是：", options: ["A. 只看书", "B. 多阅读、多思考、多实践", "C. 不学习", "D. 只做题"], answer: "B", knowledgePoint: "学习方法", analysis: "未来学习历史应注重多阅读史料、多思考分析、多实践应用，培养历史思维能力。" }
+
+  { lesson: 17, title: "工厂制度", questions: [
+    { type: "choice", difficulty: 1, text: "工厂制度的特点是：", options: ["A. 家庭生产", "B. 集中生产", "C. 手工劳动", "D. 分散作业"], answer: "B", knowledgePoint: "工厂制度", analysis: "工厂制度将工人集中在工厂里工作，使用机器进行大规模生产。" },
+    { type: "choice", difficulty: 2, text: "工人阶级形成的原因是：", options: ["A. 农业发展", "B. 工业革命", "C. 贵族衰落", "D. 战争影响"], answer: "B", knowledgePoint: "工人阶级形成", analysis: "工业革命导致工厂工人聚集，形成了一个新的社会阶级——工人阶级。" },
+    { type: "choice", difficulty: 3, text: "早期工厂工作条件的特点是：", options: ["A. 舒适安全", "B. 恶劣危险", "C. 轻松自由", "D. 高薪优待"], answer: "B", knowledgePoint: "工厂工作条件", analysis: "早期工厂工作时间长、环境恶劣、工资低，工人面临着健康和安全风险。" }
+  ]},
+
+  { lesson: 18, title: "城市化", questions: [
+    { type: "choice", difficulty: 1, text: "工业革命时期，人口流向是：", options: ["A. 城市到农村", "B. 农村到城市", "C. 农村到农村", "D. 城市到城市"], answer: "B", knowledgePoint: "城市化", analysis: "工业革命推动了城市化进程，大量农村人口进入城市寻找工作机会。" },
+    { type: "choice", difficulty: 2, text: "曼彻斯特是因什么而崛起？", options: ["A. 农业", "B. 纺织业", "C. 渔业", "D. 采矿业"], answer: "B", knowledgePoint: "曼彻斯特", analysis: "曼彻斯特因纺织业的发展从一个小镇变成了工业中心，是工业革命的典型城市。" },
+    { type: "choice", difficulty: 3, text: "城市化带来的问题不包括：", options: ["A. 污染", "B. 拥挤", "C. 疾病", "D. 人口减少"], answer: "D", knowledgePoint: "城市化问题", analysis: "城市化带来了污染、拥挤和疾病传播等问题，但人口是增加而非减少。" }
+  ]},
+
+  { lesson: 19, title: "工人运动", questions: [
+    { type: "choice", difficulty: 1, text: "宪章运动的主要要求是：", options: ["A. 君主专制", "B. 普选权", "C. 贵族统治", "D. 社会主义"], answer: "B", knowledgePoint: "宪章运动", analysis: "宪章运动要求普选权和政治改革，是工人阶级第一次大规模的政治行动。" },
+    { type: "choice", difficulty: 2, text: "工会的作用是：", options: ["A. 维护资本家利益", "B. 维护工人权益", "C. 破坏生产", "D. 反对改革"], answer: "B", knowledgePoint: "工会", analysis: "工会组织工人争取更好的工资和工作条件，维护工人的权益。" },
+    { type: "choice", difficulty: 3, text: "工人运动的结果是：", options: ["A. 没有任何改变", "B. 推动社会改革", "C. 推翻资本主义", "D. 回到封建制度"], answer: "B", knowledgePoint: "工人运动的影响", analysis: "工人运动推动了社会改革，如工厂法的制定，改善了工人的生活和工作条件。" }
+  ]},
+
+  { lesson: 20, title: "维多利亚时代", questions: [
+    { type: "choice", difficulty: 1, text: "维多利亚女王统治时期是：", options: ["A. 19世纪", "B. 18世纪", "C. 20世纪", "D. 17世纪"], answer: "A", knowledgePoint: "维多利亚时代", analysis: "维多利亚女王从1837年到1901年统治英国，属于19世纪。" },
+    { type: "choice", difficulty: 2, text: "大英帝国在维多利亚时代的地位是：", options: ["A. 衰落", "B. 鼎盛", "C. 起步", "D. 灭亡"], answer: "B", knowledgePoint: "大英帝国鼎盛", analysis: "维多利亚时代是大英帝国的鼎盛时期，英国拥有世界上最大的殖民地。" },
+    { type: "choice", difficulty: 3, text: "维多利亚时代的社会特点是：", options: ["A. 完全平等", "B. 进步与矛盾并存", "C. 停滞不前", "D. 倒退落后"], answer: "B", knowledgePoint: "维多利亚时代特点", analysis: "维多利亚时代既有工业进步和科学发展，也存在贫困和不平等，是一个充满反差的时代。" }
+  ]},
+
+  // ── 第5章 帝国主义 ──────────────────────────────────────────
+
+  { lesson: 21, title: "大英帝国", questions: [
+    { type: "choice", difficulty: 1, text: "大英帝国被称为：", options: ["A. 日不落帝国", "B. 日升帝国", "C. 日中帝国", "D. 日没帝国"], answer: "A", knowledgePoint: "日不落帝国", analysis: "大英帝国在19世纪达到顶峰，殖民地遍布全球，太阳永远不会在其领土上落下。" },
+    { type: "choice", difficulty: 2, text: "大英帝国的面积占世界的比例是：", options: ["A. 四分之一", "B. 三分之一", "C. 二分之一", "D. 五分之一"], answer: "A", knowledgePoint: "大英帝国的规模", analysis: "大英帝国的领土面积约占世界的四分之一，包括印度、加拿大、澳大利亚等。" },
+    { type: "choice", difficulty: 3, text: "帝国扩张的根本原因是：", options: ["A. 传播文明", "B. 经济利益", "C. 军事需要", "D. 宗教使命"], answer: "B", knowledgePoint: "帝国扩张原因", analysis: "经济利益是帝国扩张的根本动力，殖民地为英国提供原材料和市场。" }
+  ]},
+
+  { lesson: 22, title: "殖民地的声音", questions: [
+    { type: "choice", difficulty: 1, text: "殖民统治的特点是：", options: ["A. 平等合作", "B. 不平等统治", "C. 相互尊重", "D. 文化融合"], answer: "B", knowledgePoint: "殖民统治", analysis: "殖民统治建立了不平等的关系，殖民者享有特权，被殖民者受到压迫和剥削。" },
+    { type: "choice", difficulty: 2, text: "殖民主义的双重性是指：", options: ["A. 只有好处", "B. 只有坏处", "C. 既有建设性也有破坏性", "D. 没有影响"], answer: "C", knowledgePoint: "殖民主义的双重性", analysis: "殖民主义破坏了当地传统经济和文化，但也带来了现代教育、医疗和基础设施。" },
+    { type: "choice", difficulty: 3, text: "民族意识觉醒的原因是：", options: ["A. 殖民统治", "B. 经济繁荣", "C. 文化传承", "D. 外部援助"], answer: "A", knowledgePoint: "民族意识觉醒", analysis: "殖民统治激发了民族意识，殖民地人民开始争取独立和自决。" }
+  ]},
+
+  { lesson: 23, title: "奴隶贸易与废除", questions: [
+    { type: "choice", difficulty: 1, text: "三角贸易的路线是：", options: ["A. 欧洲→非洲→美洲→欧洲", "B. 欧洲→美洲→非洲→欧洲", "C. 非洲→欧洲→美洲→非洲", "D. 美洲→非洲→欧洲→美洲"], answer: "A", knowledgePoint: "三角贸易", analysis: "三角贸易路线：欧洲出发→非洲购买奴隶→美洲出售奴隶→返回欧洲。" },
+    { type: "choice", difficulty: 2, text: "奴隶贸易持续了多长时间？", options: ["A. 约100年", "B. 约200年", "C. 约300年", "D. 约400年"], answer: "C", knowledgePoint: "奴隶贸易时间", analysis: "奴隶贸易从16世纪开始到19世纪结束，持续了约300年。" },
+    { type: "choice", difficulty: 3, text: "废奴运动的领袖包括：", options: ["A. 牛顿", "B. 林肯", "C. 威尔伯福斯", "D. 达尔文"], answer: "C", knowledgePoint: "废奴运动", analysis: "威廉·威尔伯福斯是英国废奴运动的领袖，长期推动废除奴隶制。" }
+  ]},
+
+  { lesson: 24, title: "印度", questions: [
+    { type: "choice", difficulty: 1, text: "东印度公司最初是：", options: ["A. 军事组织", "B. 贸易公司", "C. 宗教团体", "D. 政府机构"], answer: "B", knowledgePoint: "东印度公司", analysis: "东印度公司最初是一家贸易公司，后来逐渐获得政治权力，成为英国在印度的统治工具。" },
+    { type: "choice", difficulty: 2, text: "印度独立是在哪一年？", options: ["A. 1947年", "B. 1957年", "C. 1967年", "D. 1977年"], answer: "A", knowledgePoint: "印度独立", analysis: "1947年，印度获得独立，结束了英国的殖民统治。" },
+    { type: "choice", difficulty: 3, text: "印巴分治的原因是：", options: ["A. 地理因素", "B. 宗教差异", "C. 经济矛盾", "D. 外部压力"], answer: "B", knowledgePoint: "印巴分治", analysis: "印度教徒和穆斯林之间的宗教差异导致了印巴分治，印度和巴基斯坦分别独立。" }
+  ]},
+
+  { lesson: 25, title: "非洲瓜分", questions: [
+    { type: "choice", difficulty: 1, text: "柏林会议召开于哪一年？", options: ["A. 1884年", "B. 1894年", "C. 1904年", "D. 1914年"], answer: "A", knowledgePoint: "柏林会议", analysis: "1884-1885年，欧洲列强在柏林召开会议，瓜分了非洲。" },
+    { type: "choice", difficulty: 2, text: "非洲瓜分的特点是：", options: ["A. 尊重当地边界", "B. 地图上的直线", "C. 和平协商", "D. 文化融合"], answer: "B", knowledgePoint: "非洲瓜分特点", analysis: "欧洲列强在地图上直接画直线划分非洲边界，完全无视当地的历史和民族。" },
+    { type: "choice", difficulty: 3, text: "非洲反抗殖民统治的例子包括：", options: ["A. 埃及独立", "B. 埃塞俄比亚抗意战争", "C. 南非种族隔离", "D. 刚果自由邦"], answer: "B", knowledgePoint: "非洲反抗", analysis: "埃塞俄比亚在1896年击败意大利军队，是非洲唯一成功抵抗殖民侵略的国家。" }
+  ]},
+
+  // ── 第6章 走向一战 ──────────────────────────────────────────
+
+  { lesson: 26, title: "民族主义", questions: [
+    { type: "choice", difficulty: 1, text: "巴尔干地区被称为：", options: ["A. 欧洲的花园", "B. 欧洲的火药桶", "C. 欧洲的心脏", "D. 欧洲的门户"], answer: "B", knowledgePoint: "巴尔干火药桶", analysis: "巴尔干地区民族众多，矛盾复杂，是第一次世界大战的导火索所在地。" },
+    { type: "choice", difficulty: 2, text: "泛斯拉夫主义的目标是：", options: ["A. 分裂斯拉夫人", "B. 联合所有斯拉夫人", "C. 消灭斯拉夫人", "D. 同化斯拉夫人"], answer: "B", knowledgePoint: "泛斯拉夫主义", analysis: "泛斯拉夫主义主张所有斯拉夫人联合起来，威胁了奥匈帝国的统治。" },
+    { type: "choice", difficulty: 3, text: "奥匈帝国解体的原因是：", options: ["A. 经济繁荣", "B. 民族主义", "C. 外部入侵", "D. 自然灾害"], answer: "B", knowledgePoint: "奥匈帝国解体", analysis: "民族主义的兴起导致奥匈帝国这个多民族国家解体，分裂成多个独立国家。" }
+  ]},
+
+  { lesson: 27, title: "军备竞赛", questions: [
+    { type: "choice", difficulty: 1, text: "三国同盟包括：", options: ["A. 英国、法国、俄国", "B. 德国、奥匈帝国、意大利", "C. 美国、日本、英国", "D. 法国、德国、俄国"], answer: "B", knowledgePoint: "三国同盟", analysis: "三国同盟是德国、奥匈帝国和意大利组成的军事同盟。" },
+    { type: "choice", difficulty: 2, text: "三国协约包括：", options: ["A. 德国、奥匈帝国、意大利", "B. 英国、法国、俄国", "C. 美国、日本、英国", "D. 法国、德国、俄国"], answer: "B", knowledgePoint: "三国协约", analysis: "三国协约是英国、法国和俄国组成的军事同盟，与三国同盟对峙。" },
+    { type: "choice", difficulty: 3, text: "军备竞赛的影响是：", options: ["A. 促进和平", "B. 增加战争风险", "C. 减少冲突", "D. 经济衰退"], answer: "B", knowledgePoint: "军备竞赛的影响", analysis: "军备竞赛加剧了国际紧张局势，使战争变得越来越可能。" }
+  ]},
+
+  { lesson: 28, title: "一战起因", questions: [
+    { type: "choice", difficulty: 1, text: "萨拉热窝事件中被刺杀的是：", options: ["A. 威廉二世", "B. 斐迪南大公", "C. 尼古拉二世", "D. 乔治五世"], answer: "B", knowledgePoint: "萨拉热窝事件", analysis: "1914年6月28日，奥匈帝国皇位继承人斐迪南大公在萨拉热窝被刺杀。" },
+    { type: "choice", difficulty: 2, text: "一战爆发于哪一年？", options: ["A. 1914年", "B. 1915年", "C. 1916年", "D. 1917年"], answer: "A", knowledgePoint: "一战爆发", analysis: "1914年8月，奥匈帝国向塞尔维亚宣战，第一次世界大战正式爆发。" },
+    { type: "choice", difficulty: 3, text: "七月危机指的是：", options: ["A. 战争结束", "B. 战争爆发前的外交危机", "C. 和平谈判", "D. 经济危机"], answer: "B", knowledgePoint: "七月危机", analysis: "七月危机是指从萨拉热窝事件到战争爆发的一个月里，外交努力失败，局势急剧恶化。" }
+  ]},
+
+  { lesson: 29, title: "战壕战", questions: [
+    { type: "choice", difficulty: 1, text: "一战的主战场在：", options: ["A. 非洲", "B. 欧洲", "C. 亚洲", "D. 美洲"], answer: "B", knowledgePoint: "一战主战场", analysis: "第一次世界大战的主战场在欧洲，主要分为西线、东线和南线战场。" },
+    { type: "choice", difficulty: 2, text: "堑壕战的特点是：", options: ["A. 快速进攻", "B. 长期僵持", "C. 机动灵活", "D. 速战速决"], answer: "B", knowledgePoint: "堑壕战", analysis: "堑壕战导致战线长期僵持，双方在战壕中对峙了四年，伤亡惨重。" },
+    { type: "choice", difficulty: 3, text: "新式武器包括：", options: ["A. 弓箭", "B. 机关枪", "C. 长矛", "D. 盾牌"], answer: "B", knowledgePoint: "新式武器", analysis: "机关枪、铁丝网、火炮等新技术使进攻变得极其困难，导致了堑壕战的出现。" }
+  ]},
+
+  { lesson: 30, title: "凡尔赛条约", questions: [
+    { type: "choice", difficulty: 1, text: "一战结束于哪一年？", options: ["A. 1918年", "B. 1919年", "C. 1920年", "D. 1921年"], answer: "A", knowledgePoint: "一战结束", analysis: "1918年11月11日，德国签署停战协定，第一次世界大战正式结束。" },
+    { type: "choice", difficulty: 2, text: "凡尔赛条约对德国的制裁包括：", options: ["A. 扩大领土", "B. 巨额赔款", "C. 允许扩军", "D. 免除债务"], answer: "B", knowledgePoint: "凡尔赛条约", analysis: "凡尔赛条约要求德国支付巨额赔款，割让领土，限制军队规模。" },
+    { type: "choice", difficulty: 3, text: "凡尔赛条约的影响是：", options: ["A. 促进和平", "B. 埋下二战伏笔", "C. 稳定欧洲", "D. 经济繁荣"], answer: "B", knowledgePoint: "凡尔赛条约的影响", analysis: "凡尔赛条约对德国过于苛刻，激起了德国民众的不满，为二战埋下了伏笔。" }
+  ]},
+
+  // ── 第7章 两次世界大战 ──────────────────────────────────────
+
+  { lesson: 31, title: "索姆河战役", questions: [
+    { type: "choice", difficulty: 1, text: "索姆河战役发生在哪一年？", options: ["A. 1916年", "B. 1917年", "C. 1918年", "D. 1915年"], answer: "A", knowledgePoint: "索姆河战役", analysis: "1916年7月1日，索姆河战役开始，是一战中最血腥的战役之一。" },
+    { type: "choice", difficulty: 2, text: "索姆河战役的特点是：", options: ["A. 速战速决", "B. 伤亡惨重", "C. 轻松胜利", "D. 没有战斗"], answer: "B", knowledgePoint: "索姆河战役特点", analysis: "索姆河战役持续了五个月，双方伤亡超过100万人，是一战中最惨烈的战役。" },
+    { type: "choice", difficulty: 3, text: "坦克首次投入使用是在：", options: ["A. 马恩河战役", "B. 凡尔登战役", "C. 索姆河战役", "D. 日德兰海战"], answer: "C", knowledgePoint: "坦克的使用", analysis: "1916年索姆河战役中，英军首次使用坦克，这是装甲作战的开端。" }
+  ]},
+
+  { lesson: 32, title: "十月革命", questions: [
+    { type: "choice", difficulty: 1, text: "十月革命发生在哪一年？", options: ["A. 1917年", "B. 1918年", "C. 1919年", "D. 1920年"], answer: "A", knowledgePoint: "十月革命", analysis: "1917年11月，布尔什维克党在列宁的领导下夺取了政权，建立了世界上第一个社会主义国家。" },
+    { type: "choice", difficulty: 2, text: "十月革命的领导者是：", options: ["A. 斯大林", "B. 列宁", "C. 托洛茨基", "D. 普列汉诺夫"], answer: "B", knowledgePoint: "列宁", analysis: "列宁是布尔什维克党的领袖，领导了十月革命。" },
+    { type: "choice", difficulty: 3, text: "十月革命的影响是：", options: ["A. 巩固沙皇统治", "B. 建立社会主义", "C. 恢复资本主义", "D. 维持现状"], answer: "B", knowledgePoint: "十月革命的影响", analysis: "十月革命建立了世界上第一个社会主义国家，对世界历史产生了深远影响。" }
+  ]},
+
+  { lesson: 33, title: "纳粹德国崛起", questions: [
+    { type: "choice", difficulty: 1, text: "希特勒成为德国总理是在哪一年？", options: ["A. 1933年", "B. 1934年", "C. 1935年", "D. 1936年"], answer: "A", knowledgePoint: "希特勒掌权", analysis: "1933年，希特勒被任命为德国总理，纳粹党开始在德国掌权。" },
+    { type: "choice", difficulty: 2, text: "纳粹党的全称是：", options: ["A. 德国社会党", "B. 国家社会主义德国工人党", "C. 德国共产党", "D. 德国自由党"], answer: "B", knowledgePoint: "纳粹党", analysis: "纳粹党全称是国家社会主义德国工人党，宣扬极端民族主义和反犹主义。" },
+    { type: "choice", difficulty: 3, text: "纳粹崛起的原因是：", options: ["A. 经济繁荣", "B. 大萧条", "C. 社会稳定", "D. 国际支持"], answer: "B", knowledgePoint: "纳粹崛起原因", analysis: "大萧条使德国经济崩溃，民众对政府失去信心，为纳粹党的崛起提供了土壤。" }
+  ]},
+
+  { lesson: 34, title: "第二次世界大战", questions: [
+    { type: "choice", difficulty: 1, text: "二战爆发于哪一年？", options: ["A. 1939年", "B. 1940年", "C. 1941年", "D. 1942年"], answer: "A", knowledgePoint: "二战爆发", analysis: "1939年9月1日，德国入侵波兰，第二次世界大战正式爆发。" },
+    { type: "choice", difficulty: 2, text: "二战的主战场包括：", options: ["A. 只有欧洲", "B. 欧洲和太平洋", "C. 只有亚洲", "D. 只有非洲"], answer: "B", knowledgePoint: "二战战场", analysis: "二战有两个主要战场：欧洲战场对抗德国和意大利，太平洋战场对抗日本。" },
+    { type: "choice", difficulty: 3, text: "二战的转折点是：", options: ["A. 珍珠港事件", "B. 斯大林格勒战役", "C. 诺曼底登陆", "D. 柏林战役"], answer: "B", knowledgePoint: "二战转折", analysis: "斯大林格勒战役是二战的转折点，苏军击败德军，开始战略反攻。" }
+  ]},
+
+  { lesson: 35, title: "大屠杀", questions: [
+    { type: "choice", difficulty: 1, text: "大屠杀中遇难的犹太人约有：", options: ["A. 100万", "B. 300万", "C. 600万", "D. 900万"], answer: "C", knowledgePoint: "大屠杀", analysis: "在纳粹统治期间，大约600万犹太人被系统性地屠杀。" },
+    { type: "choice", difficulty: 2, text: "集中营的作用是：", options: ["A. 关押战犯", "B. 种族灭绝", "C. 劳动改造", "D. 教育中心"], answer: "B", knowledgePoint: "集中营", analysis: "纳粹建立了多个集中营，用于关押和屠杀犹太人及其他被视为敌人的群体。" },
+    { type: "choice", difficulty: 3, text: "大屠杀的教训是：", options: ["A. 种族主义无害", "B. 警惕极端主义", "C. 战争是解决问题的方式", "D. 偏见是正常的"], answer: "B", knowledgePoint: "大屠杀的教训", analysis: "大屠杀提醒我们要警惕种族主义和极端主义，尊重人类的多样性。" }
+  ]},
+
+  // ── 第8章 冷战 ──────────────────────────────────────────
+
+  { lesson: 36, title: "雅尔塔会议", questions: [
+    { type: "choice", difficulty: 1, text: "雅尔塔会议召开于哪一年？", options: ["A. 1945年", "B. 1946年", "C. 1947年", "D. 1948年"], answer: "A", knowledgePoint: "雅尔塔会议", analysis: "1945年，二战结束前夕，美英苏三国领导人在雅尔塔会面，划分了战后的势力范围。" },
+    { type: "choice", difficulty: 2, text: "雅尔塔会议的参与国是：", options: ["A. 美国、英国、苏联", "B. 美国、英国、法国", "C. 苏联、中国、英国", "D. 美国、苏联、中国"], answer: "A", knowledgePoint: "雅尔塔会议参与国", analysis: "雅尔塔会议由美国、英国和苏联三国领导人参加。" },
+    { type: "choice", difficulty: 3, text: "雅尔塔会议的影响是：", options: ["A. 促进世界和平", "B. 奠定冷战格局", "C. 消灭共产主义", "D. 统一欧洲"], answer: "B", knowledgePoint: "雅尔塔会议的影响", analysis: "雅尔塔会议划分了战后的势力范围，奠定了冷战的基础。" }
+  ]},
+
+  { lesson: 37, title: "铁幕与马歇尔计划", questions: [
+    { type: "choice", difficulty: 1, text: "铁幕演说发表于哪一年？", options: ["A. 1946年", "B. 1947年", "C. 1948年", "D. 1949年"], answer: "A", knowledgePoint: "铁幕演说", analysis: "1946年，丘吉尔发表铁幕演说，拉开了冷战的序幕。" },
+    { type: "choice", difficulty: 2, text: "马歇尔计划的目的是：", options: ["A. 援助苏联", "B. 援助欧洲重建", "C. 扩张领土", "D. 发动战争"], answer: "B", knowledgePoint: "马歇尔计划", analysis: "马歇尔计划通过经济援助帮助欧洲重建，同时加强了美国对欧洲的影响力。" },
+    { type: "choice", difficulty: 3, text: "杜鲁门主义的核心是：", options: ["A. 孤立主义", "B. 遏制政策", "C. 扩张主义", "D. 和平主义"], answer: "B", knowledgePoint: "杜鲁门主义", analysis: "杜鲁门主义确立了美国的遏制政策，旨在阻止苏联的扩张。" }
+  ]},
+
+  { lesson: 38, title: "朝鲜战争", questions: [
+    { type: "choice", difficulty: 1, text: "朝鲜战争爆发于哪一年？", options: ["A. 1950年", "B. 1951年", "C. 1952年", "D. 1953年"], answer: "A", knowledgePoint: "朝鲜战争", analysis: "1950年6月，朝鲜战争爆发，这是冷战中的第一次大规模热战。" },
+    { type: "choice", difficulty: 2, text: "朝鲜战争的结果是：", options: ["A. 朝鲜统一", "B. 韩国统一", "C. 维持分裂", "D. 中国占领"], answer: "C", knowledgePoint: "朝鲜战争结果", analysis: "1953年，双方签署停战协定，朝鲜仍然分裂为南北两个国家。" },
+    { type: "choice", difficulty: 3, text: "朝鲜战争的影响是：", options: ["A. 缓和冷战", "B. 加剧冷战紧张", "C. 结束冷战", "D. 促进和平"], answer: "B", knowledgePoint: "朝鲜战争的影响", analysis: "朝鲜战争加剧了冷战的紧张局势，导致军备竞赛进一步升级。" }
+  ]},
+
+  { lesson: 39, title: "古巴导弹危机", questions: [
+    { type: "choice", difficulty: 1, text: "古巴导弹危机发生在哪一年？", options: ["A. 1962年", "B. 1963年", "C. 1964年", "D. 1965年"], answer: "A", knowledgePoint: "古巴导弹危机", analysis: "1962年10月，古巴导弹危机爆发，是冷战中美苏最接近核战争的一次危机。" },
+    { type: "choice", difficulty: 2, text: "古巴导弹危机的原因是：", options: ["A. 苏联在古巴部署导弹", "B. 美国入侵古巴", "C. 古巴进攻美国", "D. 经济制裁"], answer: "A", knowledgePoint: "古巴导弹危机原因", analysis: "苏联在古巴部署导弹，威胁到美国的安全，引发了危机。" },
+    { type: "choice", difficulty: 3, text: "古巴导弹危机的解决方式是：", options: ["A. 战争", "B. 外交谈判", "C. 经济制裁", "D. 军事威胁"], answer: "B", knowledgePoint: "古巴导弹危机解决", analysis: "经过紧张的外交谈判，苏联同意撤除导弹，美国承诺不入侵古巴，危机和平解决。" }
+  ]},
+
+  { lesson: 40, title: "柏林墙", questions: [
+    { type: "choice", difficulty: 1, text: "柏林墙建立于哪一年？", options: ["A. 1961年", "B. 1962年", "C. 1963年", "D. 1964年"], answer: "A", knowledgePoint: "柏林墙建立", analysis: "1961年，东德修建柏林墙，分隔了东柏林和西柏林。" },
+    { type: "choice", difficulty: 2, text: "柏林墙倒塌于哪一年？", options: ["A. 1989年", "B. 1990年", "C. 1991年", "D. 1992年"], answer: "A", knowledgePoint: "柏林墙倒塌", analysis: "1989年11月9日，柏林墙倒塌，象征着冷战的结束。" },
+    { type: "choice", difficulty: 3, text: "德国统一是在哪一年？", options: ["A. 1989年", "B. 1990年", "C. 1991年", "D. 1992年"], answer: "B", knowledgePoint: "德国统一", analysis: "1990年，东德和西德统一，标志着冷战的重要转折。" }
+  ]},
+
+  // ── 第9章 战后世界 ──────────────────────────────────────────
+
+  { lesson: 41, title: "印度独立", questions: [
+    { type: "choice", difficulty: 1, text: "印度独立运动的领袖是：", options: ["A. 真纳", "B. 甘地", "C. 尼赫鲁", "D. 泰戈尔"], answer: "B", knowledgePoint: "甘地", analysis: "甘地领导的非暴力不合作运动是印度独立的关键。" },
+    { type: "choice", difficulty: 2, text: "印巴分治的时间是：", options: ["A. 1947年", "B. 1948年", "C. 1949年", "D. 1950年"], answer: "A", knowledgePoint: "印巴分治", analysis: "1947年，印度分为印度和巴基斯坦两个国家。" },
+    { type: "choice", difficulty: 3, text: "分治的代价是：", options: ["A. 和平过渡", "B. 大规模冲突", "C. 经济繁荣", "D. 文化融合"], answer: "B", knowledgePoint: "分治的代价", analysis: "印巴分治导致了大规模的人口迁移和暴力冲突，数百万人死亡或流离失所。" }
+  ]},
+
+  { lesson: 42, title: "非洲独立浪潮", questions: [
+    { type: "choice", difficulty: 1, text: "1960年被称为：", options: ["A. 非洲年", "B. 独立年", "C. 解放年", "D. 自由年"], answer: "A", knowledgePoint: "非洲年", analysis: "1960年有17个非洲国家获得独立，被称为非洲年。" },
+    { type: "choice", difficulty: 2, text: "非洲独立的方式包括：", options: ["A. 只有谈判", "B. 只有武装斗争", "C. 谈判和武装斗争", "D. 外部干预"], answer: "C", knowledgePoint: "非洲独立方式", analysis: "非洲各国通过不同方式获得独立：有的通过谈判，有的通过武装斗争。" },
+    { type: "choice", difficulty: 3, text: "独立后的挑战包括：", options: ["A. 经济繁荣", "B. 政治稳定", "C. 经济和政治挑战", "D. 文化统一"], answer: "C", knowledgePoint: "独立后的挑战", analysis: "独立后的非洲国家面临着经济、政治和社会的挑战，如贫困、腐败和冲突。" }
+  ]},
+
+  { lesson: 43, title: "巴以冲突", questions: [
+    { type: "choice", difficulty: 1, text: "以色列建国是在哪一年？", options: ["A. 1948年", "B. 1949年", "C. 1950年", "D. 1951年"], answer: "A", knowledgePoint: "以色列建国", analysis: "1948年，联合国通过决议，在巴勒斯坦地区建立以色列国。" },
+    { type: "choice", difficulty: 2, text: "巴以冲突的根源包括：", options: ["A. 只有宗教", "B. 历史、宗教和领土", "C. 只有经济", "D. 只有文化"], answer: "B", knowledgePoint: "巴以冲突根源", analysis: "巴以冲突涉及历史、宗教、领土等多个复杂因素。" },
+    { type: "choice", difficulty: 3, text: "中东战争共有几次？", options: ["A. 2次", "B. 3次", "C. 4次", "D. 5次"], answer: "C", knowledgePoint: "中东战争", analysis: "从1948年到1973年，爆发了四次中东战争。" }
+  ]},
+
+  { lesson: 44, title: "越南战争", questions: [
+    { type: "choice", difficulty: 1, text: "越南战争持续了多长时间？", options: ["A. 10年", "B. 20年", "C. 30年", "D. 40年"], answer: "B", knowledgePoint: "越南战争", analysis: "越南战争从1955年到1975年，持续了20年。" },
+    { type: "choice", difficulty: 2, text: "美国介入越南战争的原因是：", options: ["A. 人道主义", "B. 遏制共产主义", "C. 经济利益", "D. 领土扩张"], answer: "B", knowledgePoint: "美国介入原因", analysis: "美国试图阻止共产主义在越南的扩张，这是冷战遏制政策的一部分。" },
+    { type: "choice", difficulty: 3, text: "越南战争的结果是：", options: ["A. 美国胜利", "B. 北越胜利", "C. 和平共处", "D. 分裂状态"], answer: "B", knowledgePoint: "越南战争结果", analysis: "1975年，南越政权垮台，越南实现统一，美国最终失败。" }
+  ]},
+
+  { lesson: 45, title: "民权运动", questions: [
+    { type: "choice", difficulty: 1, text: "马丁·路德·金是哪个运动的领袖？", options: ["A. 女权运动", "B. 民权运动", "C. 反战运动", "D. 环保运动"], answer: "B", knowledgePoint: "民权运动", analysis: "马丁·路德·金是美国民权运动的领袖，为黑人争取平等权利。" },
+    { type: "choice", difficulty: 2, text: "《我有一个梦想》演讲发表于哪一年？", options: ["A. 1963年", "B. 1964年", "C. 1965年", "D. 1966年"], answer: "A", knowledgePoint: "我有一个梦想", analysis: "1963年，马丁·路德·金在华盛顿发表了著名的《我有一个梦想》演讲。" },
+    { type: "choice", difficulty: 3, text: "民权法案通过于哪一年？", options: ["A. 1963年", "B. 1964年", "C. 1965年", "D. 1966年"], answer: "B", knowledgePoint: "民权法案", analysis: "1964年，美国通过了重要的民权法案，禁止种族歧视。" }
+  ]},
+
+  // ── 第10章 历史方法论 ──────────────────────────────────────
+
+  { lesson: 46, title: "史料分析", questions: [
+    { type: "choice", difficulty: 1, text: "一手资料是指：", options: ["A. 后人写的历史书", "B. 原始的历史材料", "C. 历史老师的讲义", "D. 历史纪录片"], answer: "B", knowledgePoint: "一手资料", analysis: "一手资料是指直接来自历史事件的原始材料，如日记、信件、官方文件等。" },
+    { type: "choice", difficulty: 2, text: "二手资料是指：", options: ["A. 原始文件", "B. 后人的研究和解释", "C. 考古发现", "D. 口述历史"], answer: "B", knowledgePoint: "二手资料", analysis: "二手资料是后人对历史的研究和解释，如历史书籍、学术论文等。" },
+    { type: "choice", difficulty: 3, text: "判断史料可靠性的方法包括：", options: ["A. 只看作者", "B. 考察来源、作者、目的", "C. 凭感觉判断", "D. 只看内容"], answer: "B", knowledgePoint: "史料可靠性", analysis: "判断史料的可靠性需要考虑来源、作者、目的等因素，进行综合分析。" }
+  ]},
+
+  { lesson: 47, title: "偏见与视角", questions: [
+    { type: "choice", difficulty: 1, text: "历史通常是由谁书写的？", options: ["A. 普通人", "B. 胜利者和统治阶级", "C. 历史学家", "D. 考古学家"], answer: "B", knowledgePoint: "历史的书写者", analysis: "历史通常是由胜利者、统治阶级书写的，这导致历史叙述可能带有片面性。" },
+    { type: "choice", difficulty: 2, text: "历史叙述中的偏见来源包括：", options: ["A. 只有政治观点", "B. 立场、时代背景、政治观点", "C. 只有个人喜好", "D. 没有偏见"], answer: "B", knowledgePoint: "偏见来源", analysis: "偏见可能来自作者的立场、时代背景、政治观点等多种因素。" },
+    { type: "choice", difficulty: 3, text: "理解历史需要：", options: ["A. 单一视角", "B. 多元视角", "C. 官方视角", "D. 权威视角"], answer: "B", knowledgePoint: "多元视角", analysis: "理解历史需要从多个视角出发，倾听不同声音，才能更全面地理解历史事件。" }
+  ]},
+
+  { lesson: 48, title: "历史解释", questions: [
+    { type: "choice", difficulty: 1, text: "同一历史事件可以有：", options: ["A. 唯一解释", "B. 多种解释", "C. 没有解释", "D. 官方解释"], answer: "B", knowledgePoint: "历史解释的多元性", analysis: "同一历史事件可以有多种解释，不同的历史学家可能会有不同的观点。" },
+    { type: "choice", difficulty: 2, text: "历史解释多元性的原因是：", options: ["A. 资料不足", "B. 不同的视角和方法", "C. 故意歪曲", "D. 时间流逝"], answer: "B", knowledgePoint: "多元性的原因", analysis: "历史解释的多元性源于不同的视角、方法和理论框架。" },
+    { type: "choice", difficulty: 3, text: "因果关系的特点是：", options: ["A. 单一原因", "B. 复杂多因", "C. 没有原因", "D. 随机发生"], answer: "B", knowledgePoint: "因果关系", analysis: "历史事件的原因往往是复杂的，有直接原因、根本原因、偶然因素等。" }
+  ]},
+
+  { lesson: 49, title: "口述历史", questions: [
+    { type: "choice", difficulty: 1, text: "口述历史的价值是：", options: ["A. 没有价值", "B. 提供个人体验", "C. 不如书面资料", "D. 不可信"], answer: "B", knowledgePoint: "口述历史的价值", analysis: "口述历史可以提供书面资料没有的细节和个人体验，具有独特的价值。" },
+    { type: "choice", difficulty: 2, text: "口述历史的局限是：", options: ["A. 记忆可靠", "B. 记忆可能不准确", "C. 内容太长", "D. 难以记录"], answer: "B", knowledgePoint: "口述历史的局限", analysis: "记忆是不可靠的，会受到时间、情感等因素的影响，这是口述历史的主要局限。" },
+    { type: "choice", difficulty: 3, text: "使用口述资料的正确方法是：", options: ["A. 单独使用", "B. 结合其他资料验证", "C. 完全相信", "D. 完全否定"], answer: "B", knowledgePoint: "口述资料的使用", analysis: "使用口述资料需要结合其他资料进行验证，不能单独作为证据。" }
+  ]},
+
+  { lesson: 50, title: "GCSE综合复习", questions: [
+    { type: "choice", difficulty: 1, text: "GCSE历史考试的范围包括：", options: ["A. 只有古代史", "B. 从中世纪到当代", "C. 只有近代史", "D. 只有二战"], answer: "B", knowledgePoint: "GCSE考试范围", analysis: "GCSE历史考试覆盖从中世纪到当代的历史内容。" },
+    { type: "choice", difficulty: 2, text: "论述题的答题技巧包括：", options: ["A. 论点明确、论据充分", "B. 只写论点", "C. 只写论据", "D. 随意发挥"], answer: "A", knowledgePoint: "论述题技巧", analysis: "论述题答题应论点明确、论据充分、逻辑清晰。" },
+    { type: "choice", difficulty: 3, text: "复习策略包括：", options: ["A. 死记硬背", "B. 理解与应用", "C. 只看课本", "D. 不做练习"], answer: "B", knowledgePoint: "复习策略", analysis: "有效的复习策略是理解知识点并能灵活应用，而不是死记硬背。" }
+  ]},
+
+  // ── 第11章 政治史方法 ──────────────────────────────────────
+
+  { lesson: 51, title: "政治史深度研究", questions: [
+    { type: "choice", difficulty: 1, text: "政治史研究的核心是：", options: ["A. 经济发展", "B. 权力与决策", "C. 文化变迁", "D. 社会结构"], answer: "B", knowledgePoint: "政治史核心", analysis: "政治史研究的核心是权力的运作、决策的制定以及政治制度的演变。" },
+    { type: "choice", difficulty: 2, text: "政治人物研究的方法包括：", options: ["A. 只看传记", "B. 分析其政策与影响", "C. 忽略时代背景", "D. 主观评价"], answer: "B", knowledgePoint: "政治人物研究", analysis: "研究政治人物需要分析其政策、决策及其对历史进程的影响，结合时代背景进行客观评价。" },
+    { type: "choice", difficulty: 3, text: "政治制度演变的特点是：", options: ["A. 一成不变", "B. 渐进式变革", "C. 突然断裂", "D. 完全偶然"], answer: "B", knowledgePoint: "政治制度演变", analysis: "政治制度的演变通常是渐进式的，受到多种因素的影响，既有连续性也有变革。" }
+  ]},
+
+  { lesson: 52, title: "外交史", questions: [
+    { type: "choice", difficulty: 1, text: "外交史研究的对象是：", options: ["A. 国内政策", "B. 国家间关系", "C. 文化交流", "D. 经济发展"], answer: "B", knowledgePoint: "外交史对象", analysis: "外交史研究国家之间的关系、条约签订、外交谈判等国际互动。" },
+    { type: "choice", difficulty: 2, text: "条约的作用是：", options: ["A. 没有法律效力", "B. 规范国家间行为", "C. 单方面强制", "D. 临时性文件"], answer: "B", knowledgePoint: "条约的作用", analysis: "条约是国家间达成的协议，具有国际法效力，规范国家之间的行为和关系。" },
+    { type: "choice", difficulty: 3, text: "外交档案的价值在于：", options: ["A. 记录表面现象", "B. 揭示决策过程", "C. 美化历史", "D. 简单罗列事件"], answer: "B", knowledgePoint: "外交档案价值", analysis: "外交档案能够揭示国家决策的内部过程、动机和考量，是研究外交史的重要一手资料。" }
+  ]},
+
+  { lesson: 53, title: "档案研究", questions: [
+    { type: "choice", difficulty: 1, text: "档案的类型包括：", options: ["A. 只有官方文件", "B. 官方文件、私人信件等", "C. 只有报纸", "D. 只有口述资料"], answer: "B", knowledgePoint: "档案类型", analysis: "档案包括官方文件、私人信件、日记、会议记录等多种类型的原始资料。" },
+    { type: "choice", difficulty: 2, text: "阅读档案的方法是：", options: ["A. 只看表面内容", "B. 分析来源、作者、背景", "C. 主观猜测", "D. 忽略细节"], answer: "B", knowledgePoint: "档案阅读方法", analysis: "阅读档案需要分析其来源、作者身份、写作背景和目的，理解其背后的意图。" },
+    { type: "choice", difficulty: 3, text: "档案的局限性包括：", options: ["A. 完全可靠", "B. 可能不完整或有偏见", "C. 绝对客观", "D. 无所不包"], answer: "B", knowledgePoint: "档案局限性", analysis: "档案可能存在不完整、选择性留存、作者偏见等问题，需要结合其他资料进行交叉验证。" }
+  ]},
+
+  { lesson: 54, title: "历史争论解析", questions: [
+    { type: "choice", difficulty: 1, text: "历史争论的原因是：", options: ["A. 资料完全一致", "B. 不同视角和解释", "C. 事实单一", "D. 观点统一"], answer: "B", knowledgePoint: "历史争论原因", analysis: "历史争论源于不同的研究视角、方法论和解释框架，同一事实可能有多种解读。" },
+    { type: "choice", difficulty: 2, text: "史学争论的意义在于：", options: ["A. 混淆视听", "B. 推动知识进步", "C. 否定历史", "D. 制造矛盾"], answer: "B", knowledgePoint: "争论的意义", analysis: "史学争论能够促进对历史问题的深入探讨，推动历史知识的进步和更新。" },
+    { type: "choice", difficulty: 3, text: "如何参与学术辩论：", options: ["A. 主观臆断", "B. 基于证据和逻辑", "C. 个人攻击", "D. 忽视他人观点"], answer: "B", knowledgePoint: "学术辩论方法", analysis: "参与学术辩论需要基于充分的证据和严密的逻辑，尊重不同观点，进行理性讨论。" }
+  ]},
+
+  { lesson: 55, title: "一战起因学术争议", questions: [
+    { type: "choice", difficulty: 1, text: "费希尔论战的核心是：", options: ["A. 一战的责任问题", "B. 战争的持续时间", "C. 战术问题", "D. 战后赔偿"], answer: "A", knowledgePoint: "费希尔论战", analysis: "费希尔论战围绕第一次世界大战的责任问题展开，探讨德国是否有意发动战争。" },
+    { type: "choice", difficulty: 2, text: "多元解释认为一战原因是：", options: ["A. 单一因素", "B. 多种因素共同作用", "C. 偶然事件", "D. 个人因素"], answer: "B", knowledgePoint: "多元解释", analysis: "多元解释认为一战的爆发是多种因素共同作用的结果，包括帝国主义竞争、民族主义、军备竞赛等。" },
+    { type: "choice", difficulty: 3, text: "史学观点演变的原因是：", options: ["A. 资料不变", "B. 新资料和新视角", "C. 固定不变", "D. 主观偏好"], answer: "B", knowledgePoint: "史学观点演变", analysis: "史学观点的演变源于新资料的发现、研究方法的改进和新视角的引入。" }
+  ]},
+
+  // ── 第12章 专题史 ──────────────────────────────────────────
+
+  { lesson: 56, title: "媒体与宣传", questions: [
+    { type: "choice", difficulty: 1, text: "宣传的目的是：", options: ["A. 客观报道", "B. 影响舆论", "C. 提供娱乐", "D. 传播知识"], answer: "B", knowledgePoint: "宣传目的", analysis: "宣传的目的是通过特定的信息传播，影响公众舆论和态度，服务于特定的政治或意识形态目标。" },
+    { type: "choice", difficulty: 2, text: "一战海报的特点是：", options: ["A. 客观中立", "B. 情感动员", "C. 科学分析", "D. 艺术欣赏"], answer: "B", knowledgePoint: "一战海报", analysis: "一战海报通过强烈的视觉符号和情感诉求，动员民众支持战争，激发爱国热情。" },
+    { type: "choice", difficulty: 3, text: "纳粹宣传的手段包括：", options: ["A. 理性说服", "B. 重复、恐惧、认同", "C. 客观报道", "D. 多元观点"], answer: "B", knowledgePoint: "纳粹宣传手段", analysis: "纳粹宣传运用重复强化、制造恐惧、塑造敌人形象和培养群体认同等手段，实现对民众的思想控制。" }
+  ]},
+
+  { lesson: 57, title: "女性史", questions: [
+    { type: "choice", difficulty: 1, text: "女性史研究的对象是：", options: ["A. 男性历史", "B. 女性的经历与贡献", "C. 政治史", "D. 经济史"], answer: "B", knowledgePoint: "女性史对象", analysis: "女性史研究女性在历史中的经历、角色、贡献以及性别关系的演变。" },
+    { type: "choice", difficulty: 2, text: "参政权运动的目标是：", options: ["A. 限制女性权利", "B. 争取女性选举权", "C. 维持现状", "D. 男性主导"], answer: "B", knowledgePoint: "参政权运动", analysis: "参政权运动致力于争取女性的选举权和政治权利，是女性解放运动的重要组成部分。" },
+    { type: "choice", difficulty: 3, text: "战时女性角色的变化是：", options: ["A. 没有变化", "B. 从家庭到工厂", "C. 完全回归家庭", "D. 政治权力下降"], answer: "B", knowledgePoint: "战时女性角色", analysis: "战争期间，女性大量进入工厂和公共领域，承担起传统上由男性从事的工作，推动了性别角色的重新定义。" }
+  ]},
+
+  { lesson: 58, title: "科技与战争", questions: [
+    { type: "choice", difficulty: 1, text: "一战中使用的新式武器是：", options: ["A. 弓箭", "B. 机关枪和毒气", "C. 长矛", "D. 盾牌"], answer: "B", knowledgePoint: "一战新式武器", analysis: "一战中首次大规模使用机关枪、毒气、坦克等新式武器，改变了战争形态。" },
+    { type: "choice", difficulty: 2, text: "科技对战争的影响是：", options: ["A. 减少伤亡", "B. 加剧破坏性", "C. 缩短战争", "D. 促进和平"], answer: "B", knowledgePoint: "科技与战争", analysis: "军事技术的发展加剧了战争的破坏性，使战争变得更加残酷和具有毁灭性。" },
+    { type: "choice", difficulty: 3, text: "原子弹的影响是：", options: ["A. 促进常规战争", "B. 改变战争性质和国际格局", "C. 没有影响", "D. 减少核武器"], answer: "B", knowledgePoint: "原子弹的影响", analysis: "原子弹的发明改变了战争的性质，形成了核威慑格局，深刻影响了战后的国际秩序。" }
+  ]},
+
+  { lesson: 59, title: "比较革命研究", questions: [
+    { type: "choice", difficulty: 1, text: "比较历史研究的目的是：", options: ["A. 罗列事实", "B. 寻找异同和规律", "C. 单一描述", "D. 主观评价"], answer: "B", knowledgePoint: "比较研究目的", analysis: "比较历史研究通过对比不同案例，寻找共同点和差异，揭示历史发展的规律和机制。" },
+    { type: "choice", difficulty: 2, text: "法国大革命的特点是：", options: ["A. 温和改革", "B. 激进变革", "C. 没有变化", "D. 保守主义"], answer: "B", knowledgePoint: "法国大革命", analysis: "法国大革命是一场激进的社会政治变革，推翻了封建制度，确立了资产阶级统治。" },
+    { type: "choice", difficulty: 3, text: "革命的共同条件包括：", options: ["A. 完全稳定", "B. 危机、不满和组织", "C. 经济繁荣", "D. 没有冲突"], answer: "B", knowledgePoint: "革命条件", analysis: "革命通常发生在社会危机、民众不满和组织动员等条件具备的情况下。" }
+  ]},
+
+  { lesson: 60, title: "历史哲学", questions: [
+    { type: "choice", difficulty: 1, text: "历史哲学研究的是：", options: ["A. 具体历史事件", "B. 历史的本质和意义", "C. 年代学", "D. 考古发现"], answer: "B", knowledgePoint: "历史哲学", analysis: "历史哲学探讨历史的本质、意义、规律以及历史知识的性质等根本性问题。" },
+    { type: "choice", difficulty: 2, text: "历史决定论认为：", options: ["A. 历史是偶然的", "B. 历史有规律可循", "C. 历史无法认识", "D. 历史是主观的"], answer: "B", knowledgePoint: "历史决定论", analysis: "历史决定论认为历史发展遵循一定的规律，受到经济、社会等因素的决定。" },
+    { type: "choice", difficulty: 3, text: "历史可知性的争论涉及：", options: ["A. 历史完全可知", "B. 历史的客观性与主观性", "C. 历史不可知", "D. 历史是虚构的"], answer: "B", knowledgePoint: "历史可知性", analysis: "历史可知性的争论涉及历史知识的客观性、主观性以及我们能否真正认识过去的问题。" }
+  ]},
+
+  // ── 第13章 史学理论 ──────────────────────────────────────
+
+  { lesson: 61, title: "马克思主义史学", questions: [
+    { type: "choice", difficulty: 1, text: "马克思主义史学的核心是：", options: ["A. 英雄史观", "B. 阶级斗争", "C. 文化决定", "D. 个人意志"], answer: "B", knowledgePoint: "马克思主义史学核心", analysis: "马克思主义史学以阶级斗争为核心，认为历史是阶级斗争的历史。" },
+    { type: "choice", difficulty: 2, text: "经济基础与上层建筑的关系是：", options: ["A. 上层建筑决定经济基础", "B. 经济基础决定上层建筑", "C. 两者无关", "D. 相互独立"], answer: "B", knowledgePoint: "经济基础与上层建筑", analysis: "马克思主义认为经济基础决定上层建筑，上层建筑反作用于经济基础。" },
+    { type: "choice", difficulty: 3, text: "历史唯物主义的观点是：", options: ["A. 意识决定存在", "B. 社会存在决定社会意识", "C. 两者等同", "D. 意识独立"], answer: "B", knowledgePoint: "历史唯物主义", analysis: "历史唯物主义认为社会存在决定社会意识，物质生产方式的变化推动历史发展。" }
+  ]},
+
+  { lesson: 62, title: "后现代史学", questions: [
+    { type: "choice", difficulty: 1, text: "后现代史学质疑的是：", options: ["A. 历史的客观性", "B. 历史研究", "C. 史料价值", "D. 时间顺序"], answer: "A", knowledgePoint: "后现代史学", analysis: "后现代史学质疑历史的客观性和确定性，强调历史叙述的建构性和主观性。" },
+    { type: "choice", difficulty: 2, text: "叙事的解构意味着：", options: ["A. 接受单一叙事", "B. 揭示叙事的建构性", "C. 否定所有历史", "D. 坚持传统观点"], answer: "B", knowledgePoint: "叙事解构", analysis: "叙事的解构意味着揭示历史叙述是如何被建构的，分析其中的权力关系和意识形态。" },
+    { type: "choice", difficulty: 3, text: "后现代视角的意义是：", options: ["A. 否定历史", "B. 促进多元理解", "C. 混淆是非", "D. 简化历史"], answer: "B", knowledgePoint: "后现代意义", analysis: "后现代视角促使我们反思历史叙述的多元性，倾听被边缘化的声音，促进对历史更全面的理解。" }
+  ]},
+
+  { lesson: 63, title: "性别史与后殖民史学", questions: [
+    { type: "choice", difficulty: 1, text: "性别史关注的是：", options: ["A. 只关注女性", "B. 性别关系和身份", "C. 政治史", "D. 经济史"], answer: "B", knowledgePoint: "性别史", analysis: "性别史关注性别关系、性别身份以及性别在历史中的建构和表现。" },
+    { type: "choice", difficulty: 2, text: "后殖民理论批判的是：", options: ["A. 殖民统治", "B. 殖民主义的叙事", "C. 所有历史", "D. 独立运动"], answer: "B", knowledgePoint: "后殖民理论", analysis: "后殖民理论批判殖民主义的历史叙事，揭示其权力结构和文化霸权。" },
+    { type: "choice", difficulty: 3, text: "边缘群体历史的意义是：", options: ["A. 无关紧要", "B. 挑战主流叙事", "C. 重复主流", "D. 缩小历史范围"], answer: "B", knowledgePoint: "边缘群体历史", analysis: "研究边缘群体的历史能够挑战主流叙事，使历史更加多元和包容。" }
+  ]},
+
+  { lesson: 64, title: "计量史学", questions: [
+    { type: "choice", difficulty: 1, text: "计量史学的方法是：", options: ["A. 定性描述", "B. 量化分析", "C. 主观判断", "D. 故事叙述"], answer: "B", knowledgePoint: "计量史学", analysis: "计量史学运用统计和量化方法研究历史，揭示历史现象的数量特征和规律。" },
+    { type: "choice", difficulty: 2, text: "量化方法的优势是：", options: ["A. 主观随意", "B. 精确和可验证", "C. 忽视细节", "D. 无法比较"], answer: "B", knowledgePoint: "量化优势", analysis: "量化方法能够提供精确的数据支持，使研究结果更具可验证性和可比性。" },
+    { type: "choice", difficulty: 3, text: "计量方法的局限是：", options: ["A. 无所不能", "B. 无法涵盖质性内容", "C. 绝对客观", "D. 取代定性"], answer: "B", knowledgePoint: "计量局限", analysis: "计量方法无法涵盖无法量化的历史内容，需要与定性方法相结合。" }
+  ]},
+
+  { lesson: 65, title: "公共史学", questions: [
+    { type: "choice", difficulty: 1, text: "公共史学的领域包括：", options: ["A. 只在学术界", "B. 博物馆、纪念馆等", "C. 私人研究", "D. 课堂教学"], answer: "B", knowledgePoint: "公共史学领域", analysis: "公共史学涵盖博物馆、纪念馆、历史遗址、纪录片等向公众传播历史的领域。" },
+    { type: "choice", difficulty: 2, text: "历史记忆的作用是：", options: ["A. 遗忘过去", "B. 塑造集体认同", "C. 制造分裂", "D. 无关紧要"], answer: "B", knowledgePoint: "历史记忆", analysis: "历史记忆在塑造集体认同、传承文化和反思历史方面具有重要作用。" },
+    { type: "choice", difficulty: 3, text: "纪念与遗忘的关系是：", options: ["A. 只有纪念", "B. 选择性记忆", "C. 完全遗忘", "D. 无关"], answer: "B", knowledgePoint: "纪念与遗忘", analysis: "纪念与遗忘是相互关联的，历史记忆往往是选择性的，哪些被纪念、哪些被遗忘反映了特定的价值观和权力关系。" }
+  ]},
+
+  // ── 第14章 论文写作 ──────────────────────────────────────
+
+  { lesson: 66, title: "论点构建", questions: [
+    { type: "choice", difficulty: 1, text: "论文的核心是：", options: ["A. 罗列事实", "B. 论点", "C. 字数", "D. 格式"], answer: "B", knowledgePoint: "论文核心", analysis: "论文的核心是论点，即作者提出的主张和观点。" },
+    { type: "choice", difficulty: 2, text: "论证的结构包括：", options: ["A. 只有结论", "B. 论点、论据、反驳", "C. 随意发挥", "D. 单一证据"], answer: "B", knowledgePoint: "论证结构", analysis: "论证需要包括明确的论点、支持论点的论据以及对可能反驳的回应。" },
+    { type: "choice", difficulty: 3, text: "如何构建有力的论点：", options: ["A. 主观臆断", "B. 明确、具体、可论证", "C. 模糊不清", "D. 无法验证"], answer: "B", knowledgePoint: "论点构建", analysis: "有力的论点需要明确、具体，能够被证据支持和验证。" }
+  ]},
+
+  { lesson: 67, title: "证据筛选", questions: [
+    { type: "choice", difficulty: 1, text: "证据的类型包括：", options: ["A. 只有文字", "B. 文献、实物、口述等", "C. 只有实物", "D. 没有证据"], answer: "B", knowledgePoint: "证据类型", analysis: "证据包括文献资料、实物证据、口述历史等多种类型。" },
+    { type: "choice", difficulty: 2, text: "筛选证据的标准是：", options: ["A. 主观偏好", "B. 相关性和可靠性", "C. 数量多", "D. 年代久远"], answer: "B", knowledgePoint: "筛选标准", analysis: "筛选证据需要考虑其与论点的相关性和来源的可靠性。" },
+    { type: "choice", difficulty: 3, text: "引用规范的重要性是：", options: ["A. 形式而已", "B. 尊重知识产权和便于查证", "C. 可有可无", "D. 限制创作"], answer: "B", knowledgePoint: "引用规范", analysis: "引用规范不仅尊重他人的知识产权，也使读者能够查证来源，增强研究的可信度。" }
+  ]},
+
+  { lesson: 68, title: "历史写作风格", questions: [
+    { type: "choice", difficulty: 1, text: "历史写作的特点是：", options: ["A. 虚构想象", "B. 客观严谨", "C. 主观抒情", "D. 夸张描述"], answer: "B", knowledgePoint: "历史写作特点", analysis: "历史写作需要客观、严谨，基于证据进行叙述和分析。" },
+    { type: "choice", difficulty: 2, text: "学术语言的要求是：", options: ["A. 口语化", "B. 准确、清晰、简洁", "C. 晦涩难懂", "D. 随意表达"], answer: "B", knowledgePoint: "学术语言", analysis: "学术语言需要准确、清晰、简洁，避免歧义。" },
+    { type: "choice", difficulty: 3, text: "如何提高写作质量：", options: ["A. 不修改", "B. 反复修改和校对", "C. 一次性完成", "D. 抄袭"], answer: "B", knowledgePoint: "写作质量", analysis: "提高写作质量需要反复修改、校对，确保内容准确、表达清晰。" }
+  ]},
+
+  { lesson: 69, title: "反驳与综述", questions: [
+    { type: "choice", difficulty: 1, text: "反驳的目的是：", options: ["A. 否定一切", "B. 深化论证", "C. 人身攻击", "D. 避免讨论"], answer: "B", knowledgePoint: "反驳目的", analysis: "反驳的目的不是否定一切，而是通过回应反对意见来深化和完善自己的论证。" },
+    { type: "choice", difficulty: 2, text: "史学综述的作用是：", options: ["A. 简单罗列", "B. 梳理研究现状", "C. 重复他人", "D. 没有价值"], answer: "B", knowledgePoint: "史学综述", analysis: "史学综述梳理相关领域的研究现状，指出已有研究的贡献和不足，为新研究提供背景。" },
+    { type: "choice", difficulty: 3, text: "学术对话的意义是：", options: ["A. 孤立研究", "B. 推动学术发展", "C. 自我封闭", "D. 重复研究"], answer: "B", knowledgePoint: "学术对话", analysis: "学术对话促进思想交流和知识积累，是推动学术发展的重要动力。" }
+  ]},
+
+  { lesson: 70, title: "A-Level综合模拟", questions: [
+    { type: "choice", difficulty: 1, text: "A-Level历史考试的特点是：", options: ["A. 简单记忆", "B. 深度分析", "C. 单一题型", "D. 短时间"], answer: "B", knowledgePoint: "A-Level考试特点", analysis: "A-Level历史考试注重对历史问题的深度分析和批判性思考。" },
+    { type: "choice", difficulty: 2, text: "答题策略包括：", options: ["A. 随意回答", "B. 结构清晰、论证充分", "C. 只写要点", "D. 冗长啰嗦"], answer: "B", knowledgePoint: "答题策略", analysis: "有效的答题策略包括清晰的结构、充分的论证和准确的引用。" },
+    { type: "choice", difficulty: 3, text: "时间管理的重要性是：", options: ["A. 不重要", "B. 合理分配时间确保完成", "C. 快速完成", "D. 拖延"], answer: "B", knowledgePoint: "时间管理", analysis: "合理的时间管理能够确保在考试中完成所有题目，避免因时间不足而影响成绩。" }
   ]}
+
 ];
 
-window.historyQuestionBank = questionBank;
-
-export default questionBank;
+window.history_questionBank = questionBank;

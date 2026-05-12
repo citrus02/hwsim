@@ -98,10 +98,19 @@ export function canTakeExam(subjectKey, type = 'gcse') {
   const grade = getYearGrade();
   const progress = getSubjectProgress(subjectKey);
   const exams = getMuggleExams();
+  const data = getSave();
 
   if (type === 'gcse') {
     if (grade < 5)
       return { eligible: false, reason: `GCSE 需要至少 5 年级，当前 ${grade} 年级` };
+    // 人文选科约束：history / geography 只有被选中的那科才能参加 GCSE
+    if (subjectKey === 'history' || subjectKey === 'geography') {
+      const chosen = data.course?.muggleHumanities;
+      if (!chosen)
+        return { eligible: false, reason: '请先完成人文方向选科' };
+      if (chosen !== subjectKey)
+        return { eligible: false, reason: `你选择了${chosen === 'history' ? '历史' : '地理'}方向，无法参加${subjectKey === 'history' ? '历史' : '地理'} GCSE` };
+    }
     if (progress < 0.6)
       return { eligible: false, reason: `GCSE 需要完成 60% 课程，当前 ${Math.round(progress * 100)}%` };
     if (exams.gcse[subjectKey]?.grade)
@@ -112,6 +121,12 @@ export function canTakeExam(subjectKey, type = 'gcse') {
   if (type === 'alevel') {
     if (grade < 7)
       return { eligible: false, reason: `A-Level 需要至少 7 年级，当前 ${grade} 年级` };
+    // A-Level 选科约束：只有在 aLevelSubjects 中的科目才能参加
+    const aLevelSubjects = data.course?.aLevelSubjects ?? [];
+    if (aLevelSubjects.length === 0)
+      return { eligible: false, reason: '请先完成 A-Level 选科' };
+    if (!aLevelSubjects.includes(subjectKey))
+      return { eligible: false, reason: '该科目不在你的 A-Level 选科范围内' };
     const gcseGrade = exams.gcse[subjectKey]?.grade;
     if (!gcseGrade)
       return { eligible: false, reason: 'A-Level 需要先通过 GCSE' };
@@ -282,8 +297,26 @@ export function getMuggleExamSummary() {
  * @returns {Array<{ subjectKey, name, eligible, reason }>}
  */
 export function getExamEligibilityList(type = 'gcse') {
-  const subjects = window.muggleSchedule?.MUGGLE_SUBJECTS ?? [];
+  const allSubjects = window.muggleSchedule?.MUGGLE_SUBJECTS ?? [];
   const subjectNames = window.muggleSchedule?.SUBJECT_NAMES ?? {};
+  const data = getSave();
+
+  // 按年级 / 选科筛选显示范围
+  let subjects = allSubjects;
+  if (type === 'gcse') {
+    // 4-5 年级：history / geography 中只显示已选科目
+    const chosen = data.course?.muggleHumanities;
+    if (chosen) {
+      subjects = allSubjects.filter(k => k !== 'history' && k !== 'geography' || k === chosen);
+    }
+  } else if (type === 'alevel') {
+    // 6-7 年级：只显示 aLevelSubjects 中的科目
+    const aLevelSubjects = data.course?.aLevelSubjects ?? [];
+    if (aLevelSubjects.length > 0) {
+      subjects = allSubjects.filter(k => aLevelSubjects.includes(k));
+    }
+  }
+
   return subjects.map(key => {
     const { eligible, reason } = canTakeExam(key, type);
     return { subjectKey: key, name: subjectNames[key] ?? key, eligible, reason };

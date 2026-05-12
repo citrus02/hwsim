@@ -1,6 +1,11 @@
 @echo off
 chcp 65001 >nul
 set /p version="Enter version number (example: 1.3.0): "
+if "%version%"=="" (
+    echo ERROR: Version number cannot be empty!
+    pause
+    exit /b 1
+)
 
 set usb_drive=E:\
 set backup_folder=%usb_drive%hogwarts_backup
@@ -14,7 +19,8 @@ if not exist %usb_drive% (
 if not exist %backup_folder% mkdir %backup_folder%
 
 echo Pushing code to GitHub...
-git add .
+git add . ":!.claude" ":!.trae"
+git reset -q -- .claude .trae 2>nul
 git commit -m "Release v%version%"
 git push
 

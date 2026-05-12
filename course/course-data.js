@@ -45,7 +45,7 @@ const muggleAcademicSubjects = [
   {
     level: 4,
     name: "化学",
-    icon: "🧪",
+    icon: "⚗️",
     desc: "普里姆罗斯·斯普劳特教授·元素、反应——和魔药学共享秘密的学科",
     unlock: false,
     studyRate: 0,
@@ -56,7 +56,7 @@ const muggleAcademicSubjects = [
   {
     level: 4,
     name: "生物",
-    icon: "🔬",
+    icon: "🌿",
     desc: "塔维什·麦克拉伦教授·细胞、进化、分类——严谨到让人沉默的学科",
     unlock: false,
     studyRate: 0,
@@ -89,13 +89,13 @@ const muggleAcademicSubjects = [
   {
     level: 4,
     name: "地理",
-    icon: "🗺️",
-    desc: "菲利克斯·韦斯利教授·地图、气候、探险——麻瓜用两条腿走遍的世界",
+    icon: "🌍",
+    desc: "菲利克斯·韦斯莱教授·地图、气候、探险——麻瓜用两条腿走遍的世界",
     unlock: false,
     studyRate: 0,
     unlockGrade: 1,
     muggleSubjectKey: "geography",
-    professor: "菲利克斯·韦斯利"
+    professor: "菲利克斯·韦斯莱"
   },
   {
     level: 4,

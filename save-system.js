@@ -49,6 +49,9 @@ export function getSave() {
     if (!save.course.muggleExams) save.course.muggleExams = { gcse: {}, alevel: {} };
     if (!save.course.muggleExams.gcse) save.course.muggleExams.gcse = {};
     if (!save.course.muggleExams.alevel) save.course.muggleExams.alevel = {};
+    if (save.course.muggleHumanities === undefined) save.course.muggleHumanities = null;
+    if (!save.course.aLevelSubjects) save.course.aLevelSubjects = [];
+    if (save.course.yearGrade === undefined) save.course.yearGrade = 1;
     
     return save;
   } catch (e) { return getDefaultSave(); }

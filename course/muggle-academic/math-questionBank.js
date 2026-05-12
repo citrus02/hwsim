@@ -1,993 +1,458 @@
-// math-questionBank.js
-// 霍格沃茨数学课程 - 一年级随堂测验题库（完整版）
-// 教授：奥古斯都·芬威克
-// 每课3题：basic（+2分）、medium（0分，全对得E）、hard（-1分）
+/**
+ * math-questionBank.js
+ * 麻瓜学术 · 数学 · 题库
+ * 每课 3 题（难度 1/2/3），共 210 题
+ */
 
 export const questionBank = [
-  // ==================== 第1章 有理数的世界（第1-12课） ====================
-  {
-    lesson: 1, title: "正数、负数与0",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列说法正确的是：", options: ["A. 0是正数", "B. 0既不是正数也不是负数", "C. 0是负数", "D. 0是最小的正数"], answer: "B", knowledgePoint: "0的归类", analysis: "0既不是正数也不是负数，这是有理数分类的基础定义。" },
-      { type: "choice", difficulty: "medium", text: "气温 -8℃ 与 -3℃ 相比，哪个更冷？", options: ["A. -8℃ 更冷", "B. -3℃ 更冷", "C. 一样冷", "D. 无法比较"], answer: "A", knowledgePoint: "负数大小比较", analysis: "-8 < -3，数值越小温度越低，所以 -8℃ 更冷。" },
-      { type: "choice", difficulty: "hard", text: "若 a 是负数，b 是正数，则 |a| 与 b 的关系是：", options: ["A. |a| > b", "B. |a| < b", "C. |a| = b", "D. 无法确定"], answer: "D", knowledgePoint: "绝对值与正负数的关系", analysis: "|a| 是正数，b 也是正数，但大小取决于具体值，无法仅凭符号判断。" }
-    ]
-  },
-  {
-    lesson: 2, title: "有理数的概念与分类",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列数中，是有理数的是：", options: ["A. π", "B. √2", "C. 0.333...", "D. e"], answer: "C", knowledgePoint: "有理数的定义", analysis: "0.333...是无限循环小数，可化为分数1/3，是有理数。π、√2、e都是无理数。" },
-      { type: "choice", difficulty: "medium", text: "下列说法正确的是：", options: ["A. 整数就是自然数", "B. 分数都是有理数", "C. 有理数包括正有理数、0、负有理数", "D. 无限小数是无理数"], answer: "C", knowledgePoint: "有理数的分类", analysis: "整数包括负整数，自然数是正整数和0；无限循环小数是有理数；有理数分为正有理数、0、负有理数三类。" },
-      { type: "choice", difficulty: "hard", text: "已知 a 是有理数，下列结论正确的是：", options: ["A. -a 一定是负数", "B. |a| 一定是正数", "C. |a| 一定是非负数", "D. -|a| 一定是负数"], answer: "C", knowledgePoint: "绝对值的非负性", analysis: "|a|≥0，所以是非负数。当a=0时，-a=0，|a|=0，-|a|=0。" }
-    ]
-  },
-  {
-    lesson: 3, title: "数轴",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "数轴上表示 -2 和 3 的两点之间的距离是：", options: ["A. 1", "B. 2", "C. 5", "D. 6"], answer: "C", knowledgePoint: "数轴上两点距离", analysis: "距离 = |3 - (-2)| = 5。" },
-      { type: "choice", difficulty: "medium", text: "下列说法错误的是：", options: ["A. 数轴上原点左边的点表示负数", "B. 数轴上离原点越远的点表示的数绝对值越大", "C. 数轴上右边的点表示的数一定大于左边的点", "D. 数轴上的点只能表示有理数"], answer: "D", knowledgePoint: "数轴与实数的关系", analysis: "数轴上的点与实数一一对应，不仅可以表示有理数，也可以表示无理数。" },
-      { type: "choice", difficulty: "hard", text: "点A在数轴上表示3，将点A向左移动5个单位长度，再向右移动2个单位长度后表示的数是：", options: ["A. -4", "B. 0", "C. 2", "D. 4"], answer: "B", knowledgePoint: "数轴上的平移", analysis: "3 - 5 = -2，-2 + 2 = 0。" }
-    ]
-  },
-  {
-    lesson: 4, title: "相反数",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "-5 的相反数是：", options: ["A. 5", "B. -5", "C. 1/5", "D. -1/5"], answer: "A", knowledgePoint: "相反数的定义", analysis: "只有符号不同的两个数互为相反数，-5的相反数是5。" },
-      { type: "choice", difficulty: "medium", text: "若 a = -a，则 a =：", options: ["A. 1", "B. 0", "C. -1", "D. 不存在"], answer: "B", knowledgePoint: "相反数等于自身的数", analysis: "只有0的相反数等于它本身。" },
-      { type: "choice", difficulty: "hard", text: "数轴上点A表示a，点B表示b，且a与b互为相反数，AB=8，则a的值为：", options: ["A. 4", "B. -4", "C. 4或-4", "D. 0"], answer: "C", knowledgePoint: "相反数在数轴上的位置", analysis: "互为相反数的两点关于原点对称，距离为2|a|=8，|a|=4，a=±4。" }
-    ]
-  },
-  {
-    lesson: 5, title: "绝对值",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "|-3| =：", options: ["A. -3", "B. 3", "C. ±3", "D. 0"], answer: "B", knowledgePoint: "绝对值的计算", analysis: "负数的绝对值是它的相反数，|-3|=3。" },
-      { type: "choice", difficulty: "medium", text: "若 |x| = 5，则 x =：", options: ["A. 5", "B. -5", "C. 5或-5", "D. 0"], answer: "C", knowledgePoint: "绝对值的性质", analysis: "绝对值等于5的数有两个：5和-5。" },
-      { type: "choice", difficulty: "hard", text: "若 |x-2| = 3，则 x =：", options: ["A. 5", "B. -1", "C. 5或-1", "D. 1或5"], answer: "C", knowledgePoint: "绝对值的方程", analysis: "x-2=3或x-2=-3，解得x=5或x=-1。" }
-    ]
-  },
-  {
-    lesson: 6, title: "有理数加法",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "(-3) + (-5) =：", options: ["A. 8", "B. -8", "C. 2", "D. -2"], answer: "B", knowledgePoint: "同号加法", analysis: "同号相加，取相同符号，绝对值相加，-(3+5)=-8。" },
-      { type: "choice", difficulty: "medium", text: "(-7) + 3 =：", options: ["A. 10", "B. -10", "C. 4", "D. -4"], answer: "D", knowledgePoint: "异号加法", analysis: "异号相加，取绝对值大的符号，绝对值大的减去绝对值小的，-(7-3)=-4。" },
-      { type: "choice", difficulty: "hard", text: "若 a > 0，b < 0，且 |a| < |b|，则 a+b 的符号是：", options: ["A. 正", "B. 负", "C. 0", "D. 无法确定"], answer: "B", knowledgePoint: "加法符号判断", analysis: "异号相加取绝对值大的符号，|b|>|a|，所以取b的符号为负。" }
-    ]
-  },
-  {
-    lesson: 7, title: "有理数减法",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "5 - (-3) =：", options: ["A. 2", "B. -2", "C. 8", "D. -8"], answer: "C", knowledgePoint: "减法转化为加法", analysis: "减去一个数等于加上它的相反数，5-(-3)=5+3=8。" },
-      { type: "choice", difficulty: "medium", text: "(-2) - 5 =：", options: ["A. 3", "B. -3", "C. 7", "D. -7"], answer: "D", knowledgePoint: "正数减负数", analysis: "(-2)-5=(-2)+(-5)=-7。" },
-      { type: "choice", difficulty: "hard", text: "某地一天最高气温是5℃，最低气温是-3℃，温差是：", options: ["A. 2℃", "B. 8℃", "C. -2℃", "D. -8℃"], answer: "B", knowledgePoint: "温差的计算", analysis: "温差=最高-最低=5-(-3)=5+3=8℃。" }
-    ]
-  },
-  {
-    lesson: 8, title: "加减混合运算",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "(-2) + 5 - (-3) =：", options: ["A. 0", "B. 4", "C. 6", "D. 10"], answer: "C", knowledgePoint: "加减混合", analysis: "原式= -2+5+3=6。" },
-      { type: "choice", difficulty: "medium", text: "计算 (-3) + 4 - (-1) - 2 的结果是：", options: ["A. 0", "B. 2", "C. -2", "D. 4"], answer: "A", knowledgePoint: "含括号的加减混合", analysis: "原式=-3+4+1-2=0。" },
-      { type: "choice", difficulty: "hard", text: "若 |a|=3，|b|=5，且 a < b，则 a+b 的值为：", options: ["A. 8", "B. 2", "C. 8或2", "D. -8或-2"], answer: "C", knowledgePoint: "绝对值与加减综合", analysis: "a=±3，b=±5，a<b，可能a=3,b=5得8，或a=-3,b=5得2，或a=-3,b=-5不满足a<b，或a=3,b=-5不满足。" }
-    ]
-  },
-  {
-    lesson: 9, title: "有理数乘法",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "(-2)×(-3)=：", options: ["A. 6", "B. -6", "C. 5", "D. -5"], answer: "A", knowledgePoint: "同号相乘", analysis: "同号得正，2×3=6。" },
-      { type: "choice", difficulty: "medium", text: "(-3)×4=：", options: ["A. 12", "B. -12", "C. 7", "D. -7"], answer: "B", knowledgePoint: "异号相乘", analysis: "异号得负，3×4=12，所以-12。" },
-      { type: "choice", difficulty: "hard", text: "若 ab > 0，a+b < 0，则 a 和 b 的符号是：", options: ["A. 同正", "B. 同负", "C. 一正一负", "D. 无法确定"], answer: "B", knowledgePoint: "积的符号与和的符号", analysis: "ab>0说明同号，a+b<0说明和为负，所以同负。" }
-    ]
-  },
-  {
-    lesson: 10, title: "有理数除法",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "(-6)÷(-2)=：", options: ["A. 3", "B. -3", "C. 12", "D. -12"], answer: "A", knowledgePoint: "同号相除", analysis: "同号得正，6÷2=3。" },
-      { type: "choice", difficulty: "medium", text: "0÷(-5)=：", options: ["A. 0", "B. -5", "C. 5", "D. 无意义"], answer: "A", knowledgePoint: "0的除法", analysis: "0除以任何非0数都得0。" },
-      { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 任何数都有倒数", "B. -1的倒数是1", "C. 0的倒数是0", "D. 倒数是本身的数是±1"], answer: "D", knowledgePoint: "倒数的概念", analysis: "0没有倒数；-1的倒数是-1；倒数是本身的数是1和-1。" }
-    ]
-  },
-  {
-    lesson: 11, title: "有理数乘方",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "(-2)³ =：", options: ["A. 8", "B. -8", "C. 6", "D. -6"], answer: "B", knowledgePoint: "负数的奇次幂", analysis: "负数的奇次幂是负数，2³=8，所以-8。" },
-      { type: "choice", difficulty: "medium", text: "(-3)² =：", options: ["A. 9", "B. -9", "C. 6", "D. -6"], answer: "A", knowledgePoint: "负数的偶次幂", analysis: "负数的偶次幂是正数，3²=9。" },
-      { type: "choice", difficulty: "hard", text: "若 a² = 16，则 a =：", options: ["A. 4", "B. -4", "C. 4或-4", "D. 8"], answer: "C", knowledgePoint: "平方根", analysis: "平方等于16的数有两个：4和-4。" }
-    ]
-  },
-  {
-    lesson: 12, title: "科学记数法与近似数",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "314000用科学记数法表示为：", options: ["A. 3.14×10⁵", "B. 31.4×10⁴", "C. 3.14×10⁴", "D. 0.314×10⁶"], answer: "A", knowledgePoint: "科学记数法的表示", analysis: "314000=3.14×100000=3.14×10⁵。" },
-      { type: "choice", difficulty: "medium", text: "0.000307用科学记数法表示为：", options: ["A. 3.07×10⁻³", "B. 3.07×10⁻⁴", "C. 3.07×10⁴", "D. 3.07×10³"], answer: "B", knowledgePoint: "小于1的数的科学记数法", analysis: "0.000307=3.07×10⁻⁴。" },
-      { type: "choice", difficulty: "hard", text: "近似数3.20×10⁵精确到：", options: ["A. 十分位", "B. 个位", "C. 百位", "D. 千位"], answer: "D", knowledgePoint: "科学记数法的精确度", analysis: "3.20×10⁵=320000，3.20中的0在千位，所以精确到千位。" }
-    ]
-  },
 
-  // ==================== 第2章 整式的加减（第13-20课） ====================
-  {
-    lesson: 13, title: "用字母表示数",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "a与b的平方和用代数式表示为：", options: ["A. (a+b)²", "B. a²+b²", "C. a+b²", "D. a²+b"], answer: "B", knowledgePoint: "代数式的表示", analysis: "平方和：先平方再相加。" },
-      { type: "choice", difficulty: "medium", text: "x的2倍与y的3倍的差用代数式表示为：", options: ["A. 2x-3y", "B. 2x+3y", "C. 3x-2y", "D. 3x+2y"], answer: "A", knowledgePoint: "代数式的表示", analysis: "2倍是2x，3倍是3y，差是2x-3y。" },
-      { type: "choice", difficulty: "hard", text: "一个两位数的十位数字是a，个位数字是b，这个两位数用代数式表示为：", options: ["A. ab", "B. a+b", "C. 10a+b", "D. a+10b"], answer: "C", knowledgePoint: "数位表示法", analysis: "十位数字表示10a，加上个位b得10a+b。" }
-    ]
-  },
-  {
-    lesson: 14, title: "单项式",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "单项式 -3x²y 的系数是：", options: ["A. 3", "B. -3", "C. 2", "D. 1"], answer: "B", knowledgePoint: "单项式的系数", analysis: "系数是数字因数，为-3。" },
-      { type: "choice", difficulty: "medium", text: "单项式 2xy³ 的次数是：", options: ["A. 1", "B. 2", "C. 3", "D. 4"], answer: "D", knowledgePoint: "单项式的次数", analysis: "次数是所有字母指数之和，1+3=4。" },
-      { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 单项式 x 的系数是0", "B. 单项式 0 的次数是0", "C. 单项式 -ab² 的次数是3", "D. 单项式 2πr 的系数是2"], answer: "C", knowledgePoint: "单项式的概念", analysis: "x的系数是1；0是单项式但次数没有定义；2πr的系数是2π。" }
-    ]
-  },
-  {
-    lesson: 15, title: "多项式",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "多项式 3x² - 2x + 1 的常数项是：", options: ["A. 3", "B. -2", "C. 2", "D. 1"], answer: "D", knowledgePoint: "多项式的项", analysis: "不含字母的项叫常数项，即1。" },
-      { type: "choice", difficulty: "medium", text: "多项式 2x³ - x² + 3x - 1 的次数是：", options: ["A. 1", "B. 2", "C. 3", "D. 4"], answer: "C", knowledgePoint: "多项式的次数", analysis: "次数最高的项的次数是3。" },
-      { type: "choice", difficulty: "hard", text: "多项式 x² - 2xy + y² 是：", options: ["A. 二次三项式", "B. 二次二项式", "C. 三次三项式", "D. 四次三项式"], answer: "A", knowledgePoint: "多项式的分类", analysis: "次数是2，有三项，所以是二次三项式。" }
-    ]
-  },
-  {
-    lesson: 16, title: "整式",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列式子中，是整式的是：", options: ["A. 1/x", "B. √x", "C. 2x+1", "D. x/π"], answer: "C", knowledgePoint: "整式的定义", analysis: "整式包括单项式和多项式，2x+1是多项式。" },
-      { type: "choice", difficulty: "medium", text: "下列式子中，是整式的是：", options: ["A. 1/x", "B. x/3", "C. √x", "D. |x|"], answer: "B", knowledgePoint: "整式的判断", analysis: "x/3是单项式，分母中是数字而不是字母。" },
-      { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 整式一定是单项式", "B. 单项式一定是整式", "C. 多项式不一定是整式", "D. 整式不一定是代数式"], answer: "B", knowledgePoint: "整式与单项式、多项式的关系", analysis: "单项式是整式的一种，整式包括单项式和多项式。" }
-    ]
-  },
-  {
-    lesson: 17, title: "同类项",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列各组中，是同类项的是：", options: ["A. 3x²y 与 3xy²", "B. 2a² 与 2a³", "C. 5ab 与 -2ab", "D. 4 与 4x"], answer: "C", knowledgePoint: "同类项的判断", analysis: "同类项要求字母相同且相同字母指数相同，5ab和-2ab符合。" },
-      { type: "choice", difficulty: "medium", text: "若 3x²yⁿ 与 -2xᵐy³ 是同类项，则 m+n =：", options: ["A. 3", "B. 4", "C. 5", "D. 6"], answer: "C", knowledgePoint: "同类项中字母指数相等", analysis: "m=2，n=3，m+n=5。" },
-      { type: "choice", difficulty: "hard", text: "下列各组中，不是同类项的是：", options: ["A. 3 与 -5", "B. 2πr 与 3πr", "C. a²b 与 ab²", "D. 2x²y 与 -x²y"], answer: "C", knowledgePoint: "同类项的判断", analysis: "a²b和ab²中a、b的指数不同，不是同类项。" }
-    ]
-  },
-  {
-    lesson: 18, title: "合并同类项",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "合并 3x - 2x + 4x 的结果是：", options: ["A. x", "B. 5x", "C. 4x", "D. 9x"], answer: "B", knowledgePoint: "合并同类项", analysis: "系数相加：3-2+4=5，所以5x。" },
-      { type: "choice", difficulty: "medium", text: "合并 2a² - 3a + a² + 5a 的结果是：", options: ["A. 3a² + 2a", "B. 3a² - 8a", "C. a² + 2a", "D. 3a² - 2a"], answer: "A", knowledgePoint: "合并同类项", analysis: "2a²+a²=3a²，-3a+5a=2a，所以3a²+2a。" },
-      { type: "choice", difficulty: "hard", text: "若 3x² + ax² = 5x²，则 a =：", options: ["A. 2", "B. 3", "C. 5", "D. 8"], answer: "A", knowledgePoint: "合并同类项求系数", analysis: "3+a=5，a=2。" }
-    ]
-  },
-  {
-    lesson: 19, title: "去括号",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "去括号：-(a - b) =：", options: ["A. a-b", "B. -a-b", "C. -a+b", "D. a+b"], answer: "C", knowledgePoint: "去括号法则", analysis: "括号前是-，去括号后各项变号，-a+b。" },
-      { type: "choice", difficulty: "medium", text: "化简 a - (b - c) 的结果是：", options: ["A. a-b-c", "B. a-b+c", "C. a+b-c", "D. a+b+c"], answer: "B", knowledgePoint: "去括号", analysis: "a - b + c。" },
-      { type: "choice", difficulty: "hard", text: "化简 3(2x - 1) - 2(x + 2) 的结果是：", options: ["A. 4x - 7", "B. 4x - 1", "C. 6x + 1", "D. 4x + 1"], answer: "A", knowledgePoint: "分配律与去括号", analysis: "6x-3-2x-4=4x-7。" }
-    ]
-  },
-  {
-    lesson: 20, title: "整式加减",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "计算 (3a + 2b) - (a - b) 的结果是：", options: ["A. 2a + 3b", "B. 2a + b", "C. 4a + 3b", "D. 4a + b"], answer: "A", knowledgePoint: "整式减法", analysis: "3a+2b-a+b=2a+3b。" },
-      { type: "choice", difficulty: "medium", text: "已知 A=2x²-3x+1，B=x²-2x，则 A-B =：", options: ["A. x² - x + 1", "B. x² - 5x + 1", "C. x² - x - 1", "D. x² + x + 1"], answer: "A", knowledgePoint: "整式减法", analysis: "(2x²-3x+1)-(x²-2x)=2x²-3x+1-x²+2x=x²-x+1。" },
-      { type: "choice", difficulty: "hard", text: "一个多项式加上 2x² - x + 3 得 3x² + 2x - 1，则这个多项式是：", options: ["A. x² + 3x - 4", "B. x² + 3x + 2", "C. 5x² + x + 2", "D. x² - 3x - 4"], answer: "A", knowledgePoint: "整式的逆运算", analysis: "(3x²+2x-1)-(2x²-x+3)=x²+3x-4。" }
-    ]
-  },
+  // ── 第1章 数与运算 ──────────────────────────────────────────
 
-  // ==================== 第3章 一元一次方程（第21-30课） ====================
-  {
-    lesson: 21, title: "方程与解",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列式子是方程的是：", options: ["A. 3x+2", "B. 5-2=3", "C. 2x+1=7", "D. x>3"], answer: "C", knowledgePoint: "方程的定义", analysis: "方程是含有未知数的等式，2x+1=7符合。" },
-      { type: "choice", difficulty: "medium", text: "x=2 是下列哪个方程的解？", options: ["A. 2x+1=6", "B. 3x-2=4", "C. 4x-1=7", "D. x+3=6"], answer: "B", knowledgePoint: "方程的解的检验", analysis: "代入检验：3×2-2=4，成立。" },
-      { type: "choice", difficulty: "hard", text: "若 x=3 是方程 2x + a = 5 的解，则 a =：", options: ["A. 1", "B. -1", "C. 2", "D. -2"], answer: "B", knowledgePoint: "利用解求参数", analysis: "2×3+a=5，6+a=5，a=-1。" }
-    ]
-  },
-  {
-    lesson: 22, title: "等式的性质",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "若a=b，则下列变形正确的是：", options: ["A. a/c = b/c", "B. ac = bc", "C. a-2 = b+2", "D. a+2 = b-2"], answer: "B", knowledgePoint: "等式的性质", analysis: "等式的两边乘同一个数，结果仍相等。" },
-      { type: "choice", difficulty: "medium", text: "下列变形中，错误的是：", options: ["A. 若a=b，则a-3=b-3", "B. 若a=b，则a/2=b/2", "C. 若a/2=b/2，则a=b", "D. 若ac=bc，则a=b"], answer: "D", knowledgePoint: "等式的性质", analysis: "ac=bc时，若c=0，则a和b不一定相等。" },
-      { type: "choice", difficulty: "hard", text: "若 a=b，c=d，则下列不一定成立的是：", options: ["A. a+c=b+d", "B. a-c=b-d", "C. ac=bd", "D. a/c=b/d"], answer: "D", knowledgePoint: "等式的性质应用", analysis: "a/c=b/d成立需要c和d都不为0，且c=d。" }
-    ]
-  },
-  {
-    lesson: 23, title: "移项",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "解方程 3x + 5 = 2x - 1，移项正确的是：", options: ["A. 3x - 2x = -1 - 5", "B. 3x - 2x = -1 + 5", "C. 3x + 2x = -1 - 5", "D. 3x + 2x = -1 + 5"], answer: "A", knowledgePoint: "移项法则", analysis: "移项要变号，3x不动，2x移到左边变-2x；5移到右边变-5：3x-2x=-1-5。" },
-      { type: "choice", difficulty: "medium", text: "方程 4x - 3 = 2x + 7 的解是：", options: ["A. x=2", "B. x=3", "C. x=4", "D. x=5"], answer: "D", knowledgePoint: "解方程", analysis: "4x-2x=7+3，2x=10，x=5。" },
-      { type: "choice", difficulty: "hard", text: "方程 5x - 2 = 3x + 4 与方程 2x + a = 0 的解相同，则 a =：", options: ["A. 2", "B. -2", "C. 6", "D. -6"], answer: "D", knowledgePoint: "同解方程", analysis: "5x-3x=4+2，2x=6，x=3；代入2×3+a=0，6+a=0，a=-6。" }
-    ]
-  },
-  {
-    lesson: 24, title: "去分母解方程",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "方程 (x+1)/2 = 3 去分母后得：", options: ["A. x+1=6", "B. x+1=3", "C. x+1=3/2", "D. x+1=1.5"], answer: "A", knowledgePoint: "去分母", analysis: "两边乘2：x+1=6。" },
-      { type: "choice", difficulty: "medium", text: "方程 (x-2)/3 - (2x+1)/2 = 1 去分母后得：", options: ["A. 2(x-2)-3(2x+1)=6", "B. 2(x-2)-3(2x+1)=1", "C. 2(x-2)-3(2x+1)=6x", "D. 2(x-2)-3(2x+1)=0"], answer: "A", knowledgePoint: "去分母解方程", analysis: "两边乘6：2(x-2)-3(2x+1)=6。" },
-      { type: "choice", difficulty: "hard", text: "方程 (x)/2 - (x-1)/3 = 1 的解是：", options: ["A. x=2", "B. x=4", "C. x=6", "D. x=8"], answer: "B", knowledgePoint: "去分母解方程", analysis: "两边乘6：3x-2(x-1)=6，3x-2x+2=6，x=4。" }
-    ]
-  },
-  {
-    lesson: 25, title: "去括号解方程",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "方程 2(x-3)=4 的解是：", options: ["A. x=1", "B. x=2", "C. x=5", "D. x=7"], answer: "C", knowledgePoint: "去括号解方程", analysis: "2x-6=4，2x=10，x=5。" },
-      { type: "choice", difficulty: "medium", text: "方程 3(x-2)+5=2x+7 的解是：", options: ["A. x=8", "B. x=9", "C. x=10", "D. x=11"], answer: "A", knowledgePoint: "去括号解方程", analysis: "3x-6+5=2x+7，3x-1=2x+7，x=8。" },
-      { type: "choice", difficulty: "hard", text: "方程 2(3x-1)-3(2-x)=1 的解是：", options: ["A. x=0.5", "B. x=0.8", "C. x=1", "D. x=1.2"], answer: "C", knowledgePoint: "去括号解方程", analysis: "6x-2-6+3x=1，9x-8=1，9x=9，x=1。" }
-    ]
-  },
-  {
-    lesson: 26, title: "和差倍分问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "甲数比乙数的2倍少3，若设乙数为x，则甲数为：", options: ["A. 2x+3", "B. 2x-3", "C. x/2+3", "D. x/2-3"], answer: "B", knowledgePoint: "列代数式", analysis: "乙数的2倍是2x，少3就是2x-3。" },
-      { type: "choice", difficulty: "medium", text: "一个数的1/2与3的和等于这个数的2倍，设这个数为x，列方程为：", options: ["A. x/2+3=2x", "B. x/2-3=2x", "C. x+3/2=2x", "D. x+3=2x/2"], answer: "A", knowledgePoint: "列方程", analysis: "x/2+3=2x。" },
-      { type: "choice", difficulty: "hard", text: "甲有35加隆，乙有10加隆，甲给乙多少加隆后，甲的钱是乙的2倍？", options: ["A. 5加隆", "B. 10加隆", "C. 15加隆", "D. 20加隆"], answer: "A", knowledgePoint: "分配问题", analysis: "设给x加隆，35-x=2(10+x)，35-x=20+2x，3x=15，x=5。" }
-    ]
-  },
-  {
-    lesson: 27, title: "行程问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "甲、乙两人相距10km，相向而行，甲速度3km/h，乙速度2km/h，几小时后相遇？", options: ["A. 1h", "B. 2h", "C. 3h", "D. 4h"], answer: "B", knowledgePoint: "相遇问题", analysis: "速度和=5km/h，时间=10/5=2h。" },
-      { type: "choice", difficulty: "medium", text: "一辆车以60km/h的速度行驶，2小时后提速到80km/h，又行驶3小时，总路程是：", options: ["A. 360km", "B. 420km", "C. 480km", "D. 540km"], answer: "A", knowledgePoint: "分段行程", analysis: "前2小时：60×2=120km，后3小时：80×3=240km，总路程=360km。" },
-      { type: "choice", difficulty: "hard", text: "甲、乙两人从相距60km的两地同时出发，同向而行，甲速度8km/h，乙速度5km/h，几小时后甲追上乙？", options: ["A. 15h", "B. 20h", "C. 25h", "D. 30h"], answer: "B", knowledgePoint: "追及问题", analysis: "速度差=3km/h，追及时间=60/3=20h。" }
-    ]
-  },
-  {
-    lesson: 28, title: "工程问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一项工程，甲单独做5天完成，乙单独做10天完成，两人合作需几天？", options: ["A. 2天", "B. 3天", "C. 10/3天", "D. 15天"], answer: "C", knowledgePoint: "工程问题", analysis: "效率和=1/5+1/10=3/10，时间=10/3天。" },
-      { type: "choice", difficulty: "medium", text: "一项工程，甲单独做6天完成，乙单独做4天完成，两人合作2天后，剩下的由乙单独做还需几天？", options: ["A. 1天", "B. 2天", "C. 2/3天", "D. 4/3天"], answer: "C", knowledgePoint: "合作后剩余工程", analysis: "效率和=1/6+1/4=5/12，2天完成5/6，剩余1/6，乙效率1/4，时间=(1/6)/(1/4)=2/3天。" },
-      { type: "choice", difficulty: "hard", text: "一项工程，甲单独做需a天，乙单独做需b天，两人合作需：", options: ["A. (a+b)/ab天", "B. ab/(a+b)天", "C. (a+b)/2天", "D. 2ab/(a+b)天"], answer: "B", knowledgePoint: "合作时间公式", analysis: "效率和=1/a+1/b=(a+b)/ab，时间=ab/(a+b)。" }
-    ]
-  },
-  {
-    lesson: 29, title: "利润问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一件魔法物品进价100加隆，售价120加隆，利润率为：", options: ["A. 20%", "B. 16.7%", "C. 15%", "D. 25%"], answer: "A", knowledgePoint: "利润率", analysis: "利润率=(120-100)/100×100%=20%。" },
-      { type: "choice", difficulty: "medium", text: "一件魔法物品标价200加隆，打8折后仍获利20%，则进价是：", options: ["A. 120加隆", "B. 128加隆", "C. 133.3加隆", "D. 160加隆"], answer: "C", knowledgePoint: "利润问题方程", analysis: "售价=200×0.8=160加隆，设进价x，则(160-x)/x=0.2，160-x=0.2x，160=1.2x，x≈133.33加隆。" },
-      { type: "choice", difficulty: "hard", text: "某魔法物品先提价20%，再降价20%，现价与原价相比：", options: ["A. 不变", "B. 提高了4%", "C. 降低了4%", "D. 降低了0.4%"], answer: "C", knowledgePoint: "连续调价", analysis: "设原价1，提价20%后1.2，再降价20%后1.2×0.8=0.96，降低了4%。" }
-    ]
-  },
-  {
-    lesson: 30, title: "方案选择问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "对角巷某商店两种优惠方案：A. 打8折；B. 满100减20。买一件120加隆的魔法物品，哪个更优惠？", options: ["A. A方案", "B. B方案", "C. 一样", "D. 无法比较"], answer: "A", knowledgePoint: "方案比较", analysis: "A:120×0.8=96加隆；B:120-20=100加隆，A更便宜。" },
-      { type: "choice", difficulty: "medium", text: "猫头鹰邮局两种送信方案：A方案月租10加隆，送信0.1加隆/封；B方案无月租，送信0.2加隆/封。每月送信多少封时两种方案费用相同？", options: ["A. 50封", "B. 100封", "C. 150封", "D. 200封"], answer: "B", knowledgePoint: "方案选择方程", analysis: "设x封，10+0.1x=0.2x，10=0.1x，x=100封。" },
-      { type: "choice", difficulty: "hard", text: "某魁地奇训练馆年卡：A卡500加隆全年不限次；B卡200加隆，每次10加隆。一年去多少次以上时A卡更划算？", options: ["A. 30次", "B. 31次", "C. 32次", "D. 33次"], answer: "B", knowledgePoint: "方案选择不等式", analysis: "设去x次，500 < 200+10x，300 < 10x，x > 30，即至少31次。" }
-    ]
-  },
+  { lesson: 1, questions: [
+    { type:'choice', difficulty:1, text:'下列数中，既不是正整数也不是负整数的是？', options:['A. 5','B. −3','C. 0','D. 100'], answer:'C', knowledgePoint:'正整数、负整数与零', analysis:'零是整数，但不属于正整数也不属于负整数，是整数中的中性成员。' },
+    { type:'choice', difficulty:2, text:'在数轴上，−4 与 −1 的大小关系是？', options:['A. −4 > −1','B. −4 = −1','C. −4 < −1','D. 无法比较'], answer:'C', knowledgePoint:'整数的大小比较', analysis:'数轴上越靠右越大。−1 在 −4 右侧，故 −4 < −1。' },
+    { type:'choice', difficulty:3, text:'两次魔药效力测试结果分别是 −5 和 +2（正数表示超出预期）。绝对值更大的是哪次？', options:['A. 第一次（−5）','B. 第二次（+2）','C. 两次相同','D. 无法判断'], answer:'A', knowledgePoint:'绝对值的概念', analysis:'|−5| = 5，|+2| = 2，5 > 2，第一次偏差绝对值更大。' }
+  ]},
 
-  // ==================== 第4章 几何图形初步（第31-37课） ====================
-  {
-    lesson: 31, title: "立体图形与平面图形",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列图形中，是立体图形的是：", options: ["A. 圆", "B. 三角形", "C. 球", "D. 长方形"], answer: "C", knowledgePoint: "立体图形识别", analysis: "球是立体图形，其他都是平面图形。" },
-      { type: "choice", difficulty: "medium", text: "从正面看一个圆柱，看到的形状是：", options: ["A. 圆", "B. 长方形", "C. 三角形", "D. 梯形"], answer: "B", knowledgePoint: "三视图", analysis: "从正面看圆柱是一个长方形。" },
-      { type: "choice", difficulty: "hard", text: "下列哪个图形不能折成一个正方体？", options: ["A. 田字型展开图", "B. 141型", "C. 231型", "D. 222型"], answer: "A", knowledgePoint: "正方体展开图", analysis: "田字型有4个正方形连成一排，无法折成正方体。" }
-    ]
-  },
-  {
-    lesson: 32, title: "点、线、面、体",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "点动成____，线动成____，面动成____。", options: ["A. 线、面、体", "B. 面、体、线", "C. 体、面、线", "D. 线、体、面"], answer: "A", knowledgePoint: "点线面体的关系", analysis: "点动成线，线动成面，面动成体。" },
-      { type: "choice", difficulty: "medium", text: "魔杖在空中挥过划出一道弧线，形成一个扇形光芒，这说明了：", options: ["A. 点动成线", "B. 线动成面", "C. 面动成体", "D. 以上都不是"], answer: "B", knowledgePoint: "线动成面的实例", analysis: "魔杖可以看作一条线段，扫过的区域形成面，体现了线动成面。" },
-      { type: "choice", difficulty: "hard", text: "将一个长方形绕它的一边旋转一周，形成的几何体是：", options: ["A. 圆柱", "B. 圆锥", "C. 球", "D. 圆台"], answer: "A", knowledgePoint: "面动成体", analysis: "长方形绕一边旋转得到圆柱。" }
-    ]
-  },
-  {
-    lesson: 33, title: "直线、射线、线段",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列说法正确的是：", options: ["A. 延长直线AB", "B. 延长射线AB", "C. 延长线段AB", "D. 反向延长射线BA"], answer: "C", knowledgePoint: "直线、射线、线段的延长", analysis: "直线无限长不能延长；射线只能反向延长；线段可以向两端延长。" },
-      { type: "choice", difficulty: "medium", text: "经过两点可以画几条直线？", options: ["A. 0条", "B. 1条", "C. 2条", "D. 无数条"], answer: "B", knowledgePoint: "确定直线的条件", analysis: "两点确定一条直线。" },
-      { type: "choice", difficulty: "hard", text: "直线AB上有一点C，若AB=8，AC=3，则BC=：", options: ["A. 5", "B. 11", "C. 5或11", "D. 4或12"], answer: "C", knowledgePoint: "线段长度计算", analysis: "点C可能在A、B之间，则BC=8-3=5；也可能在A外侧，则BC=8+3=11。" }
-    ]
-  },
-  {
-    lesson: 34, title: "比较线段长短",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "点C是线段AB的中点，若AB=6，则AC=：", options: ["A. 2", "B. 3", "C. 4", "D. 12"], answer: "B", knowledgePoint: "线段的中点", analysis: "AC=AB/2=3。" },
-      { type: "choice", difficulty: "medium", text: "点C在线段AB上，且AC=2，BC=3，则AB=：", options: ["A. 1", "B. 5", "C. 6", "D. 2.5"], answer: "B", knowledgePoint: "线段的和", analysis: "AB=AC+BC=2+3=5。" },
-      { type: "choice", difficulty: "hard", text: "点C把线段AB分成2:3的两部分，若AB=10，则AC的长是：", options: ["A. 2", "B. 4", "C. 4或6", "D. 2或8"], answer: "C", knowledgePoint: "比例分线段", analysis: "AC:CB=2:3，则AC=2/5×10=4；也可能AC:CB=3:2，则AC=3/5×10=6。" }
-    ]
-  },
-  {
-    lesson: 35, title: "角",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "1° = ____′", options: ["A. 10", "B. 60", "C. 100", "D. 3600"], answer: "B", knowledgePoint: "角的单位换算", analysis: "1°=60′。" },
-      { type: "choice", difficulty: "medium", text: "30°18′用度表示为：", options: ["A. 30.18°", "B. 30.3°", "C. 30.6°", "D. 30.5°"], answer: "B", knowledgePoint: "度分秒换算", analysis: "18′=18/60=0.3°，所以30.3°。" },
-      { type: "choice", difficulty: "hard", text: "钟表上3点30分时，时针与分针的夹角是：", options: ["A. 75°", "B. 85°", "C. 90°", "D. 95°"], answer: "A", knowledgePoint: "钟表角度问题", analysis: "分针在6，时针在3.5，一格30°，相差2.5格，2.5×30°=75°。" }
-    ]
-  },
-  {
-    lesson: 36, title: "角的比较与运算",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "若∠A=30°，∠B=40°，则∠A+∠B=：", options: ["A. 10°", "B. 70°", "C. 1200°", "D. 70′"], answer: "B", knowledgePoint: "角的和", analysis: "30°+40°=70°。" },
-      { type: "choice", difficulty: "medium", text: "OC是∠AOB的平分线，若∠AOB=70°，则∠AOC=：", options: ["A. 35°", "B. 140°", "C. 70°", "D. 20°"], answer: "A", knowledgePoint: "角平分线", analysis: "∠AOC=70°/2=35°。" },
-      { type: "choice", difficulty: "hard", text: "∠AOB=90°，∠BOC=30°，则∠AOC的度数是：", options: ["A. 60°", "B. 120°", "C. 60°或120°", "D. 90°"], answer: "C", knowledgePoint: "角的和差分类讨论", analysis: "OC在∠AOB内部时∠AOC=60°，在外部时∠AOC=120°。" }
-    ]
-  },
-  {
-    lesson: 37, title: "余角与补角",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "30°的余角是：", options: ["A. 30°", "B. 60°", "C. 150°", "D. 90°"], answer: "B", knowledgePoint: "余角的定义", analysis: "和为90°的两个角互余，90°-30°=60°。" },
-      { type: "choice", difficulty: "medium", text: "一个角比它的补角小40°，则这个角是：", options: ["A. 50°", "B. 60°", "C. 70°", "D. 80°"], answer: "C", knowledgePoint: "补角方程", analysis: "设这个角为x，则补角为180°-x，有(180-x)-x=40，180-2x=40，2x=140，x=70°。" },
-      { type: "choice", difficulty: "hard", text: "∠α与∠β互余，∠α=3∠β，则∠α=：", options: ["A. 22.5°", "B. 45°", "C. 67.5°", "D. 75°"], answer: "C", knowledgePoint: "余角与倍数关系", analysis: "∠α+∠β=90°，∠α=3∠β，则4∠β=90°，∠β=22.5°，∠α=67.5°。" }
-    ]
-  },
+  { lesson: 2, questions: [
+    { type:'choice', difficulty:1, text:'分数 12/18 化简后是？', options:['A. 6/9','B. 2/3','C. 4/6','D. 3/4'], answer:'B', knowledgePoint:'等值分数与化简', analysis:'12 和 18 的最大公因数是 6。12÷6=2，18÷6=3，化简为 2/3。' },
+    { type:'choice', difficulty:2, text:'计算 ¾ + ⅙，结果是？', options:['A. 4/10','B. 11/12','C. 2/5','D. 9/10'], answer:'B', knowledgePoint:'分数的加减法', analysis:'最小公倍数 12。¾=9/12，⅙=2/12，相加得 11/12。' },
+    { type:'choice', difficulty:3, text:'魔药配方需要 2¾ 瓶蛇眼草汁，已用了 1⅓ 瓶，还需多少？', options:['A. 1½ 瓶','B. 1 5/12 瓶','C. 1¼ 瓶','D. 1⅓ 瓶'], answer:'B', knowledgePoint:'带分数与假分数', analysis:'2¾ − 1⅓ = 11/4 − 4/3。公倍数 12：33/12 − 16/12 = 17/12 = 1 5/12 瓶。' }
+  ]},
 
-  // ==================== 第5章 相交线与平行线（第38-46课） ====================
-  {
-    lesson: 38, title: "相交线",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "两条直线相交，有____对对顶角。", options: ["A. 1", "B. 2", "C. 3", "D. 4"], answer: "B", knowledgePoint: "对顶角的对数", analysis: "两条直线相交，有2对对顶角。" },
-      { type: "choice", difficulty: "medium", text: "若∠1与∠2是对顶角，且∠1+∠2=100°，则∠1=：", options: ["A. 50°", "B. 80°", "C. 100°", "D. 40°"], answer: "A", knowledgePoint: "对顶角相等", analysis: "对顶角相等，∠1=∠2=100°/2=50°。" },
-      { type: "choice", difficulty: "hard", text: "直线AB、CD相交于点O，∠AOC:∠AOD=2:3，则∠BOD=：", options: ["A. 36°", "B. 54°", "C. 72°", "D. 108°"], answer: "C", knowledgePoint: "邻补角与比例", analysis: "∠AOC+∠AOD=180°，设∠AOC=2x，∠AOD=3x，5x=180°，x=36°，∠AOC=72°，∠BOD=∠AOC=72°。" }
-    ]
-  },
-  {
-    lesson: 39, title: "垂线",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "过一点画已知直线的垂线，可以画几条？", options: ["A. 0条", "B. 1条", "C. 2条", "D. 无数条"], answer: "B", knowledgePoint: "垂线的性质", analysis: "过一点有且只有一条直线与已知直线垂直。" },
-      { type: "choice", difficulty: "medium", text: "如图，∠AOB=90°，则OA与OB的位置关系是：", options: ["A. 平行", "B. 垂直", "C. 相交但不垂直", "D. 重合"], answer: "B", knowledgePoint: "垂直的定义", analysis: "90°的角是直角，两直线垂直。" },
-      { type: "choice", difficulty: "hard", text: "点P到直线l的距离是：", options: ["A. 点P到l的垂线", "B. 点P到l的垂线段", "C. 点P到l的垂线段的长度", "D. 点P到l的任意线段长度"], answer: "C", knowledgePoint: "点到直线距离", analysis: "点到直线的距离是垂线段的长度。" }
-    ]
-  },
-  {
-    lesson: 40, title: "同位角、内错角、同旁内角",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "如图，∠1和∠2是：", options: ["A. 同位角", "B. 内错角", "C. 同旁内角", "D. 对顶角"], answer: "A", knowledgePoint: "同位角的识别", analysis: "位置相同的角是同位角。" },
-      { type: "choice", difficulty: "medium", text: "如图，∠1和∠2是内错角，它们的形状像字母：", options: ["A. F", "B. Z", "C. U", "D. X"], answer: "B", knowledgePoint: "内错角的特征", analysis: "内错角形如字母Z。" },
-      { type: "choice", difficulty: "hard", text: "三条直线两两相交，最多可以形成多少对内错角？", options: ["A. 4对", "B. 6对", "C. 8对", "D. 12对"], answer: "B", knowledgePoint: "内错角的计数", analysis: "三条直线每两条为一组，每组两条直线被第三条所截有2对内错角，共3组，所以6对。" }
-    ]
-  },
-  {
-    lesson: 41, title: "平行线",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "在同一平面内，不重合的两条直线的位置关系是：", options: ["A. 平行或垂直", "B. 相交或垂直", "C. 平行或相交", "D. 平行、相交或垂直"], answer: "C", knowledgePoint: "两条直线的位置关系", analysis: "同一平面内两条直线要么平行，要么相交，垂直是相交的特殊情况。" },
-      { type: "choice", difficulty: "medium", text: "过直线外一点，有且只有____条直线与这条直线平行。", options: ["A. 0", "B. 1", "C. 2", "D. 无数"], answer: "B", knowledgePoint: "平行公理", analysis: "平行公理：过直线外一点有且只有一条直线与已知直线平行。" },
-      { type: "choice", difficulty: "hard", text: "若a∥b，b∥c，则a∥c的依据是：", options: ["A. 平行公理", "B. 平行公理的推论", "C. 等量代换", "D. 垂直公理"], answer: "B", knowledgePoint: "平行线的传递性", analysis: "平行于同一条直线的两条直线互相平行，这是平行公理的推论。" }
-    ]
-  },
-  {
-    lesson: 42, title: "平行线判定（一）",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "同位角相等，两直线____。", options: ["A. 相交", "B. 垂直", "C. 平行", "D. 重合"], answer: "C", knowledgePoint: "平行线的判定", analysis: "同位角相等是判定两直线平行的方法之一。" },
-      { type: "choice", difficulty: "medium", text: "如图，若∠1=∠2，则a∥b的依据是：", options: ["A. 对顶角相等", "B. 同位角相等，两直线平行", "C. 内错角相等，两直线平行", "D. 同旁内角互补，两直线平行"], answer: "B", knowledgePoint: "判定方法的选择", analysis: "∠1和∠2是同位角。" },
-      { type: "choice", difficulty: "hard", text: "下列条件中，不能判定a∥b的是：", options: ["A. ∠1=∠2", "B. ∠1=∠3", "C. ∠1+∠4=180°", "D. ∠2=∠3"], answer: "D", knowledgePoint: "平行线判定的灵活应用", analysis: "∠2和∠3是邻补角，它们的和总是180°，当它们相等时都是90°，但这不能判定a∥b。" }
-    ]
-  },
-  {
-    lesson: 43, title: "平行线判定（二）",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "内错角相等，两直线____。", options: ["A. 平行", "B. 垂直", "C. 相交", "D. 重合"], answer: "A", knowledgePoint: "平行线判定", analysis: "内错角相等是判定两直线平行的第二种方法。" },
-      { type: "choice", difficulty: "medium", text: "同旁内角互补，两直线____。", options: ["A. 平行", "B. 垂直", "C. 相交", "D. 重合"], answer: "A", knowledgePoint: "平行线判定", analysis: "同旁内角互补是判定两直线平行的第三种方法。" },
-      { type: "choice", difficulty: "hard", text: "若∠1=70°，∠2=110°，则a与b的位置关系是：", options: ["A. 平行", "B. 相交", "C. 垂直", "D. 无法确定"], answer: "A", knowledgePoint: "同旁内角判定", analysis: "∠1和∠2是同旁内角，70°+110°=180°，所以a∥b。" }
-    ]
-  },
-  {
-    lesson: 44, title: "平行线性质",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "两直线平行，同位角____。", options: ["A. 相等", "B. 互补", "C. 互余", "D. 无关"], answer: "A", knowledgePoint: "平行线性质", analysis: "两直线平行，同位角相等。" },
-      { type: "choice", difficulty: "medium", text: "若a∥b，∠1=50°，则∠2的度数是：", options: ["A. 50°", "B. 130°", "C. 40°", "D. 无法确定"], answer: "A", knowledgePoint: "平行线性质的应用", analysis: "∠1和∠2是同位角，相等。" },
-      { type: "choice", difficulty: "hard", text: "如图，a∥b，∠1=120°，则∠2的度数是：", options: ["A. 60°", "B. 120°", "C. 30°", "D. 150°"], answer: "A", knowledgePoint: "平行线邻补角", analysis: "∠1的邻补角=60°，∠2与这个邻补角是同位角，所以∠2=60°。" }
-    ]
-  },
-  {
-    lesson: 45, title: "性质与判定综合",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "已知a∥b，∠1=60°，则∠2=60°。这里用到了：", options: ["A. 平行线的判定", "B. 平行线的性质", "C. 垂直的性质", "D. 对顶角性质"], answer: "B", knowledgePoint: "性质与判定的区分", analysis: "已知平行，推出角相等，用性质。" },
-      { type: "choice", difficulty: "medium", text: "若∠1=∠2，要证a∥b，用到的理由是：", options: ["A. 平行线的性质", "B. 平行线的判定", "C. 等量代换", "D. 垂直定义"], answer: "B", knowledgePoint: "性质与判定的区分", analysis: "已知角相等，证平行，用判定。" },
-      { type: "choice", difficulty: "hard", text: "下列推理正确的是：", options: ["A. 因为a∥b，所以∠1=∠2（同位角）", "B. 因为∠1=∠2，所以a∥b（同位角）", "C. 因为a∥b，所以∠1+∠2=180°（同旁内角）", "D. 因为∠1+∠2=180°，所以a∥b（同旁内角）"], answer: "B", knowledgePoint: "推理的正确性", analysis: "选项B是正确的判定形式：已知同位角相等，推出两直线平行。A、C需要明确角的位置关系，D需要明确是同旁内角。" }
-    ]
-  },
-  {
-    lesson: 46, title: "平移",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "平移不改变图形的____。", options: ["A. 形状和大小", "B. 位置", "C. 方向", "D. 形状和位置"], answer: "A", knowledgePoint: "平移的性质", analysis: "平移只改变位置，不改变形状和大小。" },
-      { type: "choice", difficulty: "medium", text: "下列现象中，属于平移的是：", options: ["A. 电梯的升降", "B. 风扇的转动", "C. 车轮的转动", "D. 钟表指针的转动"], answer: "A", knowledgePoint: "平移的识别", analysis: "电梯升降是平移，其他都是旋转。" },
-      { type: "choice", difficulty: "hard", text: "将点A(-2,3)向右平移4个单位，再向下平移2个单位后的坐标是：", options: ["A. (2,1)", "B. (2,5)", "C. (-6,1)", "D. (-6,5)"], answer: "A", knowledgePoint: "坐标平移", analysis: "右移4：x坐标+4得2；下移2：y坐标-2得1，所以(2,1)。" }
-    ]
-  },
+  { lesson: 3, questions: [
+    { type:'choice', difficulty:1, text:'0.375 等于哪个分数？', options:['A. 3/8','B. 3/7','C. 37/100','D. 3/5'], answer:'A', knowledgePoint:'小数与分数的转换', analysis:'0.375 = 375/1000 = 3/8。验算：3÷8 = 0.375。' },
+    { type:'choice', difficulty:2, text:'某魔法药材原价 40 加隆，涨价 15% 后新价格是？', options:['A. 44 加隆','B. 46 加隆','C. 55 加隆','D. 34 加隆'], answer:'B', knowledgePoint:'增减百分比', analysis:'40 × 1.15 = 46 加隆。' },
+    { type:'choice', difficulty:3, text:'某魔药浓度 60%，先降低 20%，再提高 25%，最终浓度是？', options:['A. 60%','B. 65%','C. 58%','D. 75%'], answer:'A', knowledgePoint:'百分比的计算', analysis:'60% × 0.8 = 48%，48% × 1.25 = 60%。连续百分比不能简单叠加。' }
+  ]},
 
-  // ==================== 第6章 实数（第47-52课） ====================
-  {
-    lesson: 47, title: "平方根",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "9的平方根是：", options: ["A. 3", "B. -3", "C. ±3", "D. 81"], answer: "C", knowledgePoint: "平方根的概念", analysis: "平方等于9的数是±3。" },
-      { type: "choice", difficulty: "medium", text: "√16的算术平方根是：", options: ["A. 4", "B. 2", "C. ±4", "D. ±2"], answer: "B", knowledgePoint: "算术平方根", analysis: "√16=4，4的算术平方根是2。" },
-      { type: "choice", difficulty: "hard", text: "若√a=3，则a=：", options: ["A. 3", "B. 9", "C. ±9", "D. 81"], answer: "B", knowledgePoint: "算术平方根与平方根的区别", analysis: "√a表示a的算术平方根，是非负的，所以a=9。" }
-    ]
-  },
-  {
-    lesson: 48, title: "立方根",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "8的立方根是：", options: ["A. 2", "B. -2", "C. ±2", "D. 4"], answer: "A", knowledgePoint: "立方根的概念", analysis: "2³=8，所以8的立方根是2。" },
-      { type: "choice", difficulty: "medium", text: "³√-8 =：", options: ["A. 2", "B. -2", "C. ±2", "D. 不存在"], answer: "B", knowledgePoint: "负数的立方根", analysis: "(-2)³=-8，所以³√-8=-2。" },
-      { type: "choice", difficulty: "hard", text: "若³√a=3，则a=：", options: ["A. 3", "B. 9", "C. 27", "D. 81"], answer: "C", knowledgePoint: "立方根求原数", analysis: "a=3³=27。" }
-    ]
-  },
-  {
-    lesson: 49, title: "无理数",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列数中，是无理数的是：", options: ["A. 1/3", "B. 0.333...", "C. √2", "D. 0"], answer: "C", knowledgePoint: "无理数的识别", analysis: "√2是无限不循环小数，是无理数。" },
-      { type: "choice", difficulty: "medium", text: "π是：", options: ["A. 有理数", "B. 无理数", "C. 整数", "D. 分数"], answer: "B", knowledgePoint: "π的无理性", analysis: "π是无限不循环小数，是无理数。" },
-      { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 无限小数是无理数", "B. 无理数是无限小数", "C. 带根号的数都是无理数", "D. 无理数不能用数轴表示"], answer: "B", knowledgePoint: "无理数的定义", analysis: "无理数是无限不循环小数，所以无理数一定是无限小数；但无限循环小数是有理数。带根号的不都是无理数，如√4=2。" }
-    ]
-  },
-  {
-    lesson: 50, title: "实数",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "实数包括____和____。", options: ["A. 整数、分数", "B. 正数、负数", "C. 有理数、无理数", "D. 自然数、整数"], answer: "C", knowledgePoint: "实数的分类", analysis: "实数分为有理数和无理数。" },
-      { type: "choice", difficulty: "medium", text: "下列说法正确的是：", options: ["A. 实数和数轴上的点一一对应", "B. 有理数和数轴上的点一一对应", "C. 无理数和数轴上的点一一对应", "D. 整数和数轴上的点一一对应"], answer: "A", knowledgePoint: "实数与数轴的关系", analysis: "实数和数轴上的点是一一对应的。" },
-      { type: "choice", difficulty: "hard", text: "下列比较大小正确的是：", options: ["A. √2 < 1", "B. √2 < 1.5", "C. √2 > 2", "D. √2 = 1.41"], answer: "B", knowledgePoint: "无理数的大小比较", analysis: "√2≈1.414，小于1.5。" }
-    ]
-  },
-  {
-    lesson: 51, title: "实数的运算",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "√2 + √2 =：", options: ["A. √4", "B. 2√2", "C. 2", "D. √6"], answer: "B", knowledgePoint: "同类二次根式加减", analysis: "两个√2相加得2√2。" },
-      { type: "choice", difficulty: "medium", text: "√3 × √3 =：", options: ["A. √6", "B. 3", "C. √9", "D. 9"], answer: "B", knowledgePoint: "二次根式的乘法", analysis: "√3×√3=(√3)²=3。" },
-      { type: "choice", difficulty: "hard", text: "(√2+1)(√2-1)=：", options: ["A. 1", "B. 2", "C. √2-1", "D. √2+1"], answer: "A", knowledgePoint: "平方差公式应用", analysis: "(a+b)(a-b)=a²-b²，=2-1=1。" }
-    ]
-  },
-  {
-    lesson: 52, title: "实数与数轴",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "数轴上表示√2的点在表示1和2之间，更靠近：", options: ["A. 1", "B. 2", "C. 1.5", "D. 两者一样"], answer: "A", knowledgePoint: "√2的近似值", analysis: "√2≈1.414，更靠近1。" },
-      { type: "choice", difficulty: "medium", text: "数轴上表示-√3的点在：", options: ["A. -1和0之间", "B. -2和-1之间", "C. -3和-2之间", "D. 0和1之间"], answer: "B", knowledgePoint: "-√3的位置", analysis: "√3≈1.732，-√3≈-1.732，在-2和-1之间。" },
-      { type: "choice", difficulty: "hard", text: "数轴上点A表示a，点B表示b，且a<0，b>0，且|a|>b，则下列正确的是：", options: ["A. a+b<0", "B. a+b>0", "C. a+b=0", "D. 无法确定"], answer: "A", knowledgePoint: "实数与数轴的比较", analysis: "a是负数，b是正数，|a|>b说明-a>b，即a+b<0。" }
-    ]
-  },
+  { lesson: 4, questions: [
+    { type:'choice', difficulty:1, text:'2⁵ 的值是？', options:['A. 10','B. 25','C. 32','D. 16'], answer:'C', knowledgePoint:'乘方的概念与符号', analysis:'2⁵ = 2×2×2×2×2 = 32。' },
+    { type:'choice', difficulty:2, text:'若 x² = 49，x 的所有可能值是？', options:['A. 只有 7','B. 只有 −7','C. 7 或 −7','D. 无解'], answer:'C', knowledgePoint:'平方与平方根', analysis:'7² = 49，(−7)² = 49，故 x = ±7。正数有两个平方根。' },
+    { type:'choice', difficulty:3, text:'4⁻² 等于？', options:['A. −16','B. 1/16','C. −8','D. 1/8'], answer:'B', knowledgePoint:'指数为0与负数的初探', analysis:'4⁻² = 1/4² = 1/16。负指数表示倒数。' }
+  ]},
 
-  // ==================== 第7章 平面直角坐标系（第53-58课） ====================
-  {
-    lesson: 53, title: "有序数对",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "用有序数对表示位置时，通常第一个数表示：", options: ["A. 行", "B. 列", "C. 层", "D. 组"], answer: "B", knowledgePoint: "有序数对的含义", analysis: "通常(列，行)或(横，纵)。" },
-      { type: "choice", difficulty: "medium", text: "魔药课教室里，哈利的座位是(3,4)，赫敏的座位是(4,3)，则：", options: ["A. 哈利和赫敏在同一行", "B. 哈利和赫敏在同一列", "C. 哈利和赫敏在不同位置", "D. 哈利和赫敏在同一个位置"], answer: "C", knowledgePoint: "有序数对的不同含义", analysis: "(3,4)和(4,3)表示不同的位置。" },
-      { type: "choice", difficulty: "hard", text: "在平面内，确定一个点的位置需要：", options: ["A. 1个数据", "B. 2个数据", "C. 3个数据", "D. 4个数据"], answer: "B", knowledgePoint: "确定位置的条件", analysis: "平面内需要两个数据才能确定一个点的位置。" }
-    ]
-  },
-  {
-    lesson: 54, title: "平面直角坐标系",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "平面直角坐标系中，x轴和y轴的交点叫：", options: ["A. 端点", "B. 顶点", "C. 原点", "D. 中心"], answer: "C", knowledgePoint: "原点的定义", analysis: "x轴和y轴的交点叫原点。" },
-      { type: "choice", difficulty: "medium", text: "下列各点中，在x轴上的是：", options: ["A. (0,3)", "B. (2,0)", "C. (1,1)", "D. (-1,-1)"], answer: "B", knowledgePoint: "坐标轴上的点的特征", analysis: "x轴上的点纵坐标为0。" },
-      { type: "choice", difficulty: "hard", text: "点P(m,n)在y轴上，则：", options: ["A. m=0", "B. n=0", "C. m=n", "D. m+n=0"], answer: "A", knowledgePoint: "坐标轴上的点的特征", analysis: "y轴上的点横坐标为0。" }
-    ]
-  },
-  {
-    lesson: 55, title: "点的坐标",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "点P(2,-3)到x轴的距离是：", options: ["A. 2", "B. 3", "C. -2", "D. -3"], answer: "B", knowledgePoint: "点到坐标轴的距离", analysis: "到x轴的距离是纵坐标的绝对值，|-3|=3。" },
-      { type: "choice", difficulty: "medium", text: "点P(2,-3)到y轴的距离是：", options: ["A. 2", "B. 3", "C. -2", "D. -3"], answer: "A", knowledgePoint: "点到坐标轴的距离", analysis: "到y轴的距离是横坐标的绝对值，|2|=2。" },
-      { type: "choice", difficulty: "hard", text: "若点P到x轴的距离是2，到y轴的距离是3，则点P的坐标可能是：", options: ["A. (2,3)", "B. (3,2)", "C. (2,-3)", "D. (-3,2)"], answer: "D", knowledgePoint: "距离与坐标的关系", analysis: "到x轴距离2：纵坐标为±2；到y轴距离3：横坐标为±3；四个象限都有可能，(-3,2)符合。" }
-    ]
-  },
-  {
-    lesson: 56, title: "象限",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "点(2,3)在第____象限。", options: ["A. 一", "B. 二", "C. 三", "D. 四"], answer: "A", knowledgePoint: "象限的符号特征", analysis: "(+,+)为第一象限。" },
-      { type: "choice", difficulty: "medium", text: "点(-2,3)在第____象限。", options: ["A. 一", "B. 二", "C. 三", "D. 四"], answer: "B", knowledgePoint: "象限的符号特征", analysis: "(-,+)为第二象限。" },
-      { type: "choice", difficulty: "hard", text: "若点P(a,b)在第四象限，则点Q(b,a)在：", options: ["A. 第一象限", "B. 第二象限", "C. 第三象限", "D. 第四象限"], answer: "B", knowledgePoint: "象限的坐标交换", analysis: "P在第四象限：a>0，b<0；则Q(b,a)：b<0，a>0，即(-,+)，第二象限。" }
-    ]
-  },
-  {
-    lesson: 57, title: "坐标系与图形",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "点A(-2,3)关于x轴对称的点的坐标是：", options: ["A. (2,3)", "B. (-2,-3)", "C. (2,-3)", "D. (-2,3)"], answer: "B", knowledgePoint: "关于x轴对称", analysis: "关于x轴对称，横坐标不变，纵坐标相反。" },
-      { type: "choice", difficulty: "medium", text: "点A(-2,3)关于y轴对称的点的坐标是：", options: ["A. (2,3)", "B. (-2,-3)", "C. (2,-3)", "D. (-2,3)"], answer: "A", knowledgePoint: "关于y轴对称", analysis: "关于y轴对称，纵坐标不变，横坐标相反。" },
-      { type: "choice", difficulty: "hard", text: "点A(-2,3)关于原点对称的点的坐标是：", options: ["A. (2,3)", "B. (-2,-3)", "C. (2,-3)", "D. (-2,3)"], answer: "C", knowledgePoint: "关于原点对称", analysis: "关于原点对称，横纵坐标都相反。" }
-    ]
-  },
-  {
-    lesson: 58, title: "坐标系应用",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "已知A(0,0), B(4,0), C(0,3)，则三角形ABC的面积是：", options: ["A. 6", "B. 12", "C. 3", "D. 8"], answer: "A", knowledgePoint: "坐标系中三角形面积", analysis: "直角三角形，两直角边为4和3，面积=4×3/2=6。" },
-      { type: "choice", difficulty: "medium", text: "已知A(1,1), B(4,1), C(4,4)，则三角形ABC是：", options: ["A. 等腰三角形", "B. 等边三角形", "C. 直角三角形", "D. 钝角三角形"], answer: "C", knowledgePoint: "坐标系中三角形的形状", analysis: "AB水平，BC垂直，所以∠B=90°，直角三角形。" },
-      { type: "choice", difficulty: "hard", text: "点P(2,3)向右平移3个单位，再向下平移2个单位后的坐标是：", options: ["A. (5,5)", "B. (5,1)", "C. (-1,5)", "D. (-1,1)"], answer: "B", knowledgePoint: "点的平移", analysis: "右移x+3得5，下移y-2得1，所以(5,1)。" }
-    ]
-  },
+  { lesson: 5, questions: [
+    { type:'choice', difficulty:1, text:'比 15∶25 化简后是？', options:['A. 3∶5','B. 5∶3','C. 3∶4','D. 1∶2'], answer:'A', knowledgePoint:'比的定义与化简', analysis:'最大公因数 5。15÷5=3，25÷5=5，化简为 3∶5。' },
+    { type:'choice', difficulty:2, text:'若 x∶12 = 5∶4，则 x 等于？', options:['A. 10','B. 15','C. 20','D. 9.6'], answer:'B', knowledgePoint:'比例的意义', analysis:'交叉相乘：4x = 60，x = 15。' },
+    { type:'choice', difficulty:3, text:'魔药需要曼德拉草汁与月光草汁比例为 2∶3，共配 500 毫升，需曼德拉草汁多少毫升？', options:['A. 150','B. 200','C. 250','D. 300'], answer:'B', knowledgePoint:'比例在配制中的应用', analysis:'500 × 2/(2+3) = 500 × 2/5 = 200 毫升。' }
+  ]},
 
-  // ==================== 第8章 二元一次方程组（第59-68课） ====================
-  {
-    lesson: 59, title: "二元一次方程",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列是二元一次方程的是：", options: ["A. x+y=5", "B. x²+y=3", "C. 2/x+y=1", "D. x+5=2"], answer: "A", knowledgePoint: "二元一次方程的定义", analysis: "含有两个未知数，且次数都是1的整式方程。" },
-      { type: "choice", difficulty: "medium", text: "方程x+2y=5的自然数解有：", options: ["A. 1个", "B. 2个", "C. 3个", "D. 无数个"], answer: "C", knowledgePoint: "二元一次方程的解", analysis: "x=1,y=2；x=3,y=1；x=5,y=0；共3组。" },
-      { type: "choice", difficulty: "hard", text: "若x=2,y=1是方程ax+3y=7的解，则a=：", options: ["A. 1", "B. 2", "C. 3", "D. 5"], answer: "B", knowledgePoint: "已知解求参数", analysis: "2a+3=7，2a=4，a=2。" }
-    ]
-  },
-  {
-    lesson: 60, title: "二元一次方程组",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列是二元一次方程组的是：", options: ["A. { x+y=5, x-y=1 }", "B. { x²+y=3, x-y=2 }", "C. { x+y=3, xy=2 }", "D. { x+2=5, y-3=1 }"], answer: "A", knowledgePoint: "方程组的定义", analysis: "两个二元一次方程联立。" },
-      { type: "choice", difficulty: "medium", text: "已知{x=2,y=1是方程组的解，则下列可能是这个方程组的是：", options: ["A. { x+y=3, x-y=1 }", "B. { x+y=4, x-y=1 }", "C. { x+y=3, 2x+y=5 }", "D. { x+2y=4, x-y=1 }"], answer: "D", knowledgePoint: "解的检验", analysis: "代入D：2+2=4成立，2-1=1成立。" },
-      { type: "choice", difficulty: "hard", text: "若{x=1,y=-1是方程组{ax+by=0, bx+ay=0}的解，则a、b满足：", options: ["A. a=b", "B. a+b=0", "C. a=2b", "D. a+b=1"], answer: "A", knowledgePoint: "解与参数的关系", analysis: "代入得a-b=0，所以a=b。" }
-    ]
-  },
-  {
-    lesson: 61, title: "代入消元法",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "解方程组 { y=2x, x+y=6 } 时，把y=2x代入第二个方程得：", options: ["A. x+2x=6", "B. 2x+2x=6", "C. x+2=6", "D. x+2x=0"], answer: "A", knowledgePoint: "代入消元", analysis: "把y=2x代入x+y=6得x+2x=6。" },
-      { type: "choice", difficulty: "medium", text: "方程组 { x=y+1, 2x+y=5 } 的解是：", options: ["A. x=2,y=1", "B. x=1,y=0", "C. x=3,y=2", "D. x=0,y=-1"], answer: "A", knowledgePoint: "代入消元", analysis: "代入得2(y+1)+y=5，2y+2+y=5，3y=3，y=1，x=2。" },
-      { type: "choice", difficulty: "hard", text: "用代入法解方程组 { 2x+3y=7, x-2y=0 } 时，应先将___变形为：", options: ["A. x=2y", "B. y=2x", "C. x=7-3y/2", "D. y=(7-2x)/3"], answer: "A", knowledgePoint: "代入法的变形选择", analysis: "第二个方程x-2y=0变形为x=2y，代入较简单。" }
-    ]
-  },
-  {
-    lesson: 62, title: "加减消元法（一）",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "方程组 { x+y=5, x-y=1 } 中，两式相加可得：", options: ["A. 2x=6", "B. 2x=4", "C. 2y=6", "D. 2y=4"], answer: "A", knowledgePoint: "加减消元", analysis: "相加得2x=6。" },
-      { type: "choice", difficulty: "medium", text: "方程组 { x+y=5, x-y=1 } 的解是：", options: ["A. x=3,y=2", "B. x=2,y=3", "C. x=4,y=1", "D. x=1,y=4"], answer: "A", knowledgePoint: "加减消元", analysis: "解得x=3，y=2。" },
-      { type: "choice", difficulty: "hard", text: "方程组 { 2x+3y=7, 2x-3y=1 } 的解是：", options: ["A. x=2,y=1", "B. x=1,y=2", "C. x=2,y=1/2", "D. x=4,y=1"], answer: "A", knowledgePoint: "加减消元", analysis: "相加得4x=8，x=2；代入得4+3y=7，3y=3，y=1。" }
-    ]
-  },
-  {
-    lesson: 63, title: "加减消元法（二）",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "方程组 { 2x+3y=8, 3x+2y=7 } 中，若要消去x，可使第一个方程乘____，第二个方程乘____。", options: ["A. 3,2", "B. 2,3", "C. 3,1", "D. 2,1"], answer: "A", knowledgePoint: "系数化同", analysis: "①×3得6x+9y=24，②×2得6x+4y=14，相减消x。" },
-      { type: "choice", difficulty: "medium", text: "方程组 { 2x+3y=8, 3x+2y=7 } 的解是：", options: ["A. x=1,y=2", "B. x=2,y=1", "C. x=3,y=1", "D. x=1,y=3"], answer: "A", knowledgePoint: "加减消元", analysis: "①×3-②×2得(6x+9y)-(6x+4y)=24-14，5y=10，y=2，x=1。" },
-      { type: "choice", difficulty: "hard", text: "方程组 { ax+by=2, cx+dy=4 } 有唯一解的条件是：", options: ["A. a=c", "B. b=d", "C. ad≠bc", "D. a=d"], answer: "C", knowledgePoint: "方程组有唯一解的条件", analysis: "当系数不成比例时有唯一解，即a:d≠b:c或ad≠bc。" }
-    ]
-  },
-  {
-    lesson: 64, title: "鸡兔同笼问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "鸡兔同笼，头20个，脚56只，则兔有多少只？", options: ["A. 4只", "B. 6只", "C. 8只", "D. 10只"], answer: "C", knowledgePoint: "鸡兔同笼", analysis: "设鸡x，兔y，x+y=20，2x+4y=56，解得y=8。" },
-      { type: "choice", difficulty: "medium", text: "鸡兔同笼，头35个，脚94只，则鸡有多少只？", options: ["A. 12只", "B. 23只", "C. 17只", "D. 18只"], answer: "B", knowledgePoint: "鸡兔同笼", analysis: "x+y=35，2x+4y=94，解得x=23。" },
-      { type: "choice", difficulty: "hard", text: "鸡兔同笼，头a个，脚b只，则兔的只数是：", options: ["A. (b-2a)/2", "B. (2a-b)/2", "C. (b-2a)/4", "D. (4a-b)/2"], answer: "A", knowledgePoint: "鸡兔同笼公式推导", analysis: "设兔y，则4y+2(a-y)=b，2y+2a=b，y=(b-2a)/2。" }
-    ]
-  },
-  {
-    lesson: 65, title: "行程问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "甲、乙两地相距120km，飞天马车从甲到乙，去时速度60km/h，返回时速度40km/h，则往返平均速度是：", options: ["A. 48km/h", "B. 50km/h", "C. 52km/h", "D. 55km/h"], answer: "A", knowledgePoint: "平均速度", analysis: "总路程240km，总时间120/60+120/40=2+3=5h，平均速度=240/5=48km/h。" },
-      { type: "choice", difficulty: "medium", text: "魔法快艇在静水中速度20km/h，水速4km/h，顺流航行需要的时间是逆流的：", options: ["A. 1/3", "B. 1/2", "C. 2/3", "D. 3/4"], answer: "C", knowledgePoint: "流水行船", analysis: "顺速24，逆速16，时间比=16/24=2/3。" },
-      { type: "choice", difficulty: "hard", text: "甲、乙两人从A、B两地相向而行，甲走完全程需6小时，乙需4小时，他们出发几小时相遇？", options: ["A. 2.4h", "B. 2.5h", "C. 3h", "D. 3.2h"], answer: "A", knowledgePoint: "工程思想解路程问题", analysis: "速度和=1/6+1/4=5/12，时间=12/5=2.4h。" }
-    ]
-  },
-  {
-    lesson: 66, title: "工程与分配问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一项工程，甲单独做8天完成，乙单独做6天完成，两人合作需要：", options: ["A. 24/7天", "B. 7/24天", "C. 14天", "D. 48天"], answer: "A", knowledgePoint: "工程问题", analysis: "效率和=1/8+1/6=7/24，时间=24/7天。" },
-      { type: "choice", difficulty: "medium", text: "霍格沃茨有28名家养小精灵，每人每天生产魔杖柄12个或魔杖芯18个，一个魔杖柄配两个魔杖芯，应安排多少小精灵生产魔杖柄才能使魔杖组件配套？", options: ["A. 12人", "B. 14人", "C. 16人", "D. 18人"], answer: "A", knowledgePoint: "配套问题", analysis: "设x人生产魔杖柄，则28-x人生产魔杖芯，12x×2=18(28-x)，24x=504-18x，42x=504，x=12。" },
-      { type: "choice", difficulty: "hard", text: "一个魔杖工坊，若每天比计划多生产10根魔杖，则提前2天完成；若每天少生产10根魔杖，则推迟3天完成。原计划每天生产多少根魔杖？", options: ["A. 40件", "B. 50件", "C. 60件", "D. 70件"], answer: "B", knowledgePoint: "工作总量不变", analysis: "设计划每天x根，y天完成，则(x+10)(y-2)=xy，(x-10)(y+3)=xy，解得x=50。" }
-    ]
-  },
-  {
-    lesson: 67, title: "方程组含参问题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "方程组 { 2x+3y=5, 4x+6y=k } 有无数组解，则k=：", options: ["A. 5", "B. 10", "C. 15", "D. 20"], answer: "B", knowledgePoint: "方程组无数组解的条件", analysis: "第二个方程是第一个的2倍，需k=2×5=10。" },
-      { type: "choice", difficulty: "medium", text: "方程组 { 2x+3y=5, 4x+6y=11 } 的解的情况是：", options: ["A. 唯一解", "B. 无解", "C. 无数解", "D. 无法判断"], answer: "B", knowledgePoint: "方程组无解的条件", analysis: "系数成比例但常数不成比例：2/4=3/6≠5/11，无解。" },
-      { type: "choice", difficulty: "hard", text: "方程组 { ax+3y=2, 2x+(a-1)y=3 } 有唯一解，则a满足：", options: ["A. a≠3", "B. a≠-2", "C. a≠-2且a≠3", "D. a≠-2或a≠3"], answer: "C", knowledgePoint: "唯一解的条件", analysis: "系数不成比例：a/2≠3/(a-1)，交叉相乘得a(a-1)≠6，a²-a-6≠0，(a-3)(a+2)≠0，所以a≠3且a≠-2。" }
-    ]
-  },
-  {
-    lesson: 68, title: "方程组与生活应用",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "买2支羽毛笔和3本羊皮纸练习本需5加隆，买1支羽毛笔和2本羊皮纸练习本需3加隆，则羽毛笔单价是：", options: ["A. 0.5加隆", "B. 1加隆", "C. 1.5加隆", "D. 2加隆"], answer: "B", knowledgePoint: "方程组应用题", analysis: "设羽毛笔x加隆，练习本y加隆，2x+3y=5，x+2y=3，解得x=1。" },
-      { type: "choice", difficulty: "medium", text: "一个两位数，十位数字与个位数字之和为9，将这个两位数加上9得到的新数数字与原数数字交换位置后相同，则原数是：", options: ["A. 36", "B. 45", "C. 54", "D. 63"], answer: "B", knowledgePoint: "数字问题方程组", analysis: "设十位x，个位y，x+y=9，10x+y+9=10y+x，解得x=4,y=5，原数45。" },
-      { type: "choice", difficulty: "hard", text: "某人以两种形式储蓄了500加隆，一种年利率5%，一种年利率4%，一年后共得利息23加隆，则两种储蓄分别存了：", options: ["A. 300,200", "B. 200,300", "C. 400,100", "D. 100,400"], answer: "A", knowledgePoint: "储蓄问题方程组", analysis: "设x加隆5%，y加隆4%，x+y=500，0.05x+0.04y=23，解得x=300，y=200。" }
-    ]
-  },
+  // ── 第2章 空间入门 ──────────────────────────────────────────
 
-  // ==================== 第9章 不等式与不等式组（第69-77课） ====================
-  {
-    lesson: 69, title: "不等式",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列式子中，是不等式的是：", options: ["A. x+5=7", "B. 3x>6", "C. 2x+3", "D. x-2y"], answer: "B", knowledgePoint: "不等式的定义", analysis: "用不等号连接的式子是不等式。" },
-      { type: "choice", difficulty: "medium", text: "x<3的非负整数解有：", options: ["A. 1个", "B. 2个", "C. 3个", "D. 4个"], answer: "C", knowledgePoint: "不等式的解集", analysis: "非负整数解为0,1,2，共3个。" },
-      { type: "choice", difficulty: "hard", text: "在数轴上表示x≥-2正确的是：", options: ["A. 从-2向右，实心点", "B. 从-2向左，空心点", "C. 从-2向右，空心点", "D. 从-2向左，实心点"], answer: "A", knowledgePoint: "数轴表示不等式解集", analysis: "≥用实心点，向右。" }
-    ]
-  },
-  {
-    lesson: 70, title: "不等式的性质",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "若a>b，则下列变形正确的是：", options: ["A. a+3<b+3", "B. a-3<b-3", "C. a/3>b/3", "D. -a>-b"], answer: "C", knowledgePoint: "不等式的性质", analysis: "两边同除以正数，方向不变。" },
-      { type: "choice", difficulty: "medium", text: "若a>b，c<0，则下列正确的是：", options: ["A. ac>bc", "B. ac<bc", "C. a/c>b/c", "D. a/c<b/c"], answer: "B", knowledgePoint: "不等式的性质3", analysis: "两边乘负数，方向改变。" },
-      { type: "choice", difficulty: "hard", text: "下列命题正确的是：", options: ["A. 若a>b，则ac²>bc²", "B. 若a>b，则ac>bc", "C. 若ac²>bc²，则a>b", "D. 若ac>bc，则a>b"], answer: "C", knowledgePoint: "不等式的性质应用", analysis: "c²>0时ac²>bc²可推出a>b；A中c=0时不成立；B中c为负时不成立；D中c为负时不成立。" }
-    ]
-  },
-  {
-    lesson: 71, title: "一元一次不等式（一）",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "不等式2x-1>3的解集是：", options: ["A. x>2", "B. x<2", "C. x>1", "D. x<1"], answer: "A", knowledgePoint: "解一元一次不等式", analysis: "2x>4，x>2。" },
-      { type: "choice", difficulty: "medium", text: "不等式3x+2≤2x-1的解集是：", options: ["A. x≤-3", "B. x≥-3", "C. x≤1", "D. x≥1"], answer: "A", knowledgePoint: "解一元一次不等式", analysis: "3x-2x≤-1-2，x≤-3。" },
-      { type: "choice", difficulty: "hard", text: "不等式2x-5>4x+3的解集是：", options: ["A. x>-4", "B. x<-4", "C. x>4", "D. x<4"], answer: "B", knowledgePoint: "解一元一次不等式", analysis: "2x-4x>3+5，-2x>8，x<-4。" }
-    ]
-  },
-  {
-    lesson: 72, title: "一元一次不等式（二）",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "不等式(x+1)/2>1的解集是：", options: ["A. x>1", "B. x<1", "C. x>2", "D. x<2"], answer: "A", knowledgePoint: "含分母的不等式", analysis: "两边乘2得x+1>2，x>1。" },
-      { type: "choice", difficulty: "medium", text: "不等式2(x-1)+3>5的解集是：", options: ["A. x>2", "B. x<2", "C. x>3", "D. x<3"], answer: "A", knowledgePoint: "含括号的不等式", analysis: "2x-2+3>5，2x>4，x>2。" },
-      { type: "choice", difficulty: "hard", text: "不等式(2x+1)/3 - (x+1)/2 ≤ 1的解集是：", options: ["A. x≤11", "B. x≥11", "C. x≤7", "D. x≥7"], answer: "C", knowledgePoint: "去分母解不等式", analysis: "两边乘6得2(2x+1)-3(x+1)≤6，4x+2-3x-3≤6，x-1≤6，x≤7。" }
-    ]
-  },
-  {
-    lesson: 73, title: "不等式整数解",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "不等式x<5的正整数解有：", options: ["A. 3个", "B. 4个", "C. 5个", "D. 无数个"], answer: "B", knowledgePoint: "正整数解", analysis: "1,2,3,4共4个。" },
-      { type: "choice", difficulty: "medium", text: "不等式2x-1≤5的最小正整数解是：", options: ["A. 0", "B. 1", "C. 2", "D. 3"], answer: "B", knowledgePoint: "整数解", analysis: "2x≤6，x≤3，正整数解为1,2,3，最小正整数解是1。" },
-      { type: "choice", difficulty: "hard", text: "不等式x-2≥3x+4的最大整数解是：", options: ["A. -2", "B. -3", "C. 2", "D. 3"], answer: "B", knowledgePoint: "最大整数解", analysis: "x-3x≥4+2，-2x≥6，x≤-3，最大整数解是-3。" }
-    ]
-  },
-  {
-    lesson: 74, title: "一元一次不等式组",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "不等式组 { x>2, x>3 } 的解集是：", options: ["A. x>2", "B. x>3", "C. 2<x<3", "D. 无解"], answer: "B", knowledgePoint: "不等式组的解集", analysis: "同大取大，x>3。" },
-      { type: "choice", difficulty: "medium", text: "不等式组 { x<2, x<3 } 的解集是：", options: ["A. x<2", "B. x<3", "C. 2<x<3", "D. 无解"], answer: "A", knowledgePoint: "不等式组的解集", analysis: "同小取小，x<2。" },
-      { type: "choice", difficulty: "hard", text: "不等式组 { x>2, x<3 } 的解集是：", options: ["A. x>3", "B. x<2", "C. 2<x<3", "D. 无解"], answer: "C", knowledgePoint: "不等式组的解集", analysis: "大小小大中间找，2<x<3。" }
-    ]
-  },
-  {
-    lesson: 75, title: "解集公共部分",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "不等式组 { x>2, x<1 } 的解集是：", options: ["A. 2<x<1", "B. x>2", "C. x<1", "D. 无解"], answer: "D", knowledgePoint: "解集公共部分", analysis: "大大小小找不到，无解。" },
-      { type: "choice", difficulty: "medium", text: "不等式组 { x≥-1, x≤2 } 的整数解有：", options: ["A. 2个", "B. 3个", "C. 4个", "D. 5个"], answer: "C", knowledgePoint: "解集与整数解", analysis: "整数解为-1,0,1,2，共4个。" },
-      { type: "choice", difficulty: "hard", text: "不等式组 { x>a, x<3 } 有解，则a的取值范围是：", options: ["A. a<3", "B. a>3", "C. a≤3", "D. a≥3"], answer: "A", knowledgePoint: "含参不等式组的解集条件", analysis: "要有解需a<3。" }
-    ]
-  },
-  {
-    lesson: 76, title: "不等式组应用题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "某种魔法物品进价100加隆，标价150加隆，打折销售后利润不低于5%，则最多打几折？", options: ["A. 6折", "B. 7折", "C. 8折", "D. 9折"], answer: "B", knowledgePoint: "利润与打折问题", analysis: "设打x折，150×x/10-100≥100×5%，15x-100≥5，15x≥105，x≥7，即最多7折？注意：不等式是利润不低于5%即≥5%，解得x≥7，所以至少7折，最多是？问最多打几折是问最大折扣数，折扣越大售价越高，但利润要求不低于5%，所以折扣不能太低，实际上是≥7折，折扣最小7折。问最多？可能问最低折扣是7折。题目问法有歧义，这里取7折。" },
-      { type: "choice", difficulty: "medium", text: "某次魔法数学竞赛共20题，答对一题得5分，答错或不答扣2分，小巫师得分不低于72分，他至少答对多少题？", options: ["A. 15题", "B. 16题", "C. 17题", "D. 18题"], answer: "B", knowledgePoint: "竞赛得分问题", analysis: "设答对x题，5x-2(20-x)≥72，5x-40+2x≥72，7x≥112，x≥16，至少16题。" },
-      { type: "choice", difficulty: "hard", text: "一个两位数，十位数字比个位数字小2，这个两位数大于40且小于60，则这个两位数是：", options: ["A. 46", "B. 57", "C. 46或57", "D. 35"], answer: "C", knowledgePoint: "数字问题不等式组", analysis: "设个位x，十位x-2，数=10(x-2)+x=11x-20，40<11x-20<60，60<11x<80，x≈5.45~7.27，x整数为6或7对应46和57。" }
-    ]
-  },
-  {
-    lesson: 77, title: "综合应用",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "若方程2x+m=3的解是正数，则m的取值范围是：", options: ["A. m<3", "B. m>3", "C. m<0", "D. m>0"], answer: "A", knowledgePoint: "方程的解与不等式", analysis: "2x=3-m，x=(3-m)/2>0，3-m>0，m<3。" },
-      { type: "choice", difficulty: "medium", text: "若不等式组 { x>2, x<m } 有解，则m的取值范围是：", options: ["A. m>2", "B. m≥2", "C. m<2", "D. m≤2"], answer: "A", knowledgePoint: "含参不等式组", analysis: "有解需m>2。" },
-      { type: "choice", difficulty: "hard", text: "已知关于x的不等式组 { x-a≥0, 3-2x>-1 } 的整数解共有5个，则a的取值范围是：", options: ["A. -3<a≤-2", "B. -3≤a<-2", "C. -3<a<-2", "D. -3≤a≤-2"], answer: "A", knowledgePoint: "整数解个数求参数范围", analysis: "解不等式组得a≤x<2，整数解为-3,-2,-1,0,1共5个，所以-4<a≤-3。选项A为-3<a≤-2，符合题设条件。" }
-    ]
-  },
+  { lesson: 6, questions: [
+    { type:'choice', difficulty:1, text:'钝角的度数范围是？', options:['A. 0° 到 90°','B. 恰好 90°','C. 90° 到 180°','D. 180° 到 360°'], answer:'C', knowledgePoint:'锐角、直角、钝角、平角', analysis:'钝角：90° < θ < 180°。' },
+    { type:'choice', difficulty:2, text:'某角的余角是 37°，该角是多少度？', options:['A. 143°','B. 53°','C. 37°','D. 63°'], answer:'B', knowledgePoint:'互补角与互余角', analysis:'互余：两角之和为 90°。该角 = 90° − 37° = 53°。' },
+    { type:'choice', difficulty:3, text:'两个互补角，较大角比较小角大 40°，较大角是多少度？', options:['A. 70°','B. 110°','C. 120°','D. 130°'], answer:'B', knowledgePoint:'互补角与互余角', analysis:'设较小角为 x，则 x+(x+40°)=180°，2x=140°，x=70°，较大角=110°。' }
+  ]},
 
-  // ==================== 第10章 数据的收集、整理与描述（第78-84课） ====================
-  {
-    lesson: 78, title: "调查方式",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "要调查霍格沃茨所有学生的视力情况，最适合的调查方式是：", options: ["A. 全面调查", "B. 抽样调查", "C. 访问调查", "D. 观察调查"], answer: "B", knowledgePoint: "调查方式的选择", analysis: "霍格沃茨学生数量较多，应使用抽样调查。" },
-      { type: "choice", difficulty: "medium", text: "下列调查中，最适合用全面调查的是：", options: ["A. 调查某品牌魔杖的寿命", "B. 调查某学院学生身高", "C. 调查某批飞天扫帚的合格率", "D. 调查黑湖水质的污染情况"], answer: "B", knowledgePoint: "全面调查的适用场景", analysis: "学院人数少，适合全面调查；其他具有破坏性或范围太大。" },
-      { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 抽样调查的样本容量越大越好", "B. 抽样调查的样本必须具有代表性", "C. 全面调查比抽样调查更好", "D. 抽样调查的样本可以任意选取"], answer: "B", knowledgePoint: "抽样调查的原则", analysis: "样本必须具有代表性，不能任意选取。" }
-    ]
-  },
-  {
-    lesson: 79, title: "总体、个体、样本、样本容量",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "要调查霍格沃茨2000名学生的视力，从中抽取200名学生进行调查，其中200是：", options: ["A. 总体", "B. 个体", "C. 样本", "D. 样本容量"], answer: "D", knowledgePoint: "样本容量的概念", analysis: "样本容量是抽取的个体数目，没有单位。" },
-      { type: "choice", difficulty: "medium", text: "上述问题中，2000名学生的视力是：", options: ["A. 总体", "B. 个体", "C. 样本", "D. 样本容量"], answer: "A", knowledgePoint: "总体的概念", analysis: "所有调查对象的全体叫总体。" },
-      { type: "choice", difficulty: "hard", text: "下列说法正确的是：", options: ["A. 总体中的每个个体都是样本", "B. 样本中个体的数目叫样本容量", "C. 样本容量越大，调查越准确", "D. 样本容量没有单位"], answer: "D", knowledgePoint: "样本容量的性质", analysis: "样本容量是数目，没有单位。" }
-    ]
-  },
-  {
-    lesson: 80, title: "条形统计图与扇形统计图",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "要直观地比较两个学院的成绩，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "A", knowledgePoint: "条形图的特点", analysis: "条形图适合比较数据的大小。" },
-      { type: "choice", difficulty: "medium", text: "要表示某学院学生中喜欢各种魁地奇位置的人数占总人数的百分比，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "B", knowledgePoint: "扇形图的特点", analysis: "扇形图适合表示比例或百分比。" },
-      { type: "choice", difficulty: "hard", text: "在扇形统计图中，某部分占总数的40%，则圆心角为：", options: ["A. 144°", "B. 72°", "C. 120°", "D. 90°"], answer: "A", knowledgePoint: "扇形圆心角的计算", analysis: "圆心角=360°×40%=144°。" }
-    ]
-  },
-  {
-    lesson: 81, title: "折线统计图",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "要反映加隆汇率的变化趋势，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "C", knowledgePoint: "折线图的特点", analysis: "折线图适合反映变化趋势。" },
-      { type: "choice", difficulty: "medium", text: "折线统计图可以清楚地看出数据的：", options: ["A. 分布情况", "B. 增减变化", "C. 比例关系", "D. 具体数值"], answer: "B", knowledgePoint: "折线图的作用", analysis: "折线图突出的是变化趋势。" },
-      { type: "choice", difficulty: "hard", text: "下列适合用折线图表示的是：", options: ["A. 某学院学生的身高分布", "B. 霍格莫德村一年中各月的气温变化", "C. 对角巷某商店各种魔法物品的销售额占比", "D. 某学院学生喜欢的运动项目"], answer: "B", knowledgePoint: "折线图的适用场景", analysis: "气温变化是随时间变化的趋势，适合折线图。" }
-    ]
-  },
-  {
-    lesson: 82, title: "直方图",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "直方图适合表示：", options: ["A. 数据的分布情况", "B. 数据的变化趋势", "C. 数据的比例关系", "D. 数据的大小比较"], answer: "A", knowledgePoint: "直方图的特点", analysis: "直方图用于表示连续数据的分布。" },
-      { type: "choice", difficulty: "medium", text: "在频数分布直方图中，小长方形的高表示：", options: ["A. 组距", "B. 频数", "C. 频率", "D. 总数"], answer: "B", knowledgePoint: "直方图的构成", analysis: "直方图中长方形的高表示频数。" },
-      { type: "choice", difficulty: "hard", text: "数据分组时，若最小值为50，最大值为100，组距为10，则分为____组。", options: ["A. 4组", "B. 5组", "C. 6组", "D. 7组"], answer: "C", knowledgePoint: "分组数的确定", analysis: "极差=50，50/10=5组，但通常需要5或6组，实际分为6组（50-60,60-70,70-80,80-90,90-100,100-110？上限问题）。通常组数=(最大值-最小值)/组距+1≈5+1=6组。" }
-    ]
-  },
-  {
-    lesson: 83, title: "数据的整理",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "将一组数据分组后，落在各组的个数叫：", options: ["A. 频率", "B. 组距", "C. 频数", "D. 总数"], answer: "C", knowledgePoint: "频数的定义", analysis: "频数是落在每组内的数据个数。" },
-      { type: "choice", difficulty: "medium", text: "频数分布表的主要作用是：", options: ["A. 计算平均数", "B. 反映数据的分布情况", "C. 比较数据的大小", "D. 反映变化趋势"], answer: "B", knowledgePoint: "频数分布表的作用", analysis: "频数分布表是用来整理数据、反映分布情况的。" },
-      { type: "choice", difficulty: "hard", text: "某组数据的频率为0.25，总数为80，则该组的频数是：", options: ["A. 20", "B. 30", "C. 40", "D. 50"], answer: "A", knowledgePoint: "频率与频数的关系", analysis: "频数=频率×总数=0.25×80=20。" }
-    ]
-  },
-  {
-    lesson: 84, title: "统计图的选择",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "要表示某学院学生身高分布情况，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "D", knowledgePoint: "统计图的选择", analysis: "身高的分布用直方图最合适。" },
-      { type: "choice", difficulty: "medium", text: "要表示某学院学生中男女巫师各占的比例，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "B", knowledgePoint: "统计图的选择", analysis: "比例关系用扇形图。" },
-      { type: "choice", difficulty: "hard", text: "要比较霍格沃茨和布斯巴顿近5年的魔药生产量增长情况，最适合用：", options: ["A. 条形图", "B. 扇形图", "C. 折线图", "D. 直方图"], answer: "C", knowledgePoint: "统计图的选择", analysis: "增长趋势用折线图。" }
-    ]
-  },
-  // ==================== 期中复习与考试（第85-88课） ====================
-  {
-    lesson: 85, title: "实数与坐标系复习",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列数中，是无理数的是：", options: ["A. 0.333...", "B. √4", "C. π", "D. 1/3"], answer: "C", knowledgePoint: "无理数的定义", analysis: "π是无限不循环小数，是无理数。" },
-      { type: "choice", difficulty: "medium", text: "点(3,-4)在第几象限？", options: ["A. 第一象限", "B. 第二象限", "C. 第三象限", "D. 第四象限"], answer: "D", knowledgePoint: "象限的坐标特征", analysis: "横坐标为正，纵坐标为负，在第四象限。" },
-      { type: "choice", difficulty: "hard", text: "若|x-2| + √(y+3) = 0，则x+y的值为：", options: ["A. -1", "B. 1", "C. 5", "D. -5"], answer: "A", knowledgePoint: "绝对值与平方根的非负性", analysis: "|x-2|≥0，√(y+3)≥0，所以x=2，y=-3，x+y=-1。" }
-    ]
-  },
-  {
-    lesson: 86, title: "方程组与不等式复习",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "方程组{ x+y=5, x-y=1 }的解是：", options: ["A. x=2,y=3", "B. x=3,y=2", "C. x=4,y=1", "D. x=1,y=4"], answer: "B", knowledgePoint: "二元一次方程组的解", analysis: "两式相加得2x=6，x=3，代入得y=2。" },
-      { type: "choice", difficulty: "medium", text: "不等式2x-1 > 3的解集是：", options: ["A. x > 1", "B. x > 2", "C. x < 1", "D. x < 2"], answer: "B", knowledgePoint: "一元一次不等式的解", analysis: "2x > 4，x > 2。" },
-      { type: "choice", difficulty: "hard", text: "不等式组{ x > 2, x < 5 }的解集是：", options: ["A. x > 2", "B. x < 5", "C. 2 < x < 5", "D. 无解"], answer: "C", knowledgePoint: "不等式组的解集", analysis: "取两个不等式的公共部分，2 < x < 5。" }
-    ]
-  },
-  {
-    lesson: 87, title: "期中考试模拟",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "计算(-2)²的结果是：", options: ["A. -4", "B. 4", "C. -2", "D. 2"], answer: "B", knowledgePoint: "有理数的乘方", analysis: "(-2)² = 4。" },
-      { type: "choice", difficulty: "medium", text: "若a∥b，∠1=50°，则∠2的度数为：", options: ["A. 50°", "B. 130°", "C. 180°", "D. 无法确定"], answer: "D", knowledgePoint: "平行线的性质", analysis: "需要知道∠1和∠2的位置关系才能确定。" },
-      { type: "choice", difficulty: "hard", text: "某商品进价100加隆，标价150加隆，打x折后利润率为20%，则x为：", options: ["A. 8", "B. 8.5", "C. 9", "D. 9.5"], answer: "A", knowledgePoint: "利润问题", analysis: "150×x/10 = 100×(1+20%)，15x = 120，x=8。" }
-    ]
-  },
-  {
-    lesson: 88, title: "期中考试讲解",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列计算正确的是：", options: ["A. 2a + 3b = 5ab", "B. 2a² - a² = a²", "C. 5a² - 3a² = 2", "D. 3a + 2a = 5a²"], answer: "B", knowledgePoint: "整式的加减", analysis: "同类项才能合并，合并时系数相加减，字母不变。" },
-      { type: "choice", difficulty: "medium", text: "方程3(x-1) = 2x + 5的解是：", options: ["A. x = 6", "B. x = 7", "C. x = 8", "D. x = 9"], answer: "C", knowledgePoint: "一元一次方程的解", analysis: "3x - 3 = 2x + 5，x = 8。" },
-      { type: "choice", difficulty: "hard", text: "甲、乙两人分别从A、B两地相向而行，甲每小时走6km，乙每小时走4km，3小时后相遇，则AB两地距离为：", options: ["A. 20km", "B. 25km", "C. 30km", "D. 35km"], answer: "C", knowledgePoint: "行程问题", analysis: "距离 = 速度和×时间 = (6+4)×3 = 30km。" }
-    ]
-  },
-  // ==================== 专题复习（第89-96课） ====================
-  {
-    lesson: 89, title: "应用题专题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一件工作，甲单独做10天完成，乙单独做15天完成，两人合作需要几天？", options: ["A. 5天", "B. 6天", "C. 7天", "D. 8天"], answer: "B", knowledgePoint: "工程问题", analysis: "效率和 = 1/10 + 1/15 = 1/6，时间 = 6天。" },
-      { type: "choice", difficulty: "medium", text: "一列魔法快车长200米，以每秒20米的速度通过一座长300米的桥梁，需要多少秒？", options: ["A. 20秒", "B. 25秒", "C. 30秒", "D. 35秒"], answer: "B", knowledgePoint: "行程问题", analysis: "(200+300)/20 = 25秒。" },
-      { type: "choice", difficulty: "hard", text: "某商店将进价为80加隆的商品按100加隆出售，每天可卖100件。若每件降价1加隆，每天可多卖10件，要使每天利润最大，应降价多少？", options: ["A. 5加隆", "B. 10加隆", "C. 15加隆", "D. 20加隆"], answer: "B", knowledgePoint: "利润最大化问题", analysis: "设降价x加隆，利润=(20-x)(100+10x)，顶点在x=5，但选项中10加隆更合适。" }
-    ]
-  },
-  {
-    lesson: 90, title: "几何证明专题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列说法正确的是：", options: ["A. 对顶角相等", "B. 相等的角是对顶角", "C. 邻补角相等", "D. 互补的角是邻补角"], answer: "A", knowledgePoint: "对顶角的性质", analysis: "对顶角一定相等，但相等的角不一定是对顶角。" },
-      { type: "choice", difficulty: "medium", text: "若∠1和∠2是内错角，且∠1=∠2，则：", options: ["A. 两直线相交", "B. 两直线平行", "C. 两直线垂直", "D. 无法确定"], answer: "B", knowledgePoint: "平行线的判定", analysis: "内错角相等，两直线平行。" },
-      { type: "choice", difficulty: "hard", text: "在三角形ABC中，若∠A=60°，∠B=40°，则∠C的度数为：", options: ["A. 60°", "B. 70°", "C. 80°", "D. 90°"], answer: "C", knowledgePoint: "三角形内角和", analysis: "∠C = 180° - 60° - 40° = 80°。" }
-    ]
-  },
-  {
-    lesson: 91, title: "计算技巧专题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "计算25×32×125最简便的方法是：", options: ["A. 从左到右计算", "B. (25×4)×(8×125)", "C. 25×(32×125)", "D. (25×32)×125"], answer: "B", knowledgePoint: "简便计算", analysis: "32=4×8，利用乘法结合律。" },
-      { type: "choice", difficulty: "medium", text: "估算√50的值在：", options: ["A. 6和7之间", "B. 7和8之间", "C. 8和9之间", "D. 9和10之间"], answer: "B", knowledgePoint: "估算", analysis: "7²=49，8²=64，所以√50在7和8之间。" },
-      { type: "choice", difficulty: "hard", text: "计算(1-1/2)(1-1/3)(1-1/4)...(1-1/10)的结果是：", options: ["A. 1/10", "B. 1/9", "C. 1/8", "D. 1/7"], answer: "A", knowledgePoint: "分数计算技巧", analysis: "约分后得1/10。" }
-    ]
-  },
-  {
-    lesson: 92, title: "易错点专题",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "-(-2)的值是：", options: ["A. -2", "B. 2", "C. -4", "D. 4"], answer: "B", knowledgePoint: "符号运算", analysis: "负负得正，-(-2)=2。" },
-      { type: "choice", difficulty: "medium", text: "计算2×3²的结果是：", options: ["A. 36", "B. 18", "C. 12", "D. 6"], answer: "B", knowledgePoint: "运算顺序", analysis: "先算乘方，再算乘法，2×9=18。" },
-      { type: "choice", difficulty: "hard", text: "若a < 0，则|a| + a的值为：", options: ["A. 2a", "B. -2a", "C. 0", "D. 无法确定"], answer: "C", knowledgePoint: "绝对值的性质", analysis: "a < 0时，|a| = -a，所以|a| + a = -a + a = 0。" }
-    ]
-  },
-  {
-    lesson: 93, title: "数学与魔法",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "魔法阵通常具有什么性质？", options: ["A. 不对称性", "B. 对称性", "C. 随机性", "D. 无规律性"], answer: "B", knowledgePoint: "几何与魔法阵", analysis: "魔法阵通常具有对称性，这是几何图形的重要性质。" },
-      { type: "choice", difficulty: "medium", text: "咒语的组合规律类似于：", options: ["A. 代数运算", "B. 几何证明", "C. 概率计算", "D. 统计分析"], answer: "A", knowledgePoint: "代数与咒语", analysis: "咒语的组合规律类似于代数的运算规则。" },
-      { type: "choice", difficulty: "hard", text: "预言的可能性可以用什么数学概念来描述？", options: ["A. 方程", "B. 不等式", "C. 概率", "D. 函数"], answer: "C", knowledgePoint: "概率与预言", analysis: "预言的可能性可以用概率来描述和计算。" }
-    ]
-  },
-  {
-    lesson: 94, title: "数学在生活中的应用",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一件魔法物品打8折后售价为80加隆，原价是：", options: ["A. 90加隆", "B. 95加隆", "C. 100加隆", "D. 105加隆"], answer: "C", knowledgePoint: "折扣计算", analysis: "原价 = 80 ÷ 0.8 = 100加隆。" },
-      { type: "choice", difficulty: "medium", text: "调制魔药需要100毫升药液，现有浓度为20%的原液，需要多少毫升原液？", options: ["A. 20毫升", "B. 25毫升", "C. 30毫升", "D. 35毫升"], answer: "B", knowledgePoint: "浓度问题", analysis: "设需要x毫升，0.2x = 100×0.05（假设配成5%浓度），x=25。" },
-      { type: "choice", difficulty: "hard", text: "规划从霍格沃茨到霍格莫德村的路线，需要考虑：", options: ["A. 距离和时间", "B. 距离和费用", "C. 时间和费用", "D. 距离、时间和费用"], answer: "D", knowledgePoint: "路线规划", analysis: "路线规划需要综合考虑距离、时间和费用等因素。" }
-    ]
-  },
-  {
-    lesson: 95, title: "数学历史",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "阿拉伯数字起源于：", options: ["A. 阿拉伯", "B. 印度", "C. 中国", "D. 埃及"], answer: "B", knowledgePoint: "数字符号的演变", analysis: "阿拉伯数字实际上起源于印度。" },
-      { type: "choice", difficulty: "medium", text: "勾股定理最早由谁发现？", options: ["A. 欧几里得", "B. 毕达哥拉斯", "C. 牛顿", "D. 高斯"], answer: "B", knowledgePoint: "重要数学家", analysis: "勾股定理最早由毕达哥拉斯发现。" },
-      { type: "choice", difficulty: "hard", text: "π的值是：", options: ["A. 3.14", "B. 3.1415", "C. 无限不循环小数", "D. 分数22/7"], answer: "C", knowledgePoint: "无理数", analysis: "π是无限不循环小数，是无理数。" }
-    ]
-  },
-  {
-    lesson: 96, title: "学习方法总结",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "学习数学最重要的是：", options: ["A. 死记硬背", "B. 理解概念", "C. 大量做题", "D. 依赖计算器"], answer: "B", knowledgePoint: "学习方法", analysis: "理解概念是学习数学的基础。" },
-      { type: "choice", difficulty: "medium", text: "课后复习的最佳时间是：", options: ["A. 第二天", "B. 一周后", "C. 当天", "D. 一个月后"], answer: "C", knowledgePoint: "复习方法", analysis: "当天复习效果最好，符合记忆规律。" },
-      { type: "choice", difficulty: "hard", text: "遇到难题应该：", options: ["A. 直接看答案", "B. 放弃不做", "C. 先思考再请教", "D. 等老师讲解"], answer: "C", knowledgePoint: "学习态度", analysis: "遇到难题应先独立思考，再请教他人。" }
-    ]
-  },
-  // ==================== 总复习（第97-98课） ====================
-  {
-    lesson: 97, title: "知识体系构建",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列属于代数的是：", options: ["A. 三角形", "B. 方程", "C. 平行线", "D. 统计图"], answer: "B", knowledgePoint: "代数与几何", analysis: "方程是代数学的核心内容。" },
-      { type: "choice", difficulty: "medium", text: "坐标(3,4)表示的是：", options: ["A. 代数概念", "B. 几何概念", "C. 统计概念", "D. 既是代数也是几何"], answer: "D", knowledgePoint: "代数与几何的结合", analysis: "坐标既可以表示代数关系，也可以表示几何位置。" },
-      { type: "choice", difficulty: "hard", text: "数据收集、整理、分析属于：", options: ["A. 代数", "B. 几何", "C. 统计", "D. 概率"], answer: "C", knowledgePoint: "统计的流程", analysis: "数据收集、整理、分析是统计学的核心流程。" }
-    ]
-  },
-  {
-    lesson: 98, title: "综合练习",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "化简3a - 2a + 5a的结果是：", options: ["A. 6a", "B. 5a", "C. 4a", "D. 3a"], answer: "A", knowledgePoint: "整式化简", analysis: "(3-2+5)a = 6a。" },
-      { type: "choice", difficulty: "medium", text: "解方程2(x+1) = 3x - 1的解是：", options: ["A. x = 1", "B. x = 2", "C. x = 3", "D. x = 4"], answer: "C", knowledgePoint: "一元一次方程", analysis: "2x + 2 = 3x - 1，x = 3。" },
-      { type: "choice", difficulty: "hard", text: "某班有40名学生，男生人数是女生人数的1.5倍，则男生有：", options: ["A. 16人", "B. 20人", "C. 24人", "D. 28人"], answer: "C", knowledgePoint: "列方程解应用题", analysis: "设女生x人，男生1.5x人，x + 1.5x = 40，x = 16，男生24人。" }
-    ]
-  },
-  // ==================== 期末考试与毕业评估（第99-103课） ====================
-  {
-    lesson: 99, title: "期末考试",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "计算(-3)×(-4)的结果是：", options: ["A. -12", "B. 12", "C. -7", "D. 7"], answer: "B", knowledgePoint: "有理数乘法", analysis: "负负得正，(-3)×(-4)=12。" },
-      { type: "choice", difficulty: "medium", text: "若a∥b，b∥c，则a与c的关系是：", options: ["A. 相交", "B. 平行", "C. 垂直", "D. 无法确定"], answer: "B", knowledgePoint: "平行线的传递性", analysis: "平行于同一直线的两条直线互相平行。" },
-      { type: "choice", difficulty: "hard", text: "不等式组{ x + 1 > 0, 2x - 1 < 3 }的解集是：", options: ["A. x > -1", "B. x < 2", "C. -1 < x < 2", "D. 无解"], answer: "C", knowledgePoint: "不等式组", analysis: "解x > -1且x < 2，所以-1 < x < 2。" }
-    ]
-  },
-  {
-    lesson: 100, title: "期末考试讲解",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "下列是同类项的是：", options: ["A. 2x和3y", "B. 2x²和3x", "C. 2x和3x", "D. 2x和3x²"], answer: "C", knowledgePoint: "同类项", analysis: "所含字母相同，相同字母的指数也相同的项是同类项。" },
-      { type: "choice", difficulty: "medium", text: "点P(-2,3)关于x轴对称的点的坐标是：", options: ["A. (-2,-3)", "B. (2,3)", "C. (2,-3)", "D. (-2,3)"], answer: "A", knowledgePoint: "坐标对称", analysis: "关于x轴对称，横坐标不变，纵坐标取相反数。" },
-      { type: "choice", difficulty: "hard", text: "数据2,3,5,5,6,7的平均数是：", options: ["A. 4", "B. 5", "C. 6", "D. 7"], answer: "B", knowledgePoint: "平均数", analysis: "(2+3+5+5+6+7)/6 = 28/6 ≈ 4.67，最接近5。" }
-    ]
-  },
-  {
-    lesson: 101, title: "学年总结",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一年有多少个月？", options: ["A. 10", "B. 11", "C. 12", "D. 13"], answer: "C", knowledgePoint: "时间单位", analysis: "一年有12个月。" },
-      { type: "choice", difficulty: "medium", text: "一个学期大约有多少周？", options: ["A. 10周", "B. 15周", "C. 20周", "D. 25周"], answer: "B", knowledgePoint: "时间计算", analysis: "一个学期大约15-20周，通常取15周左右。" },
-      { type: "choice", difficulty: "hard", text: "本学年学习了多少章数学内容？", options: ["A. 8章", "B. 10章", "C. 12章", "D. 14章"], answer: "B", knowledgePoint: "课程内容", analysis: "本学年学习了10章数学内容。" }
-    ]
-  },
-  {
-    lesson: 102, title: "毕业评估",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "评估成绩分为几个等级？", options: ["A. 2个", "B. 3个", "C. 4个", "D. 5个"], answer: "C", knowledgePoint: "评估等级", analysis: "通常分为优秀、良好、及格、不及格四个等级。" },
-      { type: "choice", difficulty: "medium", text: "综合成绩由哪些部分组成？", options: ["A. 考试成绩", "B. 课堂表现", "C. 作业完成情况", "D. 以上都是"], answer: "D", knowledgePoint: "评估标准", analysis: "综合成绩通常包括考试成绩、课堂表现和作业完成情况。" },
-      { type: "choice", difficulty: "hard", text: "要达到优秀等级，通常需要多少分以上？", options: ["A. 80分", "B. 85分", "C. 90分", "D. 95分"], answer: "C", knowledgePoint: "优秀标准", analysis: "通常90分以上为优秀。" }
-    ]
-  },
-  {
-    lesson: 103, title: "结业典礼",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "结业证书代表：", options: ["A. 开始学习", "B. 完成学习", "C. 正在学习", "D. 放弃学习"], answer: "B", knowledgePoint: "结业的意义", analysis: "结业证书代表完成了规定的学习内容。" },
-      { type: "choice", difficulty: "medium", text: "优秀学员表彰的是：", options: ["A. 学习成绩优秀的学生", "B. 遵守纪律的学生", "C. 乐于助人的学生", "D. 以上都是"], answer: "D", knowledgePoint: "优秀学员", analysis: "优秀学员通常表彰各方面表现优秀的学生。" },
-      { type: "choice", difficulty: "hard", text: "结业后应该：", options: ["A. 停止学习", "B. 继续学习", "C. 忘记所学", "D. 放弃数学"], answer: "B", knowledgePoint: "学习态度", analysis: "学习是持续的过程，结业后应继续学习。" }
-    ]
-  },
-  // ==================== 拓展与实践（第104-108课） ====================
-  {
-    lesson: 104, title: "数学建模",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "数学建模的第一步是：", options: ["A. 求解模型", "B. 建立模型", "C. 理解问题", "D. 检验结果"], answer: "C", knowledgePoint: "建模步骤", analysis: "数学建模首先要理解实际问题。" },
-      { type: "choice", difficulty: "medium", text: "将实际问题转化为数学问题的过程叫：", options: ["A. 数学化", "B. 模型化", "C. 抽象化", "D. 公式化"], answer: "B", knowledgePoint: "建模概念", analysis: "将实际问题转化为数学模型的过程叫模型化。" },
-      { type: "choice", difficulty: "hard", text: "检验模型结果是否符合实际的过程叫：", options: ["A. 验证", "B. 求解", "C. 分析", "D. 应用"], answer: "A", knowledgePoint: "模型检验", analysis: "检验模型结果是否符合实际叫验证。" }
-    ]
-  },
-  {
-    lesson: 105, title: "几何实践",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "测量线段长度需要使用：", options: ["A. 量角器", "B. 直尺", "C. 圆规", "D. 三角板"], answer: "B", knowledgePoint: "测量工具", analysis: "直尺用于测量线段长度。" },
-      { type: "choice", difficulty: "medium", text: "用尺规作图可以：", options: ["A. 画任意角", "B. 三等分角", "C. 画垂直平分线", "D. 画任意曲线"], answer: "C", knowledgePoint: "尺规作图", analysis: "用尺规可以画出线段的垂直平分线。" },
-      { type: "choice", difficulty: "hard", text: "正方体的展开图有几种基本类型？", options: ["A. 6种", "B. 8种", "C. 10种", "D. 11种"], answer: "D", knowledgePoint: "立体图形展开", analysis: "正方体的展开图有11种基本类型。" }
-    ]
-  },
-  {
-    lesson: 106, title: "概率与统计实验",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "抛一枚硬币，正面朝上的概率是：", options: ["A. 1/4", "B. 1/3", "C. 1/2", "D. 1"], answer: "C", knowledgePoint: "概率计算", analysis: "硬币只有正反两面，正面朝上的概率是1/2。" },
-      { type: "choice", difficulty: "medium", text: "掷一颗骰子，点数大于3的概率是：", options: ["A. 1/6", "B. 1/3", "C. 1/2", "D. 2/3"], answer: "C", knowledgePoint: "概率计算", analysis: "点数大于3的有4,5,6，共3种，概率3/6=1/2。" },
-      { type: "choice", difficulty: "hard", text: "从1-10中随机选一个数，是质数的概率是：", options: ["A. 2/5", "B. 3/10", "C. 1/2", "D. 4/10"], answer: "D", knowledgePoint: "质数与概率", analysis: "1-10中的质数有2,3,5,7，共4个，概率4/10。" }
-    ]
-  },
-  {
-    lesson: 107, title: "数学与艺术",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "黄金比例约等于：", options: ["A. 1.5", "B. 1.618", "C. 1.732", "D. 2"], answer: "B", knowledgePoint: "黄金比例", analysis: "黄金比例约等于1.618。" },
-      { type: "choice", difficulty: "medium", text: "正五边形具有：", options: ["A. 三条对称轴", "B. 四条对称轴", "C. 五条对称轴", "D. 六条对称轴"], answer: "C", knowledgePoint: "几何对称性", analysis: "正五边形有五条对称轴。" },
-      { type: "choice", difficulty: "hard", text: "分形几何的特点是：", options: ["A. 简单重复", "B. 自相似性", "C. 规则对称", "D. 单一形状"], answer: "B", knowledgePoint: "分形几何", analysis: "分形几何具有自相似性，即整体与部分相似。" }
-    ]
-  },
-  {
-    lesson: 108, title: "数学挑战",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "找规律：2,4,8,16,?", options: ["A. 24", "B. 32", "C. 48", "D. 64"], answer: "B", knowledgePoint: "数列规律", analysis: "这是等比数列，公比为2，下一项是32。" },
-      { type: "choice", difficulty: "medium", text: "计算1+2+3+...+100的结果是：", options: ["A. 5000", "B. 5050", "C. 5100", "D. 5150"], answer: "B", knowledgePoint: "等差数列求和", analysis: "利用等差数列求和公式：(1+100)×100/2 = 5050。" },
-      { type: "choice", difficulty: "hard", text: "一个数的平方等于它本身，这个数是：", options: ["A. 0", "B. 1", "C. 0或1", "D. 不存在"], answer: "C", knowledgePoint: "方程求解", analysis: "x² = x，x(x-1)=0，x=0或x=1。" }
-    ]
-  },
-  // ==================== 假期作业指导（第109-115课） ====================
-  {
-    lesson: 109, title: "假期作业安排",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "假期作业应该：", options: ["A. 开学前一天做完", "B. 每天做一点", "C. 不做", "D. 让别人做"], answer: "B", knowledgePoint: "作业安排", analysis: "合理安排时间，每天做一点效果最好。" },
-      { type: "choice", difficulty: "medium", text: "假期通常有多长？", options: ["A. 1周", "B. 2周", "C. 1个月", "D. 2个月"], answer: "D", knowledgePoint: "假期时间", analysis: "通常假期约2个月。" },
-      { type: "choice", difficulty: "hard", text: "如果假期有60天，每天做10道题，总共可以做：", options: ["A. 500道", "B. 600道", "C. 700道", "D. 800道"], answer: "B", knowledgePoint: "简单计算", analysis: "60×10 = 600道。" }
-    ]
-  },
-  {
-    lesson: 110, title: "数学读物推荐",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "《数学之美》是：", options: ["A. 科普读物", "B. 教材", "C. 小说", "D. 漫画"], answer: "A", knowledgePoint: "数学读物类型", analysis: "《数学之美》是一本数学科普读物。" },
-      { type: "choice", difficulty: "medium", text: "数学历史书籍可以帮助我们：", options: ["A. 了解数学发展", "B. 解题", "C. 考试", "D. 做作业"], answer: "A", knowledgePoint: "数学历史", analysis: "数学历史书籍帮助我们了解数学的发展历程。" },
-      { type: "choice", difficulty: "hard", text: "趣味数学书籍适合：", options: ["A. 放松阅读", "B. 考试复习", "C. 课堂学习", "D. 写作业"], answer: "A", knowledgePoint: "趣味数学", analysis: "趣味数学书籍适合放松阅读，培养兴趣。" }
-    ]
-  },
-  {
-    lesson: 111, title: "学习计划制定",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "制定学习计划的第一步是：", options: ["A. 分解任务", "B. 设定目标", "C. 安排时间", "D. 执行计划"], answer: "B", knowledgePoint: "计划制定", analysis: "制定计划首先要设定目标。" },
-      { type: "choice", difficulty: "medium", text: "目标应该：", options: ["A. 模糊不清", "B. 具体可行", "C. 难以实现", "D. 不切实际"], answer: "B", knowledgePoint: "目标设定", analysis: "目标应该具体可行，符合SMART原则。" },
-      { type: "choice", difficulty: "hard", text: "计划应该：", options: ["A. 一成不变", "B. 灵活调整", "C. 过于严格", "D. 没有时间限制"], answer: "B", knowledgePoint: "计划执行", analysis: "计划需要根据实际情况灵活调整。" }
-    ]
-  },
-  {
-    lesson: 112, title: "学习方法总结",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "主动学习意味着：", options: ["A. 被动接受", "B. 积极思考", "C. 只听不做", "D. 抄作业"], answer: "B", knowledgePoint: "学习方法", analysis: "主动学习需要积极思考和参与。" },
-      { type: "choice", difficulty: "medium", text: "间隔重复法是指：", options: ["A. 每天学习", "B. 定期复习", "C. 一次性学完", "D. 考前突击"], answer: "B", knowledgePoint: "复习方法", analysis: "间隔重复法是定期复习巩固记忆。" },
-      { type: "choice", difficulty: "hard", text: "思维导图适合：", options: ["A. 计算", "B. 整理知识结构", "C. 解方程", "D. 画图"], answer: "B", knowledgePoint: "学习工具", analysis: "思维导图适合整理知识结构和关系。" }
-    ]
-  },
-  {
-    lesson: 113, title: "自我评估",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "自我评估的目的是：", options: ["A. 批评自己", "B. 了解自己", "C. 贬低自己", "D. 炫耀自己"], answer: "B", knowledgePoint: "评估目的", analysis: "自我评估的目的是了解自己的学习状况。" },
-      { type: "choice", difficulty: "medium", text: "知识掌握评估应该：", options: ["A. 凭感觉", "B. 通过测试", "C. 问同学", "D. 问老师"], answer: "B", knowledgePoint: "评估方法", analysis: "通过测试可以客观评估知识掌握程度。" },
-      { type: "choice", difficulty: "hard", text: "发现薄弱环节后应该：", options: ["A. 忽略", "B. 加强练习", "C. 放弃", "D. 抱怨"], answer: "B", knowledgePoint: "改进方法", analysis: "发现薄弱环节后应加强练习改进。" }
-    ]
-  },
-  {
-    lesson: 114, title: "学习交流",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "学习交流可以：", options: ["A. 互相学习", "B. 浪费时间", "C. 抄袭作业", "D. 聊天"], answer: "A", knowledgePoint: "交流的好处", analysis: "学习交流可以互相学习，共同进步。" },
-      { type: "choice", difficulty: "medium", text: "小组合作学习的优点是：", options: ["A. 互相依赖", "B. 分工合作", "C. 一个人做", "D. 互相抄"], answer: "B", knowledgePoint: "合作学习", analysis: "小组合作学习可以分工合作，提高效率。" },
-      { type: "choice", difficulty: "hard", text: "良好的学习氛围有助于：", options: ["A. 睡觉", "B. 学习", "C. 玩耍", "D. 聊天"], answer: "B", knowledgePoint: "学习环境", analysis: "良好的学习氛围有助于提高学习效率。" }
-    ]
-  },
-  {
-    lesson: 115, title: "未来规划",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "设定目标有助于：", options: ["A. 迷茫", "B. 前进", "C. 放弃", "D. 懒惰"], answer: "B", knowledgePoint: "目标的作用", analysis: "设定目标有助于明确方向，前进。" },
-      { type: "choice", difficulty: "medium", text: "学习路径规划应该：", options: ["A. 随意", "B. 有计划", "C. 没有方向", "D. 临时决定"], answer: "B", knowledgePoint: "路径规划", analysis: "学习路径应该有计划地规划。" },
-      { type: "choice", difficulty: "hard", text: "保持学习热情需要：", options: ["A. 强迫自己", "B. 培养兴趣", "C. 放弃", "D. 逃避"], answer: "B", knowledgePoint: "学习动力", analysis: "保持学习热情需要培养对学科的兴趣。" }
-    ]
-  },
-  // ==================== 特别课程（第116-120课） ====================
-  {
-    lesson: 116, title: "数学与时间",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一天有多少小时？", options: ["A. 12", "B. 24", "C. 36", "D. 48"], answer: "B", knowledgePoint: "时间单位", analysis: "一天有24小时。" },
-      { type: "choice", difficulty: "medium", text: "1小时等于多少秒？", options: ["A. 360", "B. 600", "C. 3600", "D. 6000"], answer: "C", knowledgePoint: "时间换算", analysis: "1小时=60分钟=3600秒。" },
-      { type: "choice", difficulty: "hard", text: "如果一节课45分钟，一天8节课，总共多少小时？", options: ["A. 5小时", "B. 6小时", "C. 7小时", "D. 8小时"], answer: "B", knowledgePoint: "时间计算", analysis: "45×8=360分钟=6小时。" }
-    ]
-  },
-  {
-    lesson: 117, title: "购物数学",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "一件商品打5折意味着：", options: ["A. 原价的5%", "B. 原价的50%", "C. 原价的15%", "D. 原价的95%"], answer: "B", knowledgePoint: "折扣计算", analysis: "打5折即原价的50%。" },
-      { type: "choice", difficulty: "medium", text: "满100减20相当于打几折？", options: ["A. 7折", "B. 8折", "C. 8.5折", "D. 9折"], answer: "B", knowledgePoint: "折扣换算", analysis: "(100-20)/100 = 0.8，即8折。" },
-      { type: "choice", difficulty: "hard", text: "两件商品，A原价100加隆打8折，B原价80加隆打7折，哪个更便宜？", options: ["A. A更便宜", "B. B更便宜", "C. 一样", "D. 无法比较"], answer: "B", knowledgePoint: "价格比较", analysis: "A:100×0.8=80，B:80×0.7=56，B更便宜。" }
-    ]
-  },
-  {
-    lesson: 118, title: "烹饪数学",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "1千克等于多少克？", options: ["A. 10克", "B. 100克", "C. 1000克", "D. 10000克"], answer: "C", knowledgePoint: "重量单位", analysis: "1千克=1000克。" },
-      { type: "choice", difficulty: "medium", text: "如果配方需要200克面粉，现有1千克，可以做几次？", options: ["A. 3次", "B. 4次", "C. 5次", "D. 6次"], answer: "C", knowledgePoint: "配方计算", analysis: "1000÷200=5次。" },
-      { type: "choice", difficulty: "hard", text: "将2人份的配方扩大到5人份，需要乘以多少倍？", options: ["A. 2倍", "B. 2.5倍", "C. 3倍", "D. 3.5倍"], answer: "B", knowledgePoint: "配方比例", analysis: "5÷2=2.5倍。" }
-    ]
-  },
-  {
-    lesson: 119, title: "旅行数学",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "距离=速度×____", options: ["A. 时间", "B. 路程", "C. 速度", "D. 加速度"], answer: "A", knowledgePoint: "行程公式", analysis: "距离=速度×时间。" },
-      { type: "choice", difficulty: "medium", text: "如果飞天马车每小时行驶60km，行驶3小时，距离是：", options: ["A. 120km", "B. 150km", "C. 180km", "D. 200km"], answer: "C", knowledgePoint: "距离计算", analysis: "60×3=180km。" },
-      { type: "choice", difficulty: "hard", text: "从霍格沃茨到霍格莫德村距离60km，去时速度30km/h，返回速度20km/h，平均速度是：", options: ["A. 24km/h", "B. 25km/h", "C. 26km/h", "D. 27km/h"], answer: "A", knowledgePoint: "平均速度", analysis: "总路程120km，总时间60/30+60/20=5小时，平均速度120/5=24km/h。" }
-    ]
-  },
-  {
-    lesson: 120, title: "数学与星空",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "北斗七星属于：", options: ["A. 小熊座", "B. 大熊座", "C. 狮子座", "D. 猎户座"], answer: "B", knowledgePoint: "星座知识", analysis: "北斗七星属于大熊座。" },
-      { type: "choice", difficulty: "medium", text: "一年有多少个星座？", options: ["A. 84个", "B. 86个", "C. 88个", "D. 90个"], answer: "C", knowledgePoint: "星座数量", analysis: "全天共有88个星座。" },
-      { type: "choice", difficulty: "hard", text: "地球绕太阳公转一周需要：", options: ["A. 一天", "B. 一个月", "C. 一年", "D. 一百年"], answer: "C", knowledgePoint: "天文知识", analysis: "地球绕太阳公转一周需要一年。" }
-    ]
-  }
+  { lesson: 7, questions: [
+    { type:'choice', difficulty:1, text:'三角形两内角为 50° 和 70°，第三个内角是？', options:['A. 50°','B. 60°','C. 70°','D. 120°'], answer:'B', knowledgePoint:'三角形内角和为180°', analysis:'第三角 = 180° − 50° − 70° = 60°。' },
+    { type:'choice', difficulty:2, text:'等腰三角形顶角为 40°，底角各是多少？', options:['A. 40°','B. 60°','C. 70°','D. 80°'], answer:'C', knowledgePoint:'等腰三角形的性质', analysis:'底角 = (180° − 40°) ÷ 2 = 70°。' },
+    { type:'choice', difficulty:3, text:'三条线段 5、9、x 能构成三角形，x 的范围是？', options:['A. 4 < x < 14','B. x > 4','C. x < 14','D. 任意正数'], answer:'A', knowledgePoint:'三角形不等式', analysis:'需满足：5+9>x → x<14；5+x>9 → x>4。取交集：4 < x < 14。' }
+  ]},
+
+  { lesson: 8, questions: [
+    { type:'choice', difficulty:1, text:'正六边形的内角和是多少度？', options:['A. 540°','B. 720°','C. 900°','D. 1080°'], answer:'B', knowledgePoint:'多边形内角和公式', analysis:'(6−2)×180° = 4×180° = 720°。' },
+    { type:'choice', difficulty:2, text:'下列说法错误的是？', options:['A. 正方形是特殊长方形','B. 长方形是特殊平行四边形','C. 菱形是特殊正方形','D. 正方形是特殊菱形'], answer:'C', knowledgePoint:'正方形、长方形、平行四边形', analysis:'菱形四边相等但不一定有直角，不是正方形的特例。正方形才是特殊菱形。' },
+    { type:'choice', difficulty:3, text:'一正多边形每个内角为 150°，有几条边？', options:['A. 10','B. 12','C. 15','D. 8'], answer:'B', knowledgePoint:'正多边形', analysis:'(n−2)×180°÷n=150°，解得 30n=360，n=12。' }
+  ]},
+
+  { lesson: 9, questions: [
+    { type:'choice', difficulty:1, text:'半径为 7 的圆，面积约为（π≈3.14）？', options:['A. 44','B. 154','C. 22','D. 49'], answer:'B', knowledgePoint:'面积公式 A = πr²', analysis:'A = 3.14 × 49 ≈ 153.86 ≈ 154。' },
+    { type:'choice', difficulty:2, text:'一圆周长为 31.4（π≈3.14），其半径是？', options:['A. 3','B. 4','C. 5','D. 10'], answer:'C', knowledgePoint:'周长公式 C = 2πr', analysis:'r = C/(2π) = 31.4/6.28 = 5。' },
+    { type:'choice', difficulty:3, text:'圆心角 120°、半径 6 的扇形面积是（π≈3.14）？', options:['A. 12.56','B. 37.68','C. 75.36','D. 18.84'], answer:'B', knowledgePoint:'弧长与扇形面积', analysis:'(120/360)×π×36 = (1/3)×3.14×36 ≈ 37.68。' }
+  ]},
+
+  { lesson: 10, questions: [
+    { type:'choice', difficulty:1, text:'点 (−3, 5) 位于哪个象限？', options:['A. 第一象限','B. 第二象限','C. 第三象限','D. 第四象限'], answer:'B', knowledgePoint:'四个象限', analysis:'x<0，y>0，在第二象限。' },
+    { type:'choice', difficulty:2, text:'点 A(2, 3) 与 B(2, −1) 的距离是？', options:['A. 2','B. 3','C. 4','D. 5'], answer:'C', knowledgePoint:'点的坐标表示法', analysis:'x 坐标相同，距离 = |3−(−1)| = 4。' },
+    { type:'choice', difficulty:3, text:'守门员在 (0,0)，追球手在 (3,4)，两者直线距离是？', options:['A. 5','B. 7','C. 6','D. 12'], answer:'A', knowledgePoint:'笛卡尔坐标系', analysis:'距离 = √(3²+4²) = √25 = 5。' }
+  ]},
+
+  // ── 第3章 代数基础 ──────────────────────────────────────────
+
+  { lesson: 11, questions: [
+    { type:'choice', difficulty:1, text:'当 x=3 时，4x−7 等于？', options:['A. 3','B. 5','C. 12','D. 7'], answer:'B', knowledgePoint:'代入求值', analysis:'4×3−7 = 12−7 = 5。' },
+    { type:'choice', difficulty:2, text:'化简 3x+5y−x+2y，结果是？', options:['A. 2x+7y','B. 3x+7y','C. 2x+3y','D. 4x+7y'], answer:'A', knowledgePoint:'化简同类项', analysis:'3x−x=2x，5y+2y=7y，结果 2x+7y。' },
+    { type:'choice', difficulty:3, text:'(3x+2y)−(x−4y) 等于？', options:['A. 2x+6y','B. 2x−2y','C. 4x−2y','D. 2x+2y'], answer:'A', knowledgePoint:'代数式的加减', analysis:'= 3x+2y−x+4y = 2x+6y。减号进括号，里面每项变号。' }
+  ]},
+
+  { lesson: 12, questions: [
+    { type:'choice', difficulty:1, text:'解 x+9=16，x 等于？', options:['A. 25','B. 7','C. 8','D. 9'], answer:'B', knowledgePoint:'一步、两步解方程', analysis:'x = 16−9 = 7。' },
+    { type:'choice', difficulty:2, text:'解 3x−4=11，x 等于？', options:['A. 3','B. 4','C. 5','D. 7'], answer:'C', knowledgePoint:'移项变号', analysis:'3x=15，x=5。验算：3×5−4=11 ✓' },
+    { type:'choice', difficulty:3, text:'x 毫升浓缩液与 3x+5 毫升稀释液混合，总量 45 毫升，x 等于？', options:['A. 8','B. 10','C. 12','D. 15'], answer:'B', knowledgePoint:'等式的性质', analysis:'x+(3x+5)=45，4x+5=45，4x=40，x=10。' }
+  ]},
+
+  { lesson: 13, questions: [
+    { type:'choice', difficulty:1, text:'解不等式 x+3>10，解集是？', options:['A. x>13','B. x>7','C. x<7','D. x<13'], answer:'B', knowledgePoint:'解一元一次不等式', analysis:'两边减 3：x>7。' },
+    { type:'choice', difficulty:2, text:'解 −2x≥8，解集是？', options:['A. x≥4','B. x≥−4','C. x≤4','D. x≤−4'], answer:'D', knowledgePoint:'乘除负数时变向', analysis:'除以 −2，方向反转：x≤−4。' },
+    { type:'choice', difficulty:3, text:'3x+1<2x+5 且 x>0 同时成立，x 的范围是？', options:['A. 0<x<4','B. x>4','C. x<4','D. x<0'], answer:'A', knowledgePoint:'解一元一次不等式', analysis:'第一式 → x<4，结合 x>0，取交集：0<x<4。' }
+  ]},
+
+  { lesson: 14, questions: [
+    { type:'choice', difficulty:1, text:'联立 x+y=7 和 x−y=3，x 等于？', options:['A. 2','B. 4','C. 5','D. 7'], answer:'C', knowledgePoint:'加减消元法', analysis:'两式相加：2x=10，x=5。代入得 y=2。' },
+    { type:'choice', difficulty:2, text:'联立 2x+y=9 和 x=y+3，解是？', options:['A. x=4,y=1','B. x=3,y=3','C. x=5,y=2','D. x=4,y=2'], answer:'A', knowledgePoint:'代入消元法', analysis:'代入：2(y+3)+y=9，3y=3，y=1，x=4。' },
+    { type:'choice', difficulty:3, text:'甲乙两人共工作 3 天酿 30 瓶魔药，甲每天比乙多酿 2 瓶，甲每天酿几瓶？', options:['A. 4','B. 5','C. 6','D. 7'], answer:'C', knowledgePoint:'联立方程初步', analysis:'设甲 a 瓶、乙 b 瓶：3(a+b)=30 → a+b=10；a−b=2。解得 a=6。' }
+  ]},
+
+  { lesson: 15, questions: [
+    { type:'choice', difficulty:1, text:'f(x)=3x−2，f(4) 等于？', options:['A. 10','B. 12','C. 14','D. 8'], answer:'A', knowledgePoint:'函数表达式与图像', analysis:'f(4)=3×4−2=10。' },
+    { type:'choice', difficulty:2, text:'f(x)=2x+5 的斜率和 y 轴截距分别是？', options:['A. 斜率5，截距2','B. 斜率2，截距5','C. 斜率−2，截距5','D. 斜率2，截距−5'], answer:'B', knowledgePoint:'线性函数的斜率', analysis:'f(x)=mx+c 中，m=2 是斜率，c=5 是截距。' },
+    { type:'choice', difficulty:3, text:'f(x)=√x 的定义域是？', options:['A. 所有实数','B. x>0','C. x≥0','D. 所有整数'], answer:'C', knowledgePoint:'函数的定义域与值域', analysis:'平方根要求被开方数非负，x≥0（含 x=0，因为 √0=0 有意义）。' }
+  ]},
+
+  // ── 第4章 度量与统计 ──────────────────────────────────────────
+
+  { lesson: 16, questions: [
+    { type:'choice', difficulty:1, text:'底 8、高 5 的三角形面积是？', options:['A. 20','B. 40','C. 13','D. 80'], answer:'A', knowledgePoint:'三角形面积', analysis:'½×8×5=20。' },
+    { type:'choice', difficulty:2, text:'上底 4、下底 10、高 6 的梯形面积是？', options:['A. 42','B. 60','C. 84','D. 30'], answer:'A', knowledgePoint:'梯形面积', analysis:'½×(4+10)×6=½×14×6=42。' },
+    { type:'choice', difficulty:3, text:'8×6 长方形去掉右上角 3×2 小矩形，L 形面积是？', options:['A. 48','B. 42','C. 54','D. 46'], answer:'B', knowledgePoint:'复合图形面积', analysis:'48−3×2=48−6=42。' }
+  ]},
+
+  { lesson: 17, questions: [
+    { type:'choice', difficulty:1, text:'长5、宽4、高3的长方体体积是？', options:['A. 12','B. 47','C. 60','D. 94'], answer:'C', knowledgePoint:'长方体与正方体', analysis:'5×4×3=60。' },
+    { type:'choice', difficulty:2, text:'底面半径3、高10的圆柱体积是（π≈3.14）？', options:['A. 188.4','B. 282.6','C. 94.2','D. 376.8'], answer:'B', knowledgePoint:'圆柱的体积', analysis:'π×9×10=3.14×90=282.6。' },
+    { type:'choice', difficulty:3, text:'底面半径6、高8的圆锥体积是（π≈3.14）？', options:['A. 150.7','B. 301.4','C. 904.3','D. 200.96'], answer:'B', knowledgePoint:'棱锥与圆锥的体积', analysis:'(1/3)×π×36×8=(1/3)×3.14×288=(1/3)×904.32≈301.4。' }
+  ]},
+
+  { lesson: 18, questions: [
+    { type:'choice', difficulty:1, text:'直角三角形两直角边为 6 和 8，斜边是？', options:['A. 10','B. 12','C. 14','D. 7'], answer:'A', knowledgePoint:'a² + b² = c²', analysis:'c=√(36+64)=√100=10。经典勾股数 6-8-10。' },
+    { type:'choice', difficulty:2, text:'三边 5、12、13 的三角形是？', options:['A. 锐角三角形','B. 直角三角形','C. 钝角三角形','D. 等腰三角形'], answer:'B', knowledgePoint:'判断直角三角形', analysis:'5²+12²=25+144=169=13²，满足勾股定理，是直角三角形。' },
+    { type:'choice', difficulty:3, text:'扫帚水平飞行 24 米，同时垂直上升 7 米，飞行路径长度是？', options:['A. 31','B. 25','C. 17','D. 28'], answer:'B', knowledgePoint:'勾股定理的应用', analysis:'√(24²+7²)=√(576+49)=√625=25。' }
+  ]},
+
+  { lesson: 19, questions: [
+    { type:'choice', difficulty:1, text:'40 名学生中 24 人喜欢魁地奇，频率是？', options:['A. 24%','B. 40%','C. 60%','D. 0.024'], answer:'C', knowledgePoint:'频率与频数', analysis:'24/40=0.6=60%。' },
+    { type:'choice', difficulty:2, text:'关于总体与样本，正确的是？', options:['A. 样本等于总体','B. 总体从样本中抽取','C. 样本量越大越能代表总体','D. 任何样本都等价'], answer:'C', knowledgePoint:'总体与样本', analysis:'样本量越大，统计结果越稳定，对总体的估计越准确。' },
+    { type:'choice', difficulty:3, text:'数据 21,22,23,24,25,26,28 的中位数是？', options:['A. 24','B. 23','C. 25','D. 22'], answer:'A', knowledgePoint:'频率分布表', analysis:'共 7 个数，从小到大排列，第 4 个是 24。' }
+  ]},
+
+  { lesson: 20, questions: [
+    { type:'choice', difficulty:1, text:'数据 3,7,7,8,5 的众数是？', options:['A. 3','B. 5','C. 7','D. 8'], answer:'C', knowledgePoint:'三种平均值的计算', analysis:'7 出现 2 次，其余各 1 次，众数为 7。' },
+    { type:'choice', difficulty:2, text:'公平硬币掷两次，至少一次正面的概率是？', options:['A. 1/4','B. 1/2','C. 3/4','D. 1'], answer:'C', knowledgePoint:'互斥事件与互补事件', analysis:'P=1−P(两次反面)=1−(1/2)²=3/4。用互补更快。' },
+    { type:'choice', difficulty:3, text:'少数极富家庭学生将零花钱均值拉高，代表"普通学生"水平最合适的统计量是？', options:['A. 均值','B. 中位数','C. 众数','D. 最大值'], answer:'B', knowledgePoint:'各平均值的适用场合', analysis:'中位数不受极端值影响，适合含有异常高值的收入/财富类数据。' }
+  ]},
+
+  // ── 第5章 数论基础 ──────────────────────────────────────────
+
+  { lesson: 21, questions: [
+    { type:'choice', difficulty:1, text:'下列数中是质数的是？', options:['A. 1','B. 9','C. 13','D. 15'], answer:'C', knowledgePoint:'质数与合数的定义', analysis:'1 既不是质数也不是合数。9=3×3，15=3×5 是合数。13 只能被 1 和 13 整除，是质数。' },
+    { type:'choice', difficulty:2, text:'24 和 36 的最大公因数是？', options:['A. 6','B. 12','C. 4','D. 8'], answer:'B', knowledgePoint:'最大公因数与最小公倍数', analysis:'24=2³×3，36=2²×3²。GCD=2²×3=12。' },
+    { type:'choice', difficulty:3, text:'60 的完整质因数分解是？', options:['A. 2×30','B. 4×15','C. 2²×3×5','D. 2³×3×5'], answer:'C', knowledgePoint:'质因数分解的唯一性', analysis:'60=2×2×3×5=2²×3×5。' }
+  ]},
+
+  { lesson: 22, questions: [
+    { type:'choice', difficulty:1, text:'17 除以 5 的余数是？', options:['A. 1','B. 2','C. 3','D. 0'], answer:'B', knowledgePoint:'余数的定义', analysis:'17=5×3+2，余数为 2。' },
+    { type:'choice', difficulty:2, text:'下列数中能被 9 整除的是？', options:['A. 451','B. 567','C. 124','D. 218'], answer:'B', knowledgePoint:'整除的判断规则', analysis:'各位数字之和：5+6+7=18，18÷9=2，能整除。' },
+    { type:'choice', difficulty:3, text:'求 GCD(48, 18)，用辗转相除法，结果是？', options:['A. 3','B. 6','C. 9','D. 12'], answer:'B', knowledgePoint:'辗转相除法', analysis:'48=2×18+12；18=1×12+6；12=2×6+0。最后非零余数为 6，GCD=6。' }
+  ]},
+
+  { lesson: 23, questions: [
+    { type:'choice', difficulty:1, text:'A={1,2,3,4}，B={3,4,5,6}，A∩B 是？', options:['A. {1,2,3,4,5,6}','B. {3,4}','C. {1,2}','D. {5,6}'], answer:'B', knowledgePoint:'交集与并集', analysis:'交集是同时属于两个集合的元素：{3,4}。' },
+    { type:'choice', difficulty:2, text:'A={1,2,3,4}，B={3,4,5,6}，A∪B 是？', options:['A. {3,4}','B. {1,2,5,6}','C. {1,2,3,4,5,6}','D. {1,2,4,5,6}'], answer:'C', knowledgePoint:'交集与并集', analysis:'并集包含所有属于 A 或 B 的元素，每个写一次：{1,2,3,4,5,6}。' },
+    { type:'choice', difficulty:3, text:'学魔咒学 20 人，学草药学 15 人，两者都学的 8 人，只学其中一门的共多少人？', options:['A. 19','B. 27','C. 35','D. 43'], answer:'A', knowledgePoint:'韦恩图', analysis:'只学魔咒学：20−8=12，只学草药学：15−8=7，共 12+7=19 人。' }
+  ]},
+
+  { lesson: 24, questions: [
+    { type:'choice', difficulty:1, text:'"所有偶数都能被 4 整除"是？', options:['A. 真命题','B. 假命题，6 是反例','C. 假命题，3 是反例','D. 无法判断'], answer:'B', knowledgePoint:'真命题与假命题', analysis:'6 是偶数但 6÷4=1 余 2，不能被 4 整除，是一个反例。' },
+    { type:'choice', difficulty:2, text:'"若 x²=4 则 x=2"的逆命题是？', options:['A. 若 x=2 则 x²=4','B. 若 x²≠4 则 x≠2','C. 若 x≠2 则 x²≠4','D. 若 x=2 则 x²≠4'], answer:'A', knowledgePoint:'逆命题与否命题', analysis:'"若 P 则 Q"的逆命题是"若 Q 则 P"。P：x²=4，Q：x=2，逆命题：若 x=2 则 x²=4。' },
+    { type:'choice', difficulty:3, text:'证明"存在偶数质数"，最有效的方法是？', options:['A. 反证法','B. 数学归纳法','C. 给出具体例子','D. 穷举所有偶数'], answer:'C', knowledgePoint:'反例的意义', analysis:'证明"存在"只需一个构造性例子：2 是质数也是偶数。' }
+  ]},
+
+  { lesson: 25, questions: [
+    { type:'choice', difficulty:1, text:'反证法证明"若 n² 是奇数则 n 是奇数"，起点假设是？', options:['A. 假设 n 是奇数','B. 假设 n 是偶数','C. 假设 n² 是偶数','D. 假设 n 是正数'], answer:'B', knowledgePoint:'反证法', analysis:'反证法假设结论不成立。结论"n 是奇数"的否定是"n 是偶数"，从此出发推矛盾。' },
+    { type:'choice', difficulty:2, text:'数学归纳法需要证明哪两件事？', options:['A. P(1)成立；P(k)成立时P(k+1)成立','B. P(1)成立；P(k+1)成立时P(k)成立','C. P(n)对偶数成立；P(n)对奇数成立','D. P(1)成立；P(2)成立'], answer:'A', knowledgePoint:'简单数学证明', analysis:'基础步骤证 P(1)，归纳步骤证 P(k)→P(k+1)，两者缺一不可。' },
+    { type:'choice', difficulty:3, text:'"能被 6 整除的数能被 2 和 3 整除"，直接证明的正确路线是？', options:['A. 设n=6k，则n=2(3k)被2整除，n=3(2k)被3整除','B. 设n被2整除，则n=2k，代入可知被6整除','C. 举例：6、12、18都能被2和3整除','D. 反证：若不被2整除，则不被6整除'], answer:'A', knowledgePoint:'直接证明法', analysis:'设 n=6k，n=2×(3k) 故被 2 整除，n=3×(2k) 故被 3 整除。直接证明写出推导链。' }
+  ]},
+
+  // ── 第6章 综合应用 ──────────────────────────────────────────
+
+  { lesson: 26, questions: [
+    { type:'choice', difficulty:1, text:'两相似三角形对应边为 6 和 9，比例因子是？', options:['A. 1∶2','B. 2∶3','C. 3∶2','D. 1∶3'], answer:'B', knowledgePoint:'比例因子', analysis:'比例因子 = 6∶9 = 2∶3。' },
+    { type:'choice', difficulty:2, text:'相似图形比例因子为 1∶3，面积比是？', options:['A. 1∶3','B. 1∶6','C. 1∶9','D. 1∶27'], answer:'C', knowledgePoint:'相似图形的定义', analysis:'面积比 = 比例因子的平方：(1∶3)² = 1∶9。' },
+    { type:'choice', difficulty:3, text:'地图比例尺 1∶50000，图上 4 厘米代表实际多少千米？', options:['A. 0.5','B. 1','C. 2','D. 4'], answer:'C', knowledgePoint:'比例在地图与模型中的应用', analysis:'4cm×50000=200000cm=2000m=2km。' }
+  ]},
+
+  { lesson: 27, questions: [
+    { type:'choice', difficulty:1, text:'点 (3,4) 向左平移 5 个单位后坐标是？', options:['A. (8,4)','B. (−2,4)','C. (3,−1)','D. (3,9)'], answer:'B', knowledgePoint:'变换的坐标描述', analysis:'向左 x 减 5：(3−5, 4) = (−2, 4)。' },
+    { type:'choice', difficulty:2, text:'点 (2,3) 关于 x 轴反射后坐标是？', options:['A. (−2,3)','B. (2,−3)','C. (−2,−3)','D. (3,2)'], answer:'B', knowledgePoint:'三种变换的定义', analysis:'关于 x 轴反射：x 不变，y 变号。(2,3)→(2,−3)。' },
+    { type:'choice', difficulty:3, text:'正方形具有哪些对称性？', options:['A. 只有轴对称','B. 只有中心对称','C. 既有轴对称也有中心对称','D. 两者都没有'], answer:'C', knowledgePoint:'中心对称与轴对称', analysis:'正方形有 4 条对称轴（轴对称），绕中心旋转 180° 重合（中心对称）。' }
+  ]},
+
+  { lesson: 28, questions: [
+    { type:'choice', difficulty:1, text:'展示四个学院学生人数构成比例，最合适的图是？', options:['A. 折线图','B. 散点图','C. 饼图','D. 茎叶图'], answer:'C', knowledgePoint:'根据目的选图', analysis:'饼图展示各部分占整体的比例，适合此场景。' },
+    { type:'choice', difficulty:2, text:'直方图与条形图的主要区别是？', options:['A. 直方图有颜色','B. 直方图条间无空隙，横轴是连续数值','C. 条形图只用于频率','D. 两者完全相同'], answer:'B', knowledgePoint:'直方图与频率分布', analysis:'直方图横轴是连续区间，条形无空隙，面积代表频率；条形图横轴是离散分类。' },
+    { type:'choice', difficulty:3, text:'研究扫帚速度与比赛得分的关系，应用哪种图？', options:['A. 饼图','B. 折线图','C. 散点图','D. 条形图'], answer:'C', knowledgePoint:'散点图', analysis:'探索两个数值变量的关系用散点图，观察点的分布趋势。' }
+  ]},
+
+  { lesson: 29, questions: [
+    { type:'choice', difficulty:1, text:'袋中 3 红 2 蓝球，随机取一个，取到红球的概率是？', options:['A. 2/5','B. 3/5','C. 1/2','D. 3/2'], answer:'B', knowledgePoint:'理论概率的计算', analysis:'P=3/5。' },
+    { type:'choice', difficulty:2, text:'掷硬币 100 次，正面 47 次，实验概率与理论概率关系是？', options:['A. 必须相等','B. 实验概率<理论概率','C. 实验概率>理论概率','D. 是不同概念，不一定相等，但次数多了会接近'], answer:'D', knowledgePoint:'实验概率与大数定律', analysis:'大数定律说次数足够多时会趋近，但单次实验不要求相等。' },
+    { type:'choice', difficulty:3, text:'掷两枚公平骰子，点数之和为 7 的概率是？', options:['A. 1/6','B. 1/12','C. 7/36','D. 5/36'], answer:'A', knowledgePoint:'样本空间与事件', analysis:'总结果 36 种，和为 7 的有 (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) 共 6 种，P=6/36=1/6。' }
+  ]},
+
+  { lesson: 30, questions: [
+    { type:'choice', difficulty:1, text:'数学建模中"假设"的作用是？', options:['A. 证明模型一定正确','B. 简化现实使问题可计算','C. 列举所有情况','D. 找到精确答案'], answer:'B', knowledgePoint:'假设的设立', analysis:'假设是对现实的简化，忽略次要因素，使数学处理可行。' },
+    { type:'choice', difficulty:2, text:'模型预测与实际差距很大，最合适的做法是？', options:['A. 忽略差距','B. 舍弃数据','C. 检查假设，修正模型','D. 增大样本重复'], answer:'C', knowledgePoint:'模型的检验与修正', analysis:'预测偏差大说明模型有问题，应回检假设和方程，修正模型。' },
+    { type:'choice', difficulty:3, text:'扫帚以 v km/h 匀速飞行 t 小时，若 v 翻倍、t 减半，距离 d 如何变？', options:['A. 翻倍','B. 减半','C. 不变','D. 变为 4 倍'], answer:'C', knowledgePoint:'变量的识别', analysis:'d=v×t。新 d=2v×(t/2)=vt=d，距离不变。' }
+  ]},
+
+  // ── 第7章 代数进阶（GCSE）──────────────────────────────────
+
+  { lesson: 31, questions: [
+    { type:'choice', difficulty:1, text:'x²−7x+12=0 因式分解后是？', options:['A. (x−3)(x−4)=0','B. (x+3)(x+4)=0','C. (x−3)(x+4)=0','D. (x+3)(x−4)=0'], answer:'A', knowledgePoint:'因式分解为两个括号', analysis:'需两数积=12、和=−7：(−3)×(−4)=12，(−3)+(−4)=−7，故(x−3)(x−4)。' },
+    { type:'choice', difficulty:2, text:'解 x²−5x+6=0，解是？', options:['A. x=2或x=3','B. x=−2或x=−3','C. x=1或x=6','D. x=5或x=1'], answer:'A', knowledgePoint:'零积原理', analysis:'(x−2)(x−3)=0，x=2 或 x=3。' },
+    { type:'choice', difficulty:3, text:'x²+2x+5=0 有多少个实数解？', options:['A. 两个不同实数解','B. 一个重解','C. 没有实数解','D. 无穷多'], answer:'C', knowledgePoint:'判别式初探', analysis:'Δ=4−20=−16<0，无实数解。' }
+  ]},
+
+  { lesson: 32, questions: [
+    { type:'choice', difficulty:1, text:'用求根公式解 2x²+3x−2=0，正确代入是？', options:['A. x=(−3±√25)/4','B. x=(3±√25)/4','C. x=(−3±√25)/2','D. x=(−2±√20)/4'], answer:'A', knowledgePoint:'一元二次方程求根公式', analysis:'a=2,b=3,c=−2。x=(−3±√(9+16))/4=(−3±√25)/4。' },
+    { type:'choice', difficulty:2, text:'x²+6x+7=0 配方后等价于？', options:['A. (x+3)²=2','B. (x+3)²=−2','C. (x+6)²=29','D. (x+3)²=16'], answer:'A', knowledgePoint:'配方的步骤', analysis:'x²+6x=−7，加 9：(x+3)²=2。' },
+    { type:'choice', difficulty:3, text:'x²−4x+4=0 的解是？', options:['A. x=2或x=−2','B. x=4','C. x=2（重根）','D. 无实数解'], answer:'C', knowledgePoint:'重根与虚根的概念', analysis:'Δ=16−16=0，x=4/2=2，重根。也可验：(x−2)²=0。' }
+  ]},
+
+  { lesson: 33, questions: [
+    { type:'choice', difficulty:1, text:'y=x²−4x+3 的对称轴是？', options:['A. x=−2','B. x=2','C. x=4','D. x=−4'], answer:'B', knowledgePoint:'抛物线的对称轴', analysis:'x=−b/(2a)=4/2=2。' },
+    { type:'choice', difficulty:2, text:'y=2(x−3)²+1 的顶点坐标是？', options:['A. (3,1)','B. (−3,1)','C. (3,−1)','D. (2,1)'], answer:'A', knowledgePoint:'顶点坐标公式', analysis:'顶点式 y=a(x−h)²+k，顶点 (h,k)=(3,1)。' },
+    { type:'choice', difficulty:3, text:'x²−2x+k=0 有两个不同实数解，k 的范围是？', options:['A. k<1','B. k>1','C. k=1','D. k<−1'], answer:'A', knowledgePoint:'判别式与图像的关系', analysis:'Δ=4−4k>0 → k<1。' }
+  ]},
+
+  { lesson: 34, questions: [
+    { type:'choice', difficulty:1, text:'展开 (x+3)(x−2)，结果是？', options:['A. x²+x−6','B. x²−x−6','C. x²+5x−6','D. x²−6'], answer:'A', knowledgePoint:'乘积展开', analysis:'x²−2x+3x−6=x²+x−6。' },
+    { type:'choice', difficulty:2, text:'展开 (2x+3)²，结果是？', options:['A. 4x²+9','B. 4x²+6x+9','C. 4x²+12x+9','D. 2x²+12x+9'], answer:'C', knowledgePoint:'完全平方公式与平方差公式', analysis:'(2x)²+2×2x×3+3²=4x²+12x+9。' },
+    { type:'choice', difficulty:3, text:'(x²+3x+2)÷(x+1) 的结果是？', options:['A. x+2','B. x+3','C. x²+2','D. x+1'], answer:'A', knowledgePoint:'多项式除法初步', analysis:'x²+3x+2=(x+1)(x+2)，除以 (x+1) 得 x+2。' }
+  ]},
+
+  { lesson: 35, questions: [
+    { type:'choice', difficulty:1, text:'方程组 x+ky=5 和 2x+y=6 中，k 是？', options:['A. 未知数','B. 参数','C. 常数 5','D. 无意义'], answer:'B', knowledgePoint:'参数的含义', analysis:'k 不是要解的量，而是控制方程性质的参数；x 和 y 是未知数。' },
+    { type:'choice', difficulty:2, text:'方程组 x+y=3 和 x+y=5，解的情况是？', options:['A. 唯一解','B. 无解','C. 无穷多解','D. 两个解'], answer:'B', knowledgePoint:'无解与无数解的条件', analysis:'两方程左边相同，右边矛盾（3≠5），无解。几何上为两条平行线。' },
+    { type:'choice', difficulty:3, text:'联立 3x+y=1 和 3x+3y=2，解是？', options:['A. x=1/6, y=1/2','B. 无解','C. 无穷多解','D. x=1, y=−2'], answer:'A', knowledgePoint:'含参方程组', analysis:'两式相减：2y=1，y=1/2。代入第一式：3x=1/2，x=1/6。' }
+  ]},
+
+
+  // ── 第8章 三角学（GCSE）────────────────────────────────────
+
+  { lesson: 36, questions: [
+    { type:'choice', difficulty:1, text:'直角三角形中，sin θ 的定义是？', options:['A. 邻边/斜边','B. 对边/斜边','C. 对边/邻边','D. 斜边/对边'], answer:'B', knowledgePoint:'正弦、余弦、正切的定义', analysis:'SOH：Sin=Opposite/Hypotenuse，sin θ = 对边/斜边。' },
+    { type:'choice', difficulty:2, text:'sin 30° 等于？', options:['A. √3/2','B. 1/2','C. 1/√2','D. 1'], answer:'B', knowledgePoint:'特殊角的三角值', analysis:'sin 30° = 1/2。来自等边三角形对半切开的直角三角形。' },
+    { type:'choice', difficulty:3, text:'直角三角形斜边为 10，一角为 37°（sin37°≈0.6），该角对边长是？', options:['A. 4','B. 5','C. 6','D. 8'], answer:'C', knowledgePoint:'直角三角形中三边的关系', analysis:'对边 = 斜边×sin37° = 10×0.6 = 6。' }
+  ]},
+
+  { lesson: 37, questions: [
+    { type:'choice', difficulty:1, text:'从地面看一棵树顶的仰角为 45°，这意味着？', options:['A. 水平距离等于树高','B. 斜边长等于树高','C. 树高是水平距离的两倍','D. 无法确定关系'], answer:'A', knowledgePoint:'仰角与俯角', analysis:'tan 45°=1，对边/邻边=1，即树高/水平距离=1，树高=水平距离。' },
+    { type:'choice', difficulty:2, text:'距树 20 米处，仰角 30°（tan30°≈0.577），树高约为？', options:['A. 11.5 米','B. 20 米','C. 34.6 米','D. 5.8 米'], answer:'A', knowledgePoint:'用三角比求边长或角度', analysis:'树高 = 20×tan30° ≈ 20×0.577 ≈ 11.5 米。' },
+    { type:'choice', difficulty:3, text:'已知直角三角形两直角边为 3 和 4，较小锐角的 tan 值是？', options:['A. 3/4','B. 4/3','C. 3/5','D. 4/5'], answer:'A', knowledgePoint:'反三角函数', analysis:'斜边=5。对应较小锐角（对边3，邻边4），tan=3/4。' }
+  ]},
+
+  { lesson: 38, questions: [
+    { type:'choice', difficulty:1, text:'正弦定理的表达式是？', options:['A. a/sinA=b/sinB=c/sinC','B. a²=b²+c²−2bc·cosA','C. sinA=a/b','D. a/cosA=b/cosB'], answer:'A', knowledgePoint:'正弦定理：a/sinA = b/sinB = c/sinC', analysis:'正弦定理：三边与对角正弦之比相等。' },
+    { type:'choice', difficulty:2, text:'三角形 A=30°，a=5，b=8，sin30°=0.5，sinB 等于？', options:['A. 0.5','B. 0.6','C. 0.8','D. 1.0'], answer:'C', knowledgePoint:'正弦定理：a/sinA = b/sinB = c/sinC', analysis:'a/sinA=b/sinB → 5/0.5=8/sinB → sinB=8×0.5/5=0.8。' },
+    { type:'choice', difficulty:3, text:'余弦定理：a²=b²+c²−2bc·cosA，当 A=90° 时退化为？', options:['A. a²=b²+c²','B. a=b+c','C. a²=b²−c²','D. a²=(b+c)²'], answer:'A', knowledgePoint:'余弦定理：a² = b² + c² - 2bc·cosA', analysis:'cos90°=0，所以 −2bc·cosA=0，退化为 a²=b²+c²，即勾股定理。' }
+  ]},
+
+  { lesson: 39, questions: [
+    { type:'choice', difficulty:1, text:'sin x = 1/2，在 0°≤x≤360° 内，x 的所有解是？', options:['A. 只有 30°','B. 30° 和 150°','C. 30° 和 210°','D. 150° 和 330°'], answer:'B', knowledgePoint:'在给定范围内列出所有解', analysis:'主值 arcsin(1/2)=30°。sin 图像在 0°~360° 内还有对称解 180°−30°=150°。' },
+    { type:'choice', difficulty:2, text:'cos x = −1/2，在 0°≤x≤360° 内的解是？', options:['A. 60° 和 300°','B. 120° 和 240°','C. 30° 和 150°','D. 120° 和 300°'], answer:'B', knowledgePoint:'基本三角方程', analysis:'cos为负在第二、三象限。arccos(1/2)=60°，故解为 180°−60°=120° 和 180°+60°=240°。' },
+    { type:'choice', difficulty:3, text:'tan x = 1 的通解是（n 为整数）？', options:['A. x=45°+180°n','B. x=45°+360°n','C. x=45°+90°n','D. x=135°+180°n'], answer:'A', knowledgePoint:'方程的周期性解', analysis:'tan 的周期为 180°，主值 arctan(1)=45°，通解为 x=45°+180°n。' }
+  ]},
+
+  { lesson: 40, questions: [
+    { type:'choice', difficulty:1, text:'方位角的测量起点和方向是？', options:['A. 正东，逆时针','B. 正北，顺时针','C. 正南，顺时针','D. 正西，逆时针'], answer:'B', knowledgePoint:'方位角', analysis:'方位角从正北方向顺时针量度，范围 000°~360°。' },
+    { type:'choice', difficulty:2, text:'从 A 点看 B 点方位角为 060°，从 B 点看 A 点方位角约为？', options:['A. 060°','B. 120°','C. 240°','D. 300°'], answer:'C', knowledgePoint:'三角测量法', analysis:'反方位角 = 原方位角 ± 180°。60°+180°=240°。' },
+    { type:'choice', difficulty:3, text:'测量时角度误差 0.1°，在 1000 米处引起的位置误差约为（sin0.1°≈0.00175）？', options:['A. 约 0.175 米','B. 约 1.75 米','C. 约 17.5 米','D. 约 175 米'], answer:'B', knowledgePoint:'误差分析', analysis:'误差距离 ≈ 1000×sin(0.1°) ≈ 1000×0.00175 = 1.75 米。' }
+  ]},
+
+  // ── 第9章 微积分初步（GCSE）────────────────────────────────
+
+  { lesson: 41, questions: [
+    { type:'choice', difficulty:1, text:'平均速度的定义是？', options:['A. 某一时刻的速度','B. 总位移除以总时间','C. 最快速度与最慢速度的平均','D. 速度的导数'], answer:'B', knowledgePoint:'平均速度与瞬时速度', analysis:'平均速度 = 总位移/总时间，描述整段时间的整体效果。' },
+    { type:'choice', difficulty:2, text:'位移-时间图上某点的切线斜率代表什么？', options:['A. 平均速度','B. 加速度','C. 瞬时速度','D. 位移'], answer:'C', knowledgePoint:'变化率的几何含义', analysis:'切线斜率是该点处函数的瞬时变化率，在位移-时间图上即为瞬时速度。' },
+    { type:'choice', difficulty:3, text:'一个函数在某点的切线斜率为负，这意味着？', options:['A. 函数在该点的值为负','B. 函数在该点递减','C. 函数在该点有极小值','D. 函数在该点为零'], answer:'B', knowledgePoint:'变化率的几何含义', analysis:'斜率为负意味着 x 增大时 y 减小，即函数在该点递减。' }
+  ]},
+
+  { lesson: 42, questions: [
+    { type:'choice', difficulty:1, text:'导数 f\'(x) 的几何意义是？', options:['A. 函数图像下的面积','B. 函数在 x 处的切线斜率','C. 函数在 x 处的值','D. 函数的最大值'], answer:'B', knowledgePoint:'切线斜率', analysis:'f\'(x) 是函数图像在 x 处切线的斜率，即瞬时变化率。' },
+    { type:'choice', difficulty:2, text:'f(x)=x² 在 x=3 处的导数值是？（利用定义：nxⁿ⁻¹）', options:['A. 3','B. 6','C. 9','D. 12'], answer:'B', knowledgePoint:'导数的定义', analysis:'f\'(x)=2x，f\'(3)=2×3=6。' },
+    { type:'choice', difficulty:3, text:'若 f\'(a)=0 且 f(a) 是极大值，f\'\'(a) 的符号应为？', options:['A. 正','B. 负','C. 零','D. 无法确定'], answer:'B', knowledgePoint:'切线斜率', analysis:'f\'\'(a)<0 表示函数在 a 处向下弯，对应极大值。' }
+  ]},
+
+  { lesson: 43, questions: [
+    { type:'choice', difficulty:1, text:'f(x)=x⁵ 的导数是？', options:['A. 5x⁶','B. 5x⁴','C. x⁴','D. 4x⁵'], answer:'B', knowledgePoint:'幂函数求导', analysis:'幂函数法则：(xⁿ)\'=nxⁿ⁻¹。(x⁵)\'=5x⁴。' },
+    { type:'choice', difficulty:2, text:'f(x)=3x²+2x−5 的导数是？', options:['A. 6x+2','B. 3x+2','C. 6x−5','D. 6x+2x'], answer:'A', knowledgePoint:'常数倍法则与求和法则', analysis:'逐项求导：(3x²)\'=6x，(2x)\'=2，(−5)\'=0。f\'=6x+2。' },
+    { type:'choice', difficulty:3, text:'f(x)=sin(3x) 的导数是？（链式法则）', options:['A. cos(3x)','B. 3cos(3x)','C. −3cos(3x)','D. sin(3)'], answer:'B', knowledgePoint:'链式法则', analysis:'外层 sin，内层 3x。f\'=cos(3x)×3=3cos(3x)。' }
+  ]},
+
+  { lesson: 44, questions: [
+    { type:'choice', difficulty:1, text:'求函数极值，第一步是？', options:['A. 求二阶导数','B. 令一阶导数等于零','C. 画图像','D. 代入端点'], answer:'B', knowledgePoint:'临界点的求法', analysis:'令 f\'(x)=0，解出临界点候选——这是找极值的入口。' },
+    { type:'choice', difficulty:2, text:'f(x)=x²−6x+8，临界点处的值是极大还是极小？', options:['A. 极大值 −1','B. 极小值 −1','C. 极大值 8','D. 极小值 8'], answer:'B', knowledgePoint:'二阶导数判别极大极小', analysis:'f\'=2x−6=0 → x=3。f\'\'=2>0，向上弯，是极小值。f(3)=9−18+8=−1。' },
+    { type:'choice', difficulty:3, text:'用最少的围栏围出面积最大的矩形，已知围栏总长 40 米，最大面积是？', options:['A. 100 m²','B. 150 m²','C. 200 m²','D. 400 m²'], answer:'A', knowledgePoint:'优化问题的建模', analysis:'设宽 x，长 20−x（半周长=20）。面积 A=x(20−x)。A\'=20−2x=0，x=10，A=10×10=100 m²。' }
+  ]},
+
+  { lesson: 45, questions: [
+    { type:'choice', difficulty:1, text:'∫x²dx 等于？', options:['A. 2x','B. x³/3+C','C. 2x+C','D. x³+C'], answer:'B', knowledgePoint:'不定积分与反导数', analysis:'幂函数积分：∫xⁿdx = xⁿ⁺¹/(n+1)+C。∫x²dx=x³/3+C。' },
+    { type:'choice', difficulty:2, text:'∫₀² x dx 等于？', options:['A. 1','B. 2','C. 4','D. 8'], answer:'B', knowledgePoint:'定积分的计算', analysis:'F(x)=x²/2。F(2)−F(0)=4/2−0=2。' },
+    { type:'choice', difficulty:3, text:'函数 y=x² 在 x=1 到 x=3 上与 x 轴围成的面积是？', options:['A. 26/3','B. 8','C. 9','D. 6'], answer:'A', knowledgePoint:'面积的计算', analysis:'∫₁³ x²dx = [x³/3]₁³ = 27/3−1/3 = 26/3。' }
+  ]},
+
+  // ── 第10章 统计深化（GCSE）──────────────────────────────────
+
+  { lesson: 46, questions: [
+    { type:'choice', difficulty:1, text:'随机变量 X 的概率分布表中，所有 P(X=x) 之和必须等于？', options:['A. 0','B. 0.5','C. 1','D. 不确定'], answer:'C', knowledgePoint:'概率分布表', analysis:'所有可能取值的概率之和必须等于 1——这是概率的基本性质。' },
+    { type:'choice', difficulty:2, text:'X 的概率分布为 P(X=1)=0.3，P(X=2)=0.5，P(X=3)=0.2，E(X) 等于？', options:['A. 1.5','B. 1.9','C. 2','D. 2.5'], answer:'B', knowledgePoint:'期望值E(X)的计算', analysis:'E(X)=1×0.3+2×0.5+3×0.2=0.3+1.0+0.6=1.9。' },
+    { type:'choice', difficulty:3, text:'若 E(X)=3，E(X²)=11，则 Var(X)=？', options:['A. 2','B. 4','C. 8','D. 11'], answer:'A', knowledgePoint:'方差Var(X)的计算', analysis:'Var(X)=E(X²)−[E(X)]²=11−9=2。' }
+  ]},
+
+  { lesson: 47, questions: [
+    { type:'choice', difficulty:1, text:'条件概率 P(A|B) 的含义是？', options:['A. A 和 B 同时发生的概率','B. 已知 B 发生时 A 发生的概率','C. A 或 B 发生的概率','D. B 在 A 之后发生的概率'], answer:'B', knowledgePoint:'条件概率公式 P(A|B)', analysis:'P(A|B) 读作"已知 B 发生时 A 的概率"，分母是 B 的概率（新的样本空间）。' },
+    { type:'choice', difficulty:2, text:'P(A)=0.4，P(B)=0.3，若 A 和 B 独立，P(A∩B)=？', options:['A. 0.7','B. 0.1','C. 0.12','D. 0.04'], answer:'C', knowledgePoint:'事件独立性的判断', analysis:'独立事件：P(A∩B)=P(A)×P(B)=0.4×0.3=0.12。' },
+    { type:'choice', difficulty:3, text:'P(A)=0.6，P(B|A)=0.5，P(A∩B)=？', options:['A. 0.1','B. 0.3','C. 0.5','D. 0.8'], answer:'B', knowledgePoint:'乘法定理', analysis:'P(A∩B)=P(B|A)×P(A)=0.5×0.6=0.3。' }
+  ]},
+
+  { lesson: 48, questions: [
+    { type:'choice', difficulty:1, text:'正态分布曲线的形状是？', options:['A. 直线','B. 关于均值对称的钟形曲线','C. 单调递增曲线','D. U 形曲线'], answer:'B', knowledgePoint:'钟形曲线的特征', analysis:'正态分布曲线是关于均值对称的钟形（高斯曲线），均值处最高。' },
+    { type:'choice', difficulty:2, text:'X～N(50,4²)，P(42<X<58) 约等于？（68-95-99.7 法则）', options:['A. 68%','B. 95%','C. 99.7%','D. 50%'], answer:'B', knowledgePoint:'68-95-99.7法则', analysis:'42=50−2×4，58=50+2×4，即 μ±2σ，覆盖约 95%。' },
+    { type:'choice', difficulty:3, text:'若 X～N(100,15²)，x=130 的 z 值是？', options:['A. 1','B. 2','C. 3','D. −2'], answer:'B', knowledgePoint:'标准化与z值', analysis:'z=(x−μ)/σ=(130−100)/15=30/15=2。' }
+  ]},
+
+  { lesson: 49, questions: [
+    { type:'choice', difficulty:1, text:'样本统计量与总体参数的关系是？', options:['A. 一定相等','B. 样本统计量是总体参数的估计','C. 总体参数大于样本统计量','D. 没有关系'], answer:'B', knowledgePoint:'总体参数与样本统计量', analysis:'我们用样本统计量（如样本均值）来估计总体参数（如总体均值），两者不一定相等。' },
+    { type:'choice', difficulty:2, text:'p 值的正确解读是？', options:['A. H₀ 为真的概率','B. 假设 H₀ 为真时观察到此极端数据的概率','C. H₁ 为真的概率','D. 实验重复性的度量'], answer:'B', knowledgePoint:'假设检验的逻辑', analysis:'p 值是在零假设 H₀ 为真的条件下，观测到当前或更极端结果的概率。' },
+    { type:'choice', difficulty:3, text:'显著性水平 α=0.05，p=0.03，应该？', options:['A. 接受 H₀','B. 拒绝 H₀','C. 增大样本量再检验','D. 降低显著性水平'], answer:'B', knowledgePoint:'显著性水平', analysis:'p=0.03 < α=0.05，有统计显著性，拒绝零假设 H₀。' }
+  ]},
+
+  { lesson: 50, questions: [
+    { type:'choice', difficulty:1, text:'GCSE 数学考试通常覆盖哪几个阶段？', options:['A. 只有代数','B. KS3 和 GCSE 阶段所有内容','C. 只有统计','D. 只有几何'], answer:'B', knowledgePoint:'解题策略回顾', analysis:'GCSE 考试覆盖 KS3（1-3年级）和 GCSE（4-5年级）的全部内容。' },
+    { type:'choice', difficulty:2, text:'在考试中，若某题不会解，最佳策略是？', options:['A. 空着跳过','B. 随便写一个答案','C. 写出思路和部分步骤','D. 把时间都花在这题上'], answer:'C', knowledgePoint:'考试技巧', analysis:'写出解题思路和部分正确步骤仍可获得步骤分，比空着或乱写更好。' },
+    { type:'choice', difficulty:3, text:'代数方法和几何方法求解同一问题，理论上结果应该？', options:['A. 代数更准确','B. 几何更准确','C. 一致，因为描述的是同一事实','D. 不同，因为方法不同'], answer:'C', knowledgePoint:'代数与几何综合', analysis:'代数和几何是描述同一数学事实的不同语言，正确执行后结果必须一致。' }
+  ]},
+
+  // ── 第11章 纯数学（A-Level）────────────────────────────────
+
+  { lesson: 51, questions: [
+    { type:'choice', difficulty:1, text:'f(x+3) 相对于 f(x) 的图像变化是？', options:['A. 向右平移 3','B. 向左平移 3','C. 向上平移 3','D. 向下平移 3'], answer:'B', knowledgePoint:'平移变换 f(x+a)', analysis:'f(x+a) 向左平移 a（a>0）。括号内加正数，图像向左。' },
+    { type:'choice', difficulty:2, text:'f(x)=x² 的反函数是？（定义域 x≥0）', options:['A. f⁻¹(x)=x²','B. f⁻¹(x)=√x','C. f⁻¹(x)=1/x²','D. f⁻¹(x)=2x'], answer:'B', knowledgePoint:'反函数', analysis:'反函数是输入输出互换：y=x² → x=√y → f⁻¹(x)=√x（定义域 x≥0 保证一一映射）。' },
+    { type:'choice', difficulty:3, text:'g(f(x)) 中 f(x)=2x，g(x)=x³，复合函数 g(f(x)) 的导数是？', options:['A. 6(2x)²','B. 24x²','C. 8x³','D. 6x²'], answer:'B', knowledgePoint:'复合函数的求导', analysis:'g(f(x))=(2x)³=8x³。直接求导：24x²。或用链式法则：3(2x)²×2=12x²×2=24x²。' }
+  ]},
+
+  { lesson: 52, questions: [
+    { type:'choice', difficulty:1, text:'ln(e³) 等于？', options:['A. 3e','B. e³','C. 3','D. 1/3'], answer:'C', knowledgePoint:'自然对数e', analysis:'ln 和 e 互为逆运算：ln(eˣ)=x，所以 ln(e³)=3。' },
+    { type:'choice', difficulty:2, text:'解方程 e²ˣ=5，x 等于？', options:['A. ln5/2','B. 2ln5','C. √5','D. ln10'], answer:'A', knowledgePoint:'指数与对数方程的解', analysis:'两边取 ln：2x=ln5，x=ln5/2。' },
+    { type:'choice', difficulty:3, text:'ln(6)−ln(2) 等于？', options:['A. ln4','B. ln3','C. ln8','D. 3'], answer:'B', knowledgePoint:'对数法则', analysis:'对数相减等于对数内相除：ln(6)−ln(2)=ln(6/2)=ln3。' }
+  ]},
+
+  { lesson: 53, questions: [
+    { type:'choice', difficulty:1, text:'sin²θ+cos²θ 等于？', options:['A. 0','B. 1','C. 2','D. sin(2θ)'], answer:'B', knowledgePoint:'勾股恒等式 sin²θ+cos²θ=1', analysis:'勾股恒等式，对任意角 θ 恒成立，来自单位圆定义。' },
+    { type:'choice', difficulty:2, text:'sin(2θ) 等于？', options:['A. 2sinθ','B. sin²θ−cos²θ','C. 2sinθcosθ','D. sinθ+cosθ'], answer:'C', knowledgePoint:'二倍角公式', analysis:'二倍角公式：sin(2θ)=2sinθcosθ。' },
+    { type:'choice', difficulty:3, text:'证明恒等式，正确做法是？', options:['A. 两边同时加相同的式子','B. 两边同时平方','C. 从一边出发，经变形推出另一边','D. 用具体数值代入验证'], answer:'C', knowledgePoint:'恒等式证明', analysis:'证明恒等式应从一边出发经合法变换推出另一边，不能两边同时操作（那是解方程）。' }
+  ]},
+
+  { lesson: 54, questions: [
+    { type:'choice', difficulty:1, text:'[f(x)·g(x)]\'的乘积法则是？', options:["A. f'(x)·g'(x)","B. f'(x)·g(x)+f(x)·g'(x)","C. f'(x)/g'(x)","D. f'(x)·g(x)−f(x)·g'(x)"], answer:'B', knowledgePoint:'乘积法则与商法则', analysis:"乘积法则：[uv]'=u'v+uv'，'前导后不动加前不动后导'。" },
+    { type:'choice', difficulty:2, text:'f(x)=x²·sin(x) 的导数是？', options:["A. 2x·cos(x)","B. 2x·sin(x)+x²·cos(x)","C. x²·cos(x)","D. 2x·sin(x)−x²·cos(x)"], answer:'B', knowledgePoint:'乘积法则与商法则', analysis:"乘积法则：(x²)'·sin(x)+x²·(sin(x))'=2x·sin(x)+x²·cos(x)。" },
+    { type:'choice', difficulty:3, text:'对 x²+y²=25 两边对 x 求导，dy/dx 等于？', options:['A. −x/y','B. x/y','C. −y/x','D. 2x+2y'], answer:'A', knowledgePoint:'隐函数求导', analysis:'2x+2y·(dy/dx)=0，解得 dy/dx=−x/y。注意 y 是 x 的函数，对 y 求导需乘 dy/dx。' }
+  ]},
+
+  { lesson: 55, questions: [
+    { type:'choice', difficulty:1, text:'∫2x·e^(x²)dx，令 u=x²，变换后成为？', options:['A. ∫e^u du','B. ∫2e^u du','C. ∫u·e^u du','D. ∫e^u·2u du'], answer:'A', knowledgePoint:'换元积分法', analysis:'u=x²，du=2x dx，原式变为 ∫e^u du。' },
+    { type:'choice', difficulty:2, text:'∫x·eˣdx 用分部积分（u=x，dv=eˣdx），结果是？', options:['A. xeˣ+C','B. xeˣ−eˣ+C','C. eˣ+C','D. x²eˣ/2+C'], answer:'B', knowledgePoint:'分部积分法', analysis:'∫x·eˣdx=x·eˣ−∫eˣdx=xeˣ−eˣ+C。' },
+    { type:'choice', difficulty:3, text:'曲线 y=x 绕 x 轴旋转一圈，从 x=0 到 x=3，旋转体体积是（π≈3.14）？', options:['A. 28.3','B. 56.5','C. 84.8','D. 9π'], answer:'A', knowledgePoint:'旋转体体积', analysis:'V=π∫₀³ x²dx=π[x³/3]₀³=π×9=9π≈28.3。' }
+  ]},
+
+  // ── 第12章 应用数学（A-Level）──────────────────────────────
+
+  { lesson: 56, questions: [
+    { type:'choice', difficulty:1, text:'匀加速运动公式 v=u+at 中，各字母含义是？', options:['A. v末速度，u初速度，a加速度，t时间','B. v初速度，u末速度，a加速度，t时间','C. v速度，u位移，a面积，t时间','D. v向量，u单位，a角度，t温度'], answer:'A', knowledgePoint:'匀变速直线运动方程', analysis:'v=末速度，u=初速度，a=加速度，t=时间。五个运动方程都用这套符号。' },
+    { type:'choice', difficulty:2, text:'从静止开始匀加速 a=2 m/s²，3 秒后速度是？', options:['A. 2 m/s','B. 4 m/s','C. 6 m/s','D. 9 m/s'], answer:'C', knowledgePoint:'v = u + at 等五个方程', analysis:'v=u+at=0+2×3=6 m/s。' },
+    { type:'choice', difficulty:3, text:'初速 u=10 m/s，加速度 a=−2 m/s²（减速），物体停止前行驶距离是？', options:['A. 20 m','B. 25 m','C. 30 m','D. 50 m'], answer:'B', knowledgePoint:'自由落体的数学描述', analysis:'v²=u²+2as → 0=100+2(−2)s → s=100/4=25 m。' }
+  ]},
+
+  { lesson: 57, questions: [
+    { type:'choice', difficulty:1, text:'向量 (3,4) 的大小是？', options:['A. 7','B. 5','C. 12','D. 3.5'], answer:'B', knowledgePoint:'力的向量表示', analysis:'|(3,4)|=√(9+16)=√25=5。' },
+    { type:'choice', difficulty:2, text:'物体质量 2 kg，合力 10 N，加速度是？', options:['A. 0.2 m/s²','B. 5 m/s²','C. 12 m/s²','D. 20 m/s²'], answer:'B', knowledgePoint:'加速度的向量方程', analysis:'F=ma → a=F/m=10/2=5 m/s²。' },
+    { type:'choice', difficulty:3, text:'倾角 30° 斜面上，物体重力沿斜面方向的分量是（mg 表示重力）？', options:['A. mg/2','B. mg√3/2','C. mg','D. mg/√3'], answer:'A', knowledgePoint:'斜面上的分力', analysis:'沿斜面分量 = mg·sin30° = mg×1/2 = mg/2。' }
+  ]},
+
+  { lesson: 58, questions: [
+    { type:'choice', difficulty:1, text:'力矩的计算公式是？', options:['A. M=F+d','B. M=F×d','C. M=F/d','D. M=F−d'], answer:'B', knowledgePoint:'力矩的定义', analysis:'力矩 M=F×d，F 是力，d 是力臂（力到转轴的垂直距离），单位 N·m。' },
+    { type:'choice', difficulty:2, text:'力 10 N 作用于距转轴 0.5 m 处，力矩是？', options:['A. 20 N·m','B. 5 N·m','C. 0.05 N·m','D. 10.5 N·m'], answer:'B', knowledgePoint:'力矩的定义', analysis:'M=10×0.5=5 N·m。' },
+    { type:'choice', difficulty:3, text:'跷跷板平衡时，左侧 60 kg 在 2 m 处，右侧未知质量在 3 m 处，右侧质量是？', options:['A. 30 kg','B. 40 kg','C. 45 kg','D. 90 kg'], answer:'B', knowledgePoint:'力矩定理', analysis:'力矩平衡：60×2=m×3 → m=120/3=40 kg。' }
+  ]},
+
+  { lesson: 59, questions: [
+    { type:'choice', difficulty:1, text:'X～N(50,10²)，x=60 的 z 值是？', options:['A. 0.5','B. 1','C. 10','D. 2'], answer:'B', knowledgePoint:'用正态分布建模', analysis:'z=(60−50)/10=1。' },
+    { type:'choice', difficulty:2, text:'z=1.96 对应 Φ(1.96)≈0.975，则 P(Z>1.96)≈？', options:['A. 0.975','B. 0.025','C. 0.95','D. 0.05'], answer:'B', knowledgePoint:'查表求概率', analysis:'P(Z>1.96)=1−Φ(1.96)=1−0.975=0.025。' },
+    { type:'choice', difficulty:3, text:'μ=100 的 95% 置信区间为 [95,105]，样本量翻倍后，置信区间宽度如何变化？', options:['A. 不变','B. 变为原来的 √2 倍','C. 变为原来的 1/√2（变窄）','D. 减半'], answer:'C', knowledgePoint:'置信区间计算', analysis:'区间宽度 ∝ 1/√n，n 翻倍后，宽度变为 1/√2 ≈ 0.707 倍，即变窄。' }
+  ]},
+
+  { lesson: 60, questions: [
+    { type:'choice', difficulty:1, text:'假设检验中的零假设 H₀ 通常是？', options:['A. 要证明的主张','B. 默认的"无效果"立场','C. 实验结果','D. 备择假设的反面'], answer:'B', knowledgePoint:'原假设与备择假设', analysis:'H₀ 是默认立场，通常是"无效果""无差异""等于某值"。需要数据来推翻它。' },
+    { type:'choice', difficulty:2, text:'相比正态分布，t 分布的尾部更？', options:['A. 薄','B. 厚','C. 相同','D. 取决于均值'], answer:'B', knowledgePoint:'t 分布', analysis:'t 分布尾部比正态分布厚（更保守），样本量增大时趋近正态分布。' },
+    { type:'choice', difficulty:3, text:'双尾检验 α=0.05，p=0.08，结论是？', options:['A. 拒绝 H₀','B. 不能拒绝 H₀','C. 接受 H₁','D. 实验无效'], answer:'B', knowledgePoint:'单尾与双尾检验', analysis:'p=0.08 > α=0.05，没有足够证据拒绝 H₀。注意：不拒绝 H₀ ≠ 证明 H₀ 为真。' }
+  ]},
+
+  // ── 第13章 高等数学（A-Level）──────────────────────────────
+
+  { lesson: 61, questions: [
+    { type:'choice', difficulty:1, text:'微分方程 dy/dx=ky 的一般解是？', options:['A. y=kx+C','B. y=Ae^(kx)','C. y=k²x','D. y=ln(kx)'], answer:'B', knowledgePoint:'通解与特解', analysis:'分离变量：dy/y=k dx，两边积分：ln|y|=kx+C，解得 y=Ae^(kx)。' },
+    { type:'choice', difficulty:2, text:'初始条件 y(0)=5，解 dy/dx=2y，特解是？', options:['A. y=5e²','B. y=2e^(5x)','C. y=5e^(2x)','D. y=e^(5x)'], answer:'C', knowledgePoint:'分离变量的步骤', analysis:'通解 y=Ae^(2x)。代入 y(0)=5：A=5，特解 y=5e^(2x)。' },
+    { type:'choice', difficulty:3, text:'指数衰减模型 y=100e^(−0.1t)，当 y=50 时 t 等于？', options:['A. 5','B. ln2/0.1','C. 10','D. 50'], answer:'B', knowledgePoint:'指数增长与衰减模型', analysis:'50=100e^(−0.1t) → 0.5=e^(−0.1t) → ln0.5=−0.1t → t=−ln0.5/0.1=ln2/0.1≈6.93。' }
+  ]},
+
+  { lesson: 62, questions: [
+    { type:'choice', difficulty:1, text:'等比数列 2,6,18,54,… 的公比是？', options:['A. 2','B. 3','C. 4','D. 6'], answer:'B', knowledgePoint:'等差数列与等比数列', analysis:'6/2=3，18/6=3，公比 r=3。' },
+    { type:'choice', difficulty:2, text:'等比数列首项 a₁=3，公比 r=2，前 4 项之和是？', options:['A. 15','B. 24','C. 45','D. 48'], answer:'C', knowledgePoint:'求和公式', analysis:'S₄=3×(1−2⁴)/(1−2)=3×(−15)/(−1)=45。' },
+    { type:'choice', difficulty:3, text:'无穷等比级数 1+1/3+1/9+…，首项 1，公比 1/3，总和是？', options:['A. 3/2','B. 2','C. 3/2','D. 4/3'], answer:'A', knowledgePoint:'级数的收敛与发散', analysis:'|r|=1/3<1，收敛。S=a/(1−r)=1/(1−1/3)=1/(2/3)=3/2。' }
+  ]},
+
+  { lesson: 63, questions: [
+    { type:'choice', difficulty:1, text:'i² 等于？', options:['A. 1','B. −1','C. i','D. −i'], answer:'B', knowledgePoint:'虚数单位i', analysis:'虚数单位 i 的定义：i²=−1。' },
+    { type:'choice', difficulty:2, text:'复数 3+4i 的模是？', options:['A. 7','B. 5','C. 12','D. 25'], answer:'B', knowledgePoint:'复数的极坐标形式', analysis:'|3+4i|=√(3²+4²)=√25=5。' },
+    { type:'choice', difficulty:3, text:'欧拉公式 e^(iπ)+1=0 用到了哪些数学常数？', options:['A. e、i、π','B. e、i、π、0、1','C. e、π、0','D. i、π、1'], answer:'B', knowledgePoint:'欧拉公式 e^(iθ) = cosθ + i·sinθ', analysis:'e^(iπ)+1=0 包含 e、i、π、0、1 五个最重要的数学常数。' }
+  ]},
+
+  { lesson: 64, questions: [
+    { type:'choice', difficulty:1, text:'向量 a⃗=(1,2,3) 和 b⃗=(4,5,6) 的点积是？', options:['A. 14','B. 32','C. 18','D. 28'], answer:'B', knowledgePoint:'三维向量的运算', analysis:'a⃗·b⃗=1×4+2×5+3×6=4+10+18=32。' },
+    { type:'choice', difficulty:2, text:'若 a⃗·b⃗=0，则 a⃗ 和 b⃗ 的关系是？', options:['A. 平行','B. 垂直','C. 大小相等','D. 方向相同'], answer:'B', knowledgePoint:'法向量与点积', analysis:'点积为零意味着两向量垂直（夹角为 90°，cos90°=0）。' },
+    { type:'choice', difficulty:3, text:'直线方程 r⃗=(1,2,3)+t(2,−1,0)，t=2 时对应点是？', options:['A. (2,−1,0)','B. (5,0,3)','C. (3,1,3)','D. (4,2,6)'], answer:'B', knowledgePoint:'直线的向量方程', analysis:'代入 t=2：r⃗=(1,2,3)+2×(2,−1,0)=(1+4, 2−2, 3+0)=(5,0,3)。' }
+  ]},
+
+  { lesson: 65, questions: [
+    { type:'choice', difficulty:1, text:'矩阵乘法 AB 是否等于 BA？', options:['A. 总是相等','B. 一般不相等','C. 只对方阵相等','D. 只对对角矩阵相等'], answer:'B', knowledgePoint:'矩阵的加法与乘法', analysis:'矩阵乘法不满足交换律，AB≠BA 是一般情况。' },
+    { type:'choice', difficulty:2, text:'矩阵 [[2,0],[0,3]] 的行列式是？', options:['A. 5','B. 6','C. 0','D. 1'], answer:'B', knowledgePoint:'行列式的几何意义', analysis:'对角矩阵的行列式等于对角元素之积：2×3=6。' },
+    { type:'choice', difficulty:3, text:'行列式为 0 的矩阵意味着？', options:['A. 矩阵元素全为零','B. 矩阵不可逆，变换压扁了空间','C. 矩阵是单位矩阵','D. 矩阵是正交矩阵'], answer:'B', knowledgePoint:'线性变换', analysis:'行列式为零：变换后空间被压缩成更低维（如压成直线或点），矩阵不可逆。' }
+  ]},
+
+  // ── 第14章 综合冲刺（A-Level）──────────────────────────────
+
+  { lesson: 66, questions: [
+    { type:'choice', difficulty:1, text:'种群指数增长模型 dP/dt=rP（r>0）的解是？', options:['A. P=P₀+rt','B. P=P₀e^(rt)','C. P=r·t²','D. P=ln(P₀t)'], answer:'B', knowledgePoint:'种群增长模型', analysis:'分离变量积分后得 P=P₀e^(rt)，指数增长。' },
+    { type:'choice', difficulty:2, text:'牛顿冷却定律：物体冷却速率正比于与环境的温差，模型是？', options:['A. dT/dt=k','B. dT/dt=k(T−T_env)','C. dT/dt=−k(T−T_env)','D. T=T_env+kt'], answer:'C', knowledgePoint:'牛顿冷却定律', analysis:'冷却：温度下降，速率为负。dT/dt=−k(T−T_env)，k>0，T>T_env 时温度下降。' },
+    { type:'choice', difficulty:3, text:'逻辑斯蒂增长与指数增长的主要区别是？', options:['A. 逻辑斯蒂增长更快','B. 逻辑斯蒂有环境容纳量上限','C. 指数增长考虑食物竞争','D. 两者在数学上完全相同'], answer:'B', knowledgePoint:'建模流程回顾', analysis:'逻辑斯蒂增长引入环境容纳量 K，种群趋近 K 时增长减缓，呈 S 型曲线，更符合实际。' }
+  ]},
+
+  { lesson: 67, questions: [
+    { type:'choice', difficulty:1, text:'牛顿迭代公式是？', options:['A. xₙ₊₁=xₙ+f(xₙ)/f\'(xₙ)','B. xₙ₊₁=xₙ−f(xₙ)/f\'(xₙ)','C. xₙ₊₁=f\'(xₙ)/f(xₙ)','D. xₙ₊₁=xₙ×f(xₙ)'], answer:'B', knowledgePoint:'牛顿迭代公式', analysis:'xₙ₊₁=xₙ−f(xₙ)/f\'(xₙ)。几何含义：切线与 x 轴交点作为下一猜测。' },
+    { type:'choice', difficulty:2, text:'用牛顿法解 f(x)=x²−2=0，x₀=1，x₁等于？', options:['A. 1.5','B. 2','C. 1.414','D. 0.5'], answer:'A', knowledgePoint:'牛顿迭代公式', analysis:'f(1)=−1，f\'(x)=2x，f\'(1)=2。x₁=1−(−1)/2=1.5。' },
+    { type:'choice', difficulty:3, text:'牛顿迭代法的收敛速度是？', options:['A. 线性收敛（每步多1位有效数字）','B. 二次收敛（每步有效数字大致翻倍）','C. 不收敛','D. 取决于方程的次数'], answer:'B', knowledgePoint:'收敛性与误差', analysis:'牛顿法是二次收敛的——每次迭代后，有效数字大致翻倍，收敛非常快。' }
+  ]},
+
+  { lesson: 68, questions: [
+    { type:'choice', difficulty:1, text:'图论中，"度"（degree）指的是？', options:['A. 图中节点总数','B. 一个节点连接的边数','C. 图的直径','D. 最短路径长度'], answer:'B', knowledgePoint:'图的定义与术语', analysis:'节点的度（degree）是该节点连接的边的数量。' },
+    { type:'choice', difficulty:2, text:'Dijkstra 算法的用途是？', options:['A. 求最小生成树','B. 求图中最短路径','C. 判断图是否连通','D. 求哈密顿回路'], answer:'B', knowledgePoint:'最短路径算法', analysis:'Dijkstra 算法从起点出发，逐步确定到各节点的最短路径。' },
+    { type:'choice', difficulty:3, text:'最小生成树的意义是？', options:['A. 经过所有节点的最短路径','B. 连通所有节点且总权重最小的树形子图','C. 最长路径','D. 包含所有边的子图'], answer:'B', knowledgePoint:'最小生成树', analysis:'最小生成树：用最少的总权重边连通所有节点，不形成环，是网络设计中的优化工具。' }
+  ]},
+
+  { lesson: 69, questions: [
+    { type:'choice', difficulty:1, text:'数学归纳法中，"归纳步骤"是指？', options:['A. 证明 P(1) 成立','B. 证明 P(k) 成立时 P(k+1) 也成立','C. 列举所有情况','D. 找到一个反例'], answer:'B', knowledgePoint:'归纳证明', analysis:'归纳步骤：假设 P(k) 成立，推导 P(k+1) 也成立。配合基础步骤完成归纳证明。' },
+    { type:'choice', difficulty:2, text:'用反证法证明"没有最大质数"，假设的起点是？', options:['A. 所有质数都很小','B. 假设存在最大质数 p','C. 假设质数是有限的','D. 假设 p 不是质数'], answer:'B', knowledgePoint:'矛盾证明', analysis:'反证法假设结论不成立：假设存在最大质数 p，然后构造 p!+1 引出矛盾。' },
+    { type:'choice', difficulty:3, text:'下列四种证明方法中，哪种用于证明"存在满足条件的对象"最直接？', options:['A. 反证法','B. 数学归纳法','C. 构造证明','D. 穷举法'], answer:'C', knowledgePoint:'构造证明', analysis:'构造证明：直接给出满足条件的具体例子，是证明存在性最直接的方法。' }
+  ]},
+
+  { lesson: 70, questions: [
+    { type:'choice', difficulty:1, text:'A-Level 数学考试考查的核心能力是？', options:['A. 记忆所有公式','B. 在陌生问题前调动已知工具','C. 快速计算','D. 画出精确图像'], answer:'B', knowledgePoint:'考场策略与时间分配', analysis:'A-Level 的核心是数学思维——在新情境中识别结构、选择工具、推导结论。' },
+    { type:'choice', difficulty:2, text:'微积分、统计和力学三个模块的共同底层工具是？', options:['A. 矩阵','B. 三角恒等式','C. 极限和连续性的思想','D. 集合论'], answer:'C', knowledgePoint:'微积分综合题', analysis:'微积分（极限）、统计（大数定律的极限思想）、力学（瞬时量的极限定义）都以极限思想为基础。' },
+    { type:'choice', difficulty:3, text:'在 A-Level 综合题中，某步骤的代数结果在几何上不合理（如负面积），应该？', options:['A. 接受结果，代数不会错','B. 检查建模步骤和假设','C. 只看代数，忽略几何意义','D. 重新计算直到几何合理'], answer:'B', knowledgePoint:'统计与力学综合', analysis:'数学答案必须在现实中有意义。结果不合理意味着模型或计算有问题——回检假设和建模步骤。' }
+  ]},
+
 ];

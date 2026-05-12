@@ -1,6 +1,6 @@
 # 麻瓜学术系·课程内容设计指令
 
-> 把这份文件和 `_spec/muggle-schedule.md` 一起发给新对话，然后说明要写哪科哪课即可。
+> 把这份文件、`_spec/muggle-syllabus.md`、`course/staff-data.js` 一起发给新对话，然后说明要写哪科哪课即可。
 
 ---
 
@@ -9,8 +9,23 @@
 为沉浸式 RPG 游戏《霍格沃茨学年》编写麻瓜学术系课程内容。
 
 在开始之前，先读：
-- `_spec/muggle-schedule.md`（科目列表、年级阶段、课表结构）
-- 对应科目的教授简介文件（`course/muggle-academic/[subject].js` 中的 `teachingStyle` 和 `professorIntroductions`）
+- `_spec/muggle-syllabus.md`——找到对应科目、年级、课次的题目
+- `course/staff-data.js` 中 `muggleStudiesStaff` 的对应条目——**教授主档案**（背景、性格、catchphrase、quizStyle 全在这里）
+- 如有需要，补充读 `course/muggle-academic/[subject].js` 中的 crossAnchors（联动信息）
+
+**科目与教授对照表：**
+
+| 科目 | 教授 | staff-data.js key |
+|---|---|---|
+| 数学 | 奥古斯都·芬威克 | augustusFenwick |
+| 物理 | 塞拉菲娜·穆迪 | serafinaMoody |
+| 化学 | 普里姆罗斯·斯普劳特 | primroseSprout |
+| 生物 | 塔维什·麦克拉伦 | tavishMacLaren |
+| 英语文学 | 伊莱莎·洛夫古德 | elizaLovegood |
+| 历史 | 赫伯特·宾斯二世 | herbertBinns |
+| 哲学与伦理 | 康斯坦丝·沙克博特 | constanceShacklebolt |
+| 地理 | 菲利克斯·韦斯莱 | felixWeasley |
+| 拉丁语 | 米兰达·珀西瓦尔 | mirandaPercival |
 
 课程内容由该科目教授主讲，语气和风格必须和教授人设一致。
 

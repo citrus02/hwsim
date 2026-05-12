@@ -5,12 +5,19 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.7.5';
+export const CURRENT_VERSION = '1.7.6';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.6': [
+    '新增四年级人文方向选科与六年级 A-Level 选科课表',
+    'GCSE 与 A-Level 考试现在会按选科范围判断报名资格',
+    '重构并补充麻瓜学术系九科课文与题库内容',
+    '优化不同年级的麻瓜学术系课程表生成逻辑',
+    '完善麻瓜学术系教授、成就与跨学科关系文本',
+  ],
   '1.7.5': [
     '新增炼金术、占卜学、算术占卜、古代魔文、保护神奇动物等课程的好好学习内容！',
     '麻瓜学术系改为英国Year 7课程体系，英语调整为拉丁语，语文与文学调整为英语文学',

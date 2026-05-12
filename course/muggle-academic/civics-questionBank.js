@@ -1,214 +1,597 @@
 // civics-questionBank.js
-// 霍格沃茨道德与法治课程 - 一年级随堂测验题库
+// 霍格沃茨哲学与伦理课程 - 随堂测验题库
 // 教授：康斯坦丝·沙克博特
+// 课程体系：UK KS3 → GCSE → A-Level，共 70 课
 // 每课3题：basic（+2分）、medium（0分，全对得E）、hard（-1分）
 
 export const questionBank = [
-  // ==================== 第1章 成长的节拍（第1-3课） ====================
+  // ── 第1章 伦理学基础（1年级·KS3） ──────────────────────────────
   {
-    lesson: 1, title: "中学序曲",
+    lesson: 1, title: "什么是道德问题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "成长最主要的特点是：", options: ["A. 身高增长", "B. 年龄增长", "C. 身心的变化与发展", "D. 知识增加"], answer: "C", knowledgePoint: "成长的含义", analysis: "成长不仅是身体上的变化，更是心理、认知、情感等多方面的全面发展。" },
-      { type: "choice", difficulty: "medium", text: "面对新的学习环境，正确的态度是：", options: ["A. 害怕挑战，逃避困难", "B. 积极适应，主动学习", "C. 等待别人帮助", "D. 保持小学的学习方式"], answer: "B", knowledgePoint: "适应新环境", analysis: "积极主动地适应新环境，调整学习方法，才能更好地应对中学阶段的挑战。" },
-      { type: "choice", difficulty: "hard", text: "从魔法视角看，成长意味着：", options: ["A. 魔力增强", "B. 责任与能力的同步提升", "C. 年龄增长", "D. 学会更多咒语"], answer: "B", knowledgePoint: "成长的本质", analysis: "真正的成长不仅是能力的提升，更是对责任的理解与担当，能力与责任应当同步发展。" }
+      { type: "choice", difficulty: 1, text: "以下哪个是道德判断？", options: ["A. 巧克力比柠檬糖好吃", "B. 折磨无辜者是错的", "C. 今天天气很好", "D. 这本书很有趣"], answer: "B", knowledgePoint: "道德判断与个人喜好", analysis: "道德判断涉及对错，而个人喜好只是个人偏好，不涉及道德评价。" },
+      { type: "choice", difficulty: 2, text: "道德分歧无法仅靠什么解决？", options: ["A. 论证", "B. 实验", "C. 讨论", "D. 思考"], answer: "B", knowledgePoint: "道德分歧的特征", analysis: "道德问题无法通过科学实验直接验证，需要通过论证和推理来解决。" },
+      { type: "choice", difficulty: 3, text: "对于'修改记忆是否正当'，巫师和麻瓜可能有不同判断，这说明：", options: ["A. 道德是主观的", "B. 道德框架不同会导致判断差异", "C. 没有客观的道德标准", "D. 魔法改变了道德"], answer: "B", knowledgePoint: "道德框架的影响", analysis: "不同的文化和经验背景会形成不同的道德框架，导致对同一行为的不同判断。" }
     ]
   },
   {
-    lesson: 2, title: "学习新天地",
+    lesson: 2, title: "电车难题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "学习的意义在于：", options: ["A. 获得好成绩", "B. 培养能力和思维方式", "C. 应付考试", "D. 得到表扬"], answer: "B", knowledgePoint: "学习的价值", analysis: "学习不仅仅是获取知识，更重要的是培养思维方式和解决问题的能力。" },
-      { type: "choice", difficulty: "medium", text: "学习中的困难：", options: ["A. 应该避免", "B. 是成长的机会", "C. 说明自己不行", "D. 是老师的问题"], answer: "B", knowledgePoint: "学习的态度", analysis: "克服困难后的理解，是真正的学习成果和快乐。" },
-      { type: "choice", difficulty: "hard", text: "魔法学习与麻瓜学习的共同点是：", options: ["A. 都需要魔杖", "B. 都需要理解和练习", "C. 都很容易", "D. 不需要思考"], answer: "B", knowledgePoint: "学习的共性", analysis: "无论是魔法还是麻瓜知识，都需要理解原理并通过练习掌握。" }
+      { type: "choice", difficulty: 1, text: "电车难题的核心是：", options: ["A. 如何修理电车", "B. 行动与不行动的道德差异", "C. 电车的速度", "D. 轨道的设计"], answer: "B", knowledgePoint: "电车难题", analysis: "电车难题探讨的是主动行动导致伤害与被动允许伤害之间的道德责任差异。" },
+      { type: "choice", difficulty: 2, text: "大多数人选择扳动开关救五人，这体现了什么伦理直觉？", options: ["A. 义务论", "B. 后果论", "C. 美德伦理", "D. 相对主义"], answer: "B", knowledgePoint: "后果论直觉", analysis: "选择拯救更多人体现了后果论的直觉——行为的道德性取决于结果。" },
+      { type: "choice", difficulty: 3, text: "如果用魔法改变电车方向，道德责任与扳动开关相比：", options: ["A. 更小", "B. 更大", "C. 相同", "D. 无法比较"], answer: "C", knowledgePoint: "魔法与道德责任", analysis: "无论使用什么手段，主动做出选择的人都承担相同的道德责任。" }
     ]
   },
   {
-    lesson: 3, title: "发现自己",
+    lesson: 3, title: "功利主义",
     questions: [
-      { type: "choice", difficulty: "basic", text: "认识自己的重要性在于：", options: ["A. 知道自己的缺点", "B. 找到人生方向", "C. 获得自信", "D. 以上都是"], answer: "D", knowledgePoint: "自我认识", analysis: "了解自己的优缺点、兴趣和目标，是做出明智选择的基础。" },
-      { type: "choice", difficulty: "medium", text: "接纳自己意味着：", options: ["A. 容忍自己的缺点", "B. 理解并接受真实的自己", "C. 忽视自己的不足", "D. 骄傲自满"], answer: "B", knowledgePoint: "自我接纳", analysis: "接纳自己不是容忍缺点，而是理解真实的自己并努力改进。" },
-      { type: "choice", difficulty: "hard", text: "天赋与责任的关系是：", options: ["A. 天赋越大，责任越小", "B. 天赋与责任无关", "C. 天赋越大，责任越大", "D. 责任是负担"], answer: "C", knowledgePoint: "责任意识", analysis: "能力越大，责任越大。天赋的意义在于承担相应的责任。" }
-    ]
-  },
-
-  // ==================== 第2章 友谊与同行（第4-6课） ====================
-  {
-    lesson: 4, title: "友谊与成长",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "友谊最重要的特质是：", options: ["A. 一起玩耍", "B. 相互理解与支持", "C. 物质交换", "D. 相同的兴趣爱好"], answer: "B", knowledgePoint: "友谊的特质", analysis: "真正的友谊建立在相互理解、信任和支持的基础上。" },
-      { type: "choice", difficulty: "medium", text: "当朋友之间发生冲突时，正确的做法是：", options: ["A. 立即绝交", "B. 主动沟通，理解对方", "C. 冷战到底", "D. 向他人抱怨"], answer: "B", knowledgePoint: "冲突处理", analysis: "面对冲突，主动沟通、换位思考是解决问题的关键。" },
-      { type: "choice", difficulty: "hard", text: "关于友谊的界限，下列说法正确的是：", options: ["A. 朋友之间没有秘密", "B. 朋友应该无条件支持对方", "C. 友谊需要保持适当的边界", "D. 朋友之间可以随意干涉对方"], answer: "C", knowledgePoint: "友谊的边界", analysis: "健康的友谊需要保持适当的个人空间和边界。" }
+      { type: "choice", difficulty: 1, text: "功利主义的核心原则是：", options: ["A. 最大多数人的最大幸福", "B. 遵循道德规则", "C. 培养良好品格", "D. 追求个人快乐"], answer: "A", knowledgePoint: "功利主义原则", analysis: "边沁提出的功利主义认为，行为的道德性取决于它带来的最大幸福。" },
+      { type: "choice", difficulty: 2, text: "功利主义面临的难题是：", options: ["A. 如何计算幸福", "B. 没有难题", "C. 太简单", "D. 不实用"], answer: "A", knowledgePoint: "功利主义的挑战", analysis: "快乐和痛苦的度量是功利主义面临的核心难题——如何比较不同类型的幸福？" },
+      { type: "choice", difficulty: 3, text: "如果修改麻瓜记忆能让他们更快乐，功利主义会认为：", options: ["A. 总是对的", "B. 总是错的", "C. 需要计算整体幸福", "D. 无法判断"], answer: "C", knowledgePoint: "功利主义的应用", analysis: "功利主义需要综合考虑所有相关者的幸福，包括被修改记忆者的自主权和潜在伤害。" }
     ]
   },
   {
-    lesson: 5, title: "交友的智慧",
+    lesson: 4, title: "义务论",
     questions: [
-      { type: "choice", difficulty: "basic", text: "建立真挚友谊的基础是：", options: ["A. 真诚", "B. 金钱", "C. 权力", "D. 外貌"], answer: "A", knowledgePoint: "交友原则", analysis: "展现真实的自己，才能吸引真正欣赏你的人。" },
-      { type: "choice", difficulty: "medium", text: "慎重交友的原因是：", options: ["A. 朋友会影响你的价值观", "B. 朋友越多越好", "C. 朋友不重要", "D. 交朋友很麻烦"], answer: "A", knowledgePoint: "交友选择", analysis: "朋友会影响你的价值观和行为，选择朋友时要慎重。" },
-      { type: "choice", difficulty: "hard", text: "不同背景同学间的交往：", options: ["A. 应该避免", "B. 是学习的机会", "C. 会产生矛盾", "D. 没有意义"], answer: "B", knowledgePoint: "跨背景交往", analysis: "理解不同于你的人，是成长的重要部分。" }
+      { type: "choice", difficulty: 1, text: "康德的绝对命令强调：", options: ["A. 追求幸福", "B. 遵循可普遍化的原则", "C. 培养美德", "D. 考虑后果"], answer: "B", knowledgePoint: "绝对命令", analysis: "康德认为，道德行为必须遵循能够普遍化的原则。" },
+      { type: "choice", difficulty: 2, text: "根据义务论，说谎：", options: ["A. 总是错的", "B. 有时是对的", "C. 要看后果", "D. 无所谓"], answer: "A", knowledgePoint: "义务论的严格性", analysis: "康德认为，说谎无法普遍化，因此在任何情况下都是错的。" },
+      { type: "choice", difficulty: 3, text: "不可饶恕咒无论出于任何理由都是错的，这是哪种立场？", options: ["A. 功利主义", "B. 义务论", "C. 美德伦理", "D. 相对主义"], answer: "B", knowledgePoint: "义务论与魔法伦理", analysis: "义务论认为某些行为本身就是邪恶的，无论后果如何，不可饶恕咒正是如此。" }
     ]
   },
   {
-    lesson: 6, title: "交往新时空",
+    lesson: 5, title: "美德伦理",
     questions: [
-      { type: "choice", difficulty: "basic", text: "现代交往的特点是：", options: ["A. 距离不再是障碍", "B. 只有面对面交流", "C. 不需要沟通", "D. 很简单"], answer: "A", knowledgePoint: "现代交往", analysis: "网络让我们能与远方的人交流，但也要注意交往的质量。" },
-      { type: "choice", difficulty: "medium", text: "虚拟交往与现实交往的关系是：", options: ["A. 虚拟交往可以替代现实交往", "B. 两者相辅相成", "C. 虚拟交往更好", "D. 现实交往不重要"], answer: "B", knowledgePoint: "交往方式", analysis: "虚拟交往拓展了社交范围，但真正的情感需要现实中的陪伴。" },
-      { type: "choice", difficulty: "hard", text: "在网络交往中，应该：", options: ["A. 说当面不敢说的话", "B. 保持真实和尊重", "C. 可以随意批评别人", "D. 泄露个人信息"], answer: "B", knowledgePoint: "网络礼仪", analysis: "在虚拟世界中也要保持真实和尊重，不要做当面不敢做的事。" }
+      { type: "choice", difficulty: 1, text: "美德伦理关注的是：", options: ["A. 行为的结果", "B. 行为的规则", "C. 人的品格", "D. 个人的快乐"], answer: "C", knowledgePoint: "美德伦理的核心", analysis: "亚里士多德的美德伦理关注培养良好的品格，而不是遵循规则或计算后果。" },
+      { type: "choice", difficulty: 2, text: "勇敢是哪两个极端之间的中道？", options: ["A. 懦弱与鲁莽", "B. 快乐与痛苦", "C. 诚实与欺骗", "D. 慷慨与吝啬"], answer: "A", knowledgePoint: "中道学说", analysis: "亚里士多德认为，每种美德都是两个极端之间的中道，勇敢介于懦弱和鲁莽之间。" },
+      { type: "choice", difficulty: 3, text: "一个巫师使用法外咒但出于好动机，美德伦理会关注：", options: ["A. 动机的好坏", "B. 行为的结果", "C. 塑造的品格", "D. 规则的遵守"], answer: "C", knowledgePoint: "美德伦理的视角", analysis: "美德伦理不关注单个行为，而关注这个行为对品格的塑造——使用法外咒会塑造什么样的品格？" }
     ]
   },
 
-  // ==================== 第3章 师长情谊（第7-9课） ====================
+  // ── 第2章 知识论（1年级·KS3） ──────────────────────────────
   {
-    lesson: 7, title: "走近老师",
+    lesson: 6, title: "我们如何知道",
     questions: [
-      { type: "choice", difficulty: "basic", text: "教师的主要职责是：", options: ["A. 讲课", "B. 教书育人", "C. 批改作业", "D. 维持纪律"], answer: "B", knowledgePoint: "教师职责", analysis: "教师不仅传授知识，更重要的是培养学生的品德和能力。" },
-      { type: "choice", difficulty: "medium", text: "理解老师的工作有助于：", options: ["A. 更好地学习", "B. 建立良好的师生关系", "C. 提高成绩", "D. 以上都是"], answer: "D", knowledgePoint: "师生理解", analysis: "理解老师的付出，能帮助学生更好地配合教学。" },
-      { type: "choice", difficulty: "hard", text: "不同教学风格的存在说明：", options: ["A. 有的老师教得好，有的教得不好", "B. 教学需要多样化", "C. 老师应该统一教学方式", "D. 学生只能适应一种风格"], answer: "B", knowledgePoint: "教学多样性", analysis: "不同的教学风格适应不同学生的学习特点。" }
+      { type: "choice", difficulty: 1, text: "知识与信念的区别在于：", options: ["A. 知识是真的", "B. 知识不需要理由", "C. 信念是假的", "D. 没有区别"], answer: "A", knowledgePoint: "知识与信念", analysis: "柏拉图认为，知识是有理由的真信念，而信念不一定为真。" },
+      { type: "choice", difficulty: 2, text: "葛梯尔问题挑战了什么？", options: ["A. 知识的定义", "B. 信念的存在", "C. 真理的可能性", "D. 怀疑论"], answer: "A", knowledgePoint: "葛梯尔问题", analysis: "葛梯尔问题表明，有理由的真信念并不一定等于知识。" },
+      { type: "choice", difficulty: 3, text: "对巫师来说，'我知道魔法存在'和'我相信魔法存在'：", options: ["A. 没有区别", "B. 前者需要更充分的理由", "C. 后者更可靠", "D. 都一样"], answer: "B", knowledgePoint: "魔法知识的特殊性", analysis: "知识需要正当理由，而信念只需要相信——对巫师来说，直接经验提供了相信魔法的理由。" }
     ]
   },
   {
-    lesson: 8, title: "亦师亦友",
+    lesson: 7, title: "柏拉图洞穴寓言",
     questions: [
-      { type: "choice", difficulty: "basic", text: "良好师生关系的基础是：", options: ["A. 尊重", "B. 畏惧", "C. 讨好", "D. 无视"], answer: "A", knowledgePoint: "师生关系", analysis: "尊重是建立良好师生关系的基础。" },
-      { type: "choice", difficulty: "medium", text: "与老师沟通的正确方式是：", options: ["A. 抱怨", "B. 寻求理解", "C. 沉默", "D. 顶撞"], answer: "B", knowledgePoint: "师生沟通", analysis: "沟通不是抱怨，而是寻求理解和解决问题。" },
-      { type: "choice", difficulty: "hard", text: "教学相长的含义是：", options: ["A. 老师教学生", "B. 学生教老师", "C. 师生互相学习", "D. 老师比学生厉害"], answer: "C", knowledgePoint: "教学相长", analysis: "好的教学是双向的，老师和学生可以互相学习。" }
+      { type: "choice", difficulty: 1, text: "洞穴中的囚徒看到的是什么？", options: ["A. 真实的事物", "B. 影子", "C. 阳光", "D. 其他囚徒"], answer: "B", knowledgePoint: "洞穴寓言", analysis: "柏拉图认为，大多数人就像洞穴中的囚徒，只能看到现实的影子而非真实。" },
+      { type: "choice", difficulty: 2, text: "走出洞穴的哲学家看到的是什么？", options: ["A. 更多影子", "B. 火光", "C. 真实的事物", "D. 黑暗"], answer: "C", knowledgePoint: "表象与实在", analysis: "走出洞穴的哲学家看到了真实的世界，而不仅仅是表象。" },
+      { type: "choice", difficulty: 3, text: "麻瓜研究课可以被看作：", options: ["A. 留在洞穴里", "B. 走出洞穴的尝试", "C. 制造更多影子", "D. 没有意义"], answer: "B", knowledgePoint: "洞穴隐喻的应用", analysis: "学习麻瓜文化可以帮助巫师理解不同的视角，就像走出洞穴看到新的世界。" }
     ]
   },
   {
-    lesson: 9, title: "正确对待反馈",
+    lesson: 8, title: "感官的可靠性",
     questions: [
-      { type: "choice", difficulty: "basic", text: "表扬的意义在于：", options: ["A. 骄傲的资本", "B. 前进的动力", "C. 停止努力", "D. 看不起别人"], answer: "B", knowledgePoint: "对待表扬", analysis: "表扬是肯定，应该成为前进的动力而非骄傲的资本。" },
-      { type: "choice", difficulty: "medium", text: "对待批评的正确态度是：", options: ["A. 生气", "B. 认真倾听并改进", "C. 辩解", "D. 记恨"], answer: "B", knowledgePoint: "对待批评", analysis: "批评是帮助改进的机会，应该认真倾听和分析。" },
-      { type: "choice", difficulty: "hard", text: "接受反馈需要：", options: ["A. 封闭的心态", "B. 开放的心态", "C. 固执己见", "D. 拒绝改变"], answer: "B", knowledgePoint: "反馈心态", analysis: "成长需要开放的心态，愿意接受反馈并改变自己。" }
-    ]
-  },
-
-  // ==================== 第5章 亲情之爱（第13-15课） ====================
-  {
-    lesson: 13, title: "家的意味",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "家庭最核心的功能是：", options: ["A. 提供住所", "B. 情感支持与陪伴", "C. 提供物质财富", "D. 传承姓氏"], answer: "B", knowledgePoint: "家庭功能", analysis: "家庭不仅提供物质保障，更重要的是提供情感支持和归属感。" },
-      { type: "choice", difficulty: "medium", text: "处理家庭矛盾的关键是：", options: ["A. 争对错", "B. 沟通与理解", "C. 回避问题", "D. 寻求外人帮助"], answer: "B", knowledgePoint: "家庭沟通", analysis: "有效的沟通和相互理解是解决家庭矛盾的关键。" },
-      { type: "choice", difficulty: "hard", text: "关于家庭价值观，正确的观点是：", options: ["A. 传统价值观都是好的", "B. 现代价值观完全取代传统", "C. 传统与现代可以融合", "D. 价值观不重要"], answer: "C", knowledgePoint: "家庭价值观", analysis: "家庭价值观的传承需要结合时代发展，传统与现代可以相互融合。" }
+      { type: "choice", difficulty: 1, text: "我们的感官：", options: ["A. 总是可靠的", "B. 有时会欺骗我们", "C. 从不可靠", "D. 只在白天可靠"], answer: "B", knowledgePoint: "感官的局限性", analysis: "感官经验可能存在幻觉和错觉，因此不完全可靠。" },
+      { type: "choice", difficulty: 2, text: "感知的本质是：", options: ["A. 被动接收", "B. 主动建构", "C. 完全客观", "D. 完全主观"], answer: "B", knowledgePoint: "感知的建构性", analysis: "大脑会根据经验和预期主动解释感官输入，因此感知是建构的。" },
+      { type: "choice", difficulty: 3, text: "魔法幻象对感知哲学的挑战在于：", options: ["A. 证明感官完全可靠", "B. 说明魔法不存在", "C. 质疑现实的可靠性", "D. 没有挑战"], answer: "C", knowledgePoint: "魔法与感知", analysis: "如果魔法可以完美复制感官经验，我们如何确定所感知的是真实的？" }
     ]
   },
   {
-    lesson: 14, title: "让家更美好",
+    lesson: 9, title: "理性的力量",
     questions: [
-      { type: "choice", difficulty: "basic", text: "家庭关系的特点是：", options: ["A. 简单", "B. 亲密且复杂", "C. 不需要经营", "D. 一成不变"], answer: "B", knowledgePoint: "家庭关系", analysis: "家庭关系是最亲密的关系，也需要用心经营。" },
-      { type: "choice", difficulty: "medium", text: "营造和谐家庭氛围需要：", options: ["A. 一个人努力", "B. 每个成员的努力", "C. 父母的努力", "D. 不需要努力"], answer: "B", knowledgePoint: "家庭和谐", analysis: "和谐的家庭需要每个成员的共同努力。" },
-      { type: "choice", difficulty: "hard", text: "家庭成员间的沟通应该：", options: ["A. 想说什么就说什么", "B. 尊重对方的感受", "C. 只说好听的", "D. 保持沉默"], answer: "B", knowledgePoint: "家庭沟通技巧", analysis: "有效的沟通需要尊重和理解对方的感受。" }
+      { type: "choice", difficulty: 1, text: "理性主义认为知识来自：", options: ["A. 感官经验", "B. 理性思考", "C. 信仰", "D. 传统"], answer: "B", knowledgePoint: "理性主义", analysis: "理性主义者如笛卡尔认为，知识可以通过纯粹理性获得。" },
+      { type: "choice", difficulty: 2, text: "数学真理的特殊性在于：", options: ["A. 依赖经验", "B. 是偶然的", "C. 是必然的", "D. 无法证明"], answer: "C", knowledgePoint: "数学真理", analysis: "数学真理是必然的，无论在哪个世界都成立，不依赖经验。" },
+      { type: "choice", difficulty: 3, text: "逻辑推理的可靠性：", options: ["A. 只对麻瓜有效", "B. 只对巫师有效", "C. 对所有人都有效", "D. 取决于魔法"], answer: "C", knowledgePoint: "逻辑的普遍性", analysis: "逻辑推理的规则是普遍有效的，无论对麻瓜还是巫师都适用。" }
     ]
   },
   {
-    lesson: 15, title: "亲情与责任",
+    lesson: 10, title: "知识的边界",
     questions: [
-      { type: "choice", difficulty: "basic", text: "家庭成员间的责任是：", options: ["A. 负担", "B. 爱的体现", "C. 麻烦", "D. 可有可无"], answer: "B", knowledgePoint: "家庭责任", analysis: "责任是亲情的体现，是家庭成员间相互关爱的表现。" },
-      { type: "choice", difficulty: "medium", text: "相互关爱的做法包括：", options: ["A. 一句问候", "B. 一次帮助", "C. 一份理解", "D. 以上都是"], answer: "D", knowledgePoint: "关爱方式", analysis: "关爱体现在日常生活的小事中。" },
-      { type: "choice", difficulty: "hard", text: "家庭价值观的传承：", options: ["A. 不需要改变", "B. 应该完全抛弃传统", "C. 应该结合时代发展", "D. 只传承现代价值观"], answer: "C", knowledgePoint: "价值观传承", analysis: "家庭价值观的传承需要结合时代发展，取其精华去其糟粕。" }
+      { type: "choice", difficulty: 1, text: "怀疑论者认为：", options: ["A. 我们可以知道一切", "B. 我们无法真正知道任何事情", "C. 知识是绝对的", "D. 知识很容易获得"], answer: "B", knowledgePoint: "怀疑论", analysis: "怀疑论者质疑知识的可能性，认为我们无法排除被欺骗的可能性。" },
+      { type: "choice", difficulty: 2, text: "知识的进步意味着：", options: ["A. 我们已经知道一切", "B. 我们在不断接近真理", "C. 知识是固定的", "D. 知识不会增长"], answer: "B", knowledgePoint: "知识的进步", analysis: "知识在不断发展，今天无法回答的问题可能在未来得到解答。" },
+      { type: "choice", difficulty: 3, text: "魔法是否超越了知识的边界？", options: ["A. 是的，完全超越", "B. 不是，只是尚未理解", "C. 魔法不存在", "D. 无法判断"], answer: "B", knowledgePoint: "魔法与知识", analysis: "魔法似乎违反物理定律，但这可能只是因为我们尚未理解其背后的规律。" }
     ]
   },
 
-  // ==================== 第6章 生命的思考（第16-18课） ====================
+  // ── 第3章 自由意志与责任（2年级·KS3） ──────────────────────────────
   {
-    lesson: 16, title: "生命的宝贵",
+    lesson: 11, title: "什么是自由意志",
     questions: [
-      { type: "choice", difficulty: "basic", text: "生命的特点是：", options: ["A. 可以重来", "B. 不可逆且独特", "C. 没有价值", "D. 很漫长"], answer: "B", knowledgePoint: "生命特性", analysis: "生命是不可逆的，每个人的生命都是独一无二的。" },
-      { type: "choice", difficulty: "medium", text: "珍惜生命意味着：", options: ["A. 害怕死亡", "B. 热爱生活", "C. 浪费时间", "D. 无所事事"], answer: "B", knowledgePoint: "生命态度", analysis: "珍惜生命不是害怕死亡，而是充分体验和热爱生活。" },
-      { type: "choice", difficulty: "hard", text: "对生命的敬畏之心：", options: ["A. 只敬畏自己的生命", "B. 敬畏所有生命", "C. 不需要敬畏", "D. 只敬畏人类的生命"], answer: "B", knowledgePoint: "生命敬畏", analysis: "敬畏生命不仅是敬畏自己的生命，也是敬畏他人和所有生命。" }
+      { type: "choice", difficulty: 1, text: "自由意志意味着：", options: ["A. 可以任意选择", "B. 本可以做出不同选择", "C. 完全被决定", "D. 没有选择"], answer: "B", knowledgePoint: "自由意志的定义", analysis: "自由意志意味着在做出选择的那一刻，你本可以做出不同的选择。" },
+      { type: "choice", difficulty: 2, text: "决定论认为：", options: ["A. 一切都是偶然的", "B. 一切都是被决定的", "C. 只有人类有自由", "D. 没有规律"], answer: "B", knowledgePoint: "决定论", analysis: "决定论认为，宇宙中的每个事件都被之前的事件决定，包括人类的选择。" },
+      { type: "choice", difficulty: 3, text: "如果决定论为真，道德责任：", options: ["A. 仍然存在", "B. 完全消失", "C. 变得更重要", "D. 无法确定"], answer: "A", knowledgePoint: "决定论与道德责任", analysis: "即使决定论为真，道德责任仍然有意义——它可以影响未来的行为。" }
     ]
   },
   {
-    lesson: 17, title: "生命的韧性",
+    lesson: 12, title: "硬决定论",
     questions: [
-      { type: "choice", difficulty: "basic", text: "挫折是：", options: ["A. 坏事", "B. 成长的机会", "C. 应该避免", "D. 无法战胜"], answer: "B", knowledgePoint: "挫折意义", analysis: "挫折是成长的必修课，能让人变得更坚强。" },
-      { type: "choice", difficulty: "medium", text: "增强生命韧性的方法是：", options: ["A. 逃避困难", "B. 设定目标、寻求支持", "C. 抱怨命运", "D. 放弃努力"], answer: "B", knowledgePoint: "韧性培养", analysis: "增强韧性需要设定目标、寻求支持、保持积极心态。" },
-      { type: "choice", difficulty: "hard", text: "积极面对挫折意味着：", options: ["A. 盲目乐观", "B. 理性应对", "C. 无视困难", "D. 自暴自弃"], answer: "B", knowledgePoint: "挫折应对", analysis: "积极面对不是盲目乐观，而是理性分析和解决问题。" }
+      { type: "choice", difficulty: 1, text: "硬决定论认为自由意志：", options: ["A. 与决定论相容", "B. 是真实的", "C. 是幻觉", "D. 只存在于人类"], answer: "C", knowledgePoint: "硬决定论", analysis: "硬决定论认为，自由意志是一种幻觉，一切都是因果链的一部分。" },
+      { type: "choice", difficulty: 2, text: "硬决定论对道德责任的看法是：", options: ["A. 应该加强", "B. 应该取消", "C. 没有变化", "D. 取决于后果"], answer: "B", knowledgePoint: "硬决定论与责任", analysis: "如果一切都是被决定的，硬决定论者认为没有人应该为自己的行为负责。" },
+      { type: "choice", difficulty: 3, text: "魔药影响下的行为：", options: ["A. 完全没有责任", "B. 完全有责任", "C. 责任减轻", "D. 责任增加"], answer: "C", knowledgePoint: "外部影响与责任", analysis: "外部影响会减轻但不一定消除道德责任，这取决于影响的程度和性质。" }
     ]
   },
   {
-    lesson: 18, title: "绽放生命之花",
+    lesson: 13, title: "相容论",
     questions: [
-      { type: "choice", difficulty: "basic", text: "生命的意义在于：", options: ["A. 长度", "B. 深度和广度", "C. 财富", "D. 地位"], answer: "B", knowledgePoint: "生命意义", analysis: "生命的意义不在于长度，而在于创造的价值和影响。" },
-      { type: "choice", difficulty: "medium", text: "实现生命价值的途径是：", options: ["A. 无所事事", "B. 设定目标，努力奋斗", "C. 依赖他人", "D. 等待机会"], answer: "B", knowledgePoint: "价值实现", analysis: "实现生命价值需要设定目标并努力奋斗。" },
-      { type: "choice", difficulty: "hard", text: "探索个人价值：", options: ["A. 一次性完成", "B. 持续的过程", "C. 不需要思考", "D. 别人决定"], answer: "B", knowledgePoint: "价值探索", analysis: "探索个人价值是一个持续的过程，需要不断反思和尝试。" }
-    ]
-  },
-
-  // ==================== 第8章 青春时光（第22-24课） ====================
-  {
-    lesson: 22, title: "悄悄变化的我",
-    questions: [
-      { type: "choice", difficulty: "basic", text: "青春期最显著的变化是：", options: ["A. 身高体重增长", "B. 心理成熟", "C. 知识增加", "D. 兴趣变化"], answer: "A", knowledgePoint: "青春期生理变化", analysis: "青春期是身体发育的关键时期，身高体重的快速增长是最直观的表现。" },
-      { type: "choice", difficulty: "medium", text: "面对青春期的变化，应该：", options: ["A. 焦虑不安", "B. 接纳并适应", "C. 逃避现实", "D. 过度关注外表"], answer: "B", knowledgePoint: "接纳青春期", analysis: "接纳青春期的身心变化，积极适应，是健康度过青春期的关键。" },
-      { type: "choice", difficulty: "hard", text: "自我认同的建立意味着：", options: ["A. 模仿他人", "B. 找到自己的独特价值", "C. 追求完美", "D. 忽视缺点"], answer: "B", knowledgePoint: "自我认同", analysis: "自我认同是在了解自己的基础上，找到独特的自我价值。" }
+      { type: "choice", difficulty: 1, text: "相容论认为：", options: ["A. 自由意志与决定论不相容", "B. 自由意志与决定论可以共存", "C. 没有自由意志", "D. 没有决定论"], answer: "B", knowledgePoint: "相容论", analysis: "相容论认为，自由意志和决定论可以同时为真，关键在于如何定义自由。" },
+      { type: "choice", difficulty: 2, text: "相容论定义的自由是：", options: ["A. 脱离因果链", "B. 不受外部强迫", "C. 完全随机", "D. 没有限制"], answer: "B", knowledgePoint: "相容论的自由", analysis: "相容论认为，自由不是脱离因果链，而是按照自己的意愿行动，不受外部强迫。" },
+      { type: "choice", difficulty: 3, text: "相容论对道德责任的辩护是：", options: ["A. 责任不存在", "B. 责任基于内在原因", "C. 责任基于后果", "D. 责任基于运气"], answer: "B", knowledgePoint: "相容论与责任", analysis: "相容论认为，只要行为反映了个人的真实自我，就应该承担责任，即使这个自我是被决定的。" }
     ]
   },
   {
-    lesson: 23, title: "成长的不仅仅是身体",
+    lesson: 14, title: "道德责任的基础",
     questions: [
-      { type: "choice", difficulty: "basic", text: "独立思考意味着：", options: ["A. 盲从", "B. 不盲从，有自己的判断", "C. 固执己见", "D. 不思考"], answer: "B", knowledgePoint: "独立思考", analysis: "独立思考意味着不盲目跟从，有自己的判断和见解。" },
-      { type: "choice", difficulty: "medium", text: "开发创造潜力需要：", options: ["A. 勇于尝试", "B. 害怕失败", "C. 墨守成规", "D. 不思考"], answer: "A", knowledgePoint: "创造力培养", analysis: "开发创造力需要勇于尝试、敢于质疑、善于联想。" },
-      { type: "choice", difficulty: "hard", text: "批判性思维的作用是：", options: ["A. 否定一切", "B. 理性分析和判断", "C. 盲目相信", "D. 没有用处"], answer: "B", knowledgePoint: "批判性思维", analysis: "批判性思维帮助我们理性分析信息，做出明智的判断。" }
+      { type: "choice", difficulty: 1, text: "承担责任需要：", options: ["A. 不知道自己在做什么", "B. 无法做出选择", "C. 知道且能够选择", "D. 被强迫"], answer: "C", knowledgePoint: "责任的条件", analysis: "要承担责任，必须知道自己在做什么，并且能够做出选择。" },
+      { type: "choice", difficulty: 2, text: "无知对责任的影响是：", options: ["A. 增加责任", "B. 减轻责任", "C. 没有影响", "D. 完全消除责任"], answer: "B", knowledgePoint: "无知与责任", analysis: "如果一个人不知道自己的行为会造成伤害，责任会相应减轻。" },
+      { type: "choice", difficulty: 3, text: "未成年人责任较轻的原因是：", options: ["A. 年龄小", "B. 判断力尚未完全发展", "C. 不需要负责", "D. 父母负责"], answer: "B", knowledgePoint: "未成年人的责任", analysis: "未成年人的判断力尚未完全成熟，因此责任较轻。" }
     ]
   },
   {
-    lesson: 24, title: "青春有格",
+    lesson: 15, title: "意志支配咒与责任",
     questions: [
-      { type: "choice", difficulty: "basic", text: "行己有耻的含义是：", options: ["A. 知道什么是可耻的", "B. 做任何事都无所谓", "C. 不知羞耻", "D. 只做坏事"], answer: "A", knowledgePoint: "行己有耻", analysis: "行己有耻意味着知道什么是可耻的，并且不去做。" },
-      { type: "choice", difficulty: "medium", text: "止于至善的追求是：", options: ["A. 达到完美", "B. 追求最高的道德境界", "C. 做个普通人", "D. 不需要努力"], answer: "B", knowledgePoint: "止于至善", analysis: "止于至善是一个永无止境的追求道德完善的过程。" },
-      { type: "choice", difficulty: "hard", text: "道德准则的建立：", options: ["A. 别人强加的", "B. 自己认同的", "C. 不需要准则", "D. 随波逐流"], answer: "B", knowledgePoint: "道德准则", analysis: "道德准则不是别人强加的，而是自己认同并遵守的行为规范。" }
+      { type: "choice", difficulty: 1, text: "夺魂咒的效果是：", options: ["A. 增强力量", "B. 控制意志", "C. 治疗疾病", "D. 飞行"], answer: "B", knowledgePoint: "夺魂咒", analysis: "夺魂咒可以完全控制一个人的意志，使其成为施咒者的傀儡。" },
+      { type: "choice", difficulty: 2, text: "被夺魂咒控制的人：", options: ["A. 完全有责任", "B. 完全没有责任", "C. 部分责任", "D. 责任加重"], answer: "B", knowledgePoint: "被控制者的责任", analysis: "在魔法法律中，被夺魂咒控制的人通常不承担责任，因为他们的意志被剥夺了。" },
+      { type: "choice", difficulty: 3, text: "如果抵抗是可能的，责任：", options: ["A. 完全消失", "B. 仍然存在", "C. 减轻但存在", "D. 无法确定"], answer: "C", knowledgePoint: "抵抗的可能性", analysis: "如果被控制者有能力抵抗，即使很困难，他们可能仍然承担部分责任。" }
     ]
   },
 
-  // ==================== 第12章 民主与法治（第34-36课） ====================
+  // ── 第4章 正义理论（2年级·KS3） ──────────────────────────────
   {
-    lesson: 34, title: "生活需要规则",
+    lesson: 16, title: "什么是公正",
     questions: [
-      { type: "choice", difficulty: "basic", text: "规则的主要作用是：", options: ["A. 限制自由", "B. 维护秩序与公平", "C. 增加麻烦", "D. 区别对待"], answer: "B", knowledgePoint: "规则的作用", analysis: "规则的核心作用是维护社会秩序，保障公平。" },
-      { type: "choice", difficulty: "medium", text: "规则与自由的关系是：", options: ["A. 规则限制自由", "B. 自由不需要规则", "C. 规则保障自由", "D. 规则与自由对立"], answer: "C", knowledgePoint: "规则与自由", analysis: "合理的规则保障每个人平等地享有自由。" },
-      { type: "choice", difficulty: "hard", text: "不同体系规则的共同点是：", options: ["A. 维护秩序", "B. 形式相同", "C. 内容一致", "D. 制定者相同"], answer: "A", knowledgePoint: "规则的共性", analysis: "尽管形式不同，规则的核心目的都是维护秩序与和谐。" }
+      { type: "choice", difficulty: 1, text: "分配正义关注的是：", options: ["A. 程序", "B. 资源分配", "C. 惩罚", "D. 法律"], answer: "B", knowledgePoint: "分配正义", analysis: "分配正义关注社会资源如何公平分配。" },
+      { type: "choice", difficulty: 2, text: "公平与平等的关系是：", options: ["A. 完全相同", "B. 公平需要恰当对待", "C. 平等就是公平", "D. 没有关系"], answer: "B", knowledgePoint: "公平与平等", analysis: "公平不等于平等，公平意味着恰当对待，有时需要不同对待才能达到公平。" },
+      { type: "choice", difficulty: 3, text: "巫师社会的正义问题包括：", options: ["A. 纯血统优势", "B. 资源分配", "C. 机会平等", "D. 以上都是"], answer: "D", knowledgePoint: "巫师社会的正义", analysis: "巫师社会存在多种正义问题，包括血统歧视、资源分配不均等。" }
     ]
   },
   {
-    lesson: 35, title: "我们与规则同行",
+    lesson: 17, title: "罗尔斯的无知之幕",
     questions: [
-      { type: "choice", difficulty: "basic", text: "依规则行事的要求是：", options: ["A. 被动服从", "B. 主动遵守", "C. 选择性遵守", "D. 不遵守"], answer: "B", knowledgePoint: "规则遵守", analysis: "依规则行事应该是主动的，理解并认同规则的价值。" },
-      { type: "choice", difficulty: "medium", text: "树立规则意识的意义是：", options: ["A. 限制自由", "B. 现代公民的基本素养", "C. 没必要", "D. 麻烦"], answer: "B", knowledgePoint: "规则意识", analysis: "规则意识是现代公民的基本素养，无论在哪里都很重要。" },
-      { type: "choice", difficulty: "hard", text: "规则意识的培养：", options: ["A. 一蹴而就", "B. 从小培养，逐步养成", "C. 长大后自然有", "D. 不需要培养"], answer: "B", knowledgePoint: "意识培养", analysis: "规则意识需要从小培养，从遵守小事开始。" }
+      { type: "choice", difficulty: 1, text: "无知之幕的作用是：", options: ["A. 隐藏真相", "B. 消除个人偏见", "C. 增加知识", "D. 制造无知"], answer: "B", knowledgePoint: "无知之幕", analysis: "无知之幕让人们在不知道自己社会地位的情况下选择正义原则，从而消除个人偏见。" },
+      { type: "choice", difficulty: 2, text: "罗尔斯认为人们会选择：", options: ["A. 对最有利者最有利", "B. 对最不利者最有利", "C. 平均分配", "D. 按能力分配"], answer: "B", knowledgePoint: "差别原则", analysis: "罗尔斯认为，在无知之幕下，人们会选择对最不利者最有利的原则。" },
+      { type: "choice", difficulty: 3, text: "如果巫师站在无知之幕后面，不知道自己是否有魔法能力：", options: ["A. 会选择隐瞒魔法", "B. 会选择公开魔法", "C. 无法预测", "D. 会选择消灭魔法"], answer: "C", knowledgePoint: "无知之幕的应用", analysis: "不同的人可能做出不同选择，取决于他们对风险的态度和对公平的理解。" }
     ]
   },
   {
-    lesson: 36, title: "规则伴我们成长",
+    lesson: 18, title: "惩罚的目的",
     questions: [
-      { type: "choice", difficulty: "basic", text: "特殊群体需要：", options: ["A. 歧视", "B. 特殊保护", "C. 忽视", "D. 不公平对待"], answer: "B", knowledgePoint: "特殊保护", analysis: "未成年人、老年人等特殊群体需要法律和社会的特殊保护。" },
-      { type: "choice", difficulty: "medium", text: "维护权益的途径包括：", options: ["A. 协商", "B. 调解", "C. 法律途径", "D. 以上都是"], answer: "D", knowledgePoint: "权益维护", analysis: "当权益受到侵害时，可以通过协商、调解或法律途径维护。" },
-      { type: "choice", difficulty: "hard", text: "自我保护意识的重要性：", options: ["A. 不重要", "B. 生存的重要技能", "C. 害怕的表现", "D. 不需要"], answer: "B", knowledgePoint: "自我保护", analysis: "自我保护是重要的生存技能，需要不断增强。" }
+      { type: "choice", difficulty: 1, text: "应报论认为惩罚是：", options: ["A. 改造罪犯", "B. 报复罪行", "C. 威慑他人", "D. 保护社会"], answer: "B", knowledgePoint: "应报论", analysis: "应报论认为，惩罚是对罪行的回应，作恶者应该得到他们应得的。" },
+      { type: "choice", difficulty: 2, text: "矫正论关注的是：", options: ["A. 报复", "B. 改造罪犯", "C. 威慑", "D. 惩罚"], answer: "B", knowledgePoint: "矫正论", analysis: "矫正论认为，惩罚的目的是改造罪犯，让他们成为更好的人。" },
+      { type: "choice", difficulty: 3, text: "阿兹卡班体现了哪种理论？", options: ["A. 应报论", "B. 矫正论", "C. 威慑论", "D. 以上都有"], answer: "D", knowledgePoint: "阿兹卡班的惩罚理念", analysis: "阿兹卡班综合了多种惩罚理论——既惩罚罪犯（应报），也威慑他人（威慑），但改造的作用有限。" }
+    ]
+  },
+  {
+    lesson: 19, title: "全球正义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "全球正义关注的是：", options: ["A. 一个国家内部", "B. 国家之间", "C. 个人之间", "D. 家庭内部"], answer: "B", knowledgePoint: "全球正义", analysis: "全球正义关注国家之间的公平和对陌生人的道德义务。" },
+      { type: "choice", difficulty: 2, text: "富国对穷国的责任：", options: ["A. 没有责任", "B. 有帮助的责任", "C. 完全负责", "D. 取决于意愿"], answer: "B", knowledgePoint: "国际责任", analysis: "大多数伦理理论认为，富国对穷国负有一定的帮助责任。" },
+      { type: "choice", difficulty: 3, text: "巫师对麻瓜的责任：", options: ["A. 没有责任", "B. 有保护的责任", "C. 有告知的责任", "D. 有统治的责任"], answer: "C", knowledgePoint: "巫师与麻瓜的正义", analysis: "从正义角度看，巫师可能有义务告知麻瓜魔法的存在，让他们做出知情选择。" }
+    ]
+  },
+  {
+    lesson: 20, title: "分配正义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "按需分配的问题是：", options: ["A. 太公平", "B. 减少工作激励", "C. 太复杂", "D. 无法实施"], answer: "B", knowledgePoint: "按需分配", analysis: "按需分配可能减少人们工作的激励，因为无论工作多少都能满足需求。" },
+      { type: "choice", difficulty: 2, text: "按贡献分配的问题是：", options: ["A. 忽视天赋差异", "B. 太平均", "C. 无法计算", "D. 太不公平"], answer: "A", knowledgePoint: "按贡献分配", analysis: "按贡献分配忽略了天赋差异——有些人天生更有能力，不是因为他们更努力。" },
+      { type: "choice", difficulty: 3, text: "魔法能力是否应该影响资源分配？", options: ["A. 应该", "B. 不应该", "C. 部分应该", "D. 无法确定"], answer: "B", knowledgePoint: "能力与分配", analysis: "从公平角度看，天生的能力差异不应该决定资源分配，否则会加剧不平等。" }
     ]
   },
 
-  // ==================== 第14章 专题复习（第40-42课） ====================
+  // ── 第5章 心身问题（3年级·KS3） ──────────────────────────────
   {
-    lesson: 40, title: "道德修养与规则意识",
+    lesson: 21, title: "笛卡尔二元论",
     questions: [
-      { type: "choice", difficulty: "basic", text: "道德与规则的关系是：", options: ["A. 无关", "B. 道德指导规则，规则保障道德", "C. 规则比道德重要", "D. 道德比规则重要"], answer: "B", knowledgePoint: "道德与规则", analysis: "道德是内在准则，规则是外在约束，二者相辅相成。" },
-      { type: "choice", difficulty: "medium", text: "道德修养的重要性在于：", options: ["A. 成为更好的人", "B. 获得利益", "C. 炫耀自己", "D. 没用"], answer: "A", knowledgePoint: "道德修养", analysis: "良好的道德修养能让你成为更好的人，也能让社会更美好。" },
-      { type: "choice", difficulty: "hard", text: "道德修养与规则意识的关系：", options: ["A. 对立", "B. 相辅相成", "C. 无关", "D. 互相阻碍"], answer: "B", knowledgePoint: "二者关系", analysis: "有道德的人会自觉遵守规则，遵守规则的人会培养良好的道德。" }
+      { type: "choice", difficulty: 1, text: "笛卡尔认为心灵和身体是：", options: ["A. 同一种东西", "B. 两种不同实体", "C. 身体包含心灵", "D. 心灵包含身体"], answer: "B", knowledgePoint: "二元论", analysis: "笛卡尔认为，心灵和身体是两种完全不同的实体——心灵是非物质的，身体是物质的。" },
+      { type: "choice", difficulty: 2, text: "二元论面临的难题是：", options: ["A. 心灵如何影响身体", "B. 身体不存在", "C. 心灵不存在", "D. 没有难题"], answer: "A", knowledgePoint: "身心交互问题", analysis: "如果心灵是非物质的，它如何影响物质的身体？这是二元论的核心难题。" },
+      { type: "choice", difficulty: 3, text: "幽灵的存在对二元论意味着：", options: ["A. 支持二元论", "B. 反对二元论", "C. 无关", "D. 证明二元论错误"], answer: "A", knowledgePoint: "幽灵与二元论", analysis: "如果幽灵存在，它们可能是脱离身体的心灵，这支持了二元论的观点。" }
     ]
   },
   {
-    lesson: 41, title: "社会责任与担当",
+    lesson: 22, title: "物理主义",
     questions: [
-      { type: "choice", difficulty: "basic", text: "社会责任的含义是：", options: ["A. 个人对社会的义务", "B. 与自己无关", "C. 负担", "D. 别人的事"], answer: "A", knowledgePoint: "社会责任", analysis: "社会责任是个人对社会应尽的义务，包括关心社会、服务社会。" },
-      { type: "choice", difficulty: "medium", text: "担当责任的意义是：", options: ["A. 帮助社会，成长自己", "B. 吃亏", "C. 浪费时间", "D. 没必要"], answer: "A", knowledgePoint: "责任担当", analysis: "担当责任不仅能帮助社会，也能提升自己的能力和价值。" },
-      { type: "choice", difficulty: "hard", text: "承担社会责任可以从哪里开始：", options: ["A. 做大事", "B. 身边小事", "C. 等长大了再说", "D. 不需要做"], answer: "B", knowledgePoint: "责任实践", analysis: "承担社会责任可以从身边小事做起，关爱他人、参与公益。" }
+      { type: "choice", difficulty: 1, text: "物理主义认为：", options: ["A. 只有心灵存在", "B. 只有物质存在", "C. 心灵和物质都存在", "D. 什么都不存在"], answer: "B", knowledgePoint: "物理主义", analysis: "物理主义认为，一切都是物理的，心灵现象可以完全用物理过程解释。" },
+      { type: "choice", difficulty: 2, text: "物理主义面临的挑战是：", options: ["A. 解释意识", "B. 解释物质", "C. 解释运动", "D. 没有挑战"], answer: "A", knowledgePoint: "物理主义的挑战", analysis: "物理主义难以解释主观意识体验——为什么神经活动会产生'感觉像什么'的体验？" },
+      { type: "choice", difficulty: 3, text: "即使了解所有神经过程，我们能解释红色看起来是什么样吗？", options: ["A. 能", "B. 不能", "C. 可能", "D. 不知道"], answer: "B", knowledgePoint: "意识的难问题", analysis: "大卫·查默斯认为，意识的主观体验无法完全用物理过程解释，这是'难问题'。" }
     ]
   },
   {
-    lesson: 42, title: "成长与发展",
+    lesson: 23, title: "意识的难问题",
     questions: [
-      { type: "choice", difficulty: "basic", text: "成长的阶段性意味着：", options: ["A. 每个阶段都有不同任务", "B. 所有阶段都一样", "C. 不需要成长", "D. 成长很简单"], answer: "A", knowledgePoint: "成长阶段", analysis: "成长有不同阶段，每个阶段有不同的任务和挑战。" },
-      { type: "choice", difficulty: "medium", text: "全面发展的要求是：", options: ["A. 只学习知识", "B. 德智体美劳全面发展", "C. 只关注成绩", "D. 不需要发展"], answer: "B", knowledgePoint: "全面发展", analysis: "全面发展包括知识、能力、品德、身体等多方面的发展。" },
-      { type: "choice", difficulty: "hard", text: "终身成长的理念是：", options: ["A. 学习只在学校", "B. 持续学习，不断进步", "C. 长大后就不用学习", "D. 学习不重要"], answer: "B", knowledgePoint: "终身学习", analysis: "学习是终身的过程，无论年龄多大都可以学习和成长。" }
+      { type: "choice", difficulty: 1, text: "意识的难问题是：", options: ["A. 大脑如何处理信息", "B. 为什么有主观体验", "C. 记忆如何存储", "D. 语言如何产生"], answer: "B", knowledgePoint: "意识的难问题", analysis: "意识的难问题是解释为什么物理过程会产生主观体验。" },
+      { type: "choice", difficulty: 2, text: "玛丽的房间思想实验说明：", options: ["A. 物理知识足够", "B. 存在非物理知识", "C. 颜色不存在", "D. 玛丽看不见颜色"], answer: "B", knowledgePoint: "玛丽的房间", analysis: "玛丽知道所有关于颜色的物理知识，但第一次看到红色时似乎学到了新东西——红色看起来是什么样的。" },
+      { type: "choice", difficulty: 3, text: "摄魂怪攻击夺走的是：", options: ["A. 记忆", "B. 意识体验", "C. 灵魂", "D. 身体能量"], answer: "B", knowledgePoint: "摄魂怪与意识", analysis: "摄魂怪夺走的似乎是快乐等主观体验，这涉及意识的本质问题。" }
+    ]
+  },
+  {
+    lesson: 24, title: "人格同一性",
+    questions: [
+      { type: "choice", difficulty: 1, text: "个人同一性关注的是：", options: ["A. 身体特征", "B. 什么使你成为你", "C. 名字", "D. 外貌"], answer: "B", knowledgePoint: "个人同一性", analysis: "个人同一性问的是：什么在时间中保持不变，使你成为同一个人？" },
+      { type: "choice", difficulty: 2, text: "洛克认为个人同一性在于：", options: ["A. 身体", "B. 记忆", "C. 灵魂", "D. 性格"], answer: "B", knowledgePoint: "记忆理论", analysis: "洛克认为，个人同一性在于记忆的连续性——如果你记得过去的经历，你就是那个经历过的人。" },
+      { type: "choice", difficulty: 3, text: "被除忆咒改变的人还是原来那个人吗？", options: ["A. 是", "B. 不是", "C. 部分是", "D. 无法确定"], answer: "C", knowledgePoint: "记忆与同一性", analysis: "如果记忆被修改，个人同一性会受到影响，但不完全消失——身体和部分记忆仍然存在。" }
+    ]
+  },
+  {
+    lesson: 25, title: "死亡与继续存在",
+    questions: [
+      { type: "choice", difficulty: 1, text: "死亡通常被定义为：", options: ["A. 生命的终止", "B. 灵魂离开身体", "C. 永远睡觉", "D. 去另一个世界"], answer: "A", knowledgePoint: "死亡的定义", analysis: "死亡通常被定义为生命的终止，包括心跳和大脑活动的停止。" },
+      { type: "choice", difficulty: 2, text: "柏拉图认为灵魂是：", options: ["A. 会死亡的", "B. 不朽的", "C. 物质的", "D. 不存在的"], answer: "B", knowledgePoint: "灵魂不朽", analysis: "柏拉图认为，灵魂是单纯的、不可分割的，因此不会分解，是不朽的。" },
+      { type: "choice", difficulty: 3, text: "幽灵是死者的灵魂吗？", options: ["A. 是", "B. 不是", "C. 可能是", "D. 无法证明"], answer: "D", knowledgePoint: "幽灵的本质", analysis: "虽然幽灵看起来像死者的延续，但我们无法证明它们就是灵魂——它们可能是某种能量形式或魔法现象。" }
+    ]
+  },
+
+  // ── 第6章 政治哲学（3年级·KS3） ──────────────────────────────
+  {
+    lesson: 26, title: "国家权力的来源",
+    questions: [
+      { type: "choice", difficulty: 1, text: "社会契约论认为国家权力来自：", options: ["A. 武力", "B. 人民的同意", "C. 上帝", "D. 传统"], answer: "B", knowledgePoint: "社会契约论", analysis: "社会契约论认为，国家的权力来自人民的自愿同意。" },
+      { type: "choice", difficulty: 2, text: "权力的合法性基础是：", options: ["A. 武力", "B. 正当性", "C. 财富", "D. 人数"], answer: "B", knowledgePoint: "合法性", analysis: "权力的合法性来自正当性，而不是武力或财富。" },
+      { type: "choice", difficulty: 3, text: "魔法部权力的正当性来自：", options: ["A. 巫师的同意", "B. 武力", "C. 传统", "D. 魔法能力"], answer: "A", knowledgePoint: "魔法部的合法性", analysis: "魔法部的权力应该来自巫师的同意，如果大多数巫师不同意其政策，其合法性就会受到质疑。" }
+    ]
+  },
+  {
+    lesson: 27, title: "洛克的社会契约",
+    questions: [
+      { type: "choice", difficulty: 1, text: "洛克认为自然权利包括：", options: ["A. 生命、自由、财产", "B. 权力、财富、地位", "C. 食物、水、住所", "D. 魔法能力"], answer: "A", knowledgePoint: "自然权利", analysis: "洛克认为，人们在自然状态下享有生命、自由和财产的权利。" },
+      { type: "choice", difficulty: 2, text: "政府的目的是：", options: ["A. 统治人民", "B. 保护权利", "C. 积累财富", "D. 扩大权力"], answer: "B", knowledgePoint: "政府的目的", analysis: "洛克认为，政府的唯一目的是保护人民的自然权利。" },
+      { type: "choice", difficulty: 3, text: "洛克认为人民有权利：", options: ["A. 永远服从政府", "B. 反抗不公正的政府", "C. 忽视法律", "D. 推翻所有政府"], answer: "B", knowledgePoint: "反抗权", analysis: "洛克认为，当政府侵犯人民的权利时，人民有权反抗。" }
+    ]
+  },
+  {
+    lesson: 28, title: "卢梭与公意",
+    questions: [
+      { type: "choice", difficulty: 1, text: "公意是：", options: ["A. 多数人的意志", "B. 共同的善", "C. 个人意志的总和", "D. 统治者的意志"], answer: "B", knowledgePoint: "公意", analysis: "卢梭认为，公意是超越个人利益的、对所有人都有利的共同意志。" },
+      { type: "choice", difficulty: 2, text: "人民主权意味着：", options: ["A. 人民统治", "B. 国王统治", "C. 议会统治", "D. 法律统治"], answer: "A", knowledgePoint: "人民主权", analysis: "卢梭认为，主权属于人民，而不是国王或议会。" },
+      { type: "choice", difficulty: 3, text: "强迫自由的悖论指的是：", options: ["A. 自由不需要强迫", "B. 强迫可以带来自由", "C. 自由与强迫对立", "D. 强迫总是错的"], answer: "B", knowledgePoint: "强迫自由", analysis: "卢梭认为，当一个人违背公意时，强迫他做对他有利的事实际上是让他获得真正的自由。" }
+    ]
+  },
+  {
+    lesson: 29, title: "无政府主义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "无政府主义认为：", options: ["A. 政府是必要的", "B. 政府是有害的", "C. 政府可以改进", "D. 政府应该扩大"], answer: "B", knowledgePoint: "无政府主义", analysis: "无政府主义认为，国家不仅不是必要的，而且是有害的。" },
+      { type: "choice", difficulty: 2, text: "无政府主义设想的社会是：", options: ["A. 混乱的", "B. 由自愿协会组成", "C. 由强者统治", "D. 没有任何组织"], answer: "B", knowledgePoint: "无政府社会", analysis: "无政府主义设想一个由自愿协会组成的社会，没有强制权力。" },
+      { type: "choice", difficulty: 3, text: "巫师社会是否需要魔法部？", options: ["A. 绝对需要", "B. 绝对不需要", "C. 可能不需要", "D. 无法确定"], answer: "C", knowledgePoint: "魔法社会的治理", analysis: "虽然当前有魔法部，但理论上巫师社会可以通过自愿合作来组织，不一定需要强制政府。" }
+    ]
+  },
+  {
+    lesson: 30, title: "公民抗命",
+    questions: [
+      { type: "choice", difficulty: 1, text: "公民抗命是：", options: ["A. 随意违法", "B. 出于良知的违法", "C. 暴力反抗", "D. 逃避法律"], answer: "B", knowledgePoint: "公民抗命", analysis: "公民抗命是出于良知，为了纠正不公正而故意违法。" },
+      { type: "choice", difficulty: 2, text: "马丁·路德·金认为公民抗命应该：", options: ["A. 暴力", "B. 和平", "C. 秘密", "D. 大规模"], answer: "B", knowledgePoint: "非暴力抵抗", analysis: "马丁·路德·金认为，公民抗命应该采取非暴力方式。" },
+      { type: "choice", difficulty: 3, text: "反对魔法部不公正法令的伦理条件是：", options: ["A. 任何情况都可以", "B. 不公正是真实的、和平的、愿意接受惩罚", "C. 只要不同意就可以", "D. 无法确定"], answer: "B", knowledgePoint: "公民抗命的条件", analysis: "根据金的标准，公民抗命需要满足：不公正是真实的、采取和平方式、愿意接受惩罚。" }
+    ]
+  },
+
+  // ── 第7章 生命伦理（4年级·GCSE） ──────────────────────────────
+  {
+    lesson: 31, title: "堕胎的哲学论证",
+    questions: [
+      { type: "choice", difficulty: 1, text: "堕胎争议的核心是：", options: ["A. 胎儿是否是人", "B. 母亲的权利", "C. 法律规定", "D. 宗教信仰"], answer: "A", knowledgePoint: "堕胎争议", analysis: "堕胎争议的核心问题是：胎儿何时成为一个人，从而拥有生命权。" },
+      { type: "choice", difficulty: 2, text: "支持堕胎的主要理由是：", options: ["A. 母亲的自主权", "B. 胎儿不是人", "C. 法律允许", "D. 宗教支持"], answer: "A", knowledgePoint: "自主权", analysis: "支持堕胎的主要理由是女性对自己身体的自主权。" },
+      { type: "choice", difficulty: 3, text: "不同伦理框架对堕胎的判断：", options: ["A. 完全一致", "B. 各不相同", "C. 都是错的", "D. 都是对的"], answer: "B", knowledgePoint: "伦理框架的差异", analysis: "后果论、义务论和美德伦理对堕胎会有不同的判断，取决于它们的核心原则。" }
+    ]
+  },
+  {
+    lesson: 32, title: "安乐死",
+    questions: [
+      { type: "choice", difficulty: 1, text: "安乐死是：", options: ["A. 自然死亡", "B. 帮助结束生命", "C. 拒绝治疗", "D. 自杀"], answer: "B", knowledgePoint: "安乐死", analysis: "安乐死是指帮助一个人结束生命，以减轻他们的痛苦。" },
+      { type: "choice", difficulty: 2, text: "支持安乐死的理由是：", options: ["A. 个人自主权", "B. 减轻痛苦", "C. 节约资源", "D. 以上都是"], answer: "D", knowledgePoint: "安乐死的理由", analysis: "支持安乐死的理由包括个人自主权、减轻痛苦和合理使用资源。" },
+      { type: "choice", difficulty: 3, text: "医生的职责是：", options: ["A. 只拯救生命", "B. 只减轻痛苦", "C. 两者兼顾", "D. 听从病人"], answer: "C", knowledgePoint: "医生的职责", analysis: "医生的职责不仅是拯救生命，也是减轻痛苦，这两者有时会产生冲突。" }
+    ]
+  },
+  {
+    lesson: 33, title: "医疗资源分配",
+    questions: [
+      { type: "choice", difficulty: 1, text: "稀缺资源分配的原则是：", options: ["A. 先到先得", "B. 公平合理", "C. 随机分配", "D. 富人优先"], answer: "B", knowledgePoint: "资源分配", analysis: "稀缺医疗资源的分配应该公平合理，考虑多种因素。" },
+      { type: "choice", difficulty: 2, text: "应该优先考虑：", options: ["A. 病情最严重的人", "B. 最有可能康复的人", "C. 年轻人", "D. 没有固定答案"], answer: "D", knowledgePoint: "分配标准", analysis: "资源分配没有绝对的标准，需要根据具体情况权衡各种因素。" },
+      { type: "choice", difficulty: 3, text: "魔法治疗是否应该优先给巫师？", options: ["A. 应该", "B. 不应该", "C. 看情况", "D. 无法确定"], answer: "B", knowledgePoint: "公平与特权", analysis: "从公平角度看，医疗资源不应该因为身份而区别对待，无论是巫师还是麻瓜。" }
+    ]
+  },
+  {
+    lesson: 34, title: "基因编辑伦理",
+    questions: [
+      { type: "choice", difficulty: 1, text: "基因编辑的两种用途是：", options: ["A. 治疗和增强", "B. 复制和删除", "C. 阅读和修改", "D. 检测和修复"], answer: "A", knowledgePoint: "基因编辑", analysis: "基因编辑主要有两种用途：治疗疾病和增强能力。" },
+      { type: "choice", difficulty: 2, text: "设计婴儿的争议在于：", options: ["A. 技术难度", "B. 加剧不平等", "C. 成本太高", "D. 没有争议"], answer: "B", knowledgePoint: "设计婴儿", analysis: "设计婴儿可能加剧社会不平等，创造基因阶层。" },
+      { type: "choice", difficulty: 3, text: "魔法基因改造应该：", options: ["A. 完全禁止", "B. 只允许治疗", "C. 完全自由", "D. 无法确定"], answer: "B", knowledgePoint: "魔法伦理", analysis: "与麻瓜技术类似，魔法基因改造应该只允许用于治疗，禁止用于增强，以避免不平等。" }
+    ]
+  },
+  {
+    lesson: 35, title: "动物权利",
+    questions: [
+      { type: "choice", difficulty: 1, text: "边沁认为动物权利的标准是：", options: ["A. 是否会思考", "B. 是否会感受痛苦", "C. 是否有语言", "D. 是否是人类"], answer: "B", knowledgePoint: "动物权利", analysis: "边沁认为，判断动物是否有道德地位的标准是它们能否感受痛苦。" },
+      { type: "choice", difficulty: 2, text: "物种歧视是：", options: ["A. 保护物种", "B. 因为物种不同而歧视", "C. 研究物种", "D. 热爱动物"], answer: "B", knowledgePoint: "物种歧视", analysis: "物种歧视是指仅仅因为一个存在物属于不同物种就歧视它。" },
+      { type: "choice", difficulty: 3, text: "神奇动物的道德地位：", options: ["A. 与普通动物相同", "B. 与人类相同", "C. 更高", "D. 取决于能力"], answer: "D", knowledgePoint: "神奇动物", analysis: "神奇动物的道德地位应该取决于它们的能力，特别是感受痛苦和拥有自我意识的能力。" }
+    ]
+  },
+
+  // ── 第8章 宗教哲学（4年级·GCSE） ──────────────────────────────
+  {
+    lesson: 36, title: "上帝存在的本体论证明",
+    questions: [
+      { type: "choice", difficulty: 1, text: "安瑟伦的本体论证明认为：", options: ["A. 上帝不存在", "B. 上帝必须存在", "C. 无法证明", "D. 上帝可能存在"], answer: "B", knowledgePoint: "本体论证明", analysis: "安瑟伦认为，上帝是无法想象比它更伟大的存在，因此必须存在。" },
+      { type: "choice", difficulty: 2, text: "康德反驳说：", options: ["A. 上帝存在", "B. 存在不是一个谓词", "C. 证明正确", "D. 无法反驳"], answer: "B", knowledgePoint: "康德的反驳", analysis: "康德认为，存在不是一个可以添加到概念上的属性，因此本体论证明不成立。" },
+      { type: "choice", difficulty: 3, text: "本体论证明的问题在于：", options: ["A. 逻辑错误", "B. 前提有问题", "C. 结论正确", "D. 无法确定"], answer: "B", knowledgePoint: "本体论的缺陷", analysis: "本体论证明的前提——存在是一种完美——是有问题的，存在与完美之间没有必然联系。" }
+    ]
+  },
+  {
+    lesson: 37, title: "宇宙论与设计论证明",
+    questions: [
+      { type: "choice", difficulty: 1, text: "宇宙论证明认为：", options: ["A. 宇宙没有原因", "B. 宇宙有第一因", "C. 宇宙是永恒的", "D. 宇宙是偶然的"], answer: "B", knowledgePoint: "宇宙论证明", analysis: "宇宙论证明认为，一切事物都有原因，因此必然有一个无因的第一因——上帝。" },
+      { type: "choice", difficulty: 2, text: "设计论证明认为：", options: ["A. 宇宙是随机的", "B. 宇宙是设计的", "C. 宇宙是偶然的", "D. 宇宙没有目的"], answer: "B", knowledgePoint: "设计论证明", analysis: "设计论证明认为，宇宙的秩序和复杂性表明存在一个设计者——上帝。" },
+      { type: "choice", difficulty: 3, text: "进化论对设计论的挑战是：", options: ["A. 支持设计论", "B. 提供了自然解释", "C. 没有影响", "D. 证明上帝存在"], answer: "B", knowledgePoint: "进化论的影响", analysis: "达尔文的进化论表明，复杂的生命可以通过自然选择产生，不需要设计者。" }
+    ]
+  },
+  {
+    lesson: 38, title: "恶的问题",
+    questions: [
+      { type: "choice", difficulty: 1, text: "恶的问题是：", options: ["A. 为什么有善", "B. 为什么有恶", "C. 恶不存在", "D. 恶是好的"], answer: "B", knowledgePoint: "恶的问题", analysis: "恶的问题追问：如果上帝是全知、全能、全善的，为什么世界上还有恶？" },
+      { type: "choice", difficulty: 2, text: "自由意志辩护认为：", options: ["A. 恶不存在", "B. 恶是自由意志的代价", "C. 上帝不是全善的", "D. 上帝不存在"], answer: "B", knowledgePoint: "自由意志辩护", analysis: "自由意志辩护认为，上帝赋予人类自由意志，这意味着人类可能选择作恶，这是自由的代价。" },
+      { type: "choice", difficulty: 3, text: "自然恶（如地震）的问题在于：", options: ["A. 可以用自由意志解释", "B. 无法用自由意志解释", "C. 不是恶", "D. 是上帝的惩罚"], answer: "B", knowledgePoint: "自然恶", analysis: "自然恶不是人类选择的结果，因此自由意志辩护无法解释它。" }
+    ]
+  },
+  {
+    lesson: 39, title: "奇迹",
+    questions: [
+      { type: "choice", difficulty: 1, text: "奇迹是：", options: ["A. 常见事件", "B. 违反自然规律的事件", "C. 科学现象", "D. 幻觉"], answer: "B", knowledgePoint: "奇迹的定义", analysis: "奇迹通常被定义为违反自然规律的事件，归因于神的干预。" },
+      { type: "choice", difficulty: 2, text: "休谟认为奇迹：", options: ["A. 很常见", "B. 证据不足", "C. 证明上帝存在", "D. 总是发生"], answer: "B", knowledgePoint: "休谟的批判", analysis: "休谟认为，奇迹的证据永远不足以推翻自然规律，因为自然规律有无数经验支持。" },
+      { type: "choice", difficulty: 3, text: "魔法是奇迹吗？", options: ["A. 是", "B. 不是", "C. 对麻瓜来说是", "D. 对巫师来说是"], answer: "C", knowledgePoint: "魔法与奇迹", analysis: "魔法对麻瓜来说似乎是奇迹，但对巫师来说是自然的一部分——真正的奇迹应该是超越所有已知规律的事件。" }
+    ]
+  },
+  {
+    lesson: 40, title: "宗教多元主义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "宗教多元主义认为：", options: ["A. 只有一个宗教是真的", "B. 所有宗教都是通向真理的道路", "C. 没有宗教是真的", "D. 宗教不重要"], answer: "B", knowledgePoint: "宗教多元主义", analysis: "宗教多元主义认为，所有宗教都是通向同一真理的不同道路。" },
+      { type: "choice", difficulty: 2, text: "排他论认为：", options: ["A. 只有一个宗教是真的", "B. 所有宗教都是真的", "C. 没有宗教是真的", "D. 宗教应该融合"], answer: "A", knowledgePoint: "排他论", analysis: "排他论认为只有一个宗教是完全真实的，其他宗教都是错误的。" },
+      { type: "choice", difficulty: 3, text: "不同宗教能否都是真的？", options: ["A. 能", "B. 不能", "C. 部分能", "D. 无法确定"], answer: "C", knowledgePoint: "宗教真理", analysis: "不同宗教的核心教义可能相互冲突，无法同时为真，但它们可能包含共同的道德真理。" }
+    ]
+  },
+
+  // ── 第9章 元伦理学（5年级·GCSE） ──────────────────────────────
+  {
+    lesson: 41, title: "道德实在论",
+    questions: [
+      { type: "choice", difficulty: 1, text: "道德实在论认为：", options: ["A. 道德事实不存在", "B. 道德事实是客观的", "C. 道德是主观的", "D. 道德是情感表达"], answer: "B", knowledgePoint: "道德实在论", analysis: "道德实在论认为，道德判断描述客观事实，存在客观的道德真理。" },
+      { type: "choice", difficulty: 2, text: "道德实在论的挑战是：", options: ["A. 道德分歧", "B. 道德事实的奇怪性", "C. 无法证明", "D. 以上都是"], answer: "D", knowledgePoint: "实在论的挑战", analysis: "道德实在论面临多重挑战，包括道德分歧、道德事实的本体论地位等。" },
+      { type: "choice", difficulty: 3, text: "如果道德实在论为真，我们如何认识道德事实？", options: ["A. 通过感官", "B. 通过理性", "C. 通过直觉", "D. 无法认识"], answer: "C", knowledgePoint: "道德知识", analysis: "道德实在论者通常认为，我们通过道德直觉来认识道德事实。" }
+    ]
+  },
+  {
+    lesson: 42, title: "情感主义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "情感主义认为道德判断是：", options: ["A. 事实描述", "B. 情感表达", "C. 逻辑推理", "D. 神的命令"], answer: "B", knowledgePoint: "情感主义", analysis: "情感主义认为，道德判断不是描述事实，而是表达情感。" },
+      { type: "choice", difficulty: 2, text: "情感主义的优势是：", options: ["A. 解释道德分歧", "B. 证明道德真理", "C. 提供客观标准", "D. 解决所有问题"], answer: "A", knowledgePoint: "情感主义的优势", analysis: "情感主义很好地解释了道德分歧——人们有不同的情感，因此有不同的道德判断。" },
+      { type: "choice", difficulty: 3, text: "情感主义的问题是：", options: ["A. 没有问题", "B. 道德争论只是情感冲突", "C. 无法解释道德进步", "D. 无法解释道德知识"], answer: "B", knowledgePoint: "情感主义的缺陷", analysis: "如果道德判断只是情感表达，那么道德争论就只是情感冲突，没有理性解决的方法。" }
+    ]
+  },
+  {
+    lesson: 43, title: "道德相对主义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "道德相对主义认为：", options: ["A. 道德是普遍的", "B. 道德是文化的", "C. 道德是客观的", "D. 道德是不变的"], answer: "B", knowledgePoint: "道德相对主义", analysis: "道德相对主义认为，道德标准是文化或个人的，没有普遍的道德真理。" },
+      { type: "choice", difficulty: 2, text: "对相对主义的反驳是：", options: ["A. 存在普遍道德原则", "B. 文化差异不重要", "C. 相对主义自相矛盾", "D. 以上都是"], answer: "D", knowledgePoint: "相对主义的反驳", analysis: "相对主义面临多重反驳，包括普遍道德原则的存在和自相矛盾。" },
+      { type: "choice", difficulty: 3, text: "是否存在跨文化的道德原则？", options: ["A. 不存在", "B. 存在一些", "C. 全部存在", "D. 无法确定"], answer: "B", knowledgePoint: "普遍道德", analysis: "几乎所有文化都禁止谋杀、盗窃等行为，这些可能是跨文化的道德原则。" }
+    ]
+  },
+  {
+    lesson: 44, title: "道德进步",
+    questions: [
+      { type: "choice", difficulty: 1, text: "道德进步意味着：", options: ["A. 道德变化", "B. 朝着更好的方向变化", "C. 变得更严格", "D. 变得更宽松"], answer: "B", knowledgePoint: "道德进步", analysis: "道德进步不仅仅是道德观念的变化，而是朝着更公正、更平等的方向变化。" },
+      { type: "choice", difficulty: 2, text: "奴隶制的废除是：", options: ["A. 道德退步", "B. 道德进步", "C. 文化变化", "D. 没有变化"], answer: "B", knowledgePoint: "具体例子", analysis: "奴隶制的废除是公认的道德进步，因为它实现了更大的平等和正义。" },
+      { type: "choice", difficulty: 3, text: "道德进步的标准是：", options: ["A. 多数人的意见", "B. 更公正、更平等", "C. 传统", "D. 权力"], answer: "B", knowledgePoint: "进步的标准", analysis: "道德进步的标准通常是更公正、更平等、更尊重人权，而不是多数人的意见或传统。" }
+    ]
+  },
+  {
+    lesson: 45, title: "道德语言分析",
+    questions: [
+      { type: "choice", difficulty: 1, text: "摩尔认为'善'是：", options: ["A. 可以定义的", "B. 简单不可定义的", "C. 不存在的", "D. 等同于快乐"], answer: "B", knowledgePoint: "自然主义谬误", analysis: "摩尔认为，'善'是一个简单的、不可定义的概念，试图用自然属性定义它是错误的。" },
+      { type: "choice", difficulty: 2, text: "自然主义谬误是：", options: ["A. 正确的推理", "B. 用自然属性定义道德术语", "C. 道德不存在", "D. 道德是主观的"], answer: "B", knowledgePoint: "自然主义谬误", analysis: "自然主义谬误是指试图用自然属性（如快乐、欲望满足）来定义道德术语（如'善'）。" },
+      { type: "choice", difficulty: 3, text: "巫师的道德语言与麻瓜：", options: ["A. 完全不同", "B. 基本相同", "C. 部分相同", "D. 无法比较"], answer: "C", knowledgePoint: "道德语言的共性", analysis: "巫师和麻瓜的道德语言在基本概念（如对错、善恶）上是相似的，但在具体应用上可能不同。" }
+    ]
+  },
+
+  // ── 第10章 GCSE综合（5年级·GCSE） ──────────────────────────────
+  {
+    lesson: 46, title: "哲学论证结构分析",
+    questions: [
+      { type: "choice", difficulty: 1, text: "论证的基本结构是：", options: ["A. 前提+结论", "B. 问题+答案", "C. 事实+观点", "D. 原因+结果"], answer: "A", knowledgePoint: "论证结构", analysis: "每个论证都由前提和结论组成，前提支持结论。" },
+      { type: "choice", difficulty: 2, text: "有效的论证是：", options: ["A. 前提为真", "B. 结论为真", "C. 前提为真则结论必然为真", "D. 前提和结论都为真"], answer: "C", knowledgePoint: "论证有效性", analysis: "有效的论证是指如果前提为真，结论必然为真，与前提是否实际为真无关。" },
+      { type: "choice", difficulty: 3, text: "重构论证的关键是：", options: ["A. 找到隐含前提", "B. 忽略细节", "C. 改变结论", "D. 添加新前提"], answer: "A", knowledgePoint: "论证重构", analysis: "重构论证需要识别隐含的前提，明确结论，整理推理步骤。" }
+    ]
+  },
+  {
+    lesson: 47, title: "概念分析方法",
+    questions: [
+      { type: "choice", difficulty: 1, text: "概念分析的目的是：", options: ["A. 混淆概念", "B. 厘清概念的意义", "C. 创造新概念", "D. 消除概念"], answer: "B", knowledgePoint: "概念分析", analysis: "概念分析的目的是厘清概念的意义、边界和用法。" },
+      { type: "choice", difficulty: 2, text: "必要条件是：", options: ["A. 足够满足的条件", "B. 必须满足的条件", "C. 可选的条件", "D. 无关的条件"], answer: "B", knowledgePoint: "必要条件", analysis: "必要条件是定义一个概念必须满足的条件。" },
+      { type: "choice", difficulty: 3, text: "反例测试的作用是：", options: ["A. 证明定义正确", "B. 检验定义的准确性", "C. 创造反例", "D. 忽略定义"], answer: "B", knowledgePoint: "反例测试", analysis: "反例测试是检验定义准确性的有效方法——如果一个定义无法解释某个案例，就需要修改。" }
+    ]
+  },
+  {
+    lesson: 48, title: "反驳技巧",
+    questions: [
+      { type: "choice", difficulty: 1, text: "反驳的目的是：", options: ["A. 攻击人", "B. 指出论证的弱点", "C. 同意对方", "D. 转移话题"], answer: "B", knowledgePoint: "反驳", analysis: "反驳不是攻击人，而是指出论证的弱点。" },
+      { type: "choice", difficulty: 2, text: "归谬法是：", options: ["A. 证明自己正确", "B. 假设对方观点为真并推导出荒谬结论", "C. 同意对方", "D. 忽略对方"], answer: "B", knowledgePoint: "归谬法", analysis: "归谬法是一种有力的反驳工具，通过假设对方观点为真并推导出荒谬结论来反驳。" },
+      { type: "choice", difficulty: 3, text: "善意原则要求：", options: ["A. 歪曲对方观点", "B. 理解对方观点的最佳版本", "C. 攻击对方", "D. 忽略对方"], answer: "B", knowledgePoint: "善意原则", analysis: "评价论证时要遵循善意原则，理解对方观点的最佳版本。" }
+    ]
+  },
+  {
+    lesson: 49, title: "哲学写作",
+    questions: [
+      { type: "choice", difficulty: 1, text: "哲学写作的要求是：", options: ["A. 模糊晦涩", "B. 清晰精确有力", "C. 冗长复杂", "D. 充满比喻"], answer: "B", knowledgePoint: "哲学写作", analysis: "哲学写作需要清晰表达观点、精确使用术语、有力论证立场。" },
+      { type: "choice", difficulty: 2, text: "论文结构应该包括：", options: ["A. 引言、主体、结论", "B. 只有结论", "C. 只有引言", "D. 没有结构"], answer: "A", knowledgePoint: "论文结构", analysis: "哲学论文应该有引言（说明问题和立场）、主体（论证观点）和结论（总结论证）。" },
+      { type: "choice", difficulty: 3, text: "引用文献的目的是：", options: ["A. 凑字数", "B. 学术诚信和支持论证", "C. 炫耀知识", "D. 没有目的"], answer: "B", knowledgePoint: "学术引用", analysis: "引用文献既是学术诚信的要求，也是为论证提供支持。" }
+    ]
+  },
+  {
+    lesson: 50, title: "GCSE综合复习",
+    questions: [
+      { type: "choice", difficulty: 1, text: "三大伦理框架是：", options: ["A. 功利主义、义务论、美德伦理", "B. 相对主义、实在论、情感主义", "C. 有神论、无神论、不可知论", "D. 理性主义、经验主义、怀疑论"], answer: "A", knowledgePoint: "伦理框架", analysis: "三大伦理框架是功利主义、义务论和美德伦理。" },
+      { type: "choice", difficulty: 2, text: "知识论的核心问题是：", options: ["A. 什么是美", "B. 什么是知识", "C. 什么是正义", "D. 什么是存在"], answer: "B", knowledgePoint: "知识论", analysis: "知识论研究知识的本质、来源和界限。" },
+      { type: "choice", difficulty: 3, text: "政治哲学的关键概念包括：", options: ["A. 社会契约、正义、权利", "B. 意识、自由意志、同一性", "C. 上帝、奇迹、宗教", "D. 道德语言、实在论、相对主义"], answer: "A", knowledgePoint: "政治哲学", analysis: "政治哲学关注社会契约、正义理论、权利和权力等概念。" }
+    ]
+  },
+
+  // ── 第11章 认识论深化（6年级·A-Level） ──────────────────────────────
+  {
+    lesson: 51, title: "盖梯尔问题",
+    questions: [
+      { type: "choice", difficulty: 1, text: "盖梯尔问题挑战了：", options: ["A. 知识的定义", "B. 信念的存在", "C. 真理的可能性", "D. 怀疑论"], answer: "A", knowledgePoint: "盖梯尔问题", analysis: "盖梯尔问题表明，有理由的真信念并不一定等于知识。" },
+      { type: "choice", difficulty: 2, text: "知识需要满足的条件是：", options: ["A. 真信念", "B. 有理由的真信念", "C. 有理由且安全的真信念", "D. 无法定义"], answer: "C", knowledgePoint: "知识的条件", analysis: "知识不仅需要有理由的真信念，还需要安全性——如果情况稍有不同，信念仍然为真。" },
+      { type: "choice", difficulty: 3, text: "知识的本质是：", options: ["A. 信念状态", "B. 与真理的关系", "C. 认知成就", "D. 以上都是"], answer: "D", knowledgePoint: "知识的本质", analysis: "知识是一种特殊的信念状态，涉及与真理的可靠联系，也是一种认知成就。" }
+    ]
+  },
+  {
+    lesson: 52, title: "内在主义与外在主义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "内在主义认为正当性是：", options: ["A. 外部的", "B. 内省可及的", "C. 不可知的", "D. 随机的"], answer: "B", knowledgePoint: "内在主义", analysis: "内在主义认为，知识所需的正当性是内省可及的——你知道你有理由相信。" },
+      { type: "choice", difficulty: 2, text: "可靠主义是一种：", options: ["A. 内在主义", "B. 外在主义", "C. 怀疑论", "D. 相对主义"], answer: "B", knowledgePoint: "可靠主义", analysis: "可靠主义认为，知识是由可靠的认知过程产生的真信念，这是一种外在主义理论。" },
+      { type: "choice", difficulty: 3, text: "认知责任与可靠性的关系：", options: ["A. 对立", "B. 互补", "C. 无关", "D. 等同"], answer: "B", knowledgePoint: "认知责任", analysis: "内在主义强调认知责任，外在主义强调可靠性，两者可以互补——既要有正当理由，也要有可靠过程。" }
+    ]
+  },
+  {
+    lesson: 53, title: "怀疑主义的回应",
+    questions: [
+      { type: "choice", difficulty: 1, text: "摩尔的常识反驳认为：", options: ["A. 我们无法知道任何事情", "B. 我们确实知道一些事情", "C. 知识是不可能的", "D. 怀疑论正确"], answer: "B", knowledgePoint: "摩尔的反驳", analysis: "摩尔认为，我们确实知道一些事情，比如'我有两只手'，这可以反驳怀疑论。" },
+      { type: "choice", difficulty: 2, text: "语境主义认为知识标准：", options: ["A. 固定不变", "B. 随语境变化", "C. 不存在", "D. 由怀疑论决定"], answer: "B", knowledgePoint: "语境主义", analysis: "语境主义认为，知识的标准随语境变化——在日常语境中我们知道很多，在哲学语境中标准更高。" },
+      { type: "choice", difficulty: 3, text: "诺齐克的追踪理论认为：", options: ["A. 知识是追踪真理的信念", "B. 知识是有理由的真信念", "C. 知识不存在", "D. 知识是主观的"], answer: "A", knowledgePoint: "追踪理论", analysis: "诺齐克认为，知识是追踪真理的信念——如果事情不是这样，你就不会相信它。" }
+    ]
+  },
+  {
+    lesson: 54, title: "归纳问题",
+    questions: [
+      { type: "choice", difficulty: 1, text: "休谟问题是关于：", options: ["A. 演绎推理", "B. 归纳推理", "C. 类比推理", "D. 因果推理"], answer: "B", knowledgePoint: "归纳问题", analysis: "休谟问题追问归纳推理的理性基础——我们为什么相信未来会像过去一样？" },
+      { type: "choice", difficulty: 2, text: "归纳推理依赖：", options: ["A. 自然齐一性", "B. 逻辑必然性", "C. 主观信念", "D. 上帝存在"], answer: "A", knowledgePoint: "自然齐一性", analysis: "归纳推理依赖自然齐一性原则——自然规律在时间和空间上是一致的。" },
+      { type: "choice", difficulty: 3, text: "科学推理的基础是：", options: ["A. 演绎", "B. 归纳", "C. 类比", "D. 直觉"], answer: "B", knowledgePoint: "科学推理", analysis: "科学依赖归纳推理，因此如果归纳没有理性基础，科学知识的基础也会受到质疑。" }
+    ]
+  },
+  {
+    lesson: 55, title: "科学哲学",
+    questions: [
+      { type: "choice", difficulty: 1, text: "波普尔的证伪主义认为科学理论应该：", options: ["A. 可证实", "B. 可证伪", "C. 不可检验", "D. 永远正确"], answer: "B", knowledgePoint: "证伪主义", analysis: "波普尔认为，科学理论应该是可证伪的——存在可能的观察会推翻它。" },
+      { type: "choice", difficulty: 2, text: "库恩的范式理论认为科学发展是：", options: ["A. 累积的", "B. 革命性的", "C. 线性的", "D. 停滞的"], answer: "B", knowledgePoint: "范式转换", analysis: "库恩认为，科学发展是范式转换——从一个范式到另一个范式的革命性转变。" },
+      { type: "choice", difficulty: 3, text: "科学实在论与工具主义的争论在于：", options: ["A. 科学是否有用", "B. 科学理论是否描述真实世界", "C. 科学是否进步", "D. 科学是否需要实验"], answer: "B", knowledgePoint: "科学实在论", analysis: "科学实在论认为科学理论描述真实世界，工具主义认为它们只是预测现象的工具。" }
+    ]
+  },
+
+  // ── 第12章 形而上学（6年级·A-Level） ──────────────────────────────
+  {
+    lesson: 56, title: "存在的本质",
+    questions: [
+      { type: "choice", difficulty: 1, text: "本体论研究：", options: ["A. 知识的本质", "B. 存在的种类", "C. 道德的本质", "D. 美的本质"], answer: "B", knowledgePoint: "本体论", analysis: "本体论研究存在的种类——有哪些东西存在，它们是什么样的。" },
+      { type: "choice", difficulty: 2, text: "为什么有存在而不是虚无？", options: ["A. 偶然的", "B. 必然的", "C. 无法回答", "D. 上帝创造"], answer: "C", knowledgePoint: "存在的问题", analysis: "这是形而上学最根本的问题，目前没有普遍接受的答案。" },
+      { type: "choice", difficulty: 3, text: "抽象对象是否存在？", options: ["A. 存在", "B. 不存在", "C. 只存在于心灵中", "D. 无法确定"], answer: "D", knowledgePoint: "抽象对象", analysis: "数字、共相、命题等抽象对象的存在性是形而上学的重要争论点。" }
+    ]
+  },
+  {
+    lesson: 57, title: "实体理论",
+    questions: [
+      { type: "choice", difficulty: 1, text: "实体是：", options: ["A. 性质的集合", "B. 具有性质但本身不是性质的东西", "C. 不存在的", "D. 只有心灵"], answer: "B", knowledgePoint: "实体", analysis: "传统实体理论认为，实体是具有性质但本身不是性质的东西——是性质的承载者。" },
+      { type: "choice", difficulty: 2, text: "共相问题关注：", options: ["A. 个体事物", "B. 多个事物共有的性质", "C. 特殊事物", "D. 不存在的东西"], answer: "B", knowledgePoint: "共相问题", analysis: "共相问题问的是，多个事物共有的性质（如红色）是否独立存在。" },
+      { type: "choice", difficulty: 3, text: "个体性的基础是：", options: ["A. 性质", "B. 实体", "C. 时空位置", "D. 无法确定"], answer: "D", knowledgePoint: "个体性", analysis: "什么使一个事物成为它自己，是性质、实体还是其他，这是形而上学的难题。" }
+    ]
+  },
+  {
+    lesson: 58, title: "时间与空间",
+    questions: [
+      { type: "choice", difficulty: 1, text: "绝对时空观认为时空：", options: ["A. 依赖物质", "B. 独立于物质", "C. 不存在", "D. 是主观的"], answer: "B", knowledgePoint: "绝对时空", analysis: "牛顿认为时空是绝对的——即使没有任何事物，时空依然存在。" },
+      { type: "choice", difficulty: 2, text: "相对时空观认为时空：", options: ["A. 独立于物质", "B. 依赖物质和能量", "C. 是绝对的", "D. 不存在"], answer: "B", knowledgePoint: "相对时空", analysis: "爱因斯坦认为时空是相对的——时空依赖于物质和能量。" },
+      { type: "choice", difficulty: 3, text: "时间的流逝是：", options: ["A. 真实的", "B. 幻觉", "C. 主观的", "D. 无法确定"], answer: "D", knowledgePoint: "时间的本质", analysis: "时间是否真的流逝，还是只是我们的主观感受，这是物理学和哲学的共同问题。" }
+    ]
+  },
+  {
+    lesson: 59, title: "偶然与必然",
+    questions: [
+      { type: "choice", difficulty: 1, text: "必然真理是：", options: ["A. 在某些世界中为真", "B. 在所有可能世界中为真", "C. 只在现实世界中为真", "D. 永远为假"], answer: "B", knowledgePoint: "必然真理", analysis: "必然真理在所有可能世界中都是真的，比如数学真理。" },
+      { type: "choice", difficulty: 2, text: "可能世界语义学用于理解：", options: ["A. 必然性和可能性", "B. 时间和空间", "C. 因果关系", "D. 知识"], answer: "A", knowledgePoint: "可能世界", analysis: "可能世界是理解模态概念（必然性、可能性）的工具。" },
+      { type: "choice", difficulty: 3, text: "宿命论认为：", options: ["A. 所有事情都是必然的", "B. 所有事情都是偶然的", "C. 有些事情是必然的", "D. 没有必然的事情"], answer: "A", knowledgePoint: "宿命论", analysis: "宿命论认为，所有事情都是必然的——未来已经注定，与自由意志不相容。" }
+    ]
+  },
+  {
+    lesson: 60, title: "反事实推理",
+    questions: [
+      { type: "choice", difficulty: 1, text: "反事实条件句是：", options: ["A. 关于现实的陈述", "B. 关于可能情况的陈述", "C. 必然为真的陈述", "D. 必然为假的陈述"], answer: "B", knowledgePoint: "反事实条件句", analysis: "反事实条件句是'如果A没有发生，B就不会发生'这样的陈述。" },
+      { type: "choice", difficulty: 2, text: "反事实因果理论认为：", options: ["A. A导致B如果A不发生B也不发生", "B. A导致B如果A发生B也发生", "C. 因果关系不存在", "D. 因果关系是主观的"], answer: "A", knowledgePoint: "反事实因果", analysis: "大卫·刘易斯认为，A导致B，如果在最接近的可能世界中A不发生，B也不发生。" },
+      { type: "choice", difficulty: 3, text: "反事实理论的问题是：", options: ["A. 过度决定", "B. 预设", "C. 传递性", "D. 以上都是"], answer: "D", knowledgePoint: "反事实的缺陷", analysis: "反事实因果理论面临过度决定（多个原因导致同一结果）和预设（一个原因预设另一个原因）等问题。" }
+    ]
+  },
+
+  // ── 第13章 政治与社会哲学（7年级·A-Level） ────────────────────────
+  {
+    lesson: 61, title: "自由主义的张力",
+    questions: [
+      { type: "choice", difficulty: 1, text: "自由与平等的关系是：", options: ["A. 完全一致", "B. 有时冲突", "C. 完全对立", "D. 无关"], answer: "B", knowledgePoint: "自由与平等", analysis: "自由可能导致不平等，平等可能限制自由，两者存在张力。" },
+      { type: "choice", difficulty: 2, text: "古典自由主义强调：", options: ["A. 平等优先", "B. 自由优先", "C. 秩序优先", "D. 安全优先"], answer: "B", knowledgePoint: "古典自由主义", analysis: "古典自由主义强调最小政府、最大自由，认为自由是最重要的价值。" },
+      { type: "choice", difficulty: 3, text: "福利国家的正当性在于：", options: ["A. 促进平等", "B. 保障自由", "C. 两者兼顾", "D. 没有正当性"], answer: "C", knowledgePoint: "福利国家", analysis: "福利国家通过税收提供公共服务，既促进平等，也保障所有人的基本自由。" }
+    ]
+  },
+  {
+    lesson: 62, title: "共同体主义",
+    questions: [
+      { type: "choice", difficulty: 1, text: "共同体主义批评自由主义：", options: ["A. 过于强调个人", "B. 过于强调国家", "C. 过于强调自由", "D. 过于强调平等"], answer: "A", knowledgePoint: "共同体主义", analysis: "共同体主义认为，自由主义把个人看作原子化的、脱离社会的存在，忽视了共同体的重要性。" },
+      { type: "choice", difficulty: 2, text: "共同善是：", options: ["A. 个人利益的总和", "B. 共同体成员共同追求的善", "C. 物质财富", "D. 权力"], answer: "B", knowledgePoint: "共同善", analysis: "共同善是共同体成员共同追求的善，如正义、繁荣、文化传承。" },
+      { type: "choice", difficulty: 3, text: "个人与社群的关系是：", options: ["A. 对立", "B. 相互构成", "C. 个人优先", "D. 社群优先"], answer: "B", knowledgePoint: "个人与社群", analysis: "个人离不开社群，社群也离不开个人——共同体塑造了我们是谁，我们也塑造了共同体。" }
+    ]
+  },
+  {
+    lesson: 63, title: "女性主义政治哲学",
+    questions: [
+      { type: "choice", difficulty: 1, text: "女性主义关注：", options: ["A. 性别平等", "B. 阶级斗争", "C. 种族平等", "D. 宗教自由"], answer: "A", knowledgePoint: "女性主义", analysis: "女性主义政治哲学关注性别不平等和权力结构，追求性别平等。" },
+      { type: "choice", difficulty: 2, text: "父权制是：", options: ["A. 父亲统治", "B. 男性主导的权力结构", "C. 家庭制度", "D. 宗教制度"], answer: "B", knowledgePoint: "父权制", analysis: "父权制是一种权力结构，男性在其中占据主导地位，渗透在社会的各个方面。" },
+      { type: "choice", difficulty: 3, text: "差异女性主义认为：", options: ["A. 男女完全相同", "B. 男女差异应该被消除", "C. 男女差异应该被尊重", "D. 女性优于男性"], answer: "C", knowledgePoint: "差异女性主义", analysis: "差异女性主义认为，男女之间存在重要差异，应该被承认和尊重，而不是消除。" }
+    ]
+  },
+  {
+    lesson: 64, title: "后殖民批判",
+    questions: [
+      { type: "choice", difficulty: 1, text: "后殖民批判关注：", options: ["A. 殖民主义的遗产", "B. 经济发展", "C. 科技进步", "D. 文化传承"], answer: "A", knowledgePoint: "后殖民批判", analysis: "后殖民批判关注殖民主义的遗产和知识的权力，以及文化帝国主义。" },
+      { type: "choice", difficulty: 2, text: "知识与权力的关系是：", options: ["A. 无关", "B. 交织的", "C. 知识决定权力", "D. 权力决定知识"], answer: "B", knowledgePoint: "知识与权力", analysis: "福柯认为，知识和权力是交织的——谁拥有知识，谁就拥有权力。" },
+      { type: "choice", difficulty: 3, text: "去殖民化意味着：", options: ["A. 政治独立", "B. 知识和文化的解放", "C. 经济独立", "D. 以上都是"], answer: "D", knowledgePoint: "去殖民化", analysis: "去殖民化不仅是政治独立，也是知识和文化的解放，需要重新审视被殖民的知识。" }
+    ]
+  },
+  {
+    lesson: 65, title: "全球治理",
+    questions: [
+      { type: "choice", difficulty: 1, text: "全球治理关注：", options: ["A. 国家内部事务", "B. 国际事务", "C. 个人事务", "D. 家庭事务"], answer: "B", knowledgePoint: "全球治理", analysis: "全球治理关注如何在主权国家之上建立有效的治理体系，解决全球性问题。" },
+      { type: "choice", difficulty: 2, text: "主权与人权的关系是：", options: ["A. 完全一致", "B. 有时冲突", "C. 完全对立", "D. 无关"], answer: "B", knowledgePoint: "主权与人权", analysis: "国家主权与普遍人权有时会产生冲突，需要协调两者的关系。" },
+      { type: "choice", difficulty: 3, text: "全球公民身份意味着：", options: ["A. 只忠于国家", "B. 只忠于世界", "C. 既忠于国家也忠于世界", "D. 没有忠诚"], answer: "C", knowledgePoint: "全球公民身份", analysis: "全球公民身份认为，我们不仅是某个国家的公民，也是世界的公民，对全人类负有责任。" }
+    ]
+  },
+
+  // ── 第14章 哲学综合（7年级·A-Level） ──────────────────────────────
+  {
+    lesson: 66, title: "哲学史脉络",
+    questions: [
+      { type: "choice", difficulty: 1, text: "哲学史的发展是：", options: ["A. 线性进步", "B. 对话和回应", "C. 断裂的", "D. 停滞的"], answer: "B", knowledgePoint: "哲学史", analysis: "哲学史不是线性进步，而是不同哲学家之间的对话和回应。" },
+      { type: "choice", difficulty: 2, text: "分析哲学关注：", options: ["A. 语言和逻辑", "B. 存在和本质", "C. 道德和政治", "D. 艺术和美"], answer: "A", knowledgePoint: "分析哲学", analysis: "分析哲学强调语言分析和逻辑论证，关注知识、真理、意义等问题。" },
+      { type: "choice", difficulty: 3, text: "哲学问题的延续性在于：", options: ["A. 问题相同答案不同", "B. 问题不同答案相同", "C. 问题和答案都相同", "D. 没有延续性"], answer: "A", knowledgePoint: "哲学问题", analysis: "有些哲学问题贯穿哲学史，如存在、知识、道德，但不同时代有不同的回答。" }
+    ]
+  },
+  {
+    lesson: 67, title: "当代哲学问题",
+    questions: [
+      { type: "choice", difficulty: 1, text: "AI的道德地位取决于：", options: ["A. 外观", "B. 意识和感受", "C. 功能", "D. 价格"], answer: "B", knowledgePoint: "AI伦理", analysis: "AI是否有道德地位，取决于它是否具有意识和感受能力。" },
+      { type: "choice", difficulty: 2, text: "气候变化的伦理问题是：", options: ["A. 代际正义", "B. 分配正义", "C. 全球正义", "D. 以上都是"], answer: "D", knowledgePoint: "气候伦理", analysis: "气候变化涉及代际正义（影响未来世代）、分配正义（责任分担）和全球正义（国际合作）。" },
+      { type: "choice", difficulty: 3, text: "数字时代的隐私重要性在于：", options: ["A. 个人自主", "B. 权力平衡", "C. 社会信任", "D. 以上都是"], answer: "D", knowledgePoint: "数字隐私", analysis: "隐私保护个人自主，平衡个人与权力机构的关系，维护社会信任。" }
+    ]
+  },
+  {
+    lesson: 68, title: "论文写作",
+    questions: [
+      { type: "choice", difficulty: 1, text: "优秀哲学论文的标准是：", options: ["A. 清晰精确有力", "B. 冗长复杂", "C. 模糊晦涩", "D. 充满比喻"], answer: "A", knowledgePoint: "论文标准", analysis: "优秀哲学论文需要清晰表达观点、精确使用术语、有力论证立场。" },
+      { type: "choice", difficulty: 2, text: "论文的核心是：", options: ["A. 文献综述", "B. 论证", "C. 结论", "D. 引言"], answer: "B", knowledgePoint: "论文核心", analysis: "哲学论文的核心是论证——提出观点并为之辩护。" },
+      { type: "choice", difficulty: 3, text: "论证深度意味着：", options: ["A. 引用更多文献", "B. 考虑反对意见并回应", "C. 使用复杂术语", "D. 更长的篇幅"], answer: "B", knowledgePoint: "论证深度", analysis: "论证深度在于考虑反对意见，回应反驳，展示论证的复杂性。" }
+    ]
+  },
+  {
+    lesson: 69, title: "批判性思维综合",
+    questions: [
+      { type: "choice", difficulty: 1, text: "批判性思维的核心是：", options: ["A. 否定一切", "B. 理性分析和判断", "C. 盲目相信", "D. 主观臆断"], answer: "B", knowledgePoint: "批判性思维", analysis: "批判性思维帮助我们理性分析信息，做出明智的判断。" },
+      { type: "choice", difficulty: 2, text: "常见的逻辑谬误包括：", options: ["A. 诉诸权威", "B. 稻草人", "C. 人身攻击", "D. 以上都是"], answer: "D", knowledgePoint: "逻辑谬误", analysis: "常见的逻辑谬误有诉诸权威、稻草人、人身攻击、滑坡谬误等。" },
+      { type: "choice", difficulty: 3, text: "理性讨论的艺术在于：", options: ["A. 说服对方", "B. 尊重和倾听", "C. 赢得争论", "D. 证明自己正确"], answer: "B", knowledgePoint: "理性讨论", analysis: "理性讨论需要尊重、倾听、开放，即使不同意对方也要认真对待他们的论证。" }
+    ]
+  },
+  {
+    lesson: 70, title: "A-Level综合模拟",
+    questions: [
+      { type: "choice", difficulty: 1, text: "伦理学综合需要：", options: ["A. 比较不同框架", "B. 只使用一个框架", "C. 忽略框架", "D. 拒绝所有框架"], answer: "A", knowledgePoint: "伦理综合", analysis: "伦理学综合需要比较不同伦理框架在具体案例中的应用。" },
+      { type: "choice", difficulty: 2, text: "认识论综合关注：", options: ["A. 知识的定义和来源", "B. 道德的本质", "C. 存在的意义", "D. 政治的正义"], answer: "A", knowledgePoint: "认识论综合", analysis: "认识论综合关注知识的定义、来源、界限以及怀疑论的挑战。" },
+      { type: "choice", difficulty: 3, text: "哲学综合的关键是：", options: ["A. 记忆知识点", "B. 整合不同领域", "C. 背诵论证", "D. 记住哲学家名字"], answer: "B", knowledgePoint: "哲学综合", analysis: "哲学综合需要整合不同领域的知识，形成连贯的理解和论证。" }
     ]
   }
 ];
+
+export default questionBank;

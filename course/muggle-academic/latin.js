@@ -1,23 +1,11 @@
 /**
- * subjects/latin.js
- * 麻瓜学术系 · 拉丁语分科
- * 教授：米兰达·珀西瓦尔
- *
- * 包含：
- *   subjectMeta      科目元数据
- *   syllabus         课程大纲（章节+知识点）
- *   crossAnchors     跨学科锚点
- *   teachingStyle    教学风格常量
- *
- * 课程安排参考现实初一标准：
- *   - 每周4节课（周一、周三、周五、周六）
- *   - 包含期中和期末考试
- *   - 包含复习环节
- *   - 魔法世界包装，但避免具体学生或原著剧情
- *
- * 题库文件：latin-questionBank.js
+ * latin.js
+ * 麻瓜学术系 · 拉丁语
+ * 教授：米兰达·珀西瓦尔（Miranda Percival）
+ * 课程体系：英国 KS3 → GCSE → A-Level（共 70 课，14 章，横跨 7 年级）
  */
 
+import { lessonMap } from './latin-lesson.js';
 import { questionBank } from './latin-questionBank.js';
 
 export const subjectMeta = {
@@ -26,7 +14,7 @@ export const subjectMeta = {
   icon: "🏛️",
   professor: "米兰达·珀西瓦尔",
   desc: "词根、格变、词源——所有咒语的母语，死的语言里藏着活的魔法",
-  unlockGrade: 3,
+  unlockGrade: 1,
   housePointsPerLesson: { O: 6, E: 5, A: 3, P: 1, D: -1, T: -3 }
 };
 
@@ -40,490 +28,167 @@ export const teachingStyle = {
 };
 
 export const syllabus = [
-  { chapter: 1, title: "语言基础与词根", lessons: [
-    { lesson: 1, title: "词根与词汇构建", keyPoints: [
-      "词根是单词的意义核心（如 dict= 说，port= 带）",
-      "前缀改变方向或程度（un-, re-, pre-）",
-      "后缀改变词性（-tion, -ness, -ly）",
-      "通过词根推断未知单词含义的方法"
-    ]},
-    { lesson: 2, title: "基础词汇积累", keyPoints: [
-      "日常高频词汇分类记忆",
-      "单词的音形义结合",
-      "词汇在句子中的运用",
-      "常用介词搭配"
-    ]},
-    { lesson: 3, title: "词性识别", keyPoints: [
-      "名词、动词、形容词、副词的区分",
-      "词性变化规则",
-      "同一词根不同词性的单词",
-      "词性对句子结构的影响"
-    ]},
-    { lesson: 4, title: "构词法进阶", keyPoints: [
-      "合成词的构成方式",
-      "转化词的用法",
-      "派生词的规律",
-      "词源追溯方法"
-    ]}
-  ]},
-  { chapter: 2, title: "语法结构基础", lessons: [
-    { lesson: 5, title: "句子成分", keyPoints: [
-      "主语、谓语、宾语的识别",
-      "定语、状语、补语的作用",
-      "基本句型结构",
-      "句子成分分析方法"
-    ]},
-    { lesson: 6, title: "句子类型", keyPoints: [
-      "简单句、并列句、复合句",
-      "并列连词的使用",
-      "从句的基本概念",
-      "句子类型判断"
-    ]},
-    { lesson: 7, title: "名词与冠词", keyPoints: [
-      "可数名词与不可数名词",
-      "冠词a/an/the的用法",
-      "零冠词情况",
-      "名词所有格"
-    ]},
-    { lesson: 8, title: "代词", keyPoints: [
-      "人称代词主格与宾格",
-      "物主代词与反身代词",
-      "指示代词与不定代词",
-      "代词的一致性"
-    ]}
-  ]},
-  { chapter: 3, title: "时态系统", lessons: [
-    { lesson: 9, title: "一般现在时", keyPoints: [
-      "经常性、习惯性动作",
-      "客观事实与真理",
-      "动词第三人称单数变化",
-      "时间标志词"
-    ]},
-    { lesson: 10, title: "现在进行时", keyPoints: [
-      "正在进行的动作",
-      "现在分词构成",
-      "be动词的配合",
-      "暂时情况与发展趋势"
-    ]},
-    { lesson: 11, title: "一般过去时", keyPoints: [
-      "过去发生的动作",
-      "规则动词与不规则动词",
-      "动词过去式变化",
-      "过去时间标志词"
-    ]},
-    { lesson: 12, title: "过去进行时", keyPoints: [
-      "过去某时刻正在进行的动作",
-      "过去进行时构成",
-      "与一般过去时的区别",
-      "场景描述用法"
-    ]},
-    { lesson: 13, title: "一般将来时", keyPoints: [
-      "will/be going to的用法",
-      "现在进行时表将来",
-      "一般现在时表将来",
-      "将来时间表达"
-    ]},
-    { lesson: 14, title: "现在完成时", keyPoints: [
-      "过去动作对现在的影响",
-      "already/yet/just的用法",
-      "延续性动词与短暂性动词",
-      "for与since的区别"
-    ]}
-  ]},
-  { chapter: 4, title: "英式发音与语调", lessons: [
-    { lesson: 15, title: "标准英音（RP）", keyPoints: [
-      "Received Pronunciation：英国标准发音",
-      "元音与辅音的英式发音",
-      "重音位置对词义的影响",
-      "RP发音特点"
-    ]},
-    { lesson: 16, title: "连读与省音", keyPoints: [
-      "连读规则",
-      "省音现象",
-      "弱读与强读",
-      "口语中的发音变化"
-    ]},
-    { lesson: 17, title: "语调与节奏", keyPoints: [
-      "句子重音与信息焦点",
-      "升调与降调的用法",
-      "英语节奏特点",
-      "语调对语义的影响"
-    ]},
-    { lesson: 18, title: "音标学习", keyPoints: [
-      "国际音标表",
-      "元音分类与发音",
-      "辅音分类与发音",
-      "音标拼读练习"
-    ]}
-  ]},
-  { chapter: 5, title: "英式英语特色", lessons: [
-    { lesson: 19, title: "英式与美式差异", keyPoints: [
-      "日常词汇差异：lift/elevator, tube/subway",
-      "拼写差异：colour/color, centre/center",
-      "习语差异",
-      "差异的历史原因"
-    ]},
-    { lesson: 20, title: "英语的历史层次", keyPoints: [
-      "古英语与日耳曼词根",
-      "诺曼征服后的法语词汇",
-      "拉丁语的影响",
-      "英语词汇的多元来源"
-    ]},
-    { lesson: 21, title: "不列颠文化背景", keyPoints: [
-      "英语发源地的文化印记",
-      "伦敦作为语言中心",
-      "牛津英语词典的权威",
-      "语言与文化的联系"
-    ]},
-    { lesson: 22, title: "日常交际用语", keyPoints: [
-      "问候与道别",
-      "请求与感谢",
-      "道歉与回应",
-      "礼貌用语"
-    ]}
-  ]},
-  { chapter: 6, title: "第一学期期中复习与考试", lessons: [
-    { lesson: 23, title: "词汇专题复习", keyPoints: [
-      "词根词缀综合运用",
-      "高频词汇回顾",
-      "易混词辨析",
-      "词汇记忆技巧"
-    ]},
-    { lesson: 24, title: "语法专题复习", keyPoints: [
-      "时态综合运用",
-      "句子结构分析",
-      "词性与句型",
-      "语法易错点"
-    ]},
-    { lesson: 25, title: "听说专题复习", keyPoints: [
-      "发音规则巩固",
-      "听力技巧",
-      "口语表达",
-      "语调练习"
-    ]},
-    { lesson: 26, title: "综合练习", keyPoints: [
-      "模拟测试",
-      "错题分析",
-      "时间管理",
-      "答题技巧"
-    ]},
-    { lesson: 27, title: "第一学期期中考试", keyPoints: [
-      "考试范围：第1-5章",
-      "题型：听力、选择、填空、句型转换、写作",
-      "考试时间：120分钟",
-      "评分标准"
-    ]}
-  ]},
-  { chapter: 7, title: "语法进阶", lessons: [
-    { lesson: 28, title: "情态动词", keyPoints: [
-      "can/could/may/might的用法",
-      "must/have to的区别",
-      "should/ought to的用法",
-      "情态动词表推测"
-    ]},
-    { lesson: 29, title: "非谓语动词", keyPoints: [
-      "动词不定式",
-      "动名词",
-      "分词作定语与状语",
-      "非谓语动词的选择"
-    ]},
-    { lesson: 30, title: "比较级与最高级", keyPoints: [
-      "形容词比较级构成",
-      "最高级用法",
-      "比较结构",
-      "特殊变化形容词"
-    ]},
-    { lesson: 31, title: "介词与连词", keyPoints: [
-      "常用介词搭配",
-      "连词的分类",
-      "从属连词用法",
-      "介词短语"
-    ]}
-  ]},
-  { chapter: 8, title: "句型转换与复合句", lessons: [
-    { lesson: 32, title: "否定句与疑问句", keyPoints: [
-      "肯定句变否定句",
-      "一般疑问句构成",
-      "特殊疑问句",
-      "反义疑问句"
-    ]},
-    { lesson: 33, title: "宾语从句", keyPoints: [
-      "that/if/whether引导的从句",
-      "特殊疑问词引导的从句",
-      "时态一致",
-      "语序变化"
-    ]},
-    { lesson: 34, title: "状语从句", keyPoints: [
-      "时间状语从句",
-      "条件状语从句",
-      "原因状语从句",
-      "结果状语从句"
-    ]},
-    { lesson: 35, title: "定语从句", keyPoints: [
-      "关系代词who/whom/which/that",
-      "关系副词where/when/why",
-      "限定性与非限定性从句",
-      "介词+关系代词"
-    ]}
-  ]},
-  { chapter: 9, title: "阅读与写作", lessons: [
-    { lesson: 36, title: "阅读理解技巧", keyPoints: [
-      "主旨大意把握",
-      "细节信息查找",
-      "推理判断",
-      "词义猜测"
-    ]},
-    { lesson: 37, title: "记叙文阅读", keyPoints: [
-      "故事结构分析",
-      "人物与情节",
-      "时间顺序",
-      "情感表达"
-    ]},
-    { lesson: 38, title: "应用文写作", keyPoints: [
-      "书信格式",
-      "邮件写作",
-      "通知与便条",
-      "邀请函"
-    ]},
-    { lesson: 39, title: "记叙文写作", keyPoints: [
-      "开头与结尾",
-      "细节描写",
-      "段落衔接",
-      "时态运用"
-    ]},
-    { lesson: 40, title: "说明文写作", keyPoints: [
-      "说明顺序",
-      "说明方法",
-      "语言准确性",
-      "结构清晰"
-    ]}
-  ]},
-  { chapter: 10, title: "第一学期期末复习与考试", lessons: [
-    { lesson: 41, title: "全学期语法回顾", keyPoints: [
-      "时态系统梳理",
-      "句型结构总结",
-      "复合句综合",
-      "语法体系构建"
-    ]},
-    { lesson: 42, title: "读写专题复习", keyPoints: [
-      "阅读理解策略",
-      "写作技巧提升",
-      "常见错误纠正",
-      "表达准确性"
-    ]},
-    { lesson: 43, title: "听说专题复习", keyPoints: [
-      "听力理解训练",
-      "口语表达练习",
-      "发音与语调",
-      "日常对话"
-    ]},
-    { lesson: 44, title: "综合模拟", keyPoints: [
-      "全真模拟考试",
-      "时间管理训练",
-      "错题回顾",
-      "考试策略"
-    ]},
-    { lesson: 45, title: "第一学期期末考试", keyPoints: [
-      "考试范围：第1-9章",
-      "题型：听力、选择、完形填空、阅读理解、写作",
-      "考试时间：150分钟",
-      "评分标准"
-    ]}
-  ]},
-  { chapter: 11, title: "第二学期语法拓展", lessons: [
-    { lesson: 46, title: "过去完成时", keyPoints: [
-      "过去完成时构成",
-      "过去动作的先后顺序",
-      "与一般过去时的配合",
-      "时间状语"
-    ]},
-    { lesson: 47, title: "被动语态", keyPoints: [
-      "被动语态构成",
-      "主动变被动",
-      "被动语态的用法",
-      "不同时态的被动"
-    ]},
-    { lesson: 48, title: "直接引语与间接引语", keyPoints: [
-      "直接引语变间接引语",
-      "时态变化",
-      "人称变化",
-      "特殊句式"
-    ]},
-    { lesson: 49, title: "主谓一致", keyPoints: [
-      "主谓一致原则",
-      "集体名词的主谓一致",
-      "并列主语",
-      "特殊情况"
-    ]}
-  ]},
-  { chapter: 12, title: "词汇与表达进阶", lessons: [
-    { lesson: 50, title: "同义词与反义词", keyPoints: [
-      "同义词辨析",
-      "反义词运用",
-      "近义词替换",
-      "词汇多样性"
-    ]},
-    { lesson: 51, title: "习语与俗语", keyPoints: [
-      "常用英语习语",
-      "习语的文化背景",
-      "习语在语境中的运用",
-      "避免字面理解错误"
-    ]},
-    { lesson: 52, title: "词汇搭配", keyPoints: [
-      "动词短语",
-      "形容词搭配",
-      "介词搭配",
-      "固定表达"
-    ]},
-    { lesson: 53, title: "高级表达", keyPoints: [
-      "复杂句型运用",
-      "连接词使用",
-      "表达准确性提升",
-      "正式与非正式表达"
-    ]}
-  ]},
-  { chapter: 13, title: "阅读与写作进阶", lessons: [
-    { lesson: 54, title: "说明文阅读", keyPoints: [
-      "说明对象与特征",
-      "说明顺序",
-      "信息提取",
-      "图表阅读"
-    ]},
-    { lesson: 55, title: "议论文阅读", keyPoints: [
-      "论点与论据",
-      "论证方法",
-      "逻辑结构",
-      "作者观点"
-    ]},
-    { lesson: 56, title: "议论文写作", keyPoints: [
-      "论点明确",
-      "论据充分",
-      "论证结构",
-      "语言有力"
-    ]},
-    { lesson: 57, title: "概要写作", keyPoints: [
-      "要点提取",
-      "语言简洁",
-      "结构清晰",
-      "保持原意"
-    ]},
-    { lesson: 58, title: "情景写作", keyPoints: [
-      "根据提示写作",
-      "情境理解",
-      "语言得体",
-      "格式正确"
-    ]}
-  ]},
-  { chapter: 14, title: "第二学期期中复习与考试", lessons: [
-    { lesson: 59, title: "语法专题复习", keyPoints: [
-      "被动语态综合",
-      "间接引语运用",
-      "时态呼应",
-      "易错点总结"
-    ]},
-    { lesson: 60, title: "读写专题复习", keyPoints: [
-      "各类文体阅读",
-      "写作技巧提升",
-      "表达多样性",
-      "逻辑结构"
-    ]},
-    { lesson: 61, title: "词汇专题复习", keyPoints: [
-      "习语与搭配",
-      "同义词辨析",
-      "词汇运用",
-      "词汇量扩展"
-    ]},
-    { lesson: 62, title: "综合练习", keyPoints: [
-      "模拟测试",
-      "错题分析",
-      "答题策略",
-      "时间管理"
-    ]},
-    { lesson: 63, title: "第二学期期中考试", keyPoints: [
-      "考试范围：第10-13章",
-      "题型：听力、选择、完形填空、阅读理解、写作",
-      "考试时间：120分钟",
-      "评分标准"
-    ]}
-  ]},
-  { chapter: 15, title: "专题拓展", lessons: [
-    { lesson: 64, title: "英语与魔法", keyPoints: [
-      "咒语词源探索",
-      "语言的魔力",
-      "英语在魔法中的应用",
-      "词源与魔力的联系"
-    ]},
-    { lesson: 65, title: "英国文学选读", keyPoints: [
-      "经典文学片段",
-      "文学语言特点",
-      "名著中的英语",
-      "文学欣赏"
-    ]},
-    { lesson: 66, title: "文化与习俗", keyPoints: [
-      "英国文化特色",
-      "社交礼仪",
-      "节日习俗",
-      "文化差异理解"
-    ]},
-    { lesson: 67, title: "影视与媒体英语", keyPoints: [
-      "电影台词赏析",
-      "新闻英语",
-      "广告语言",
-      "媒体英语特点"
-    ]}
-  ]},
-  { chapter: 16, title: "总复习", lessons: [
-    { lesson: 68, title: "语法总复习", keyPoints: [
-      "时态系统回顾",
-      "句型结构梳理",
-      "复合句综合",
-      "语法体系整合"
-    ]},
-    { lesson: 69, title: "词汇总复习", keyPoints: [
-      "词根词缀系统",
-      "高频词汇巩固",
-      "词汇运用",
-      "词汇网络构建"
-    ]},
-    { lesson: 70, title: "阅读总复习", keyPoints: [
-      "各类文体阅读",
-      "阅读技巧总结",
-      "快速阅读",
-      "深度理解"
-    ]},
-    { lesson: 71, title: "写作总复习", keyPoints: [
-      "各类文体写作",
-      "写作结构",
-      "语言表达",
-      "修改与润色"
-    ]},
-    { lesson: 72, title: "听说总复习", keyPoints: [
-      "听力技巧",
-      "口语表达",
-      "发音与语调",
-      "交际能力"
-    ]}
-  ]},
-  { chapter: 17, title: "期末复习与考试", lessons: [
-    { lesson: 73, title: "综合复习（语法·词汇·写作）", keyPoints: [
-      "全学年语法体系回顾",
-      "高频词汇与词根系统",
-      "写作结构与语言表达",
-      "阅读策略总结"
-    ]},
-    { lesson: 74, title: "模拟练习与答疑", keyPoints: [
-      "全真模拟练习",
-      "疑难点集中答疑",
-      "答题技巧与时间分配",
-      "常见错误回顾"
-    ]},
-    { lesson: 75, title: "期末考试", keyPoints: [
-      "考试范围：全学年内容",
-      "题型：选择、完形填空、阅读理解、写作",
-      "考试时间：120分钟",
-      "评分标准"
-    ]}
-  ]}
+  // ── 第1年·KS3 ────────────────────────────────────────────
+  {
+    chapter: 1, yearRange: "1年级", phase: "KS3",
+    title: "拉丁语的声音",
+    lessons: [
+      { lesson: 1,  title: "字母表与发音规则",       keyPoints: ["拉丁字母表", "元音发音规则", "辅音发音规则", "音节划分"] },
+      { lesson: 2,  title: "主格与宾格：动作的主语与宾语",   keyPoints: ["主格名词变格", "宾格名词变格", "动词与宾语的一致", "SOV语序"] },
+      { lesson: 3,  title: "第一变位动词（现在时）",       keyPoints: ["动词词干识别", "现在时词尾变化", "人称与数的一致", "简单句子翻译"] },
+      { lesson: 4,  title: "形容词的性与数格一致",   keyPoints: ["形容词三性", "性数格一致原则", "形容词变格", "名词形容词搭配"] },
+      { lesson: 5,  title: "简单句：SOV语序与读法",   keyPoints: ["主-宾-谓语序", "句子成分识别", "基本翻译技巧", "常见句式结构"] }
+    ]
+  },
+  {
+    chapter: 2, yearRange: "1年级", phase: "KS3",
+    title: "格的系统",
+    lessons: [
+      { lesson: 6,  title: "与格：间接宾语",     keyPoints: ["与格的功能", "名词与格变格", "与格动词搭配", "给予类动词"] },
+      { lesson: 7,  title: "夺格：工具、伴随、来源",       keyPoints: ["夺格的多重用法", "夺格变格", "夺格介词", "工具与方式表达"] },
+      { lesson: 8,  title: "属格：所有关系",       keyPoints: ["属格表示所属", "属格变格", "属格位置", "描述性属格"] },
+      { lesson: 9,  title: "第二变位动词",     keyPoints: ["第二变位词干", "现在时变位", "与第一变位的区别", "常见第二变位动词"] },
+      { lesson: 10, title: "数词与基础词汇（含咒语词根初探）",       keyPoints: ["基数词与序数词", "时间表达", "常用词汇积累", "咒语中的拉丁词根"] }
+    ]
+  },
+  // ── 第2年·KS3 ────────────────────────────────────────────
+  {
+    chapter: 3, yearRange: "2年级", phase: "KS3",
+    title: "时态扩展",
+    lessons: [
+      { lesson: 11, title: "未完成过去时：持续的动作",       keyPoints: ["未完成时含义", "变位规则", "与现在时的区别", "场景描述"] },
+      { lesson: 12, title: "完成时：已完成的事件",     keyPoints: ["完成时构成", "主动态完成时", "不规则完成分词", "时间表达"] },
+      { lesson: 13, title: "大过去时",       keyPoints: ["大过去时含义", "变位规则", "与完成时的区别", "叙事时序"] },
+      { lesson: 14, title: "间接引语：宾语从句",       keyPoints: ["ut/ne引导从句", "时态变化", "动词不定式用法", "转述技巧"] },
+      { lesson: 15, title: "关系从句：qui, quae, quod",   keyPoints: ["关系代词变格", "限定与非限定从句", "先行词一致", "翻译方法"] }
+    ]
+  },
+  {
+    chapter: 4, yearRange: "2年级", phase: "KS3",
+    title: "句法深化",
+    lessons: [
+      { lesson: 16, title: "不定式结构（宾语+不定式）",     keyPoints: ["不定式用法", "accusative + infinitive", "主语不定式", "目的表达"] },
+      { lesson: 17, title: "分词：现在分词与完成被动分词",   keyPoints: ["现在分词构成", "完成被动分词", "分词作定语", "独立夺格结构"] },
+      { lesson: 18, title: "属格的扩展用法（描述性属格）",   keyPoints: ["描述性属格", "主观属格与客观属格", "品质属格", "来源属格"] },
+      { lesson: 19, title: "句子成分分析方法",       keyPoints: ["句法分析步骤", "主从结构识别", "修饰关系判断", "复杂句拆解"] },
+      { lesson: 20, title: "词根与词缀规律（含英语衍生词）", keyPoints: ["拉丁词根识别", "常见词缀", "英语中的拉丁借词", "词源追溯"] }
+    ]
+  },
+  // ── 第3年·KS3 ────────────────────────────────────────────
+  {
+    chapter: 5, yearRange: "3年级", phase: "KS3",
+    title: "词源学",
+    lessons: [
+      { lesson: 21, title: "拉丁语对英语词汇的影响",     keyPoints: ["英语中的拉丁词汇", "借词历史", "词汇层次", "词义演变"] },
+      { lesson: 22, title: "医学与法律术语的拉丁根",       keyPoints: ["医学术语", "法律术语", "专业词汇构成", "词根识别"] },
+      { lesson: 23, title: "科学命名法：双名法与分类",       keyPoints: ["林奈双名法", "属名与种加词", "分类层级", "拉丁语在科学中的地位"] },
+      { lesson: 24, title: "咒语词根精析",   keyPoints: ["Lumos、Expecto、Alohomora等词根", "咒语结构分析", "词源与魔力的联系", "发音与效果"] },
+      { lesson: 25, title: "罗马世界背景：共和国与帝国",       keyPoints: ["罗马历史概览", "拉丁语发展阶段", "文化背景对语言的影响", "政治术语来源"] }
+    ]
+  },
+  {
+    chapter: 6, yearRange: "3年级", phase: "KS3",
+    title: "文本阅读",
+    lessons: [
+      { lesson: 26, title: "简化拉丁文阅读训练",  keyPoints: ["基础阅读技巧", "词汇识别", "句法分析", "翻译实践"] },
+      { lesson: 27, title: "凯撒《高卢战记》节选",   keyPoints: ["历史文本特点", "军事术语", "叙事风格", "文化背景"] },
+      { lesson: 28, title: "奥维德《变形记》节选",   keyPoints: ["神话文本", "诗歌语言", "变形主题", "文学手法"] },
+      { lesson: 29, title: "格言、铭文与箴言",       keyPoints: ["常见拉丁格言", "铭文解读", "箴言的智慧", "引用场景"] },
+      { lesson: 30, title: "中世纪拉丁语：教会与学术传统", keyPoints: ["中世纪拉丁特点", "教会拉丁语", "学术拉丁语", "语言延续性"] }
+    ]
+  },
+  // ── 第4年·GCSE ────────────────────────────────────────────
+  {
+    chapter: 7, yearRange: "4年级", phase: "GCSE",
+    title: "高级语法",
+    lessons: [
+      { lesson: 31, title: "虚拟语气：现在与未完成时", keyPoints: ["虚拟语气用法", "现在虚拟式", "未完成虚拟式", "条件句"] },
+      { lesson: 32, title: "条件句：真实与非真实条件",   keyPoints: ["条件句类型", "真实条件", "非真实条件", "时态呼应"] },
+      { lesson: 33, title: "间接疑问句",       keyPoints: ["间接疑问结构", "疑问词变化", "语序调整", "时态变化"] },
+      { lesson: 34, title: "动名词与目的结构",     keyPoints: ["动名词用法", "目的不定式", "目的从句", "结果从句"] },
+      { lesson: 35, title: "被动语态（所有时态）",   keyPoints: ["被动语态构成", "各时态被动", "施动者表达", "翻译技巧"] }
+    ]
+  },
+  {
+    chapter: 8, yearRange: "4年级", phase: "GCSE",
+    title: "GCSE文本",
+    lessons: [
+      { lesson: 36, title: "指定文本精读（散文）", keyPoints: ["散文文本分析", "作者风格", "修辞手法", "主题解读"] },
+      { lesson: 37, title: "指定诗歌：六音步格律",   keyPoints: ["六音步结构", "韵律分析", "诗歌节奏", "拉丁诗歌特点"] },
+      { lesson: 38, title: "修辞手法识别",       keyPoints: ["明喻与暗喻", "反复与排比", "拟人与夸张", "修辞效果"] },
+      { lesson: 39, title: "无准备文本翻译训练",   keyPoints: ["快速阅读", "上下文推断", "词义选择", "流畅翻译"] },
+      { lesson: 40, title: "文化历史背景：奥古斯都时代", keyPoints: ["奥古斯都时期", "文学繁荣", "政治语境", "文本解读"] }
+    ]
+  },
+  // ── 第5年·GCSE ────────────────────────────────────────────
+  {
+    chapter: 9, yearRange: "5年级", phase: "GCSE",
+    title: "翻译技巧",
+    lessons: [
+      { lesson: 41, title: "难句结构分析策略",   keyPoints: ["复杂句拆解", "长句处理", "语序调整", "逻辑分析"] },
+      { lesson: 42, title: "词义辨析与语境推断",   keyPoints: ["多义词处理", "语境分析", "词义选择", "文化对应"] },
+      { lesson: 43, title: "历史语境对理解的影响",   keyPoints: ["历史背景重要性", "时代差异", "文化概念", "文本定位"] },
+      { lesson: 44, title: "文本评注方法",       keyPoints: ["评注要素", "语言分析", "文学评价", "学术规范"] },
+      { lesson: 45, title: "GCSE真题训练",       keyPoints: ["题型熟悉", "答题技巧", "时间管理", "常见错误"] }
+    ]
+  },
+  {
+    chapter: 10, yearRange: "5年级", phase: "GCSE",
+    title: "综合输出",
+    lessons: [
+      { lesson: 46, title: "拉丁短文写作",       keyPoints: ["写作结构", "词汇选择", "语法准确", "表达流畅"] },
+      { lesson: 47, title: "文学评论写作框架",   keyPoints: ["评论结构", "论点构建", "文本引用", "分析深度"] },
+      { lesson: 48, title: "跨文化比较：罗马与魔法世界的语言观", keyPoints: ["语言与魔法", "文化对比", "词源联系", "概念对应"] },
+      { lesson: 49, title: "词源学综合：一个词根的旅程",     keyPoints: ["词根追踪", "词义演变", "跨语言影响", "文化印记"] },
+      { lesson: 50, title: "GCSE综合复习",       keyPoints: ["知识梳理", "重点强化", "模拟练习", "考试准备"] }
+    ]
+  },
+  // ── 第6年·A-Level ─────────────────────────────────────────
+  {
+    chapter: 11, yearRange: "6年级", phase: "A-Level",
+    title: "古典文本精读",
+    lessons: [
+      { lesson: 51, title: "西塞罗散文：修辞结构分析",     keyPoints: ["修辞学", "演讲技巧", "论证结构", "文体特点"] },
+      { lesson: 52, title: "维吉尔《埃涅阿斯纪》：史诗传统",     keyPoints: ["史诗结构", "英雄主题", "神话引用", "文学地位"] },
+      { lesson: 53, title: "李维历史著作：史学写法",     keyPoints: ["历史叙述", "史料处理", "道德评价", "叙事技巧"] },
+      { lesson: 54, title: "塔西佗：讽刺与历史评判",           keyPoints: ["写作风格", "讽刺手法", "历史观", "政治批判"] },
+      { lesson: 55, title: "奥古斯都文学的政治语境",     keyPoints: ["文学与政治", "赞助制度", "意识形态", "文本解读"] }
+    ]
+  },
+  {
+    chapter: 12, yearRange: "6年级", phase: "A-Level",
+    title: "语言学深度",
+    lessons: [
+      { lesson: 56, title: "拉丁语法理论：格系统的逻辑", keyPoints: ["格理论", "句法功能", "语义角色", "语言类型学"] },
+      { lesson: 57, title: "语言演变：拉丁语到罗曼语",   keyPoints: ["语音变化", "形态演变", "语法简化", "罗曼语族"] },
+      { lesson: 58, title: "铭文研究与文献考证",     keyPoints: ["铭文类型", "书写系统", "文献校勘", "历史价值"] },
+      { lesson: 59, title: "斯多葛与伊壁鸠鲁哲学文本",     keyPoints: ["哲学流派", "文本特点", "概念分析", "翻译难点"] },
+      { lesson: 60, title: "学术写作：论证与引证规范", keyPoints: ["学术规范", "引用格式", "论证结构", "学术风格"] }
+    ]
+  },
+  // ── 第7年·A-Level ─────────────────────────────────────────
+  {
+    chapter: 13, yearRange: "7年级", phase: "A-Level",
+    title: "文学与思想",
+    lessons: [
+      { lesson: 61, title: "悲剧传统：塞内卡与希腊悲剧比较", keyPoints: ["悲剧理论", "塞内卡风格", "希腊影响", "主题对比"] },
+      { lesson: 62, title: "贺拉斯：颂歌与文学批评",  keyPoints: ["颂歌形式", "美学理论", "文学批评", "影响研究"] },
+      { lesson: 63, title: "卢克莱修：诗歌中的哲学论证", keyPoints: ["伊壁鸠鲁哲学", "诗歌表达", "论证结构", "科学思想"] },
+      { lesson: 64, title: "文体比较：散文、诗歌、历史写法的差异", keyPoints: ["文体特征", "写作目的", "语言选择", "读者定位"] },
+      { lesson: 65, title: "原创翻译与注释写作", keyPoints: ["翻译策略", "注释规范", "学术深度", "文本阐释"] }
+    ]
+  },
+  {
+    chapter: 14, yearRange: "7年级", phase: "A-Level",
+    title: "综合冲刺",
+    lessons: [
+      { lesson: 66, title: "无准备文本：速读与精译", keyPoints: ["快速理解", "准确翻译", "难点处理", "时间控制"] },
+      { lesson: 67, title: "文学评论：论点建构",  keyPoints: ["论题设计", "论证展开", "文本支撑", "批判性分析"] },
+      { lesson: 68, title: "语言演变论文写作", keyPoints: ["研究选题", "文献综述", "论证结构", "结论推导"] },
+      { lesson: 69, title: "跨学科综合（拉丁语与魔咒课的联动）", keyPoints: ["语言与魔法", "词根关联", "发音共振", "知识整合"] },
+      { lesson: 70, title: "A-Level综合模拟",      keyPoints: ["模拟考试", "综合训练", "答题策略", "考前准备"] }
+    ]
+  }
 ];
 
 export const crossAnchors = [
@@ -553,6 +218,11 @@ export const crossAnchors = [
   }
 ];
 
-export { questionBank };
-
-window.subject_latin = { subjectMeta, syllabus, questionBank, crossAnchors, teachingStyle };
+window.subject_latin = {
+  subjectMeta,
+  teachingStyle,
+  syllabus,
+  crossAnchors,
+  lessonMap,
+  questionBank
+};

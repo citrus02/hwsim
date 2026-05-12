@@ -18,7 +18,7 @@
  *   biology    → 塔维什·麦克拉伦
  *   history    → 赫伯特·宾斯二世
  *   civics     → 康斯坦丝·沙克博特
- *   geography  → 菲利克斯·韦斯利
+ *   geography  → 菲利克斯·韦斯莱
  *   literature → 伊莱莎·洛夫古德
  *   latin      → 米兰达·珀西瓦尔
  */
@@ -173,7 +173,7 @@ const muggleStudiesEvents = {
     "课后她留了一句话：「逻辑比情感更难伪造。」"
   ],
 
-  // ── 地理 · 菲利克斯·韦斯利
+  // ── 地理 · 菲利克斯·韦斯莱
   geography: [
     "你能在地图上找到世界主要山脉的位置",
     "你理解了经纬度的基本含义",
@@ -759,7 +759,7 @@ export const professorComments = {
     ]
   },
 
-  // ── 菲利克斯·韦斯利 · 地理
+  // ── 菲利克斯·韦斯莱 · 地理
   // 年轻，激动，"提高班"，真诚
   geography: {
     O: [

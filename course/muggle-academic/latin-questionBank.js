@@ -1,400 +1,458 @@
-// latin-questionBank.js
-// 霍格沃茨拉丁语课程 - 一年级随堂测验题库
-// 教授：米兰达·珀西瓦尔
-// 每课3题：basic（+2分）、medium（0分，全对得E）、hard（-1分）
+/**
+ * latin-questionBank.js
+ * 麻瓜学术 · 拉丁语 · 题库
+ * 教授：米兰达·珀西瓦尔
+ * 每课 3 题（难度 basic/medium/hard），共 210 题
+ */
 
 export const questionBank = [
-  // ==================== 第1章 语言基础与词根（第1-4课） ====================
-  { lesson: 1, title: "词根与词汇构建", questions: [
-    { type: "choice", difficulty: "basic", text: "词根 「dict」 的含义是：", options: ["A. 写", "B. 说、声明", "C. 跑", "D. 看"], answer: "B", knowledgePoint: "词根dict", analysis: "dict 来自拉丁语 dicere（说），如 dictate（口述）、predict（预言）、contradict（反驳）。" },
-    { type: "choice", difficulty: "medium", text: "单词 「unbreakable」 的词根是：", options: ["A. un-", "B. break", "C. -able", "D. -un-break"], answer: "B", knowledgePoint: "词根识别", analysis: "unbreakable = un（否定前缀）+ break（词根，打破）+ able（能够的后缀），词根是 break。" },
-    { type: "choice", difficulty: "hard", text: "通过词根推断，「benevolent」最可能的意思是：（bene=好，vol=意愿）", options: ["A. 恶意的", "B. 善意的、仁慈的", "C. 暴力的", "D. 自愿的"], answer: "B", knowledgePoint: "词根推断词义", analysis: "bene（好）+ vol（意愿）+ -ent（形容词后缀）= 有好的意愿 = 善意的、仁慈的。" }
-  ]},
-  { lesson: 2, title: "基础词汇积累", questions: [
-    { type: "choice", difficulty: "basic", text: "下列哪个单词是名词？", options: ["A. beautiful", "B. beauty", "C. beautify", "D. beautifully"], answer: "B", knowledgePoint: "词性识别", analysis: "beauty是名词，表示美丽；beautiful是形容词；beautify是动词；beautifully是副词。" },
-    { type: "choice", difficulty: "medium", text: "「I'm looking forward to ______ you.」空格应填：", options: ["A. see", "B. seeing", "C. saw", "D. seen"], answer: "B", knowledgePoint: "介词搭配", analysis: "look forward to中的to是介词，后面应接动名词seeing。" },
-    { type: "choice", difficulty: "hard", text: "下列短语搭配正确的是：", options: ["A. make a decision", "B. do a decision", "C. take a decision", "D. have a decision"], answer: "A", knowledgePoint: "动词短语搭配", analysis: "正确的搭配是make a decision（做决定），这是固定表达。" }
-  ]},
-  { lesson: 3, title: "词性识别", questions: [
-    { type: "choice", difficulty: "basic", text: "「quickly」是什么词性？", options: ["A. 名词", "B. 动词", "C. 形容词", "D. 副词"], answer: "D", knowledgePoint: "副词识别", analysis: "-ly通常是副词后缀，quickly是quick的副词形式，修饰动词。" },
-    { type: "choice", difficulty: "medium", text: "「He runs fast.」中「fast」是什么词性？", options: ["A. 形容词", "B. 副词", "C. 名词", "D. 动词"], answer: "B", knowledgePoint: "副词用法", analysis: "fast在这里修饰动词runs，说明动作的方式，是副词用法。" },
-    { type: "choice", difficulty: "hard", text: "「The boy is tall.」中「is」是什么词？", options: ["A. 实义动词", "B. 助动词", "C. 系动词", "D. 情态动词"], answer: "C", knowledgePoint: "系动词", analysis: "is是系动词，连接主语和表语（tall），构成主系表结构。" }
-  ]},
-  { lesson: 4, title: "构词法进阶", questions: [
-    { type: "choice", difficulty: "basic", text: "「toothbrush」是：", options: ["A. 派生词", "B. 合成词", "C. 转化词", "D. 缩写词"], answer: "B", knowledgePoint: "合成词", analysis: "toothbrush由tooth（牙齿）+ brush（刷子）合成，是合成词。" },
-    { type: "choice", difficulty: "medium", text: "「email」是「electronic mail」的：", options: ["A. 派生词", "B. 合成词", "C. 缩写词", "D. 转化词"], answer: "C", knowledgePoint: "缩写词", analysis: "email是electronic mail的缩写形式。" },
-    { type: "choice", difficulty: "hard", text: "「She watered the flowers.」中「watered」是：", options: ["A. 名词变动词", "B. 形容词变动词", "C. 副词变动词", "D. 动词变名词"], answer: "A", knowledgePoint: "转化词", analysis: "water在这里从名词（水）转化为动词（浇水），是名词变动词的转化。" }
+
+  // ── 第1章 拉丁语的声音 ──────────────────────────────────────────
+
+  { lesson: 1, title: "字母表与发音规则", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁字母表共有多少个字母？", options: ["A. 24", "B. 25", "C. 26", "D. 23"], answer: "A", knowledgePoint: "拉丁字母表", analysis: "古典拉丁字母表有24个字母，不包含J、U、W。这些字母是后来才加入的。" },
+    { type: "choice", difficulty: 2, text: "拉丁语中字母 C 的发音是？", options: ["A. /s/（如英语see）", "B. /k/（如英语cat）", "C. /ts/（如英语bits）", "D. /ʃ/（如英语she）"], answer: "B", knowledgePoint: "辅音发音规则", analysis: "在古典拉丁语中，C始终发/k/音，无论在什么位置。" },
+    { type: "choice", difficulty: 3, text: "拉丁语中双元音 AE 的发音接近英语的？", options: ["A. eye", "B. hay", "C. sky", "D. boy"], answer: "B", knowledgePoint: "双元音发音", analysis: "AE发音类似英语单词hay中的长元音/eɪ/。" }
   ]},
 
-  // ==================== 第2章 语法结构基础（第5-8课） ====================
-  { lesson: 5, title: "句子成分", questions: [
-    { type: "choice", difficulty: "basic", text: "句子「The cat sleeps.」中，谓语是：", options: ["A. The", "B. cat", "C. sleeps", "D. 整个句子"], answer: "C", knowledgePoint: "谓语识别", analysis: "谓语是句子中描述主语动作或状态的动词。「sleeps」是动词，描述「cat」的动作，是谓语。" },
-    { type: "choice", difficulty: "medium", text: "以下哪个句子是复合句（含从句）？", options: ["A. She sings and dances.", "B. She sings because she is happy.", "C. She is a singer.", "D. She sings well."], answer: "B", knowledgePoint: "句子类型", analysis: "复合句含有一个主句和至少一个从句，由连词连接。B中「because she is happy」是原因状语从句，所以B是复合句。A是并列句。" },
-    { type: "choice", difficulty: "hard", text: "「The book that she recommended was excellent.」中，「that she recommended」是：", options: ["A. 主语", "B. 定语从句，修饰 book", "C. 宾语从句", "D. 状语从句"], answer: "B", knowledgePoint: "定语从句", analysis: "that she recommended 是关系从句，修饰名词 book（哪本书？她推荐的那本），是定语从句。" }
-  ]},
-  { lesson: 6, title: "句子类型", questions: [
-    { type: "choice", difficulty: "basic", text: "「What a beautiful day!」是什么类型的句子？", options: ["A. 陈述句", "B. 疑问句", "C. 祈使句", "D. 感叹句"], answer: "D", knowledgePoint: "感叹句", analysis: "感叹句表达强烈的情感，以what或how开头，句末用感叹号。" },
-    { type: "choice", difficulty: "medium", text: "「Close the door.」是什么类型的句子？", options: ["A. 陈述句", "B. 疑问句", "C. 祈使句", "D. 感叹句"], answer: "C", knowledgePoint: "祈使句", analysis: "祈使句用来表示请求、命令或建议，通常省略主语you。" },
-    { type: "choice", difficulty: "hard", text: "「I think that he is right.」中「that he is right」是：", options: ["A. 主语从句", "B. 宾语从句", "C. 表语从句", "D. 定语从句"], answer: "B", knowledgePoint: "宾语从句", analysis: "that引导的从句作为动词think的宾语，是宾语从句。" }
-  ]},
-  { lesson: 7, title: "名词与冠词", questions: [
-    { type: "choice", difficulty: "basic", text: "「water」是：", options: ["A. 可数名词", "B. 不可数名词", "C. 既可数又不可数", "D. 专有名词"], answer: "B", knowledgePoint: "不可数名词", analysis: "water（水）是不可数名词，不能说a water或waters（除非指水域）。" },
-    { type: "choice", difficulty: "medium", text: "「______ apple a day keeps the doctor away.」空格应填：", options: ["A. A", "B. An", "C. The", "D. /"], answer: "B", knowledgePoint: "不定冠词", analysis: "apple以元音音素开头，应使用an。" },
-    { type: "choice", difficulty: "hard", text: "「______ Great Wall is in China.」空格应填：", options: ["A. A", "B. An", "C. The", "D. /"], answer: "C", knowledgePoint: "定冠词", analysis: "the用于专有名词前，Great Wall是特定的专有名词，需要用the。" }
-  ]},
-  { lesson: 8, title: "代词", questions: [
-    { type: "choice", difficulty: "basic", text: "「This is my book. That is ______.」空格应填：", options: ["A. your", "B. yours", "C. you", "D. yourself"], answer: "B", knowledgePoint: "名词性物主代词", analysis: "yours是名词性物主代词，相当于your book。" },
-    { type: "choice", difficulty: "medium", text: "「He hurt ______ yesterday.」空格应填：", options: ["A. him", "B. his", "C. himself", "D. he"], answer: "C", knowledgePoint: "反身代词", analysis: "hurt oneself表示自己伤到自己，这里用himself。" },
-    { type: "choice", difficulty: "hard", text: "「______ of the students has a book.」空格应填：", options: ["A. Each", "B. Every", "C. All", "D. Both"], answer: "A", knowledgePoint: "不定代词", analysis: "each of+复数名词作主语时，谓语动词用单数has。every不能与of连用。" }
+  { lesson: 2, title: "主格与宾格：动作的主语与宾语", questions: [
+    { type: "choice", difficulty: 1, text: "名词 puella（女孩）的主格单数是？", options: ["A. puellam", "B. puellae", "C. puella", "D. puellae"], answer: "C", knowledgePoint: "第一变格名词主格", analysis: "puella是第一变格名词，主格单数形式为puella。" },
+    { type: "choice", difficulty: 2, text: "句子 \"Caesar pugnam gerit.\" 中，pugnam 是什么格？", options: ["A. 主格", "B. 宾格", "C. 与格", "D. 属格"], answer: "B", knowledgePoint: "宾格识别", analysis: "pugnam是pugna（战斗）的宾格形式，作为动词gerit（进行）的宾语。" },
+    { type: "choice", difficulty: 3, text: "动词 \"videre\"（看）要求什么格的宾语？", options: ["A. 主格", "B. 宾格", "C. 与格", "D. 夺格"], answer: "B", knowledgePoint: "及物动词与宾格", analysis: "videre是及物动词，要求宾格宾语，如\"Puellam video.\"（我看见女孩。）" }
   ]},
 
-  // ==================== 第3章 时态系统（第9-14课） ====================
-  { lesson: 9, title: "一般现在时", questions: [
-    { type: "choice", difficulty: "basic", text: "He ______ to school every day.", options: ["A. go", "B. goes", "C. went", "D. going"], answer: "B", knowledgePoint: "一般现在时第三人称单数", analysis: "主语是第三人称单数He，一般现在时动词需要加s/es，所以用goes。" },
-    { type: "choice", difficulty: "medium", text: "The sun ______ in the east.", options: ["A. rise", "B. rises", "C. rose", "D. rising"], answer: "B", knowledgePoint: "客观事实", analysis: "太阳从东方升起是客观事实，用一般现在时，主语是第三人称单数，所以用rises。" },
-    { type: "choice", difficulty: "hard", text: "Which sentence uses simple present tense correctly?", options: ["A. I am eat breakfast now.", "B. She drink coffee every morning.", "C. They play football on weekends.", "D. He go to school by bus."], answer: "C", knowledgePoint: "一般现在时用法", analysis: "C选项正确使用了一般现在时表示习惯性动作。A应该用现在进行时，B和D的动词形式错误。" }
-  ]},
-  { lesson: 10, title: "现在进行时", questions: [
-    { type: "choice", difficulty: "basic", text: "She ______ TV now.", options: ["A. watch", "B. watches", "C. is watching", "D. watched"], answer: "C", knowledgePoint: "现在进行时", analysis: "now表示现在正在进行的动作，用现在进行时is watching。" },
-    { type: "choice", difficulty: "medium", text: "「They are building a bridge.」的否定句是：", options: ["A. They are not build a bridge.", "B. They are not building a bridge.", "C. They not building a bridge.", "D. They don't building a bridge."], answer: "B", knowledgePoint: "现在进行时否定", analysis: "现在进行时的否定是在be动词后加not，动词保持-ing形式。" },
-    { type: "choice", difficulty: "hard", text: "「He is always complaining.」表示：", options: ["A. 他正在抱怨", "B. 他总是抱怨（带有不满情绪）", "C. 他曾经抱怨", "D. 他将要抱怨"], answer: "B", knowledgePoint: "现在进行时特殊用法", analysis: "现在进行时与always连用表示反复的动作，通常带有感情色彩（如不满、赞扬等）。" }
-  ]},
-  { lesson: 11, title: "一般过去时", questions: [
-    { type: "choice", difficulty: "basic", text: "She ______ to the park yesterday.", options: ["A. go", "B. goes", "C. went", "D. gone"], answer: "C", knowledgePoint: "一般过去时", analysis: "yesterday表示过去时间，用一般过去时went。" },
-    { type: "choice", difficulty: "medium", text: "「I saw him yesterday.」的否定句是：", options: ["A. I not saw him yesterday.", "B. I didn't see him yesterday.", "C. I didn't saw him yesterday.", "D. I saw not him yesterday."], answer: "B", knowledgePoint: "一般过去时否定", analysis: "一般过去时的否定需要用助动词did，动词还原为原形see。" },
-    { type: "choice", difficulty: "hard", text: "Which verb is irregular in past tense?", options: ["A. walk", "B. talk", "C. think", "D. work"], answer: "C", knowledgePoint: "不规则动词", analysis: "think的过去式是thought，是不规则变化。其他选项都是规则变化，加-ed。" }
-  ]},
-  { lesson: 12, title: "过去进行时", questions: [
-    { type: "choice", difficulty: "basic", text: "He ______ when I arrived.", options: ["A. slept", "B. was sleeping", "C. sleeps", "D. is sleeping"], answer: "B", knowledgePoint: "过去进行时", analysis: "arrived是过去的时间点，当时正在发生的动作用过去进行时was sleeping。" },
-    { type: "choice", difficulty: "medium", text: "「They were playing football.」的一般疑问句是：", options: ["A. Were they playing football?", "B. Did they playing football?", "C. Are they playing football?", "D. Do they playing football?"], answer: "A", knowledgePoint: "过去进行时疑问", analysis: "过去进行时的疑问句将be动词were提前。" },
-    { type: "choice", difficulty: "hard", text: "「While I was reading, he came.」中两个动作的关系是：", options: ["A. 同时发生", "B. reading先发生，came后发生", "C. reading正在进行时came发生", "D. came正在进行时reading发生"], answer: "C", knowledgePoint: "过去进行时与一般过去时", analysis: "while引导的从句用过去进行时，表示背景动作，主句用一般过去时，表示在背景动作过程中发生的短暂动作。" }
-  ]},
-  { lesson: 13, title: "一般将来时", questions: [
-    { type: "choice", difficulty: "basic", text: "I ______ to Beijing tomorrow.", options: ["A. go", "B. went", "C. will go", "D. have gone"], answer: "C", knowledgePoint: "一般将来时", analysis: "tomorrow表示将来时间，用will+动词原形。" },
-    { type: "choice", difficulty: "medium", text: "「He is going to buy a book.」表示：", options: ["A. 计划好的动作", "B. 临时决定的动作", "C. 客观必然", "D. 过去的计划"], answer: "A", knowledgePoint: "be going to用法", analysis: "be going to表示计划、打算做某事，或有迹象表明将要发生。" },
-    { type: "choice", difficulty: "hard", text: "「The train leaves at 8 o'clock.」表示：", options: ["A. 经常性动作", "B. 将来时间的安排", "C. 现在正在离开", "D. 过去的离开"], answer: "B", knowledgePoint: "一般现在时表将来", analysis: "表示按时刻表、日程安排的将来动作，可用一般现在时。" }
-  ]},
-  { lesson: 14, title: "现在完成时", questions: [
-    { type: "choice", difficulty: "basic", text: "I ______ finished my homework.", options: ["A. have", "B. has", "C. had", "D. am"], answer: "A", knowledgePoint: "现在完成时", analysis: "主语是I，现在完成时用have+过去分词finished。" },
-    { type: "choice", difficulty: "medium", text: "「Have you ever been to London?」中「ever」的意思是：", options: ["A. 曾经", "B. 永远", "C. 甚至", "D. 总是"], answer: "A", knowledgePoint: "现在完成时副词", analysis: "ever用于现在完成时疑问句中，表示「曾经」。" },
-    { type: "choice", difficulty: "hard", text: "「I have lived here for 10 years.」与「I lived here for 10 years.」的区别是：", options: ["A. 意思相同", "B. 前者表示现在还住在这里，后者表示过去住在这里", "C. 前者表示过去住在这里，后者表示现在还住在这里", "D. 前者是错误用法"], answer: "B", knowledgePoint: "现在完成时与一般过去时", analysis: "现在完成时强调过去动作对现在的影响或延续到现在；一般过去时只表示过去的动作。" }
+  { lesson: 3, title: "第一变位动词（现在时）", questions: [
+    { type: "choice", difficulty: 1, text: "动词 amo（我爱）的第一人称单数现在时是？", options: ["A. amas", "B. amat", "C. amo", "D. amamus"], answer: "C", knowledgePoint: "第一变位动词变位", analysis: "amo是第一变位动词的第一人称单数现在时形式。" },
+    { type: "choice", difficulty: 2, text: "第一变位动词的词干是去掉词尾什么字母？", options: ["A. -o", "B. -are", "C. -ere", "D. -ire"], answer: "B", knowledgePoint: "动词词干识别", analysis: "第一变位动词以-are结尾，词干是去掉-are后的部分。" },
+    { type: "choice", difficulty: 3, text: "动词 \"laudare\"（赞美）的第三人称复数现在时是？", options: ["A. laudat", "B. laudant", "C. laudamus", "D. laudatis"], answer: "B", knowledgePoint: "第一变位动词复数变位", analysis: "laudare的第三人称复数现在时是laudant。" }
   ]},
 
-  // ==================== 第4章 英式发音与语调（第15-18课） ====================
-  { lesson: 15, title: "标准英音（RP）", questions: [
-    { type: "choice", difficulty: "basic", text: "RP 指的是：", options: ["A. 美国标准发音", "B. 英国标准发音", "C. 澳大利亚发音", "D. 加拿大发音"], answer: "B", knowledgePoint: "RP发音", analysis: "RP是Received Pronunciation的缩写，指英国标准发音，是BBC英语和牛津剑桥等大学使用的发音。" },
-    { type: "choice", difficulty: "medium", text: "在英式发音中，「schedule」通常读作：", options: ["A. /ˈskedʒuːl/", "B. /ˈʃedjuːl/", "C. /ˈskedʒəl/", "D. /ˈʃedʒəl/"], answer: "B", knowledgePoint: "英式美式发音差异", analysis: "英式发音中schedule读作/ˈʃedjuːl/，而美式发音通常读作/ˈskedʒuːl/。" },
-    { type: "choice", difficulty: "hard", text: "以下哪个单词在英式和美式发音中重音位置不同？", options: ["A. record（名词）", "B. tomato", "C. banana", "D. computer"], answer: "A", knowledgePoint: "重音差异", analysis: "record作为名词时，英式发音重音在第一个音节/ˈrekɔːd/，美式发音也在第一个音节/ˈrekərd/，但作为动词时重音位置不同。" }
-  ]},
-  { lesson: 16, title: "连读与省音", questions: [
-    { type: "choice", difficulty: "basic", text: "「not at all」在口语中通常读作：", options: ["A. /nɒt æt ɔːl/", "B. /nɒt ət ɔːl/", "C. /nɒtætɔːl/", "D. /nɒ æt ɔːl/"], answer: "B", knowledgePoint: "弱读", analysis: "at在句子中通常弱读为/ət/。" },
-    { type: "choice", difficulty: "medium", text: "「I am going to...」在口语中常简化为：", options: ["A. I am gonna...", "B. I'm gonna...", "C. I am going to...", "D. I go to..."], answer: "B", knowledgePoint: "口语简化", analysis: "I am常缩写为I'm，going to常简化为gonna。" },
-    { type: "choice", difficulty: "hard", text: "「want to」在口语中常读作：", options: ["A. /wɒnt tuː/", "B. /wɒnt tə/", "C. /wɒn tə/", "D. /wɔːn tuː/"], answer: "C", knowledgePoint: "连读与省音", analysis: "want to在口语中常发生省音，读作/wɒn tə/或/wɒnna/。" }
-  ]},
-  { lesson: 17, title: "语调与节奏", questions: [
-    { type: "choice", difficulty: "basic", text: "一般疑问句通常用：", options: ["A. 升调", "B. 降调", "C. 平调", "D. 先升后降"], answer: "A", knowledgePoint: "疑问句语调", analysis: "一般疑问句通常用升调，表示疑问。" },
-    { type: "choice", difficulty: "medium", text: "陈述句通常用：", options: ["A. 升调", "B. 降调", "C. 平调", "D. 先降后升"], answer: "B", knowledgePoint: "陈述句语调", analysis: "陈述句通常用降调，表示陈述或完结。" },
-    { type: "choice", difficulty: "hard", text: "「You're coming, aren't you?」这句话的语调是：", options: ["A. 全部升调", "B. 前升后降", "C. 前降后升", "D. 全部降调"], answer: "C", knowledgePoint: "反义疑问句语调", analysis: "反义疑问句前半句用降调，后半句通常用升调，表示询问确认。" }
-  ]},
-  { lesson: 18, title: "音标学习", questions: [
-    { type: "choice", difficulty: "basic", text: "国际音标中，长元音用什么符号表示？", options: ["A. 短横线 -", "B. 冒号 :", "C. 点 ·", "D. 波浪线 ~"], answer: "B", knowledgePoint: "长元音符号", analysis: "国际音标中长元音用冒号表示，如/iː/、/ɑː/。" },
-    { type: "choice", difficulty: "medium", text: "「ship」和「sheep」的区别在于：", options: ["A. 辅音不同", "B. 元音长短不同", "C. 重音不同", "D. 声调不同"], answer: "B", knowledgePoint: "长短元音", analysis: "ship读作/ʃɪp/（短元音），sheep读作/ʃiːp/（长元音）。" },
-    { type: "choice", difficulty: "hard", text: "以下哪个是双元音？", options: ["A. /iː/", "B. /e/", "C. /eɪ/", "D. /æ/"], answer: "C", knowledgePoint: "双元音", analysis: "双元音由两个元音音素组成，/eɪ/是双元音，如在day中。" }
+  { lesson: 4, title: "形容词的性与数格一致", questions: [
+    { type: "choice", difficulty: 1, text: "形容词 bonus（好的）修饰 puella（女孩，阴性）时应变为？", options: ["A. bonus", "B. bona", "C. bonum", "D. boni"], answer: "B", knowledgePoint: "形容词性数格一致", analysis: "puella是阴性名词，形容词需变为阴性形式bona。" },
+    { type: "choice", difficulty: 2, text: "\"magna domus\" 中，magna 与 domus 的关系是？", options: ["A. 性不一致", "B. 数不一致", "C. 格不一致", "D. 完全一致"], answer: "D", knowledgePoint: "形容词变格", analysis: "magna（大的，阴性单数主格）与domus（房子，阴性单数主格）性、数、格都一致。" },
+    { type: "choice", difficulty: 3, text: "形容词 \"felix\"（幸运的）修饰 \"puellam\"（宾格单数）时应变为？", options: ["A. felix", "B. felicem", "C. felicis", "D. felici"], answer: "B", knowledgePoint: "第三变格形容词变格", analysis: "felix是第三变格形容词，宾格单数形式为felicem。" }
   ]},
 
-  // ==================== 第5章 英式英语特色（第19-22课） ====================
-  { lesson: 19, title: "英式与美式差异", questions: [
-    { type: "choice", difficulty: "basic", text: "在英式英语中，「电梯」应该说：", options: ["A. elevator", "B. lift", "C. escalator", "D. staircase"], answer: "B", knowledgePoint: "英式美式词汇差异", analysis: "lift是英式英语的说法，elevator是美式英语。这种差异源于历史上不同的词汇发展路径。" },
-    { type: "choice", difficulty: "medium", text: "以下哪组拼写是英式英语的正确拼写？", options: ["A. color, center, theater", "B. colour, centre, theatre", "C. colour, center, theater", "D. color, centre, theatre"], answer: "B", knowledgePoint: "英式美式拼写差异", analysis: "英式英语保留了更多法语拼写特征：colour（美式color）、centre（美式center）、theatre（美式theater）。" },
-    { type: "choice", difficulty: "hard", text: "在英式英语中，「地铁」通常称为：", options: ["A. subway", "B. metro", "C. tube", "D. underground"], answer: "C", knowledgePoint: "英式英语特有词汇", analysis: "伦敦地铁被称为the Tube（管子），因其隧道形状而得名。underground也可使用，但tube是更具特色的称呼。" }
-  ]},
-  { lesson: 20, title: "英语的历史层次", questions: [
-    { type: "choice", difficulty: "basic", text: "英语属于哪个语系？", options: ["A. 拉丁语系", "B. 日耳曼语系", "C. 罗曼语系", "D. 斯拉夫语系"], answer: "B", knowledgePoint: "英语语系", analysis: "英语属于日耳曼语系，与德语、荷兰语等同属一支。" },
-    { type: "choice", difficulty: "medium", text: "英语中大量法语词汇来自：", options: ["A. 古罗马时期", "B. 诺曼征服", "C. 工业革命", "D. 殖民时期"], answer: "B", knowledgePoint: "法语词汇来源", analysis: "1066年诺曼征服后，法语成为英国上层社会的语言，大量法语词汇进入英语。" },
-    { type: "choice", difficulty: "hard", text: "以下哪个单词来自拉丁语？", options: ["A. house", "B. water", "C. school", "D. book"], answer: "C", knowledgePoint: "拉丁语借词", analysis: "school来自拉丁语schola，而house、water、book都是古英语词汇。" }
-  ]},
-  { lesson: 21, title: "不列颠文化背景", questions: [
-    { type: "choice", difficulty: "basic", text: "《牛津英语词典》是哪个国家的词典？", options: ["A. 美国", "B. 英国", "C. 加拿大", "D. 澳大利亚"], answer: "B", knowledgePoint: "牛津词典", analysis: "《牛津英语词典》是英国牛津大学出版社出版的权威词典。" },
-    { type: "choice", difficulty: "medium", text: "伦敦是英国的：", options: ["A. 政治中心", "B. 文化中心", "C. 语言中心", "D. 以上都是"], answer: "D", knowledgePoint: "伦敦的地位", analysis: "伦敦是英国的首都，是政治、文化和语言的中心。" },
-    { type: "choice", difficulty: "hard", text: "为什么英语成为全球通用语言？", options: ["A. 发音简单", "B. 语法简单", "C. 历史原因（殖民、科技、文化影响）", "D. 词汇最少"], answer: "C", knowledgePoint: "英语全球化", analysis: "英语成为全球通用语言主要是历史原因：大英帝国的殖民扩张、美国的科技文化影响力等。" }
-  ]},
-  { lesson: 22, title: "日常交际用语", questions: [
-    { type: "choice", difficulty: "basic", text: "英国人见面常用的问候语是：", options: ["A. What's up?", "B. How do you do?", "C. Hey man!", "D. What's going on?"], answer: "B", knowledgePoint: "英式问候", analysis: "How do you do?是英式英语中正式的问候语。" },
-    { type: "choice", difficulty: "medium", text: "在英式英语中，表达感谢最常用的是：", options: ["A. Thanks a lot!", "B. Thank you!", "C. Cheers!", "D. All of above"], answer: "D", knowledgePoint: "感谢表达", analysis: "英式英语中可以用Thank you、Thanks a lot、Cheers等表达感谢。" },
-    { type: "choice", difficulty: "hard", text: "「I'm sorry.」在英式英语中不用于：", options: ["A. 道歉", "B. 表示遗憾", "C. 吸引注意", "D. 表示同意"], answer: "D", knowledgePoint: "sorry的用法", analysis: "sorry可以表示道歉、遗憾或吸引注意，但不能表示同意。" }
+  { lesson: 5, title: "简单句：SOV语序与读法", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语的基本语序是？", options: ["A. SVO（主谓宾）", "B. SOV（主宾谓）", "C. VSO（谓主宾）", "D. OSV（宾主谓）"], answer: "B", knowledgePoint: "拉丁语语序", analysis: "拉丁语基本语序为主-宾-谓(SOV)，如\"Caesar pugnam gerit.\"（凯撒进行战斗。）" },
+    { type: "choice", difficulty: 2, text: "句子 \"Puer librum legit.\" 中，legit 是？", options: ["A. 主语", "B. 宾语", "C. 谓语", "D. 定语"], answer: "C", knowledgePoint: "句子成分识别", analysis: "legit是动词legere（读）的第三人称单数现在时，作为谓语。" },
+    { type: "choice", difficulty: 3, text: "\"Magister discipulos docet.\" 的正确翻译是？", options: ["A. 学生教老师", "B. 老师教学生", "C. 老师和学生", "D. 学生们教"], answer: "B", knowledgePoint: "句子翻译", analysis: "Magister（老师，主格）是主语，discipulos（学生们，宾格）是宾语，docet（教）是谓语。" }
   ]},
 
-  // ==================== 第6章 第一学期期中复习与考试（第23-27课） ====================
-  { lesson: 23, title: "词汇专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "「unhappiness」的词根是：", options: ["A. un-", "B. happy", "C. -ness", "D. unhappi"], answer: "B", knowledgePoint: "词根识别", analysis: "unhappiness = un（否定前缀）+ happy（词根）+ -ness（名词后缀）。" },
-    { type: "choice", difficulty: "medium", text: "下列哪个是派生词？", options: ["A. blackboard", "B. internet", "C. happiness", "D. toothpaste"], answer: "C", knowledgePoint: "派生词", analysis: "happiness由happy加后缀-ness构成，是派生词。其他选项是合成词。" },
-    { type: "choice", difficulty: "hard", text: "「-tion」后缀通常将动词变为：", options: ["A. 形容词", "B. 名词", "C. 副词", "D. 动词"], answer: "B", knowledgePoint: "后缀功能", analysis: "-tion是名词后缀，如educate（动词）→ education（名词）。" }
-  ]},
-  { lesson: 24, title: "语法专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "「He has been working here for 5 years.」是什么时态？", options: ["A. 现在完成时", "B. 现在完成进行时", "C. 过去完成时", "D. 现在进行时"], answer: "B", knowledgePoint: "时态识别", analysis: "has been working是现在完成进行时，表示从过去开始持续到现在的动作。" },
-    { type: "choice", difficulty: "medium", text: "「If it rains tomorrow, we will stay at home.」是：", options: ["A. 真实条件句", "B. 虚拟条件句", "C. 疑问句", "D. 祈使句"], answer: "A", knowledgePoint: "条件句", analysis: "这是真实条件句，谈论可能发生的情况。" },
-    { type: "choice", difficulty: "hard", text: "「She said that she would come.」中「would come」表示：", options: ["A. 过去将来时", "B. 一般将来时", "C. 现在完成时", "D. 一般过去时"], answer: "A", knowledgePoint: "时态呼应", analysis: "would come是过去将来时，表示从过去看将来要发生的动作。" }
-  ]},
-  { lesson: 25, title: "听说专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "听力中，「gonna」是哪个短语的缩写？", options: ["A. got to", "B. going to", "C. get to", "D. gone to"], answer: "B", knowledgePoint: "口语缩写", analysis: "gonna是going to的口语缩写形式。" },
-    { type: "choice", difficulty: "medium", text: "口语中「wanna」表示：", options: ["A. want a", "B. want to", "C. was not", "D. will not"], answer: "B", knowledgePoint: "口语缩写", analysis: "wanna是want to的口语缩写形式。" },
-    { type: "choice", difficulty: "hard", text: "「How do you do?」的正确回应是：", options: ["A. I'm fine, thank you.", "B. How do you do?", "C. Fine, and you?", "D. I'm doing well."], answer: "B", knowledgePoint: "交际用语", analysis: "How do you do?是一种正式问候，回应也是How do you do?" }
-  ]},
-  { lesson: 26, title: "综合练习", questions: [
-    { type: "choice", difficulty: "basic", text: "「My mother ______ dinner now.」空格应填：", options: ["A. cook", "B. cooks", "C. is cooking", "D. cooked"], answer: "C", knowledgePoint: "现在进行时", analysis: "now表示正在进行的动作，用现在进行时。" },
-    { type: "choice", difficulty: "medium", text: "「I have ______ finished my homework.」空格应填：", options: ["A. already", "B. yet", "C. ever", "D. never"], answer: "A", knowledgePoint: "副词用法", analysis: "already用于肯定句中表示「已经」。" },
-    { type: "choice", difficulty: "hard", text: "「Neither he nor I ______ wrong.」空格应填：", options: ["A. am", "B. is", "C. are", "D. be"], answer: "A", knowledgePoint: "主谓一致", analysis: "neither...nor...连接两个主语时，谓语动词与最近的主语保持一致，I是最近的主语，所以用am。" }
+  // ── 第2章 格的系统 ──────────────────────────────────────────
+
+  { lesson: 6, title: "与格：间接宾语", questions: [
+    { type: "choice", difficulty: 1, text: "名词 amico（朋友，阳性）的与格单数是？", options: ["A. amicus", "B. amicum", "C. amico", "D. amici"], answer: "C", knowledgePoint: "与格变格", analysis: "amicus是第二变格名词，与格单数为amico。" },
+    { type: "choice", difficulty: 2, text: "动词 \"dare\"（给）要求什么格的宾语？", options: ["A. 主格", "B. 宾格", "C. 与格", "D. 属格"], answer: "C", knowledgePoint: "与格动词", analysis: "dare是与格动词，如\"Amico librum do.\"（我给朋友一本书。）" },
+    { type: "choice", difficulty: 3, text: "\"Puellae donum dat.\" 中，puellae 是什么格？", options: ["A. 主格", "B. 宾格", "C. 与格", "D. 属格"], answer: "C", knowledgePoint: "与格识别", analysis: "puellae是puella的与格单数，作为间接宾语。" }
   ]},
 
-  // ==================== 第7章 语法进阶（第28-31课） ====================
-  { lesson: 28, title: "情态动词", questions: [
-    { type: "choice", difficulty: "basic", text: "______ you pass me the book?", options: ["A. Must", "B. Can", "C. Should", "D. Have to"], answer: "B", knowledgePoint: "请求用语", analysis: "Can用于礼貌地请求帮助，是最常用的请求方式。" },
-    { type: "choice", difficulty: "medium", text: "You ______ finish your homework before watching TV.", options: ["A. can", "B. may", "C. must", "D. could"], answer: "C", knowledgePoint: "必须做某事", analysis: "must表示义务或必要性，这里表示必须先完成作业。" },
-    { type: "choice", difficulty: "hard", text: "He ______ be at home. His car is not in the garage.", options: ["A. must", "B. can't", "C. may", "D. should"], answer: "B", knowledgePoint: "否定推测", analysis: "根据证据（车不在车库）进行否定推测，用can't表示不可能。" }
-  ]},
-  { lesson: 29, title: "非谓语动词", questions: [
-    { type: "choice", difficulty: "basic", text: "「I want ______ to the park.」空格应填：", options: ["A. go", "B. going", "C. to go", "D. went"], answer: "C", knowledgePoint: "动词不定式", analysis: "want后接动词不定式to go。" },
-    { type: "choice", difficulty: "medium", text: "「She enjoys ______ books.」空格应填：", options: ["A. read", "B. reading", "C. to read", "D. reads"], answer: "B", knowledgePoint: "动名词", analysis: "enjoy后接动名词reading。" },
-    { type: "choice", difficulty: "hard", text: "「______ from the top of the hill, the city looks beautiful.」空格应填：", options: ["A. See", "B. Seeing", "C. Seen", "D. To see"], answer: "C", knowledgePoint: "分词作状语", analysis: "the city与see是被动关系，用过去分词Seen。" }
-  ]},
-  { lesson: 30, title: "比较级与最高级", questions: [
-    { type: "choice", difficulty: "basic", text: "「tall」的比较级是：", options: ["A. tall", "B. taller", "C. tallest", "D. more tall"], answer: "B", knowledgePoint: "比较级", analysis: "tall是单音节词，比较级直接加-er。" },
-    { type: "choice", difficulty: "medium", text: "「beautiful」的最高级是：", options: ["A. beautifuler", "B. beautifulest", "C. more beautiful", "D. most beautiful"], answer: "D", knowledgePoint: "最高级", analysis: "beautiful是多音节词，最高级用most。" },
-    { type: "choice", difficulty: "hard", text: "「This book is ______ interesting than that one.」空格应填：", options: ["A. more", "B. most", "C. much", "D. many"], answer: "A", knowledgePoint: "比较级修饰", analysis: "interesting是多音节词，比较级用more。" }
-  ]},
-  { lesson: 31, title: "介词与连词", questions: [
-    { type: "choice", difficulty: "basic", text: "「I'm good ______ English.」空格应填：", options: ["A. at", "B. in", "C. on", "D. for"], answer: "A", knowledgePoint: "介词搭配", analysis: "be good at表示擅长于。" },
-    { type: "choice", difficulty: "medium", text: "「She stayed home ______ she was sick.」空格应填：", options: ["A. because", "B. so", "C. but", "D. and"], answer: "A", knowledgePoint: "连词", analysis: "because表示原因，解释她待在家里的原因。" },
-    { type: "choice", difficulty: "hard", text: "「We will go out ______ it doesn't rain.」空格应填：", options: ["A. if", "B. unless", "C. because", "D. though"], answer: "A", knowledgePoint: "条件连词", analysis: "if表示条件，意思是如果不下雨我们就出去。" }
+  { lesson: 7, title: "夺格：工具、伴随、来源", questions: [
+    { type: "choice", difficulty: 1, text: "名词 gladio（剑）的夺格单数是？", options: ["A. gladius", "B. gladium", "C. gladio", "D. gladii"], answer: "C", knowledgePoint: "夺格变格", analysis: "gladius是第二变格名词，夺格单数为gladio。" },
+    { type: "choice", difficulty: 2, text: "\"Gladio pugnat.\" 的意思是？", options: ["A. 剑战斗", "B. 用剑战斗", "C. 剑被战斗", "D. 向剑战斗"], answer: "B", knowledgePoint: "夺格表示工具", analysis: "夺格gladio表示工具，意思是\"用剑战斗\"。" },
+    { type: "choice", difficulty: 3, text: "\"Cum amico ambulo.\" 中，cum 是什么词？", options: ["A. 动词", "B. 名词", "C. 介词", "D. 副词"], answer: "C", knowledgePoint: "夺格介词", analysis: "cum是介词，意思是\"和...一起\"，要求夺格宾语。" }
   ]},
 
-  // ==================== 第8章 句型转换与复合句（第32-35课） ====================
-  { lesson: 32, title: "否定句与疑问句", questions: [
-    { type: "choice", difficulty: "basic", text: "「He likes coffee.」的否定句是：", options: ["A. He not likes coffee.", "B. He doesn't likes coffee.", "C. He doesn't like coffee.", "D. He like not coffee."], answer: "C", knowledgePoint: "否定句", analysis: "一般现在时的否定需要用助动词doesn't，动词还原为原形like。" },
-    { type: "choice", difficulty: "medium", text: "「She is reading.」的一般疑问句是：", options: ["A. Does she reading?", "B. Is she reading?", "C. She is reading?", "D. Do she reading?"], answer: "B", knowledgePoint: "疑问句", analysis: "现在进行时的疑问句将be动词is提前。" },
-    { type: "choice", difficulty: "hard", text: "「He can swim.」的反义疑问句是：", options: ["A. He can swim, can he?", "B. He can swim, can't he?", "C. He can swim, doesn't he?", "D. He can swim, isn't he?"], answer: "B", knowledgePoint: "反义疑问句", analysis: "反义疑问句前肯后否，can的否定式是can't。" }
-  ]},
-  { lesson: 33, title: "宾语从句", questions: [
-    { type: "choice", difficulty: "basic", text: "「I think ______ he is right.」空格应填：", options: ["A. that", "B. if", "C. whether", "D. what"], answer: "A", knowledgePoint: "宾语从句连接词", analysis: "that引导陈述句宾语从句，that可以省略。" },
-    { type: "choice", difficulty: "medium", text: "「I don't know ______ he will come.」空格应填：", options: ["A. that", "B. if", "C. what", "D. which"], answer: "B", knowledgePoint: "宾语从句连接词", analysis: "if表示「是否」，用于引导疑问句宾语从句。" },
-    { type: "choice", difficulty: "hard", text: "「She asked me ______ I had seen.」空格应填：", options: ["A. that", "B. if", "C. what", "D. whether"], answer: "C", knowledgePoint: "宾语从句连接词", analysis: "what在从句中作seen的宾语，引导名词性从句。" }
-  ]},
-  { lesson: 34, title: "状语从句", questions: [
-    { type: "choice", difficulty: "basic", text: "「I will call you ______ I arrive.」空格应填：", options: ["A. when", "B. if", "C. because", "D. though"], answer: "A", knowledgePoint: "时间状语从句", analysis: "when表示「当...时候」，引导时间状语从句。" },
-    { type: "choice", difficulty: "medium", text: "「We will go ______ it rains.」空格应填：", options: ["A. if", "B. unless", "C. because", "D. when"], answer: "B", knowledgePoint: "条件状语从句", analysis: "unless表示「除非」，意思是除非下雨我们才不去。" },
-    { type: "choice", difficulty: "hard", text: "「He ran ______ fast ______ he won the race.」空格应填：", options: ["A. so, that", "B. such, that", "C. too, to", "D. enough, to"], answer: "A", knowledgePoint: "结果状语从句", analysis: "so+形容词/副词+that表示「如此...以至于」，引导结果状语从句。" }
-  ]},
-  { lesson: 35, title: "定语从句", questions: [
-    { type: "choice", difficulty: "basic", text: "「This is the book ______ I bought.」空格应填：", options: ["A. who", "B. which", "C. what", "D. whose"], answer: "B", knowledgePoint: "定语从句关系代词", analysis: "which指代物（book），在从句中作宾语。" },
-    { type: "choice", difficulty: "medium", text: "「The girl ______ is standing there is my sister.」空格应填：", options: ["A. who", "B. which", "C. what", "D. where"], answer: "A", knowledgePoint: "定语从句关系代词", analysis: "who指代人（girl），在从句中作主语。" },
-    { type: "choice", difficulty: "hard", text: "「This is the house ______ I lived when I was young.」空格应填：", options: ["A. which", "B. that", "C. where", "D. when"], answer: "C", knowledgePoint: "定语从句关系副词", analysis: "where指代地点（house），在从句中作地点状语。" }
+  { lesson: 8, title: "属格：所有关系", questions: [
+    { type: "choice", difficulty: 1, text: "名词 regis（国王）的属格单数是？", options: ["A. rex", "B. regem", "C. regis", "D. regi"], answer: "C", knowledgePoint: "属格变格", analysis: "rex是第三变格名词，属格单数为regis。" },
+    { type: "choice", difficulty: 2, text: "\"domus regis\" 的意思是？", options: ["A. 国王的房子", "B. 房子的国王", "C. 国王和房子", "D. 房子国王"], answer: "A", knowledgePoint: "属格表示所属", analysis: "regis是属格，修饰domus，表示\"国王的房子\"。" },
+    { type: "choice", difficulty: 3, text: "\"virtus hominis\" 中，hominis 是？", options: ["A. 主格", "B. 宾格", "C. 属格", "D. 与格"], answer: "C", knowledgePoint: "属格识别", analysis: "hominis是homo（人）的属格单数，修饰virtus（美德），表示\"人的美德\"。" }
   ]},
 
-  // ==================== 第9章 阅读与写作（第36-40课） ====================
-  { lesson: 36, title: "阅读理解技巧", questions: [
-    { type: "choice", difficulty: "basic", text: "阅读理解中，把握文章主要内容的能力称为：", options: ["A. 细节理解", "B. 主旨大意", "C. 推理判断", "D. 词义猜测"], answer: "B", knowledgePoint: "阅读技能", analysis: "主旨大意是指理解文章的中心思想或主要内容。" },
-    { type: "choice", difficulty: "medium", text: "When reading for details, you should:", options: ["A. Read quickly to get the main idea", "B. Look for specific information", "C. Guess unknown words", "D. Skip difficult parts"], answer: "B", knowledgePoint: "细节阅读", analysis: "细节阅读需要寻找特定的信息，如时间、地点、数字等。" },
-    { type: "choice", difficulty: "hard", text: "根据上下文猜测词义时，最重要的是：", options: ["A. 查字典", "B. 看单词的拼写", "C. 理解句子语境", "D. 记住单词的词性"], answer: "C", knowledgePoint: "词义猜测", analysis: "语境是猜测词义的关键，通过上下文可以推断出单词的含义。" }
-  ]},
-  { lesson: 37, title: "记叙文阅读", questions: [
-    { type: "choice", difficulty: "basic", text: "记叙文的六要素是：", options: ["A. 时间、地点、人物、起因、经过、结果", "B. 论点、论据、论证", "C. 开头、正文、结尾", "D. 记叙、描写、说明"], answer: "A", knowledgePoint: "记叙文要素", analysis: "记叙文的六要素是时间、地点、人物、起因、经过、结果。" },
-    { type: "choice", difficulty: "medium", text: "记叙文的叙述顺序通常不包括：", options: ["A. 顺叙", "B. 倒叙", "C. 插叙", "D. 议论"], answer: "D", knowledgePoint: "叙述顺序", analysis: "议论是表达方式，不是叙述顺序。" },
-    { type: "choice", difficulty: "hard", text: "记叙文的线索可以是：", options: ["A. 时间", "B. 空间", "C. 人物", "D. 以上都是"], answer: "D", knowledgePoint: "文章线索", analysis: "记叙文的线索可以是时间、空间、人物、事件、物品等。" }
-  ]},
-  { lesson: 38, title: "应用文写作", questions: [
-    { type: "choice", difficulty: "basic", text: "英文书信的格式通常包括：", options: ["A. 日期、称呼、正文、结尾、签名", "B. 标题、正文、结尾", "C. 开头、正文、结尾", "D. 正文、签名"], answer: "A", knowledgePoint: "书信格式", analysis: "英文书信通常包括日期、称呼、正文、结尾敬语和签名。" },
-    { type: "choice", difficulty: "medium", text: "英文邮件的主题行应该：", options: ["A. 空白", "B. 简洁明了", "C. 写满内容", "D. 用中文"], answer: "B", knowledgePoint: "邮件主题", analysis: "邮件主题应该简洁明了，让人一眼知道内容。" },
-    { type: "choice", difficulty: "hard", text: "邀请信的结尾通常用：", options: ["A. Sincerely", "B. Yours faithfully", "C. Looking forward to your reply", "D. Best regards"], answer: "C", knowledgePoint: "邀请信结尾", analysis: "邀请信通常用Looking forward to your reply表示期待回复。" }
-  ]},
-  { lesson: 39, title: "记叙文写作", questions: [
-    { type: "choice", difficulty: "basic", text: "记叙文的开头可以：", options: ["A. 开门见山", "B. 设置悬念", "C. 环境描写", "D. 以上都可以"], answer: "D", knowledgePoint: "开头方式", analysis: "记叙文开头可以采用多种方式：开门见山、设置悬念、环境描写等。" },
-    { type: "choice", difficulty: "medium", text: "记叙文的细节描写不包括：", options: ["A. 外貌描写", "B. 语言描写", "C. 心理描写", "D. 论点阐述"], answer: "D", knowledgePoint: "细节描写", analysis: "论点阐述是议论文的要素，不是记叙文的细节描写。" },
-    { type: "choice", difficulty: "hard", text: "记叙文的段落衔接常用：", options: ["A. 时间顺序词", "B. 空间顺序词", "C. 逻辑连接词", "D. 以上都是"], answer: "D", knowledgePoint: "段落衔接", analysis: "时间顺序词（first, then）、空间顺序词（near, far）、逻辑连接词（however, therefore）都可以用于段落衔接。" }
-  ]},
-  { lesson: 40, title: "说明文写作", questions: [
-    { type: "choice", difficulty: "basic", text: "说明文的说明顺序不包括：", options: ["A. 时间顺序", "B. 空间顺序", "C. 逻辑顺序", "D. 抒情顺序"], answer: "D", knowledgePoint: "说明顺序", analysis: "抒情是表达方式，不是说明顺序。" },
-    { type: "choice", difficulty: "medium", text: "说明文的语言特点是：", options: ["A. 生动形象", "B. 准确简洁", "C. 富有感情", "D. 夸张幽默"], answer: "B", knowledgePoint: "说明文语言", analysis: "说明文语言要求准确、简洁、客观。" },
-    { type: "choice", difficulty: "hard", text: "说明文的结构通常是：", options: ["A. 总-分", "B. 分-总", "C. 总-分-总", "D. 以上都可以"], answer: "D", knowledgePoint: "说明文结构", analysis: "说明文可以采用总-分、分-总、总-分-总等结构。" }
+  { lesson: 9, title: "第二变位动词", questions: [
+    { type: "choice", difficulty: 1, text: "第二变位动词的词尾是？", options: ["A. -are", "B. -ere", "C. -ire", "D. -ire（第四变位）"], answer: "B", knowledgePoint: "第二变位动词词尾", analysis: "第二变位动词以-ere结尾，如videre（看）、docere（教）。" },
+    { type: "choice", difficulty: 2, text: "动词 \"videre\"（看）的第一人称单数现在时是？", options: ["A. video", "B. vides", "C. videt", "D. videmus"], answer: "A", knowledgePoint: "第二变位动词变位", analysis: "video是videre的第一人称单数现在时。" },
+    { type: "choice", difficulty: 3, text: "第二变位动词与第一变位动词的主要区别在于？", options: ["A. 词尾不同", "B. 词干元音不同", "C. 变位规则不同", "D. 以上都是"], answer: "D", knowledgePoint: "变位区别", analysis: "第二变位动词词尾为-ere，词干元音为-e-，变位规则也与第一变位不同。" }
   ]},
 
-  // ==================== 第10章 第一学期期末复习与考试（第41-45课） ====================
-  { lesson: 41, title: "全学期语法回顾", questions: [
-    { type: "choice", difficulty: "basic", text: "英语中最基本的时态有：", options: ["A. 4种", "B. 6种", "C. 8种", "D. 12种"], answer: "B", knowledgePoint: "基本时态", analysis: "英语中最基本的6种时态是：一般现在时、现在进行时、一般过去时、过去进行时、一般将来时、现在完成时。" },
-    { type: "choice", difficulty: "medium", text: "复合句包括：", options: ["A. 并列复合句", "B. 主从复合句", "C. 并列句", "D. A和B"], answer: "D", knowledgePoint: "复合句", analysis: "复合句包括并列复合句（由并列连词连接）和主从复合句（包含从句）。" },
-    { type: "choice", difficulty: "hard", text: "主谓一致的基本原则是：", options: ["A. 主语和谓语在人称和数上保持一致", "B. 主语和谓语在时态上保持一致", "C. 主语和谓语在语态上保持一致", "D. 主语和谓语在语气上保持一致"], answer: "A", knowledgePoint: "主谓一致", analysis: "主谓一致的基本原则是主语和谓语在人称和数上保持一致。" }
-  ]},
-  { lesson: 42, title: "读写专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "阅读理解的题型不包括：", options: ["A. 主旨题", "B. 细节题", "C. 计算题", "D. 推理题"], answer: "C", knowledgePoint: "阅读题型", analysis: "计算题不是阅读理解的常见题型。" },
-    { type: "choice", difficulty: "medium", text: "写作中，段落的主题句通常在：", options: ["A. 段首", "B. 段尾", "C. 段中", "D. 以上都可以"], answer: "D", knowledgePoint: "主题句位置", analysis: "主题句可以在段首、段尾或段中，最常见的是段首。" },
-    { type: "choice", difficulty: "hard", text: "英语写作中，连接词的作用是：", options: ["A. 增加字数", "B. 连接句子，使逻辑清晰", "C. 装饰文章", "D. 提高难度"], answer: "B", knowledgePoint: "连接词作用", analysis: "连接词用于连接句子和段落，使文章逻辑清晰、连贯。" }
-  ]},
-  { lesson: 43, title: "听说专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "听力技巧不包括：", options: ["A. 提前阅读题目", "B. 抓住关键词", "C. 逐字翻译", "D. 注意语调"], answer: "C", knowledgePoint: "听力技巧", analysis: "逐字翻译不是有效的听力技巧，会影响理解速度。" },
-    { type: "choice", difficulty: "medium", text: "口语表达的基本要求是：", options: ["A. 流利", "B. 准确", "C. 清晰", "D. 以上都是"], answer: "D", knowledgePoint: "口语要求", analysis: "口语表达要求流利、准确、清晰。" },
-    { type: "choice", difficulty: "hard", text: "日常对话中，「Pardon?」表示：", options: ["A. 请再说一遍", "B. 对不起", "C. 原谅我", "D. 没关系"], answer: "A", knowledgePoint: "日常用语", analysis: "Pardon?用于没听清对方的话，请对方再说一遍。" }
-  ]},
-  { lesson: 44, title: "综合模拟", questions: [
-    { type: "choice", difficulty: "basic", text: "考试中，时间管理的重要性在于：", options: ["A. 完成所有题目", "B. 检查答案", "C. 避免紧张", "D. 以上都是"], answer: "D", knowledgePoint: "时间管理", analysis: "合理的时间管理可以帮助完成所有题目、检查答案、避免紧张。" },
-    { type: "choice", difficulty: "medium", text: "答题技巧不包括：", options: ["A. 先易后难", "B. 仔细审题", "C. 随意猜测", "D. 检查答案"], answer: "C", knowledgePoint: "答题技巧", analysis: "随意猜测不是好的答题技巧，应该根据知识和排除法来选择。" },
-    { type: "choice", difficulty: "hard", text: "模拟考试的目的是：", options: ["A. 熟悉考试流程", "B. 发现薄弱环节", "C. 提高答题速度", "D. 以上都是"], answer: "D", knowledgePoint: "模拟考试", analysis: "模拟考试可以帮助熟悉流程、发现薄弱环节、提高答题速度。" }
+  { lesson: 10, title: "数词与基础词汇（含咒语词根初探）", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语数字 \"quinque\" 是？", options: ["A. 3", "B. 5", "C. 7", "D. 9"], answer: "B", knowledgePoint: "基数词", analysis: "quinque是拉丁语数字5。" },
+    { type: "choice", difficulty: 2, text: "咒语 \"Lumos\" 的词根来自拉丁语哪个词？", options: ["A. lux（光）", "B. lumen（灯）", "C. lucere（发光）", "D. luna（月亮）"], answer: "C", knowledgePoint: "咒语词根", analysis: "Lumos来自拉丁语lucere（发光），意为\"照亮\"。" },
+    { type: "choice", difficulty: 3, text: "咒语 \"Alohomora\" 中 \"homo\" 的意思是？", options: ["A. 打开", "B. 人", "C. 门", "D. 自由"], answer: "B", knowledgePoint: "咒语词源", analysis: "homo在拉丁语中意为\"人\"，Alohomora字面意思是\"让人自由\"，即开门咒。" }
   ]},
 
-  // ==================== 第11章 第二学期语法拓展（第46-49课） ====================
-  { lesson: 46, title: "过去完成时", questions: [
-    { type: "choice", difficulty: "basic", text: "「He had finished his homework before I arrived.」是什么时态？", options: ["A. 一般过去时", "B. 过去完成时", "C. 现在完成时", "D. 过去进行时"], answer: "B", knowledgePoint: "过去完成时", analysis: "had finished是过去完成时，表示过去某时间之前已经完成的动作。" },
-    { type: "choice", difficulty: "medium", text: "过去完成时的构成是：", options: ["A. had + 过去分词", "B. have + 过去分词", "C. was/were + 现在分词", "D. did + 动词原形"], answer: "A", knowledgePoint: "过去完成时构成", analysis: "过去完成时由had+过去分词构成。" },
-    { type: "choice", difficulty: "hard", text: "「By the time I got there, the bus ______.」空格应填：", options: ["A. left", "B. has left", "C. had left", "D. was leaving"], answer: "C", knowledgePoint: "过去完成时用法", analysis: "by the time表示「到...时候为止」，通常与过去完成时连用。" }
-  ]},
-  { lesson: 47, title: "被动语态", questions: [
-    { type: "choice", difficulty: "basic", text: "The letter ______ by Tom.", options: ["A. wrote", "B. writes", "C. was written", "D. is writing"], answer: "C", knowledgePoint: "被动语态构成", analysis: "被动语态由be动词+过去分词构成，这里用一般过去时的被动语态was written。" },
-    { type: "choice", difficulty: "medium", text: "主动句「They built the bridge.」改为被动句是：", options: ["A. The bridge built them.", "B. The bridge was built by them.", "C. They were built the bridge.", "D. The bridge is built by them."], answer: "B", knowledgePoint: "主动变被动", analysis: "将主动句的宾语the bridge作为被动句的主语，谓语变为was built，动作执行者用by引出。" },
-    { type: "choice", difficulty: "hard", text: "Which sentence is passive voice?", options: ["A. She will write a letter.", "B. The letter has been written.", "C. Writing is her hobby.", "D. She is writing a letter."], answer: "B", knowledgePoint: "被动语态识别", analysis: "B选项使用了现在完成时的被动语态has been written，其他选项都是主动语态。" }
-  ]},
-  { lesson: 48, title: "直接引语与间接引语", questions: [
-    { type: "choice", difficulty: "basic", text: "直接引语变间接引语时，「I said, 'I am happy.'」变为：", options: ["A. I said that I am happy.", "B. I said that I was happy.", "C. I said that I be happy.", "D. I said that I were happy."], answer: "B", knowledgePoint: "时态变化", analysis: "直接引语变间接引语时，一般现在时变为一般过去时。" },
-    { type: "choice", difficulty: "medium", text: "直接引语变间接引语时，人称变化正确的是：", options: ["A. I → I", "B. you → you", "C. he → he", "D. I → he（根据语境）"], answer: "D", knowledgePoint: "人称变化", analysis: "直接引语变间接引语时，人称需要根据语境进行调整。" },
-    { type: "choice", difficulty: "hard", text: "「He said, 'I will come tomorrow.'」变为间接引语是：", options: ["A. He said that he will come tomorrow.", "B. He said that he would come tomorrow.", "C. He said that he would come the next day.", "D. He said that he will come the next day."], answer: "C", knowledgePoint: "时间状语变化", analysis: "tomorrow变为the next day，will变为would。" }
-  ]},
-  { lesson: 49, title: "主谓一致", questions: [
-    { type: "choice", difficulty: "basic", text: "The book ______ on the desk.", options: ["A. is", "B. are", "C. am", "D. be"], answer: "A", knowledgePoint: "主谓一致", analysis: "主语the book是单数，谓语用is。" },
-    { type: "choice", difficulty: "medium", text: "Neither the teacher nor the students ______ happy.", options: ["A. is", "B. are", "C. was", "D. be"], answer: "B", knowledgePoint: "主谓一致", analysis: "neither...nor...连接两个主语时，谓语与最近的主语保持一致，students是复数，所以用are。" },
-    { type: "choice", difficulty: "hard", text: "The group ______ having a meeting.", options: ["A. is", "B. are", "C. am", "D. be"], answer: "A", knowledgePoint: "集体名词", analysis: "group作为一个整体时，谓语用单数is。" }
+  // ── 第3章 时态扩展 ──────────────────────────────────────────
+
+  { lesson: 11, title: "未完成过去时：持续的动作", questions: [
+    { type: "choice", difficulty: 1, text: "未完成过去时表示什么类型的动作？", options: ["A. 已完成的动作", "B. 持续或反复的动作", "C. 将来的动作", "D. 习惯性动作"], answer: "B", knowledgePoint: "未完成时含义", analysis: "未完成过去时表示过去正在进行、持续或反复的动作。" },
+    { type: "choice", difficulty: 2, text: "动词 \"amo\"（我爱）的第一人称单数未完成过去时是？", options: ["A. amavi", "B. amabam", "C. amarem", "D. amaveram"], answer: "B", knowledgePoint: "未完成时变位", analysis: "第一变位动词未完成过去时词尾为-bam, -bas, -bat等。" },
+    { type: "choice", difficulty: 3, text: "\"Cum veniebam, puella cantabat.\" 的意思是？", options: ["A. 当我来的时候，女孩唱歌了", "B. 当我正来的时候，女孩正在唱歌", "C. 我来的时候，女孩将要唱歌", "D. 我来了，女孩唱歌"], answer: "B", knowledgePoint: "未完成时场景", analysis: "两个未完成时表示过去同时发生的持续动作。" }
   ]},
 
-  // ==================== 第12章 词汇与表达进阶（第50-53课） ====================
-  { lesson: 50, title: "同义词与反义词", questions: [
-    { type: "choice", difficulty: "basic", text: "「happy」的反义词是：", options: ["A. sad", "B. angry", "C. tired", "D. hungry"], answer: "A", knowledgePoint: "反义词", analysis: "happy（快乐的）的反义词是sad（悲伤的）。" },
-    { type: "choice", difficulty: "medium", text: "「big」和「large」是：", options: ["A. 反义词", "B. 同义词", "C. 同音词", "D. 同形词"], answer: "B", knowledgePoint: "同义词", analysis: "big和large都表示「大的」，是同义词。" },
-    { type: "choice", difficulty: "hard", text: "「beautiful」的近义词不包括：", options: ["A. pretty", "B. handsome", "C. ugly", "D. lovely"], answer: "C", knowledgePoint: "近义词", analysis: "ugly是beautiful的反义词，不是近义词。" }
-  ]},
-  { lesson: 51, title: "习语与俗语", questions: [
-    { type: "choice", difficulty: "basic", text: "「Break a leg!」的意思是：", options: ["A. 摔断腿", "B. 祝你好运", "C. 小心点", "D. 快跑"], answer: "B", knowledgePoint: "习语", analysis: "Break a leg!是祝人好运的习语，常用于演出前。" },
-    { type: "choice", difficulty: "medium", text: "「It's raining cats and dogs.」的意思是：", options: ["A. 下猫狗雨", "B. 下大雨", "C. 天气晴朗", "D. 刮风"], answer: "B", knowledgePoint: "习语", analysis: "It's raining cats and dogs.是表示下大雨的习语。" },
-    { type: "choice", difficulty: "hard", text: "「A piece of cake.」的意思是：", options: ["A. 一块蛋糕", "B. 很容易", "C. 很难", "D. 很美味"], answer: "B", knowledgePoint: "习语", analysis: "A piece of cake.表示某事很容易。" }
-  ]},
-  { lesson: 52, title: "词汇搭配", questions: [
-    { type: "choice", difficulty: "basic", text: "「make」的正确搭配是：", options: ["A. make a decision", "B. do a decision", "C. take a decision", "D. have a decision"], answer: "A", knowledgePoint: "动词搭配", analysis: "正确搭配是make a decision。" },
-    { type: "choice", difficulty: "medium", text: "「take」的正确搭配是：", options: ["A. take a bath", "B. make a bath", "C. do a bath", "D. have a bath"], answer: "D", knowledgePoint: "动词搭配", analysis: "正确搭配是have a bath（英式）或take a bath（美式），选项中有D。" },
-    { type: "choice", difficulty: "hard", text: "「look forward to」后接：", options: ["A. 动词原形", "B. 动名词", "C. 不定式", "D. 过去分词"], answer: "B", knowledgePoint: "动词短语", analysis: "look forward to中的to是介词，后接动名词。" }
-  ]},
-  { lesson: 53, title: "高级表达", questions: [
-    { type: "choice", difficulty: "basic", text: "正式场合常用的表达是：", options: ["A. Hey!", "B. Hello!", "C. Hi!", "D. What's up?"], answer: "B", knowledgePoint: "正式表达", analysis: "Hello!比Hey!和Hi!更正式。" },
-    { type: "choice", difficulty: "medium", text: "非正式场合常用的表达是：", options: ["A. Good morning.", "B. How do you do?", "C. What's up?", "D. Nice to meet you."], answer: "C", knowledgePoint: "非正式表达", analysis: "What's up?是非常非正式的问候语。" },
-    { type: "choice", difficulty: "hard", text: "书面语中常用的连接词是：", options: ["A. and", "B. but", "C. however", "D. so"], answer: "C", knowledgePoint: "书面连接词", analysis: "however比but更正式，常用于书面语。" }
+  { lesson: 12, title: "完成时：已完成的事件", questions: [
+    { type: "choice", difficulty: 1, text: "完成时表示什么类型的动作？", options: ["A. 正在进行的动作", "B. 已完成的动作", "C. 将来的动作", "D. 持续的动作"], answer: "B", knowledgePoint: "完成时含义", analysis: "完成时表示在过去某个时间点已经完成的动作。" },
+    { type: "choice", difficulty: 2, text: "动词 \"laudare\"（赞美）的第一人称单数完成时是？", options: ["A. laudabam", "B. laudavi", "C. laudarer", "D. laudatus sum"], answer: "B", knowledgePoint: "完成时变位", analysis: "第一变位动词完成时词干加-avi。" },
+    { type: "choice", difficulty: 3, text: "不规则动词 \"esse\"（是）的完成时是？", options: ["A. eram", "B. fui", "C. sum", "D. fueram"], answer: "B", knowledgePoint: "不规则动词完成时", analysis: "esse的完成时是不规则的，为fui。" }
   ]},
 
-  // ==================== 第13章 阅读与写作进阶（第54-58课） ====================
-  { lesson: 54, title: "说明文阅读", questions: [
-    { type: "choice", difficulty: "basic", text: "说明文的主要目的是：", options: ["A. 讲故事", "B. 说明事物", "C. 表达观点", "D. 抒发感情"], answer: "B", knowledgePoint: "说明文目的", analysis: "说明文的主要目的是说明事物、解释现象。" },
-    { type: "choice", difficulty: "medium", text: "说明文的说明方法不包括：", options: ["A. 举例", "B. 对比", "C. 夸张", "D. 引用"], answer: "C", knowledgePoint: "说明方法", analysis: "夸张是修辞手法，不是说明方法。" },
-    { type: "choice", difficulty: "hard", text: "图表阅读的关键是：", options: ["A. 看图说话", "B. 理解标题和图例", "C. 描述颜色", "D. 猜测数据"], answer: "B", knowledgePoint: "图表阅读", analysis: "理解标题和图例是图表阅读的关键。" }
-  ]},
-  { lesson: 55, title: "议论文阅读", questions: [
-    { type: "choice", difficulty: "basic", text: "议论文的三要素是：", options: ["A. 时间、地点、人物", "B. 论点、论据、论证", "C. 开头、正文、结尾", "D. 记叙、描写、说明"], answer: "B", knowledgePoint: "议论文要素", analysis: "议论文需要有明确的论点、充分的论据和合理的论证过程。" },
-    { type: "choice", difficulty: "medium", text: "议论文中支持论点的理由和证据称为：", options: ["A. 论点", "B. 论据", "C. 论证", "D. 结论"], answer: "B", knowledgePoint: "论据定义", analysis: "论据是用来支持论点的理由、事实和证据。" },
-    { type: "choice", difficulty: "hard", text: "议论文的论证方法不包括：", options: ["A. 举例论证", "B. 对比论证", "C. 抒情描写", "D. 引用论证"], answer: "C", knowledgePoint: "论证方法", analysis: "抒情描写是文学写作的方法，不是议论文的论证方法。" }
-  ]},
-  { lesson: 56, title: "议论文写作", questions: [
-    { type: "choice", difficulty: "basic", text: "议论文的论点应该：", options: ["A. 模糊不清", "B. 明确清晰", "C. 模棱两可", "D. 可有可无"], answer: "B", knowledgePoint: "论点要求", analysis: "议论文的论点应该明确、清晰，让读者一眼就能明白作者的观点。" },
-    { type: "choice", difficulty: "medium", text: "议论文的论据应该：", options: ["A. 虚假", "B. 充分", "C. 无关", "D. 主观"], answer: "B", knowledgePoint: "论据要求", analysis: "论据应该充分、真实、有说服力，能够有力地支持论点。" },
-    { type: "choice", difficulty: "hard", text: "议论文的结构通常是：", options: ["A. 总-分", "B. 分-总", "C. 总-分-总", "D. 以上都可以"], answer: "D", knowledgePoint: "议论文结构", analysis: "议论文可以采用总-分、分-总、总-分-总等结构。" }
-  ]},
-  { lesson: 57, title: "概要写作", questions: [
-    { type: "choice", difficulty: "basic", text: "概要写作的目的是：", options: ["A. 详细复述", "B. 提取要点", "C. 增加内容", "D. 改写原文"], answer: "B", knowledgePoint: "概要写作", analysis: "概要写作的目的是提取原文的要点，用简洁的语言概括内容。" },
-    { type: "choice", difficulty: "medium", text: "概要写作的语言应该：", options: ["A. 冗长", "B. 简洁", "C. 华丽", "D. 复杂"], answer: "B", knowledgePoint: "概要语言", analysis: "概要写作要求语言简洁，只保留核心信息。" },
-    { type: "choice", difficulty: "hard", text: "概要写作应该：", options: ["A. 改变原意", "B. 保持原意", "C. 添加个人观点", "D. 省略重要信息"], answer: "B", knowledgePoint: "概要要求", analysis: "概要写作必须保持原文的意思，不能改变或歪曲。" }
-  ]},
-  { lesson: 58, title: "情景写作", questions: [
-    { type: "choice", difficulty: "basic", text: "情景写作需要：", options: ["A. 忽略提示", "B. 理解情境", "C. 自由发挥", "D. 脱离主题"], answer: "B", knowledgePoint: "情景写作", analysis: "情景写作需要理解题目提供的情境，根据提示进行写作。" },
-    { type: "choice", difficulty: "medium", text: "情景写作的语言应该：", options: ["A. 不恰当", "B. 得体", "C. 随意", "D. 夸张"], answer: "B", knowledgePoint: "语言得体", analysis: "情景写作需要根据情境选择合适的语言风格，做到语言得体。" },
-    { type: "choice", difficulty: "hard", text: "情景写作的格式应该：", options: ["A. 混乱", "B. 正确", "C. 随意", "D. 省略"], answer: "B", knowledgePoint: "格式要求", analysis: "情景写作需要注意格式正确，如书信、邮件等有特定的格式要求。" }
+  { lesson: 13, title: "大过去时", questions: [
+    { type: "choice", difficulty: 1, text: "大过去时表示什么？", options: ["A. 过去正在进行的动作", "B. 过去完成的动作", "C. 过去某时间之前已完成的动作", "D. 将来的动作"], answer: "C", knowledgePoint: "大过去时含义", analysis: "大过去时表示在过去某时间点之前已经完成的动作，即过去的过去。" },
+    { type: "choice", difficulty: 2, text: "动词 \"videre\"（看）的第一人称单数大过去时是？", options: ["A. vidi", "B. videbam", "C. videram", "D. videro"], answer: "C", knowledgePoint: "大过去时变位", analysis: "大过去时由完成时词干加-eram构成。" },
+    { type: "choice", difficulty: 3, text: "\"Cum veni, puella cantaverat.\" 的意思是？", options: ["A. 当我来的时候，女孩正在唱歌", "B. 当我来的时候，女孩已经唱完歌了", "C. 当我来的时候，女孩将要唱歌", "D. 我来，女孩唱歌"], answer: "B", knowledgePoint: "大过去时用法", analysis: "cantaverat是大过去时，表示在veni（来）之前已经完成的动作。" }
   ]},
 
-  // ==================== 第14章 第二学期期中复习与考试（第59-63课） ====================
-  { lesson: 59, title: "语法专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "被动语态的构成是：", options: ["A. be + 现在分词", "B. be + 过去分词", "C. have + 过去分词", "D. will + 动词原形"], answer: "B", knowledgePoint: "被动语态构成", analysis: "被动语态由be动词+过去分词构成。" },
-    { type: "choice", difficulty: "medium", text: "间接引语中，时态需要：", options: ["A. 保持不变", "B. 相应变化", "C. 变为将来时", "D. 变为现在时"], answer: "B", knowledgePoint: "时态呼应", analysis: "直接引语变间接引语时，时态通常需要相应变化。" },
-    { type: "choice", difficulty: "hard", text: "主谓一致的原则是：", options: ["A. 主语和谓语在人称和数上一致", "B. 主语和谓语在时态上一致", "C. 主语和谓语在语态上一致", "D. 主语和谓语在语气上一致"], answer: "A", knowledgePoint: "主谓一致", analysis: "主谓一致的基本原则是主语和谓语在人称和数上保持一致。" }
-  ]},
-  { lesson: 60, title: "读写专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "各类文体阅读的共同点是：", options: ["A. 目的相同", "B. 方法相同", "C. 都需要理解", "D. 难度相同"], answer: "C", knowledgePoint: "阅读共同点", analysis: "无论哪种文体，阅读的核心都是理解内容。" },
-    { type: "choice", difficulty: "medium", text: "写作技巧包括：", options: ["A. 结构清晰", "B. 语言准确", "C. 表达流畅", "D. 以上都是"], answer: "D", knowledgePoint: "写作技巧", analysis: "好的写作需要结构清晰、语言准确、表达流畅。" },
-    { type: "choice", difficulty: "hard", text: "表达多样性指的是：", options: ["A. 使用复杂词汇", "B. 避免重复", "C. 使用长句", "D. 使用生僻词"], answer: "B", knowledgePoint: "表达多样性", analysis: "表达多样性指的是避免重复使用相同的词汇和句式，使文章更丰富。" }
-  ]},
-  { lesson: 61, title: "词汇专题复习", questions: [
-    { type: "choice", difficulty: "basic", text: "习语的特点是：", options: ["A. 字面意思就是实际意思", "B. 不能按字面理解", "C. 结构简单", "D. 容易理解"], answer: "B", knowledgePoint: "习语特点", analysis: "习语通常不能按字面意思理解，需要记住其固定含义。" },
-    { type: "choice", difficulty: "medium", text: "词汇搭配的重要性在于：", options: ["A. 增加字数", "B. 语言地道", "C. 提高难度", "D. 显示水平"], answer: "B", knowledgePoint: "搭配重要性", analysis: "正确的词汇搭配使语言更地道、更自然。" },
-    { type: "choice", difficulty: "hard", text: "同义词辨析需要注意：", options: ["A. 完全相同", "B. 细微差别", "C. 没有差别", "D. 随意使用"], answer: "B", knowledgePoint: "同义词辨析", analysis: "同义词之间通常有细微的差别，需要根据语境选择合适的词。" }
-  ]},
-  { lesson: 62, title: "综合练习", questions: [
-    { type: "choice", difficulty: "basic", text: "模拟测试的目的是：", options: ["A. 熟悉题型", "B. 发现问题", "C. 提高能力", "D. 以上都是"], answer: "D", knowledgePoint: "模拟测试", analysis: "模拟测试可以帮助熟悉题型、发现问题、提高能力。" },
-    { type: "choice", difficulty: "medium", text: "错题分析的重要性在于：", options: ["A. 浪费时间", "B. 查漏补缺", "C. 增加负担", "D. 重复错误"], answer: "B", knowledgePoint: "错题分析", analysis: "错题分析可以帮助发现薄弱环节，进行针对性复习。" },
-    { type: "choice", difficulty: "hard", text: "答题策略包括：", options: ["A. 先易后难", "B. 仔细审题", "C. 检查答案", "D. 以上都是"], answer: "D", knowledgePoint: "答题策略", analysis: "好的答题策略包括先易后难、仔细审题、检查答案等。" }
+  { lesson: 14, title: "间接引语：宾语从句", questions: [
+    { type: "choice", difficulty: 1, text: "间接引语中表示\"that\"的连词是？", options: ["A. et", "B. ut", "C. sed", "D. quia"], answer: "B", knowledgePoint: "间接引语连词", analysis: "ut用于引导间接引语中的宾语从句。" },
+    { type: "choice", difficulty: 2, text: "\"Dicit se librum legere.\" 中 \"se\" 指代？", options: ["A. 说话者", "B. 听话者", "C. 第三方", "D. 自己"], answer: "D", knowledgePoint: "反身代词", analysis: "se是反身代词，指代主语自己。" },
+    { type: "choice", difficulty: 3, text: "\"Dixit se librum legere.\" 中 \"legere\" 为什么用不定式？", options: ["A. 表示将来", "B. 表示目的", "C. 间接引语结构", "D. 表示命令"], answer: "C", knowledgePoint: "间接引语结构", analysis: "间接引语中使用accusative + infinitive结构。" }
   ]},
 
-  // ==================== 第15章 专题拓展（第64-67课） ====================
-  { lesson: 64, title: "英语与魔法", questions: [
-    { type: "choice", difficulty: "basic", text: "许多咒语的词源来自：", options: ["A. 拉丁语", "B. 希腊语", "C. 英语", "D. 以上都是"], answer: "D", knowledgePoint: "咒语词源", analysis: "许多咒语的词源来自拉丁语、希腊语和英语，反映了语言的古老魔力。" },
-    { type: "choice", difficulty: "medium", text: "语言被称为「最古老的魔法」是因为：", options: ["A. 语言可以施魔法", "B. 语言具有表达和创造的力量", "C. 语言是巫师发明的", "D. 语言来自魔法世界"], answer: "B", knowledgePoint: "语言的魔力", analysis: "语言是人类最古老的表达方式，具有创造和改变现实的力量，因此被称为最古老的魔法。" },
-    { type: "choice", difficulty: "hard", text: "词根「vis」（看）在魔法中的体现是：", options: ["A. 飞行咒语", "B. 变形咒语", "C. 视觉相关咒语", "D. 防御咒语"], answer: "C", knowledgePoint: "词根与魔法", analysis: "词根vis表示看，因此与视觉相关的咒语可能包含这个词根。" }
-  ]},
-  { lesson: 65, title: "英国文学选读", questions: [
-    { type: "choice", difficulty: "basic", text: "莎士比亚是哪个国家的作家？", options: ["A. 美国", "B. 英国", "C. 法国", "D. 德国"], answer: "B", knowledgePoint: "莎士比亚", analysis: "威廉·莎士比亚是英国著名剧作家和诗人。" },
-    { type: "choice", difficulty: "medium", text: "《哈姆雷特》是莎士比亚的：", options: ["A. 喜剧", "B. 悲剧", "C. 历史剧", "D. 传奇剧"], answer: "B", knowledgePoint: "哈姆雷特", analysis: "《哈姆雷特》是莎士比亚最著名的悲剧作品之一。" },
-    { type: "choice", difficulty: "hard", text: "英国文学的特点是：", options: ["A. 浪漫主义", "B. 现实主义", "C. 多样性", "D. 单一性"], answer: "C", knowledgePoint: "英国文学", analysis: "英国文学历史悠久，风格多样，包括浪漫主义、现实主义、现代主义等多种流派。" }
-  ]},
-  { lesson: 66, title: "文化与习俗", questions: [
-    { type: "choice", difficulty: "basic", text: "英国的国花是：", options: ["A. 玫瑰", "B. 郁金香", "C. 向日葵", "D. 百合"], answer: "A", knowledgePoint: "英国国花", analysis: "英国的国花是玫瑰，象征美丽和爱情。" },
-    { type: "choice", difficulty: "medium", text: "英国人喜欢的运动是：", options: ["A. 足球", "B. 板球", "C. 橄榄球", "D. 以上都是"], answer: "D", knowledgePoint: "英国运动", analysis: "英国人喜欢多种运动，包括足球、板球、橄榄球等。" },
-    { type: "choice", difficulty: "hard", text: "英国的传统节日不包括：", options: ["A. 圣诞节", "B. 复活节", "C. 感恩节", "D. 新年"], answer: "C", knowledgePoint: "英国节日", analysis: "感恩节是美国的传统节日，不是英国的传统节日。" }
-  ]},
-  { lesson: 67, title: "影视与媒体英语", questions: [
-    { type: "choice", difficulty: "basic", text: "BBC是哪个国家的广播公司？", options: ["A. 美国", "B. 英国", "C. 加拿大", "D. 澳大利亚"], answer: "B", knowledgePoint: "BBC", analysis: "BBC是英国广播公司（British Broadcasting Corporation）的缩写。" },
-    { type: "choice", difficulty: "medium", text: "电影台词的特点是：", options: ["A. 书面化", "B. 口语化", "C. 正式", "D. 复杂"], answer: "B", knowledgePoint: "电影台词", analysis: "电影台词通常比较口语化，贴近日常对话。" },
-    { type: "choice", difficulty: "hard", text: "新闻英语的语言特点是：", options: ["A. 简洁客观", "B. 生动形象", "C. 夸张幽默", "D. 复杂冗长"], answer: "A", knowledgePoint: "新闻英语", analysis: "新闻英语要求语言简洁、客观、准确。" }
+  { lesson: 15, title: "关系从句：qui, quae, quod", questions: [
+    { type: "choice", difficulty: 1, text: "关系代词 \"qui\" 用于指代什么性别的名词？", options: ["A. 阴性", "B. 阳性", "C. 中性", "D. 所有性别"], answer: "B", knowledgePoint: "关系代词性", analysis: "qui指代阳性名词，quae指代阴性，quod指代中性。" },
+    { type: "choice", difficulty: 2, text: "\"Puella quae cantat est pulchra.\" 中 \"quae\" 指代？", options: ["A. puella", "B. cantat", "C. pulchra", "D. 无指代"], answer: "A", knowledgePoint: "关系代词指代", analysis: "quae指代puella（女孩），引导定语从句。" },
+    { type: "choice", difficulty: 3, text: "\"Homo qui librum legit est magister.\" 的正确翻译是？", options: ["A. 读书的人是老师", "B. 老师读书", "C. 人读老师的书", "D. 书是人读的"], answer: "A", knowledgePoint: "关系从句翻译", analysis: "qui librum legit是定语从句修饰homo，意思是\"读书的人\"。" }
   ]},
 
-  // ==================== 第16章 总复习（第68-72课） ====================
-  { lesson: 68, title: "语法总复习", questions: [
-    { type: "choice", difficulty: "basic", text: "英语时态系统包括：", options: ["A. 现在时", "B. 过去时", "C. 将来时", "D. 以上都是"], answer: "D", knowledgePoint: "时态系统", analysis: "英语时态系统包括现在时、过去时、将来时等多种时态。" },
-    { type: "choice", difficulty: "medium", text: "复合句的类型包括：", options: ["A. 宾语从句", "B. 定语从句", "C. 状语从句", "D. 以上都是"], answer: "D", knowledgePoint: "复合句类型", analysis: "复合句包括宾语从句、定语从句、状语从句等。" },
-    { type: "choice", difficulty: "hard", text: "语法体系整合的目的是：", options: ["A. 零散记忆", "B. 系统掌握", "C. 增加难度", "D. 混淆知识"], answer: "B", knowledgePoint: "语法整合", analysis: "语法体系整合的目的是帮助学生系统掌握语法知识，而不是零散记忆。" }
-  ]},
-  { lesson: 69, title: "词汇总复习", questions: [
-    { type: "choice", difficulty: "basic", text: "词根词缀系统的作用是：", options: ["A. 增加记忆负担", "B. 帮助记忆单词", "C. 混淆词义", "D. 增加难度"], answer: "B", knowledgePoint: "词根词缀", analysis: "词根词缀系统可以帮助学生理解和记忆单词，推断未知单词的含义。" },
-    { type: "choice", difficulty: "medium", text: "高频词汇的重要性在于：", options: ["A. 很少使用", "B. 日常常用", "C. 难度高", "D. 生僻"], answer: "B", knowledgePoint: "高频词汇", analysis: "高频词汇是日常交流和学习中最常用的词汇，掌握它们非常重要。" },
-    { type: "choice", difficulty: "hard", text: "词汇网络构建指的是：", options: ["A. 孤立记忆", "B. 建立联系", "C. 死记硬背", "D. 随机记忆"], answer: "B", knowledgePoint: "词汇网络", analysis: "词汇网络构建指的是建立单词之间的联系，形成知识网络。" }
-  ]},
-  { lesson: 70, title: "阅读总复习", questions: [
-    { type: "choice", difficulty: "basic", text: "阅读技巧包括：", options: ["A. 略读", "B. 精读", "C. 扫读", "D. 以上都是"], answer: "D", knowledgePoint: "阅读技巧", analysis: "阅读技巧包括略读、精读、扫读等多种方法。" },
-    { type: "choice", difficulty: "medium", text: "快速阅读的目的是：", options: ["A. 逐字阅读", "B. 把握大意", "C. 理解细节", "D. 背诵全文"], answer: "B", knowledgePoint: "快速阅读", analysis: "快速阅读的目的是快速把握文章大意，而不是逐字阅读。" },
-    { type: "choice", difficulty: "hard", text: "深度理解指的是：", options: ["A. 表面理解", "B. 理解内涵", "C. 字面理解", "D. 简单理解"], answer: "B", knowledgePoint: "深度理解", analysis: "深度理解指的是理解文章的内涵、作者的意图和隐含的信息。" }
-  ]},
-  { lesson: 71, title: "写作总复习", questions: [
-    { type: "choice", difficulty: "basic", text: "各类文体写作的共同点是：", options: ["A. 格式相同", "B. 语言相同", "C. 都需要结构", "D. 难度相同"], answer: "C", knowledgePoint: "写作共同点", analysis: "无论哪种文体，写作都需要清晰的结构。" },
-    { type: "choice", difficulty: "medium", text: "写作结构包括：", options: ["A. 开头", "B. 正文", "C. 结尾", "D. 以上都是"], answer: "D", knowledgePoint: "写作结构", analysis: "一篇完整的文章通常包括开头、正文和结尾。" },
-    { type: "choice", difficulty: "hard", text: "修改与润色的目的是：", options: ["A. 增加字数", "B. 提高质量", "C. 保持原样", "D. 简化内容"], answer: "B", knowledgePoint: "修改润色", analysis: "修改与润色的目的是提高文章的质量，使表达更准确、流畅。" }
-  ]},
-  { lesson: 72, title: "听说总复习", questions: [
-    { type: "choice", difficulty: "basic", text: "听力技巧包括：", options: ["A. 预测内容", "B. 抓住关键词", "C. 注意语调", "D. 以上都是"], answer: "D", knowledgePoint: "听力技巧", analysis: "听力技巧包括预测内容、抓住关键词、注意语调等。" },
-    { type: "choice", difficulty: "medium", text: "口语表达的要求是：", options: ["A. 流利", "B. 准确", "C. 清晰", "D. 以上都是"], answer: "D", knowledgePoint: "口语要求", analysis: "口语表达要求流利、准确、清晰。" },
-    { type: "choice", difficulty: "hard", text: "交际能力指的是：", options: ["A. 语法正确", "B. 能够交流", "C. 词汇量大", "D. 发音标准"], answer: "B", knowledgePoint: "交际能力", analysis: "交际能力指的是能够用语言进行有效的交流，而不仅仅是语法正确或词汇量大。" }
+  // ── 第4章 句法深化 ──────────────────────────────────────────
+
+  { lesson: 16, title: "不定式结构（宾语+不定式）", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语中不定式的基本形式是？", options: ["A. -o", "B. -are/-ere/-ire", "C. -atus/-ata/-atum", "D. -am/-as/-at"], answer: "B", knowledgePoint: "不定式形式", analysis: "不定式形式与动词基本形式相同，如amare（爱）、videre（看）。" },
+    { type: "choice", difficulty: 2, text: "\"Volumus ludere.\" 中 \"ludere\" 是什么？", options: ["A. 谓语", "B. 宾语", "C. 不定式宾语", "D. 定语"], answer: "C", knowledgePoint: "不定式作宾语", analysis: "volo（想要）后接不定式作宾语。" },
+    { type: "choice", difficulty: 3, text: "\"Rogavi eum venire.\" 的结构是？", options: ["A. 主语+谓语", "B. 主语+谓语+宾语", "C. 主语+谓语+宾语+不定式", "D. 并列句"], answer: "C", knowledgePoint: "accusative + infinitive", analysis: "eum（宾格）+ venire（不定式）构成宾语不定式结构。" }
   ]},
 
-  // ==================== 第17章 期末考试与评估（第73-77课） ====================
-  { lesson: 73, title: "模拟考试（一）", questions: [
-    { type: "choice", difficulty: "basic", text: "全真模拟的目的是：", options: ["A. 熟悉流程", "B. 提高速度", "C. 发现问题", "D. 以上都是"], answer: "D", knowledgePoint: "模拟考试", analysis: "全真模拟可以帮助熟悉考试流程、提高答题速度、发现薄弱环节。" },
-    { type: "choice", difficulty: "medium", text: "时间训练的重要性在于：", options: ["A. 完成所有题目", "B. 检查答案", "C. 避免超时", "D. 以上都是"], answer: "D", knowledgePoint: "时间训练", analysis: "时间训练可以帮助合理分配时间，完成所有题目并检查答案。" },
-    { type: "choice", difficulty: "hard", text: "答题技巧包括：", options: ["A. 先易后难", "B. 仔细审题", "C. 合理猜测", "D. 以上都是"], answer: "D", knowledgePoint: "答题技巧", analysis: "好的答题技巧包括先易后难、仔细审题、合理猜测等。" }
+  { lesson: 17, title: "分词：现在分词与完成被动分词", questions: [
+    { type: "choice", difficulty: 1, text: "第一变位动词的现在分词词尾是？", options: ["A. -ans", "B. -ens", "C. -atus", "D. -andus"], answer: "A", knowledgePoint: "现在分词", analysis: "第一变位动词现在分词词尾为-ans，如amans（爱的）。" },
+    { type: "choice", difficulty: 2, text: "完成被动分词的词尾是？", options: ["A. -ans", "B. -atus/-ata/-atum", "C. -ens", "D. -andus"], answer: "B", knowledgePoint: "完成被动分词", analysis: "完成被动分词词尾为-atus/-ata/-atum，如amatus（被爱的）。" },
+    { type: "choice", difficulty: 3, text: "\"Liber scriptus est.\" 中 \"scriptus\" 是？", options: ["A. 现在分词", "B. 完成被动分词", "C. 不定式", "D. 动名词"], answer: "B", knowledgePoint: "被动结构", analysis: "scriptus是scribere（写）的完成被动分词，与est构成被动语态。" }
   ]},
-  { lesson: 74, title: "模拟考试（二）", questions: [
-    { type: "choice", difficulty: "basic", text: "综合检测的目的是：", options: ["A. 全面评估", "B. 查漏补缺", "C. 提高信心", "D. 以上都是"], answer: "D", knowledgePoint: "综合检测", analysis: "综合检测可以全面评估学习情况、查漏补缺、提高信心。" },
-    { type: "choice", difficulty: "medium", text: "查漏补缺指的是：", options: ["A. 忽略错误", "B. 弥补不足", "C. 重复错误", "D. 放弃学习"], answer: "B", knowledgePoint: "查漏补缺", analysis: "查漏补缺指的是发现并弥补学习中的不足和漏洞。" },
-    { type: "choice", difficulty: "hard", text: "心理调适的重要性在于：", options: ["A. 增加紧张", "B. 保持冷静", "C. 影响发挥", "D. 焦虑不安"], answer: "B", knowledgePoint: "心理调适", analysis: "良好的心理调适可以帮助保持冷静，发挥出最佳水平。" }
+
+  { lesson: 18, title: "属格的扩展用法（描述性属格）", questions: [
+    { type: "choice", difficulty: 1, text: "描述性属格表示什么？", options: ["A. 所属关系", "B. 描述性质或特征", "C. 来源", "D. 目的"], answer: "B", knowledgePoint: "描述性属格", analysis: "描述性属格用来描述名词的性质或特征。" },
+    { type: "choice", difficulty: 2, text: "\"vir magnae virtutis\" 的意思是？", options: ["A. 美德的男人", "B. 有伟大美德的男人", "C. 男人的伟大美德", "D. 伟大的男人"], answer: "B", knowledgePoint: "描述性属格翻译", analysis: "magnae virtutis是属格短语，描述vir的特征。" },
+    { type: "choice", difficulty: 3, text: "\"puer annorum decem\" 的意思是？", options: ["A. 十岁的男孩", "B. 男孩的十年", "C. 十年前的男孩", "D. 男孩十年"], answer: "A", knowledgePoint: "年龄表达", analysis: "annorum decem（十年的）是属格结构，表示年龄。" }
   ]},
-  { lesson: 75, title: "考前答疑", questions: [
-    { type: "choice", difficulty: "basic", text: "疑难解答的目的是：", options: ["A. 增加困惑", "B. 解决问题", "C. 回避问题", "D. 拖延时间"], answer: "B", knowledgePoint: "疑难解答", analysis: "考前答疑的目的是解决学生的疑难问题。" },
-    { type: "choice", difficulty: "medium", text: "重点回顾指的是：", options: ["A. 复习所有内容", "B. 复习核心内容", "C. 忽略重点", "D. 随意复习"], answer: "B", knowledgePoint: "重点回顾", analysis: "重点回顾指的是复习考试的核心内容和重点知识。" },
-    { type: "choice", difficulty: "hard", text: "信心建立的方法是：", options: ["A. 自我否定", "B. 积极暗示", "C. 过度焦虑", "D. 逃避考试"], answer: "B", knowledgePoint: "信心建立", analysis: "积极的自我暗示可以帮助建立信心，面对考试。" }
+
+  { lesson: 19, title: "句子成分分析方法", questions: [
+    { type: "choice", difficulty: 1, text: "句子的基本成分不包括？", options: ["A. 主语", "B. 谓语", "C. 宾语", "D. 标点"], answer: "D", knowledgePoint: "句子成分", analysis: "句子基本成分包括主语、谓语、宾语、定语、状语等，标点不是成分。" },
+    { type: "choice", difficulty: 2, text: "\"Magister discipulis libros dat.\" 中直接宾语是？", options: ["A. magister", "B. discipulis", "C. libros", "D. dat"], answer: "C", knowledgePoint: "直接宾语", analysis: "libros是直接宾语，discipulis是间接宾语（与格）。" },
+    { type: "choice", difficulty: 3, text: "\"Cum celeritate ad scholam veni.\" 中 \"cum celeritate\" 是什么成分？", options: ["A. 主语", "B. 宾语", "C. 状语", "D. 定语"], answer: "C", knowledgePoint: "状语", analysis: "cum celeritate（快速地）是方式状语，修饰动词veni。" }
+  ]},
+
+  { lesson: 20, title: "词根与词缀规律（含英语衍生词）", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语词根 \"spect\" 的意思是？", options: ["A. 说", "B. 看", "C. 跑", "D. 写"], answer: "B", knowledgePoint: "词根含义", analysis: "spect来自拉丁语specere（看），如inspect（检查）、spectacle（景象）。" },
+    { type: "choice", difficulty: 2, text: "英语单词 \"transport\" 的词根是？", options: ["A. trans-", "B. port", "C. -port", "D. trans-port"], answer: "B", knowledgePoint: "词根识别", analysis: "transport由trans-（跨越）+ port（携带）组成，port是词根。" },
+    { type: "choice", difficulty: 3, text: "拉丁语 \"vocare\"（呼唤）衍生出的英语单词不包括？", options: ["A. vocal", "B. vocation", "C. vocabulary", "D. vehicle"], answer: "D", knowledgePoint: "词源追溯", analysis: "vehicle来自拉丁语vehiculum（交通工具），与vocare无关。" }
+  ]},
+
+  // ── 第5章 词源学 ──────────────────────────────────────────
+
+  { lesson: 21, title: "拉丁语对英语词汇的影响", questions: [
+    { type: "choice", difficulty: 1, text: "英语中大约有多少词汇来自拉丁语？", options: ["A. 10%", "B. 25%", "C. 50%", "D. 75%"], answer: "C", knowledgePoint: "拉丁语借词比例", analysis: "据估计，英语中约50%的词汇直接或间接来自拉丁语。" },
+    { type: "choice", difficulty: 2, text: "英语单词 \"education\" 来自拉丁语哪个词？", options: ["A. educere", "B. educare", "C. educatus", "D. educationem"], answer: "D", knowledgePoint: "直接借词", analysis: "education直接来自拉丁语educationem（教育）。" },
+    { type: "choice", difficulty: 3, text: "英语单词 \"revolution\" 的词源是？", options: ["A. 拉丁语revolvere（旋转）", "B. 希腊语revolution", "C. 法语revolution", "D. 德语Revolution"], answer: "A", knowledgePoint: "词源追溯", analysis: "revolution来自拉丁语revolvere（旋转），引申为变革。" }
+  ]},
+
+  { lesson: 22, title: "医学与法律术语的拉丁根", questions: [
+    { type: "choice", difficulty: 1, text: "医学术语 \"cardio-\" 来自拉丁语哪个词？", options: ["A. caro（肉）", "B. cor（心）", "C. caput（头）", "D. corpus（身体）"], answer: "B", knowledgePoint: "医学词根", analysis: "cardio-来自拉丁语cor（心），如cardiology（心脏病学）。" },
+    { type: "choice", difficulty: 2, text: "法律术语 \"pro bono\" 的意思是？", options: ["A. 有偿服务", "B. 免费服务", "C. 专业服务", "D. 私人服务"], answer: "B", knowledgePoint: "法律术语", analysis: "pro bono来自拉丁语pro bono publico（为了公共利益），意为免费服务。" },
+    { type: "choice", difficulty: 3, text: "医学术语 \"appendicitis\" 的词根是？", options: ["A. appendix（附录）", "B. appendere（悬挂）", "C. appendre（添加）", "D. appercevoir（察觉）"], answer: "A", knowledgePoint: "复杂术语", analysis: "appendicitis由appendix（阑尾）+ -itis（炎症）组成。" }
+  ]},
+
+  { lesson: 23, title: "科学命名法：双名法与分类", questions: [
+    { type: "choice", difficulty: 1, text: "双名法由哪两部分组成？", options: ["A. 属名+种加词", "B. 科名+属名", "C. 种名+亚种名", "D. 纲名+目名"], answer: "A", knowledgePoint: "双名法结构", analysis: "双名法由属名和种加词组成，如Homo sapiens（智人）。" },
+    { type: "choice", difficulty: 2, text: "植物学名 \"Rosa\" 是什么？", options: ["A. 种加词", "B. 属名", "C. 科名", "D. 亚种名"], answer: "B", knowledgePoint: "属名", analysis: "Rosa是玫瑰属的属名。" },
+    { type: "choice", difficulty: 3, text: "\"Canis lupus familiaris\" 中 \"familiaris\" 是？", options: ["A. 属名", "B. 种加词", "C. 亚种名", "D. 变种名"], answer: "C", knowledgePoint: "亚种命名", analysis: "Canis lupus familiaris是家犬，familiaris是亚种名。" }
+  ]},
+
+  { lesson: 24, title: "咒语词根精析", questions: [
+    { type: "choice", difficulty: 1, text: "咒语 \"Expecto Patronum\" 中 \"expecto\" 的意思是？", options: ["A. 期待", "B. 驱逐", "C. 召唤", "D. 保护"], answer: "A", knowledgePoint: "咒语词根", analysis: "expecto来自拉丁语expectare（期待、等待）。" },
+    { type: "choice", difficulty: 2, text: "咒语 \"Expelliarmus\" 中 \"armus\" 来自拉丁语哪个词？", options: ["A. arma（武器）", "B. arbor（树）", "C. aurum（金）", "D. aqua（水）"], answer: "A", knowledgePoint: "咒语词源", analysis: "armus来自拉丁语arma（武器），Expelliarmus意为\"解除武装\"。" },
+    { type: "choice", difficulty: 3, text: "咒语 \"Stupefy\" 的词根来自拉丁语哪个词？", options: ["A. stupere（惊讶）", "B. stare（站立）", "C. struere（建造）", "D. stringere（拉紧）"], answer: "A", knowledgePoint: "咒语词源", analysis: "Stupefy来自拉丁语stupere（使惊讶、使麻木）。" }
+  ]},
+
+  { lesson: 25, title: "罗马世界背景：共和国与帝国", questions: [
+    { type: "choice", difficulty: 1, text: "罗马共和国建立于哪一年？", options: ["A. 753 BCE", "B. 509 BCE", "C. 27 BCE", "D. 476 CE"], answer: "B", knowledgePoint: "罗马历史", analysis: "罗马共和国建立于公元前509年。" },
+    { type: "choice", difficulty: 2, text: "罗马帝国的第一位皇帝是？", options: ["A. Julius Caesar", "B. Augustus", "C. Nero", "D. Constantine"], answer: "B", knowledgePoint: "罗马皇帝", analysis: "奥古斯都是罗马帝国的第一位皇帝，在位时间为公元前27年至公元14年。" },
+    { type: "choice", difficulty: 3, text: "拉丁语在罗马帝国时期的地位是？", options: ["A. 仅上层社会使用", "B. 官方语言", "C. 仅军队使用", "D. 仅宗教使用"], answer: "B", knowledgePoint: "语言地位", analysis: "拉丁语是罗马帝国的官方语言，广泛用于政府、法律、军事和教育。" }
+  ]},
+
+  // ── 第6章 文本阅读 ──────────────────────────────────────────
+
+  { lesson: 26, title: "简化拉丁文阅读训练", questions: [
+    { type: "choice", difficulty: 1, text: "阅读拉丁语时，首先应该识别什么？", options: ["A. 动词", "B. 名词", "C. 形容词", "D. 介词"], answer: "A", knowledgePoint: "阅读技巧", analysis: "动词是句子的核心，先识别动词有助于理解句子结构。" },
+    { type: "choice", difficulty: 2, text: "\"Caesar Galliam vicit.\" 中 \"vicit\" 的意思是？", options: ["A. 征服", "B. 访问", "C. 看见", "D. 建造"], answer: "A", knowledgePoint: "核心词汇", analysis: "vicit是动词vincere（征服）的完成时第三人称单数。" },
+    { type: "choice", difficulty: 3, text: "\"Alea iacta est.\" 的意思是？", options: ["A. 游戏开始了", "B. 骰子已掷出", "C. 胜利在望", "D. 战斗结束"], answer: "B", knowledgePoint: "名言翻译", analysis: "这是凯撒的名言，意思是\"骰子已掷出\"，表示事情已无可挽回。" }
+  ]},
+
+  { lesson: 27, title: "凯撒《高卢战记》节选", questions: [
+    { type: "choice", difficulty: 1, text: "《高卢战记》是谁写的？", options: ["A. Virgil", "B. Caesar", "C. Ovid", "D. Cicero"], answer: "B", knowledgePoint: "作者", analysis: "《高卢战记》是凯撒撰写的关于高卢战争的回忆录。" },
+    { type: "choice", difficulty: 2, text: "《高卢战记》用什么文体写成？", options: ["A. 诗歌", "B. 散文", "C. 戏剧", "D. 史诗"], answer: "B", knowledgePoint: "文体", analysis: "《高卢战记》是散文体的历史著作。" },
+    { type: "choice", difficulty: 3, text: "《高卢战记》的写作目的是？", options: ["A. 文学创作", "B. 政治宣传", "C. 历史记录", "D. 教学用书"], answer: "B", knowledgePoint: "写作背景", analysis: "凯撒写作《高卢战记》是为了向罗马民众展示他的功绩，进行政治宣传。" }
+  ]},
+
+  { lesson: 28, title: "奥维德《变形记》节选", questions: [
+    { type: "choice", difficulty: 1, text: "《变形记》的作者是？", options: ["A. Ovid", "B. Virgil", "C. Horace", "D. Seneca"], answer: "A", knowledgePoint: "作者", analysis: "《变形记》是奥维德的代表作。" },
+    { type: "choice", difficulty: 2, text: "《变形记》的主题是？", options: ["A. 历史", "B. 神话变形", "C. 哲学", "D. 战争"], answer: "B", knowledgePoint: "主题", analysis: "《变形记》讲述了众多神话人物变形的故事。" },
+    { type: "choice", difficulty: 3, text: "《变形记》的结构特点是？", options: ["A. 线性叙事", "B. 环形结构", "C. 主题串联", "D. 编年体"], answer: "C", knowledgePoint: "结构", analysis: "《变形记》以变形为主题串联众多神话故事，而非严格的线性叙事。" }
+  ]},
+
+  { lesson: 29, title: "格言、铭文与箴言", questions: [
+    { type: "choice", difficulty: 1, text: "\"Carpe diem\" 的意思是？", options: ["A. 抓住今天", "B. 明天再说", "C. 时光流逝", "D. 珍惜时间"], answer: "A", knowledgePoint: "常见格言", analysis: "Carpe diem来自拉丁语，意为\"抓住今天\"。" },
+    { type: "choice", difficulty: 2, text: "\"Veni, vidi, vici.\" 是谁说的？", options: ["A. Augustus", "B. Caesar", "C. Cicero", "D. Virgil"], answer: "B", knowledgePoint: "名言出处", analysis: "\"Veni, vidi, vici\"（我来，我见，我征服）是凯撒的名言。" },
+    { type: "choice", difficulty: 3, text: "\"Audiatur et altera pars\" 的意思是？", options: ["A. 听另一面", "B. 偏听则暗", "C. 兼听则明", "D. 听取双方意见"], answer: "D", knowledgePoint: "法律格言", analysis: "这是一句法律格言，意思是\"应当听取双方意见\"。" }
+  ]},
+
+  { lesson: 30, title: "中世纪拉丁语：教会与学术传统", questions: [
+    { type: "choice", difficulty: 1, text: "中世纪拉丁语主要用于什么场合？", options: ["A. 日常交流", "B. 宗教与学术", "C. 商业贸易", "D. 文学创作"], answer: "B", knowledgePoint: "中世纪拉丁语用途", analysis: "中世纪拉丁语主要用于宗教仪式和学术研究。" },
+    { type: "choice", difficulty: 2, text: "谁将《圣经》翻译成拉丁语？", options: ["A. St. Augustine", "B. St. Jerome", "C. St. Thomas Aquinas", "D. St. Francis"], answer: "B", knowledgePoint: "圣经翻译", analysis: "圣杰罗姆翻译了拉丁语版《圣经》（武加大译本）。" },
+    { type: "choice", difficulty: 3, text: "经院哲学的主要语言是？", options: ["A. 希腊语", "B. 拉丁语", "C. 阿拉伯语", "D. 英语"], answer: "B", knowledgePoint: "学术语言", analysis: "经院哲学使用拉丁语作为学术语言。" }
+  ]},
+
+  // ── 第7章 高级语法 ──────────────────────────────────────────
+
+  { lesson: 31, title: "虚拟语气：现在与未完成时", questions: [
+    { type: "choice", difficulty: 1, text: "虚拟语气用于表达什么？", options: ["A. 事实", "B. 假设、愿望、建议", "C. 命令", "D. 疑问"], answer: "B", knowledgePoint: "虚拟语气用途", analysis: "虚拟语气用于表达假设、愿望、建议等非真实情况。" },
+    { type: "choice", difficulty: 2, text: "动词 \"amo\" 的现在虚拟式第一人称单数是？", options: ["A. amem", "B. amabo", "C. amaverim", "D. amarem"], answer: "A", knowledgePoint: "现在虚拟式变位", analysis: "第一变位动词现在虚拟式词尾为-em, -es, -et等。" },
+    { type: "choice", difficulty: 3, text: "\"Utinam venias!\" 的意思是？", options: ["A. 你来了！", "B. 希望你来！", "C. 如果你来了", "D. 你来过"], answer: "B", knowledgePoint: "愿望句式", analysis: "utinam引导愿望句，后接虚拟语气。" }
+  ]},
+
+  { lesson: 32, title: "条件句：真实与非真实条件", questions: [
+    { type: "choice", difficulty: 1, text: "真实条件句使用什么语气？", options: ["A. 虚拟语气", "B. 陈述语气", "C. 命令语气", "D. 祈使语气"], answer: "B", knowledgePoint: "真实条件句", analysis: "真实条件句使用陈述语气，表示可能发生的情况。" },
+    { type: "choice", difficulty: 2, text: "非真实条件句（与现在事实相反）使用什么时态？", options: ["A. 现在时", "B. 完成时", "C. 未完成虚拟式", "D. 将来时"], answer: "C", knowledgePoint: "非真实条件句", analysis: "与现在事实相反的条件句使用未完成虚拟式。" },
+    { type: "choice", difficulty: 3, text: "\"Si haberem pecuniam, emam librum.\" 的意思是？", options: ["A. 如果我有钱，我会买书", "B. 如果我有钱，我买书", "C. 如果我曾经有钱，我会买过书", "D. 如果我有钱，我要买书"], answer: "A", knowledgePoint: "条件句翻译", analysis: "haberem是未完成虚拟式，emam是将来时，构成与现在事实相反的条件句。" }
+  ]},
+
+  { lesson: 33, title: "间接疑问句", questions: [
+    { type: "choice", difficulty: 1, text: "间接疑问句使用什么语气？", options: ["A. 陈述语气", "B. 虚拟语气", "C. 命令语气", "D. 祈使语气"], answer: "B", knowledgePoint: "间接疑问句语气", analysis: "间接疑问句使用虚拟语气。" },
+    { type: "choice", difficulty: 2, text: "\"Rogo quid facias.\" 中 \"quid\" 是什么词？", options: ["A. 关系代词", "B. 疑问代词", "C. 指示代词", "D. 不定代词"], answer: "B", knowledgePoint: "疑问代词", analysis: "quid是疑问代词，意思是\"什么\"。" },
+    { type: "choice", difficulty: 3, text: "\"Nescio utrum veniat necne.\" 的意思是？", options: ["A. 我不知道他是否来", "B. 我不知道他来了", "C. 我不知道他什么时候来", "D. 我不知道他为什么来"], answer: "A", knowledgePoint: "间接疑问结构", analysis: "utrum...necne表示\"是否\"，引导间接疑问句。" }
+  ]},
+
+  { lesson: 34, title: "动名词与目的结构", questions: [
+    { type: "choice", difficulty: 1, text: "动名词的词尾是？", options: ["A. -ing", "B. -andum/-endus/-endum", "C. -atio/-atus", "D. -mentum"], answer: "B", knowledgePoint: "动名词形式", analysis: "拉丁语动名词词尾为-andum/-endus/-endum。" },
+    { type: "choice", difficulty: 2, text: "\"Liber legendus est.\" 的意思是？", options: ["A. 书被读", "B. 书应该被读", "C. 书正在读", "D. 书已经读了"], answer: "B", knowledgePoint: "动名词用法", analysis: "legendus是legere的动名词，这里表示义务或必要性。" },
+    { type: "choice", difficulty: 3, text: "\"Ad videndum veni.\" 的意思是？", options: ["A. 我来了去看", "B. 我来看", "C. 我为了看而来", "D. 我看过了"], answer: "C", knowledgePoint: "目的不定式", analysis: "ad+不定式表示目的。" }
+  ]},
+
+  { lesson: 35, title: "被动语态（所有时态）", questions: [
+    { type: "choice", difficulty: 1, text: "被动语态由什么构成？", options: ["A. 助动词+现在分词", "B. 助动词+完成分词", "C. 助动词+不定式", "D. 助动词+动名词"], answer: "B", knowledgePoint: "被动语态构成", analysis: "被动语态由助动词esse+完成被动分词构成。" },
+    { type: "choice", difficulty: 2, text: "\"Liber scribitur.\" 是什么时态？", options: ["A. 现在时", "B. 过去时", "C. 将来时", "D. 完成时"], answer: "A", knowledgePoint: "被动语态时态", analysis: "scribitur是现在时被动语态。" },
+    { type: "choice", difficulty: 3, text: "\"Liber scriptus est.\" 是什么语态和时态？", options: ["A. 主动语态现在时", "B. 被动语态现在时", "C. 被动语态完成时", "D. 主动语态完成时"], answer: "C", knowledgePoint: "完成被动", analysis: "scriptus est是完成时被动语态。" }
+  ]},
+
+  // ── 第8章 GCSE文本 ──────────────────────────────────────────
+
+  { lesson: 36, title: "指定文本精读（散文）", questions: [
+    { type: "choice", difficulty: 1, text: "散文文本分析的重点是？", options: ["A. 韵律", "B. 叙事结构和修辞", "C. 押韵", "D. 诗节"], answer: "B", knowledgePoint: "散文分析", analysis: "散文分析关注叙事结构、修辞手法和主题表达。" },
+    { type: "choice", difficulty: 2, text: "西塞罗的散文风格特点是？", options: ["A. 简洁朴素", "B. 华丽雄辩", "C. 晦涩难懂", "D. 口语化"], answer: "B", knowledgePoint: "西塞罗风格", analysis: "西塞罗的散文以华丽雄辩著称，是拉丁语散文的典范。" },
+    { type: "choice", difficulty: 3, text: "凯撒散文的特点是？", options: ["A. 复杂冗长", "B. 简洁直接", "C. 抒情优美", "D. 哲理深奥"], answer: "B", knowledgePoint: "凯撒风格", analysis: "凯撒的散文简洁直接，客观冷静，被称为\"高贵的简洁\"。" }
+  ]},
+
+  { lesson: 37, title: "指定诗歌：六音步格律", questions: [
+    { type: "choice", difficulty: 1, text: "六音步诗行有几个音步？", options: ["A. 4", "B. 5", "C. 6", "D. 7"], answer: "C", knowledgePoint: "六音步", analysis: "六音步诗行由六个音步组成。" },
+    { type: "choice", difficulty: 2, text: "六音步的最后一个音步通常是？", options: ["A. 扬扬格", "B. 扬抑格", "C. 抑扬格", "D. 扬扬格或扬抑格"], answer: "D", knowledgePoint: "音步类型", analysis: "六音步的最后一个音步通常是扬扬格或扬抑格。" },
+    { type: "choice", difficulty: 3, text: "维吉尔《埃涅阿斯纪》使用什么格律？", options: ["A. 五音步", "B. 六音步", "C. 七音步", "D. 自由诗"], answer: "B", knowledgePoint: "史诗格律", analysis: "《埃涅阿斯纪》是史诗，使用六音步格律。" }
+  ]},
+
+  { lesson: 38, title: "修辞手法识别", questions: [
+    { type: "choice", difficulty: 1, text: "明喻使用什么连接词？", options: ["A. ut", "B. sicut", "C. tamquam", "D. 以上都是"], answer: "D", knowledgePoint: "明喻", analysis: "拉丁语中明喻常用ut, sicut, tamquam等连接词。" },
+    { type: "choice", difficulty: 2, text: "暗喻和明喻的区别是？", options: ["A. 没有区别", "B. 暗喻不用连接词", "C. 暗喻更简短", "D. 暗喻更复杂"], answer: "B", knowledgePoint: "暗喻", analysis: "暗喻直接将一物比作另一物，不使用连接词。" },
+    { type: "choice", difficulty: 3, text: "拟人化是什么？", options: ["A. 赋予事物人的特征", "B. 重复使用词语", "C. 夸大描述", "D. 对比两个事物"], answer: "A", knowledgePoint: "拟人", analysis: "拟人化是将人的特征赋予非人类的事物。" }
+  ]},
+
+  { lesson: 39, title: "无准备文本翻译训练", questions: [
+    { type: "choice", difficulty: 1, text: "无准备翻译的第一步是？", options: ["A. 逐字翻译", "B. 识别动词", "C. 查字典", "D. 确定主语"], answer: "B", knowledgePoint: "翻译技巧", analysis: "识别动词是理解句子结构的关键第一步。" },
+    { type: "choice", difficulty: 2, text: "遇到不认识的单词时应该？", options: ["A. 跳过", "B. 根据上下文推断", "C. 猜测", "D. 放弃"], answer: "B", knowledgePoint: "词义推断", analysis: "根据上下文推断词义是重要的翻译技巧。" },
+    { type: "choice", difficulty: 3, text: "流畅翻译的关键是？", options: ["A. 逐字对应", "B. 保持原文结构", "C. 符合目标语言习惯", "D. 使用复杂句式"], answer: "C", knowledgePoint: "翻译原则", analysis: "流畅翻译的关键是使译文符合目标语言的表达习惯。" }
+  ]},
+
+  { lesson: 40, title: "文化历史背景：奥古斯都时代", questions: [
+    { type: "choice", difficulty: 1, text: "奥古斯都时代被称为？", options: ["A. 黄金时代", "B. 白银时代", "C. 青铜时代", "D. 黑暗时代"], answer: "A", knowledgePoint: "文学时期", analysis: "奥古斯都时代是拉丁语文学的黄金时代。" },
+    { type: "choice", difficulty: 2, text: "奥古斯都时代的主要作家不包括？", options: ["A. Virgil", "B. Ovid", "C. Horace", "D. Seneca"], answer: "D", knowledgePoint: "主要作家", analysis: "塞涅卡是白银时代的作家，不是奥古斯都时代的。" },
+    { type: "choice", difficulty: 3, text: "奥古斯都对文学的影响是？", options: ["A. 压制文学", "B. 支持和赞助文学", "C. 忽视文学", "D. 禁止文学"], answer: "B", knowledgePoint: "文学赞助", analysis: "奥古斯都积极支持和赞助文学，促进了文学的繁荣。" }
+  ]},
+
+  // ── 第9章 翻译技巧 ──────────────────────────────────────────
+
+  { lesson: 41, title: "难句结构分析策略", questions: [
+    { type: "choice", difficulty: 1, text: "分析复杂句子的第一步是？", options: ["A. 查字典", "B. 识别主句和从句", "C. 翻译每个单词", "D. 确定主语"], answer: "B", knowledgePoint: "句子分析", analysis: "首先识别主句和从句结构是分析复杂句子的关键。" },
+    { type: "choice", difficulty: 2, text: "拉丁语句子中，动词通常位于？", options: ["A. 句首", "B. 句中", "C. 句末", "D. 任意位置"], answer: "C", knowledgePoint: "语序特点", analysis: "拉丁语基本语序为主-宾-谓，动词通常位于句末。" },
+    { type: "choice", difficulty: 3, text: "分析长句时应该？", options: ["A. 一次性翻译", "B. 拆分成短句", "C. 跳过不认识的单词", "D. 逐字翻译"], answer: "B", knowledgePoint: "长句处理", analysis: "将长句拆分成短句有助于理解和翻译。" }
+  ]},
+
+  { lesson: 42, title: "词义辨析与语境推断", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语中多义词需要根据什么来确定词义？", options: ["A. 词性", "B. 语境", "C. 词形", "D. 发音"], answer: "B", knowledgePoint: "词义确定", analysis: "语境是确定多义词词义的关键。" },
+    { type: "choice", difficulty: 2, text: "动词 \"facere\" 可以表示？", options: ["A. 做", "B. 制造", "C. 成为", "D. 以上都是"], answer: "D", knowledgePoint: "多义动词", analysis: "facere是一个多义动词，可以表示做、制造、成为等含义。" },
+    { type: "choice", difficulty: 3, text: "\"bellum\" 在不同语境中可以表示？", options: ["A. 战争", "B. 斗争", "C. 冲突", "D. 以上都是"], answer: "D", knowledgePoint: "词义扩展", analysis: "bellum基本含义是战争，但在不同语境中可以扩展为斗争、冲突等含义。" }
+  ]},
+
+  { lesson: 43, title: "历史语境对理解的影响", questions: [
+    { type: "choice", difficulty: 1, text: "理解拉丁语文本需要了解什么？", options: ["A. 语法", "B. 词汇", "C. 历史文化背景", "D. 以上都是"], answer: "D", knowledgePoint: "综合理解", analysis: "理解拉丁语文本需要语法、词汇和历史文化背景的结合。" },
+    { type: "choice", difficulty: 2, text: "凯撒《高卢战记》的写作背景是？", options: ["A. 和平时期", "B. 高卢战争期间", "C. 罗马内战期间", "D. 帝国时期"], answer: "B", knowledgePoint: "历史背景", analysis: "《高卢战记》是凯撒在高卢战争期间撰写的。" },
+    { type: "choice", difficulty: 3, text: "为什么了解历史背景很重要？", options: ["A. 帮助理解词汇含义", "B. 帮助理解作者意图", "C. 帮助理解文本主题", "D. 以上都是"], answer: "D", knowledgePoint: "背景重要性", analysis: "历史背景有助于全面理解文本。" }
+  ]},
+
+  { lesson: 44, title: "文本评注方法", questions: [
+    { type: "choice", difficulty: 1, text: "文本评注的目的是？", options: ["A. 翻译文本", "B. 分析和解释文本", "C. 背诵文本", "D. 改写文本"], answer: "B", knowledgePoint: "评注目的", analysis: "文本评注的目的是分析和解释文本的语言、结构和主题。" },
+    { type: "choice", difficulty: 2, text: "评注应该包括？", options: ["A. 词汇解释", "B. 语法分析", "C. 文化背景", "D. 以上都是"], answer: "D", knowledgePoint: "评注内容", analysis: "评注应包括词汇解释、语法分析和文化背景等内容。" },
+    { type: "choice", difficulty: 3, text: "学术评注的标准是？", options: ["A. 主观随意", "B. 客观准确", "C. 冗长复杂", "D. 简短模糊"], answer: "B", knowledgePoint: "评注标准", analysis: "学术评注应客观准确，基于文本证据。" }
+  ]},
+
+  { lesson: 45, title: "GCSE真题训练", questions: [
+    { type: "choice", difficulty: 1, text: "GCSE拉丁语考试包括哪些部分？", options: ["A. 翻译", "B. 理解", "C. 语法", "D. 以上都是"], answer: "D", knowledgePoint: "考试内容", analysis: "GCSE拉丁语考试通常包括翻译、理解和语法等部分。" },
+    { type: "choice", difficulty: 2, text: "答题时应该注意什么？", options: ["A. 时间管理", "B. 字迹清晰", "C. 仔细审题", "D. 以上都是"], answer: "D", knowledgePoint: "答题技巧", analysis: "答题时应注意时间管理、字迹清晰和仔细审题。" },
+    { type: "choice", difficulty: 3, text: "常见的答题错误包括？", options: ["A. 时态错误", "B. 格的错误", "C. 词义错误", "D. 以上都是"], answer: "D", knowledgePoint: "常见错误", analysis: "时态、格和词义错误是常见的答题错误。" }
+  ]},
+
+  // ── 第10章 综合输出 ──────────────────────────────────────────
+
+  { lesson: 46, title: "拉丁短文写作", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语写作的第一步是？", options: ["A. 确定主题", "B. 选择词汇", "C. 确定句式", "D. 开始写作"], answer: "A", knowledgePoint: "写作步骤", analysis: "确定主题是写作的第一步。" },
+    { type: "choice", difficulty: 2, text: "拉丁语写作应注意什么？", options: ["A. 语法正确", "B. 词汇准确", "C. 语序合理", "D. 以上都是"], answer: "D", knowledgePoint: "写作要求", analysis: "拉丁语写作应注意语法正确、词汇准确和语序合理。" },
+    { type: "choice", difficulty: 3, text: "如何提高拉丁语写作能力？", options: ["A. 背诵范文", "B. 多练习", "C. 学习句型", "D. 以上都是"], answer: "D", knowledgePoint: "写作练习", analysis: "提高写作能力需要背诵范文、多练习和学习句型。" }
+  ]},
+
+  { lesson: 47, title: "文学评论写作框架", questions: [
+    { type: "choice", difficulty: 1, text: "文学评论的结构是？", options: ["A. 引言-正文-结论", "B. 描述-分析-评价", "C. 问题-分析-解决", "D. 引言-分析-结论"], answer: "D", knowledgePoint: "评论结构", analysis: "文学评论通常采用引言-分析-结论的结构。" },
+    { type: "choice", difficulty: 2, text: "文学评论应包括？", options: ["A. 文本分析", "B. 主题讨论", "C. 评价", "D. 以上都是"], answer: "D", knowledgePoint: "评论内容", analysis: "文学评论应包括文本分析、主题讨论和评价。" },
+    { type: "choice", difficulty: 3, text: "如何构建论点？", options: ["A. 提出观点", "B. 引用文本证据", "C. 分析论证", "D. 以上都是"], answer: "D", knowledgePoint: "论点构建", analysis: "构建论点需要提出观点、引用证据和分析论证。" }
+  ]},
+
+  { lesson: 48, title: "跨文化比较：罗马与魔法世界的语言观", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语在魔法世界的作用是？", options: ["A. 日常交流", "B. 咒语语言", "C. 学术语言", "D. 商业语言"], answer: "B", knowledgePoint: "魔法语言", analysis: "拉丁语是咒语的主要语言。" },
+    { type: "choice", difficulty: 2, text: "咒语与拉丁语词根的关系是？", options: ["A. 无关", "B. 部分咒语源自拉丁词根", "C. 所有咒语都源自拉丁词根", "D. 所有拉丁词根都用于咒语"], answer: "B", knowledgePoint: "咒语词源", analysis: "许多咒语源自拉丁词根，但并非全部。" },
+    { type: "choice", difficulty: 3, text: "为什么拉丁语适合作为咒语语言？", options: ["A. 发音优美", "B. 结构严谨", "C. 历史悠久", "D. 以上都是"], answer: "D", knowledgePoint: "语言特点", analysis: "拉丁语的发音、结构和历史使其适合作为咒语语言。" }
+  ]},
+
+  { lesson: 49, title: "词源学综合：一个词根的旅程", questions: [
+    { type: "choice", difficulty: 1, text: "词根 \"dict\" 的意思是？", options: ["A. 说", "B. 写", "C. 看", "D. 做"], answer: "A", knowledgePoint: "词根含义", analysis: "dict来自拉丁语dicere（说）。" },
+    { type: "choice", difficulty: 2, text: "英语单词 \"predict\" 由什么组成？", options: ["A. pre- + dict", "B. pro- + dict", "C. per- + dict", "D. re- + dict"], answer: "A", knowledgePoint: "词根组合", analysis: "predict由pre-（提前）+ dict（说）组成，意为预言。" },
+    { type: "choice", difficulty: 3, text: "词根 \"dict\" 在英语中的衍生词不包括？", options: ["A. dictionary", "B. dictate", "C. direct", "D. dictator"], answer: "C", knowledgePoint: "词根衍生", analysis: "direct来自拉丁语dirigere（引导），与dict无关。" }
+  ]},
+
+  { lesson: 50, title: "GCSE综合复习", questions: [
+    { type: "choice", difficulty: 1, text: "复习的重点是？", options: ["A. 语法", "B. 词汇", "C. 翻译", "D. 以上都是"], answer: "D", knowledgePoint: "复习内容", analysis: "复习应包括语法、词汇和翻译等方面。" },
+    { type: "choice", difficulty: 2, text: "如何有效复习？", options: ["A. 制定计划", "B. 练习真题", "C. 查漏补缺", "D. 以上都是"], answer: "D", knowledgePoint: "复习方法", analysis: "有效复习需要制定计划、练习真题和查漏补缺。" },
+    { type: "choice", difficulty: 3, text: "考试前应该做什么？", options: ["A. 熬夜复习", "B. 放松休息", "C. 突击记忆", "D. 放弃复习"], answer: "B", knowledgePoint: "考前准备", analysis: "考试前应放松休息，保持良好状态。" }
+  ]},
+
+  // ── 第11章 古典文本精读 ──────────────────────────────────────────
+
+  { lesson: 51, title: "西塞罗散文：修辞结构分析", questions: [
+    { type: "choice", difficulty: 1, text: "西塞罗是哪个时期的作家？", options: ["A. 共和国时期", "B. 帝国时期", "C. 中世纪", "D. 文艺复兴时期"], answer: "A", knowledgePoint: "西塞罗时期", analysis: "西塞罗是罗马共和国时期的著名演说家和作家。" },
+    { type: "choice", difficulty: 2, text: "西塞罗的主要作品类型是？", options: ["A. 诗歌", "B. 散文和演说", "C. 历史", "D. 哲学"], answer: "B", knowledgePoint: "西塞罗作品", analysis: "西塞罗以散文和演说著称。" },
+    { type: "choice", difficulty: 3, text: "西塞罗的修辞学著作是？", options: ["A. 《论演说家》", "B. 《共和国》", "C. 《法律篇》", "D. 《图斯库兰论辩》"], answer: "A", knowledgePoint: "修辞学著作", analysis: "《论演说家》是西塞罗的重要修辞学著作。" }
+  ]},
+
+  { lesson: 52, title: "维吉尔《埃涅阿斯纪》：史诗传统", questions: [
+    { type: "choice", difficulty: 1, text: "《埃涅阿斯纪》的作者是？", options: ["A. Ovid", "B. Virgil", "C. Horace", "D. Lucan"], answer: "B", knowledgePoint: "史诗作者", analysis: "《埃涅阿斯纪》是维吉尔的代表作。" },
+    { type: "choice", difficulty: 2, text: "《埃涅阿斯纪》讲述的是？", options: ["A. 特洛伊战争", "B. 埃涅阿斯的旅程", "C. 罗马建国", "D. 以上都是"], answer: "D", knowledgePoint: "史诗内容", analysis: "《埃涅阿斯纪》讲述了埃涅阿斯从特洛伊到意大利建立罗马的故事。" },
+    { type: "choice", difficulty: 3, text: "《埃涅阿斯纪》模仿了哪部希腊史诗？", options: ["A. 《伊利亚特》", "B. 《奥德赛》", "C. 两者都是", "D. 都不是"], answer: "C", knowledgePoint: "文学借鉴", analysis: "《埃涅阿斯纪》综合模仿了《伊利亚特》和《奥德赛》。" }
+  ]},
+
+  { lesson: 53, title: "李维历史著作：史学写法", questions: [
+    { type: "choice", difficulty: 1, text: "李维的代表作是？", options: ["A. 《罗马史》", "B. 《高卢战记》", "C. 《编年史》", "D. 《历史》"], answer: "A", knowledgePoint: "李维著作", analysis: "李维的代表作是《罗马史》。" },
+    { type: "choice", difficulty: 2, text: "李维的历史写作风格是？", options: ["A. 简洁客观", "B. 华丽生动", "C. 枯燥乏味", "D. 晦涩难懂"], answer: "B", knowledgePoint: "写作风格", analysis: "李维的历史写作华丽生动，富有文学性。" },
+    { type: "choice", difficulty: 3, text: "李维历史著作的特点是？", options: ["A. 注重史实准确性", "B. 注重道德教化", "C. 注重政治分析", "D. 注重经济描述"], answer: "B", knowledgePoint: "史学特点", analysis: "李维注重通过历史进行道德教化。" }
+  ]},
+
+  { lesson: 54, title: "塔西佗：讽刺与历史评判", questions: [
+    { type: "choice", difficulty: 1, text: "塔西佗是哪个时期的历史学家？", options: ["A. 共和国时期", "B. 帝国早期", "C. 帝国后期", "D. 中世纪"], answer: "B", knowledgePoint: "塔西佗时期", analysis: "塔西佗是罗马帝国早期的历史学家。" },
+    { type: "choice", difficulty: 2, text: "塔西佗的代表作不包括？", options: ["A. 《编年史》", "B. 《历史》", "C. 《日耳曼尼亚志》", "D. 《罗马史》"], answer: "D", knowledgePoint: "塔西佗著作", analysis: "《罗马史》是李维的著作，不是塔西佗的。" },
+    { type: "choice", difficulty: 3, text: "塔西佗的写作风格是？", options: ["A. 赞美帝国", "B. 批判讽刺", "C. 中立客观", "D. 浪漫抒情"], answer: "B", knowledgePoint: "写作风格", analysis: "塔西佗以批判和讽刺的风格著称。" }
+  ]},
+
+  { lesson: 55, title: "奥古斯都文学的政治语境", questions: [
+    { type: "choice", difficulty: 1, text: "奥古斯都时期文学繁荣的原因是？", options: ["A. 政治稳定", "B. 官方赞助", "C. 文化交流", "D. 以上都是"], answer: "D", knowledgePoint: "文学繁荣原因", analysis: "政治稳定、官方赞助和文化交流共同促进了文学繁荣。" },
+    { type: "choice", difficulty: 2, text: "奥古斯都时期的主要文学形式是？", options: ["A. 散文", "B. 诗歌", "C. 戏剧", "D. 历史"], answer: "B", knowledgePoint: "文学形式", analysis: "诗歌是奥古斯都时期的主要文学形式。" },
+    { type: "choice", difficulty: 3, text: "维吉尔《埃涅阿斯纪》的政治意义是？", options: ["A. 歌颂奥古斯都", "B. 批评帝国", "C. 记录历史", "D. 娱乐大众"], answer: "A", knowledgePoint: "政治意义", analysis: "《埃涅阿斯纪》通过神话歌颂奥古斯都和罗马帝国。" }
+  ]},
+
+  // ── 第12章 语言学深度 ──────────────────────────────────────────
+
+  { lesson: 56, title: "拉丁语法理论：格系统的逻辑", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语有几个格？", options: ["A. 4", "B. 5", "C. 6", "D. 7"], answer: "C", knowledgePoint: "格的数量", analysis: "拉丁语有6个格：主格、宾格、与格、夺格、属格、呼格。" },
+    { type: "choice", difficulty: 2, text: "格的功能是？", options: ["A. 表示语法关系", "B. 表示词性", "C. 表示时态", "D. 表示语气"], answer: "A", knowledgePoint: "格的功能", analysis: "格表示名词在句子中的语法关系。" },
+    { type: "choice", difficulty: 3, text: "格变系统的逻辑基础是？", options: ["A. 语义角色", "B. 词形变化", "C. 语序", "D. 词性"], answer: "A", knowledgePoint: "格理论", analysis: "格变系统的逻辑基础是语义角色，如施事、受事、工具等。" }
+  ]},
+
+  { lesson: 57, title: "语言演变：拉丁语到罗曼语", questions: [
+    { type: "choice", difficulty: 1, text: "罗曼语族包括哪些语言？", options: ["A. 法语、西班牙语、意大利语", "B. 德语、英语、荷兰语", "C. 俄语、波兰语、捷克语", "D. 希腊语、阿尔巴尼亚语"], answer: "A", knowledgePoint: "罗曼语族", analysis: "罗曼语族包括法语、西班牙语、意大利语等。" },
+    { type: "choice", difficulty: 2, text: "拉丁语演变为罗曼语的主要原因是？", options: ["A. 政治变化", "B. 语音演变", "C. 文化交流", "D. 以上都是"], answer: "D", knowledgePoint: "语言演变原因", analysis: "政治、语音和文化因素共同导致了拉丁语的演变。" },
+    { type: "choice", difficulty: 3, text: "罗曼语与拉丁语的主要区别是？", options: ["A. 语法简化", "B. 词汇变化", "C. 语音变化", "D. 以上都是"], answer: "D", knowledgePoint: "语言差异", analysis: "罗曼语在语法、词汇和语音上都与拉丁语有显著区别。" }
+  ]},
+
+  { lesson: 58, title: "铭文研究与文献考证", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁铭文的主要类型是？", options: ["A. 墓碑铭文", "B. 公共建筑铭文", "C. 法律铭文", "D. 以上都是"], answer: "D", knowledgePoint: "铭文类型", analysis: "拉丁铭文包括墓碑、公共建筑和法律等多种类型。" },
+    { type: "choice", difficulty: 2, text: "铭文研究的意义是？", options: ["A. 补充历史资料", "B. 研究语言变化", "C. 了解社会文化", "D. 以上都是"], answer: "D", knowledgePoint: "研究意义", analysis: "铭文研究对历史、语言和文化研究都有重要意义。" },
+    { type: "choice", difficulty: 3, text: "文献考证的目的是？", options: ["A. 确定文本真实性", "B. 还原原始文本", "C. 分析文本版本", "D. 以上都是"], answer: "D", knowledgePoint: "文献考证", analysis: "文献考证包括确定真实性、还原文本和分析版本等。" }
+  ]},
+
+  { lesson: 59, title: "斯多葛与伊壁鸠鲁哲学文本", questions: [
+    { type: "choice", difficulty: 1, text: "斯多葛学派的核心思想是？", options: ["A. 追求快乐", "B. 顺应自然", "C. 怀疑一切", "D. 追求知识"], answer: "B", knowledgePoint: "斯多葛思想", analysis: "斯多葛学派主张顺应自然和理性生活。" },
+    { type: "choice", difficulty: 2, text: "伊壁鸠鲁学派的核心思想是？", options: ["A. 追求快乐", "B. 顺应自然", "C. 禁欲主义", "D. 悲观主义"], answer: "A", knowledgePoint: "伊壁鸠鲁思想", analysis: "伊壁鸠鲁学派主张追求快乐，但强调精神快乐高于肉体快乐。" },
+    { type: "choice", difficulty: 3, text: "卢克莱修的《物性论》属于哪个哲学流派？", options: ["A. 斯多葛", "B. 伊壁鸠鲁", "C. 柏拉图", "D. 亚里士多德"], answer: "B", knowledgePoint: "哲学流派", analysis: "卢克莱修的《物性论》阐述了伊壁鸠鲁的原子论哲学。" }
+  ]},
+
+  { lesson: 60, title: "学术写作：论证与引证规范", questions: [
+    { type: "choice", difficulty: 1, text: "学术写作的特点是？", options: ["A. 主观随意", "B. 客观严谨", "C. 夸张生动", "D. 口语化"], answer: "B", knowledgePoint: "学术写作特点", analysis: "学术写作应客观严谨。" },
+    { type: "choice", difficulty: 2, text: "引用文献的目的是？", options: ["A. 支持论点", "B. 显示知识", "C. 增加字数", "D. 符合格式"], answer: "A", knowledgePoint: "引用目的", analysis: "引用文献是为了支持论点。" },
+    { type: "choice", difficulty: 3, text: "学术论证的结构是？", options: ["A. 提出问题-分析问题-解决问题", "B. 引言-论证-结论", "C. 描述-分析-评价", "D. 以上都是"], answer: "D", knowledgePoint: "论证结构", analysis: "学术论证可以采用多种结构。" }
+  ]},
+
+  // ── 第13章 文学与思想 ──────────────────────────────────────────
+
+  { lesson: 61, title: "悲剧传统：塞内卡与希腊悲剧比较", questions: [
+    { type: "choice", difficulty: 1, text: "塞内卡是哪个时期的悲剧作家？", options: ["A. 共和国时期", "B. 帝国时期", "C. 中世纪", "D. 文艺复兴时期"], answer: "B", knowledgePoint: "塞内卡时期", analysis: "塞内卡是罗马帝国时期的悲剧作家。" },
+    { type: "choice", difficulty: 2, text: "塞内卡悲剧的特点是？", options: ["A. 情节简单", "B. 语言华丽", "C. 情感强烈", "D. 以上都是"], answer: "D", knowledgePoint: "塞内卡风格", analysis: "塞内卡的悲剧情节简单但语言华丽、情感强烈。" },
+    { type: "choice", difficulty: 3, text: "塞内卡悲剧与希腊悲剧的区别是？", options: ["A. 更注重心理描写", "B. 更注重情节", "C. 更注重人物", "D. 更注重场景"], answer: "A", knowledgePoint: "悲剧比较", analysis: "塞内卡悲剧更注重心理描写和情感表达。" }
+  ]},
+
+  { lesson: 62, title: "贺拉斯：颂歌与文学批评", questions: [
+    { type: "choice", difficulty: 1, text: "贺拉斯是哪个时期的诗人？", options: ["A. 共和国时期", "B. 奥古斯都时期", "C. 帝国后期", "D. 中世纪"], answer: "B", knowledgePoint: "贺拉斯时期", analysis: "贺拉斯是奥古斯都时期的重要诗人。" },
+    { type: "choice", difficulty: 2, text: "贺拉斯的主要作品是？", options: ["A. 《颂歌集》", "B. 《诗艺》", "C. 《书信集》", "D. 以上都是"], answer: "D", knowledgePoint: "贺拉斯作品", analysis: "贺拉斯的作品包括《颂歌集》、《诗艺》和《书信集》。" },
+    { type: "choice", difficulty: 3, text: "贺拉斯的文学理论主张是？", options: ["A. 寓教于乐", "B. 纯粹娱乐", "C. 纯粹教化", "D. 形式主义"], answer: "A", knowledgePoint: "文学理论", analysis: "贺拉斯主张文学应该寓教于乐。" }
+  ]},
+
+  { lesson: 63, title: "卢克莱修：诗歌中的哲学论证", questions: [
+    { type: "choice", difficulty: 1, text: "卢克莱修的代表作是？", options: ["A. 《物性论》", "B. 《变形记》", "C. 《埃涅阿斯纪》", "D. 《颂歌集》"], answer: "A", knowledgePoint: "卢克莱修作品", analysis: "卢克莱修的代表作是《物性论》。" },
+    { type: "choice", difficulty: 2, text: "《物性论》的主题是？", options: ["A. 爱情", "B. 哲学", "C. 历史", "D. 神话"], answer: "B", knowledgePoint: "作品主题", analysis: "《物性论》是一部哲学史诗，阐述伊壁鸠鲁的原子论。" },
+    { type: "choice", difficulty: 3, text: "卢克莱修使用诗歌形式的原因是？", options: ["A. 便于记忆", "B. 增加美感", "C. 传播哲学", "D. 以上都是"], answer: "D", knowledgePoint: "诗歌形式", analysis: "卢克莱修使用诗歌形式便于记忆、增加美感并传播哲学思想。" }
+  ]},
+
+  { lesson: 64, title: "文体比较：散文、诗歌、历史写法的差异", questions: [
+    { type: "choice", difficulty: 1, text: "散文与诗歌的主要区别是？", options: ["A. 韵律", "B. 格式", "C. 语言", "D. 以上都是"], answer: "D", knowledgePoint: "文体区别", analysis: "散文与诗歌在韵律、格式和语言上都有区别。" },
+    { type: "choice", difficulty: 2, text: "历史写作的特点是？", options: ["A. 虚构", "B. 客观", "C. 主观", "D. 抒情"], answer: "B", knowledgePoint: "历史写作", analysis: "历史写作应客观真实。" },
+    { type: "choice", difficulty: 3, text: "不同文体的写作目的差异是？", options: ["A. 散文用于说理", "B. 诗歌用于抒情", "C. 历史用于记录", "D. 以上都是"], answer: "D", knowledgePoint: "写作目的", analysis: "不同文体有不同的写作目的。" }
+  ]},
+
+  { lesson: 65, title: "原创翻译与注释写作", questions: [
+    { type: "choice", difficulty: 1, text: "翻译的基本原则是？", options: ["A. 忠实", "B. 通顺", "C. 完整", "D. 以上都是"], answer: "D", knowledgePoint: "翻译原则", analysis: "翻译应忠实、通顺、完整。" },
+    { type: "choice", difficulty: 2, text: "注释写作的目的是？", options: ["A. 解释文本", "B. 分析文本", "C. 评价文本", "D. 以上都是"], answer: "D", knowledgePoint: "注释目的", analysis: "注释应解释、分析和评价文本。" },
+    { type: "choice", difficulty: 3, text: "学术翻译的标准是？", options: ["A. 直译", "B. 意译", "C. 兼顾直译与意译", "D. 自由发挥"], answer: "C", knowledgePoint: "翻译标准", analysis: "学术翻译应兼顾直译的准确性和意译的流畅性。" }
+  ]},
+
+  // ── 第14章 综合冲刺 ──────────────────────────────────────────
+
+  { lesson: 66, title: "无准备文本：速读与精译", questions: [
+    { type: "choice", difficulty: 1, text: "速读的目的是？", options: ["A. 理解大意", "B. 逐字翻译", "C. 背诵文本", "D. 分析语法"], answer: "A", knowledgePoint: "速读目的", analysis: "速读的目的是快速理解文本大意。" },
+    { type: "choice", difficulty: 2, text: "精译的要求是？", options: ["A. 准确", "B. 流畅", "C. 完整", "D. 以上都是"], answer: "D", knowledgePoint: "精译要求", analysis: "精译应准确、流畅、完整。" },
+    { type: "choice", difficulty: 3, text: "如何平衡速读与精译？", options: ["A. 先速读再精译", "B. 边速读边精译", "C. 只速读不精译", "D. 只精译不速读"], answer: "A", knowledgePoint: "阅读策略", analysis: "先速读了解大意，再精译细节。" }
+  ]},
+
+  { lesson: 67, title: "文学评论：论点建构", questions: [
+    { type: "choice", difficulty: 1, text: "论点的要素是？", options: ["A. 观点", "B. 证据", "C. 分析", "D. 以上都是"], answer: "D", knowledgePoint: "论点要素", analysis: "论点包括观点、证据和分析。" },
+    { type: "choice", difficulty: 2, text: "如何支持论点？", options: ["A. 引用文本", "B. 分析例子", "C. 对比分析", "D. 以上都是"], answer: "D", knowledgePoint: "论点支持", analysis: "可以通过引用、分析和对比来支持论点。" },
+    { type: "choice", difficulty: 3, text: "批判性分析的特点是？", options: ["A. 主观评价", "B. 客观分析", "C. 否定一切", "D. 肯定一切"], answer: "B", knowledgePoint: "批判性分析", analysis: "批判性分析应客观分析文本。" }
+  ]},
+
+  { lesson: 68, title: "语言演变论文写作", questions: [
+    { type: "choice", difficulty: 1, text: "论文的结构是？", options: ["A. 引言-正文-结论", "B. 摘要-引言-方法-结果-讨论-结论", "C. 问题-分析-解决", "D. 以上都是"], answer: "D", knowledgePoint: "论文结构", analysis: "论文可以采用多种结构。" },
+    { type: "choice", difficulty: 2, text: "文献综述的目的是？", options: ["A. 总结研究现状", "B. 提出研究问题", "C. 说明研究意义", "D. 以上都是"], answer: "D", knowledgePoint: "文献综述", analysis: "文献综述总结现状、提出问题并说明意义。" },
+    { type: "choice", difficulty: 3, text: "如何进行学术研究？", options: ["A. 提出假设", "B. 收集资料", "C. 分析论证", "D. 以上都是"], answer: "D", knowledgePoint: "研究方法", analysis: "学术研究包括提出假设、收集资料和分析论证。" }
+  ]},
+
+  { lesson: 69, title: "跨学科综合（拉丁语与魔咒课的联动）", questions: [
+    { type: "choice", difficulty: 1, text: "拉丁语与魔咒课的联系是？", options: ["A. 咒语源自拉丁词根", "B. 发音影响咒语效果", "C. 语法结构影响咒语", "D. 以上都是"], answer: "D", knowledgePoint: "学科联系", analysis: "拉丁语与魔咒课在词根、发音和语法上都有联系。" },
+    { type: "choice", difficulty: 2, text: "为什么拉丁语适合作为咒语语言？", options: ["A. 结构严谨", "B. 历史悠久", "C. 发音优美", "D. 以上都是"], answer: "D", knowledgePoint: "语言特点", analysis: "拉丁语的结构、历史和发音使其适合作为咒语语言。" },
+    { type: "choice", difficulty: 3, text: "如何将拉丁语知识应用于魔咒学习？", options: ["A. 理解咒语词源", "B. 掌握发音技巧", "C. 分析咒语结构", "D. 以上都是"], answer: "D", knowledgePoint: "知识应用", analysis: "可以通过理解词源、掌握发音和分析结构来应用拉丁语知识。" }
+  ]},
+
+  { lesson: 70, title: "A-Level综合模拟", questions: [
+    { type: "choice", difficulty: 1, text: "A-Level拉丁语考试包括哪些部分？", options: ["A. 翻译", "B. 理解", "C. 文学评论", "D. 以上都是"], answer: "D", knowledgePoint: "考试内容", analysis: "A-Level拉丁语考试包括翻译、理解和文学评论等部分。" },
+    { type: "choice", difficulty: 2, text: "如何准备A-Level考试？", options: ["A. 练习翻译", "B. 分析文本", "C. 写作练习", "D. 以上都是"], answer: "D", knowledgePoint: "备考方法", analysis: "备考应包括练习翻译、分析文本和写作练习。" },
+    { type: "choice", difficulty: 3, text: "考试策略是？", options: ["A. 时间管理", "B. 先易后难", "C. 仔细检查", "D. 以上都是"], answer: "D", knowledgePoint: "考试策略", analysis: "考试策略包括时间管理、先易后难和仔细检查。" }
   ]}
+
 ];

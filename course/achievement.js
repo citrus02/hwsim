@@ -249,7 +249,7 @@ const HIDDEN_ACHIEVEMENTS = [
   {
     id: "hidden_geography_tuesday",
     name: "博士论文封面",
-    desc: "发现菲利克斯·韦斯利讲桌玻璃下的褪色封面（触发特定地理事件）",
+    desc: "发现菲利克斯·韦斯莱讲桌玻璃下的褪色封面（触发特定地理事件）",
     icon: "🗂️",
     points: 15,
     hidden: true,

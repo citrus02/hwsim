@@ -1,8 +1,12 @@
 /**
- * subjects/literature.js
- * 麻瓜学术 · 英国文学分科
- * 教授：伊莱莎·洛夫古德
+ * literature.js
+ * 麻瓜学术系 · 英国文学
+ * 教授：伊莱莎·洛夫古德（Eliza Lovegood）
+ * 课程体系：从贝奥武夫到现代文学（共 48 课，13章）
  */
+
+import { lessonMap } from './literature-lesson.js';
+import { questionBank } from './literature-questionBank.js';
 
 export const subjectMeta = {
   key: "literature",
@@ -127,4 +131,11 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_literature = { subjectMeta, syllabus, crossAnchors, teachingStyle };
+window.subject_literature = {
+  subjectMeta,
+  teachingStyle,
+  syllabus,
+  crossAnchors,
+  lessonMap,
+  questionBank
+};
