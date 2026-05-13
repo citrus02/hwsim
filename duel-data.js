@@ -10,6 +10,8 @@
  *   getAvailableOpponents — 返回可选对手列表（学生+角色）
  */
 
+import { getSave } from './save-system.js';
+
 // ═══════════════════════════════════════════════════════════
 // 匿名学生对手池
 // ═══════════════════════════════════════════════════════════
@@ -619,8 +621,7 @@ export const ENEMY_TEAMS = [
  */
 function _isKnown(key) {
   try {
-    const raw = localStorage.getItem("hogwarts");
-    const data = raw ? JSON.parse(raw) : {};
+    const data = getSave();
     if (data.knownCharacters?.includes(key)) return true;
     if (data.affinity?.[key]) return true;
     return false;
@@ -629,8 +630,7 @@ function _isKnown(key) {
 
 function _getTier(key) {
   try {
-    const raw = localStorage.getItem("hogwarts");
-    const data = raw ? JSON.parse(raw) : {};
+    const data = getSave();
     const aff = data.affinity?.[key];
     if (!aff) return 0;
     const v = typeof aff === 'object' ? (aff.value || 0) : aff;

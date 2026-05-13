@@ -1287,11 +1287,126 @@ export const professorComments = {
 };
 
 export const quickStudyEvents = [
-  "你复习了占卜学的基础步骤，熟练度小幅提高。",
-  "你整理了一页占卜学错题，终于看出自己常犯的错误。",
-  "你完成了一次短练习，教授认可你的复盘态度。",
-  "你把一个旧知识点重新练稳了。",
-  "你在课后记录里补上了遗漏的安全检查。"
+  {
+    trigger: "观察烟雾图形",
+    effect: "你观察了烟雾中的图形，尝试解读其中的预兆。",
+    skill: "烟雾解读",
+    grade: 3
+  },
+  {
+    trigger: "学习预言伦理",
+    effect: "你学习了预言的伦理原则，理解了谨慎预测的重要性。",
+    skill: "预言伦理",
+    grade: 3
+  },
+  {
+    trigger: "分析茶叶形状",
+    effect: "你分析了茶杯中的茶叶形状，做出了自己的第一个茶叶占卜。",
+    skill: "茶叶占卜",
+    grade: 3
+  },
+  {
+    trigger: "记录梦境",
+    effect: "你记录了自己的梦境，尝试解读其中的象征意义。",
+    skill: "梦境解析",
+    grade: 4
+  },
+  {
+    trigger: "凝视水晶球",
+    effect: "你凝视水晶球，尝试看到未来的影像。",
+    skill: "水晶球占卜",
+    grade: 4
+  },
+  {
+    trigger: "学习手相",
+    effect: "你学习了手相解读的基本知识，分析了自己的手掌纹路。",
+    skill: "手相解读",
+    grade: 4
+  },
+  {
+    trigger: "研究星象预兆",
+    effect: "你研究了星象与预兆的关联，学习了基础的星象占卜。",
+    skill: "星象占卜",
+    grade: 5
+  },
+  {
+    trigger: "学习塔罗牌",
+    effect: "你学习了塔罗牌的基本牌阵和解读方法。",
+    skill: "塔罗牌",
+    grade: 5
+  },
+  {
+    trigger: "进行案例复盘",
+    effect: "你复盘了一个历史预言案例，提高了分析能力。",
+    skill: "案例分析",
+    grade: 5
+  },
+  {
+    trigger: "练习O.W.L.解读",
+    effect: "你进行了O.W.L.级别的占卜解读练习，为考试做准备。",
+    skill: "O.W.L.准备",
+    grade: 6
+  },
+  {
+    trigger: "准备N.E.W.T.综合",
+    effect: "你开始准备N.E.W.T.级别的综合占卜能力。",
+    skill: "N.E.W.T.准备",
+    grade: 6
+  },
+  {
+    trigger: "研究高级象征",
+    effect: "你研究了高级象征系统，深入理解了占卜的深层含义。",
+    skill: "高级象征",
+    grade: 6
+  },
+  {
+    trigger: "进行综合占卜",
+    effect: "你进行了一次综合占卜，整合了多种占卜方法。",
+    skill: "综合占卜",
+    grade: 7
+  },
+  {
+    trigger: "研究预言历史",
+    effect: "你研究了著名预言的历史，分析了它们的准确性和影响。",
+    skill: "预言历史",
+    grade: 7
+  },
+  {
+    trigger: "探索占卜哲学",
+    effect: "你探索了占卜的哲学基础，思考了自由意志与命运的关系。",
+    skill: "占卜哲学",
+    grade: 7
+  },
+  {
+    trigger: "复习基础步骤",
+    effect: "你复习了占卜学的基础步骤，熟练度小幅提高。",
+    skill: "基础复习",
+    grade: 3
+  },
+  {
+    trigger: "整理错题",
+    effect: "你整理了一页占卜学错题，终于看出自己常犯的错误。",
+    skill: "错题分析",
+    grade: 4
+  },
+  {
+    trigger: "完成短练习",
+    effect: "你完成了一次短练习，特里劳妮教授认可你的复盘态度。",
+    skill: "练习巩固",
+    grade: 5
+  },
+  {
+    trigger: "巩固旧知识点",
+    effect: "你把一个旧知识点重新练稳了，基础更加扎实。",
+    skill: "知识巩固",
+    grade: 6
+  },
+  {
+    trigger: "完善记录",
+    effect: "你在课后记录里补上了遗漏的安全检查，记录更加完整。",
+    skill: "记录完善",
+    grade: 7
+  }
 ];
 
 window.subject_divination = {

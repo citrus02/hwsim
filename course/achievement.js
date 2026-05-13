@@ -193,6 +193,15 @@ const REGULAR_ACHIEVEMENTS = [
 
 const HIDDEN_ACHIEVEMENTS = [
   {
+    id: "hidden_time_before_start",
+    name: "提前入学",
+    desc: "使用时间转换器回到1991年9月2日夜晚之前",
+    icon: "🌙",
+    points: 25,
+    hidden: true,
+    condition: "时间旅行到1991-09-02夜晚之前"
+  },
+  {
     id: "hidden_fail_to_O",
     name: "涅槃",
     desc: "在同一分科中，从T评级逆袭到O评级",

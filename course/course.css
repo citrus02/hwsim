@@ -585,3 +585,274 @@
   text-align: center;
   padding: 4px 0;
 }
+
+/* ── 考试页面样式 ─────────────────────────────────────────── */
+.exam-page {
+  padding: 12px;
+}
+.exam-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.exam-title {
+  font-size: 13px;
+  color: #b2dfdb;
+}
+.exam-info {
+  font-size: 11px;
+  color: #7ecdc8;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.exam-info-highlight {
+  color: #88f8d8;
+  font-weight: bold;
+}
+
+/* ── 考试区块样式 ─────────────────────────────────────────── */
+.exam-block {
+  margin-bottom: 16px;
+}
+.exam-block-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #88f8d8;
+  margin-bottom: 4px;
+}
+.exam-block-subtitle {
+  font-size: 11px;
+  color: #7ecdc8;
+  margin-bottom: 8px;
+}
+.exam-block-locked {
+  color: #ff8888;
+  font-size: 12px;
+  padding: 8px;
+  background: #1a2a2a;
+  border-radius: 6px;
+}
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+/* ── 考试按钮样式 ─────────────────────────────────────────── */
+.exam-btn {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+.exam-btn--completed {
+  background: #1a3a1a;
+  color: #88f8d8;
+}
+.exam-btn--completed.fail {
+  color: #ff8888;
+}
+.exam-btn--eligible {
+  background: #1d3b3a;
+  color: #e0f7f5;
+}
+.exam-btn--eligible:hover {
+  background: #2a4a48;
+}
+.exam-btn--locked {
+  background: #1a1a2a;
+  color: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.exam-btn-icon {
+  margin-right: 4px;
+}
+.exam-btn-status {
+  font-size: 11px;
+  margin-top: 2px;
+}
+.exam-btn-status--passed {
+  color: #88f8d8;
+}
+.exam-btn-status--eligible {
+  color: #88f8d8;
+}
+.exam-btn-status--locked {
+  color: #666;
+}
+
+/* ── 霍格沃茨考试特殊样式 ─────────────────────────────────── */
+.hogwarts-exam-block {
+  background: #151520;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.hogwarts-exam-list {
+  display: flex;
+  flex-direction: column;
+}
+.hogwarts-exam-item {
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  width: 100%;
+  text-align: left;
+  background: #1d3b3a;
+  border: 1px solid #2b5654;
+  border-radius: 6px;
+  color: #e0f7f5;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.hogwarts-exam-item:hover:not(:disabled) {
+  border-color: #88f8d8;
+}
+.hogwarts-exam-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.hogwarts-exam-item--completed {
+  border-color: #88f8d8;
+}
+.hogwarts-exam-item--completed.fail {
+  border-color: #ff8888;
+}
+.hogwarts-exam-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hogwarts-exam-item-name {
+  font-size: 13px;
+}
+.hogwarts-exam-item-grade {
+  font-size: 14px;
+  font-weight: bold;
+}
+.hogwarts-exam-item-grade--passed {
+  color: #88f8d8;
+}
+.hogwarts-exam-item-grade--failed {
+  color: #ff8888;
+}
+.hogwarts-exam-item-grade--eligible {
+  color: #ffc888;
+}
+.hogwarts-exam-item-grade--locked {
+  color: #666;
+}
+.hogwarts-exam-item-detail {
+  font-size: 11px;
+  margin-top: 4px;
+}
+.hogwarts-exam-item-detail--success {
+  color: #7ecdc8;
+}
+.hogwarts-exam-item-detail--error {
+  color: #ff8888;
+}
+
+/* ── 考试会话页面 ─────────────────────────────────────────── */
+.exam-session {
+  padding: 14px;
+}
+.exam-session-title {
+  font-size: 14px;
+  color: #ffc888;
+  margin-bottom: 12px;
+}
+.exam-session-desc {
+  font-size: 12px;
+  color: #b2dfdb;
+  margin-bottom: 14px;
+}
+.exam-action-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2b5654;
+  color: #88f8d8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+.exam-action-btn:hover {
+  background: #3a6a68;
+}
+.exam-action-btn--secondary {
+  padding: 8px;
+  background: #1a1a2a;
+  color: #888;
+  font-size: 12px;
+}
+.exam-action-btn--secondary:hover {
+  background: #2a2a3a;
+}
+
+/* ── 考试结果页面 ─────────────────────────────────────────── */
+.exam-result {
+  padding: 14px;
+}
+.exam-result-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #e0f7f5;
+  margin-bottom: 8px;
+}
+.exam-result-grade {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.exam-result-grade--passed {
+  color: #88f8d8;
+}
+.exam-result-grade--failed {
+  color: #ff8888;
+}
+.exam-result-grade-name {
+  font-size: 13px;
+  margin-top: 4px;
+}
+.exam-result-score {
+  font-size: 12px;
+  color: #7ecdc8;
+  margin-top: 8px;
+}
+.exam-result-narrative {
+  font-size: 12px;
+  color: #b2dfdb;
+  line-height: 1.6;
+  white-space: pre-line;
+  padding: 10px;
+  background: #111;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+.exam-result-back-btn {
+  width: 100%;
+  padding: 10px;
+  background: #1d3b3a;
+  color: #e0f7f5;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ── 考试警告样式 ─────────────────────────────────────────── */
+.exam-warn {
+  color: #ff8888;
+  font-size: 12px;
+  display: none;
+  margin-bottom: 8px;
+}

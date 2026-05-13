@@ -5,8 +5,8 @@
  *   npm init -y
  *   npm i express cors
  *   set AI_API_KEY=your_key
- *   set AI_API_URL=https://api.minimax.io/v1/chat/completions
- *   set AI_MODEL=MiniMax-M2.7
+ *   set AI_API_URL=https://api.deepseek.com/chat/completions
+ *   set AI_MODEL=deepseek-v4-flash
  *   node tools/ai-proxy.example.js
  *
  * Frontend default config:
@@ -23,8 +23,8 @@ app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
 const API_KEY = process.env.AI_API_KEY;
-const API_URL = process.env.AI_API_URL || "https://api.minimax.io/v1/chat/completions";
-const DEFAULT_MODEL = process.env.AI_MODEL || "MiniMax-M2.7";
+const API_URL = process.env.AI_API_URL || "https://api.deepseek.com/chat/completions";
+const DEFAULT_MODEL = process.env.AI_MODEL || "deepseek-v4-flash";
 
 app.post("/api/ai-grade", async (req, res) => {
   if (!API_KEY) {

@@ -1,4 +1,5 @@
 import { getSave, setSave, addLog } from './save-system.js';
+import { unlockAchievement } from './course/achievement.js';
 
 const TIME_PERIODS = ["上午", "下午", "夜晚"];
 
@@ -39,6 +40,12 @@ function _dateGTE(a, b) {
 
 const PERIOD_ORDER = { "上午": 0, "下午": 1, "夜晚": 2, "深夜": 3 };
 
+function _getWeekday(dateStr) {
+  const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const date = _parseDate(dateStr);
+  return isNaN(date.getTime()) ? "" : weekdays[date.getDay()];
+}
+
 function _hasReachedOriginal(currentDate, currentPeriod, origDate, origPeriod) {
   if (currentDate > origDate) return true;
   if (currentDate < origDate) return false;
@@ -60,7 +67,7 @@ function openTimeTurnerPanel() {
   const usesLeft = getUsesLeft();
   const unlimited = usesLeft === -1;
   const currentDate = data.time?.currentDate || "1991-09-02";
-  const currentPeriod = data.time?.nowTime || "上午";
+  const currentPeriod = "上午";
   const testMode = isTestMode();
 
   let existing = document.getElementById("timeTurnerPanel");
@@ -96,9 +103,12 @@ function openTimeTurnerPanel() {
 
   let dayOptions = "";
   const daysInMonth = new Date(curYear, curMonth, 0).getDate();
+  const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   for (let d = 1; d <= daysInMonth; d++) {
     const selected = d === curDay ? "selected" : "";
-    dayOptions += `<option value="${d}" ${selected}>${d}日</option>`;
+    const date = new Date(curYear, curMonth - 1, d);
+    const weekday = weekdays[date.getDay()];
+    dayOptions += `<option value="${d}" ${selected}>${d}日 ${weekday}</option>`;
   }
 
   let periodOptions = TIME_PERIODS.map(p => {
@@ -172,18 +182,34 @@ function openTimeTurnerPanel() {
     const m = parseInt(monthSel.value);
     const maxDay = new Date(y, m, 0).getDate();
     const curD = parseInt(daySel.value);
+    const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     daySel.innerHTML = '';
     for (let d = 1; d <= maxDay; d++) {
       const opt = document.createElement('option');
       opt.value = d;
-      opt.textContent = d + '日';
+      const date = new Date(y, m - 1, d);
+      const weekday = weekdays[date.getDay()];
+      opt.textContent = `${d}日 ${weekday}`;
       if (d === Math.min(curD, maxDay)) opt.selected = true;
       daySel.appendChild(opt);
+    }
+    _updateWeekday();
+  }
+
+  function _updateWeekday() {
+    const y = parseInt(yearSel.value);
+    const m = parseInt(monthSel.value);
+    const d = parseInt(daySel.value);
+    const dateStr = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const weekday = document.getElementById("tt-weekday");
+    if (weekday) {
+      weekday.textContent = `${dateStr} ${_getWeekday(dateStr)}`;
     }
   }
 
   yearSel.addEventListener('change', _updateDays);
   monthSel.addEventListener('change', _updateDays);
+  daySel.addEventListener('change', _updateWeekday);
 
   const goBtn = document.getElementById("tt-go");
   if (goBtn && (unlimited || usesLeft > 0)) {
@@ -276,7 +302,24 @@ function _travelTo(targetDate, targetPeriod) {
 
   if (window.questEngine?.notify) window.questEngine.notify("timeTurnerUse");
 
+  _checkTimeBeforeStartAchievement(targetDate, targetPeriod);
+
   if (window.refreshAll) window.refreshAll();
+}
+
+function _checkTimeBeforeStartAchievement(targetDate, targetPeriod) {
+  const START_DATE = "1991-09-02";
+  const START_PERIOD = "夜晚";
+  const PERIOD_ORDER = { "上午": 0, "下午": 1, "夜晚": 2, "深夜": 3 };
+
+  if (targetDate < START_DATE) {
+    unlockAchievement("hidden_time_before_start");
+    return;
+  }
+
+  if (targetDate === START_DATE && PERIOD_ORDER[targetPeriod] < PERIOD_ORDER[START_PERIOD]) {
+    unlockAchievement("hidden_time_before_start");
+  }
 }
 
 function _renderReturnPanel() {

@@ -154,16 +154,26 @@ function getApiModel(localApiKeys = {}) {
   return localStorage.getItem('apiModel') || '';
 }
 
+function isServerProxyUrl(url) {
+  return typeof url === 'string' && url.startsWith('/');
+}
+
 function getApiConfig(localApiKeys = {}) {
   const provider = getApiProvider(localApiKeys);
   const config = API_CONFIG[provider] || API_CONFIG.deepseek;
   const baseUrl = getApiBaseUrl(localApiKeys);
   const model = getApiModel(localApiKeys);
+  const url = baseUrl || config.url;
+  const isDefaultServerProxy = getApiMode() === 'default' && isServerProxyUrl(url);
   return {
     ...config,
-    ...(baseUrl ? { url: baseUrl } : {}),
-    ...(model ? { model } : {}),
-    requiresApiKey: getApiMode() === 'default' ? defaultApiRequiresKey(localApiKeys) : true
+    url,
+    model: isDefaultServerProxy ? "" : (model || config.model),
+    requiresApiKey: isDefaultServerProxy
+      ? false
+      : getApiMode() === 'default'
+        ? defaultApiRequiresKey(localApiKeys)
+        : true
   };
 }
 
@@ -172,12 +182,12 @@ async function ensureApiKey(localApiKeys = {}, config = {}) {
   const mode = getApiMode();
   
   if (mode === 'default') {
+    if (config.requiresApiKey === false || isServerProxyUrl(config.url)) {
+      return "";
+    }
     const defaultApiKey = String(localApiKeys.DEFAULT_API_KEY || PUBLIC_DEFAULT_API_KEY || "").trim();
     if (defaultApiKey) {
       return defaultApiKey;
-    }
-    if (config.requiresApiKey === false) {
-      return "";
     }
     const stored = getStoredKey();
     if (stored) return stored;

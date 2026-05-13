@@ -1,5 +1,5 @@
 /**
- * muggle-studies.js
+ * muggle-academic/system.js
  * 麻瓜研究核心规则引擎（精简版）
  *
  * 职责：
@@ -17,7 +17,7 @@
  *   - save-utils.js（loadSave / writeSave）
  */
 
-import { loadSave, writeSave } from './save-utils.js';
+import { loadSave, writeSave } from '../save-utils.js';
 
 // ── 评级→积分映射 ──────────────────────────────────────────
 export const SCORE_MAP = {
@@ -59,6 +59,10 @@ export function scoreToRating(score) {
  * @param {string} reason 原因说明
  */
 export function addInternalPoints(points, reason = "") {
+  if (typeof points !== 'number' || isNaN(points)) {
+    console.warn('[muggle-academic/system] addInternalPoints: 无效积分值', points);
+    return getInternalPoints();
+  }
   const data = loadSave();
   if (!data.muggleStudies) data.muggleStudies = { internalPoints: 0 };
   data.muggleStudies.internalPoints = (data.muggleStudies.internalPoints || 0) + points;
@@ -113,6 +117,9 @@ export function getSubjectStudyRate(subjectKey) {
  * 学术分×0.5 + 贡献分×0.3 + 成就分×0.2
  */
 export function calcComprehensiveScore(academicScore, contributionScore) {
+  if (!window.achievementSystem) {
+    console.warn('[muggle-academic/system] achievementSystem 未加载，成就分以0计算');
+  }
   const achievementScore = window.achievementSystem
     ? window.achievementSystem.getTotalAchievementScore()
     : 0;

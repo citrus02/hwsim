@@ -108,7 +108,7 @@
   <div class="main-header-row">
     <button id="music-button-main" class="music-btn-main">🎵</button>
     <h1>✨🏰 霍格沃茨模拟器 🏰✨</h1>
-    <button id="note-button-main" class="note-btn-main">✍</button>
+    <button id="note-button-main" class="note-btn-main">⚙️</button>
   </div>
   <hr>
 
@@ -124,9 +124,9 @@
     <!-- 行动日常 -->
     <div class="tab-screen active" id="tab-daily">
       <div class="status-grid">
-        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">上午</span> <span id="dateEvent"></span></span>
+        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">夜晚</span> <span id="dateEvent"></span></span>
         <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分 <span id="profileBtn" onclick="window.openProfilePanel?.()" class="info-emoji-btn" title="角色信息">📋</span></span>
-        <span class="sg-left">今日行动次数：<span id="actions">3</span>/3 <span id="timeTurnerBtn" onclick="window.openTimeTurnerPanel?.()" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
+        <span class="sg-left">今日行动次数：<span id="actions">1</span>/3 <span id="timeTurnerBtn" onclick="window.openTimeTurnerPanel?.()" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
         <span class="sg-right sg-currency">
           <span class="coin-g">🟡<span id="stat-galleons">10</span></span>
           <span class="coin-s">⚪<span id="stat-sickles">0</span></span>
@@ -195,8 +195,8 @@
     </div>
     <div id="saveBox">
       <div class="save-btn-row">
-        <button class="save-btn save" onclick="window.openSave()">💾 保存</button>
-        <button class="save-btn load" onclick="window.openLoad()">📂 读取</button>
+        <button class="save-btn save" onclick="window.exportSaveFile?.()">💾 导出存档</button>
+        <button class="save-btn load" onclick="window.importSaveFile?.()">📂 导入存档</button>
         <button class="save-btn reset" onclick="window.resetGame()">🔄 重置</button>
       </div>
       <div id="slotBox"></div>
@@ -272,16 +272,15 @@ function buildSaveData(opts) {
 
 // 全局测试通道
 function quickTest() {
-  const existing = localStorage.getItem("hogwarts");
   let savedTime = null;
   let savedCourse = null;
   let savedHousePoints = null;
   let savedAffinity = null;
   let savedKnownCharacters = null;
   let savedBag = null;
-  if (existing) {
+  if (window.saveSys?.getSave) {
     try {
-      const old = JSON.parse(existing);
+      const old = window.saveSys.getSave();
       savedTime = old.time || null;
       savedCourse = old.course || null;
       savedHousePoints = old.housePoints || null;
@@ -291,7 +290,7 @@ function quickTest() {
     } catch(e) {}
   }
 
-  const data = buildSaveData({
+  const data = window.saveSys?.createNewSave?.({
     name: "无名巫师",
     blood: "混血巫师",
     house: "格兰芬多",
@@ -299,6 +298,11 @@ function quickTest() {
     wandAccepted: true,
     log: ["✅ 测试通道已进入"]
   });
+
+  if (!data) {
+    alert("Save system is still loading. Please try again.");
+    return;
+  }
 
   if (savedTime) data.time = savedTime;
   if (savedCourse) data.course = { ...data.course, ...savedCourse };
@@ -313,7 +317,11 @@ function quickTest() {
     data.bag.item.push({ name: "时间转换器", emoji: "⏳", count: 1 });
   }
 
-  localStorage.setItem("hogwarts", JSON.stringify(data));
+  if (!window.saveSys?.setSave) {
+    alert("Save system is still loading. Please try again.");
+    return;
+  }
+  window.saveSys.setSave(data);
   document.getElementById("screen-create").classList.remove("active");
   document.getElementById("screen-main").classList.add("active");
 
@@ -358,15 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!card) return;
 
   const hasSave = () => {
-    if (localStorage.getItem('hogwarts')) return true;
-    try {
-      const slots = JSON.parse(localStorage.getItem('hogwarts_slots') || '[]');
-      if (Array.isArray(slots) && slots.some(Boolean)) return true;
-    } catch (e) {}
-    for (let i = 1; i <= 10; i++) {
-      if (localStorage.getItem('save_' + i)) return true;
-    }
-    return false;
+    return window.saveSys?.hasAnySave?.() || false;
   };
 
   card.style.display = hasSave() ? 'block' : 'none';
@@ -376,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- 核心：随机生成 + 开始游戏 -->
 <script type="module">
 import { initRandomGenerators, initSortingHat, initWandSelection, player } from './random-generator.js';
+import { createNewSave, getSave, hasAnySave, setSave } from './save-system.js';
 
 window.addEventListener('load', () => {
   initRandomGenerators();
@@ -402,7 +403,7 @@ window.addEventListener('load', () => {
       return;
     }
 
-    const data = buildSaveData({
+    const data = createNewSave({
       name:  document.getElementById('name').value.trim(),
       blood,
       house,
@@ -411,7 +412,7 @@ window.addEventListener('load', () => {
       log: ["✅ 成功进入霍格沃茨"]
     });
 
-    localStorage.setItem("hogwarts", JSON.stringify(data));
+    setSave(data);
     document.getElementById("screen-create").classList.remove("active");
     document.getElementById("screen-main").classList.add("active");
 
@@ -424,10 +425,9 @@ window.addEventListener('load', () => {
 
 // ✅ 页面加载时：有存档则自动跳转主界面
 document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('hogwarts');
-  if (saved) {
+  if (hasAnySave()) {
     try {
-      const data = JSON.parse(saved);
+      const data = getSave();
       if (data.player?.name) {
         document.getElementById("screen-create").classList.remove("active");
         document.getElementById("screen-main").classList.add("active");
@@ -492,6 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <script type="module" src="course/muggle-academic/literature.js"></script>
   <script type="module" src="course/muggle-academic/latin.js"></script>
   <script type="module" src="course/muggle-exam.js"></script>
+  <script type="module" src="course/hogwarts-exam.js"></script>
   <script type="module" src="course/subjects/transfiguration.js"></script>
   <script type="module" src="course/subjects/charms.js"></script>
   <script type="module" src="course/subjects/herbology.js"></script>

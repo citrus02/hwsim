@@ -2,7 +2,12 @@
  * course/utils.js
  * 课程系统公共工具模块
  * 统一管理学科键名映射、数据获取等通用功能
+ *
+ * 注意：评分相关函数（scoreToRating, HOUSE_POINTS_MAP）统一从 muggle-academic/system.js 导入
+ * 确保所有模块使用一致的评分标准
  */
+
+import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-academic/system.js';
 
 // ── 学科键名常量 ─────────────────────────────────────────────
 
@@ -99,24 +104,9 @@ export function getItemSubjectKey(item) {
 }
 
 // ── 评分工具函数 ─────────────────────────────────────────────
-
-export function scoreToRating(score) {
-  if (score >= 6) return 'O';
-  if (score >= 4) return 'E';
-  if (score >= 2) return 'A';
-  if (score >= 0) return 'P';
-  if (score >= -2) return 'D';
-  return 'T';
-}
-
-export const HOUSE_POINTS_MAP = {
-  O: 10,
-  E: 5,
-  A: 2,
-  P: 0,
-  D: -5,
-  T: -10
-};
+// 注意：scoreToRating 和 HOUSE_POINTS_MAP 从 muggle-academic/system.js 导入
+// 确保所有模块使用一致的评分标准
+export { scoreToRating, HOUSE_POINTS_MAP };
 
 // ── 全局挂载（保持向后兼容）──────────────────────────────────
 

@@ -15,13 +15,13 @@
 //   偷窥眼镜约6~8加隆
 //   无头帽约3~5加隆
 
-import { BasesicklesToKnutshop } from '../basesicklesToKnutshop.js';
+import { BaseShop } from '../baseShop.js';
 
 // 货币转换函数
 const galleonsToKnuts = (g) => g * 493;
 const sicklesToKnuts = (s) => s * 29;
 const knutsToKnuts = (n) => n;
-const galleonsAndsicklesToKnutsicklesToKnuts = (g, s) => galleonsToKnuts(g) + sicklesToKnuts(s);
+const galleonsAndSicklesToKnuts = (g, s) => galleonsToKnuts(g) + sicklesToKnuts(s);
 
 export const WeasleyWheezesConfig = {
   id: "weasley_wheezes",
@@ -52,7 +52,7 @@ export const WeasleyWheezesConfig = {
       description: "包含多种口味：呕吐味、鼻血味、发烧味。吃下后会产生逼真的生病症状，让你顺利逃离课堂",
       basePrice: sicklesToKnuts(6),
       displayPrice: "6西可",
-      stock: 50, maxsicklesToKnutstock: 50,
+      stock: 50, maxStock: 50,
       buyable: true, sellable: false,
       effect: { type: "prank", escapeClass: true }
     },
@@ -64,7 +64,7 @@ export const WeasleyWheezesConfig = {
       description: "吃下后会逼真地流鼻血，是装病逃课的绝佳道具。韦斯莱兄弟的招牌产品之一",
       basePrice: sicklesToKnuts(4),
       displayPrice: "4西可",
-      stock: 80, maxsicklesToKnutstock: 80,
+      stock: 80, maxStock: 80,
       buyable: true, sellable: false,
       effect: { type: "prank", nosebleed: true }
     },
@@ -76,7 +76,7 @@ export const WeasleyWheezesConfig = {
       description: "吃下后舌头会迅速肿胀到正常大小的两倍，说话含混不清。效果持续约十分钟",
       basePrice: sicklesToKnuts(5),
       displayPrice: "5西可",
-      stock: 60, maxsicklesToKnutstock: 60,
+      stock: 60, maxStock: 60,
       buyable: true, sellable: false,
       effect: { type: "prank", fatTongue: true }
     },
@@ -88,7 +88,7 @@ export const WeasleyWheezesConfig = {
       description: "橙色的一端让人呕吐，紫色的一端让人立刻恢复。完美的逃课组合",
       basePrice: sicklesToKnuts(7),
       displayPrice: "7西可",
-      stock: 40, maxsicklesToKnutstock: 40,
+      stock: 40, maxStock: 40,
       buyable: true, sellable: false,
       effect: { type: "prank", puke: true }
     },
@@ -100,7 +100,7 @@ export const WeasleyWheezesConfig = {
       description: "吃下后会立刻陷入昏迷状态，持续约五分钟。适合假装晕倒逃离麻烦",
       basePrice: sicklesToKnuts(8),
       displayPrice: "8西可",
-      stock: 30, maxsicklesToKnutstock: 30,
+      stock: 30, maxStock: 30,
       buyable: true, sellable: false,
       effect: { type: "prank", faint: true }
     },
@@ -112,9 +112,9 @@ export const WeasleyWheezesConfig = {
       icon: "🎆",
       category: "烟火系列",
       description: "五彩缤纷的魔法烟火，在空中绽放出各种图案和文字。在霍格沃茨走廊点燃会引发极大混乱",
-      basePrice: GsicklesToKnuts(1, 5),
+      basePrice: galleonsAndSicklesToKnuts(1, 5),
       displayPrice: "1加隆5西可",
-      stock: 20, maxsicklesToKnutstock: 20,
+      stock: 20, maxStock: 20,
       buyable: true, sellable: false,
       effect: { type: "prank", fireworks: true }
     },
@@ -124,9 +124,9 @@ export const WeasleyWheezesConfig = {
       icon: "🌑",
       category: "烟火系列",
       description: "从秘鲁进口的高档货，投掷后瞬间制造一片漆黑，范围约一个房间",
-      basePrice: GsicklesToKnuts(6, 0),
+      basePrice: galleonsAndSicklesToKnuts(6, 0),
       displayPrice: "6加隆",
-      stock: 10, maxsicklesToKnutstock: 10,
+      stock: 10, maxStock: 10,
       buyable: true, sellable: false,
       effect: { type: "prank", darkness: true }
     },
@@ -138,7 +138,7 @@ export const WeasleyWheezesConfig = {
       description: "会跳的魔法烟火，落地后会不断跳跃并发出砰砰声，最后爆炸成彩色火花",
       basePrice: sicklesToKnuts(12),
       displayPrice: "12西可",
-      stock: 35, maxsicklesToKnutstock: 35,
+      stock: 35, maxStock: 35,
       buyable: true, sellable: false,
       effect: { type: "prank", bang: true }
     },
@@ -150,9 +150,9 @@ export const WeasleyWheezesConfig = {
       icon: "🫧",
       category: "实用道具",
       description: "撒在地上会产生跳跃的魔法泡泡，人踩上去会被弹起数英尺高",
-      basePrice: GsicklesToKnuts(2, 10),
+      basePrice: galleonsAndSicklesToKnuts(2, 10),
       displayPrice: "2加隆10西可",
-      stock: 15, maxsicklesToKnutstock: 15,
+      stock: 15, maxStock: 15,
       buyable: true, sellable: false,
       effect: { type: "prank", bounce: true }
     },
@@ -162,9 +162,9 @@ export const WeasleyWheezesConfig = {
       icon: "🟢",
       category: "实用道具",
       description: "展开后会在任何地方制造一片小型沼泽。曾被用来堵塞霍格沃茨走廊",
-      basePrice: GsicklesToKnuts(2, 15),
+      basePrice: galleonsAndSicklesToKnuts(2, 15),
       displayPrice: "2加隆15西可",
-      stock: 8, maxsicklesToKnutstock: 8,
+      stock: 8, maxStock: 8,
       buyable: true, sellable: false,
       effect: { type: "prank", swamp: true }
     },
@@ -176,9 +176,9 @@ export const WeasleyWheezesConfig = {
       description: "逼真的假伤疤贴纸，可以贴在任何地方。万圣节必备",
       basePrice: sicklesToKnuts(2),
       displayPrice: "2西可",
-      stock: 100, maxsicklesToKnutstock: 100,
+      stock: 100, maxStock: 100,
       buyable: true, sellable: false,
-      effect: { type: "prank", fakesicklesToKnutscar: true }
+      effect: { type: "prank", fakeScar: true }
     },
     {
       id: "extendable_ears",
@@ -186,9 +186,9 @@ export const WeasleyWheezesConfig = {
       icon: "👂",
       category: "实用道具",
       description: "可以伸长的魔法耳朵，用来偷听远处的对话。注意不要被发现哦",
-      basePrice: GsicklesToKnuts(3, 0),
+      basePrice: galleonsAndSicklesToKnuts(3, 0),
       displayPrice: "3加隆",
-      stock: 25, maxsicklesToKnutstock: 25,
+      stock: 25, maxStock: 25,
       buyable: true, sellable: false,
       effect: { type: "prank", eavesdrop: true }
     },
@@ -198,9 +198,9 @@ export const WeasleyWheezesConfig = {
       icon: "👓",
       category: "实用道具",
       description: "可以看穿隐身衣和隐形物体的神奇眼镜。效果可能有点眼花缭乱",
-      basePrice: GsicklesToKnuts(6, 5),
+      basePrice: galleonsAndSicklesToKnuts(6, 5),
       displayPrice: "6加隆5西可",
-      stock: 12, maxsicklesToKnutstock: 12,
+      stock: 12, maxStock: 12,
       buyable: true, sellable: false,
       effect: { type: "prank", seeInvisible: true }
     },
@@ -210,9 +210,9 @@ export const WeasleyWheezesConfig = {
       icon: "🎩",
       category: "实用道具",
       description: "戴上后头部会消失，只留下帽子悬浮在空中。吓唬同学的好工具",
-      basePrice: GsicklesToKnuts(4, 0),
+      basePrice: galleonsAndSicklesToKnuts(4, 0),
       displayPrice: "4加隆",
-      stock: 18, maxsicklesToKnutstock: 18,
+      stock: 18, maxStock: 18,
       buyable: true, sellable: false,
       effect: { type: "prank", headless: true }
     },
@@ -224,9 +224,9 @@ export const WeasleyWheezesConfig = {
       icon: "💘",
       category: "迷情剂系列",
       description: "含有迷情剂成分的香水，让闻到的人对你产生强烈的好感。注意使用道德！",
-      basePrice: GsicklesToKnuts(8, 0),
+      basePrice: galleonsAndSicklesToKnuts(8, 0),
       displayPrice: "8加隆",
-      stock: 10, maxsicklesToKnutstock: 10,
+      stock: 10, maxStock: 10,
       buyable: true, sellable: false,
       effect: { type: "prank", lovePotion: true }
     },
@@ -236,9 +236,9 @@ export const WeasleyWheezesConfig = {
       icon: "🧪",
       category: "迷情剂系列",
       description: "标准剂量的迷情剂，世界上最强的爱情魔药。谨慎使用！",
-      basePrice: GsicklesToKnuts(10, 0),
+      basePrice: galleonsAndSicklesToKnuts(10, 0),
       displayPrice: "10加隆",
-      stock: 5, maxsicklesToKnutstock: 5,
+      stock: 5, maxStock: 5,
       buyable: true, sellable: false,
       effect: { type: "prank", amortentia: true }
     },
@@ -250,9 +250,9 @@ export const WeasleyWheezesConfig = {
       icon: "♟️",
       category: "其他",
       description: "棋子会互相攻击的巫师棋套装，比普通巫师棋更刺激好玩",
-      basePrice: GsicklesToKnuts(5, 0),
+      basePrice: galleonsAndSicklesToKnuts(5, 0),
       displayPrice: "5加隆",
-      stock: 15, maxsicklesToKnutstock: 15,
+      stock: 15, maxStock: 15,
       buyable: true, sellable: false,
       effect: { type: "prank", fightingChess: true }
     },
@@ -262,16 +262,16 @@ export const WeasleyWheezesConfig = {
       icon: "🪄",
       category: "其他",
       description: "施咒时会变出意想不到的东西，可能是鲜花、烟火，或者是一只活蟾蜍哦",
-      basePrice: GsicklesToKnuts(7, 10),
+      basePrice: galleonsAndSicklesToKnuts(7, 10),
       displayPrice: "7加隆10西可",
-      stock: 8, maxsicklesToKnutstock: 8,
+      stock: 8, maxStock: 8,
       buyable: true, sellable: false,
       effect: { type: "prank", trickWand: true }
     },
   ]
 };
 
-export class WeasleyWheezessicklesToKnutshop extends BasesicklesToKnutshop {
+export class WeasleyWheezesShop extends BaseShop {
   constructor() {
     super(WeasleyWheezesConfig);
     this.loyaltyLevels = WeasleyWheezesConfig.loyaltyLevels;
@@ -329,12 +329,12 @@ export class WeasleyWheezessicklesToKnutshop extends BasesicklesToKnutshop {
     if (item.stock) item.stock -= quantity;
     this.loyaltyPoints += Math.floor(totalPrice / 10);
 
-    if (window.updatesicklesToKnutshopsicklesToKnutstats) {
-      window.updatesicklesToKnutshopsicklesToKnutstats(this.id, totalPrice, 'spent');
+    if (window.updateShopStats) {
+      window.updateShopStats(this.id, totalPrice, 'spent');
     }
 
-    if (window.addsicklesToKnutshopItemsToBag) {
-      window.addsicklesToKnutshopItemsToBag(item.id, item.name, quantity, item.icon);
+    if (window.addShopItemToBag) {
+      window.addShopItemToBag(item.id, item.name, quantity, item.icon);
     }
 
     const currentLevel = this.getCurrentLoyaltyLevel();
@@ -363,4 +363,4 @@ export class WeasleyWheezessicklesToKnutshop extends BasesicklesToKnutshop {
   }
 }
 
-export default WeasleyWheezessicklesToKnutshop;
+export default WeasleyWheezesShop;

@@ -5,12 +5,19 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.7.7';
+import { getSave } from './save-system.js';
+export const CURRENT_VERSION = '1.7.8';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.8': [
+    '完善默认 AI 判题配置，玩家无需填写 API Key 也可通过云端代理使用默认 AI',
+    '整理通用 AI 文件结构，为后续 NPC、课程与事件接入 AI 能力做准备',
+    '优化自定义 API 设置提示，补充不同平台的 API Key 格式与默认模型说明',
+    '扩展课程与考试相关内容，并优化课程系统、存档与发布流程',
+  ],
   '1.7.7': [
     '新增默认 AI 判题接口配置，玩家无需填写 API Key 也可使用默认 AI',
     '接入 Cloudflare Worker 后端代理，默认 API Key 不再暴露在前端代码中',
@@ -196,9 +203,7 @@ export const versionLogs = {
 
 function getPlayerBackup() {
   try {
-    const data = localStorage.getItem(SAVE_KEY);
-    if (!data) return null;
-    const save = JSON.parse(data);
+    const save = getSave();
     return save.player ? { ...save.player } : null;
   } catch (e) {
     return null;

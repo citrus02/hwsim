@@ -1,4 +1,4 @@
-﻿import { lessonMap } from "./herbology-lesson.js";
+import { lessonMap } from "./herbology-lesson.js";
 import { questionBank } from "./herbology-questionBank.js";
 
 export const subjectMeta = {
@@ -146,6 +146,129 @@ export const professorComments = {
     "今天的结果说明你没掌握基础。来温室补课，别拖到下一次事故"
   ]
 };
+
+export const quickStudyEvents = [
+  {
+    trigger: "在温室观察魔法植物",
+    effect: "你仔细观察了温室里的各种魔法植物，学会了如何识别它们的特征。",
+    skill: "植物辨识",
+    grade: 1
+  },
+  {
+    trigger: "学习配土技巧",
+    effect: "斯普劳特教授教你如何配制适合不同植物生长的土壤，你掌握了通气、保水、养分平衡的要点。",
+    skill: "配土技巧",
+    grade: 1
+  },
+  {
+    trigger: "练习播种",
+    effect: "你在温室里练习播种，学会了控制播种深度和间距的技巧。",
+    skill: "播种技术",
+    grade: 1
+  },
+  {
+    trigger: "照料曼德拉草",
+    effect: "你在教授的指导下照料曼德拉草，学会了正确的护理方法和安全距离。",
+    skill: "特殊植物护理",
+    grade: 2
+  },
+  {
+    trigger: "处理毒触手",
+    effect: "你学习了如何安全地处理毒触手，掌握了两人协作的技巧。",
+    skill: "危险植物处理",
+    grade: 2
+  },
+  {
+    trigger: "研究魔法真菌",
+    effect: "你研究了各种魔法真菌，学会了孢子安全处理的方法。",
+    skill: "真菌研究",
+    grade: 2
+  },
+  {
+    trigger: "学习嫁接技术",
+    effect: "你学会了植物嫁接的基本技术，掌握了切口质量和形成层对齐的要点。",
+    skill: "嫁接技术",
+    grade: 3
+  },
+  {
+    trigger: "观察伪装植物",
+    effect: "你学习了如何识别伪装植物，掌握了寻找细节和现场确认的方法。",
+    skill: "伪装植物辨识",
+    grade: 3
+  },
+  {
+    trigger: "研究湿地植物",
+    effect: "你研究了湿地植物的生长条件，了解了缺氧环境下的特殊养护方法。",
+    skill: "湿地植物",
+    grade: 3
+  },
+  {
+    trigger: "学习药用植物",
+    effect: "你学习了白鲜等药用植物的特性，了解了它们的采收窗口和药用安全注意事项。",
+    skill: "药用植物",
+    grade: 4
+  },
+  {
+    trigger: "实践反应性实验",
+    effect: "你进行了光照和触碰对植物反应的实验，学会了控制变量和记录可比数据。",
+    skill: "实验设计",
+    grade: 4
+  },
+  {
+    trigger: "规划温室布局",
+    effect: "你学习了温室微气候和轮作的知识，尝试规划了一个合理的温室布局。",
+    skill: "温室管理",
+    grade: 4
+  },
+  {
+    trigger: "O.W.L.辨识练习",
+    effect: "你进行了O.W.L.级别的植物辨识练习，学会了特征拆解和证据链书写的方法。",
+    skill: "O.W.L.准备",
+    grade: 5
+  },
+  {
+    trigger: "练习移栽技巧",
+    effect: "你练习了O.W.L.级别的移栽操作，掌握了正确的顺序和修剪技巧。",
+    skill: "移栽技术",
+    grade: 5
+  },
+  {
+    trigger: "学习毒性分类",
+    effect: "你深入学习了植物毒性分类和急救方法，提高了安全意识。",
+    skill: "毒性知识",
+    grade: 5
+  },
+  {
+    trigger: "研究稀有植物",
+    effect: "你研究了稀有魔法植物的培育方案，学习了风险评估和备选方案的制定。",
+    skill: "稀有植物培育",
+    grade: 6
+  },
+  {
+    trigger: "学习逆境栽培",
+    effect: "你学习了低魔力环境下的植物栽培技巧，掌握了物理替代和取舍决策的方法。",
+    skill: "逆境栽培",
+    grade: 6
+  },
+  {
+    trigger: "设计轮作计划",
+    effect: "你设计了一个完整的温室轮作计划，考虑了改造指标和维护记录。",
+    skill: "轮作设计",
+    grade: 6
+  },
+  {
+    trigger: "研究曼德拉草与生命魔力",
+    effect: "你深入研究了曼德拉草与生命魔力的同源机制，思考了制度化管理和伦理问题。",
+    skill: "生命魔力研究",
+    grade: 7
+  },
+  {
+    trigger: "学习解毒植物",
+    effect: "你学习了解毒植物和反咒材料，掌握了解毒定位和机制分类的方法。",
+    skill: "解毒知识",
+    grade: 7
+  }
+];
 
 window.subject_herbology = {
   subjectMeta,

@@ -360,8 +360,7 @@ const KNOWN_CHARACTERS = {
 function _getKnownCharacters() {
   const result = [];
   try {
-    const raw = localStorage.getItem("hogwarts");
-    const data = raw ? JSON.parse(raw) : {};
+    const data = getSave();
     Object.entries(KNOWN_CHARACTERS).forEach(([key, stats]) => {
       const known = data.knownCharacters?.includes(key) || !!data.affinity?.[key];
       if (known) {

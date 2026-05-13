@@ -1,10 +1,15 @@
 {
     "files.encoding": "utf8",
-    "liveServer.settings.port": 5501,
+    "liveServer.settings.port": 5500,
     "css.lint.validProperties": [
         "-webkit-line-clamp",
         "-webkit-box-orient"
     ],
     "css.lint.vendorPrefix": "ignore",
-    "css.lint.unknownProperties": "ignore"
+    "css.lint.unknownProperties": "ignore",
+    "workbench.secondarySideBar.defaultVisibility": "visibleInWorkspace",
+    "workbench.sideBar.location": "left",
+    "workbench.activityBar.location": "default",
+    "workbench.sideBar.expandMode": "default",
+    "explorer.openEditors.visible": 1
 }

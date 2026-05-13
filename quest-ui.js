@@ -397,12 +397,11 @@ export function renderNpcQuestInAffinity(characterKey, containerEl) {
   // 绑定接取按钮
   containerEl.querySelectorAll(".npc-quest-accept-btn[data-qid]").forEach(btn => {
     btn.onclick = () => {
-      const data = window.saveSys?.getSave?.() || JSON.parse(localStorage.getItem('hogwarts')||'{}');
+      const data = window.saveSys?.getSave?.() || {};
       if (!data.quests) data.quests = {};
       if (!data.quests.side) data.quests.side = {};
       data.quests.side[btn.dataset.qid] = { triggered: true, done: false, claimed: false };
-      if (window.saveSys?.setSave) window.saveSys.setSave(data);
-      else localStorage.setItem('hogwarts', JSON.stringify(data));
+      window.saveSys?.setSave?.(data);
       window.addLog?.(`📋 接取任务：${window.questData?.SIDE_QUESTS?.find(q=>q.id===btn.dataset.qid)?.title||''}`);
       renderNpcQuestInAffinity(characterKey, containerEl);
     };

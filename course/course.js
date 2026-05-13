@@ -37,7 +37,8 @@
 import { loadTimeFromSave, isHoliday, getNoClassReason, isSchoolNoClassDate, isSchoolNoClassPeriod } from '../time-system.js';
 import { getYearGrade, getSave } from '../save-system.js';
 import { courseData, getStudyEvent } from './course-data.js';
-import { addInternalPoints } from './muggle-studies.js';
+import './course-ui.js';
+import { addInternalPoints } from './muggle-academic/system.js';
 import { loadSave, writeSave } from './save-utils.js';
 import { showLearnChoiceModal } from './classroom.js';
 import { SUBJECT_WIN_KEY, getSubjectData, getAllLessons, getItemSubjectKey } from './utils.js';
@@ -265,12 +266,12 @@ function openScheduledCourse({ type, day, period, subject, subjectKey }) {
   const todayDayName = getDayName(today);
 
   if (day !== todayDayName || isSchoolNoClassPeriod(today, period)) {
-    window.doStudyLog?.(`📅 今天没有这门课：${subject}`);
+    window.doStudyLog?.(`📅 今天没有${subject}课。`);
     return;
   }
 
   if (period !== getCurrentActionPeriod()) {
-    window.doStudyLog?.(`⏰ 现在不是【${subject}】的上课时间。窗口一过就不能补上这节课了。`);
+    window.doStudyLog?.(getCourseTimeMessage(period, subject));
     return;
   }
 
@@ -378,24 +379,41 @@ function courseMatchesItem(course, item) {
   return course.type === "hogwarts" && course.subject === item?.name;
 }
 
+function getCourseTimeMessage(period, subjectName) {
+  const currentPeriod = getCurrentActionPeriod();
+  const timePeriod = Object.values(ACTION_PERIODS).find(p => p.period === period);
+  const timeLabel = timePeriod?.time || '';
+
+  if (period < currentPeriod) {
+    return `⚠️ 已经错过了今天${timeLabel}的${subjectName}课。如果可以补课的话……`;
+  } else {
+    return `⏰ 现在还没到【${subjectName}】的上课时间，等上课的时候再来吧！`;
+  }
+}
+
 function validateCourseAccess(item) {
   if (!item) {
     return { ok: false, message: "📅 没有找到这门课" };
   }
   const data = loadSave();
   const today = data.time?.currentDate || "1991-09-02";
-  const allToday = getTodayScheduledCourses(today).filter(course => courseMatchesItem(course, item));
-  if (allToday.length === 0) {
-    return { ok: false, message: `📅 今天没有这门课：${item.name}` };
-  }
 
   const current = getCurrentWindowCourses(today).find(course => courseMatchesItem(course, item));
   if (!current) {
-    return { ok: false, message: `⏰ 现在不是【${item.name}】的上课时间。窗口一过就不能补上这节课了。` };
+    const allToday = getTodayScheduledCourses(today).filter(course => courseMatchesItem(course, item));
+    if (allToday.length === 0) {
+      return { ok: false, message: `📅 今天没有${item.name}课。` };
+    }
+    return { ok: false, message: getCourseTimeMessage(allToday[0].period, item.name) };
   }
 
   if (isCourseResolved(current, today)) {
-    return { ok: false, message: `✅ 今天这个时段的【${item.name}】已经处理过了。` };
+    const attendanceStatus = data.course?.attendance?.[today]?.[getAttendanceKey(current)];
+    if (attendanceStatus === 'missed') {
+      return { ok: false, message: getCourseTimeMessage(current.period, item.name) };
+    }
+    const timePeriod = Object.values(ACTION_PERIODS).find(p => p.period === current.period);
+    return { ok: false, message: `✅ 今天${timePeriod?.time || ''}已经上过${item.name}课了。` };
   }
 
   return { ok: true, course: current };
@@ -414,9 +432,21 @@ function markAttended(item) {
 }
 
 function advanceSkippedLesson(data, course) {
+  if (!data) {
+    console.warn('[course.js] advanceSkippedLesson: data is null or undefined');
+    return;
+  }
+  if (!course) {
+    console.warn('[course.js] advanceSkippedLesson: course is null or undefined');
+    return;
+  }
   if (!data.course) data.course = {};
 
   if (course.type === "muggle") {
+    if (!course.subjectKey) {
+      console.warn('[course.js] advanceSkippedLesson: muggle course missing subjectKey');
+      return;
+    }
     const subjectData = getSubjectData(course.subjectKey);
     if (!data.course.muggleProgress) data.course.muggleProgress = {};
     if (!data.course.muggleProgress[course.subjectKey]) {
@@ -432,21 +462,28 @@ function advanceSkippedLesson(data, course) {
     }
     const allLessons = getAllLessons(subjectData?.syllabus);
     const currentLesson = data.course.muggleSchedule?.[course.subjectKey]?.currentLesson || 1;
-    const lesson = allLessons.find(l => l.lesson === currentLesson) || allLessons[allLessons.length - 1];
-    if (lesson && !data.course.muggleProgress[course.subjectKey].expired.includes(lesson.lesson)) {
-      data.course.muggleProgress[course.subjectKey].expired.push(lesson.lesson);
-    }
-    if (!allLessons.length || currentLesson < allLessons.length) {
-      data.course.muggleSchedule[course.subjectKey].currentLesson = currentLesson + 1;
-    }
     if (allLessons.length > 0) {
+      const lesson = allLessons.find(l => l.lesson === currentLesson) || allLessons[allLessons.length - 1];
+      if (lesson && !data.course.muggleProgress[course.subjectKey].expired.includes(lesson.lesson)) {
+        data.course.muggleProgress[course.subjectKey].expired.push(lesson.lesson);
+      }
+      if (currentLesson < allLessons.length) {
+        data.course.muggleSchedule[course.subjectKey].currentLesson = currentLesson + 1;
+      }
       const progressed = new Set([
         ...(data.course.muggleProgress[course.subjectKey].completed || []),
         ...(data.course.muggleProgress[course.subjectKey].expired || [])
       ]).size;
-      data.course[course.subject] = Math.floor(progressed / allLessons.length * 100);
+      if (course.subject) {
+        data.course[course.subject] = Math.floor(progressed / allLessons.length * 100);
+      }
     }
     updateMuggleOverallProgress(data);
+    return;
+  }
+
+  if (!course.subject) {
+    console.warn('[course.js] advanceSkippedLesson: hogwarts course missing subject name');
     return;
   }
 
@@ -579,7 +616,7 @@ function _renderSchedule(container) {
   html += `<div class="schedule-header">`;
   html += holidayTag;
   html += `<div class="schedule-grade">📖 ${gradeLabel}课程表</div>`;
-  html += `<div></div>`;
+  html += `<button id="hogwarts-exam-entry-btn" class="schedule-exam-entry-btn" title="O.W.L. 五年级报考，N.E.W.T. 七年级报考">🏆 O.W.L. · N.E.W.T.</button>`;
   html += `</div>`;
 
   html += `<div class="schedule-table">`;
@@ -652,6 +689,11 @@ function _renderSchedule(container) {
 
   container.innerHTML = html;
   bindScheduleCourseClicks(container);
+
+  const hogwartsExamEntryBtn = container.querySelector('#hogwarts-exam-entry-btn');
+  if (hogwartsExamEntryBtn) {
+    hogwartsExamEntryBtn.addEventListener('click', () => _renderHogwartsExams(container));
+  }
 }
 
 function _renderMuggleSchedule(container) {
@@ -1008,7 +1050,40 @@ function _renderExamSession(container, subjectKey, type) {
   // 从题库里随机抽题
   const pool = (subjectData?.questionBank ?? []).flatMap(ch => ch.questions ?? []);
   if (pool.length === 0) {
-    container.innerHTML = `<div style="padding:20px;color:#ff8888">⚠️ ${subjectName} 题库为空，无法开始考试</div>`;
+    // 空题库降级处理：允许跳过考试，记录为缺考（T级）
+    container.innerHTML = `
+      <div style="padding:20px">
+        <div style="font-size:14px;color:#ffc888;margin-bottom:12px">📋 ${subjectName} · ${examTypeName} 考试</div>
+        <div style="padding:12px;background:#1a2a2a;border-radius:8px;margin-bottom:16px">
+          <div style="color:#ff8888;margin-bottom:8px">⚠️ 该科目题库暂未完善</div>
+          <div style="color:#b2dfdb;font-size:12px">系统将根据你的课程进度自动评定成绩，或你可以选择跳过本次考试。</div>
+        </div>
+        <button id="exam-auto-btn" style="width:100%;padding:10px;background:#2b5654;color:#88f8d8;border:none;border-radius:6px;cursor:pointer;font-size:13px;margin-bottom:8px">
+          🎲 基于进度自动评分
+        </button>
+        <button id="exam-skip-btn" style="width:100%;padding:8px;background:#1a1a2a;color:#888;border:none;border-radius:6px;cursor:pointer;font-size:12px;margin-bottom:8px">
+          ⏭️ 跳过本次考试
+        </button>
+        <button id="exam-back-btn" style="width:100%;padding:8px;background:#1a1a2a;color:#888;border:none;border-radius:6px;cursor:pointer;font-size:12px">
+          ← 返回考试列表
+        </button>
+      </div>`;
+
+    document.getElementById('exam-auto-btn').addEventListener('click', () => {
+      // 基于进度自动评分
+      const result = examSys.takeMuggleExam(subjectKey, type, null);
+      _showExamResult(container, subjectKey, type, result);
+    });
+
+    document.getElementById('exam-skip-btn').addEventListener('click', () => {
+      // 跳过考试，记录为缺考（T级）
+      const result = examSys.takeMuggleExam(subjectKey, type, 0);
+      _showExamResult(container, subjectKey, type, result);
+    });
+
+    document.getElementById('exam-back-btn').addEventListener('click', () => {
+      _renderMuggleExams(container);
+    });
     return;
   }
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
@@ -1116,6 +1191,177 @@ function _showExamResult(container, subjectKey, type, result, detail = null) {
   });
 
   // 同步写入游戏日志
+  if (result.narrative) {
+    window.doStudyLog?.(result.narrative);
+  }
+}
+
+// ============================================================
+// 霍格沃茨考试 UI
+// ============================================================
+
+function _renderHogwartsExams(container) {
+  const examSys = window.hogwartsExam;
+  if (!examSys) {
+    container.innerHTML = `<div style="padding:20px;color:#ff8888">⚠️ 考试系统未加载</div>`;
+    return;
+  }
+
+  function buildExamBlock(type, minGrade, title, subtitle) {
+    const list = examSys.getExamEligibilityList(type);
+    const { owl, newt } = examSys.getHogwartsExams();
+    const exams = type === 'owl' ? owl : newt;
+
+    let items = '';
+    list.forEach(item => {
+      const result = exams[item.subjectKey];
+      const hasResult = !!result?.grade;
+      const eligible = item.eligible;
+      const reason = item.reason;
+      const passed = hasResult && examSys.PASSING_GRADES.has(result.grade);
+
+      let itemClass = 'hogwarts-exam-item';
+      if (hasResult) {
+        itemClass += passed ? ' hogwarts-exam-item--completed' : ' hogwarts-exam-item--completed fail';
+      } else if (!eligible) {
+        itemClass += ' hogwarts-exam-item--locked';
+      }
+
+      let gradeClass = 'hogwarts-exam-item-grade';
+      if (hasResult) {
+        gradeClass += passed ? ' hogwarts-exam-item-grade--passed' : ' hogwarts-exam-item-grade--failed';
+      } else if (eligible) {
+        gradeClass += ' hogwarts-exam-item-grade--eligible';
+      } else {
+        gradeClass += ' hogwarts-exam-item-grade--locked';
+      }
+
+      let detailHtml = '';
+      if (hasResult) {
+        detailHtml = `<div class="hogwarts-exam-item-detail hogwarts-exam-item-detail--success">得分：${result.score}分 · ${examSys.GRADE_NAMES[result.grade]}</div>`;
+      } else if (!eligible) {
+        detailHtml = `<div class="hogwarts-exam-item-detail hogwarts-exam-item-detail--error">${reason}</div>`;
+      }
+
+      items += `<button
+        ${eligible && !hasResult ? '' : 'disabled'}
+        class="${itemClass}"
+        data-exam-key="${item.subjectKey}" data-exam-type="${type}"
+        title="${hasResult ? `${examSys.GRADE_NAMES[result.grade]}（${result.score}分）` : (eligible ? '点击参加考试' : reason)}">
+        <div class="hogwarts-exam-item-header">
+          <span class="hogwarts-exam-item-name">${item.name}</span>
+          <span class="${gradeClass}">${hasResult ? result.grade : (eligible ? '📝' : '🔒')}</span>
+        </div>
+        ${detailHtml}
+      </button>`;
+    });
+
+    return `<div class="hogwarts-exam-block">
+      <div class="exam-block-title">${title}</div>
+      <div class="exam-block-subtitle">${subtitle}</div>
+      <div class="hogwarts-exam-list">${items}</div>
+    </div>`;
+  }
+
+  let html = `<div class="exam-page">
+    <div class="exam-header">
+      <button id="hogwarts-exam-back-btn" class="schedule-exam-entry-btn">← 返回课程表</button>
+      <div class="exam-title">霍格沃茨资质考试</div>
+    </div>
+    <div class="exam-info">
+      <span class="exam-info-highlight">O.W.L.</span>（普通巫师等级考试）· 5年级参加<br>
+      <span class="exam-info-highlight">N.E.W.T.</span>（终极巫师等级考试）· 7年级参加 · 需 O.W.L. 成绩 A 或以上
+    </div>
+
+    ${buildExamBlock('owl', 5, '📋 O.W.L.（普通巫师等级考试）', '需要 5 年级，且各科完成 60% 以上课程')}
+    ${buildExamBlock('newt', 7, '🎓 N.E.W.T.（终极巫师等级考试）', '需要 7 年级，且 O.W.L. 成绩达到 A 或以上')}
+  </div>`;
+
+  container.innerHTML = html;
+
+  const backBtn = container.querySelector('#hogwarts-exam-back-btn');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => _renderSchedule(container));
+  }
+
+  container.querySelectorAll('button[data-exam-key]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.examKey;
+      const type = btn.dataset.examType;
+      const result = type === 'owl'
+        ? examSys.getHogwartsExams().owl[key]
+        : examSys.getHogwartsExams().newt[key];
+      if (result) {
+        _showHogwartsExamResult(container, key, type, result);
+      } else {
+        _renderHogwartsExamSession(container, key, type);
+      }
+    });
+  });
+}
+
+function _renderHogwartsExamSession(container, subjectKey, type) {
+  const examSys = window.hogwartsExam;
+  if (!examSys) return;
+
+  const examTypeName = type === 'owl' ? 'O.W.L.' : 'N.E.W.T.';
+  const subjectName = examSys.SUBJECT_DISPLAY_NAMES[subjectKey] || subjectKey;
+
+  let html = `<div class="exam-session">
+    <div class="exam-session-title">📋 ${subjectName} · ${examTypeName} 考试</div>
+    <div class="exam-session-desc">系统将根据你的课程进度自动评定成绩，或你可以选择跳过本次考试。</div>
+    <button id="exam-auto-btn" class="exam-action-btn">
+      ✨ 参加考试（系统自动评分）
+    </button>
+    <button id="exam-skip-btn" class="exam-action-btn exam-action-btn--secondary">
+      ⏭️ 跳过本次考试
+    </button>
+    <button id="exam-back-btn" class="exam-action-btn exam-action-btn--secondary">
+      ← 返回考试列表
+    </button>
+  </div>`;
+
+  container.innerHTML = html;
+
+  document.getElementById('exam-auto-btn').addEventListener('click', () => {
+    const result = examSys.takeHogwartsExam(subjectKey, type, null);
+    _showHogwartsExamResult(container, subjectKey, type, result);
+  });
+
+  document.getElementById('exam-skip-btn').addEventListener('click', () => {
+    const result = examSys.takeHogwartsExam(subjectKey, type, 0);
+    _showHogwartsExamResult(container, subjectKey, type, result);
+  });
+
+  document.getElementById('exam-back-btn').addEventListener('click', () => {
+    _renderHogwartsExams(container);
+  });
+}
+
+function _showHogwartsExamResult(container, subjectKey, type, result) {
+  const examSys = window.hogwartsExam;
+  if (!examSys) return;
+
+  const examTypeName = type === 'owl' ? 'O.W.L.' : 'N.E.W.T.';
+  const subjectName = examSys.SUBJECT_DISPLAY_NAMES[subjectKey] || subjectKey;
+  const passed = examSys.PASSING_GRADES.has(result.grade);
+  const gradeClass = passed ? 'exam-result-grade--passed' : 'exam-result-grade--failed';
+
+  let html = `<div class="exam-result">
+    <div class="exam-result-title">${subjectName} · ${examTypeName} 成绩</div>
+    <div class="exam-result-grade ${gradeClass}">${result.grade}</div>
+    <div class="exam-result-grade-name ${gradeClass}">${examSys.GRADE_NAMES[result.grade]}</div>
+    <div class="exam-result-score">得分：${result.score}分${result.correct !== undefined ? `（${result.correct}/${result.total}题正确）` : ''}</div>
+    <div class="exam-result-narrative">${result.narrative ?? ''}</div>
+    <button id="exam-result-back" class="exam-result-back-btn">← 返回考试列表</button>
+  </div>`;
+
+  container.innerHTML = html;
+
+  document.getElementById('exam-result-back').addEventListener('click', () => {
+    _renderHogwartsExams(container);
+  });
+
   if (result.narrative) {
     window.doStudyLog?.(result.narrative);
   }
@@ -1470,7 +1716,9 @@ window.courseAttendance = {
   recordMissedClassesForCurrentWindow,
   remindCurrentWindowClasses,
   isSchoolNoClassDate,
-  isSchoolNoClassPeriod
+  isSchoolNoClassPeriod,
+  _renderSchedule,
+  _renderMuggleSchedule
 };
 
 export default {

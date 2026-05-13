@@ -4,16 +4,28 @@
  * Required secrets / variables:
  *   AI_API_KEY      Your provider API key. Keep it secret.
  *   AI_API_URL      Optional. Defaults to DeepSeek chat completions.
- *   AI_MODEL        Optional. Defaults to deepseek-chat.
- *   ALLOWED_ORIGIN  Optional. Defaults to https://www.hwsim.top.
+ *   AI_MODEL        Optional. Defaults to deepseek-v4-flash.
+ *   ALLOWED_ORIGIN  Optional. Comma-separated allowed browser origins.
  *
  * Recommended route:
  *   https://www.hwsim.top/api/*
  */
 
 const DEFAULT_API_URL = "https://api.deepseek.com/chat/completions";
-const DEFAULT_MODEL = "deepseek-chat";
-const DEFAULT_ALLOWED_ORIGIN = "https://www.hwsim.top";
+const DEFAULT_MODEL = "deepseek-v4-flash";
+const DEFAULT_ALLOWED_ORIGIN = [
+  "https://www.hwsim.top",
+  "https://hwsim.top",
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://localhost:5500",
+  "http://localhost:8787",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5500",
+  "http://127.0.0.1:8787",
+  "null"
+].join(",");
 
 function getAllowedOrigins(env) {
   return String(env.ALLOWED_ORIGIN || DEFAULT_ALLOWED_ORIGIN)
@@ -30,7 +42,7 @@ function getCorsHeaders(request, env) {
   return {
     "Access-Control-Allow-Origin": allowedOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Vary": "Origin"
   };
 }

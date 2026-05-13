@@ -102,6 +102,37 @@ function saveProgress(subjectKey, lessonNum, rating) {
   window.autoUnlockByCourse?.();
 }
 
+function saveOpenAnswerEntry(st, subjectKey, lesson, rating = null) {
+  if (st.openScore == null || !st.openAnswer) return;
+  const data = loadSave();
+  const key = `${subjectKey}_${lesson.lesson}`;
+  const timestamp = st.openAnswerTimestamp || Date.now();
+  st.openAnswerTimestamp = timestamp;
+
+  if (!data.openAnswers) data.openAnswers = {};
+  if (!data.openAnswers[key]) data.openAnswers[key] = [];
+
+  const entry = {
+    answer:         st.openAnswer,
+    question:       st.openQuestion || "",
+    score:          st.openScore,
+    maxScore:       st.openMaxScore,
+    feedback:       st.openFeedback,
+    pointsAchieved: st.openPointsAchieved || [],
+    lessonTitle:    lesson.title,
+    lessonNum:      lesson.lesson,
+    rating,
+    timestamp
+  };
+
+  const existingIdx = data.openAnswers[key].findIndex(e => e.timestamp === timestamp);
+  if (existingIdx >= 0) data.openAnswers[key][existingIdx] = { ...data.openAnswers[key][existingIdx], ...entry };
+  else data.openAnswers[key].unshift(entry);
+
+  if (data.openAnswers[key].length > 5) data.openAnswers[key].length = 5;
+  writeSave(data);
+}
+
 // ════════════════════════════════════════════════════════════
 //  选择弹窗
 // ════════════════════════════════════════════════════════════
@@ -298,6 +329,13 @@ let _clsState = null;
 
 function _resetState() { _clsState = null; }
 
+function resetClassroom() {
+  document.getElementById("classroomPanel")?.remove();
+  const cm = document.getElementById("courseMain");
+  if (cm) cm.style.display = "";
+  _resetState();
+}
+
 // ── 课堂面板外框 ─────────────────────────────────────────
 function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
   document.getElementById("classroomPanel")?.remove();
@@ -319,7 +357,7 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
       </div>
       <div class="cls-phase-badge" id="cls-phase-badge">📍 导入</div>
     </div>
-    <div style="padding:10px 14px 0">
+    <div class="cls-open-container">
       <div class="cls-phase-steps">
         <div class="cls-step cls-step-active" id="cls-s0" onclick="window._clsJumpToPhase(0)">🕯️ 开场</div>
         <div class="cls-step" id="cls-s1" onclick="window._clsJumpToPhase(1)">📖 讲课</div>
@@ -333,7 +371,7 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
   card.appendChild(panel);
 
   _clsState = {
-    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0 },
+    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0, kpQA:false, kpCorrect:null, kpFeedback:false, kpAnsweredIdx:null, kpCalcDone:false, kpCalcStep:0, kpCalcDisplay:null, openAnswerTimestamp:null },
     subjectKey,
     sd: subjectData,
     lesson,
@@ -367,7 +405,7 @@ window._clsJumpToPhase = (target) => {
   if (target === 0) {
     _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 1) {
-    st.kpIdx = 0;
+    st.kpIdx = 0; st.kpQA = false; st.kpCorrect = null; st.kpFeedback = false; st.kpAnsweredIdx = null; st.kpCalcDone = false; st.kpCalcStep = 0; st.kpCalcDisplay = null;
     _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 2) {
     // 注意：从步骤条回跳测验会重置本轮分数，相当于重新作答
@@ -421,18 +459,171 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
   }
 }
 
+// ── 小黑板 SVG 数轴生成器 ────────────────────────────────────
+function _buildNumberLineSVG({ range = [-5, 5], marks = [], regionLabels = null, compArrow = null } = {}) {
+  const [lo, hi] = range;
+  const W = 280, AY = 38;
+  const X0 = 32, X1 = 248;
+  const UW = (X1 - X0) / (hi - lo);
+  const px = n => Math.round(X0 + (n - lo) * UW);
+  const oX = px(0);
+
+  let s = `<svg viewBox="0 0 ${W} 72" style="width:100%;display:block;margin:4px 0 2px">`;
+
+  if (regionLabels?.left)
+    s += `<rect x="${X0}" y="${AY-12}" width="${oX - X0}" height="24" fill="#1c2242" rx="2"/>
+          <text x="${Math.round((X0 + oX) / 2)}" y="${AY-17}" text-anchor="middle" font-size="9" fill="#6a7ec0">${regionLabels.left}</text>`;
+  if (regionLabels?.right)
+    s += `<rect x="${oX+1}" y="${AY-12}" width="${X1 - oX}" height="24" fill="#1c3422" rx="2"/>
+          <text x="${Math.round((oX + X1) / 2)}" y="${AY-17}" text-anchor="middle" font-size="9" fill="#5abf7a">${regionLabels.right}</text>`;
+  if (regionLabels?.origin)
+    s += `<text x="${oX}" y="${AY+30}" text-anchor="middle" font-size="9" fill="#f0d870">${regionLabels.origin}</text>`;
+
+  s += `<line x1="15" y1="${AY}" x2="${W-15}" y2="${AY}" stroke="#c8e8b0" stroke-width="1.5"/>
+        <polygon points="15,${AY} 27,${AY-5} 27,${AY+5}" fill="#c8e8b0"/>
+        <polygon points="${W-15},${AY} ${W-27},${AY-5} ${W-27},${AY+5}" fill="#c8e8b0"/>`;
+
+  for (let n = lo; n <= hi; n++) {
+    const x = px(n), isO = n === 0;
+    s += `<line x1="${x}" y1="${AY-(isO?7:4)}" x2="${x}" y2="${AY+(isO?7:4)}" stroke="${isO?"#f0d870":"#c8e8b0"}" stroke-width="${isO?2:1}"/>`;
+    const lbl = n < 0 ? `−${-n}` : String(n);
+    s += `<text x="${x}" y="${AY+18}" text-anchor="middle" font-size="${isO?11:9}" fill="${isO?"#f0d870":"#7aaa6a"}"${isO?' font-weight="bold"':''}>${lbl}</text>`;
+  }
+
+  if (compArrow) {
+    const ax = px(compArrow.from), bx = px(compArrow.to), ay = AY - 20;
+    s += `<line x1="${ax}" y1="${ay}" x2="${bx-7}" y2="${ay}" stroke="#f8c850" stroke-width="1.5"/>
+          <polygon points="${bx},${ay} ${bx-8},${ay-4} ${bx-8},${ay+4}" fill="#f8c850"/>`;
+    if (compArrow.label)
+      s += `<text x="${Math.round((ax + bx) / 2)}" y="${ay-5}" text-anchor="middle" font-size="9" fill="#f8c850">${compArrow.label}</text>`;
+  }
+
+  const MARK_COLORS = { highlight: "#f8c850", dim: "#667799", accent: "#8adfaa" };
+  for (const m of marks) {
+    const fill = MARK_COLORS[m.style] || MARK_COLORS.highlight;
+    const x = px(m.value);
+    s += `<circle cx="${x}" cy="${AY}" r="5" fill="${fill}" opacity="0.85"/>`;
+  }
+
+  return s + `</svg>`;
+}
+
+function _renderCalculator({ display = "0", highlightKey = null } = {}) {
+  const keys = ["7","8","9","÷","4","5","6","×","1","2","3","−","|x|","0",".","="];
+  const keysHtml = keys.map(k =>
+    `<div class="cls-calc-key${k === highlightKey ? " cls-calc-key-hl" : ""}" data-key="${k}">${k}</div>`
+  ).join("");
+  return `
+    <div class="cls-calc">
+      <div class="cls-calc-body">
+        <div class="cls-calc-brand">MUGGLE-7</div>
+        <div class="cls-calc-screen">
+          <div class="cls-calc-display">${display}</div>
+        </div>
+        <div class="cls-calc-keys">${keysHtml}</div>
+      </div>
+    </div>`;
+}
+
+function _renderBlackboard(bb) {
+  if (!bb) return "";
+  if (typeof bb === "string") return `<div class="cls-blackboard">${bb}</div>`;
+
+  let inner = "";
+  if (bb.label) inner += `<div class="cls-bb-title">${bb.label}</div>`;
+
+  if (bb.type === "numberline") {
+    inner += _buildNumberLineSVG(bb);
+  } else if (bb.type === "calculator") {
+    return _renderCalculator(bb);
+  } else if (bb.type === "formulas") {
+    inner += `<div class="cls-bb-pre">${(bb.lines || []).join("\n")}</div>`;
+  }
+
+  if (bb.note) inner += `<div class="cls-bb-note">${bb.note}</div>`;
+  return inner ? `<div class="cls-blackboard">${inner}</div>` : "";
+}
+
+// ── context 格式化：对白高亮 + 换行 ──────────────────────────
+function _formatContext(text) {
+  if (!text) return text;
+  // 「对白」→ span 高亮
+  let out = text.replace(/「([^」]*)」/g, '<span class="cls-dialogue">「$1」</span>');
+  // 句末（。！？）后紧跟对白 → 插入换行
+  out = out.replace(/([。！？])(<span class="cls-dialogue">)/g, '$1<br>$2');
+  // 对白结束后紧跟叙述（非空格非标点）→ 插入换行
+  out = out.replace(/(<\/span>)([^\s，。、！？：」<])/g, '$1<br>$2');
+  return out;
+}
+
+// ── 讲课阶段：教授提问 UI ─────────────────────────────────
+function _renderMiniQuestion(q) {
+  const leadIn = q.leadIn
+    ? `<div class="cls-mini-leadin">${_formatContext(q.leadIn)}</div>`
+    : "";
+  const opts = q.options.map((opt, i) =>
+    `<button class="cls-mini-opt" data-idx="${i}">${opt}</button>`
+  ).join("");
+  return `
+    <div class="cls-mini-q">
+      ${leadIn}
+      <div class="cls-mini-text">${q.text}</div>
+      <div class="cls-mini-opts">${opts}</div>
+    </div>`;
+}
+
+function _renderMiniLeadIn(text) {
+  return text ? `<div class="cls-mini-q"><div class="cls-mini-leadin">${_formatContext(text)}</div></div>` : "";
+}
+
 // ── 第二阶段：讲课 ────────────────────────────────────────
 function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
   _setPhase(1);
   const kps = lesson.keyPoints || [];
 
+  function resetKeyPointInteraction() {
+    st.kpQA = false;
+    st.kpCorrect = null;
+    st.kpFeedback = false;
+    st.kpAnsweredIdx = null;
+    st.kpCalcDone = false;
+    st.kpCalcStep = 0;
+    st.kpCalcDisplay = null;
+  }
+
   function render() {
     const body = document.getElementById("cls-body");
     if (!body) return;
-    const kp      = kps[st.kpIdx];
-    const point   = typeof kp === "string" ? kp : (kp?.point || "");
-    const context = typeof kp === "string" ? null : (kp?.context || null);
-    const isLast  = st.kpIdx === kps.length - 1;
+    const kp         = kps[st.kpIdx];
+    const point      = typeof kp === "string" ? kp : (kp?.point || "");
+    const _ctx       = typeof kp === "string" ? null : (kp?.context || null);
+    const context    = typeof kp === "string" ? null
+      : st.kpQA && st.kpCorrect  === true  && kp?.contextRight ? kp.contextRight
+      : st.kpQA && st.kpCorrect  === false && kp?.contextWrong ? kp.contextWrong
+      : _ctx;
+    const question   = typeof kp === "string" ? null : (kp?.question || null);
+    const interactionContext = typeof kp === "string" ? null
+      : (kp?.interactionContext || kp?.blackboardQ?.leadIn || null);
+    const isLast     = st.kpIdx === kps.length - 1;
+    const interactiveBlackboard = typeof kp === "string" ? null : (kp?.blackboardQ || null);
+    const calcSequence = interactiveBlackboard?.type === "calculator" && Array.isArray(interactiveBlackboard.sequence)
+      ? interactiveBlackboard.sequence
+      : null;
+    const showCalcSequence = !!(calcSequence && !st.kpCalcDone && !st.kpQA && !st.kpFeedback);
+    const showCompletedCalcSequence = !!(calcSequence && st.kpCalcDone && !question && !st.kpQA);
+    const showQ      = !!(question && !st.kpQA && !st.kpFeedback && !showCalcSequence);
+    const showAnsweredMiniQuestion = !!(question && st.kpFeedback && !showCalcSequence);
+    const showBoardInteraction = !!(!question && interactiveBlackboard?.type === "calculator" && !calcSequence && !st.kpQA);
+    const activeCalcKey = showCalcSequence ? calcSequence[st.kpCalcStep || 0] : interactiveBlackboard?.highlightKey;
+    const calcDisplay = showCalcSequence
+      ? (st.kpCalcDisplay ?? interactiveBlackboard.display ?? "0")
+      : st.kpCalcDone && interactiveBlackboard?.type === "calculator"
+        ? (st.kpCalcDisplay ?? interactiveBlackboard.result ?? interactiveBlackboard.display)
+      : interactiveBlackboard?.display;
+    const blackboard = typeof kp === "string" ? null
+      : ((showQ || showAnsweredMiniQuestion || showBoardInteraction || showCalcSequence || showCompletedCalcSequence) && interactiveBlackboard
+        ? { ...interactiveBlackboard, display: calcDisplay, highlightKey: activeCalcKey }
+        : (kp?.blackboard || null));
 
     body.innerHTML = `
       <div class="cls-dots">
@@ -443,24 +634,121 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           <div class="cls-kp-num">${st.kpIdx+1}</div>
           <div class="cls-kp-point">${point}</div>
         </div>
-        ${context ? `<div class="cls-kp-context">${context}</div>` : ""}
+        ${blackboard ? _renderBlackboard(blackboard) : ""}
+        ${showCalcSequence
+          ? _renderMiniLeadIn(question?.leadIn || interactionContext)
+          : showCompletedCalcSequence
+          ? (interactionContext ? `<div class="cls-kp-context">${_formatContext(interactionContext)}</div>` : "")
+          : showQ
+          ? _renderMiniQuestion(question)
+          : showAnsweredMiniQuestion
+          ? _renderMiniQuestion(question)
+          : showBoardInteraction
+            ? (interactionContext ? `<div class="cls-kp-context">${_formatContext(interactionContext)}</div>` : "")
+            : (context ? `<div class="cls-kp-context">${_formatContext(context)}</div>` : "")}
       </div>
+      ${showAnsweredMiniQuestion || showCompletedCalcSequence ? `
       <div class="cls-nav">
-        ${st.kpIdx > 0 ? `<button class="cls-btn-sec" id="cls-prev">← 上一条</button>` : `<button class="cls-btn-sec" id="cls-to-opening">← 返回开场</button>`}
+        <button class="cls-btn-advance" id="cls-mini-continue">继续 →</button>
+      </div>` : showQ || showBoardInteraction || showCalcSequence ? "" : `
+      <div class="cls-nav">
+        ${st.kpIdx > 0
+          ? `<button class="cls-btn-sec" id="cls-prev">← 上一条</button>`
+          : `<button class="cls-btn-sec" id="cls-to-opening">← 返回开场</button>`}
         ${isLast
           ? `<button class="cls-btn-advance" id="cls-to-quiz">随堂测验 →</button>`
           : `<button class="cls-btn-pri" id="cls-next">下一条 →</button>`}
-      </div>`;
+      </div>`}`;
 
-    document.getElementById("cls-prev")?.addEventListener("click", () => { st.kpIdx--; render(); });
-    document.getElementById("cls-to-opening")?.addEventListener("click", () => {
-      _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
-    });
-    document.getElementById("cls-next")?.addEventListener("click", () => { st.kpIdx++; render(); });
-    document.getElementById("cls-to-quiz")?.addEventListener("click", () => {
-      if (qGroup) { st.qIdx=0; st.score=0; st.answered=false; _phaseQuiz(st,subjectKey,sd,lesson,qGroup,onClose); }
-      else _phaseResult(st,subjectKey,sd,lesson,null,onClose);
-    });
+    if (showCalcSequence && blackboard?.type === "calculator") {
+      document.querySelectorAll(".cls-calc-key").forEach(k => {
+        k.addEventListener("click", () => {
+          const pressed = k.dataset.key;
+          const expected = calcSequence[st.kpCalcStep || 0];
+          k.style.transform = "scale(0.92)";
+          setTimeout(() => { k.style.transform = ""; }, 100);
+          if (pressed !== expected) return;
+
+          if (pressed === "|x|") {
+            st.kpCalcDisplay = interactiveBlackboard.result ?? st.kpCalcDisplay ?? "";
+          } else {
+            const base = st.kpCalcDisplay == null || st.kpCalcDisplay === "0" ? "" : String(st.kpCalcDisplay);
+            st.kpCalcDisplay = `${base}${pressed}`;
+          }
+          st.kpCalcStep = (st.kpCalcStep || 0) + 1;
+
+          if (st.kpCalcStep >= calcSequence.length) {
+            st.kpCalcDone = true;
+            setTimeout(render, 450);
+          } else {
+            render();
+          }
+        });
+      });
+    } else if (showQ && question) {
+      document.querySelectorAll(".cls-mini-opt").forEach(btn => {
+        btn.onclick = () => {
+          const chosen = parseInt(btn.dataset.idx);
+          const correct = chosen === question.answer;
+          st.kpAnsweredIdx = chosen;
+          document.querySelectorAll(".cls-mini-opt").forEach((b, i) => {
+            b.disabled = true;
+            if (i === question.answer) b.classList.add("cls-mini-opt-correct");
+            else if (parseInt(b.dataset.idx) === chosen && !correct) b.classList.add("cls-mini-opt-wrong");
+          });
+          st.kpCorrect = correct;
+          setTimeout(() => { st.kpFeedback = true; render(); }, 650);
+        };
+      });
+    } else if (showAnsweredMiniQuestion && question) {
+      document.querySelectorAll(".cls-mini-opt").forEach(btn => {
+        const idx = parseInt(btn.dataset.idx);
+        btn.disabled = true;
+        if (idx === question.answer) btn.classList.add("cls-mini-opt-correct");
+        else if (idx === st.kpAnsweredIdx) btn.classList.add("cls-mini-opt-wrong");
+      });
+      document.getElementById("cls-mini-continue")?.addEventListener("click", () => {
+        st.kpQA = true;
+        st.kpFeedback = false;
+        render();
+      });
+    } else if (showCompletedCalcSequence) {
+      document.getElementById("cls-mini-continue")?.addEventListener("click", () => {
+        st.kpQA = true;
+        render();
+      });
+    } else if (showBoardInteraction && blackboard?.type === "calculator") {
+      document.querySelectorAll(".cls-calc-key:not(.cls-calc-key-hl)").forEach(k => {
+        k.addEventListener("click", () => {
+          k.style.transform = "scale(0.92)";
+          setTimeout(() => { k.style.transform = ""; }, 100);
+        });
+      });
+      const hlKey = document.querySelector(".cls-calc-key-hl");
+      if (hlKey) {
+        hlKey.style.cursor = "pointer";
+        hlKey.addEventListener("click", () => {
+          const display = document.querySelector(".cls-calc-display");
+          if (display && blackboard.result != null) {
+            display.textContent = blackboard.result;
+            display.style.color = "#8ae09a";
+          }
+          hlKey.classList.add("cls-calc-key-pressed");
+          st.kpCorrect = true;
+          setTimeout(() => { st.kpQA = true; render(); }, 900);
+        });
+      }
+    } else {
+      document.getElementById("cls-prev")?.addEventListener("click", () => { st.kpIdx--; resetKeyPointInteraction(); render(); });
+      document.getElementById("cls-to-opening")?.addEventListener("click", () => {
+        _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
+      });
+      document.getElementById("cls-next")?.addEventListener("click", () => { st.kpIdx++; resetKeyPointInteraction(); render(); });
+      document.getElementById("cls-to-quiz")?.addEventListener("click", () => {
+        if (qGroup) { st.qIdx=0; st.score=0; st.answered=false; _phaseQuiz(st,subjectKey,sd,lesson,qGroup,onClose); }
+        else _phaseResult(st,subjectKey,sd,lesson,null,onClose);
+      });
+    }
   }
   render();
 }
@@ -544,32 +832,56 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
       return;  // gesture 题型处理完毕
     }
 
-    // ── 开放题（AI 判题） ─────────────────────────────────
+    // ── 开放题（教授判题） ─────────────────────────────────
     if (q.type === "open") {
       body.innerHTML = `
         <div class="cls-quiz-header">
-          <span class="cls-quiz-count">开放题（AI 判题）</span>
-          <span class="cls-diff-badge" style="background:#7c5cbf;color:#fff;padding:2px 8px;border-radius:6px;font-size:0.78em">主观题</span>
+          <span class="cls-quiz-count">开放题（教授判题）</span>
+          <span class="cls-diff-badge cls-diff-subjective">主观题</span>
         </div>
         <div class="cls-question">${q.text}</div>
-        <div style="margin:12px 0 4px">
+        <div class="cls-open-hint">
           <textarea id="cls-open-ta" rows="5" maxlength="600"
             placeholder="请用文字写出你的答案……"
-            style="width:100%;padding:10px;border:1px solid #555;border-radius:8px;
-                   background:#0d0d1a;color:#e0e0e0;font-size:0.9em;resize:vertical;
-                   box-sizing:border-box;outline:none;line-height:1.6"></textarea>
-          <div style="text-align:right;font-size:0.75em;color:#888;margin-top:2px">
+            class="cls-open-textarea"></textarea>
+          <div class="cls-open-counter">
             <span id="cls-open-cnt">0</span> / 600
           </div>
         </div>
         <div class="cls-feedback" id="cls-fb"></div>
-        <div class="cls-nav">
+        <div class="cls-open-api-note">
+          💡 教授判题需要网络连接。可在右上角⚙️配置自己的 API Key。
+        </div>
+        <div class="cls-nav cls-nav-wide">
+          <button id="cls-open-skip" class="cls-open-skip-btn">
+            跳过此题
+          </button>
+          <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 答题记录</button>
           <button class="cls-btn-advance" id="cls-open-submit">提交答案 →</button>
         </div>`;
 
       const ta = document.getElementById("cls-open-ta");
       ta?.addEventListener("input", () => {
         document.getElementById("cls-open-cnt").textContent = ta.value.length;
+      });
+
+      document.getElementById("cls-open-api-link")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (typeof openFeedback === "function") {
+          openFeedback();
+          // 自动切换到 API Key 标签
+          setTimeout(() => {
+            document.querySelector('.modal-tab[data-tab="api-key"]')?.click();
+          }, 50);
+        }
+      });
+
+      document.getElementById("cls-open-skip")?.addEventListener("click", () => {
+        _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose);
+      });
+
+      document.getElementById("cls-journal-btn")?.addEventListener("click", () => {
+        window.courseUI?.showAnswerJournal?.(subjectKey, lesson.lesson, lesson.title, sd.subjectMeta?.professor);
       });
 
       document.getElementById("cls-open-submit").addEventListener("click", async () => {
@@ -585,49 +897,142 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
 
         // 进入 loading 状态
         const submitBtn = document.getElementById("cls-open-submit");
-        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "评分中…"; }
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "教授判题中…"; }
         if (fb) {
           fb.className = "cls-feedback cls-fb-show";
           fb.style.background = "rgba(108,92,231,0.1)";
-          fb.innerHTML = `<div style="text-align:center;padding:12px;color:#b9a7e8">🔮 正在召唤 AI 评分…</div>`;
+          fb.innerHTML = `<div class="cls-ai-loading">🪶 教授判题中…</div>`;
         }
 
         // 降级评分函数：基于关键词匹配
+        function extractFallbackKeywords(point) {
+          if (typeof point === 'object' && point !== null) {
+            return point.keywords || [point.text || ''].filter(Boolean);
+          }
+          const text = String(point);
+          const keywords = [];
+          // 括号内的提示词优先（如"（数到零的距离，或去掉符号后的值）"）
+          const bracketMatches = text.match(/[（(]([^）)]+)[）)]/g) || [];
+          bracketMatches.forEach(m => {
+            const inner = m.replace(/^[（(]|[）)]$/g, '');
+            inner.split(/[、，,或以及]/).forEach(kw => {
+              const clean = kw.replace(/^(如|例如|比如|等)+/, '').trim();
+              if (clean.length >= 2) keywords.push(clean);
+            });
+          });
+          // 括号外：按标点拆分，取 2-8 字的短语
+          const mainText = text.replace(/[（(][^）)]*[）)]/g, '');
+          mainText.split(/[、，,。：:（(]/).forEach(chunk => {
+            const c = chunk.replace(/^(正确|合理|举出|说明|解释|描述|阐述)+/, '').trim();
+            if (c.length >= 2 && c.length <= 8) keywords.push(c);
+          });
+          return keywords.length > 0 ? keywords : [text];
+        }
+
         function fallbackGrade() {
           const scoringPoints = q.scoringPoints || [];
           const maxScore = q.maxScore || 4;
+          const professor = sd.subjectMeta?.professor || '';
           let score = 0;
           const achieved = [];
 
           scoringPoints.forEach((point, idx) => {
-            const keywords = point.keywords || [point];
-            const found = keywords.some(kw =>
-              answer.toLowerCase().includes(kw.toLowerCase())
-            );
+            const keywords = extractFallbackKeywords(point);
+            const found = keywords.some(kw => answer.includes(kw));
             if (found) {
               score += 1;
-              achieved.push(point.text || `要点${idx + 1}`);
+              achieved.push(typeof point === 'object' ? (point.text || `要点${idx + 1}`) : `要点${idx + 1}`);
             }
           });
 
-          // 根据答案长度额外加分
-          if (answer.length > 100) score = Math.min(maxScore, score + 1);
-          if (answer.length > 200) score = Math.min(maxScore, score + 1);
+          // 答案有实质内容但关键词未命中时给基础分，避免认真作答却得零
+          if (score === 0 && answer.length >= 20) {
+            score = Math.max(1, Math.floor(maxScore * 0.25));
+          }
+          // 较长答案酌情加分
+          if (answer.length > 100 && score < maxScore) score = Math.min(maxScore, score + 1);
+          if (answer.length > 200 && score < maxScore) score = Math.min(maxScore, score + 1);
 
           return {
             score,
             maxScore,
-            feedback: getFallbackFeedback(score, maxScore),
+            feedback: getFallbackFeedback(score, maxScore, professor),
             pointsAchieved: achieved
           };
         }
 
-        function getFallbackFeedback(score, max) {
+        // 各教授在 AI 不可用时的降级评语风格
+        const PROFESSOR_FALLBACK_FEEDBACK = {
+          "奥古斯都·芬威克": {
+            high:    "定义把握准确，例子亦能支撑概念。",
+            mid:     "有数学直觉，但定义表述尚需规范。",
+            low:     "方向有了，回去看定义再来。",
+            zero:    "回去看定义。"
+          },
+          "塔维什·麦克拉伦": {
+            high:    "概念准确，例子有效。",
+            mid:     "方向对，细节不够精准。",
+            low:     "有方向，概念还需核实。",
+            zero:    "概念偏差，重新核查。"
+          },
+          "普里姆罗斯·斯普劳特": {
+            high:    "说得很好，例子也很贴切，你理解了！",
+            mid:     "有想法，再想想核心概念，你快到了。",
+            low:     "有一些想法，没关系，我们再来一遍。",
+            zero:    "别急，慢慢来，再读一读讲义吧。"
+          },
+          "康斯坦丝·沙克博特": {
+            high:    "论证完整，前提与推理均成立。",
+            mid:     "方向正确，但推理过程还需补充。",
+            low:     "你的前提是什么？先把它说清楚。",
+            zero:    "没有论证，这不算回答。"
+          },
+          "菲利克斯·韦斯莱": {
+            high:    "答得不错！思路清晰，例子也有意思！",
+            mid:     "有自己的想法，再把核心概念补充一下！",
+            low:     "好的开始！把概念再想深一点。",
+            zero:    "哎，再想想，你肯定有想法的！"
+          },
+          "赫伯特·宾斯二世": {
+            high:    "太好了！脉络清晰，联系也到位！",
+            mid:     "有历史感！再补充一下背景就更完整了。",
+            low:     "思路有了，再往深处想想！",
+            zero:    "是我没讲清楚，我们再来一遍！"
+          },
+          "米兰达·珀西瓦尔": {
+            high:    "不错。",
+            mid:     "概念基本准确，表达尚欠精确。",
+            low:     "有偏差。请重读定义。",
+            zero:    "不准确。"
+          },
+          "伊莱莎·洛夫古德": {
+            high:    "你感受到了，写得很有温度。",
+            mid:     "有感受，再慢慢读一读，让它更清晰。",
+            low:     "你再读一遍，慢慢的——有什么让你停下来了吗？",
+            zero:    "没关系，再读一遍，慢慢感受。"
+          },
+          "塞拉菲娜·穆迪": {
+            high:    "漂亮！就是这个！",
+            mid:     "物理直觉有了！再把推理过程补全。",
+            low:     "炸了不过炸也是数据——方向再调整一下。",
+            zero:    "完全没想到物理？再读读讲义，来一次！"
+          }
+        };
+
+        function getFallbackFeedback(score, max, professor) {
+          const style = PROFESSOR_FALLBACK_FEEDBACK[professor];
           const pct = score / max;
+          if (style) {
+            if (pct >= 0.75) return style.high;
+            if (pct >= 0.5)  return style.mid;
+            if (pct > 0)     return style.low;
+            return style.zero;
+          }
+          // 通用后备
           if (pct >= 0.75) return "回答完整，思路清晰。";
-          if (pct >= 0.5) return "回答有一定深度，但还可以更完善。";
-          if (pct > 0) return "思路正确，继续加油。";
-          return "请重新思考这个问题。";
+          if (pct >= 0.5)  return "有一定深度，可进一步完善。";
+          if (pct > 0)     return "有方向，继续加油。";
+          return "请再想想，结合讲义重新作答。";
         }
 
         let retryCount = 0;
@@ -654,11 +1059,11 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           } catch (err) {
             retryCount++;
             if (retryCount <= maxRetries) {
-              console.warn(`AI 评分失败，重试第 ${retryCount} 次:`, err.message);
+              console.warn(`教授判题失败，重试第 ${retryCount} 次:`, err.message);
               await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
               return attemptGrade();
             }
-            console.error(`AI 评分多次失败，使用降级评分:`, err.message);
+            console.error(`教授判题多次失败，使用降级评分:`, err.message);
             throw err;
           }
         }
@@ -671,6 +1076,9 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           st.openMaxScore       = result.maxScore;
           st.openFeedback       = result.feedback;
           st.openPointsAchieved = result.pointsAchieved || [];
+          st.openAnswer         = answer;
+          st.openQuestion       = q.text;
+          saveOpenAnswerEntry(st, subjectKey, lesson, null);
 
           const pct       = result.score / result.maxScore;
           const fbClass   = pct >= 0.75 ? "cls-fb-right" : pct > 0 ? "" : "cls-fb-wrong";
@@ -684,18 +1092,23 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
                 ${scoreTag} · ${result.score} / ${result.maxScore} 分
               </div>
               ${result.pointsAchieved.length
-                ? `<div class="cls-fb-analysis" style="margin-top:6px">
+                ? `<div class="cls-fb-analysis cls-fb-extra">
                      <span class="cls-fb-kp">✓ 得分点：</span>${result.pointsAchieved.join("、")}
                    </div>`
                 : ""}
-              <div class="cls-fb-analysis" style="margin-top:8px;font-style:italic;color:#d0c8e8">
+              <div class="cls-fb-analysis cls-fb-italic">
                 "${result.feedback}"
               </div>`;
           }
 
           const nav = body.querySelector(".cls-nav");
           if (nav) {
-            nav.innerHTML = `<button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
+            nav.innerHTML = `
+              <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
+              <button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
+            document.getElementById("cls-journal-btn")?.addEventListener("click", () => {
+              window.courseUI?.showAnswerJournal?.(subjectKey, lesson.lesson, lesson.title, sd.subjectMeta?.professor);
+            });
             document.getElementById("cls-to-result")?.addEventListener("click", () =>
               _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose));
           }
@@ -707,6 +1120,9 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           st.openMaxScore = result.maxScore;
           st.openFeedback = result.feedback;
           st.openPointsAchieved = result.pointsAchieved;
+          st.openAnswer   = answer;
+          st.openQuestion = q.text;
+          saveOpenAnswerEntry(st, subjectKey, lesson, null);
 
           const pct = result.score / result.maxScore;
           const fbClass = pct >= 0.75 ? "cls-fb-right" : pct > 0 ? "" : "cls-fb-wrong";
@@ -718,24 +1134,29 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
             fb.innerHTML = `
               <div class="cls-fb-tag ${pct >= 0.75 ? "cls-fb-r" : pct > 0 ? "" : "cls-fb-w"}">
                 ${scoreTag} · ${result.score} / ${result.maxScore} 分
-                <span style="font-size:0.7em;color:#888;margin-left:8px">（自动评分）</span>
+                <span class="cls-fb-meta">（自动评分）</span>
               </div>
               ${result.pointsAchieved.length
-                ? `<div class="cls-fb-analysis" style="margin-top:6px">
+                ? `<div class="cls-fb-analysis cls-fb-extra">
                      <span class="cls-fb-kp">✓ 得分点：</span>${result.pointsAchieved.join("、")}
                    </div>`
                 : ""}
-              <div class="cls-fb-analysis" style="margin-top:8px;font-style:italic;color:#d0c8e8">
+              <div class="cls-fb-analysis cls-fb-italic">
                 "${result.feedback}"
               </div>
-              <div class="cls-fb-analysis" style="margin-top:6px;font-size:0.85em;color:#888">
-                AI 评分暂时不可用，已使用自动评分
+              <div class="cls-fb-analysis cls-fb-muted">
+                教授暂时无法连线，已使用自动判题
               </div>`;
           }
 
           const nav = body.querySelector(".cls-nav");
           if (nav) {
-            nav.innerHTML = `<button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
+            nav.innerHTML = `
+              <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
+              <button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
+            document.getElementById("cls-journal-btn")?.addEventListener("click", () => {
+              window.courseUI?.showAnswerJournal?.(subjectKey, lesson.lesson, lesson.title, sd.subjectMeta?.professor);
+            });
             document.getElementById("cls-to-result")?.addEventListener("click", () =>
               _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose));
           }
@@ -817,6 +1238,8 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
 
   saveProgress(subjectKey, lesson.lesson, rating);
 
+  saveOpenAnswerEntry(st, subjectKey, lesson, rating);
+
   // 麻瓜课程：记录学习日期并推进课程进度
   if (MUGGLE_SUBJECTS.includes(subjectKey)) {
     recordStudyDate(subjectKey);
@@ -891,13 +1314,13 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
           学院分 ${housePoints>=0?"+":""}${housePoints}
         </div>` : `<div class="cls-result-no-quiz">本课已完成，知识已记录。</div>`}
       ${hasOpenResult ? `
-        <div style="margin:16px 0 0;padding:14px 16px;border:1px solid #3a3a5a;border-radius:10px;background:rgba(108,92,231,0.08)">
-          <div style="font-size:0.82em;color:#9d86e9;font-weight:bold;margin-bottom:6px">📝 开放题 AI 点评</div>
-          <div style="font-size:0.9em;color:${openScoreColor};font-weight:bold;margin-bottom:8px">
+        <div class="cls-open-review">
+          <div class="cls-open-review-title">📝 教授判题</div>
+          <div class="cls-open-review-score" style="color:${openScoreColor}">
             得分：${st.openScore} / ${st.openMaxScore}
-            ${st.openPointsAchieved?.length ? `<span style="color:#aaa;font-weight:normal;font-size:0.85em;margin-left:8px">· ${st.openPointsAchieved.join("、")}</span>` : ""}
+            ${st.openPointsAchieved?.length ? `<span class="cls-open-review-tags">· ${st.openPointsAchieved.join("、")}</span>` : ""}
           </div>
-          <div style="font-size:0.88em;color:#d0c8e8;line-height:1.6;font-style:italic">"${st.openFeedback}"</div>
+          <div class="cls-open-review-text">"${st.openFeedback}"</div>
         </div>` : ""}
       ${comment ? `
         <div class="cls-result-comment">
@@ -905,17 +1328,21 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
           <div class="cls-comment-text">"${comment}"</div>
         </div>` : ""}
     </div>
+    <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
     <button class="cls-btn-leave" id="cls-leave">← 离开教室</button>`;
 
   document.getElementById("cls-leave").onclick = () => {
-    document.getElementById("classroomPanel")?.remove();
-    const cm = document.getElementById("courseMain");
-    if (cm) cm.style.display = "";
-    _resetState();
+    resetClassroom();
     onClose?.();
-
   };
+
+  const journalBtn = document.getElementById("cls-journal-btn");
+  if (journalBtn) {
+    journalBtn.addEventListener("click", () => {
+      window.courseUI?.showAnswerJournal?.(subjectKey, lesson.lesson, lesson.title, sd.subjectMeta?.professor);
+    });
+  }
 }
 
 // ── 全局挂载 ─────────────────────────────────────────────
-window.classroom = { showLearnChoiceModal };
+window.classroom = { showLearnChoiceModal, resetClassroom };

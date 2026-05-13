@@ -56,6 +56,19 @@ export function refreshAll() {
   renderLog();
   renderTimeline();
 
+  if (document.getElementById("courseMain")) {
+    const scheduleContainer = document.getElementById("schedule-container");
+    const muggleScheduleContainer = document.getElementById("muggle-schedule-container");
+    if (scheduleContainer && scheduleContainer.style.display !== "none") {
+      window.courseAttendance?.getTodayScheduledCourses?.();
+      const renderFn = window.courseAttendance?._renderSchedule || (() => {});
+      renderFn(scheduleContainer);
+    } else if (muggleScheduleContainer && muggleScheduleContainer.style.display !== "none") {
+      const renderFn = window.courseAttendance?._renderMuggleSchedule || (() => {});
+      renderFn(muggleScheduleContainer);
+    }
+  }
+
   const ttBtn = document.getElementById("timeTurnerBtn");
   if (ttBtn) {
     const hasTT = data.timeTurner?.usesLeft !== undefined || (data.bag?.item || []).some(i => i.name === "时间转换器");

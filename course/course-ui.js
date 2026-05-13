@@ -16,6 +16,8 @@
 
 // ── 工具函数 ──────────────────────────────────────────────
 
+import { getSave } from '../save-system.js';
+
 function el(id) { return document.getElementById(id); }
 
 /**
@@ -234,6 +236,7 @@ export function showStudyResultModal(result, subjectName, onClose) {
       </div>
     </div>`;
 
+  document.getElementById("study-result-overlay")?.remove();
   document.body.insertAdjacentHTML("beforeend", modalHTML);
   document.body.classList.add("modal-open");
 
@@ -302,6 +305,71 @@ window.addEventListener("achievementUnlocked", (e) => {
   showAchievementToast(e.detail.achievement);
 });
 
+// ── 答题日记弹窗 ─────────────────────────────────────────
+
+/**
+ * 展示某课的历史答题记录
+ * @param {string} subjectKey
+ * @param {number} lessonNum
+ * @param {string} lessonTitle
+ * @param {string} professor
+ */
+export function showAnswerJournal(subjectKey, lessonNum, lessonTitle, professor = "教授") {
+  document.getElementById("answer-journal-overlay")?.remove();
+
+  const raw = getSave();
+  const entries = raw.openAnswers?.[`${subjectKey}_${lessonNum}`] || [];
+
+  const scoreColor = (pct) =>
+    pct >= 0.75 ? "#98e898" : pct >= 0.5 ? "#aad4f0" : pct > 0 ? "#f0c878" : "#f88";
+
+  const ratingLabel = { O: "Outstanding", E: "Exceeds Expectations", A: "Acceptable", P: "Poor", D: "Dreadful", T: "Troll" };
+
+  const entriesHtml = entries.length === 0
+    ? `<div style="text-align:center;padding:32px;color:#666">暂无答题记录</div>`
+    : entries.map((e, i) => {
+        const pct = e.score / e.maxScore;
+        const date = new Date(e.timestamp).toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
+        const ratingBadge = e.rating
+          ? `<span style="background:${scoreColor(pct)};color:#0d0d1a;padding:1px 7px;border-radius:4px;font-size:0.75em;font-weight:bold">${e.rating}</span>`
+          : "";
+        return `
+          <div style="border:1px solid #2a2a4a;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap">
+              <span style="font-size:0.78em;color:#666">#${entries.length - i} · ${date}</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                ${ratingBadge}
+                <span style="color:${scoreColor(pct)};font-weight:bold;font-size:0.9em">${e.score} / ${e.maxScore}</span>
+              </div>
+            </div>
+            ${e.question ? `<div style="font-size:0.78em;color:#777;margin-bottom:6px;line-height:1.4">❓ ${e.question}</div>` : ""}
+            <div style="background:#0d0d1a;border-radius:6px;padding:10px 12px;font-size:0.88em;color:#c8c0e0;line-height:1.6;white-space:pre-wrap;margin-bottom:10px">${e.answer}</div>
+            <div style="font-size:0.78em;color:#9d86e9;font-weight:bold;margin-bottom:4px">👤 ${professor} 点评</div>
+            <div style="font-size:0.85em;color:#c0b8d8;font-style:italic;line-height:1.5">"${e.feedback}"</div>
+            ${e.pointsAchieved?.length ? `<div style="margin-top:6px;font-size:0.78em;color:#aaa">✓ ${e.pointsAchieved.join("、")}</div>` : ""}
+          </div>`;
+      }).join("");
+
+  const overlay = document.createElement("div");
+  overlay.id = "answer-journal-overlay";
+  overlay.className = "answer-journal-overlay";
+  overlay.innerHTML = `
+    <div style="background:#13132a;border:1px solid #3a3a5a;border-radius:14px;width:100%;max-width:520px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid #2a2a4a;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
+        <div>
+          <div style="font-size:0.78em;color:#888;margin-bottom:2px">第 ${lessonNum} 课</div>
+          <div style="font-weight:bold;color:#e0d8f8">📖 ${lessonTitle}</div>
+        </div>
+        <button id="journal-close" style="background:none;border:1px solid #3a3a5a;color:#888;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.85em">关闭</button>
+      </div>
+      <div style="padding:16px 20px;overflow-y:auto;flex:1">${entriesHtml}</div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+  document.getElementById("journal-close")?.addEventListener("click", () => overlay.remove());
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.remove(); });
+}
+
 // 全局挂载（供 course.js 调用）
 window.courseUI = {
   renderProgressBar,
@@ -312,5 +380,6 @@ window.courseUI = {
   showStudyResultModal,
   showAchievementToast,
   showCourseLevel,
-  setCourseTitle
+  setCourseTitle,
+  showAnswerJournal
 };
