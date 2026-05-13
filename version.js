@@ -5,12 +5,19 @@
 
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
-export const CURRENT_VERSION = '1.7.6';
+export const CURRENT_VERSION = '1.7.7';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.7': [
+    '新增默认 AI 判题接口配置，玩家无需填写 API Key 也可使用默认 AI',
+    '接入 Cloudflare Worker 后端代理，默认 API Key 不再暴露在前端代码中',
+    '新增 OpenAI、DeepSeek、Minimax、豆包、Claude、Gemini、千问、GLM、Kimi、Azure 等 API 提供商配置',
+    '优化 API Key 设置界面，补充不同平台的 Key 格式与默认模型提示',
+    '整理 AI 相关文件结构，为后续 NPC 接入 AI 做准备',
+  ],
   '1.7.6': [
     '新增四年级人文方向选科与六年级 A-Level 选科课表',
     'GCSE 与 A-Level 考试现在会按选科范围判断报名资格',
@@ -251,7 +258,7 @@ function showVersionUpdateDialog(oldVersion, backup) {
     flex-direction: column;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
     color: #fff;
-    font-family: 'Microsoft YaHei', sans-serif;
+    font-family: inherit;
     animation: slideUp 0.4s ease-out;
   `;
 

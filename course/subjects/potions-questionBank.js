@@ -516,7 +516,7 @@ export const questionBank = [
         difficulty: "medium",
         text: "草药采集的最佳时机是：",
         options: [
-          "A. 中午阳光最强时",
+          "A. 下午阳光最强时",
           "B. 月光下",
           "C. 清晨露水多时",
           "D. 任何时间都一样"

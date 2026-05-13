@@ -85,7 +85,7 @@ function buildPreviewSVG(gesture, opts = {}) {
                font-size="4.5"
                fill="${textC}"
                opacity="${opacity}"
-               font-family="serif">${node.label}</text>`
+               font-family="inherit">${node.label}</text>`
       : '';
 
     return `
@@ -96,7 +96,7 @@ function buildPreviewSVG(gesture, opts = {}) {
             text-anchor="middle" dominant-baseline="middle"
             font-size="5.5" font-weight="700"
             fill="${textC}" opacity="${opacity}"
-            font-family="serif">${idx + 1}</text>
+            font-family="inherit">${idx + 1}</text>
       ${labelEl}`;
   }).join('');
 

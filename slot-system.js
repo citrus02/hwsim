@@ -128,11 +128,26 @@ function openFeedback() {
   if (!modal) return;
   scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
   document.body.classList.add('modal-open');
-  document.body.style.top = '-' + scrollTop + 'px';
   document.addEventListener('wheel', preventScroll, { passive: false });
   document.addEventListener('touchmove', preventScroll, { passive: false });
   modal.classList.add('show');
   initCopyButton();
+  initModalTabs();
+}
+
+function initModalTabs() {
+  document.querySelectorAll('.modal-tab').forEach(tab => {
+    tab.removeEventListener('click', handleTabClick);
+    tab.addEventListener('click', handleTabClick);
+  });
+}
+
+function handleTabClick() {
+  const tabId = this.getAttribute('data-tab');
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.modal-tab-content').forEach(c => c.classList.remove('active'));
+  this.classList.add('active');
+  document.getElementById(`tab-${tabId}`)?.classList.add('active');
 }
 
 function closeFeedback() {

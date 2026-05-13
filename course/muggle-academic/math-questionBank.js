@@ -11,31 +11,36 @@ export const questionBank = [
   { lesson: 1, questions: [
     { type:'choice', difficulty:1, text:'下列数中，既不是正整数也不是负整数的是？', options:['A. 5','B. −3','C. 0','D. 100'], answer:'C', knowledgePoint:'正整数、负整数与零', analysis:'零是整数，但不属于正整数也不属于负整数，是整数中的中性成员。' },
     { type:'choice', difficulty:2, text:'在数轴上，−4 与 −1 的大小关系是？', options:['A. −4 > −1','B. −4 = −1','C. −4 < −1','D. 无法比较'], answer:'C', knowledgePoint:'整数的大小比较', analysis:'数轴上越靠右越大。−1 在 −4 右侧，故 −4 < −1。' },
-    { type:'choice', difficulty:3, text:'两次魔药效力测试结果分别是 −5 和 +2（正数表示超出预期）。绝对值更大的是哪次？', options:['A. 第一次（−5）','B. 第二次（+2）','C. 两次相同','D. 无法判断'], answer:'A', knowledgePoint:'绝对值的概念', analysis:'|−5| = 5，|+2| = 2，5 > 2，第一次偏差绝对值更大。' }
+    { type:'choice', difficulty:3, text:'两次魔药效力测试结果分别是 −5 和 +2（正数表示超出预期）。绝对值更大的是哪次？', options:['A. 第一次（−5）','B. 第二次（+2）','C. 两次相同','D. 无法判断'], answer:'A', knowledgePoint:'绝对值的概念', analysis:'|−5| = 5，|+2| = 2，5 > 2，第一次偏差绝对值更大。' },
+    { type:'open', text:'用自己的话解释什么是"绝对值"，并举一个生活中用到绝对值的例子。', scoringPoints:['正确解释绝对值的含义（数到零的距离，或去掉符号后的值）','举出合理的生活例子（如温差、海拔、误差等）'], maxScore:4 }
   ]},
 
   { lesson: 2, questions: [
     { type:'choice', difficulty:1, text:'分数 12/18 化简后是？', options:['A. 6/9','B. 2/3','C. 4/6','D. 3/4'], answer:'B', knowledgePoint:'等值分数与化简', analysis:'12 和 18 的最大公因数是 6。12÷6=2，18÷6=3，化简为 2/3。' },
     { type:'choice', difficulty:2, text:'计算 ¾ + ⅙，结果是？', options:['A. 4/10','B. 11/12','C. 2/5','D. 9/10'], answer:'B', knowledgePoint:'分数的加减法', analysis:'最小公倍数 12。¾=9/12，⅙=2/12，相加得 11/12。' },
-    { type:'choice', difficulty:3, text:'魔药配方需要 2¾ 瓶蛇眼草汁，已用了 1⅓ 瓶，还需多少？', options:['A. 1½ 瓶','B. 1 5/12 瓶','C. 1¼ 瓶','D. 1⅓ 瓶'], answer:'B', knowledgePoint:'带分数与假分数', analysis:'2¾ − 1⅓ = 11/4 − 4/3。公倍数 12：33/12 − 16/12 = 17/12 = 1 5/12 瓶。' }
+    { type:'choice', difficulty:3, text:'魔药配方需要 2¾ 瓶蛇眼草汁，已用了 1⅓ 瓶，还需多少？', options:['A. 1½ 瓶','B. 1 5/12 瓶','C. 1¼ 瓶','D. 1⅓ 瓶'], answer:'B', knowledgePoint:'带分数与假分数', analysis:'2¾ − 1⅓ = 11/4 − 4/3。公倍数 12：33/12 − 16/12 = 17/12 = 1 5/12 瓶。' },
+    { type:'open', text:'分数 ¾ 表示什么意思？用生活中的例子说明"等值分数"的概念。', scoringPoints:['正确说明分数的含义（部分与整体的关系）','举出等值分数的生活例子并说明为何它们相等'], maxScore:4 }
   ]},
 
   { lesson: 3, questions: [
     { type:'choice', difficulty:1, text:'0.375 等于哪个分数？', options:['A. 3/8','B. 3/7','C. 37/100','D. 3/5'], answer:'A', knowledgePoint:'小数与分数的转换', analysis:'0.375 = 375/1000 = 3/8。验算：3÷8 = 0.375。' },
     { type:'choice', difficulty:2, text:'某魔法药材原价 40 加隆，涨价 15% 后新价格是？', options:['A. 44 加隆','B. 46 加隆','C. 55 加隆','D. 34 加隆'], answer:'B', knowledgePoint:'增减百分比', analysis:'40 × 1.15 = 46 加隆。' },
-    { type:'choice', difficulty:3, text:'某魔药浓度 60%，先降低 20%，再提高 25%，最终浓度是？', options:['A. 60%','B. 65%','C. 58%','D. 75%'], answer:'A', knowledgePoint:'百分比的计算', analysis:'60% × 0.8 = 48%，48% × 1.25 = 60%。连续百分比不能简单叠加。' }
+    { type:'choice', difficulty:3, text:'某魔药浓度 60%，先降低 20%，再提高 25%，最终浓度是？', options:['A. 60%','B. 65%','C. 58%','D. 75%'], answer:'A', knowledgePoint:'百分比的计算', analysis:'60% × 0.8 = 48%，48% × 1.25 = 60%。连续百分比不能简单叠加。' },
+    { type:'open', text:'某商品打折 20%，再打折 20%，为什么最终不是打了 40% 折扣？请用你自己的话解释原因。', scoringPoints:['说明两次折扣作用的基数不同（第二次是在打折后价格上再打折）','举例或用数字说明为何不等于一次性打 40% 折扣'], maxScore:4 }
   ]},
 
   { lesson: 4, questions: [
     { type:'choice', difficulty:1, text:'2⁵ 的值是？', options:['A. 10','B. 25','C. 32','D. 16'], answer:'C', knowledgePoint:'乘方的概念与符号', analysis:'2⁵ = 2×2×2×2×2 = 32。' },
     { type:'choice', difficulty:2, text:'若 x² = 49，x 的所有可能值是？', options:['A. 只有 7','B. 只有 −7','C. 7 或 −7','D. 无解'], answer:'C', knowledgePoint:'平方与平方根', analysis:'7² = 49，(−7)² = 49，故 x = ±7。正数有两个平方根。' },
-    { type:'choice', difficulty:3, text:'4⁻² 等于？', options:['A. −16','B. 1/16','C. −8','D. 1/8'], answer:'B', knowledgePoint:'指数为0与负数的初探', analysis:'4⁻² = 1/4² = 1/16。负指数表示倒数。' }
+    { type:'choice', difficulty:3, text:'4⁻² 等于？', options:['A. −16','B. 1/16','C. −8','D. 1/8'], answer:'B', knowledgePoint:'指数为0与负数的初探', analysis:'4⁻² = 1/4² = 1/16。负指数表示倒数。' },
+    { type:'open', text:'平方和平方根是互逆运算。请用你的话解释它们的关系，并说明为什么正数的平方根有两个，而负数没有实数平方根。', scoringPoints:['说明平方与平方根互为逆运算的含义','解释正数有两个平方根（正负各一）的原因','解释负数没有实数平方根的原因（任意实数的平方不为负）'], maxScore:6 }
   ]},
 
   { lesson: 5, questions: [
     { type:'choice', difficulty:1, text:'比 15∶25 化简后是？', options:['A. 3∶5','B. 5∶3','C. 3∶4','D. 1∶2'], answer:'A', knowledgePoint:'比的定义与化简', analysis:'最大公因数 5。15÷5=3，25÷5=5，化简为 3∶5。' },
     { type:'choice', difficulty:2, text:'若 x∶12 = 5∶4，则 x 等于？', options:['A. 10','B. 15','C. 20','D. 9.6'], answer:'B', knowledgePoint:'比例的意义', analysis:'交叉相乘：4x = 60，x = 15。' },
-    { type:'choice', difficulty:3, text:'魔药需要曼德拉草汁与月光草汁比例为 2∶3，共配 500 毫升，需曼德拉草汁多少毫升？', options:['A. 150','B. 200','C. 250','D. 300'], answer:'B', knowledgePoint:'比例在配制中的应用', analysis:'500 × 2/(2+3) = 500 × 2/5 = 200 毫升。' }
+    { type:'choice', difficulty:3, text:'魔药需要曼德拉草汁与月光草汁比例为 2∶3，共配 500 毫升，需曼德拉草汁多少毫升？', options:['A. 150','B. 200','C. 250','D. 300'], answer:'B', knowledgePoint:'比例在配制中的应用', analysis:'500 × 2/(2+3) = 500 × 2/5 = 200 毫升。' },
+    { type:'open', text:'正比和反比有什么区别？各举一个你生活中能观察到的例子说明。', scoringPoints:['正确解释正比（一个量增大另一个也增大，比值不变）','正确解释反比（一个量增大另一个减小，乘积不变）','各举出一个合理的生活例子'], maxScore:6 }
   ]},
 
   // ── 第2章 空间入门 ──────────────────────────────────────────

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="course/classroom.css">
   <link rel="stylesheet" href="gesture-widget.css">
   <link rel="stylesheet" href="duel.css">
-  
+
   <!-- PWA 配置 -->
   <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="霍格沃茨">
-  
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
 </head>
@@ -30,7 +30,7 @@
 <div class="screen active" id="screen-create">
   <h1>✨🏰 霍格沃茨模拟器 🏰✨</h1>
   <hr>
-  
+
   <div class="create-header-row">
     <button id="music-button" class="music-btn">🎵</button>
     <h2>🧙🏻‍♀️ 创建你的巫师</h2>
@@ -124,7 +124,7 @@
     <!-- 行动日常 -->
     <div class="tab-screen active" id="tab-daily">
       <div class="status-grid">
-        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">早晨</span> <span id="dateEvent"></span></span>
+        <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">上午</span> <span id="dateEvent"></span></span>
         <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分 <span id="profileBtn" onclick="window.openProfilePanel?.()" class="info-emoji-btn" title="角色信息">📋</span></span>
         <span class="sg-left">今日行动次数：<span id="actions">3</span>/3 <span id="timeTurnerBtn" onclick="window.openTimeTurnerPanel?.()" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
         <span class="sg-right sg-currency">
@@ -155,7 +155,7 @@
   <div class="card">
     <div class="title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>行动日志</span>
-      <div id="log-filters" style="display:inline-flex;flex-wrap:nowrap;align-items:center;flex-shrink:0;font-size:12px;"></div>
+      <div id="log-filters" style="display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;"></div>
     </div>
     <div class="log" id="log"></div>
   </div>
@@ -440,12 +440,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script type="module">
   import { initMusicSystem, setBGMSource } from './audio.js';
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       setBGMSource('./audio/Prologue.mp3');
       initMusicSystem();
-      
+
       const musicBtnMain = document.getElementById('music-button-main');
       const musicBtn = document.getElementById('music-button');
       if (musicBtnMain && musicBtn) {
@@ -457,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMusicSystem();
   }
 </script>
-  
+
 <script type="module">
   import { initVersionManager } from './version.js';
   try {
@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
 window.toggleSavePanel = function() {
   const saveBox = document.getElementById('saveBox');
   const btn = document.getElementById('saveBtnToggle');
-  
+
   if (saveBox.style.display === 'none' || !saveBox.style.display) {
     saveBox.style.display = 'block';
     btn.textContent = '收起';
@@ -552,30 +552,266 @@ window.toggleSavePanel = function() {
     btn.textContent = '查看';
   }
 };
+
+// API Key 设置功能
+document.addEventListener('DOMContentLoaded', function() {
+  const apiModeRadios = document.querySelectorAll('input[name="api-mode"]');
+  apiModeRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+      const customInput = document.getElementById('custom-api-input');
+      if (this.value === 'custom') {
+        customInput.style.display = 'block';
+      } else {
+        customInput.style.display = 'none';
+      }
+    });
+  });
+
+  document.getElementById('api-provider')?.addEventListener('change', function() {
+    updateApiNote(this.value);
+  });
+
+  document.getElementById('save-api-settings')?.addEventListener('click', saveApiSettings);
+  document.getElementById('reset-api-settings')?.addEventListener('click', resetApiSettings);
+  document.addEventListener('click', function(e) {
+    if (e.target?.closest?.('#api-advanced-toggle')) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleApiAdvanced();
+    }
+  });
+
+  loadApiSettings();
+});
+
+const API_PROVIDERS = {
+  openai: { name: 'GPT (OpenAI)', url: 'https://platform.openai.com/', model: 'gpt-4o-mini', keyHint: '格式通常为 sk-xxx' },
+  claude: { name: 'Claude (Anthropic)', url: 'https://console.anthropic.com/', model: 'claude-3-haiku-20240307', keyHint: '格式通常为 sk-ant-api-xxx' },
+  doubao: { name: '豆包 (火山方舟)', url: 'https://console.volcengine.com/ark/', model: 'doubao-1-5-pro-32k-250115', keyHint: '格式通常为 ak-xxx' },
+  gemini: { name: 'Gemini (Google)', url: 'https://ai.google.dev/', model: 'gemini-1.5-flash-latest', keyHint: '格式通常为 AIza-xxx' },
+  qianwen: { name: '千问 (阿里云)', url: 'https://dashscope.aliyun.com/', model: 'qwen-turbo', keyHint: '格式通常为 sk-xxx' },
+  glm: { name: 'GLM (智谱)', url: 'https://open.bigmodel.cn/', model: 'glm-4-flash', keyHint: '使用平台生成的 Bearer Token' },
+  kimi: { name: 'Kimi (Moonshot)', url: 'https://platform.moonshot.cn/', model: 'moonshot-v1-8k', keyHint: '格式通常为 sk-xxx' },
+  deepseek: { name: 'DeepSeek (深度求索)', url: 'https://platform.deepseek.com/', model: 'deepseek-v4-flash', keyHint: '格式通常为 sk-xxx' },
+  minimax: { name: 'Minimax', url: 'https://platform.minimax.io/', model: 'MiniMax-M2.7', keyHint: '按平台控制台生成' },
+  azure: { name: 'Azure OpenAI (Microsoft)', url: 'https://azure.microsoft.com/', model: '', keyHint: '使用 Azure 门户生成的 Key', needsBaseUrl: true }
+};
+
+function updateApiNote(provider) {
+  const noteEl = document.getElementById('api-note');
+  const baseUrlInput = document.getElementById('api-base-url');
+  const modelInput = document.getElementById('api-model-input');
+  const keyInput = document.getElementById('api-key-input');
+
+  const info = API_PROVIDERS[provider];
+  if (keyInput) {
+    keyInput.placeholder = `输入 API Key，${info?.keyHint || '按平台控制台生成'}`;
+  }
+  if (modelInput) {
+    const modelHint = info?.model ? `默认 ${info.model}` : 'Azure 可留空';
+    modelInput.placeholder = `模型名（不知道就留空，${modelHint}）`;
+  }
+  if (baseUrlInput) baseUrlInput.placeholder = provider === 'azure'
+    ? '完整 Azure 部署地址'
+    : '自定义 API 地址 / 后端代理地址（不知道就留空）';
+
+  if (info) {
+    noteEl.innerHTML = `<strong>💡 提示：</strong>密钥只保存在本地浏览器；调用 AI 时会发送给当前选择的 API 平台。可在 <a href="${info.url}" target="_blank">${info.name} 平台</a> 获取。`;
+  }
+}
+
+function toggleApiAdvanced() {
+  const panel = document.getElementById('api-advanced-panel');
+  const button = document.getElementById('api-advanced-toggle');
+  panel?.classList.toggle('show');
+  if (button && panel) {
+    button.textContent = panel.classList.contains('show') ? '▾ 高级设置' : '▸ 高级设置';
+  }
+}
+
+function loadApiSettings() {
+  const savedMode = localStorage.getItem('apiMode') || 'default';
+  const savedKey = localStorage.getItem('apiKey') || '';
+  const savedProvider = localStorage.getItem('apiProvider') || 'deepseek';
+  const savedBaseUrl = localStorage.getItem('apiBaseUrl') || '';
+  const savedModel = localStorage.getItem('apiModel') || '';
+
+  const modeRadio = document.querySelector(`input[name="api-mode"][value="${savedMode}"]`);
+  const providerSelect = document.getElementById('api-provider');
+  const keyInput = document.getElementById('api-key-input');
+  const baseUrlInput = document.getElementById('api-base-url');
+  const modelInput = document.getElementById('api-model-input');
+
+  if (modeRadio) modeRadio.checked = true;
+  if (providerSelect) providerSelect.value = savedProvider;
+  if (keyInput) keyInput.value = savedKey;
+  if (baseUrlInput) baseUrlInput.value = savedBaseUrl;
+  if (modelInput) modelInput.value = savedModel;
+
+  const customInput = document.getElementById('custom-api-input');
+
+  updateApiNote(savedProvider);
+
+  if (savedMode === 'custom') {
+    customInput.style.display = 'block';
+  } else {
+    customInput.style.display = 'none';
+  }
+
+  const advancedPanel = document.getElementById('api-advanced-panel');
+  const advancedToggle = document.getElementById('api-advanced-toggle');
+  if (advancedPanel && (savedBaseUrl || savedModel)) {
+    advancedPanel.classList.add('show');
+    if (advancedToggle) advancedToggle.textContent = '▾ 高级设置';
+  }
+}
+
+function saveApiSettings() {
+  const mode = document.querySelector('input[name="api-mode"]:checked')?.value || 'default';
+  const apiKey = document.getElementById('api-key-input')?.value || '';
+  const provider = document.getElementById('api-provider')?.value || 'deepseek';
+  const baseUrl = document.getElementById('api-base-url')?.value || '';
+  const model = document.getElementById('api-model-input')?.value || '';
+
+  localStorage.setItem('apiMode', mode);
+  localStorage.setItem('apiKey', apiKey);
+  localStorage.setItem('apiProvider', provider);
+  localStorage.setItem('apiBaseUrl', baseUrl);
+  localStorage.setItem('apiModel', model);
+
+  showApiStatus('success', '✓ 设置已保存！');
+}
+
+function resetApiSettings() {
+  localStorage.removeItem('apiMode');
+  localStorage.removeItem('apiKey');
+  localStorage.removeItem('deepseek_api_key');
+  localStorage.removeItem('apiProvider');
+  localStorage.removeItem('apiBaseUrl');
+  localStorage.removeItem('apiModel');
+
+  const defaultModeRadio = document.querySelector('input[name="api-mode"][value="default"]');
+  const providerSelect = document.getElementById('api-provider');
+  const keyInput = document.getElementById('api-key-input');
+  const baseUrlInput = document.getElementById('api-base-url');
+  const modelInput = document.getElementById('api-model-input');
+
+  if (defaultModeRadio) defaultModeRadio.checked = true;
+  if (providerSelect) providerSelect.value = 'deepseek';
+  if (keyInput) keyInput.value = '';
+  if (baseUrlInput) baseUrlInput.value = '';
+  if (modelInput) modelInput.value = '';
+  document.getElementById('custom-api-input').style.display = 'none';
+  document.getElementById('api-advanced-panel')?.classList.remove('show');
+  const advancedToggle = document.getElementById('api-advanced-toggle');
+  if (advancedToggle) advancedToggle.textContent = '▸ 高级设置';
+
+  updateApiNote('deepseek');
+  showApiStatus('success', '✓ 已重置为默认设置');
+}
+
+function showApiStatus(type, message) {
+  const statusDiv = document.getElementById('api-status');
+  const statusText = document.getElementById('api-status-text');
+
+  statusDiv.className = type;
+  statusText.textContent = message;
+  statusDiv.style.display = 'block';
+
+  setTimeout(() => {
+    statusDiv.style.display = 'none';
+  }, 3000);
+}
+
 </script>
 
-<!-- 反馈弹窗 -->
+<!-- 反馈与设置弹窗 -->
 <div id="feedback-modal" class="modal">
     <div class="modal-content">
         <button id="close-feedback" class="close-btn">✕</button>
-        
-        <h2>💡反馈</h2>
-        <p><i><span>🧙‍♂️ 已有 <span id="visitor-count">--</span> 位巫师入学</span></i></p>
-        
-        <div class="email-box">
-            <code id="email-display">hwsimgame@qq.com</code>
+
+        <div class="modal-tabs">
+            <button class="modal-tab active" data-tab="feedback">💡 反馈</button>
+            <button class="modal-tab" data-tab="api-key">🔑 API Key</button>
         </div>
-      
-        <p class="feedback-message">
-            遇到问题、有新想法，请联系上方邮箱<br>
-        </p>
 
-       <p class="feedback-github-link">
-            <a href="https://github.com/citrus02/hwsim/issues" target="_blank">或者到GitHub发送Issue</a>
-        </p>
+        <!-- 反馈标签页 -->
+        <div class="modal-tab-content active" id="tab-feedback">
+            <h2>💡 反馈</h2>
+            <p><i><span>🧙‍♂️ 已有 <span id="visitor-count">--</span> 位巫师入学</span></i></p>
 
-        <div class="button-group">
-            <button id="copy-email" class="btn btn-primary">📋 复制邮箱</button>
+            <div class="email-box">
+                <code id="email-display">hwsimgame@qq.com</code>
+            </div>
+
+            <p class="feedback-message">
+                遇到问题、有新想法，请联系上方邮箱<br>
+            </p>
+
+           <p class="feedback-github-link">
+                <a href="https://github.com/citrus02/hwsim/issues" target="_blank">或者到GitHub发送Issue</a>
+            </p>
+
+            <div class="button-group">
+                <button id="copy-email" class="btn btn-primary">📋 复制邮箱</button>
+            </div>
+        </div>
+
+        <!-- API Key 设置标签页 -->
+        <div class="modal-tab-content" id="tab-api-key">
+            <h2>🔑 API Key 设置</h2>
+
+            <label class="api-key-option">
+                <input type="radio" name="api-mode" value="default" checked>
+                <div class="option-content">
+                    <span>使用默认 API Key</span>
+                    <p class="option-desc">当前默认通过后端代理调用 DeepSeek；如果默认接口不可用，会自动使用本地关键词</p>
+                </div>
+            </label>
+
+            <label class="api-key-option">
+                <input type="radio" name="api-mode" value="custom">
+                <div class="option-content">
+                    <span>使用自定义 API Key</span>
+                    <p class="option-desc">输入自己的 API Key 以获得更好的 AI 体验；密钥只保存在本地浏览器，调用 AI 时仅发送给所选 API 平台，不会上传到本游戏服务器（本游戏压根没有服务器，完全可以下载更新包全量覆盖本地玩）</p>
+                </div>
+            </label>
+
+            <div id="custom-api-input" style="margin-top: 8px; text-align: center;">
+                <div class="api-provider-select">
+                    <label>API 提供商：</label>
+                    <select id="api-provider">
+                        <option value="openai">GPT (OpenAI)</option>
+                        <option value="claude">Claude (Anthropic)</option>
+                        <option value="doubao">豆包 (字节跳动)</option>
+                        <option value="gemini">Gemini (Google)</option>
+                        <option value="qianwen">千问 (阿里云)</option>
+                        <option value="glm">GLM (智谱)</option>
+                        <option value="kimi">Kimi (Moonshot)</option>
+                        <option value="deepseek">DeepSeek (深度求索)</option>
+                        <option value="minimax">Minimax</option>
+                        <option value="azure">Azure OpenAI (Microsoft)</option>
+                    </select>
+                </div>
+                <input type="password" id="api-key-input" placeholder="输入 API Key，格式通常为 sk-xxx" class="api-key-input">
+                <button type="button" id="api-advanced-toggle" class="api-advanced-toggle">▸ 高级设置</button>
+                <div id="api-advanced-panel" class="api-advanced-panel">
+                    <input type="text" id="api-model-input" placeholder="模型名（不知道就留空，默认 deepseek-v4-flash）" class="api-model-input">
+                    <input type="text" id="api-base-url" placeholder="自定义 API 地址 / 后端代理地址（不知道就留空）" class="api-base-url-input">
+                </div>
+                <p class="api-key-note" id="api-note">
+                        <strong>💡 提示：</strong>密钥只保存在本地浏览器；调用 AI 时会发送给当前选择的 API 平台。
+                    </p>
+            </div>
+
+            <div class="button-group" style="margin-top: 20px;">
+                <button id="save-api-settings" class="btn btn-primary">💾 保存设置</button>
+                <button id="reset-api-settings" class="btn">🔄 重置</button>
+            </div>
+
+            <div id="api-status" style="margin-top: 16px; display: none; padding: 10px; border-radius: 8px;">
+                <span id="api-status-text"></span>
+            </div>
         </div>
     </div>
 </div>
@@ -587,7 +823,7 @@ window.toggleSavePanel = function() {
     function initVisitorCounter() {
         const counterSpan = document.getElementById('busuanzi_value_site_uv');
         const fallbackSpan = document.getElementById('visitor-count');
-        
+
         if (!counterSpan && fallbackSpan) {
             let checkCount = 0;
             const interval = setInterval(function() {
@@ -610,7 +846,7 @@ window.toggleSavePanel = function() {
             }, 100);
         }
     }
-    
+
     document.addEventListener('DOMContentLoaded', initVisitorCounter);
 </script>
 

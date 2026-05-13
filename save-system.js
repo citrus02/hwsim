@@ -198,9 +198,9 @@ export function renderLog() {
   if (filtersEl) {
     const filters = data.logFilters || { story: true, npc: true, player: true };
     filtersEl.innerHTML =
-      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer;margin-right:12px"><input type="checkbox" data-filter="story" ${filters.story ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;color:rgba(255,255,255,0.7)">旁白</span></label>` +
-      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer;margin-right:12px"><input type="checkbox" data-filter="npc" ${filters.npc ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;background:linear-gradient(to right,#dc143c,#ffd700,#4169e1,#5cb85c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">角色</span></label>` +
-      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer"><input type="checkbox" data-filter="player" ${filters.player ? 'checked' : ''} style="margin-right:2px"><span style="font-size:11px;color:#9999cc">自己</span></label>`;
+      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer"><input type="checkbox" data-filter="story" ${filters.story ? 'checked' : ''} style="margin-right:4px"><span style="font-size:11px;color:rgba(255,255,255,0.7)">旁白</span></label>` +
+      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer"><input type="checkbox" data-filter="npc" ${filters.npc ? 'checked' : ''} style="margin-right:4px"><span style="font-size:11px;background:linear-gradient(to right,#dc143c,#ffd700,#4169e1,#5cb85c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">角色</span></label>` +
+      `<label style="display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer"><input type="checkbox" data-filter="player" ${filters.player ? 'checked' : ''} style="margin-right:4px"><span style="font-size:11px;color:#9999cc">自己</span></label>`;
 
     filtersEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
       cb.addEventListener('change', () => {

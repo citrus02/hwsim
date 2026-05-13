@@ -110,7 +110,7 @@ export const ErmineTeahouseConfig = {
       name: "英式早餐茶",
       icon: "☕",
       category: "经典红茶",
-      description: "浓郁的拼配红茶，配牛奶和方糖——但糖罐是魔法糖罐，加糖时会自动问你'一颗还是两颗？'。早晨来一杯比什么醒神咒都好用",
+      description: "浓郁的拼配红茶，配牛奶和方糖——但糖罐是魔法糖罐，加糖时会自动问你'一颗还是两颗？'。上午来一杯比什么醒神咒都好用",
       basePrice: S(2),
       displayPrice: "2西可",
       stock: 300, maxStock: 300,

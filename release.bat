@@ -32,13 +32,30 @@ echo Waiting 5 seconds...
 timeout /t 5
 
 echo Creating zip package...
-powershell -Command "Get-ChildItem -Exclude '.git','.github','*.bat' | Compress-Archive -DestinationPath \"%version%.zip\" -Force"
+set zip_file=%version%.zip
+for /l %%i in (1,1,3) do (
+    echo Zip attempt %%i of 3...
+    if exist "%zip_file%" del "%zip_file%"
+    powershell -NoProfile -Command "try { Get-ChildItem -Exclude '.git','.github','*.bat' | Compress-Archive -DestinationPath '%zip_file%' -Force -ErrorAction Stop; exit 0 } catch { Write-Error $_; exit 1 }"
+    if not errorlevel 1 (
+        goto zip_done
+    )
+    echo Zip failed. Waiting 3 seconds before retry...
+    timeout /t 3 >nul
+)
+
+:zip_done
+if not exist "%zip_file%" (
+    echo ERROR: Zip package failed after 3 attempts. Backup was not copied.
+    pause
+    exit /b 1
+)
 
 echo Copying to USB drive...
-copy "%version%.zip" "%backup_folder%\" >nul
+copy "%zip_file%" "%backup_folder%\" >nul
 if %errorlevel%==0 (
-    echo SUCCESS: Zip saved to %backup_folder%\%version%.zip
-    del "%version%.zip"
+    echo SUCCESS: Zip saved to %backup_folder%\%zip_file%
+    del "%zip_file%"
     echo Local zip deleted.
 ) else (
     echo ERROR: Copy failed

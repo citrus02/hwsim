@@ -1,6 +1,6 @@
 import { getSave, setSave, addLog } from './save-system.js';
 
-const TIME_PERIODS = ["早晨", "中午", "夜晚"];
+const TIME_PERIODS = ["上午", "下午", "夜晚"];
 
 function isTimeTraveling() {
   const data = getSave();
@@ -27,8 +27,8 @@ function _parseDate(s) {
 }
 
 function _periodToAction(period) {
-  if (period === "早晨") return 3;
-  if (period === "中午") return 2;
+  if (period === "上午") return 3;
+  if (period === "下午") return 2;
   if (period === "夜晚") return 1;
   return 0;
 }
@@ -37,7 +37,7 @@ function _dateGTE(a, b) {
   return a > b || a === b;
 }
 
-const PERIOD_ORDER = { "早晨": 0, "中午": 1, "夜晚": 2, "深夜": 3 };
+const PERIOD_ORDER = { "上午": 0, "下午": 1, "夜晚": 2, "深夜": 3 };
 
 function _hasReachedOriginal(currentDate, currentPeriod, origDate, origPeriod) {
   if (currentDate > origDate) return true;
@@ -60,7 +60,7 @@ function openTimeTurnerPanel() {
   const usesLeft = getUsesLeft();
   const unlimited = usesLeft === -1;
   const currentDate = data.time?.currentDate || "1991-09-02";
-  const currentPeriod = data.time?.nowTime || "早晨";
+  const currentPeriod = data.time?.nowTime || "上午";
   const testMode = isTestMode();
 
   let existing = document.getElementById("timeTurnerPanel");
@@ -201,7 +201,7 @@ function openTimeTurnerPanel() {
 function _travelTo(targetDate, targetPeriod) {
   const data = getSave();
   const currentFullDate = data.time?.currentDate || "1991-09-02";
-  const currentPeriod = data.time?.nowTime || "早晨";
+  const currentPeriod = data.time?.nowTime || "上午";
   const currentActions = data.time?.dailyActionLeft ?? 3;
 
   if (targetDate === currentFullDate && targetPeriod === currentPeriod) {
@@ -410,7 +410,7 @@ function _checkAutoEnd() {
   if (data.timeTurner.isFutureTravel) return;
 
   const currentDate = data.time?.currentDate || "1991-09-02";
-  const currentPeriod = data.time?.nowTime || "早晨";
+  const currentPeriod = data.time?.nowTime || "上午";
 
   if (_hasReachedOriginal(currentDate, currentPeriod, orig.currentDate, orig.nowTime)) {
     addLog(`⏳ 时间已追平原时间点，时间旅行自动结束。`, 'story');

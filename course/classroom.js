@@ -16,81 +16,28 @@
  */
 
 import { loadSave, writeSave } from './save-utils.js';
-import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-studies.js';
+import { gradeOpenAnswer } from '../ai/grader.js';
 import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
 import { GestureWidget } from '../gesture-widget.js';
 import { getGestureById } from '../gesture-data.js';
 import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, getCurrentLesson as getMuggleCurrentLesson, advanceLesson } from './muggle-schedule.js';
+import { SUBJECT_WIN_KEY, SUBJECT_NAME_KEY, HOGWARTS_SUBJECT_KEYS, getSubjectData, getAllLessons, getItemSubjectKey, scoreToRating, HOUSE_POINTS_MAP } from './utils.js';
 import './subjects/flight.js';
 import './subjects/apparition.js';
 
-// ── 分科数据映射 ─────────────────────────────────────────
-const SUBJECT_WIN_KEY = {
-  math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
-  biology:"subject_biology", history:"subject_history", civics:"subject_civics",
-  geography:"subject_geography", literature:"subject_literature", latin:"subject_latin",
-  transfiguration: "subject_transfiguration",
-  charms: "subject_charms",
-  magicHistory: "subject_magicHistory",
-  defense: "subject_defense",
-  herbology: "subject_herbology",
-  astronomy: "subject_astronomy",
-  potions: "subject_potions",
-  flight: "subject_flight",
-  muggleStudies: "subject_muggleStudies",
-  careOfMagicalCreatures: "subject_careOfMagicalCreatures",
-  apparition: "subject_apparition",
-  alchemy: "subject_alchemy",
-  divination: "subject_divination",
-  arithmancy: "subject_arithmancy",
-  ancientRunes: "subject_ancientRunes",
-};
-
-const SUBJECT_NAME_KEY = {
-  "变形术": "transfiguration",
-  "魔咒学": "charms",
-  "魔法史": "magicHistory",
-  "黑魔法防御术": "defense",
-  "草药学": "herbology",
-  "天文学": "astronomy",
-  "魔药学": "potions",
-  "飞行课": "flight",
-  "麻瓜研究": "muggleStudies",
-  "保护神奇动物": "careOfMagicalCreatures",
-  "幻影移形": "apparition",
-  "炼金术": "alchemy",
-  "占卜学": "divination",
-  "算术占卜": "arithmancy",
-  "古代魔文": "ancientRunes",
-};
-
-function getItemSubjectKey(item) {
-  return item?.muggleSubjectKey || item?.hogwartsSubjectKey || SUBJECT_NAME_KEY[item?.name] || null;
-}
-
-// 从 SUBJECT_WIN_KEY 动态生成霍格沃茨魔法课程键名集合
-const HOGWARTS_SUBJECT_KEYS = new Set(Object.keys(SUBJECT_WIN_KEY).filter(k => !MUGGLE_SUBJECTS.includes(k)));
-
-function getSubjectData(key) { return window[SUBJECT_WIN_KEY[key]] || null; }
-
 // ── 课时工具 ─────────────────────────────────────────────
-function getAllLessons(syllabus) {
-  const out = [];
-  (syllabus || []).forEach(ch => (ch.lessons || []).forEach(l => out.push(l)));
-  return out;
-}
 
 function getCurrentLesson(subjectKey) {
   const data = getSubjectData(subjectKey);
   if (!data) return null;
   const all = getAllLessons(data.syllabus);
-  
+
   // 麻瓜课程使用特殊课时逻辑：基于课程表和学习进度
   if (MUGGLE_SUBJECTS.includes(subjectKey)) {
     const currentLessonNum = getMuggleCurrentLesson(subjectKey);
     return all.find(l => l.lesson === currentLessonNum) || all[all.length - 1];
   }
-  
+
   // 霍格沃茨课程使用原有逻辑
   const prog = loadSave().course?.muggleProgress?.[subjectKey] || {};
   const done = [...(prog.completed || []), ...(prog.expired || [])];
@@ -436,10 +383,10 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
   _setPhase(0);
   const body = document.getElementById("cls-body");
   if (!body) return;
-  
+
   // 检查是否是第一次上麻瓜课程（需要触发教授自我介绍）
   const isMuggleFirstTime = MUGGLE_SUBJECTS.includes(subjectKey) && !hasMetProfessor(subjectKey);
-  
+
   if (isMuggleFirstTime) {
     // 显示教授自我介绍
     const intro = window.muggleSchedule?.professorIntroductions?.[subjectKey];
@@ -453,7 +400,7 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
       <div class="cls-nav">
         <button class="cls-btn-advance" id="cls-start">开始上课 →</button>
       </div>`;
-    
+
     document.getElementById("cls-start").onclick = () => {
       // 标记已见过教授
       markMetProfessor(subjectKey);
@@ -597,6 +544,207 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
       return;  // gesture 题型处理完毕
     }
 
+    // ── 开放题（AI 判题） ─────────────────────────────────
+    if (q.type === "open") {
+      body.innerHTML = `
+        <div class="cls-quiz-header">
+          <span class="cls-quiz-count">开放题（AI 判题）</span>
+          <span class="cls-diff-badge" style="background:#7c5cbf;color:#fff;padding:2px 8px;border-radius:6px;font-size:0.78em">主观题</span>
+        </div>
+        <div class="cls-question">${q.text}</div>
+        <div style="margin:12px 0 4px">
+          <textarea id="cls-open-ta" rows="5" maxlength="600"
+            placeholder="请用文字写出你的答案……"
+            style="width:100%;padding:10px;border:1px solid #555;border-radius:8px;
+                   background:#0d0d1a;color:#e0e0e0;font-size:0.9em;resize:vertical;
+                   box-sizing:border-box;outline:none;line-height:1.6"></textarea>
+          <div style="text-align:right;font-size:0.75em;color:#888;margin-top:2px">
+            <span id="cls-open-cnt">0</span> / 600
+          </div>
+        </div>
+        <div class="cls-feedback" id="cls-fb"></div>
+        <div class="cls-nav">
+          <button class="cls-btn-advance" id="cls-open-submit">提交答案 →</button>
+        </div>`;
+
+      const ta = document.getElementById("cls-open-ta");
+      ta?.addEventListener("input", () => {
+        document.getElementById("cls-open-cnt").textContent = ta.value.length;
+      });
+
+      document.getElementById("cls-open-submit").addEventListener("click", async () => {
+        const answer = ta?.value?.trim();
+        const fb = document.getElementById("cls-fb");
+        if (!answer) {
+          if (fb) {
+            fb.className = "cls-feedback cls-fb-show cls-fb-wrong";
+            fb.innerHTML = `<div class="cls-fb-tag cls-fb-w">请先输入你的答案</div>`;
+          }
+          return;
+        }
+
+        // 进入 loading 状态
+        const submitBtn = document.getElementById("cls-open-submit");
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "评分中…"; }
+        if (fb) {
+          fb.className = "cls-feedback cls-fb-show";
+          fb.style.background = "rgba(108,92,231,0.1)";
+          fb.innerHTML = `<div style="text-align:center;padding:12px;color:#b9a7e8">🔮 正在召唤 AI 评分…</div>`;
+        }
+
+        // 降级评分函数：基于关键词匹配
+        function fallbackGrade() {
+          const scoringPoints = q.scoringPoints || [];
+          const maxScore = q.maxScore || 4;
+          let score = 0;
+          const achieved = [];
+
+          scoringPoints.forEach((point, idx) => {
+            const keywords = point.keywords || [point];
+            const found = keywords.some(kw =>
+              answer.toLowerCase().includes(kw.toLowerCase())
+            );
+            if (found) {
+              score += 1;
+              achieved.push(point.text || `要点${idx + 1}`);
+            }
+          });
+
+          // 根据答案长度额外加分
+          if (answer.length > 100) score = Math.min(maxScore, score + 1);
+          if (answer.length > 200) score = Math.min(maxScore, score + 1);
+
+          return {
+            score,
+            maxScore,
+            feedback: getFallbackFeedback(score, maxScore),
+            pointsAchieved: achieved
+          };
+        }
+
+        function getFallbackFeedback(score, max) {
+          const pct = score / max;
+          if (pct >= 0.75) return "回答完整，思路清晰。";
+          if (pct >= 0.5) return "回答有一定深度，但还可以更完善。";
+          if (pct > 0) return "思路正确，继续加油。";
+          return "请重新思考这个问题。";
+        }
+
+        let retryCount = 0;
+        const maxRetries = 2;
+
+        async function attemptGrade() {
+          try {
+            const result = await gradeOpenAnswer({
+              question:      q.text,
+              scoringPoints: q.scoringPoints || [],
+              maxScore:      q.maxScore || 4,
+              studentAnswer: answer,
+              subject:       sd.subjectMeta?.name  || "学科",
+              lessonTitle:   lesson.title           || "",
+              professor:     sd.subjectMeta?.professor || "教授"
+            });
+
+            if (!result) {
+              // 用户跳过了 API Key 输入，使用降级评分
+              return fallbackGrade();
+            }
+
+            return result;
+          } catch (err) {
+            retryCount++;
+            if (retryCount <= maxRetries) {
+              console.warn(`AI 评分失败，重试第 ${retryCount} 次:`, err.message);
+              await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+              return attemptGrade();
+            }
+            console.error(`AI 评分多次失败，使用降级评分:`, err.message);
+            throw err;
+          }
+        }
+
+        try {
+          const result = await attemptGrade();
+
+          // 保存开放题结果到状态
+          st.openScore          = result.score;
+          st.openMaxScore       = result.maxScore;
+          st.openFeedback       = result.feedback;
+          st.openPointsAchieved = result.pointsAchieved || [];
+
+          const pct       = result.score / result.maxScore;
+          const fbClass   = pct >= 0.75 ? "cls-fb-right" : pct > 0 ? "" : "cls-fb-wrong";
+          const scoreTag  = pct >= 0.75 ? "✦ 优秀" : pct >= 0.5 ? "◎ 良好" : pct > 0 ? "△ 部分得分" : "✗ 未得分";
+
+          if (fb) {
+            fb.style.background = "";
+            fb.className = `cls-feedback cls-fb-show ${fbClass}`;
+            fb.innerHTML = `
+              <div class="cls-fb-tag ${pct >= 0.75 ? "cls-fb-r" : pct > 0 ? "" : "cls-fb-w"}">
+                ${scoreTag} · ${result.score} / ${result.maxScore} 分
+              </div>
+              ${result.pointsAchieved.length
+                ? `<div class="cls-fb-analysis" style="margin-top:6px">
+                     <span class="cls-fb-kp">✓ 得分点：</span>${result.pointsAchieved.join("、")}
+                   </div>`
+                : ""}
+              <div class="cls-fb-analysis" style="margin-top:8px;font-style:italic;color:#d0c8e8">
+                "${result.feedback}"
+              </div>`;
+          }
+
+          const nav = body.querySelector(".cls-nav");
+          if (nav) {
+            nav.innerHTML = `<button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
+            document.getElementById("cls-to-result")?.addEventListener("click", () =>
+              _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose));
+          }
+
+        } catch (err) {
+          // 所有重试都失败，使用降级评分
+          const result = fallbackGrade();
+          st.openScore = result.score;
+          st.openMaxScore = result.maxScore;
+          st.openFeedback = result.feedback;
+          st.openPointsAchieved = result.pointsAchieved;
+
+          const pct = result.score / result.maxScore;
+          const fbClass = pct >= 0.75 ? "cls-fb-right" : pct > 0 ? "" : "cls-fb-wrong";
+          const scoreTag = pct >= 0.75 ? "✦ 优秀" : pct >= 0.5 ? "◎ 良好" : pct > 0 ? "△ 部分得分" : "✗ 未得分";
+
+          if (fb) {
+            fb.style.background = "";
+            fb.className = `cls-feedback cls-fb-show ${fbClass}`;
+            fb.innerHTML = `
+              <div class="cls-fb-tag ${pct >= 0.75 ? "cls-fb-r" : pct > 0 ? "" : "cls-fb-w"}">
+                ${scoreTag} · ${result.score} / ${result.maxScore} 分
+                <span style="font-size:0.7em;color:#888;margin-left:8px">（自动评分）</span>
+              </div>
+              ${result.pointsAchieved.length
+                ? `<div class="cls-fb-analysis" style="margin-top:6px">
+                     <span class="cls-fb-kp">✓ 得分点：</span>${result.pointsAchieved.join("、")}
+                   </div>`
+                : ""}
+              <div class="cls-fb-analysis" style="margin-top:8px;font-style:italic;color:#d0c8e8">
+                "${result.feedback}"
+              </div>
+              <div class="cls-fb-analysis" style="margin-top:6px;font-size:0.85em;color:#888">
+                AI 评分暂时不可用，已使用自动评分
+              </div>`;
+          }
+
+          const nav = body.querySelector(".cls-nav");
+          if (nav) {
+            nav.innerHTML = `<button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
+            document.getElementById("cls-to-result")?.addEventListener("click", () =>
+              _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose));
+          }
+        }
+      });
+
+      return;  // open 题型处理完毕
+    }
+
     // ── 普通选择题（原有逻辑） ────────────────────────────
     body.innerHTML = `
       <div class="cls-quiz-header">
@@ -668,7 +816,7 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   }
 
   saveProgress(subjectKey, lesson.lesson, rating);
-  
+
   // 麻瓜课程：记录学习日期并推进课程进度
   if (MUGGLE_SUBJECTS.includes(subjectKey)) {
     recordStudyDate(subjectKey);
@@ -679,14 +827,14 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   if (rating) {
     // 维度一：行动触发偶遇
     window.affinityUI?.tryStudentActionEncounter('courseStudy');
-    
+
     // 维度四：专属条件触发
-    window.affinityUI?.checkStudentSpecialTriggers('courseGrade', { 
+    window.affinityUI?.checkStudentSpecialTriggers('courseGrade', {
       subject: sd.subjectMeta?.name || subjectKey,
       subjectKey,
-      rating: rating 
+      rating: rating
     });
-    
+
     // 草药学特殊触发 → 纳威
     if (subjectKey === 'herbology') {
       window.affinityUI?.checkStudentSpecialTriggers('goodStudy', { subject: '草药学' });
@@ -724,16 +872,33 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
   const ratingColor = {O:"#ffd700",E:"#98e898",A:"#aad4f0",P:"#ccc",D:"#f88",T:"#f44"}[rating] || "#aaa";
   const gradeText = {O:"Outstanding · 卓越",E:"Exceeds Expectations · 超预期",A:"Acceptable · 合格",P:"Poor · 欠佳",D:"Dreadful · 糟糕",T:"Troll · 极差"}[rating] || "";
 
+  // 选择题数量（排除开放题）
+  const choiceCount = (qGroup?.questions?.filter(q => q.type !== "open")?.length || 0);
+
+  // 开放题结果（如有）
+  const hasOpenResult = st.openScore != null;
+  const openPct = hasOpenResult ? st.openScore / st.openMaxScore : 0;
+  const openScoreColor = openPct >= 0.75 ? "#98e898" : openPct >= 0.5 ? "#aad4f0" : openPct > 0 ? "#f0c878" : "#f88";
+
   body.innerHTML = `
     <div class="cls-result-card">
       <div class="cls-result-lesson">第 ${lesson.lesson} 课《${lesson.title}》· 课程结束</div>
       ${rating ? `
         <div class="cls-result-rating" style="color:${ratingColor}">${rating}</div>
         <div class="cls-result-grade" style="color:${ratingColor}">${gradeText}</div>
-        <div class="cls-result-score">${st.score} 分 · 满分 ${(qGroup?.questions?.length||0)*2} 分</div>
+        <div class="cls-result-score">${st.score} 分 · 满分 ${choiceCount * 2} 分</div>
         <div class="cls-result-hp ${housePoints>=0?"cls-hp-plus":"cls-hp-minus"}">
           学院分 ${housePoints>=0?"+":""}${housePoints}
         </div>` : `<div class="cls-result-no-quiz">本课已完成，知识已记录。</div>`}
+      ${hasOpenResult ? `
+        <div style="margin:16px 0 0;padding:14px 16px;border:1px solid #3a3a5a;border-radius:10px;background:rgba(108,92,231,0.08)">
+          <div style="font-size:0.82em;color:#9d86e9;font-weight:bold;margin-bottom:6px">📝 开放题 AI 点评</div>
+          <div style="font-size:0.9em;color:${openScoreColor};font-weight:bold;margin-bottom:8px">
+            得分：${st.openScore} / ${st.openMaxScore}
+            ${st.openPointsAchieved?.length ? `<span style="color:#aaa;font-weight:normal;font-size:0.85em;margin-left:8px">· ${st.openPointsAchieved.join("、")}</span>` : ""}
+          </div>
+          <div style="font-size:0.88em;color:#d0c8e8;line-height:1.6;font-style:italic">"${st.openFeedback}"</div>
+        </div>` : ""}
       ${comment ? `
         <div class="cls-result-comment">
           <div class="cls-comment-prof">👤 ${sd.subjectMeta.professor}</div>

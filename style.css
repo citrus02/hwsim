@@ -1,6 +1,7 @@
 /* style.css */
 /* 📦 颜色变量系统（放在最顶部） */
 :root {
+  --font-default: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --bg-dark: #0b0f1a;
   --bg-card: #161d2f;
   --bg-input: #1e293b;
@@ -36,9 +37,12 @@
 /* 基础重置与全局样式 */
 * {
   box-sizing: border-box;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: inherit;
   margin: 0;
   padding: 0;
+}
+html {
+  font-family: var(--font-default);
 }
 body {
   background: var(--bg-dark);
@@ -50,6 +54,12 @@ body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 .container {
   max-width: 900px;
@@ -217,7 +227,7 @@ h3 {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 0 0 10px 0;
+  margin: 10px 0;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -917,7 +927,9 @@ select:valid {
   font-weight: 500;
 }
 
-/* ==================== ✅ 反馈弹窗 ==================== */
+
+
+/* ==================== ✅ 反馈与设置弹窗 ==================== */
 .modal {
   display: none;
   position: fixed;
@@ -929,25 +941,67 @@ select:valid {
   z-index: 10000;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow-y: auto;
+  padding: 18px 0;
+  box-sizing: border-box;
 }
 .modal.show {
   display: flex !important;
 }
 .modal-content {
   background: var(--bg-card);
-  padding: 30px;
+  padding: 16px;
   border-radius: 12px;
+  width: min(92vw, 400px);
+  min-height: 430px;
   max-width: 400px;
-  max-height: 80vh;
-  overflow-y: auto;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   position: relative;
   border: 1px solid var(--bg-input);
 }
 .modal-content h2 {
   color: var(--color-gold);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+.modal-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--bg-input);
+}
+.modal-tab {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--color-text-light);
+  transition: all 0.2s;
+  font-size: 14px;
+}
+.modal-tab:hover {
+  background: var(--bg-btn);
+}
+.modal-tab.active {
+  background: var(--bg-btn);
+  color: var(--color-gold);
+}
+.modal-tab-content {
+  display: none;
+  flex: 0 0 auto;
+  overflow: visible;
+  padding-right: 2px;
+}
+.modal-tab-content.active {
+  display: flex;
+  flex-direction: column;
 }
 .close-btn {
   position: absolute;
@@ -968,6 +1022,7 @@ select:valid {
   color: var(--color-text);
   font-size: 14px;
   line-height: 1.6;
+  text-align: center;
 }
 .email-box {
   background: var(--bg-input);
@@ -976,6 +1031,140 @@ select:valid {
   text-align: center;
   margin: 18px 0;
   border: 1px solid #2a3b66;
+}
+.api-key-option {
+  margin-bottom: 8px;
+}
+.api-key-section {
+  margin-top: 10px;
+}
+.api-key-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.api-key-option:hover {
+  background-color: rgba(255, 215, 0, 0.08);
+}
+.api-key-option input[type="radio"] {
+  accent-color: var(--color-gold);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.option-content {
+  flex: 1;
+  text-align: left;
+}
+.option-content span {
+  font-size: 14px;
+  color: var(--color-text);
+  display: block;
+}
+.option-desc {
+  font-size: 12px;
+  color: var(--color-text-light);
+  margin-top: 3px;
+}
+.api-provider-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+.api-provider-select label {
+  font-size: 14px;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+.api-provider-select select {
+  background: var(--bg-input);
+  border: 1px solid var(--bg-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--color-text);
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 160px;
+}
+.api-provider-select select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+.api-key-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--bg-border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--color-text);
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.api-base-url-input,
+.api-model-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--bg-border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--color-text);
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+.api-key-input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+.api-key-note {
+  font-size: 11px;
+  color: var(--color-text-light);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.api-key-note a {
+  color: var(--color-gold);
+}
+.api-advanced-toggle {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px 10px;
+  border: 1px solid var(--bg-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-light);
+  cursor: pointer;
+}
+.api-advanced-toggle:hover {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+}
+.api-advanced-panel {
+  display: none;
+  margin-top: 8px;
+}
+.api-advanced-panel.show {
+  display: block;
+}
+#api-status.success {
+  background: rgba(46, 125, 50, 0.15);
+  border: 1px solid rgba(46, 125, 50, 0.3);
+}
+#api-status.error {
+  background: rgba(198, 40, 40, 0.15);
+  border: 1px solid rgba(198, 40, 40, 0.3);
+}
+#api-status-text {
+  font-size: 13px;
 }
 .email-box code {
   font-size: 16px;
@@ -1028,10 +1217,7 @@ select:valid {
 
 /* 弹窗打开时禁用背景滚动 */
 body.modal-open {
-  position: fixed !important;
   width: 100vw !important;
-  top: 0;
-  left: 0;
   overflow: hidden !important;
 }
 body.modal-open .container {
@@ -1063,7 +1249,7 @@ body.modal-open .container {
   color: #aaa;
   background: transparent;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: system-ui, 'Segoe UI', monospace;
+  font-family: inherit;
 }
 .site-footer a {
   color: #aaa;

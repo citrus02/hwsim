@@ -40,6 +40,7 @@ import { courseData, getStudyEvent } from './course-data.js';
 import { addInternalPoints } from './muggle-studies.js';
 import { loadSave, writeSave } from './save-utils.js';
 import { showLearnChoiceModal } from './classroom.js';
+import { SUBJECT_WIN_KEY, getSubjectData, getAllLessons, getItemSubjectKey } from './utils.js';
 
 const SCHEDULE = {
   1: {
@@ -221,47 +222,13 @@ const SCHOOL_DAYS = ["周一", "周二", "周三", "周四", "周五"];
 const DAY_NAMES = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 const GRADE_TEXT = ["", "一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级"];
 const ACTION_PERIODS = {
-  3: { period: 1, time: "上午", label: "早晨" },
-  2: { period: 2, time: "下午", label: "中午" },
+  3: { period: 1, time: "上午", label: "上午" },
+  2: { period: 2, time: "下午", label: "下午" },
   1: { period: 3, time: "夜晚", label: "夜晚" },
-};
-const SUBJECT_WIN_KEY = {
-  math:"subject_math", physics:"subject_physics", chemistry:"subject_chemistry",
-  biology:"subject_biology", history:"subject_history", civics:"subject_civics",
-  geography:"subject_geography", literature:"subject_literature", latin:"subject_latin",
-  transfiguration: "subject_transfiguration",
-  charms: "subject_charms",
-  magicHistory: "subject_magicHistory",
-  defense: "subject_defense",
-  herbology: "subject_herbology",
-  astronomy: "subject_astronomy",
-  potions: "subject_potions",
-  flight: "subject_flight",
-  muggleStudies: "subject_muggleStudies",
-  careOfMagicalCreatures: "subject_careOfMagicalCreatures",
-  apparition: "subject_apparition",
-  alchemy: "subject_alchemy",
-  divination: "subject_divination",
-  arithmancy: "subject_arithmancy",
-  ancientRunes: "subject_ancientRunes",
 };
 function getDayName(dateStr) {
   const date = new Date(dateStr);
   return isNaN(date.getTime()) ? "" : DAY_NAMES[date.getDay()];
-}
-
-function getSubjectData(subjectKey) {
-  return window[SUBJECT_WIN_KEY[subjectKey]] || null;
-}
-
-function getAllLessons(syllabus) {
-  const out = [];
-  (syllabus || []).forEach(ch => (ch.lessons || []).forEach(l => out.push(l)));
-  return out;
-}
-
-function getItemSubjectKey(item) {
-  return item?.muggleSubjectKey || item?.hogwartsSubjectKey || null;
 }
 
 function findCourseItemByName(name, items = courseData) {
@@ -541,7 +508,7 @@ function remindCurrentWindowClasses() {
   writeSave(data);
 
   const names = courses.map(c => `${c.icon || "📚"}${c.subject}`).join("、");
-  window.doStudyLog?.(`🔔 ${windowInfo.label}有课：${names}。上课不消耗行动次数，窗口结束前记得去。`);
+  window.doStudyLog?.(`🔔 ${windowInfo.label}有课：${names}。上课不消耗行动次数，${windowInfo.label}结束前记得去。`);
 }
 
 function recordMissedClassesForCurrentWindow() {
@@ -750,7 +717,7 @@ function _renderMuggleSchedule(container) {
   </div>`;
 
   const periods = [1, 2, 3];
-  const periodNames = ['早晨（第1节）', '中午（第2节）', '夜晚（第3节）'];
+  const periodNames = ['上午（第1节）', '下午（第2节）', '夜晚（第3节）'];
 
   periods.forEach((period, idx) => {
     html += `<div class="schedule-row">`;

@@ -41,7 +41,7 @@ export function refreshAll() {
   setText("stat-galleons", data.player?.galleons ?? 10);
   const curDate = data.time?.currentDate || "1991-09-02";
   setText("date", curDate);
-  setText("timeOfDay", data.time?.nowTime || "早晨");
+  setText("timeOfDay", data.time?.nowTime || "上午");
   setText("dateEvent", getDateEventName(curDate));
   setText("actions", data.time?.dailyActionLeft ?? 3);
 
