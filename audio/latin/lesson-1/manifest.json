@@ -1,0 +1,140 @@
+[
+  {
+    "id": "vowel-a",
+    "text": "a",
+    "label": "元音 a",
+    "file": "audio/latin/lesson-1/vowel-a.wav"
+  },
+  {
+    "id": "vowel-e",
+    "text": "e",
+    "label": "元音 e",
+    "file": "audio/latin/lesson-1/vowel-e.wav"
+  },
+  {
+    "id": "vowel-i",
+    "text": "i",
+    "label": "元音 i",
+    "file": "audio/latin/lesson-1/vowel-i.wav"
+  },
+  {
+    "id": "vowel-o",
+    "text": "o",
+    "label": "元音 o",
+    "file": "audio/latin/lesson-1/vowel-o.wav"
+  },
+  {
+    "id": "vowel-u",
+    "text": "u",
+    "label": "元音 u",
+    "file": "audio/latin/lesson-1/vowel-u.wav"
+  },
+  {
+    "id": "consonant-ca",
+    "text": "ka",
+    "label": "ca = ka",
+    "file": "audio/latin/lesson-1/consonant-ca.wav"
+  },
+  {
+    "id": "consonant-ce",
+    "text": "ke",
+    "label": "ce = ke",
+    "file": "audio/latin/lesson-1/consonant-ce.wav"
+  },
+  {
+    "id": "consonant-ci",
+    "text": "ki",
+    "label": "ci = ki",
+    "file": "audio/latin/lesson-1/consonant-ci.wav"
+  },
+  {
+    "id": "consonant-co",
+    "text": "ko",
+    "label": "co = ko",
+    "file": "audio/latin/lesson-1/consonant-co.wav"
+  },
+  {
+    "id": "consonant-cu",
+    "text": "ku",
+    "label": "cu = ku",
+    "file": "audio/latin/lesson-1/consonant-cu.wav"
+  },
+  {
+    "id": "consonant-ga",
+    "text": "ga",
+    "label": "ga = ga",
+    "file": "audio/latin/lesson-1/consonant-ga.wav"
+  },
+  {
+    "id": "consonant-ge",
+    "text": "ge",
+    "label": "ge = ge",
+    "file": "audio/latin/lesson-1/consonant-ge.wav"
+  },
+  {
+    "id": "consonant-gi",
+    "text": "gi",
+    "label": "gi = gi",
+    "file": "audio/latin/lesson-1/consonant-gi.wav"
+  },
+  {
+    "id": "consonant-go",
+    "text": "go",
+    "label": "go = go",
+    "file": "audio/latin/lesson-1/consonant-go.wav"
+  },
+  {
+    "id": "consonant-gu",
+    "text": "gu",
+    "label": "gu = gu",
+    "file": "audio/latin/lesson-1/consonant-gu.wav"
+  },
+  {
+    "id": "double-villa",
+    "text": "villa",
+    "label": "vil-la（双辅音 ll）",
+    "file": "audio/latin/lesson-1/double-villa.wav"
+  },
+  {
+    "id": "double-terra",
+    "text": "terra",
+    "label": "ter-ra（双辅音 rr）",
+    "file": "audio/latin/lesson-1/double-terra.wav"
+  },
+  {
+    "id": "word-lumos",
+    "text": "lumos",
+    "label": "Lumos（荧光闪烁）",
+    "file": "audio/latin/lesson-1/word-lumos.wav"
+  },
+  {
+    "id": "word-amicus",
+    "text": "amikus",
+    "label": "am-i-cus（朋友）",
+    "file": "audio/latin/lesson-1/word-amicus.wav"
+  },
+  {
+    "id": "word-dominus",
+    "text": "dominus",
+    "label": "do-mi-nus（主人）",
+    "file": "audio/latin/lesson-1/word-dominus.wav"
+  },
+  {
+    "id": "word-ceno",
+    "text": "keno",
+    "label": "ce-no（我用餐）",
+    "file": "audio/latin/lesson-1/word-ceno.wav"
+  },
+  {
+    "id": "word-puella",
+    "text": "puella",
+    "label": "pu-EL-la（女孩）",
+    "file": "audio/latin/lesson-1/word-puella.wav"
+  },
+  {
+    "id": "word-nox",
+    "text": "noks",
+    "label": "NO-x（夜）",
+    "file": "audio/latin/lesson-1/word-nox.wav"
+  }
+]

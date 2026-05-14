@@ -112,8 +112,17 @@ function getSubjectProgress(subjectKey) {
   if (total === 0) return 0;
 
   const data = getSave();
+  const progress = data.course?.muggleProgress?.[subjectKey];
+  if (progress) {
+    const progressedLessons = new Set([
+      ...(progress.completed || []),
+      ...(progress.expired || []),
+    ]).size;
+    return Math.min(progressedLessons / total, 1);
+  }
+
   const current = data.course?.progress?.[subjectKey]?.currentLesson ?? 1;
-  return Math.min(current / total, 1);
+  return Math.min(Math.max(current - 1, 0) / total, 1);
 }
 
 export function canTakeExam(subjectKey, type = 'owl') {

@@ -1,3 +1,8 @@
 .claude/
 .trae/
+.cache/
+.kilo/
+.venv/
+__pycache__/
+CLAUDE.md
 ai/private-config.js

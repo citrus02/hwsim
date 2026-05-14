@@ -1,0 +1,26 @@
+[
+  {
+    "id": "magistri",
+    "text": "magistri",
+    "label": "ma-gis-tri（老师的，属格）",
+    "file": "audio/latin/lesson-8/magistri.wav"
+  },
+  {
+    "id": "domus",
+    "text": "domus",
+    "label": "do-mus（房子）",
+    "file": "audio/latin/lesson-8/domus.wav"
+  },
+  {
+    "id": "regis",
+    "text": "regis",
+    "label": "re-gis（国王的，属格）",
+    "file": "audio/latin/lesson-8/regis.wav"
+  },
+  {
+    "id": "pueri",
+    "text": "pueri",
+    "label": "pu-e-ri（男孩的，属格）",
+    "file": "audio/latin/lesson-8/pueri.wav"
+  }
+]

@@ -591,6 +591,85 @@ function recordMissedClassesForCurrentWindow() {
   }
 }
 
+function getNextSchoolWindow(dateStr, actionLeft) {
+  if (actionLeft > 1) {
+    return { date: dateStr, actionLeft: actionLeft - 1 };
+  }
+
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return null;
+  date.setDate(date.getDate() + 1);
+  return {
+    date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
+    actionLeft: 3,
+  };
+}
+
+function isBeforeSchoolWindow(dateStr, actionLeft, targetDate, targetActionLeft) {
+  if (dateStr < targetDate) return true;
+  if (dateStr > targetDate) return false;
+  return (ACTION_PERIODS[actionLeft]?.period || 0) < (ACTION_PERIODS[targetActionLeft]?.period || 0);
+}
+
+function recordMissedClassesBetween(fromDate, fromActionLeft, targetDate, targetActionLeft) {
+  const data = loadSave();
+  let cursor = {
+    date: fromDate || data.time?.currentDate || "1991-09-02",
+    actionLeft: fromActionLeft ?? data.time?.dailyActionLeft ?? 3,
+  };
+  const endDate = targetDate || data.time?.currentDate || cursor.date;
+  const endActionLeft = targetActionLeft ?? data.time?.dailyActionLeft ?? cursor.actionLeft;
+  const missed = [];
+  let guard = 0;
+
+  while (
+    isBeforeSchoolWindow(cursor.date, cursor.actionLeft, endDate, endActionLeft) &&
+    guard < 4000
+  ) {
+    const windowInfo = ACTION_PERIODS[cursor.actionLeft];
+    if (windowInfo) {
+      const attendance = ensureAttendance(data, cursor.date);
+      for (const course of getCurrentWindowCourses(cursor.date, cursor.actionLeft)) {
+        const key = getAttendanceKey(course);
+        if (attendance[key]) continue;
+        attendance[key] = "missed";
+        advanceSkippedLesson(data, course);
+
+        if (!data.course.absenceStats) data.course.absenceStats = { total: 0, bySubject: {}, records: [] };
+        data.course.absenceStats.total = (data.course.absenceStats.total || 0) + 1;
+        if (!data.course.absenceStats.bySubject) data.course.absenceStats.bySubject = {};
+        data.course.absenceStats.bySubject[course.subject] = (data.course.absenceStats.bySubject[course.subject] || 0) + 1;
+        if (!Array.isArray(data.course.absenceStats.records)) data.course.absenceStats.records = [];
+        data.course.absenceStats.records.push({
+          date: cursor.date,
+          window: windowInfo.label,
+          period: course.period,
+          type: course.type,
+          subject: course.subject,
+          subjectKey: course.subjectKey || null,
+        });
+        missed.push(course);
+      }
+    }
+
+    const next = getNextSchoolWindow(cursor.date, cursor.actionLeft);
+    if (!next) break;
+    cursor = next;
+    guard++;
+  }
+
+  if (missed.length > 0) {
+    if (data.course?.absenceStats?.records) {
+      data.course.absenceStats.records = data.course.absenceStats.records.slice(-200);
+    }
+    writeSave(data);
+    window.loadCourseProgressFromSave?.();
+    window.refreshAll?.();
+  }
+
+  return missed.length;
+}
+
 function _renderSchedule(container) {
   const data = getSave();
   const grade = getYearGrade();
@@ -1559,6 +1638,28 @@ export function closeCoursePanel() {
   }
 }
 
+export function refreshCoursePanel() {
+  const box = document.getElementById("courseMain");
+  if (!box) return;
+
+  loadTimeFromSave();
+  loadCourseProgressFromSave();
+  autoUpdateCourseUnlock();
+
+  const scheduleContainer = document.getElementById("schedule-container");
+  const muggleScheduleContainer = document.getElementById("muggle-schedule-container");
+  const courseContainer = document.getElementById("course-container");
+
+  if (scheduleContainer && scheduleContainer.style.display !== "none") {
+    _renderSchedule(scheduleContainer);
+  } else if (muggleScheduleContainer && muggleScheduleContainer.style.display !== "none") {
+    _renderMuggleSchedule(muggleScheduleContainer);
+  } else if (courseContainer && courseContainer.style.display !== "none") {
+    navStack = [];
+    renderLevel(courseData, "课程列表");
+  }
+}
+
 // ============================================================
 // 渲染层（通用，适配三级导航）
 // ============================================================
@@ -1702,6 +1803,7 @@ function loadCourseProgressFromSave() {
 
 window.openCoursePanel       = openCoursePanel;
 window.closeCoursePanel      = closeCoursePanel;
+window.refreshCoursePanel    = refreshCoursePanel;
 window.autoUpdateCourseUnlock = autoUpdateCourseUnlock;
 window.getCurrentGrade       = getCurrentGrade;
 window.renderLevelFn         = renderLevel;
@@ -1714,6 +1816,7 @@ window.courseAttendance = {
   validateCourseAccess,
   markAttended,
   recordMissedClassesForCurrentWindow,
+  recordMissedClassesBetween,
   remindCurrentWindowClasses,
   isSchoolNoClassDate,
   isSchoolNoClassPeriod,
@@ -1724,6 +1827,7 @@ window.courseAttendance = {
 export default {
   openCoursePanel,
   closeCoursePanel,
+  refreshCoursePanel,
   autoUpdateCourseUnlock,
   getCurrentGrade,
   getHogwartsTodaySchedule,
@@ -1733,6 +1837,7 @@ export default {
   validateCourseAccess,
   markAttended,
   recordMissedClassesForCurrentWindow,
+  recordMissedClassesBetween,
   remindCurrentWindowClasses,
   isSchoolNoClassDate,
   isSchoolNoClassPeriod

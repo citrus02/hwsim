@@ -10,9 +10,11 @@ export const questionBank = [
   // ── 第1章 拉丁语的声音 ──────────────────────────────────────────
 
   { lesson: 1, title: "字母表与发音规则", questions: [
-    { type: "choice", difficulty: 1, text: "拉丁字母表共有多少个字母？", options: ["A. 24", "B. 25", "C. 26", "D. 23"], answer: "A", knowledgePoint: "拉丁字母表", analysis: "古典拉丁字母表有24个字母，不包含J、U、W。这些字母是后来才加入的。" },
-    { type: "choice", difficulty: 2, text: "拉丁语中字母 C 的发音是？", options: ["A. /s/（如英语see）", "B. /k/（如英语cat）", "C. /ts/（如英语bits）", "D. /ʃ/（如英语she）"], answer: "B", knowledgePoint: "辅音发音规则", analysis: "在古典拉丁语中，C始终发/k/音，无论在什么位置。" },
-    { type: "choice", difficulty: 3, text: "拉丁语中双元音 AE 的发音接近英语的？", options: ["A. eye", "B. hay", "C. sky", "D. boy"], answer: "B", knowledgePoint: "双元音发音", analysis: "AE发音类似英语单词hay中的长元音/eɪ/。" }
+    { type: "choice", difficulty: 1, text: "古典拉丁字母表共有多少个字母？", options: ["A. 26", "B. 24", "C. 23", "D. 21"], answer: "C", knowledgePoint: "拉丁字母表", analysis: "古典拉丁字母表有23个字母，不包含J、U、W。J由I分化，U和W由V分化，都是后世添加的。" },
+    { type: "choice", difficulty: 1, text: "拉丁语元音 a 的发音接近英语哪个词中的 a？", options: ["A. cat", "B. cake", "C. father", "D. about"], answer: "C", knowledgePoint: "元音发音规则", analysis: "拉丁语a读作[a:]，接近英语father中的a。拉丁语每个元音只有一种发音，不像英语那样多变。" },
+    { type: "choice", difficulty: 2, text: "拉丁语中字母 C 在 ceno（我用餐）里的发音是？", options: ["A. /s/（如英语cent）", "B. /k/（如英语cat）", "C. /tʃ/（如英语church）", "D. /ʃ/（如英语ship）"], answer: "B", knowledgePoint: "辅音发音规则", analysis: "在古典拉丁语中，C永远发/k/音，无论后面跟什么元音。英语中c在e、i前会变软发/s/，但拉丁语没有这种软化规则。" },
+    { type: "choice", difficulty: 2, text: "两个音节的拉丁语单词，重音应在哪个音节？", options: ["A. 最后一个音节", "B. 倒数第二个（即第一个）音节", "C. 随意，无固定规则", "D. 看元音长短决定"], answer: "B", knowledgePoint: "音节划分", analysis: "两个音节的拉丁语单词，重音永远在倒数第二个音节（即第一个音节）。这是拉丁语重音的固定规则，没有例外。" },
+    { type: "choice", difficulty: 3, text: "咒语 Lumos 中，字母 V 的古典发音可能对应今天英语的哪个音？", options: ["A. 只有/v/（如very）", "B. 只有/w/（如water）", "C. 可能是/u/或/w/，因为古典拉丁语V兼任U和W", "D. 只有/u:/（如rude）"], answer: "C", knowledgePoint: "拉丁字母表", analysis: "古典拉丁语中没有U和W，只有V。V兼任元音/u/和辅音/w/的角色，具体发音取决于它在单词中的位置。Lumos中的o已经是元音，但如果在古铭文中看到V，它可能读作U的音。" }
   ]},
 
   { lesson: 2, title: "主格与宾格：动作的主语与宾语", questions: [

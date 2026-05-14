@@ -225,10 +225,11 @@ function openTimeTurnerPanel() {
 }
 
 function _travelTo(targetDate, targetPeriod) {
-  const data = getSave();
+  let data = getSave();
   const currentFullDate = data.time?.currentDate || "1991-09-02";
   const currentPeriod = data.time?.nowTime || "上午";
   const currentActions = data.time?.dailyActionLeft ?? 3;
+  const targetActions = _periodToAction(targetPeriod);
 
   if (targetDate === currentFullDate && targetPeriod === currentPeriod) {
     addLog("⏳ 时间转换器嗡嗡作响——你已经在那个时间点了。");
@@ -239,13 +240,25 @@ function _travelTo(targetDate, targetPeriod) {
 
   const targetDateObj = _parseDate(targetDate);
   const currentDateObj = _parseDate(currentFullDate);
-  const isFuture = targetDateObj > currentDateObj;
+  const isFuture = targetDateObj > currentDateObj
+    || (targetDate === currentFullDate && (PERIOD_ORDER[targetPeriod] ?? 0) > (PERIOD_ORDER[currentPeriod] ?? 0));
 
   if (isFuture && !isTestMode()) {
     addLog("⏳ 时间转换器只能回到过去，无法前往未来。");
     const panel = document.getElementById("timeTurnerPanel");
     if (panel) panel.remove();
     return;
+  }
+
+  const courseSnapshot = isFuture && data.course ? JSON.parse(JSON.stringify(data.course)) : null;
+  if (isFuture) {
+    window.courseAttendance?.recordMissedClassesBetween?.(
+      currentFullDate,
+      currentActions,
+      targetDate,
+      targetActions
+    );
+    data = getSave();
   }
 
   const affinitySnapshot = data.affinity ? JSON.parse(JSON.stringify(data.affinity)) : {};
@@ -260,6 +273,7 @@ function _travelTo(targetDate, targetPeriod) {
     },
     affinitySnapshot,
     knownCharactersSnapshot,
+    courseSnapshot,
     isFutureTravel: isFuture,
     travelHistory: [...(data.timeTurner?.travelHistory || []), {
       from: { currentDate: currentFullDate, nowTime: currentPeriod },
@@ -270,7 +284,6 @@ function _travelTo(targetDate, targetPeriod) {
     isTestMode: data.timeTurner?.isTestMode || false,
   };
 
-  const targetActions = _periodToAction(targetPeriod);
   data.time.currentDate = targetDate;
   data.time.nowTime = targetPeriod;
   data.time.dailyActionLeft = targetActions;
@@ -305,6 +318,7 @@ function _travelTo(targetDate, targetPeriod) {
   _checkTimeBeforeStartAchievement(targetDate, targetPeriod);
 
   if (window.refreshAll) window.refreshAll();
+  window.refreshCoursePanel?.();
 }
 
 function _checkTimeBeforeStartAchievement(targetDate, targetPeriod) {
@@ -410,7 +424,11 @@ function _returnToOriginal() {
   }
 
   if (currentBag) data.bag = currentBag;
-  if (currentCourse) data.course = currentCourse;
+  if (data.timeTurner.isFutureTravel && data.timeTurner.courseSnapshot) {
+    data.course = JSON.parse(JSON.stringify(data.timeTurner.courseSnapshot));
+  } else if (currentCourse) {
+    data.course = currentCourse;
+  }
   if (currentSpellProf) data.spellProficiency = currentSpellProf;
   if (currentPotion) data.potion = currentPotion;
   if (currentExploreRate) data.exploreRate = currentExploreRate;
@@ -420,6 +438,7 @@ function _returnToOriginal() {
   data.timeTurner.originalTime = null;
   data.timeTurner.affinitySnapshot = null;
   data.timeTurner.knownCharactersSnapshot = null;
+  data.timeTurner.courseSnapshot = null;
   const wasFutureTravel = data.timeTurner.isFutureTravel;
   data.timeTurner.isFutureTravel = false;
 
@@ -442,6 +461,7 @@ function _returnToOriginal() {
   }
 
   if (window.refreshAll) window.refreshAll();
+  window.refreshCoursePanel?.();
 }
 
 function _checkAutoEnd() {

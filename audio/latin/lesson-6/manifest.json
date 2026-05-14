@@ -1,0 +1,56 @@
+[
+  {
+    "id": "discipulo",
+    "text": "diskipulo",
+    "label": "di-scip-u-lo（学生，与格）",
+    "file": "audio/latin/lesson-6/discipulo.wav"
+  },
+  {
+    "id": "dat",
+    "text": "dat",
+    "label": "dat（他/她给）",
+    "file": "audio/latin/lesson-6/dat.wav"
+  },
+  {
+    "id": "puellae",
+    "text": "puellaj",
+    "label": "puel-lae（女孩，与格）",
+    "file": "audio/latin/lesson-6/puellae.wav"
+  },
+  {
+    "id": "puero",
+    "text": "puero",
+    "label": "pu-e-ro（男孩，与格）",
+    "file": "audio/latin/lesson-6/puero.wav"
+  },
+  {
+    "id": "dare",
+    "text": "dare",
+    "label": "da-re（给）",
+    "file": "audio/latin/lesson-6/dare.wav"
+  },
+  {
+    "id": "credere",
+    "text": "kredere",
+    "label": "cre-de-re（相信）",
+    "file": "audio/latin/lesson-6/credere.wav"
+  },
+  {
+    "id": "servire",
+    "text": "serwire",
+    "label": "ser-vi-re（服务）",
+    "file": "audio/latin/lesson-6/servire.wav"
+  },
+  {
+    "id": "tibi",
+    "text": "tibi",
+    "label": "ti-bi（对你）",
+    "file": "audio/latin/lesson-6/tibi.wav"
+  },
+  {
+    "id": "veritatem",
+    "text": "weritatem",
+    "label": "ve-ri-ta-tem（真相，宾格）",
+    "file": "audio/latin/lesson-6/veritatem.wav"
+  }
+]

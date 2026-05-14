@@ -371,7 +371,7 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
   card.appendChild(panel);
 
   _clsState = {
-    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0, kpQA:false, kpCorrect:null, kpFeedback:false, kpAnsweredIdx:null, kpCalcDone:false, kpCalcStep:0, kpCalcDisplay:null, openAnswerTimestamp:null },
+    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0, kpQA:false, kpCorrect:null, kpFeedback:false, kpAnsweredIdx:null, kpCalcDone:false, kpCalcStep:0, kpCalcDisplay:null, kpCalcIntroDone:false, openAnswerTimestamp:null },
     subjectKey,
     sd: subjectData,
     lesson,
@@ -405,7 +405,7 @@ window._clsJumpToPhase = (target) => {
   if (target === 0) {
     _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 1) {
-    st.kpIdx = 0; st.kpQA = false; st.kpCorrect = null; st.kpFeedback = false; st.kpAnsweredIdx = null; st.kpCalcDone = false; st.kpCalcStep = 0; st.kpCalcDisplay = null;
+    st.kpIdx = 0; st.kpQA = false; st.kpCorrect = null; st.kpFeedback = false; st.kpAnsweredIdx = null; st.kpCalcDone = false; st.kpCalcStep = 0; st.kpCalcDisplay = null; st.kpCalcIntroDone = false;
     _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 2) {
     // 注意：从步骤条回跳测验会重置本轮分数，相当于重新作答
@@ -433,7 +433,7 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
       <div class="cls-opening cls-opening-intro">
         <div class="cls-opening-label">🎭 ${intro?.professor || sd.subjectMeta.professor}</div>
         <div class="cls-opening-portrait">${intro?.portrait || ""}</div>
-        <div class="cls-opening-text cls-opening-intro-text">${intro?.introduction || "教授走进了教室。"}</div>
+        <div class="cls-opening-text cls-opening-intro-text">${_formatContext(intro?.introduction || "教授走进了教室。")}</div>
       </div>
       <div class="cls-nav">
         <button class="cls-btn-advance" id="cls-start">开始上课 →</button>
@@ -450,7 +450,7 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
       ${lesson.atmosphere ? `<div class="cls-atmosphere">${lesson.atmosphere}</div>` : ""}
       <div class="cls-opening">
         <div class="cls-opening-label">🎭 ${sd.subjectMeta.professor}</div>
-        <div class="cls-opening-text">${lesson.opening || "教授走进了教室。"}</div>
+        <div class="cls-opening-text">${_formatContext(lesson.opening || "教授走进了教室。")}</div>
       </div>
       <div class="cls-nav">
         <button class="cls-btn-advance" id="cls-start">开始上课 →</button>
@@ -525,8 +525,9 @@ function _renderCalculator({ display = "0", highlightKey = null } = {}) {
     </div>`;
 }
 
-function _renderBlackboard(bb) {
+function _renderBlackboard(bb, uniqueId = "") {
   if (!bb) return "";
+  if (Array.isArray(bb)) return bb.map((item, idx) => _renderBlackboard(item, `${uniqueId}-${idx}`)).join("");
   if (typeof bb === "string") return `<div class="cls-blackboard">${bb}</div>`;
 
   let inner = "";
@@ -537,12 +538,52 @@ function _renderBlackboard(bb) {
   } else if (bb.type === "calculator") {
     return _renderCalculator(bb);
   } else if (bb.type === "formulas") {
-    inner += `<div class="cls-bb-pre">${(bb.lines || []).join("\n")}</div>`;
+    const audioMap = new Map();
+    if (bb.audio && Array.isArray(bb.audio)) {
+      bb.audio.forEach((item, idx) => audioMap.set(item.lineIndex ?? idx, item));
+    }
+    const lines = (bb.lines || []).map((line, idx) => {
+      if (!line) return `<div class="cls-bb-formula-gap"></div>`;
+      const audio = audioMap.get(idx);
+      if (audio) {
+        const id = `audio-btn-${uniqueId}-${idx}`;
+        return `<div class="cls-bb-formula-line cls-bb-line-audio"><button id="${id}" class="cls-audio-btn" title="点击播放发音" onclick="playLatinAudio('${audio.src}', '${id}')">🔊</button><span class="cls-bb-line-text">${line}</span></div>`;
+      }
+      return `<div class="cls-bb-formula-line">${line}</div>`;
+    }).join("");
+    inner += `<div class="cls-bb-pre">${lines}</div>`;
   }
 
   if (bb.note) inner += `<div class="cls-bb-note">${bb.note}</div>`;
+
   return inner ? `<div class="cls-blackboard">${inner}</div>` : "";
 }
+
+const _latinAudioMap = new Map();
+
+function playLatinAudio(src, buttonId) {
+  const btn = document.getElementById(buttonId);
+  if (!btn) return;
+
+  const existing = _latinAudioMap.get(buttonId);
+  if (existing && !existing.paused) {
+    existing.pause();
+    existing.currentTime = 0;
+    btn.textContent = '🔊';
+    return;
+  }
+
+  const audio = new Audio(src);
+  _latinAudioMap.set(buttonId, audio);
+  audio.onplaying = () => { btn.textContent = '🔉'; };
+  audio.onended = audio.onerror = () => {
+    btn.textContent = '🔊';
+    _latinAudioMap.delete(buttonId);
+  };
+  audio.play().catch(e => console.error('音频播放失败:', e));
+}
+
+window.playLatinAudio = playLatinAudio;
 
 // ── context 格式化：对白高亮 + 换行 ──────────────────────────
 function _formatContext(text) {
@@ -556,24 +597,55 @@ function _formatContext(text) {
   return out;
 }
 
+// ── 短提问文本：只高亮对白，不拆行 ─────────────────────────
+function _formatDialogOnly(text) {
+  if (!text) return text;
+  return text.replace(/「([^」]*)」/g, '<span class="cls-dialogue">「$1」</span>');
+}
+
 // ── 讲课阶段：教授提问 UI ─────────────────────────────────
 function _renderMiniQuestion(q) {
   const leadIn = q.leadIn
     ? `<div class="cls-mini-leadin">${_formatContext(q.leadIn)}</div>`
     : "";
-  const opts = q.options.map((opt, i) =>
-    `<button class="cls-mini-opt" data-idx="${i}">${opt}</button>`
-  ).join("");
   return `
     <div class="cls-mini-q">
       ${leadIn}
-      <div class="cls-mini-text">${q.text}</div>
+      ${_renderMiniQuestionInline(q, false, !!q.leadIn)}
+    </div>`;
+}
+
+function _renderMiniQuestionInline(q, disabled = false, separated = true) {
+  if (!q) return "";
+  const opts = q.options.map((opt, i) =>
+    `<button class="cls-mini-opt" data-idx="${i}"${disabled ? " disabled" : ""}>${opt}</button>`
+  ).join("");
+  return `
+    <div class="cls-mini-inline-question${separated ? "" : " cls-mini-inline-question-solo"}">
+      <div class="cls-mini-text">${_formatDialogOnly(q.text)}</div>
       <div class="cls-mini-opts">${opts}</div>
     </div>`;
 }
 
 function _renderMiniLeadIn(text) {
   return text ? `<div class="cls-mini-q"><div class="cls-mini-leadin">${_formatContext(text)}</div></div>` : "";
+}
+
+function _renderLectureText(text) {
+  return text ? `<div class="cls-lecture-block"><div class="cls-mini-leadin">${_formatContext(text)}</div></div>` : "";
+}
+
+function _findCalculatorBlackboard(bb) {
+  if (Array.isArray(bb)) return bb.find(item => item?.type === "calculator") || null;
+  return bb?.type === "calculator" ? bb : null;
+}
+
+function _withActiveCalculator(bb, calc, display, highlightKey) {
+  if (!calc) return bb;
+  const applyCalcState = item => item === calc
+    ? { ...item, display, highlightKey }
+    : item;
+  return Array.isArray(bb) ? bb.map(applyCalcState) : applyCalcState(bb);
 }
 
 // ── 第二阶段：讲课 ────────────────────────────────────────
@@ -589,6 +661,7 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
     st.kpCalcDone = false;
     st.kpCalcStep = 0;
     st.kpCalcDisplay = null;
+    st.kpCalcIntroDone = false;
   }
 
   function render() {
@@ -606,23 +679,28 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
       : (kp?.interactionContext || kp?.blackboardQ?.leadIn || null);
     const isLast     = st.kpIdx === kps.length - 1;
     const interactiveBlackboard = typeof kp === "string" ? null : (kp?.blackboardQ || null);
-    const calcSequence = interactiveBlackboard?.type === "calculator" && Array.isArray(interactiveBlackboard.sequence)
-      ? interactiveBlackboard.sequence
+    const calculatorBlackboard = _findCalculatorBlackboard(interactiveBlackboard);
+    const calcSequence = calculatorBlackboard && Array.isArray(calculatorBlackboard.sequence)
+      ? calculatorBlackboard.sequence
       : null;
-    const showCalcSequence = !!(calcSequence && !st.kpCalcDone && !st.kpQA && !st.kpFeedback);
+    const isCalculatorSequenceQuestion = !!(calculatorBlackboard && calcSequence && question);
+    const showCalcIntro = !!(isCalculatorSequenceQuestion && question?.leadIn && !st.kpCalcIntroDone && !st.kpCalcDone && !st.kpQA && !st.kpFeedback);
+    const showCalcSequence = !!(calcSequence && !showCalcIntro && !st.kpCalcDone && !st.kpQA && !st.kpFeedback);
     const showCompletedCalcSequence = !!(calcSequence && st.kpCalcDone && !question && !st.kpQA);
-    const showQ      = !!(question && !st.kpQA && !st.kpFeedback && !showCalcSequence);
-    const showAnsweredMiniQuestion = !!(question && st.kpFeedback && !showCalcSequence);
-    const showBoardInteraction = !!(!question && interactiveBlackboard?.type === "calculator" && !calcSequence && !st.kpQA);
-    const activeCalcKey = showCalcSequence ? calcSequence[st.kpCalcStep || 0] : interactiveBlackboard?.highlightKey;
+    const showCompletedCalcQuestion = !!(isCalculatorSequenceQuestion && st.kpCalcDone && !st.kpQA && !st.kpFeedback);
+    const showAnsweredCompletedCalcQuestion = !!(isCalculatorSequenceQuestion && st.kpCalcDone && st.kpFeedback && !st.kpQA);
+    const showQ      = !!(question && !st.kpQA && !st.kpFeedback && !showCalcSequence && !showCompletedCalcQuestion);
+    const showAnsweredMiniQuestion = !!(question && st.kpFeedback && !showCalcSequence && !showAnsweredCompletedCalcQuestion);
+    const showBoardInteraction = !!(!question && calculatorBlackboard && !calcSequence && !st.kpQA);
+    const activeCalcKey = showCalcSequence ? calcSequence[st.kpCalcStep || 0] : calculatorBlackboard?.highlightKey;
     const calcDisplay = showCalcSequence
-      ? (st.kpCalcDisplay ?? interactiveBlackboard.display ?? "0")
-      : st.kpCalcDone && interactiveBlackboard?.type === "calculator"
-        ? (st.kpCalcDisplay ?? interactiveBlackboard.result ?? interactiveBlackboard.display)
-      : interactiveBlackboard?.display;
+      ? (st.kpCalcDisplay ?? calculatorBlackboard?.display ?? "0")
+      : st.kpCalcDone && calculatorBlackboard
+        ? (st.kpCalcDisplay ?? calculatorBlackboard.result ?? calculatorBlackboard.display)
+      : calculatorBlackboard?.display;
     const blackboard = typeof kp === "string" ? null
-      : ((showQ || showAnsweredMiniQuestion || showBoardInteraction || showCalcSequence || showCompletedCalcSequence) && interactiveBlackboard
-        ? { ...interactiveBlackboard, display: calcDisplay, highlightKey: activeCalcKey }
+      : ((showQ || showAnsweredMiniQuestion || showBoardInteraction || showCalcIntro || showCalcSequence || showCompletedCalcSequence || showCompletedCalcQuestion || showAnsweredCompletedCalcQuestion) && interactiveBlackboard
+        ? _withActiveCalculator(interactiveBlackboard, calculatorBlackboard, calcDisplay, activeCalcKey)
         : (kp?.blackboard || null));
 
     body.innerHTML = `
@@ -634,23 +712,41 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           <div class="cls-kp-num">${st.kpIdx+1}</div>
           <div class="cls-kp-point">${point}</div>
         </div>
-        ${blackboard ? _renderBlackboard(blackboard) : ""}
-        ${showCalcSequence
-          ? _renderMiniLeadIn(question?.leadIn || interactionContext)
+        ${blackboard ? _renderBlackboard(blackboard, `kp-${st.kpIdx}`) : ""}
+        ${showCalcIntro
+          ? _renderMiniLeadIn(interactionContext)
+          : showCalcSequence
+          ? `<div class="cls-mini-q">
+              ${question?.leadIn ? `<div class="cls-mini-leadin">${_formatContext(question.leadIn)}</div>` : ""}
+              ${question ? _renderMiniQuestionInline(question, true) : ""}
+            </div>`
           : showCompletedCalcSequence
-          ? (interactionContext ? `<div class="cls-kp-context">${_formatContext(interactionContext)}</div>` : "")
+          ? _renderLectureText(interactionContext)
+          : showCompletedCalcQuestion
+          ? `<div class="cls-mini-q">
+              ${question?.leadIn ? `<div class="cls-mini-leadin">${_formatContext(question.leadIn)}</div>` : ""}
+              ${_renderMiniQuestionInline(question)}
+            </div>`
+          : showAnsweredCompletedCalcQuestion
+          ? `<div class="cls-mini-q">
+              ${question?.leadIn ? `<div class="cls-mini-leadin">${_formatContext(question.leadIn)}</div>` : ""}
+              ${_renderMiniQuestionInline(question)}
+            </div>`
           : showQ
           ? _renderMiniQuestion(question)
           : showAnsweredMiniQuestion
           ? _renderMiniQuestion(question)
           : showBoardInteraction
-            ? (interactionContext ? `<div class="cls-kp-context">${_formatContext(interactionContext)}</div>` : "")
-            : (context ? `<div class="cls-kp-context">${_formatContext(context)}</div>` : "")}
+            ? _renderLectureText(interactionContext)
+            : _renderLectureText(context)}
       </div>
-      ${showAnsweredMiniQuestion || showCompletedCalcSequence ? `
+      ${showAnsweredMiniQuestion || showAnsweredCompletedCalcQuestion || showCompletedCalcSequence ? `
       <div class="cls-nav">
         <button class="cls-btn-advance" id="cls-mini-continue">继续 →</button>
-      </div>` : showQ || showBoardInteraction || showCalcSequence ? "" : `
+      </div>` : showCalcIntro ? `
+      <div class="cls-nav">
+        <button class="cls-btn-pri" id="cls-calc-intro-next">下一步 →</button>
+      </div>` : showQ || showBoardInteraction || showCalcSequence || showCompletedCalcQuestion ? "" : `
       <div class="cls-nav">
         ${st.kpIdx > 0
           ? `<button class="cls-btn-sec" id="cls-prev">← 上一条</button>`
@@ -660,7 +756,12 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           : `<button class="cls-btn-pri" id="cls-next">下一条 →</button>`}
       </div>`}`;
 
-    if (showCalcSequence && blackboard?.type === "calculator") {
+    if (showCalcIntro) {
+      document.getElementById("cls-calc-intro-next")?.addEventListener("click", () => {
+        st.kpCalcIntroDone = true;
+        render();
+      });
+    } else if (showCalcSequence && calculatorBlackboard) {
       document.querySelectorAll(".cls-calc-key").forEach(k => {
         k.addEventListener("click", () => {
           const pressed = k.dataset.key;
@@ -670,7 +771,7 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           if (pressed !== expected) return;
 
           if (pressed === "|x|") {
-            st.kpCalcDisplay = interactiveBlackboard.result ?? st.kpCalcDisplay ?? "";
+            st.kpCalcDisplay = calculatorBlackboard.result ?? st.kpCalcDisplay ?? "";
           } else {
             const base = st.kpCalcDisplay == null || st.kpCalcDisplay === "0" ? "" : String(st.kpCalcDisplay);
             st.kpCalcDisplay = `${base}${pressed}`;
@@ -685,7 +786,7 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           }
         });
       });
-    } else if (showQ && question) {
+    } else if ((showQ || showCompletedCalcQuestion) && question) {
       document.querySelectorAll(".cls-mini-opt").forEach(btn => {
         btn.onclick = () => {
           const chosen = parseInt(btn.dataset.idx);
@@ -700,7 +801,7 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           setTimeout(() => { st.kpFeedback = true; render(); }, 650);
         };
       });
-    } else if (showAnsweredMiniQuestion && question) {
+    } else if ((showAnsweredMiniQuestion || showAnsweredCompletedCalcQuestion) && question) {
       document.querySelectorAll(".cls-mini-opt").forEach(btn => {
         const idx = parseInt(btn.dataset.idx);
         btn.disabled = true;
@@ -717,7 +818,7 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
         st.kpQA = true;
         render();
       });
-    } else if (showBoardInteraction && blackboard?.type === "calculator") {
+    } else if (showBoardInteraction && calculatorBlackboard) {
       document.querySelectorAll(".cls-calc-key:not(.cls-calc-key-hl)").forEach(k => {
         k.addEventListener("click", () => {
           k.style.transform = "scale(0.92)";
@@ -729,8 +830,8 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
         hlKey.style.cursor = "pointer";
         hlKey.addEventListener("click", () => {
           const display = document.querySelector(".cls-calc-display");
-          if (display && blackboard.result != null) {
-            display.textContent = blackboard.result;
+          if (display && calculatorBlackboard.result != null) {
+            display.textContent = calculatorBlackboard.result;
             display.style.color = "#8ae09a";
           }
           hlKey.classList.add("cls-calc-key-pressed");
@@ -1104,7 +1205,7 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           const nav = body.querySelector(".cls-nav");
           if (nav) {
             nav.innerHTML = `
-              <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
+              <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 答题记录</button>
               <button class="cls-btn-advance" id="cls-to-result">查看结果 →</button>`;
             document.getElementById("cls-journal-btn")?.addEventListener("click", () => {
               window.courseUI?.showAnswerJournal?.(subjectKey, lesson.lesson, lesson.title, sd.subjectMeta?.professor);
@@ -1328,8 +1429,10 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
           <div class="cls-comment-text">"${comment}"</div>
         </div>` : ""}
     </div>
-    <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
-    <button class="cls-btn-leave" id="cls-leave">← 离开教室</button>`;
+    <div class="cls-result-actions">
+      <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
+      <button class="cls-btn-leave" id="cls-leave">← 离开教室</button>
+    </div>`;
 
   document.getElementById("cls-leave").onclick = () => {
     resetClassroom();

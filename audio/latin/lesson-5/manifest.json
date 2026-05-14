@@ -1,0 +1,50 @@
+[
+  {
+    "id": "caesar",
+    "text": "kajsar",
+    "label": "Cae-sar（凯撒）",
+    "file": "audio/latin/lesson-5/caesar.wav"
+  },
+  {
+    "id": "pontem",
+    "text": "pontem",
+    "label": "pon-tem（桥梁，宾格）",
+    "file": "audio/latin/lesson-5/pontem.wav"
+  },
+  {
+    "id": "aedificat",
+    "text": "ajedifikat",
+    "label": "ae-di-fi-cat（他/她建造）",
+    "file": "audio/latin/lesson-5/aedificat.wav"
+  },
+  {
+    "id": "discipulos",
+    "text": "diskipulos",
+    "label": "di-scip-u-los（学生们，宾格）",
+    "file": "audio/latin/lesson-5/discipulos.wav"
+  },
+  {
+    "id": "docet",
+    "text": "doket",
+    "label": "do-cet（他/她教）",
+    "file": "audio/latin/lesson-5/docet.wav"
+  },
+  {
+    "id": "aquila",
+    "text": "akwila",
+    "label": "a-qui-la（鹰）",
+    "file": "audio/latin/lesson-5/aquila.wav"
+  },
+  {
+    "id": "cibum",
+    "text": "kibum",
+    "label": "ci-bum（食物，宾格）",
+    "file": "audio/latin/lesson-5/cibum.wav"
+  },
+  {
+    "id": "capit",
+    "text": "kapit",
+    "label": "ca-pit（他/她抓住）",
+    "file": "audio/latin/lesson-5/capit.wav"
+  }
+]

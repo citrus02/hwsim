@@ -1,0 +1,44 @@
+[
+  {
+    "id": "amare",
+    "text": "amare",
+    "label": "a-ma-re（爱，不定式）",
+    "file": "audio/latin/lesson-3/amare.wav"
+  },
+  {
+    "id": "amamus",
+    "text": "amamus",
+    "label": "a-ma-mus（我们爱）",
+    "file": "audio/latin/lesson-3/amamus.wav"
+  },
+  {
+    "id": "amatis",
+    "text": "amatis",
+    "label": "a-ma-tis（你们爱）",
+    "file": "audio/latin/lesson-3/amatis.wav"
+  },
+  {
+    "id": "amant",
+    "text": "amant",
+    "label": "a-mant（他们爱）",
+    "file": "audio/latin/lesson-3/amant.wav"
+  },
+  {
+    "id": "tu-amas",
+    "text": "tu amas",
+    "label": "Tu amas（你爱）",
+    "file": "audio/latin/lesson-3/tu-amas.wav"
+  },
+  {
+    "id": "nos-amamus",
+    "text": "nos amamus",
+    "label": "Nos amamus（我们爱）",
+    "file": "audio/latin/lesson-3/nos-amamus.wav"
+  },
+  {
+    "id": "amicus-meus",
+    "text": "amikus meus",
+    "label": "amicus meus（我的朋友）",
+    "file": "audio/latin/lesson-3/amicus-meus.wav"
+  }
+]

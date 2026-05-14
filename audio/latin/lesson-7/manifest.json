@@ -1,0 +1,38 @@
+[
+  {
+    "id": "gladio",
+    "text": "gladio",
+    "label": "gla-di-o（剑，夺格）",
+    "file": "audio/latin/lesson-7/gladio.wav"
+  },
+  {
+    "id": "pugnat",
+    "text": "pugnat",
+    "label": "pug-nat（他/她战斗）",
+    "file": "audio/latin/lesson-7/pugnat.wav"
+  },
+  {
+    "id": "amico",
+    "text": "amiko",
+    "label": "a-mi-co（朋友，夺格）",
+    "file": "audio/latin/lesson-7/amico.wav"
+  },
+  {
+    "id": "ambulat",
+    "text": "ambulat",
+    "label": "am-bu-lat（他/她散步）",
+    "file": "audio/latin/lesson-7/ambulat.wav"
+  },
+  {
+    "id": "lapis",
+    "text": "lapis",
+    "label": "la-pis（石头）",
+    "file": "audio/latin/lesson-7/lapis.wav"
+  },
+  {
+    "id": "aedificatur",
+    "text": "ajedifikatur",
+    "label": "ae-di-fi-ca-tur（被建造）",
+    "file": "audio/latin/lesson-7/aedificatur.wav"
+  }
+]

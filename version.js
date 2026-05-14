@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.7.8';
+export const CURRENT_VERSION = '1.7.9';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.9': [
+    '扩充麻瓜学术系数学与拉丁语课程内容，补充拉丁语发音练习与课堂音频',
+    '优化课堂黑板、课堂小问答、计算器互动与答题记录显示',
+    '完善时间转换器与课程缺勤记录联动，减少跳转时间后课程状态不一致的问题',
+    '整理发布脚本与本地备份流程，压缩失败会自动重试并避免复制半成品 zip',
+  ],
   '1.7.8': [
     '完善默认 AI 判题配置，玩家无需填写 API Key 也可通过云端代理使用默认 AI',
     '整理通用 AI 文件结构，为后续 NPC、课程与事件接入 AI 能力做准备',

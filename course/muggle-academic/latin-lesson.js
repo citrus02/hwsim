@@ -15,26 +15,244 @@ export const lessonMap = {
   // ════════════════════════════════════════
 
   1: {
-    atmosphere: "拉丁语教室位于城堡的西塔楼，墙上挂满了拉丁语字母表和发音图表。米兰达·珀西瓦尔教授站在讲台前，手中拿着一支细头钢笔，讲台上放着一本厚重的牛津拉丁语词典和一本磨旧的咒语词源手册。",
-    opening: "「米兰达·珀西瓦尔。」她的发音清晰得像水晶。「拉丁语是所有咒语的母语。」她在黑板上写下 'Lumos'，「今天，我们从字母和发音开始。」",
+    atmosphere: "拉丁语教室在城堡西塔楼顶层，窗外是湖面的灰光。墙上挂着一幅手抄体字母表，墨迹极工整。米兰达·珀西瓦尔站在讲台后，细头钢笔搁在牛津拉丁语词典旁，另一边是一本磨旧的咒语词源手册。她没有看任何人。",
+    opening: "等最后一个学生坐下，她拿起粉笔在黑板正中写了一个词：Lumos。\n「你们都认识这个词。」她的声音清晰得像水晶，「但你们不知道它为什么是这个声音，不是别的。」她在 Lumos 下面画了一条横线，「今天我们学四件事：拉丁语有哪些字母，元音怎么发音，辅音怎么发音，音节怎么划分。学完之后，你们就能读出任何一个拉丁语单词——包括你们每天念的咒语。」她停了一秒，「开始。」",
     keyPoints: [
       {
-        point: "拉丁字母表",
-        context: "「拉丁语使用23个字母。」珀西瓦尔在黑板上写下字母表，「注意没有J、U、W——这些是后来添加的。字母的形状与英语相似，但发音不同。」"
+        point: "拉丁字母表：23个字母",
+        blackboardQ: {
+          type: "formulas",
+          label: "拉丁字母表",
+          lines: [
+            "A B C D E F G H I K L M",
+            "N O P Q R S T V X Y Z",
+            "",
+            "共 23 个字母",
+            "没有 J, U, W"
+          ]
+        },
+        question: {
+          leadIn: "珀西瓦尔在黑板上写下一行字母。「拉丁语——古典拉丁语——使用23个字母。」她逐个点过，「A、B、C、D、E、F、G、H、I、K、L、M、N、O、P、Q、R、S、T、V、X、Y、Z。」她在三个位置划了空格，「注意：没有J，没有U，没有W。这三个是后来才加进去的。」她转身，「I 兼任 J 的角色，V 兼任 U 和 W 的角色。所以你们在古罗马铭文上看到的 V，读起来可能是 U 的音。」",
+          text: "「古典拉丁字母表中，哪个字母不存在？」",
+          options: ["K", "J", "Y"],
+          answer: 1
+        },
+        contextRight: "「对。」珀西瓦尔在 J 的位置画了一个叉。「J 不在古典拉丁字母表中。你们在咒语里看到的 J，是中世纪以后才从 I 分化出来的。」她停了一秒，「同理，U 和 W 也是后来才从 V 分出来的。古典时期只有一个 V，它既是辅音也是元音。」",
+        contextWrong: "她没有表情，只是在 J 的位置画了一个叉。「J 不在古典拉丁字母表中。」她重复了一遍，「J 是中世纪以后才从 I 分化出来的。K 和 Y 都在——K 只用于极少数借词，Y 用于希腊借词，但它们存在。」她停顿，「记住：23个字母。没有J，没有U，没有W。」",
+        blackboard: {
+          type: "formulas",
+          label: "拉丁字母表",
+          lines: [
+            "A B C D E F G H I K L M",
+            "N O P Q R S T V X Y Z",
+            "",
+            "23 个字母",
+            "X  J  -->  由 I 分化",
+            "X  U  -->  由 V 分化",
+            "X  W  -->  由 V 分化"
+          ],
+          note: "I 兼任 J，V 兼任 U/W"
+        }
       },
       {
-        point: "元音发音规则",
-        context: "「拉丁语有五个元音：a, e, i, o, u。」她示范发音，「每个元音只有一种发音，不像英语那样有多种变化。a读作['a:]，e读作['e:]，i读作['i:]，o读作['o:]，u读作['u:]。」"
+        point: "五个元音：每个只有一种发音",
+        blackboardQ: {
+          type: "formulas",
+          label: "拉丁语元音",
+          lines: [
+            "a  =  [a:]  如 fAther",
+            "e  =  [e:]  如 thEY",
+            "i  =  [i:]  如 machIne",
+            "o  =  [o:]  如 bOAt",
+            "u  =  [u:]  如 rUde",
+            "",
+            "每个元音只有一种发音"
+          ],
+          audio: [
+            { text: "a", src: "audio/latin/lesson-1/vowel-a.wav" },
+            { text: "e", src: "audio/latin/lesson-1/vowel-e.wav" },
+            { text: "i", src: "audio/latin/lesson-1/vowel-i.wav" },
+            { text: "o", src: "audio/latin/lesson-1/vowel-o.wav" },
+            { text: "u", src: "audio/latin/lesson-1/vowel-u.wav" }
+          ]
+        },
+        question: {
+          leadIn: "珀西瓦尔在黑板上写下五个字母。「拉丁语有五个元音：a、e、i、o、u。」她逐一发音，每个音都清晰稳定，「a——如英语 father 中的 a。e——如英语 they 中的 e。i——如英语 machine 中的 i。o——如英语 boat 中的 o。u——如英语 rude 中的 u。」她放下粉笔，「关键在这里：每个元音只有一种发音。不像英语——英语的 a 可以读成 cat、cake、car，但拉丁语的 a 永远是 a。永远。」",
+          text: "「拉丁语元音 i 的发音接近英语哪个词中的 i？」",
+          options: ["sit", "machine", "like"],
+          answer: 1
+        },
+        contextRight: "「对。」珀西瓦尔点了一下头。「拉丁语的 i 读长音 [i:]，和英语 machine 里的 i 一样。不是 sit 里的短 i，不是 like 里的双元音 aɪ。只有一种发音。」她停了一秒，「这就是拉丁语比英语简单的地方——元音不会骗你。」",
+        contextWrong: "她重复了一遍正确的发音。「[i:]——machine。」不带感情，「不是 sit，不是 like。拉丁语的 i 只有一种发音：长音 [i:]。」她在 machine 旁边画了一个圈，「记住这个参照。以后遇到 i，就发这个音。没有例外。」",
+        blackboard: {
+          type: "formulas",
+          label: "拉丁语元音",
+          lines: [
+            "a  =  [a:]  如 fAther",
+            "e  =  [e:]  如 thEY",
+            "i  =  [i:]  如 machIne",
+            "o  =  [o:]  如 bOAt",
+            "u  =  [u:]  如 rUde"
+          ],
+          note: "每个元音只有一种发音，没有例外",
+          audio: [
+            { text: "a", src: "audio/latin/lesson-1/vowel-a.wav" },
+            { text: "e", src: "audio/latin/lesson-1/vowel-e.wav" },
+            { text: "i", src: "audio/latin/lesson-1/vowel-i.wav" },
+            { text: "o", src: "audio/latin/lesson-1/vowel-o.wav" },
+            { text: "u", src: "audio/latin/lesson-1/vowel-u.wav" }
+          ]
+        }
       },
       {
-        point: "辅音发音规则",
-        context: "「辅音的发音大多与英语相似，但有几个例外。」珀西瓦尔强调，「c永远发[k]音，g永远发[g]音。双辅音要发长音：ll读作[ll]，ss读作[ss]。」"
+        point: "辅音的关键例外：c、g 和双辅音",
+        blackboardQ: {
+          type: "formulas",
+          label: "辅音关键规则",
+          lines: [
+            "c  =  永远 [k]",
+            "ca = [ka]",
+            "ce = [ke]",
+            "ci = [ki]",
+            "co = [ko]",
+            "cu = [ku]",
+            "",
+            "g  =  永远 [g]（永远硬）",
+            "ga = [ga]",
+            "ge = [ge]",
+            "gi = [gi]",
+            "go = [go]",
+            "gu = [gu]",
+            "",
+            "双辅音发长音（停留时间加倍）：",
+            "vil-la（别墅）  ll → [l:l]",
+            "ter-ra（土地）  rr → [r:r]"
+          ],
+          audio: [
+            { text: "ca", src: "audio/latin/lesson-1/consonant-ca.wav", lineIndex: 1 },
+            { text: "ce", src: "audio/latin/lesson-1/consonant-ce.wav", lineIndex: 2 },
+            { text: "ci", src: "audio/latin/lesson-1/consonant-ci.wav", lineIndex: 3 },
+            { text: "co", src: "audio/latin/lesson-1/consonant-co.wav", lineIndex: 4 },
+            { text: "cu", src: "audio/latin/lesson-1/consonant-cu.wav", lineIndex: 5 },
+            { text: "ga", src: "audio/latin/lesson-1/consonant-ga.wav", lineIndex: 8 },
+            { text: "ge", src: "audio/latin/lesson-1/consonant-ge.wav", lineIndex: 9 },
+            { text: "gi", src: "audio/latin/lesson-1/consonant-gi.wav", lineIndex: 10 },
+            { text: "go", src: "audio/latin/lesson-1/consonant-go.wav", lineIndex: 11 },
+            { text: "gu", src: "audio/latin/lesson-1/consonant-gu.wav", lineIndex: 12 },
+            { text: "villa", src: "audio/latin/lesson-1/double-villa.wav", lineIndex: 15 },
+            { text: "terra", src: "audio/latin/lesson-1/double-terra.wav", lineIndex: 16 }
+          ]
+        },
+        question: {
+          leadIn: "「大多数辅音和英语一样，」珀西瓦尔说，「但有两个必须从现在就记住。」她在黑板上写下 c 和 g。「c——永远发 [k]。不管后面跟什么元音。ca 是 ka，ce 是 ke，ci 是 ki，co 是 ko，cu 是 ku。不是英语那种 c 在 e 前面变 s 的规则——拉丁语没有那种规则。」她指向 g，「g——永远发 [g]。ga、ge、gi、go、gu，永远是硬 g，不会变成英语 gym 里那种 [dʒ]。」她又写了一行，「还有双辅音：ll、ss、rr、tt——两个相同的辅音连在一起，要发长音，停留时间加倍。」",
+          text: "「拉丁语单词 ceno（我用餐）中，c 的发音是？」",
+          options: ["[s]（如英语 cent）", "[k]（如英语 cat）", "[ch]（如英语 church）"],
+          answer: 1
+        },
+        contextRight: "「对。」珀西瓦尔没有多余的表情。「[k]。ceno 读作 ke-no。不管 c 后面跟的是 e 还是 i，永远是 [k]。这是古典拉丁语最铁的规则之一。」她停了一秒，「你们以后念咒语的时候会感谢这条规则的——至少 c 不会骗你。」",
+        contextWrong: "她重复了一遍。「ke-no。」只重复一次，不解释。「c 在拉丁语中永远发 [k]。不是 [s]，不是 [ch]。英语里 c 在 e、i 前面会变软，拉丁语不会。」她在 ceno 上方写了一个 k，「记住：c 永远硬。没有例外。」",
+        blackboard: {
+          type: "formulas",
+          label: "辅音关键规则",
+          lines: [
+            "c  =  永远 [k]",
+            "ca = [ka]",
+            "ce = [ke]",
+            "ci = [ki]",
+            "co = [ko]",
+            "cu = [ku]",
+            "",
+            "g  =  永远 [g]（永远硬）",
+            "ga = [ga]",
+            "ge = [ge]",
+            "gi = [gi]",
+            "go = [go]",
+            "gu = [gu]",
+            "",
+            "双辅音发长音（停留时间加倍）：",
+            "vil-la（别墅）  ll → [l:l]",
+            "ter-ra（土地）  rr → [r:r]"
+          ],
+          note: "c 和 g 永远硬，不会软化",
+          audio: [
+            { text: "ca", src: "audio/latin/lesson-1/consonant-ca.wav", lineIndex: 1 },
+            { text: "ce", src: "audio/latin/lesson-1/consonant-ce.wav", lineIndex: 2 },
+            { text: "ci", src: "audio/latin/lesson-1/consonant-ci.wav", lineIndex: 3 },
+            { text: "co", src: "audio/latin/lesson-1/consonant-co.wav", lineIndex: 4 },
+            { text: "cu", src: "audio/latin/lesson-1/consonant-cu.wav", lineIndex: 5 },
+            { text: "ga", src: "audio/latin/lesson-1/consonant-ga.wav", lineIndex: 8 },
+            { text: "ge", src: "audio/latin/lesson-1/consonant-ge.wav", lineIndex: 9 },
+            { text: "gi", src: "audio/latin/lesson-1/consonant-gi.wav", lineIndex: 10 },
+            { text: "go", src: "audio/latin/lesson-1/consonant-go.wav", lineIndex: 11 },
+            { text: "gu", src: "audio/latin/lesson-1/consonant-gu.wav", lineIndex: 12 },
+            { text: "villa", src: "audio/latin/lesson-1/double-villa.wav", lineIndex: 15 },
+            { text: "terra", src: "audio/latin/lesson-1/double-terra.wav", lineIndex: 16 }
+          ]
+        }
       },
       {
-        point: "音节划分",
-        context: "「拉丁语的音节以元音为中心。」她举例：'am-i-cus'（朋友），「每个音节都包含一个元音。重音通常在倒数第二个音节上，如果倒数第二个音节是短音，则重音在倒数第三个音节。」"
+        point: "音节划分与重音规则",
+        blackboardQ: {
+          type: "formulas",
+          label: "音节划分",
+          lines: [
+            "AM-i-cus  (朋友)    3 音节",
+            "DO-mi-nus (主人)    3 音节",
+            "LU-mos    (荧光)    2 音节",
+            "",
+            "每个音节包含一个元音",
+            "重音规则：",
+            "  两音节 --> 重音在倒数第2",
+            "  三音节+ --> 看倒数第2音节长短"
+          ],
+          audio: [
+            { text: "amicus",  src: "audio/latin/lesson-1/word-amicus.wav" },
+            { text: "dominus", src: "audio/latin/lesson-1/word-dominus.wav" },
+            { text: "lumos",   src: "audio/latin/lesson-1/word-lumos.wav" }
+          ]
+        },
+        question: {
+          leadIn: "珀西瓦尔在黑板上写下 am-i-cus。「音节——以元音为中心的发音单位。每个音节必须包含一个元音。am-i-cus：a-mi-cus，三个元音，三个音节。」她用竖线把单词切开，「划音节就是找元音，一个元音一个音节。」她又写了 do-mi-nus，「重音——拉丁语的重音有固定规则。两个音节的词，重音永远在倒数第二个音节：LU-mos。」她指着黑板上的规则，「三个或更多音节的词，看倒数第二个音节：如果它是长音节，重音就在它上面；如果它是短音节，重音就往前移到倒数第三个。」",
+          text: "「两个音节的拉丁语单词，重音在哪个音节？」",
+          options: ["第一个（倒数第二）", "最后一个", "随便哪个都行"],
+          answer: 0
+        },
+        contextRight: "「对。」珀西瓦尔点了一下头。「两个音节的词，重音永远在第一个——也就是倒数第二个。LU-mos，LU。」她在黑板上补了一条线，「三个音节的词，看倒数第二个音节：pu-EL-la 的 el 是长音节，重音就落在 EL，不是第一个音节。」她停了一秒，「拉丁语的重音是可以预测的，不像英语那样毫无规律。」",
+        contextWrong: "她没有表情。「两个音节，重音在倒数第二个——也就是第一个音节。」她在 LU-mos 的 LU 下面画了一条线，「LU-mos。永远如此。拉丁语的重音是可以预测的，不像英语。」她停顿，「这是拉丁语比英语简单的又一个地方。」",
+        blackboard: {
+          type: "formulas",
+          label: "音节与重音",
+          lines: [
+            "音节：每个元音 = 一个音节",
+            "",
+            "AM-i-cus （朋友）",
+            "DO-mi-nus（主人）",
+            "LU-mos   （荧光闪烁）",
+            "NO-x     （夜）",
+            "CE-no    （我用餐）",
+            "pu-EL-la （女孩）",
+            "",
+            "重音规则：",
+            "2 音节词 --> 重音在倒数第2",
+            "  LU-mos",
+            "3+音节词 --> 看倒数第2音节长短",
+            "  长 --> 重音在倒数第2",
+            "  短 --> 重音在倒数第3"
+          ],
+          note: "拉丁语重音可预测，无例外",
+          audio: [
+            { text: "amicus",  src: "audio/latin/lesson-1/word-amicus.wav",  lineIndex: 2 },
+            { text: "dominus", src: "audio/latin/lesson-1/word-dominus.wav", lineIndex: 3 },
+            { text: "lumos",   src: "audio/latin/lesson-1/word-lumos.wav",   lineIndex: 4 },
+            { text: "nox",     src: "audio/latin/lesson-1/word-nox.wav",     lineIndex: 5 },
+            { text: "ceno",    src: "audio/latin/lesson-1/word-ceno.wav",    lineIndex: 6 },
+            { text: "puella",  src: "audio/latin/lesson-1/word-puella.wav",  lineIndex: 7 }
+          ]
+        }
       }
-    ]
+    ],
+    lessonSummary: "今天学了四件事：第一，古典拉丁字母表只有23个字母——没有J、U、W，I兼任J，V兼任U和W。第二，五个元音每个只有一种发音，不会像英语那样变来变去。第三，辅音里c永远发[k]、g永远发[g]，双辅音要发长音。第四，音节以元音划分，两个音节的词重音永远在第一个音节。",
+    nextLessonPreview: "下一课，我们用这些字母和发音搭建第一个句子——主格和宾格。你们会发现，拉丁语里一个词的尾巴变了，它在句子里的角色就变了。"
   },
 
   2: {

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "puella",
+    "text": "puella",
+    "label": "puella（女孩，主格）",
+    "file": "audio/latin/lesson-2/puella.wav"
+  },
+  {
+    "id": "puellam",
+    "text": "puellam",
+    "label": "puellam（女孩，宾格）",
+    "file": "audio/latin/lesson-2/puellam.wav"
+  },
+  {
+    "id": "magister",
+    "text": "magister",
+    "label": "ma-gis-ter（老师）",
+    "file": "audio/latin/lesson-2/magister.wav"
+  },
+  {
+    "id": "cantat",
+    "text": "kantat",
+    "label": "can-tat（他/她唱歌）",
+    "file": "audio/latin/lesson-2/cantat.wav"
+  },
+  {
+    "id": "videt",
+    "text": "widet",
+    "label": "vi-det（他/她看见）",
+    "file": "audio/latin/lesson-2/videt.wav"
+  },
+  {
+    "id": "amo",
+    "text": "amo",
+    "label": "a-mo（我爱）",
+    "file": "audio/latin/lesson-2/amo.wav"
+  },
+  {
+    "id": "amas",
+    "text": "amas",
+    "label": "a-mas（你爱）",
+    "file": "audio/latin/lesson-2/amas.wav"
+  },
+  {
+    "id": "amat",
+    "text": "amat",
+    "label": "a-mat（他/她爱）",
+    "file": "audio/latin/lesson-2/amat.wav"
+  },
+  {
+    "id": "librum",
+    "text": "librum",
+    "label": "li-brum（书，宾格）",
+    "file": "audio/latin/lesson-2/librum.wav"
+  },
+  {
+    "id": "legit",
+    "text": "legit",
+    "label": "le-git（他/她读）",
+    "file": "audio/latin/lesson-2/legit.wav"
+  },
+  {
+    "id": "puella-cantat",
+    "text": "puella kantat",
+    "label": "Puella cantat（女孩唱歌）",
+    "file": "audio/latin/lesson-2/puella-cantat.wav"
+  },
+  {
+    "id": "magister-videt-puellam",
+    "text": "magister widet puellam",
+    "label": "Magister videt puellam",
+    "file": "audio/latin/lesson-2/magister-videt-puellam.wav"
+  }
+]

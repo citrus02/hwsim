@@ -57,6 +57,7 @@ export async function initMusicSystem() {
 
   // 🎵 ⭐ 全局按钮点击音效
   document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('cls-audio-btn')) return;
     if (e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable')) {
       playClickSound();
     }

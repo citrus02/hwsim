@@ -118,6 +118,36 @@
 
 ***
 
+### 课程级别字段
+
+每个 `lesson`（课程）对象除了标准的 `keyPoints` 外，应该包含：
+
+```js
+{
+  atmosphere: "...",           // 开场氛围
+  opening: "...",              // 老师的开场白，含今天学习目标的暗示
+  keyPoints: [...]             // 知识点数组
+  lessonSummary: "...",        // 课后总结：今天学了什么（60–100 字）
+  nextLessonPreview: "...",    // 下一课预告：为什么要学下一个话题（30–60 字）
+}
+```
+
+**设计原则**：
+
+- `lessonSummary` 用第一人称复述，从学生的角度总结今天的收获。不是"我讲了"，而是"你们学了"。
+- `nextLessonPreview` 制造对下一课的好奇或期待，通常是"现在你会 X，下一课我们要 Y"的逻辑链。
+- 两者都是**故事化**的，不是生硬的列表。
+
+**示例**：
+
+```
+lessonSummary: "今天学了三件事：第一，数轴是数字的地理位置——越靠右越大，这是唯一的规则。第二，整数分成三个家族——正整数、负整数、零，各自有各自的位置。第三，最容易出错的是负数比较——−1 比 −4 大，因为离零更近。还有，绝对值就是距离，永远不会是负数。"
+
+nextLessonPreview: "下一课，我们从整数走到分数——同一条数轴，但这次要放下更小的东西。你们会发现，整数其实是分数的特殊情况。"
+```
+
+---
+
 ## keyPoint context 写作原则
 
 每个 `keyPoint` 由两部分组成：`point`（知识点标题）和 `context`（课堂场景段落）。
@@ -153,8 +183,8 @@
 ```js
 {
   point: "知识点标题",
-  blackboard: { ... },      // 可选，答题后显示的黑板（含答案、箭头、结果）
-  blackboardQ: { ... },     // 可选，答题前显示的黑板（不含答案——见下文）
+  blackboard: { ... },      // 可选，答题后显示的黑板（含答案、箭头、结果）；也可写成 [{...}, {...}] 显示多块板书
+  blackboardQ: { ... },     // 可选，答题前显示的黑板（不含答案——见下文）；也可写成数组
   question: { ... },        // 可选，课中提问；calculator 可配合 question 做按键后提问
   interactionContext: "...", // 可选，无 question 的互动说明；如计算器按键演示前的引导语
   context: "...",           // 答题后显示的解释（兜底，无 question 时也显示）
@@ -176,11 +206,43 @@
 
 **何时需要分开写**：当 `blackboard` 里含有答案信息（`compArrow`、公式结果、`calculator.result`）时，必须同时提供 `blackboardQ`（去掉答案部分）。若黑板本身不含答案，只需写 `blackboard`，`blackboardQ` 可省略。
 
+**多块板书**：当同一个 keyPoint 需要同时展示公式和计算器，或同时展示定义板书与辅助图示时，`blackboard` / `blackboardQ` 可以写成数组，例如 `blackboardQ: [{ type: "formulas", ... }, { type: "calculator", ... }]`。数组顺序就是 UI 中从上到下的显示顺序。
+
 ### 何时添加
 
 **必须加**：教授在 context 中提到"在黑板上画/写了某物"——数轴、公式、表格——而这个东西是学生理解本条知识点的视觉锚点。
 
 **不必加**：教授只是板书一个词或句子（已经在 context 叙事中说清楚了）；氛围性动作（整理粉笔、转身等）。
+
+### 黑板文案一致性硬规则
+
+凡是课程文案里写到黑板上出现了具体内容，UI 黑板就必须出现对应内容。这里的"课程文案"包括 `atmosphere`、`opening`、`question.leadIn`、`context`、`contextRight`、`contextWrong`，不只限于 `context`。
+
+必须补板书的触发词包括但不限于：
+
+- "黑板上写了/写下/列出/标着/标注"
+- "黑板上画了/画出/画成/圈出/划线"
+- "在黑板上算/一步步写/演示"
+- "指着黑板上的……"
+
+处理原则：
+
+- 如果文案说黑板上有公式、数字、标题、表格或步骤，`blackboardQ` / `blackboard` 的 `formulas.lines` 必须列出它。
+- 如果文案说黑板上有数轴、比较箭头、标记点，优先用 `numberline`；题前用 `blackboardQ`，题后用 `blackboard` 补答案箭头或结论。
+- 如果文案说黑板上有几何图形，但当前 UI 没有专用图形组件，必须先用 `formulas.lines` 写出可读的板书图示或结构说明，例如"图示：等边 / 等腰 / 不等边"、"圆心 O —— 半径 r —— 圆周"、坐标轴 ASCII 图。不能因为没有图形组件就让黑板为空。
+- 如果 `atmosphere` 或 `opening` 已经描述了开场黑板内容，通常应并入第一个 keyPoint 的 `blackboardQ`，让学生进入讲课时能看到同一块黑板上的内容。
+- 答题后文案如果写"芬威克在黑板上写/算/画……"，对应内容必须出现在题后的 `blackboard`；不能只藏在文字里。
+
+### 计算器一致性硬规则
+
+凡是课程文案里写到教授或学生实际使用计算器，UI 必须显示 `calculator`。这里的"使用"包括"按了/输入/显示/屏幕显示/让学生按/重复按/计算器算出"等。
+
+处理原则：
+
+- 如果计算器只是 `atmosphere` 里的道具（例如"计算器放在讲台正中"），但本 keyPoint 没有按键、输入或屏幕结果，可以不做交互。
+- 如果文案写"按了几个键"或"显示某个结果"，至少要在 `blackboardQ` 中放一个 `calculator`，用 `display` 表示屏幕当前结果。
+- 如果文案要求学生按键验证，必须用 `calculator` 的 `highlightKey` 或 `sequence`。
+- 如果同一个 keyPoint 既需要公式板书又需要计算器，`blackboardQ` 写成数组：先放公式板书，再放计算器，或按课堂视觉顺序排列。
 
 ### 支持的类型
 
@@ -234,7 +296,7 @@ blackboard: {
 
 1. **单键演示**：提供 `highlightKey`，学生按下高亮键后显示 `result`，随后进入解释。
 2. **按键序列演示**：提供 `sequence`，不提供 `question`。学生必须依次按完序列中的键，屏幕显示 `result`，然后出现"继续"按钮；学生点击后进入解释。用于"让学生操作验证"，但不额外考问结果。
-3. **按键序列 + 提问**：提供 `sequence` 和 `question`，学生必须依次按完序列中的键，屏幕显示 `result` 后再出现 `question` 选项；答对/答错会像普通课中提问一样显示反馈，再进入解释。
+3. **按键序列 + 提问**：提供 `sequence` 和 `question`。UI 先显示 `question.leadIn` 与 `question.text`，选项先禁用；学生依次按完序列中的键，屏幕显示 `result` 后，选项变为可答。答对/答错会像普通课中提问一样显示反馈，再进入解释。
 
 ```js
 blackboardQ: {
@@ -265,21 +327,150 @@ blackboardQ: {
   result: "5"                // 序列完成后屏幕显示值
 },
 question: {
-  leadIn: "芬威克把那台旧计算器递给你。「按 −5，找绝对值键。」",
-  text: "「结果是多少？」",
+  leadIn: "他把计算器推到前面，「绝对值，」他停顿，「是一个数到零的距离。距离没有方向——往左走 5 步和往右走 5 步，你走的距离是一样的。」他看着全班，「按 −5，再按这个键。」他用粉笔指向计算器上的 |x| 键。",
+  text: "「屏幕现在显示什么？」",
   options: ["5", "−5", "0"],
   answer: 0
 }
-// 答题后显示 blackboard（formulas 或其他类型），展示结论
+// 显示顺序：黑板计算器 → question.leadIn → question.text（选项禁用）→ 学生按完 sequence → 选项可答 → 答题后显示 blackboard（formulas 或其他类型）+ 反馈
 ```
 
 **注意**：`calculator` 只放在 `blackboardQ`，不放在 `blackboard`。`blackboard` 改用 `formulas` 展示对应公式结论。
+
+#### `audio`（行内发音按钮，仅用于 `formulas` 类型）
+
+用于语言类课程（如拉丁语）中为每行词汇配上可点击的发音按钮（🔊）。
+
+```js
+blackboard: {
+  type: "formulas",
+  label: "拉丁语元音",
+  lines: [
+    "a  =  [a:]  如 fAther",   // lineIndex 0
+    "e  =  [e:]  如 thEY",     // lineIndex 1
+    "i  =  [i:]  如 machIne",  // lineIndex 2
+    "o  =  [o:]  如 bOAt",     // lineIndex 3
+    "u  =  [u:]  如 rUde",     // lineIndex 4
+    "",
+    "每个元音只有一种发音"
+  ],
+  audio: [
+    { text: "a", src: "audio/latin/lesson-1/vowel-a.wav" },   // lineIndex 省略 → 按数组下标 0
+    { text: "e", src: "audio/latin/lesson-1/vowel-e.wav" },
+    { text: "i", src: "audio/latin/lesson-1/vowel-i.wav" },
+    { text: "o", src: "audio/latin/lesson-1/vowel-o.wav" },
+    { text: "u", src: "audio/latin/lesson-1/vowel-u.wav" }
+  ]
+}
+```
+
+**`lineIndex` 字段**：指定该音频按钮出现在哪一行前面（0-indexed）。省略时按数组下标自动匹配。当音频行与数组下标不对应时（例如首行是标题、中间有空行），必须显式写 `lineIndex`：
+
+```js
+audio: [
+  { text: "ca", src: "...", lineIndex: 1 },  // 第 0 行是标题，音频从第 1 行开始
+  { text: "ce", src: "...", lineIndex: 2 },
+]
+```
+
+**书写规则：**
+
+- 有独立发音需要展示的内容，**必须拆成独立行**，不能合并在同一行——合并后只能放一个按钮，其他音频无处挂载。
+- `audio` 应同时加在 `blackboardQ`（答题时）和 `blackboard`（答题后），让学生在选择答案前就能听到发音。
+- 空行（`""`）不渲染按钮，即使 `lineIndex` 指向空行，按钮也不会出现。
+- **列对齐注意**：有音频按钮的行会在文字前增加一个固定宽度按钮（约 28px），破坏纯 `white-space: pre` 的列对齐。因此**同一个黑板内**，若既有音频行又有非音频行，两者不宜强行对齐同一列——分组书写或在视觉上自然区分更合适。
+- 中文字符按 **2 视觉单位**计算（英文字符 = 1 单位），用于手动对齐音节数等右对齐列。
+
+**按钮交互行为：**
+
+- 默认显示 🔊；点击后播放，显示 🔉；播放完毕自动回到 🔊。
+- 播放中再次点击：立即停止并重置，回到 🔊，下次点击从头播放。
+
+---
+
+#### 拉丁语课程专项规范
+
+**重音标注惯例（stress mark）**
+
+板书中用**大写字母**标注重音音节，小写标注其余音节：
+
+```
+AM-i-cus   （重音在第一音节 AM）
+pu-EL-la   （重音在第二音节 EL）
+DO-mi-nus  （重音在第一音节 DO）
+```
+
+规则：
+- 两音节词：重音永远在第一音节（倒数第二）→ 首音节大写
+- 三音节+词：倒数第二音节为重音节（长音节）→ 该音节大写；否则倒数第三音节大写
+- 单音节词（如 nox）：无需重音标注，不要误写成两音节
+
+**TTS 发音输入校正表（用于 generate-latin-audio.py `text` 字段）**
+
+espeak-ng `la` 模式不能直接用拉丁语正字法，需要将发音写法作为 `text` 输入：
+
+| 拉丁正字 | TTS 输入 | 原因 |
+|---|---|---|
+| c（所有位置）| k | 古典拉丁 c 永远硬 [k]，espeak 默认会软化 |
+| v | w | 古典拉丁 v = [w] |
+| ae | aj | 古典拉丁 ae 双元音 |
+| qu | kw | qu = [kw] |
+
+示例：`"amicus"` → `text: "amikus"`，`"videt"` → `text: "widet"`
+
+**音节计数**
+
+计算音节数时以**元音数量**为准（每个元音 = 一个音节）：
+- nox = 1个元音(o) = **1音节**（不可写成 NO-x 放入"2音节词"例子）
+- lumos = 2个元音(u,o) = 2音节
+- amicus = 3个元音(a,i,u) = 3音节
+
+---
 
 ### 关键约束
 
 - `lines` 使用 **ASCII 连字符 `-`** 表示负号，**禁止使用 Unicode 减号 `−`（U+2212）或 `&minus;`**——后者在 Courier New 中不等宽，导致列对齐错位。
 - `lines` 的对齐完全依赖手动空格 + `white-space: pre` 渲染。写之前先在等宽字体编辑器里对好列，再填入。
 - `label` 和 `note` 均为纯文本，不解析 HTML。
+
+---
+
+## 课堂 UI 分区规范
+
+讲课阶段的视觉结构必须统一，所有 keyPoint 都按以下顺序呈现：
+
+1. **标题区**：序号 + `point`
+2. **黑板区**：`blackboardQ` 或 `blackboard`
+3. **讲课区**：`context`、`interactionContext` 或 `question.leadIn`
+4. **提问区**：`question.text` + `question.options`
+
+### 分隔规则
+
+- 黑板区、讲课区、提问区之间必须有横线分隔，不能挤在同一个视觉块里。
+- 讲课区使用金色左边线样式，普通叙事为灰色斜体，教授对白为暖金色正体。
+- 如果 `question` 带 `leadIn`，`leadIn` 属于讲课区，`question.text` 属于提问区；两者之间必须有横线。
+- 如果没有提问，`context` 或 `interactionContext` 也必须使用同样的金边讲课区，不允许退回普通裸文本。
+
+### 计算器序列提问的显示顺序
+
+对于 `blackboardQ.type === "calculator"` 且同时有 `sequence` 和 `question` 的 keyPoint：
+
+1. 先显示计算器黑板。
+2. 在计算器下方显示 `question.leadIn`。
+3. `question.text` 必须接在 `question.leadIn` 下方，中间有横线；选项先禁用。
+4. 学生按完 `sequence` 后，屏幕显示 `result`，选项变为可答。
+5. 答题后进入 `contextRight` / `contextWrong`，并显示题后 `blackboard`。
+
+不要把 `question.text` 延后到按完计算器之后才出现；提问本身要先出现，计算器是用来得到答案的操作。
+
+### 公式板书排版
+
+`formulas.lines` 以黑板板书为准，必须整齐、紧凑：
+
+- 每一行都是一条公式或说明，使用等宽字体渲染。
+- 手动空格会被保留；写入前必须在等宽字体中检查列对齐。
+- 空字符串 `""` 可用于分隔公式组，但只作为小间隔，不能制造大段空白。
+- 绝对值、方程、表格类公式优先写成视觉上对齐的多行，不要把所有内容塞进一句 `note`。
 
 ---
 

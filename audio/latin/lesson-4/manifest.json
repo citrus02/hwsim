@@ -1,0 +1,50 @@
+[
+  {
+    "id": "bonus",
+    "text": "bonus",
+    "label": "bo-nus（好的，阳性）",
+    "file": "audio/latin/lesson-4/bonus.wav"
+  },
+  {
+    "id": "bona",
+    "text": "bona",
+    "label": "bo-na（好的，阴性）",
+    "file": "audio/latin/lesson-4/bona.wav"
+  },
+  {
+    "id": "bonum",
+    "text": "bonum",
+    "label": "bo-num（好的，中性）",
+    "file": "audio/latin/lesson-4/bonum.wav"
+  },
+  {
+    "id": "puer",
+    "text": "puer",
+    "label": "pu-er（男孩）",
+    "file": "audio/latin/lesson-4/puer.wav"
+  },
+  {
+    "id": "boni-pueri",
+    "text": "boni pueri",
+    "label": "boni pueri（好男孩们）",
+    "file": "audio/latin/lesson-4/boni-pueri.wav"
+  },
+  {
+    "id": "bonas-puellas",
+    "text": "bonas puellas",
+    "label": "bonas puellas（好女孩们）",
+    "file": "audio/latin/lesson-4/bonas-puellas.wav"
+  },
+  {
+    "id": "magna-puella",
+    "text": "magna puella",
+    "label": "magna puella（大女孩）",
+    "file": "audio/latin/lesson-4/magna-puella.wav"
+  },
+  {
+    "id": "parvus-liber",
+    "text": "parwus liber",
+    "label": "parvus liber（小书）",
+    "file": "audio/latin/lesson-4/parvus-liber.wav"
+  }
+]
