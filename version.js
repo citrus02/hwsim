@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.7.9';
+export const CURRENT_VERSION = '1.7.10';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.10': [
+    '麻瓜学术系迎来大补充：新增并扩写物理、历史、地理、文学等课程长篇课文',
+    '重做多门麻瓜学术课程题库，补足选择题、解析与知识点对应关系',
+    '调整化学、历史、文学等科目的课程大纲与教授风格，让学科定位更清晰',
+    '完善课程内容写作规范，方便后续继续批量扩写课程而不破坏课堂展示',
+  ],
   '1.7.9': [
     '扩充麻瓜学术系数学与拉丁语课程内容，补充拉丁语发音练习与课堂音频',
     '优化课堂黑板、课堂小问答、计算器互动与答题记录显示',

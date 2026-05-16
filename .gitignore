@@ -6,3 +6,19 @@
 __pycache__/
 CLAUDE.md
 ai/private-config.js
+
+# 本地临时修复/生成脚本，不随版本发布
+*.bak
+*.bak*
+fix*.js
+fix*.py
+extract_*.py
+generate_lessons.py
+rebuild*.js
+temp_*.txt
+test-questionbank.mjs
+_spec/check_syntax.js
+scripts/
+tools/check_frags.ps1
+tools/merge_latin.ps1
+tools/verify_latin.ps1

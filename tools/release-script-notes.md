@@ -19,8 +19,16 @@
 会排除：
 
 - `.git`
+- `.cache`
+- `.kilo`
 - `.trae`
 - `.uploads`
+- `.venv`
+- `__pycache__`
+- `CLAUDE.md`
+- `scripts`
+- 临时修复脚本，例如 `fix*.js`、`fix*.py`、`rebuild*.js`
+- 临时题库/检查文件，例如 `*.bak`、`temp_*.txt`、`test-questionbank.mjs`
 - `.claude/worktrees`
 - 正在生成的 zip 文件本身
 

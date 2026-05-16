@@ -5,6 +5,9 @@
  * 课程体系：英国 KS3 → GCSE → A-Level（共 70 课，14 章，横跨 7 年级）
  */
 
+import { lessonMap } from './history-lesson.js';
+import { questionBank } from './history-questionBank.js';
+
 export const subjectMeta = {
   key: "history",
   name: "历史",
@@ -209,4 +212,4 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_history = { subjectMeta, teachingStyle, syllabus, crossAnchors };
+window.subject_history = { subjectMeta, teachingStyle, syllabus, crossAnchors, lessonMap, questionBank };

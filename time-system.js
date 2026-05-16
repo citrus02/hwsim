@@ -143,7 +143,7 @@ const HOLIDAYS = [
 ];
 
 const DATE_EVENTS = [
-  { exactDate: "1991-09-02", name: "开学日", noClass: true, noClassLabel: "开学日" },
+  { date: "09-02", name: "开学日", noClass: true, noClassLabel: "开学日" },
   { date: "10-31", name: "万圣节", noClassPeriods: [3], noClassLabel: "万圣节宴会" },
   { date: "02-14", name: "情人节" },
 ];

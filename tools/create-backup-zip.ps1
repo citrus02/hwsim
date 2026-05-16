@@ -10,8 +10,36 @@ $zipFullPath = [System.IO.Path]::GetFullPath((Join-Path $root $ZipPath))
 
 $excludedRootNames = @(
   ".git",
+  ".cache",
+  ".kilo",
   ".trae",
-  ".uploads"
+  ".uploads",
+  ".venv",
+  "CLAUDE.md",
+  "scripts"
+)
+
+$excludedDirectoryNames = @(
+  "__pycache__"
+)
+
+$excludedFileNamePatterns = @(
+  "*.bak",
+  "*.bak*",
+  "fix*.js",
+  "fix*.py",
+  "extract_*.py",
+  "generate_lessons.py",
+  "rebuild*.js",
+  "temp_*.txt",
+  "test-questionbank.mjs"
+)
+
+$excludedRelativeNames = @(
+  "_spec\check_syntax.js",
+  "tools\check_frags.ps1",
+  "tools\merge_latin.ps1",
+  "tools\verify_latin.ps1"
 )
 
 $excludedRelativePrefixes = @(
@@ -43,6 +71,25 @@ function Test-IsExcludedPath {
   $parts = $relative -split "\\"
   if ($parts.Length -gt 0 -and $excludedRootNames -contains $parts[0]) {
     return $true
+  }
+
+  foreach ($name in $excludedRelativeNames) {
+    if ($relative.Equals($name, [System.StringComparison]::OrdinalIgnoreCase)) {
+      return $true
+    }
+  }
+
+  $fileName = [System.IO.Path]::GetFileName($FullName)
+  foreach ($pattern in $excludedFileNamePatterns) {
+    if ($fileName -like $pattern) {
+      return $true
+    }
+  }
+
+  foreach ($part in $parts) {
+    if ($excludedDirectoryNames -contains $part) {
+      return $true
+    }
   }
 
   foreach ($prefix in $excludedRelativePrefixes) {
