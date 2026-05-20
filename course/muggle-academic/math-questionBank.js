@@ -57,7 +57,7 @@ export const questionBank = [
   ]},
   { lesson: 7, questions: [
     { type:'choice', difficulty:1, text:'三角形两内角为 50° 和 70°，第三个内角是？', options:['A. 50°','B. 60°','C. 70°','D. 120°'], answer:'B', knowledgePoint:'三角形内角和为180°', analysis:'第三角 = 180° − 50° − 70° = 60°。' },
-    { type:'choice', difficulty:1, text:'三角形三个内角和是？', options:['A. 90度','B. 180度','C. 270度','D. 360度'], answer:'B', knowledgePoint:'三角形内角和为180度', analysis:'任意三角形三个内角之和等于180度。' },
+    { type:'choice', difficulty:1, text:'三角形三个内角和是？', options:['A. 90度','B. 180度','C. 270度','D. 360度'], answer:'B', knowledgePoint:'三角形内角和为180°', analysis:'任意三角形三个内角之和等于180度。' },
     { type:'choice', difficulty:2, text:'等腰三角形顶角为 40°，底角各是多少？', options:['A. 40°','B. 60°','C. 70°','D. 80°'], answer:'C', knowledgePoint:'等腰三角形的性质', analysis:'底角 = (180° − 40°) ÷ 2 = 70°。' },
     { type:'choice', difficulty:2, text:'等边三角形每个内角是？', options:['A. 60度','B. 90度','C. 120度','D. 180度'], answer:'A', knowledgePoint:'等腰三角形的性质', analysis:'等边三角形三个角相等，每个角=180÷3=60度。' },
     { type:'choice', difficulty:3, text:'三条线段 5、9、x 能构成三角形，x 的范围是？', options:['A. 4 < x < 14','B. x > 4','C. x < 14','D. 任意正数'], answer:'A', knowledgePoint:'三角形不等式', analysis:'需满足：5+9>x → x<14；5+x>9 → x>4。取交集：4 < x < 14。' },
@@ -117,7 +117,7 @@ export const questionBank = [
     { type:'choice', difficulty:1, text:'联立x+y=5和x-y=1，两式相加得？', options:['A. 2x=6','B. 2y=6','C. x=6','D. y=6'], answer:'A', knowledgePoint:'加减消元法', analysis:'x+y+x-y=5+1，得2x=6。' },
     { type:'choice', difficulty:2, text:'联立 2x+y=9 和 x=y+3，解是？', options:['A. x=4,y=1','B. x=3,y=3','C. x=5,y=2','D. x=4,y=2'], answer:'A', knowledgePoint:'代入消元法', analysis:'代入：2(y+3)+y=9，3y=3，y=1，x=4。' },
     { type:'choice', difficulty:2, text:'方程组x+y=4，x=2的解是？', options:['A. x=2,y=2','B. x=2,y=4','C. x=4,y=2','D. x=1,y=3'], answer:'A', knowledgePoint:'代入消元法', analysis:'x=2代入x+y=4，得2+y=4，y=2。' },
-    { type:'choice', difficulty:3, text:'甲乙两人共工作 3 天酿 30 瓶魔药，甲每天比乙多酿 2 瓶，甲每天酿几瓶？', options:['A. 4','B. 5','C. 6','D. 7'], answer:'C', knowledgePoint:'联立方程初步', analysis:'设甲 a 瓶、乙 b 瓶：3(a+b)=30 → a+b=10；a−b=2。解得 a=6。' },
+    { type:'choice', difficulty:3, text:'甲乙两人共工作 3 天酿 30 瓶魔药，甲每天比乙多酿 2 瓶，甲每天酿几瓶？', options:['A. 4','B. 5','C. 6','D. 7'], answer:'C', knowledgePoint:'两个未知数、两个方程', analysis:'设甲 a 瓶、乙 b 瓶：3(a+b)=30 → a+b=10；a−b=2。解得 a=6。' },
     { type:'open', text:'代入消元法和加减消元法各适用于什么情况？请比较这两种方法。', scoringPoints:['正确说明代入消元法的适用情况','正确说明加减消元法的适用情况','能够比较两种方法'], maxScore:4 }
   ]},
   { lesson: 15, questions: [
@@ -188,9 +188,9 @@ export const questionBank = [
   ]},
   { lesson: 23, questions: [
     { type:'choice', difficulty:1, text:'A={1,2,3}，B={2,3,4}，A与B的交集是？', options:['A. {1,2,3,4}','B. {2,3}','C. {1,4}','D. {1,2}'], answer:'B', knowledgePoint:'交集与并集', analysis:'交集是同时属于两个集合的元素：{2,3}。' },
-    { type:'choice', difficulty:1, text:'集合{a,b,c}的元素个数是？', options:['A. 2','B. 3','C. 4','D. 无限'], answer:'B', knowledgePoint:'集合的定义', analysis:'集合{a,b,c}包含3个元素：a、b、c。' },
+    { type:'choice', difficulty:1, text:'集合{a,b,c}的元素个数是？', options:['A. 2','B. 3','C. 4','D. 无限'], answer:'B', knowledgePoint:'集合的表示方法', analysis:'集合{a,b,c}包含3个元素：a、b、c。' },
     { type:'choice', difficulty:2, text:'A={a,b,c}，B={c,d}，A与B的并集是？', options:['A. {a,b,c,d}','B. {c}','C. {a,b}','D. {a,b,c}'], answer:'A', knowledgePoint:'交集与并集', analysis:'并集包含所有元素：{a,b,c,d}。' },
-    { type:'choice', difficulty:2, text:'若A是B的子集，下列说法正确的是？', options:['A. A中的元素都在B中','B. B中的元素都在A中','C. A和B完全相同','D. A和B没有公共元素'], answer:'A', knowledgePoint:'子集的定义', analysis:'子集的定义：A的所有元素都属于B。' },
+    { type:'choice', difficulty:2, text:'若A是B的子集，下列说法正确的是？', options:['A. A中的元素都在B中','B. B中的元素都在A中','C. A和B完全相同','D. A和B没有公共元素'], answer:'A', knowledgePoint:'属于与不属于', analysis:'子集的定义：A的所有元素都属于B。' },
     { type:'choice', difficulty:3, text:'学魔咒学 20 人，学草药学 15 人，两者都学的 8 人，只学其中一门的共多少人？', options:['A. 19','B. 27','C. 35','D. 43'], answer:'A', knowledgePoint:'韦恩图', analysis:'只学魔咒学：20−8=12，只学草药学：15−8=7，共 12+7=19 人。' },
     { type:'open', text:'交集和并集有什么区别？请用韦恩图说明。', scoringPoints:['正确定义交集','正确定义并集','能够用韦恩图或例子说明区别'], maxScore:4 }
   ]},
@@ -205,8 +205,8 @@ export const questionBank = [
   { lesson: 25, questions: [
     { type:'choice', difficulty:1, text:'反证法证明"若 n² 是奇数则 n 是奇数"，起点假设是？', options:['A. 假设 n 是奇数','B. 假设 n 是偶数','C. 假设 n² 是偶数','D. 假设 n 是正数'], answer:'B', knowledgePoint:'反证法', analysis:'反证法假设结论不成立。结论"n 是奇数"的否定是"n 是偶数"，从此出发推矛盾。' },
     { type:'choice', difficulty:1, text:'反证法的第一步是？', options:['A. 直接证明结论','B. 假设结论不成立','C. 举例验证','D. 画图说明'], answer:'B', knowledgePoint:'反证法', analysis:'反证法从假设结论不成立开始，推出矛盾。' },
-    { type:'choice', difficulty:2, text:'数学归纳法需要证明哪两件事？', options:['A. P(1)成立；P(k)成立时P(k+1)成立','B. P(1)成立；P(k+1)成立时P(k)成立','C. P(n)对偶数成立；P(n)对奇数成立','D. P(1)成立；P(2)成立'], answer:'A', knowledgePoint:'简单数学证明', analysis:'基础步骤证 P(1)，归纳步骤证 P(k)→P(k+1)，两者缺一不可。' },
-    { type:'choice', difficulty:2, text:'数学归纳法的基础步骤是？', options:['A. 证明P(k)成立','B. 证明P(1)成立','C. 证明P(n)对所有n成立','D. 找到反例'], answer:'B', knowledgePoint:'简单数学证明', analysis:'数学归纳法首先证明P(1)成立（基础步骤）。' },
+    { type:'choice', difficulty:2, text:'数学归纳法需要证明哪两件事？', options:['A. P(1)成立；P(k)成立时P(k+1)成立','B. P(1)成立；P(k+1)成立时P(k)成立','C. P(n)对偶数成立；P(n)对奇数成立','D. P(1)成立；P(2)成立'], answer:'A', knowledgePoint:'证明的书写格式', analysis:'基础步骤证 P(1)，归纳步骤证 P(k)→P(k+1)，两者缺一不可。' },
+    { type:'choice', difficulty:2, text:'数学归纳法的基础步骤是？', options:['A. 证明P(k)成立','B. 证明P(1)成立','C. 证明P(n)对所有n成立','D. 找到反例'], answer:'B', knowledgePoint:'证明的书写格式', analysis:'数学归纳法首先证明P(1)成立（基础步骤）。' },
     { type:'choice', difficulty:3, text:'"能被 6 整除的数能被 2 和 3 整除"，直接证明的正确路线是？', options:['A. 设n=6k，则n=2(3k)被2整除，n=3(2k)被3整除','B. 设n被2整除，则n=2k，代入可知被6整除','C. 举例：6、12、18都能被2和3整除','D. 反证：若不被2整除，则不被6整除'], answer:'A', knowledgePoint:'直接证明法', analysis:'设 n=6k，n=2×(3k) 故被 2 整除，n=3×(2k) 故被 3 整除。直接证明写出推导链。' },
     { type:'open', text:'反证法和直接证明有什么区别？各举一个适用的例子。', scoringPoints:['正确说明反证法的特点','正确说明直接证明的特点','各举出一个适用的例子'], maxScore:4 }
   ]},
@@ -286,10 +286,10 @@ export const questionBank = [
   ]},
   { lesson: 35, questions: [
     { type:'choice', difficulty:1, text:'方程组 x+ky=5 和 2x+y=6 中，k 是？', options:['A. 未知数','B. 参数','C. 常数 5','D. 无意义'], answer:'B', knowledgePoint:'参数的含义', analysis:'k 不是要解的量，而是控制方程性质的参数；x 和 y 是未知数。' },
-    { type:'choice', difficulty:1, text:'方程组x+y=5和x-y=1的解是？', options:['A. x=3,y=2','B. x=2,y=3','C. x=4,y=1','D. x=1,y=4'], answer:'A', knowledgePoint:'参数的含义', analysis:'两式相加：2x=6，x=3。代入得y=2。' },
+    { type:'choice', difficulty:1, text:'在方程 x+ay=5 中，a 的作用更接近什么？', options:['A. 要解出的未知数','B. 可以调节方程性质的参数','C. 固定答案','D. 方程右边的常数'], answer:'B', knowledgePoint:'参数的含义', analysis:'a 不一定是本题要解出的未知数，而是能改变方程性质的参数。x 和 y 才是通常要求解的未知数。' },
     { type:'choice', difficulty:2, text:'方程组 x+y=3 和 x+y=5，解的情况是？', options:['A. 唯一解','B. 无解','C. 无穷多解','D. 两个解'], answer:'B', knowledgePoint:'无解与无数解的条件', analysis:'两方程左边相同，右边矛盾（3≠5），无解。几何上为两条平行线。' },
-    { type:'choice', difficulty:2, text:'方程组2x+y=7和x-y=2，解是？', options:['A. x=3,y=1','B. x=1,y=3','C. x=2,y=3','D. x=3,y=2'], answer:'A', knowledgePoint:'无解与无数解的条件', analysis:'两式相加：3x=9，x=3。代入得y=1。' },
-    { type:'choice', difficulty:3, text:'联立 3x+y=1 和 3x+3y=2，解是？', options:['A. x=1/6, y=1/2','B. 无解','C. 无穷多解','D. x=1, y=−2'], answer:'A', knowledgePoint:'含参方程组', analysis:'两式相减：2y=1，y=1/2。代入第一式：3x=1/2，x=1/6。' },
+    { type:'choice', difficulty:2, text:'方程组 x+y=5 和 2x+2y=10，解的情况是？', options:['A. 唯一解','B. 无解','C. 无穷多解','D. 只能解出 x'], answer:'C', knowledgePoint:'无解与无数解的条件', analysis:'第二个方程是第一个方程的 2 倍，表示同一条直线，因此有无穷多组解。' },
+    { type:'choice', difficulty:3, text:'方程组 x+ay=5 和 2x+y=6 中，当 a=1/2 时，解的情况是？', options:['A. 唯一解','B. 无解','C. 无穷多解','D. 只能解出 y'], answer:'B', knowledgePoint:'参数影响解的性质', analysis:'a=1/2 时，第一个方程乘以 2 得 2x+y=10，与第二个方程 2x+y=6 矛盾，因此无解。参数的取值改变了解的性质。' },
     { type:'open', text:'方程组什么时候无解？什么时候有无穷多解？请各举一个例子。', scoringPoints:['说明无解的条件（矛盾方程）','说明无穷多解的条件（相同方程）','各举出一个正确的例子'], maxScore:4 }
   ]},
   // ── 第8章 三角学（GCSE）────────────────────────────────────
@@ -356,15 +356,15 @@ export const questionBank = [
     { type:'choice', difficulty:2, text:'f(x)=3x²+2x−5 的导数是？', options:['A. 6x+2','B. 3x+2','C. 6x−5','D. 6x+2x'], answer:'A', knowledgePoint:'常数倍法则与求和法则', analysis:'逐项求导：(3x²)\'=6x，(2x)\'=2，常数导数为0。f\'(x)=6x+2。' },
     { type:'choice', difficulty:2, text:'f(x)=5x的三次方减2x的导数是？', options:['A. 15x的平方减2','B. 5x的平方减2','C. 15x的三次方减2','D. 5x的平方'], answer:'A', knowledgePoint:'常数倍法则与求和法则', analysis:'f\'(x)=15x的平方减2。' },
     { type:'choice', difficulty:3, text:'f(x)=sin(3x) 的导数是？（链式法则）', options:['A. cos(3x)','B. 3cos(3x)','C. −3cos(3x)','D. sin(3)'], answer:'B', knowledgePoint:'链式法则', analysis:'外层 sin，内层 3x。链式法则：f\'(x)=cos(3x)×3=3cos(3x)。' },
-    { type:'open', text:'幂函数的求导法则是什么？请用f(x)=x³为例说明。', scoringPoints:[["正确写出法则(xⁿ)'=nxⁿ⁻¹", "正确求导f'(x)=3x²", '步骤清晰']], maxScore:4 }
+    { type:'open', text:'幂函数的求导法则是什么？请用f(x)=x³为例说明。', scoringPoints:["正确写出法则(xⁿ)'=nxⁿ⁻¹", "正确求导f'(x)=3x²", '步骤清晰'], maxScore:4 }
   ]},
   { lesson: 44, questions: [
     { type:'choice', difficulty:1, text:'求函数极值，第一步是？', options:['A. 求二阶导数','B. 令一阶导数等于零','C. 画图像','D. 代入端点'], answer:'B', knowledgePoint:'临界点的求法', analysis:'令 f\'(x)=0，找到临界点。' },
-    { type:'choice', difficulty:1, text:'函数有极值点的必要条件是？', options:[["A. f'(x)=0", 'B. f(x)=0', "C. f''(x)=0", "D. f'(x)大于0"]], answer:'A', knowledgePoint:'临界点的求法', analysis:'极值点处导数为0（或导数不存在）。' },
+    { type:'choice', difficulty:1, text:'函数有极值点的必要条件是？', options:["A. f'(x)=0", 'B. f(x)=0', "C. f''(x)=0", "D. f'(x)大于0"], answer:'A', knowledgePoint:'临界点的求法', analysis:'极值点处导数为0（或导数不存在）。' },
     { type:'choice', difficulty:2, text:'f(x)=x²−6x+8，临界点处的值是极大还是极小？', options:['A. 极大值 −1','B. 极小值 −1','C. 极大值 8','D. 极小值 8'], answer:'B', knowledgePoint:'二阶导数判别极大极小', analysis:'f\'(x)=2x−6=0，x=3。f\'\'(x)=2>0，极小值。f(3)=9−18+8=−1。' },
     { type:'choice', difficulty:2, text:'f(x)=x的平方减4x加5的极值是？', options:['A. 极大值1','B. 极小值1','C. 极大值5','D. 极小值5'], answer:'B', knowledgePoint:'二阶导数判别极大极小', analysis:'f\'(x)=2x-4=0，x=2。f\'\'(x)=2大于0，极小值。f(2)=1。' },
     { type:'choice', difficulty:3, text:'用最少的围栏围出面积最大的矩形，已知围栏总长 40 米，最大面积是？', options:['A. 100 m²','B. 150 m²','C. 200 m²','D. 400 m²'], answer:'A', knowledgePoint:'优化问题的建模', analysis:'设宽 x，长 20−x（半周长=20）。面积 A=x(20−x)。A\'(x)=20−2x=0，x=10。最大面积=10×10=100 m²。' },
-    { type:'open', text:'如何用导数求函数的极值？请写出步骤。', scoringPoints:[["说明先求f'(x)=0找临界点", '说明用二阶导数或符号变化判断极值类型', '步骤完整']], maxScore:4 }
+    { type:'open', text:'如何用导数求函数的极值？请写出步骤。', scoringPoints:["说明先求f'(x)=0找临界点", '说明用二阶导数或符号变化判断极值类型', '步骤完整'], maxScore:4 }
   ]},
   { lesson: 45, questions: [
     { type:'choice', difficulty:1, text:'∫x²dx 等于？', options:['A. 2x','B. x³/3+C','C. 2x+C','D. x³+C'], answer:'B', knowledgePoint:'不定积分与反导数', analysis:'幂函数积分：∫xⁿdx = xⁿ⁺¹/(n+1)+C。∫x²dx=x³/3+C。' },
@@ -442,7 +442,7 @@ export const questionBank = [
   ]},
   { lesson: 54, questions: [
     { type:'choice', difficulty:1, text:'[f(x)·g(x)]\' 等于？', options:["A. f\'(x)·g\'(x)","B. f\'(x)·g(x)+f(x)·g\'(x)","C. f\'(x)/g\'(x)","D. f\'(x)·g(x)−f(x)·g\'(x)"], answer:'B', knowledgePoint:'乘积法则与商法则', analysis:'乘积法则：[f(x)·g(x)]\'=f\'(x)·g(x)+f(x)·g\'(x)。' },
-    { type:'choice', difficulty:1, text:'乘积法则 [u·v]\' 等于？', options:[["A. u\'v+uv\'", "B. u\'v\'", "C. u\'v-uv\'", 'D. u+v']], answer:'A', knowledgePoint:'乘积法则与商法则', analysis:'[u·v]\'=u\'v+uv\'。' },
+    { type:'choice', difficulty:1, text:'乘积法则 [u·v]\' 等于？', options:["A. u\'v+uv\'", "B. u\'v\'", "C. u\'v-uv\'", 'D. u+v'], answer:'A', knowledgePoint:'乘积法则', analysis:'[u·v]\'=u\'v+uv\'。' },
     { type:'choice', difficulty:2, text:'f(x)=x²·sin(x) 的导数是？', options:["A. 2x·cos(x)","B. 2x·sin(x)+x²·cos(x)","C. x²·cos(x)","D. 2x·sin(x)−x²·cos(x)"], answer:'B', knowledgePoint:'乘积法则与商法则', analysis:'用乘积法则：f\'(x)=2x·sin(x)+x²·cos(x)。' },
     { type:'choice', difficulty:2, text:'f(x)=x·e的x次方的导数是？', options:['A. e的x次方加xe的x次方','B. e的x次方','C. xe的x次方','D. 2e的x次方'], answer:'A', knowledgePoint:'乘积法则与商法则', analysis:'f\'(x)=1·e的x次方+x·e的x次方=e的x次方加xe的x次方。' },
     { type:'choice', difficulty:3, text:'对 x²+y²=25 两边对 x 求导，dy/dx 等于？', options:['A. −x/y','B. x/y','C. −y/x','D. 2x+2y'], answer:'A', knowledgePoint:'隐函数求导', analysis:'2x+2y·(dy/dx)=0，解得 dy/dx=−x/y。注意 y 是 x 的函数，对 y 求导需乘 dy/dx。' },
@@ -450,7 +450,7 @@ export const questionBank = [
   ]},
   { lesson: 55, questions: [
     { type:'choice', difficulty:1, text:'∫2x·e^(x²)dx，令 u=x²，变换后成为？', options:['A. ∫e^u du','B. ∫2e^u du','C. ∫u·e^u du','D. ∫e^u·2u du'], answer:'A', knowledgePoint:'换元积分法', analysis:'u=x²，du=2x dx，原式变为 ∫e^u du。' },
-    { type:'choice', difficulty:1, text:'换元积分法中，设u=g(x)，则du=？', options:[["A. g'(x)dx", 'B. g(x)dx', 'C. dx', "D. g'(x)"]], answer:'A', knowledgePoint:'换元积分法', analysis:'u=g(x)，du=g\'(x)dx。' },
+    { type:'choice', difficulty:1, text:'换元积分法中，设u=g(x)，则du=？', options:["A. g'(x)dx", 'B. g(x)dx', 'C. dx', "D. g'(x)"], answer:'A', knowledgePoint:'换元积分法', analysis:'u=g(x)，du=g\'(x)dx。' },
     { type:'choice', difficulty:2, text:'∫x·eˣdx 用分部积分（u=x，dv=eˣdx），结果是？', options:['A. xeˣ+C','B. xeˣ−eˣ+C','C. eˣ+C','D. x²eˣ/2+C'], answer:'B', knowledgePoint:'分部积分法', analysis:'∫x·eˣdx=x·eˣ−∫eˣdx=xeˣ−eˣ+C。' },
     { type:'choice', difficulty:2, text:'分部积分公式积分u dv等于？', options:['A. uv减积分v du','B. uv加积分v du','C. u减v','D. 积分u dv'], answer:'A', knowledgePoint:'分部积分法', analysis:'积分u dv=uv减积分v du。' },
     { type:'choice', difficulty:3, text:'曲线 y=x 绕 x 轴旋转一圈，从 x=0 到 x=3，旋转体体积是（π≈3.14）？', options:['A. 28.3','B. 56.5','C. 84.8','D. 9π'], answer:'A', knowledgePoint:'旋转体体积', analysis:'V=π∫₀³ x²dx=π[x³/3]₀³=π×9=9π≈28.3。' },

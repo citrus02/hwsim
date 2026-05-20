@@ -37,7 +37,8 @@ export const lessonMap = {
           options: ["K", "J", "Y"],
           answer: 1
         },
-        contextRight: "「对。」珀西瓦尔在 J 的位置画了一个叉。「J 不在古典拉丁字母表中。你们在咒语里看到的 J，是中世纪以后才从 I 分化出来的。」她停了一秒，「同理，U 和 W 也是后来才从 V 分出来的。古典时期只有一个 V，它既是辅音也是元音。」",
+        context: "珀西瓦尔在 J 的位置画了一个叉。「J 不在古典拉丁字母表中。你们在咒语里看到的 J，是中世纪以后才从 I 分化出来的。」她停了一秒，「同理，U 和 W 也是后来才从 V 分出来的。古典时期只有一个 V，它既是辅音也是元音。」",
+        contextRight: "「不错。」珀西瓦尔在 J 的位置画了一个叉。「J 不在古典拉丁字母表中。你们在咒语里看到的 J，是中世纪以后才从 I 分化出来的。」她停了一秒，「同理，U 和 W 也是后来才从 V 分出来的。古典时期只有一个 V，它既是辅音也是元音。」",
         contextWrong: "她没有表情，只是在 J 的位置画了一个叉。「J 不在古典拉丁字母表中。」她重复了一遍，「J 是中世纪以后才从 I 分化出来的。K 和 Y 都在——K 只用于极少数借词，Y 用于希腊借词，但它们存在。」她停顿，「记住：23个字母。没有J，没有U，没有W。」",
         blackboard: {
           type: "formulas",
@@ -82,7 +83,8 @@ export const lessonMap = {
           options: ["sit", "machine", "like"],
           answer: 1
         },
-        contextRight: "「对。」珀西瓦尔点了一下头。「拉丁语的 i 读长音 [i:]，和英语 machine 里的 i 一样。不是 sit 里的短 i，不是 like 里的双元音 aɪ。只有一种发音。」她停了一秒，「这就是拉丁语比英语简单的地方——元音不会骗你。」",
+        context: "珀西瓦尔说，「拉丁语的 i 读长音 [i:]，和英语 machine 里的 i 一样。不是 sit 里的短 i，不是 like 里的双元音 aɪ。只有一种发音。」她停了一秒，「这就是拉丁语比英语简单的地方——元音不会骗你。」",
+        contextRight: "「不错。」珀西瓦尔点了一下头。「拉丁语的 i 读长音 [i:]，和英语 machine 里的 i 一样。不是 sit 里的短 i，不是 like 里的双元音 aɪ。只有一种发音。」她停了一秒，「这就是拉丁语比英语简单的地方——元音不会骗你。」",
         contextWrong: "她重复了一遍正确的发音。「[i:]——machine。」不带感情，「不是 sit，不是 like。拉丁语的 i 只有一种发音：长音 [i:]。」她在 machine 旁边画了一个圈，「记住这个参照。以后遇到 i，就发这个音。没有例外。」",
         blackboard: {
           type: "formulas",
@@ -149,7 +151,8 @@ export const lessonMap = {
           options: ["[s]（如英语 cent）", "[k]（如英语 cat）", "[ch]（如英语 church）"],
           answer: 1
         },
-        contextRight: "「对。」珀西瓦尔没有多余的表情。「[k]。ceno 读作 ke-no。不管 c 后面跟的是 e 还是 i，永远是 [k]。这是古典拉丁语最铁的规则之一。」她停了一秒，「你们以后念咒语的时候会感谢这条规则的——至少 c 不会骗你。」",
+        context: "珀西瓦尔说，「[k]。ceno 读作 ke-no。不管 c 后面跟的是 e 还是 i，永远是 [k]。这是古典拉丁语最铁的规则之一。」她停了一秒，「你们以后念咒语的时候会感谢这条规则的——至少 c 不会骗你。」",
+        contextRight: "「不错。」珀西瓦尔没有多余的表情。「[k]。ceno 读作 ke-no。不管 c 后面跟的是 e 还是 i，永远是 [k]。这是古典拉丁语最铁的规则之一。」她停了一秒，「你们以后念咒语的时候会感谢这条规则的——至少 c 不会骗你。」",
         contextWrong: "她重复了一遍。「ke-no。」只重复一次，不解释。「c 在拉丁语中永远发 [k]。不是 [s]，不是 [ch]。英语里 c 在 e、i 前面会变软，拉丁语不会。」她在 ceno 上方写了一个 k，「记住：c 永远硬。没有例外。」",
         blackboard: {
           type: "formulas",
@@ -217,7 +220,8 @@ export const lessonMap = {
           options: ["第一个（倒数第二）", "最后一个", "随便哪个都行"],
           answer: 0
         },
-        contextRight: "「对。」珀西瓦尔点了一下头。「两个音节的词，重音永远在第一个——也就是倒数第二个。LU-mos，LU。」她在黑板上补了一条线，「三个音节的词，看倒数第二个音节：pu-EL-la 的 el 是长音节，重音就落在 EL，不是第一个音节。」她停了一秒，「拉丁语的重音是可以预测的，不像英语那样毫无规律。」",
+        context: "珀西瓦尔说，「两个音节的词，重音永远在第一个——也就是倒数第二个。LU-mos，LU。」她在黑板上补了一条线，「三个音节的词，看倒数第二个音节：pu-EL-la 的 el 是长音节，重音就落在 EL，不是第一个音节。」她停了一秒，「拉丁语的重音是可以预测的，不像英语那样毫无规律。」",
+        contextRight: "「不错。」珀西瓦尔点了一下头。「两个音节的词，重音永远在第一个——也就是倒数第二个。LU-mos，LU。」她在黑板上补了一条线，「三个音节的词，看倒数第二个音节：pu-EL-la 的 el 是长音节，重音就落在 EL，不是第一个音节。」她停了一秒，「拉丁语的重音是可以预测的，不像英语那样毫无规律。」",
         contextWrong: "她没有表情。「两个音节，重音在倒数第二个——也就是第一个音节。」她在 LU-mos 的 LU 下面画了一条线，「LU-mos。永远如此。拉丁语的重音是可以预测的，不像英语。」她停顿，「这是拉丁语比英语简单的又一个地方。」",
         blackboard: {
           type: "formulas",
@@ -280,6 +284,7 @@ export const lessonMap = {
           options: ['宾格', '主格', '属格'],
           answer: 1
         },
+        context: '她说，「puella 以 -a 结尾，是第一变格法单数主格。它是动作的执行者——唱歌的是女孩，不是被女孩唱的。这个区别很重要，后面你们会看到词尾变了，意思就跟着变。」',
         contextRight: '「不错。」她停了一秒，「puella 以 -a 结尾，是第一变格法单数主格。它是动作的执行者——唱歌的是女孩，不是被女孩唱的。这个区别很重要，后面你们会看到词尾变了，意思就跟着变。」',
         contextWrong: '她不带感情地重复一遍，「主格。puella 是句子的主语，动作的执行者。主格以 -a 结尾，是第一变格法的标准词尾。宾格和属格的词尾不同——我们马上会看到。」',
         blackboard: {
@@ -319,6 +324,7 @@ export const lessonMap = {
           options: ['主格', '宾格', '属格'],
           answer: 1
         },
+        context: '她说，「puellam——词尾 -am，宾格。video 是"我看见"，puellam 是"女孩"，宾格，被看见的那个。我看见女孩。」她停了一秒，「词尾 -am 是宾格的标志。记住它。」',
         contextRight: '「不错。」她点了一下头，「puellam——词尾 -am，宾格。video 是"我看见"，puellam 是"女孩"，宾格，被看见的那个。我看见女孩。」她停了一秒，「词尾 -am 是宾格的标志。记住它。」',
         contextWrong: '「宾格。」她在 -am 下面画了两条线，「词尾 -am，宾格，承受动作。puella 是主格，puellam 是宾格。一个字母的差别，句子的意思完全不同。」',
         blackboard: {
@@ -419,6 +425,7 @@ export const lessonMap = {
           options: ['am-', 'amor-', 'amare-'],
           answer: 0
         },
+        context: '她在黑板上圈住 am-，「am-，词干。去掉不定式词尾 -re，剩下 ama-，然后加人称词尾。这就是第一变位动词的基本操作。词干是稳定的，变化的只是末尾那个词尾。」',
         contextRight: '「不错。」她在黑板上圈住 am-，「am-，词干。去掉不定式词尾 -re，剩下 ama-，然后加人称词尾。这就是第一变位动词的基本操作。词干是稳定的，变化的只是末尾那个词尾。」',
         contextWrong: '「am-。」她在黑板上圈住它，「amare 去掉 -re，得到 ama-，这是词干。不是 amor——那是名词，"爱"，不是动词词干。词干 am- 是动词变化的基础，一切人称词尾都加在它后面。」',
         blackboard: {
@@ -460,7 +467,7 @@ export const lessonMap = {
             '词尾：-o, -s, -t, -mus, -tis, -nt'
           ]
         },
-        context: '珀西瓦尔把整张变位表工整地写在黑板上，六行，三列。「这六个词尾，」她用粉笔依次点过，「是你们这学期最需要记牢的东西。-o，-s，-t，-mus，-tis，-nt。不只是 amare——所有第一变位动词都用这六个词尾。portare（携带），cantare（唱歌），vocare（呼唤），laudare（赞美）——词干不同，但词尾相同。」她在黑板角落写下：amamus。「"amamus"——词尾 -mus，我们爱。」她指着复数的三行，「注意复数词尾：-mus，-tis，-nt。和单数的 -o，-s，-t 完全不同，不会混淆。」她停了一下，「下次你们念 Alohomora，可以想想它里面那个 mora，来自动词 morari——停留，延迟，是第三变位，但词根变化的逻辑一样。语言是最古老的魔法，巫师只是把它说得更大声一点。」'
+        context: '珀西瓦尔把整张变位表工整地写在黑板上，六行，三列。「这六个词尾，」她用粉笔依次点过，「是你们这学期最需要记牢的东西。-o，-s，-t，-mus，-tis，-nt。不只是 amare——所有第一变位动词都用这六个词尾。portare（携带），cantare（唱歌），vocare（呼唤），laudare（赞美）——词干不同，但词尾相同。」她在黑板角落写下：amamus。「"amamus"——词尾 -mus，我们爱。」她指着复数的三行，「注意复数词尾：-mus，-tis，-nt。和单数的 -o，-s，-t 完全不同，不会混淆。」她停了一下，「这就是为什么我不允许你们凭声音猜词源。能进入变位表的词，必须能按规则变化；不能按规则变化的咒语，只能暂时放在旁边。语言是最古老的魔法，巫师只是把它说得更大声一点。」'
       },
       {
         point: '主语代词可以省略',
@@ -483,7 +490,7 @@ export const lessonMap = {
         context: '珀西瓦尔擦掉黑板上的一半内容，只留下变位表的词尾列。「你们看，」她指着 -o，「这个词尾告诉你主语是第一人称单数——"我"。所以 amo 本身就是一个完整的句子。说 ego amo——ego 是"我"——不是错误，但是多余的，除非你要强调"是我"。」她停顿，「拉丁文文本里大量出现没有主语代词的句子。读到一个动词，先看词尾，判断人称，自动补上主语。这是读拉丁语的第一个技巧。」她转身，「顺便说一句——这也是咒语语法的逻辑。Expecto Patronum——expecto，第一人称单数，"我期待/我召唤"。不需要 ego。词尾说了一切。」'
       },
       {
-        point: '第一变位动词的魔法联动',
+        point: '第一变位动词的魔法联动与词源警惕',
         blackboard: {
           type: 'formulas',
           label: '咒语词根 · 第一变位',
@@ -493,16 +500,16 @@ export const lessonMap = {
             '',
             'portare（携带）→ porto, portas, portat...',
             '',
-            'Alohomora 中的 mora：',
-            '  morari（停留/延迟）',
-            '  → 与第一变位结构平行',
+            'Alohomora：',
+            '  不是标准古典拉丁词',
+            '  不可强行按拉丁语变位拆解',
             '',
             '命令式（简单形式）：',
             '  amare → ama!（去爱！）',
             '  vocare → voca!（呼唤！）'
           ]
         },
-        context: '珀西瓦尔靠在讲台边，她难得地停了比平时更长的停顿。「你们每天使用咒语，但从没想过为什么它们是那个形状。」她在黑板上写下 Alohomora，「这个词的核心是 mora——来自 morari，停留、延迟。门锁的机关停顿——开了。词义精准，不是随便凑出来的声音。」她又写下一个词：Accio，「第一变位命令式。Accio 来自 accere 或类似词根，呼唤，招来。用的是命令式，因为你是在对世界下命令。」她停了一秒，「巫师用拉丁语说话，不是传统，是精确。每个词尾都是一条指令，不容误读。」她合上粉笔盒，「amo, amas, amat——把变位表背下来。下节课要用到。」'
+        context: '珀西瓦尔靠在讲台边，她难得地停了比平时更长的停顿。「你们每天使用咒语，但从没想过为什么它们是那个形状。」她在黑板上写下 Alohomora，「这个词不是标准古典拉丁词。不要因为看见一个像拉丁语的结尾，就强行把它塞进第一变位。」她又写下 vocare，「能安全分析的是这种形式：vocare，呼唤；voca，命令式，呼唤。」她停了一秒，「语言学第一条规则：能证明的才说，不能证明的标注为未知。巫师喜欢神秘，语法不接受神秘。」她合上粉笔盒，「amo, amas, amat——把变位表背下来。下节课要用到。」'
       }
     ],
     lessonSummary: '今天你们解开了拉丁语动词的第一层结构。amare 去掉不定式词尾 -re，得到词干 ama-，再加上六个人称词尾，就得到完整的现在时变位：amo, amas, amat, amamus, amatis, amant。最关键的发现是：词尾本身就包含了主语信息，所以主语代词在大多数情况下可以省略。珀西瓦尔还带你们看了一件事——那些你们每天喊出的咒语，其实都藏着第一变位动词的影子。语言是最古老的魔法，这句话开始有了具体的意思。',
@@ -534,6 +541,7 @@ export const lessonMap = {
           options: ['bonus', 'bona', 'bonum'],
           answer: 1
         },
+        context: '她在黑板上写下 bona puella，「bona puella——好女孩。puella 阴性，bona 阴性，一致。」她停了一秒，「这就是一致性原则：形容词的性必须跟名词一致。不是你觉得这个女孩"看起来像阳性"，是语法告诉你用阴性。」',
         contextRight: '「不错。」她在黑板上写下 bona puella，「bona puella——好女孩。puella 阴性，bona 阴性，一致。」她停了一秒，「这就是一致性原则：形容词的性必须跟名词一致。不是你觉得这个女孩"看起来像阳性"，是语法告诉你用阴性。」',
         contextWrong: '「bona。」她在黑板上写了一遍，「puella 是阴性名词，形容词要用阴性形式 bona。bonus 是阳性，bonum 是中性，都不能修饰阴性名词 puella。性不一致，句子就错了。」',
         blackboard: {
@@ -613,6 +621,7 @@ export const lessonMap = {
           options: ['bona puella', 'bonam puellam', 'bonum puellam'],
           answer: 1
         },
+        context: '她在黑板上划了两个圈，圈住 bonam 和 puellam，「两个词都加了宾格词尾 -am。阴性宾格，一致。」她停了一秒，「形容词修饰名词，形容词跟着名词走。名词变格，形容词也变。这是一致性原则的实际应用。」',
         contextRight: '「不错。」她在黑板上划了两个圈，圈住 bonam 和 puellam，「两个词都加了宾格词尾 -am。阴性宾格，一致。」她停了一秒，「形容词修饰名词，形容词跟着名词走。名词变格，形容词也变。这是一致性原则的实际应用。」',
         contextWrong: '她不带感情地写下正确答案，「bonam puellam。puellam 是宾格，所以 bona 也要变成宾格 bonam，词尾 -am。不是 bona——那是主格。形容词词尾要和名词词尾一致。」',
         blackboard: {
@@ -662,6 +671,7 @@ export const lessonMap = {
           options: ['Magister', 'discipulum', 'docet'],
           answer: 2
         },
+        context: '她在 docet 下画了一条线，「docet——第三人称单数，词尾 -t。他/她教。Magister 是主格，老师，主语。discipulum 是宾格，学生，宾语。老师教学生。」她停了一秒，「找动词，在末尾。确认人称。然后主格找主语，宾格找宾语。这就是方法。」',
         contextRight: '「不错。」她在 docet 下画了一条线，「docet——第三人称单数，词尾 -t。他/她教。Magister 是主格，老师，主语。discipulum 是宾格，学生，宾语。老师教学生。」她停了一秒，「找动词，在末尾。确认人称。然后主格找主语，宾格找宾语。这就是方法。」',
         contextWrong: '「docet。」她在这个词下画线，「词尾 -t，第三人称单数，这是动词。拉丁语句子的动词通常在末尾——这是第一个要找的。Magister 是主格，discipulum 是宾格。老师教学生。」',
         blackboard: {
@@ -745,6 +755,7 @@ export const lessonMap = {
           options: ['主格', '宾格', '与格（间接宾语）'],
           answer: 2
         },
+        context: '她说，「与格——间接宾语，给的对象。词尾 -o 是第二变格法与格的标志。下节课我们正式讲与格。」她在黑板上把 magistro 下面的标注写出：与格。「今天记住这个预告：dat，给，后面常跟与格。给什么给谁——给什么是宾格，给谁是与格。」',
         contextRight: '「不错。」她停了一秒，「与格——间接宾语，给的对象。词尾 -o 是第二变格法与格的标志。下节课我们正式讲与格。」她在黑板上把 magistro 下面的标注写出：与格。「今天记住这个预告：dat，给，后面常跟与格。给什么给谁——给什么是宾格，给谁是与格。」',
         contextWrong: '「与格——间接宾语。」她在黑板上写下这个词，「给的对象不用宾格，用与格。词尾 -o 是第二变格法与格的词尾。下节课讲与格，今天先知道：magistro 是与格，老师是被给予书的那个人，不是被给予本身。」',
         blackboard: {
@@ -794,6 +805,7 @@ export const lessonMap = {
           options: ['puellam', 'puellae', 'puella'],
           answer: 1
         },
+        context: '她在 puellae 下画线，「-ae，第一变格法与格词尾。注意：-ae 和属格的词尾相同，区分它们靠的是语境——与格是给的对象，属格是所属关系。下节课讲属格，你们会看到这个区分。」',
         contextRight: '「不错。」她在 puellae 下画线，「-ae，第一变格法与格词尾。注意：-ae 和属格的词尾相同，区分它们靠的是语境——与格是给的对象，属格是所属关系。下节课讲属格，你们会看到这个区分。」',
         contextWrong: '「puellae。」她写了一遍，「-ae，与格词尾，第一变格法。-am 是宾格，-a 是主格，-ae 是与格。三个不同的词尾，三种不同的语法角色。」',
         blackboard: {
@@ -874,6 +886,7 @@ export const lessonMap = {
           options: ['宾格，承受动作的对象', '与格，接受建议的那个人', '主格，做动作的人'],
           answer: 1
         },
+        context: '她说，「discipulo，词尾 -o，第二变格法与格。老师把建议给了学生——学生是间接接受者，用与格。被给出的建议 consilium 是宾格。」她在黑板上把完整翻译写出来：老师给学生建议。「格决定角色，角色决定翻译。」',
         contextRight: '「不错。」她停了一秒，「discipulo，词尾 -o，第二变格法与格。老师把建议给了学生——学生是间接接受者，用与格。被给出的建议 consilium 是宾格。」她在黑板上把完整翻译写出来：老师给学生建议。「格决定角色，角色决定翻译。」',
         contextWrong: '「与格。」她不带感情，「词尾 -o，第二变格法与格，间接宾语。discipulo 是接受建议的那个人，不是动作直接作用的对象。宾格是 consilium，建议，被给出的东西。」',
         blackboard: {
@@ -925,6 +938,7 @@ export const lessonMap = {
           options: ['主格与宾格', '主格与夺格', '宾格与与格'],
           answer: 1
         },
+        context: '她在两个 puella 旁边分别标注了 Nom. 和 Abl.，「第一变格法的主格和夺格词尾相同——都是 -a。但夺格几乎总是跟着介词出现，这是区分它们最实用的方法。」',
         contextRight: '「不错。」她在两个 puella 旁边分别标注了 Nom. 和 Abl.，「第一变格法的主格和夺格词尾相同——都是 -a。但夺格几乎总是跟着介词出现，这是区分它们最实用的方法。」',
         contextWrong: '「主格与夺格。」她不带感情，「两者都以 -a 结尾。靠介词区分——夺格通常跟在 cum、ex、in 之类的介词后面，主格则是句子的主语，不会跟介词。」',
         blackboard: {
@@ -1008,6 +1022,7 @@ export const lessonMap = {
           options: ['主格，魔杖是主语', '夺格，用魔杖施咒（工具）', '宾格，魔杖是宾语'],
           answer: 1
         },
+        context: '她说，「夺格工具用法。virga，词尾 -a，在这里是夺格——因为主语已经是 puella，virga 不能再是主格。用魔杖念出荧光咒。」她停顿，「每一次施法，每一次拿着魔杖念出咒语，都是夺格工具用法的具体体现。语言是最古老的魔法，巫师只是把它说得更大声一点。」',
         contextRight: '「不错。」她停了一秒，「夺格工具用法。virga，词尾 -a，在这里是夺格——因为主语已经是 puella，virga 不能再是主格。用魔杖念出荧光咒。」她停顿，「每一次施法，每一次拿着魔杖念出咒语，都是夺格工具用法的具体体现。语言是最古老的魔法，巫师只是把它说得更大声一点。」',
         contextWrong: '「夺格，工具用法。」她在黑板上写出 Abl. 标注，「virga 的词尾 -a 和主格相同，但句子里已经有主语 puella，所以 virga 不是主格。它是夺格——用魔杖施法，工具用法，无需介词。」',
         blackboard: {
@@ -1057,6 +1072,7 @@ export const lessonMap = {
           options: ['magistrum', 'magistri', 'magistro'],
           answer: 1
         },
+        context: '她在 magistri 下画线，「-i，第二变格法属格词尾。magistri——老师的。liber magistri——老师的书。」她停了一秒，「第二变格法属格词尾 -i 很好记，因为它在其他格里不重复出现，不会混淆。」',
         contextRight: '「不错。」她在 magistri 下画线，「-i，第二变格法属格词尾。magistri——老师的。liber magistri——老师的书。」她停了一秒，「第二变格法属格词尾 -i 很好记，因为它在其他格里不重复出现，不会混淆。」',
         contextWrong: '「magistri。」她不带感情，「词尾 -i，第二变格法属格。-um 是宾格，-o 是与格或夺格。属格 -i 表示所属：magistri librum——老师的书。」',
         blackboard: {
@@ -1138,6 +1154,7 @@ export const lessonMap = {
           options: ['属格', '与格', '夺格'],
           answer: 0
         },
+        context: '她说，「属格——所属关系。liber magistri——老师的书，magistri 是第二变格法属格，词尾 -i。」她指着表格，「属格是今天学的最后一个基础格。主格、宾格、与格、夺格、属格——五格，你们全部接触过了。」',
         contextRight: '「不错。」她停了一秒，「属格——所属关系。liber magistri——老师的书，magistri 是第二变格法属格，词尾 -i。」她指着表格，「属格是今天学的最后一个基础格。主格、宾格、与格、夺格、属格——五格，你们全部接触过了。」',
         contextWrong: '「属格。」她不带感情，「所属关系用属格，不是与格。与格是给的对象——"给老师"用与格 magistro。"老师的"用属格 magistri，词尾 -i。」',
         blackboard: {
@@ -1192,6 +1209,7 @@ export const lessonMap = {
           options: ['vid-', 'vide-', 'vider-'],
           answer: 1
         },
+        context: '她圈住 vide-，「vide-，带着那个 -e-。第二变位动词词干的末尾元音是 e，这是它和第一变位（词干末尾 a）的唯一区别。词尾框架完全相同。」',
         contextRight: '「不错。」她圈住 vide-，「vide-，带着那个 -e-。第二变位动词词干的末尾元音是 e，这是它和第一变位（词干末尾 a）的唯一区别。词尾框架完全相同。」',
         contextWrong: '「vide-，包括那个 e。」她不带感情，「第二变位词干末尾是 e，这是区分第一变位（a）和第二变位（e）的关键特征。vid- 去掉了词干元音，那是错误的。vider- 包含了不定式词尾的残余，也不对。」',
         blackboard: {
@@ -1280,6 +1298,7 @@ export const lessonMap = {
           options: ['老师看见了女孩', '女孩看见了老师', '女孩被老师看见'],
           answer: 1
         },
+        context: '她说，「Puella——主格，主语，女孩；magistrum——宾格，宾语，老师；videt——动词，看见。女孩看见老师。主格执行动作，宾格承受动作，动词在末尾。」',
         contextRight: '「不错。」她停了一秒，「Puella——主格，主语，女孩；magistrum——宾格，宾语，老师；videt——动词，看见。女孩看见老师。主格执行动作，宾格承受动作，动词在末尾。」',
         contextWrong: '「女孩看见老师。」她不带感情，「Puella 是主格——动作执行者，女孩。magistrum 是宾格——动作承受者，老师。主格做动作，不是宾格。词尾决定角色。」',
         blackboard: {
@@ -1330,6 +1349,7 @@ export const lessonMap = {
           options: ['五', '十', '十二'],
           answer: 1
         },
+        context: '她在 decem 旁边写下 December，「decem——十，December——十月，也就是古罗马历法的第十个月。英语月份名字里保留了大量拉丁语数词，你们每次说日期都在使用拉丁语的遗存。」',
         contextRight: '「不错。」她在 decem 旁边写下 December，「decem——十，December——十月，也就是古罗马历法的第十个月。英语月份名字里保留了大量拉丁语数词，你们每次说日期都在使用拉丁语的遗存。」',
         contextWrong: '「十。」她不带感情，「decem——十。December——十月，古罗马历法里的第十个月。五是 quinque，十二在今天的内容里没有，但它是 duodecim——两个十，duo + decem。」',
         blackboard: {
@@ -1414,8 +1434,8 @@ export const lessonMap = {
             'Incendio     incendere（点火）燃烧咒',
             'Reparo       reparare（修复）修缮咒',
             '',
-            '注：Lumos = lux 变形 + -mos 后缀',
-            '    Aguamenti = aqua + ment- + i（属格）'
+            '注：Lumos 可联系 lux/lumen 词族',
+            '    Aguamenti 可联系 aqua（水），非标准古典词形'
           ],
           audio: [
             { text: 'nox',  src: 'audio/latin/lesson-10/word-nox.wav' },
@@ -1424,11 +1444,12 @@ export const lessonMap = {
           ]
         },
         question: {
-          leadIn: '珀西瓦尔放下粉笔，站到讲台前。「来谈咒语。」她说，这次语气比平时稍微松动了一点，「你们每天使用这些词，从没有想过它们是从哪里来的。现在你们有工具了。」她指向黑板，「Nox——熄灯咒，用的就是拉丁语 nox，夜，就这一个词，一声令下，光就熄灭了。Lumos——荧光咒，来自 lux，光，但 lux 在变格后的词干是 luc-，加上后缀变成 Lumos。Aguamenti——水流咒，aqua 是水，ment- 是常见拉丁语后缀表示"产生某物的手段"，整体是"产生水流的手段"。」',
+          leadIn: '珀西瓦尔放下粉笔，站到讲台前。「来谈咒语。」她说，这次语气比平时稍微松动了一点，「你们每天使用这些词，从没有想过它们是从哪里来的。现在你们有工具了。」她指向黑板，「Nox——熄灯咒，用的就是拉丁语 nox，夜，就这一个词，一声令下，光就熄灭了。Lumos——荧光咒，可以联系 lux 和 lumen 这一组表示光的词族。Aguamenti——水流咒，可以联系 aqua，水；但它不是标准古典拉丁词形。」她停顿，「相似不是证据，词根联系也不等于完整变格分析。」',
           text: '「咒语 Nox 对应的拉丁语词根是什么意思？」',
           options: ['光', '夜', '水'],
           answer: 1
         },
+        context: '她说，「nox——夜。Nox 咒语熄灭光源，把光变成夜。一个词，精确到不能再精确。」她看了全班一眼，「语言是最古老的魔法，巫师只是把它说得更大声一点。今天这句话，应该有了具体的画面。」',
         contextRight: '「不错。」她停了一秒，「nox——夜。Nox 咒语熄灭光源，把光变成夜。一个词，精确到不能再精确。」她看了全班一眼，「语言是最古老的魔法，巫师只是把它说得更大声一点。今天这句话，应该有了具体的画面。」',
         contextWrong: '「夜。」她不带感情，「nox，夜，N-O-X。Nox 咒语熄灭光源，召唤黑夜。不是光——光是 lux。不是水——水是 aqua。词义精确，效果才精确。」',
         blackboard: {
@@ -1437,12 +1458,12 @@ export const lessonMap = {
           lines: [
             'Nox        ← nox（夜）       → 熄光',
             'Lumos      ← lux（光）       → 发光',
-            'Aguamenti  ← aqua（水）      → 召水',
+            'Aguamenti  ~ aqua（水）      → 召水',
             'Incendio   ← incendere（点火）→ 燃烧',
             'Reparo     ← reparare（修复）→ 修缮',
             '',
-            '→ 咒语不是随机声音',
-            '→ 每一个咒语都是精确的拉丁语指令',
+            '→ 许多咒语借用拉丁语词根',
+            '→ 不可把所有咒语都硬说成标准拉丁',
             '',
             '「语言是最古老的魔法，',
             ' 巫师只是把它说得更大声一点。」'
@@ -1492,6 +1513,7 @@ export const lessonMap = {
           options: ['-vi-', '-ba-', '-re-'],
           answer: 1
         },
+        context: '她说，「-ba- 就是未完成时的标志。词干 + ba + 人称词尾。无论哪个动词，第一变位的未完成时里都有这个 ba。」她在黑板上圈出所有 ba，「看见了？六个变位里，ba 在每一个。」',
         contextRight: '「不错。」她停了一秒，「-ba- 就是未完成时的标志。词干 + ba + 人称词尾。无论哪个动词，第一变位的未完成时里都有这个 ba。」她在黑板上圈出所有 ba，「看见了？六个变位里，ba 在每一个。」',
         contextWrong: '「-ba-。」她重复，不带感情，「-vi- 是完成时的标志，-re- 是不定式词尾。-ba- 是未完成时。词干 + ba + 人称词尾。看黑板：ama-ba-m，ama-ba-s，ama-ba-t。中间那两个字母。」',
         blackboard: {
@@ -1569,8 +1591,8 @@ export const lessonMap = {
         context: '珀西瓦尔靠在讲台边，以她一贯的平静语气说：「语言是最古老的魔法，巫师只是把它说得更大声一点。」她指向黑板，「Protego 来自 protego——pro，在前面；tego，我覆盖。这个咒语形成一个持续的护盾，它不是一瞬间的爆发，而是在你发声之后的一段时间内持续存在。这就是未完成时的本质——动作不是在一个点结束，而是延伸成一段时间。」她拿起粉笔，「如果你理解了 amabam 的持续性，你就理解了 Protego 的工作原理。语法和魔法，在这里是同一件事。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，未完成时的构成——词干加 -ba- 加人称词尾，六个变位都有这个 ba 标志；第二，含义——描述过去的持续动作或习惯，不是一次性完成的事；第三，区别——amo 是现在，amabam 是过去持续，不要混淆。记住 -ba- 这个信号，看到它就知道：这件事在过去延续了一段时间。」',
-    nextLessonPreview: '「下节课：完成时。过去发生了，完成了，结束了。和今天完全不同的概念。」'
+    lessonSummary: '今天学了三件事：第一，未完成时的构成——词干加 -ba- 加人称词尾，六个变位都有这个 ba 标志；第二，含义——描述过去的持续动作或习惯，不是一次性完成的事；第三，区别——amo 是现在，amabam 是过去持续，不要混淆。记住 -ba- 这个信号，看到它就知道：这件事在过去延续了一段时间。',
+    nextLessonPreview: '下节课：完成时。过去发生了，完成了，结束了。和今天完全不同的概念。'
   },
 
   12: {
@@ -1601,6 +1623,7 @@ export const lessonMap = {
           options: ['amavam', 'amavi', 'amaverunt'],
           answer: 1
         },
+        context: '她在黑板上圈出 amavi，「amav-i。完成词干加词尾 -i。注意区分：amabam 是未完成时（-ba- 标志），amavi 是完成时（完成词干+-i 词尾）。」她在两者旁边各写了一个时态标注，「一个持续，一个结束。」',
         contextRight: '「不错。」她在黑板上圈出 amavi，「amav-i。完成词干加词尾 -i。注意区分：amabam 是未完成时（-ba- 标志），amavi 是完成时（完成词干+-i 词尾）。」她在两者旁边各写了一个时态标注，「一个持续，一个结束。」',
         contextWrong: '「amavi。」她重复，不带感情，「amav- 是完成词干，-i 是第一人称单数完成时词尾。amavam 不存在，amaverunt 是第三人称复数。」她在黑板上画箭头标注结构，「词干加词尾，对应人称。」',
         blackboard: {
@@ -1655,6 +1678,7 @@ export const lessonMap = {
           options: ['vocare，我呼唤了', 'videre，我看见了', 'vincere，我征服了'],
           answer: 1
         },
+        context: '她在 vidi 旁边写了 videre，「vidi，videre 的完成时，意思是 I saw 或 I have seen。」她停了一秒，「凯撒的那句话：Veni, vidi, vici。我来，我见，我征服。三个完成时连用，表示三件已经完成的事。言简意赅。」',
         contextRight: '「不错。」她在 vidi 旁边写了 videre，「vidi，videre 的完成时，意思是 I saw 或 I have seen。」她停了一秒，「凯撒的那句话：Veni, vidi, vici。我来，我见，我征服。三个完成时连用，表示三件已经完成的事。言简意赅。」',
         contextWrong: '「videre，我看见了。」她重复，「vidi 是 videre 的完成时，不是 vocare 或 vincere。」她在黑板上画出 videre → vidi 的箭头，「不规则完成词干需要单独记忆。vidi 和 dixi，这两个先记住。」',
         blackboard: {
@@ -1691,8 +1715,8 @@ export const lessonMap = {
         context: '「语言是最古老的魔法，巫师只是把它说得更大声一点。」珀西瓦尔靠在讲台边，「Finite——你们知道这个咒语，用来结束持续的魔法效果。它来自拉丁语 finire，意思是结束、完成。finis 是边界，是终点。」她在黑板上写下 finire，「完成时在语法上做的，和 Finite 在魔法上做的，是同一件事——宣告一段过程已经结束。amavi，我爱了，结束了。vidi，我看了，看完了。动作到达了它的 finis，它的边界。」她停顿，「这就是为什么完成时的发音要干脆——amavi，不拖音，因为它已经结束了。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，完成时表示已完成的事件，和未完成时的持续性不同；第二，构成方法——找完成词干（通常加 -v-），再加完成人称词尾 -i/-isti/-it/-imus/-istis/-erunt；第三，不规则词干 vidi 和 dixi 要单独记忆。」她停顿，「amabam 是一段时间，amavi 是一个结束的事件。这个区别要刻进脑子里。」',
-    nextLessonPreview: '「下节课：大过去时。过去的过去——某件事在另一件过去的事之前就已经结束了。时间轴会变得更复杂。」'
+    lessonSummary: '今天学了三件事：第一，完成时表示已完成的事件，和未完成时的持续性不同；第二，构成方法——找完成词干（通常加 -v-），再加完成人称词尾 -i/-isti/-it/-imus/-istis/-erunt；第三，不规则词干 vidi 和 dixi 要单独记忆。amabam 是一段时间，amavi 是一个结束的事件。这个区别要刻进脑子里。',
+    nextLessonPreview: '下节课：大过去时。过去的过去——某件事在另一件过去的事之前就已经结束了。时间轴会变得更复杂。'
   },
 
   13: {
@@ -1723,6 +1747,7 @@ export const lessonMap = {
           options: ['-vi-', '-erat', '-eram'],
           answer: 2
         },
+        context: '她圈出 -eram，「amav- 是词干，-eram 是大过去时词尾。完成词干加 -eram，就得到了第一人称单数大过去时。」她停了一秒，「整个词尾序列：-eram, -eras, -erat, -eramus, -eratis, -erant。和 esse 的未完成时一模一样。」',
         contextRight: '「不错。」她圈出 -eram，「amav- 是词干，-eram 是大过去时词尾。完成词干加 -eram，就得到了第一人称单数大过去时。」她停了一秒，「整个词尾序列：-eram, -eras, -erat, -eramus, -eratis, -erant。和 esse 的未完成时一模一样。」',
         contextWrong: '「-eram。」她重复，「amav- 是完成词干，-eram 是大过去时第一人称单数词尾。不是 -vi-，那是完成词干的一部分，不是词尾。-erat 是第三人称单数，不是第一。」她在黑板上写出结构分析，「amav | eram。两部分。」',
         blackboard: {
@@ -1801,6 +1826,7 @@ export const lessonMap = {
           options: ['现在时', '未完成时', '大过去时'],
           answer: 2
         },
+        context: '她在黑板上写下 didiceram，「大过去时。didiceram——我早已学了。用来描述在过去某事件之前就已经完成的动作，这正是大过去时的核心功能。」她停了一秒，「三个时态的分工：现在时看此刻，完成时看过去，大过去时看过去的过去。」',
         contextRight: '「不错。」她在黑板上写下 didiceram，「大过去时。didiceram——我早已学了。用来描述在过去某事件之前就已经完成的动作，这正是大过去时的核心功能。」她停了一秒，「三个时态的分工：现在时看此刻，完成时看过去，大过去时看过去的过去。」',
         contextWrong: '「大过去时。」她重复，「未完成时描述过去的持续动作，不是已完成；现在时描述此刻。大过去时专门用于：在另一件过去的事之前就已经结束了的动作。这是它唯一的功能。」',
         blackboard: {
@@ -1818,8 +1844,8 @@ export const lessonMap = {
         }
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，大过去时的构成——完成词干加 -eram 系列词尾，词尾来自 esse 的未完成时；第二，时间层次——三个时态，大过去在最左边，完成时居中，现在时在右边；第三，用途——大过去时专门描述在过去某事件之前就已经结束的动作。amaveram，I had loved。比 amavi 还要更早的事情。」',
-    nextLessonPreview: '「下节课：间接引语。你们现在会说话，下节课会学如何转述别人说的话——accusative 加 infinitive 的结构。」'
+    lessonSummary: '今天学了三件事：第一，大过去时的构成——完成词干加 -eram 系列词尾，词尾来自 esse 的未完成时；第二，时间层次——三个时态，大过去在最左边，完成时居中，现在时在右边；第三，用途——大过去时专门描述在过去某事件之前就已经结束的动作。amaveram，I had loved。比 amavi 还要更早的事情。',
+    nextLessonPreview: '下节课：间接引语。你们现在会说话，下节课会学如何转述别人说的话——accusative 加 infinitive 的结构。'
   },
 
   14: {
@@ -1849,6 +1875,7 @@ export const lessonMap = {
           options: ['主格（nominative）', '与格（dative）', '宾格（accusative）'],
           answer: 2
         },
+        context: '珀西瓦尔在 accusative 旁边写下 pueros，「pueri 变成了 pueros——宾格复数。动词 ludunt 变成不定式 ludere。完整的间接引语：Dicit pueros ludere——他说孩子们在玩耍。」她停了一秒，「宾格加不定式，这个结构要背进去。」',
         contextRight: '「不错。」珀西瓦尔在 accusative 旁边写下 pueros，「pueri 变成了 pueros——宾格复数。动词 ludunt 变成不定式 ludere。完整的间接引语：Dicit pueros ludere——他说孩子们在玩耍。」她停了一秒，「宾格加不定式，这个结构要背进去。」',
         contextWrong: '「宾格。」她重复，「间接引语的从句主语必须用宾格，不是主格，不是与格。pueri 变 pueros，puella 变 puellam。然后动词变不定式。这两步都不能省。」',
         blackboard: {
@@ -1906,6 +1933,7 @@ export const lessonMap = {
           options: ['我相信他在说大话', '我相信他是伟大的', '我相信他来了'],
           answer: 1
         },
+        context: '她在黑板上圈出 eum 和 magnum，「eum——他，宾格；magnum——伟大的，宾格形容词，与 eum 一致；esse——是。所以：我相信他是伟大的。」她停了一秒，「esse 作不定式时，表示"是"的关系，形容词一并变宾格。」',
         contextRight: '「不错。」她在黑板上圈出 eum 和 magnum，「eum——他，宾格；magnum——伟大的，宾格形容词，与 eum 一致；esse——是。所以：我相信他是伟大的。」她停了一秒，「esse 作不定式时，表示"是"的关系，形容词一并变宾格。」',
         contextWrong: '「我相信他是伟大的。」她重复，「eum 是宾格主语"他"，magnum 是宾格形容词"伟大的"，esse 是不定式"是"。credo——相信。我相信 + 他 + 是伟大的。」她在黑板上写出结构分析，「不是来了，来了要用 venire，不是 esse。」',
         blackboard: {
@@ -1941,8 +1969,8 @@ export const lessonMap = {
         context: '「间接引语把一件事变成另一件事的宾语——它变成了被宣告的对象。」珀西瓦尔平静地说，「巫师发出咒语时，他不是在描述，而是在宣告：Expecto Patronum——我期待/召唤守护神。ex+specto，向外看、向外宣告。这个宣告把守护神变成了宾格——被施加意志的对象。」她停顿，「Acc+Inf 结构的本质和这个一样：主句的动词（说/想/看/信）是施力者，宾格从句是被施力的对象。语言结构模拟了魔法施力的方向。理解这个，你就理解了为什么咒语是拉丁语的。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，间接引语用 Acc+Inf 结构——从句主语变宾格，动词变不定式；第二，引导动词有说类（dico）、想类（credo/puto）、感知类（video/audio）；第三，描述状态时用 esse 作不定式，形容词也要跟着变宾格。」她停顿，「宾格主语加不定式。这个结构在拉丁语中极其常见，背进去。」',
-    nextLessonPreview: '「下节课：关系从句。qui, quae, quod——引导修饰名词的从句。比间接引语容易，但同样重要。」'
+    lessonSummary: '今天学了三件事：第一，间接引语用 Acc+Inf 结构——从句主语变宾格，动词变不定式；第二，引导动词有说类（dico）、想类（credo/puto）、感知类（video/audio）；第三，描述状态时用 esse 作不定式，形容词也要跟着变宾格。宾格主语加不定式。这个结构在拉丁语中极其常见，背进去。',
+    nextLessonPreview: '下节课：关系从句。qui, quae, quod——引导修饰名词的从句。比间接引语容易，但同样重要。'
   },
 
   15: {
@@ -1969,6 +1997,7 @@ export const lessonMap = {
           options: ['阳性主格，从句主语', '阴性宾格，从句宾语', '中性与格，从句间接宾语'],
           answer: 1
         },
+        context: '珀西瓦尔在 quam 旁边写出分析，「quam——阴性（与 puella 一致），宾格（在从句 amo 中充当宾语，即"我爱的对象"）。」她停了一秒，「两条规则同时工作：性/数跟先行词，格跟从句功能。分开记，不要混。」',
         contextRight: '「不错。」珀西瓦尔在 quam 旁边写出分析，「quam——阴性（与 puella 一致），宾格（在从句 amo 中充当宾语，即"我爱的对象"）。」她停了一秒，「两条规则同时工作：性/数跟先行词，格跟从句功能。分开记，不要混。」',
         contextWrong: '「阴性宾格，从句宾语。」她重复，「quam 阴性——因为先行词 puella 是阴性，必须一致；宾格——因为在从句 amo 中，quam 是"我爱的对象"，充当宾语。这两个信息同时编码在一个词里。」',
         blackboard: {
@@ -2031,6 +2060,7 @@ export const lessonMap = {
           options: ['主语（主格）', '宾语（宾格）', '与格（间接宾语）'],
           answer: 1
         },
+        context: '她在黑板上圈出 quem，「quem 是宾格，在从句 legis（你在读）里充当宾语——你读的对象。先行词 liber 是阳性，quem 用阳性宾格。整句：你正在读的那本书很好。」她停了一秒，「先行词的性告诉你用哪个词，从句功能告诉你用什么格。两条线索缺一不可。」',
         contextRight: '「不错。」她在黑板上圈出 quem，「quem 是宾格，在从句 legis（你在读）里充当宾语——你读的对象。先行词 liber 是阳性，quem 用阳性宾格。整句：你正在读的那本书很好。」她停了一秒，「先行词的性告诉你用哪个词，从句功能告诉你用什么格。两条线索缺一不可。」',
         contextWrong: '「宾语，宾格。」她重复，「quem 是宾格，所以在从句里是宾语——你读的对象。不是主语，主语要用主格 qui。」她写出分析，「liber quem legis = 你读的那本书。宾语。」',
         blackboard: {
@@ -2069,8 +2099,8 @@ export const lessonMap = {
         context: '「关系从句可以修饰主语，也可以修饰宾语，甚至修饰与格或属格名词。」珀西瓦尔写下 Video puellam quae cantat，「这里先行词 puellam 是主句的宾格宾语——我看见女孩；但关系代词 quae 在从句里是主语，所以用主格。」她在 puellam 和 quae 之间用不同颜色的粉笔画了两条线，「注意：puellam 的格由主句决定，quae 的格由从句决定。两条线，各走各的。」她停顿，「这就是拉丁语关系从句最容易出错的地方。格一定要分清楚来源。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，关系代词 qui/quae/quod 引导修饰名词的从句；第二，格的规则——性/数跟先行词，格跟从句内部功能，这两条必须分开；第三，翻译方法——找先行词，找关系代词，把从句翻译成"……的"放在名词前面。」她停顿，「quam amo，我所爱的——记住这个短语的结构。」',
-    nextLessonPreview: '「下节课：不定式的三种形式。现在主动、现在被动、完成主动——以及它们的用法。」'
+    lessonSummary: '今天学了三件事：第一，关系代词 qui/quae/quod 引导修饰名词的从句；第二，格的规则——性/数跟先行词，格跟从句内部功能，这两条必须分开；第三，翻译方法——找先行词，找关系代词，把从句翻译成"……的"放在名词前面。quam amo，我所爱的——记住这个短语的结构。',
+    nextLessonPreview: '下节课：不定式的三种形式。现在主动、现在被动、完成主动——以及它们的用法。'
   },
 
   16: {
@@ -2101,6 +2131,7 @@ export const lessonMap = {
           options: ['vidari', 'videri', 'vidisse'],
           answer: 1
         },
+        context: '她在黑板上写下 videri，「videre 的词干是 vide-，被动不定式词尾是 -ri，但第二变位动词是 -eri：videri——to be seen，被看见。」她停了一秒，「注意：第一变位被动是 -ari（amari），第二变位被动是 -eri（videri）。词尾不同，规律一致。」',
         contextRight: '「不错。」她在黑板上写下 videri，「videre 的词干是 vide-，被动不定式词尾是 -ri，但第二变位动词是 -eri：videri——to be seen，被看见。」她停了一秒，「注意：第一变位被动是 -ari（amari），第二变位被动是 -eri（videri）。词尾不同，规律一致。」',
         contextWrong: '「videri。」她重复，「vidare 不存在。vidisse 是完成主动不定式（to have seen），不是被动。videri——to be seen，现在被动不定式，第二变位用 -eri。」她在黑板上写出三个形式：videre/videri/vidisse，「三种。各有各的词尾。」',
         blackboard: {
@@ -2163,6 +2194,7 @@ export const lessonMap = {
           options: ['我想住在霍格沃茨', '我能住在霍格沃茨', '我曾经住在霍格沃茨'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「possum——我能；habitare——居住，不定式；in Hogwarts——在霍格沃茨，夺格。我能住在霍格沃茨。」她在 possum 旁边写了一个小提示，「possum + 不定式，表示能力。这个结构在魔法誓言和契约文本里很常见。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「possum——我能；habitare——居住，不定式；in Hogwarts——在霍格沃茨，夺格。我能住在霍格沃茨。」她在 possum 旁边写了一个小提示，「possum + 不定式，表示能力。这个结构在魔法誓言和契约文本里很常见。」',
         contextWrong: '「我能住在霍格沃茨。」她重复，「volo 是我想，possum 是我能，不要混淆。habitare 是居住的不定式，in + 夺格表示地点。」她在 possum 下面写了 I am able，「能，不是想，不是曾经。」',
         blackboard: {
@@ -2203,8 +2235,8 @@ export const lessonMap = {
         context: '「完成主动不定式 amavisse——to have loved，表示在主句动作发生之前就已经完成的动作。」珀西瓦尔在黑板上并排写了两句话，「Credo te amare——我相信你现在在爱，同时进行；Credo te amavisse——我相信你曾经爱过，那件事发生在我"相信"之前。」她停顿，「时间层次：不定式表达的动作早于主句的动作。」她指向黑板，「这就是三种不定式的时间含义：现在不定式表示与主句同时，完成不定式表示在主句之前。用哪种不定式，取决于你要表达的时间关系。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，三种不定式形式——现在主动（-are/-ere）、现在被动（-ari/-eri）、完成主动（完成词干+-isse）；第二，不定式可以作主语（Errare est humanum）或作宾语（Volo cantare）；第三，完成不定式表示在主句之前就已经完成的动作。」她停顿，「三种形式，三种用法。不定式比你们想的用途更广。」',
-    nextLessonPreview: '「下节课：分词。动词变成形容词——现在主动分词和完成被动分词。两种截然不同的东西。」'
+    lessonSummary: '今天学了三件事：第一，三种不定式形式——现在主动（-are/-ere）、现在被动（-ari/-eri）、完成主动（完成词干+-isse）；第二，不定式可以作主语（Errare est humanum）或作宾语（Volo cantare）；第三，完成不定式表示在主句之前就已经完成的动作。三种形式，三种用法。不定式比你们想的用途更广。',
+    nextLessonPreview: '下节课：分词。动词变成形容词——现在主动分词和完成被动分词。两种截然不同的东西。'
   },
 
   17: {
@@ -2234,6 +2266,7 @@ export const lessonMap = {
           options: ['vocatus', 'vocans', 'vocare'],
           answer: 1
         },
+        context: '她在黑板上写下 vocans，「vocare，第一变位，词干 voca-，加 -ns，得到 vocans——正在呼唤的。」她停了一秒，「vocans magister——正在呼唤的老师；vocans puella——正在呼唤的女孩。分词与名词一致变格。」',
         contextRight: '「不错。」她在黑板上写下 vocans，「vocare，第一变位，词干 voca-，加 -ns，得到 vocans——正在呼唤的。」她停了一秒，「vocans magister——正在呼唤的老师；vocans puella——正在呼唤的女孩。分词与名词一致变格。」',
         contextWrong: '「vocans。」她重复，「vocatus 是完成被动分词（被呼唤的），vocare 是原形不定式（to call）。vocans 才是现在主动分词，正在呼唤的。词干 voca- 加 -ns。」',
         blackboard: {
@@ -2292,6 +2325,7 @@ export const lessonMap = {
           options: ['amatus', 'amatum', 'amati'],
           answer: 1
         },
+        context: '她在 amatum 旁边写了 librum，「librum——阳性宾格；amatum——阳性宾格，与 librum 一致。Librum amatum legit——他读了那本被（人）喜爱的书。」她停了一秒，「性/数/格，三条线，全部对齐。」',
         contextRight: '「不错。」她在 amatum 旁边写了 librum，「librum——阳性宾格；amatum——阳性宾格，与 librum 一致。Librum amatum legit——他读了那本被（人）喜爱的书。」她停了一秒，「性/数/格，三条线，全部对齐。」',
         contextWrong: '「amatum。」她重复，「librum 是阳性宾格，分词必须也是阳性宾格，所以用 amatum，不是 amatus（阳性主格）或 amati（阳性属格或主格复数）。」她写出变格对比，「主格 amatus，宾格 amatum。格不同。」',
         blackboard: {
@@ -2329,8 +2363,8 @@ export const lessonMap = {
         context: '珀西瓦尔站在黑板前，以她一贯的平静语气说：「语言是最古老的魔法，巫师只是把它说得更大声一点。」她在 revelatus 旁边写出词根，「Homenum Revelio——揭示人的存在。Revelio 来自 revelare，re- 是"再次"或"往回"，velare 是"覆盖"——揭开覆盖物，就是揭示。完成被动分词 revelatus——被揭示的状态。」她停顿，「当你发出 Homenum Revelio 的时候，你在对空间宣告：让隐藏的人被揭示出来。这个宣告的逻辑，是完成被动分词——你想要达成的那个被动完成的状态。」她放下粉笔，「理解词根，就理解咒语为什么有效。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，现在主动分词——词干加 -ans/-ens，表示正在进行的主动动作；第二，完成被动分词——词干加 -atus/-ata/-atum，表示已完成的被动状态；第三，分词作定语时必须与名词在性数格上完全一致，和形容词规则相同。」她停顿，「amans 和 amatus——一个主动进行，一个被动完成。这两种东西不要混淆。」',
-    nextLessonPreview: '「下节课：属格的扩展用法。你们以为属格只表示所有，但它能做的远不止这些。」'
+    lessonSummary: '今天学了三件事：第一，现在主动分词——词干加 -ans/-ens，表示正在进行的主动动作；第二，完成被动分词——词干加 -atus/-ata/-atum，表示已完成的被动状态；第三，分词作定语时必须与名词在性数格上完全一致，和形容词规则相同。amans 和 amatus——一个主动进行，一个被动完成。这两种东西不要混淆。',
+    nextLessonPreview: '下节课：属格的扩展用法。你们以为属格只表示所有，但它能做的远不止这些。'
   },
 
   18: {
@@ -2361,6 +2395,7 @@ export const lessonMap = {
           options: ['所有属格，书是母亲的', '主观属格，母亲是爱的发出者', '客观属格，母亲是被爱的对象'],
           answer: 1
         },
+        context: '珀西瓦尔在 matris 旁边写了一个箭头，「matris——主观属格，母亲发出爱，是爱的主语。」她停了一秒，「注意：amor matris 可以是主观属格（母亲爱别人），也可能是客观属格（别人爱母亲）——取决于语境。这种歧义在拉丁语诗歌中被刻意利用。」',
         contextRight: '「不错。」珀西瓦尔在 matris 旁边写了一个箭头，「matris——主观属格，母亲发出爱，是爱的主语。」她停了一秒，「注意：amor matris 可以是主观属格（母亲爱别人），也可能是客观属格（别人爱母亲）——取决于语境。这种歧义在拉丁语诗歌中被刻意利用。」',
         contextWrong: '「主观属格。母亲是爱的发出者，是爱这个动作的主语。」她重复，「不是所有属格——amor 不属于母亲；不是客观属格，那要等到下面讲。主观 = 发出动作的那一方。」',
         blackboard: {
@@ -2421,6 +2456,7 @@ export const lessonMap = {
           options: ['那个男孩的智慧', '具有大智慧的男孩', '男孩比智慧更重要'],
           answer: 1
         },
+        context: '珀西瓦尔」她停了一秒，「英语中通常译成 of great wisdom，这个 of 就是描述性属格的痕迹。」',
         contextRight: '「不错。」珀西瓦尔在黑板上写下 puer magnae sapientiae，「具有大智慧的男孩——描述性属格，magnae sapientiae 描述这个男孩的性质，不是说智慧属于他。」她停了一秒，「英语中通常译成 of great wisdom，这个 of 就是描述性属格的痕迹。」',
         contextWrong: '「具有大智慧的男孩。」她重复，「不是所有关系——不是"那个男孩的智慧"；而是描述性质：这个男孩是一个什么样的人。用 of great wisdom 来理解——具有大智慧。描述性属格。」',
         blackboard: {
@@ -2462,8 +2498,8 @@ export const lessonMap = {
         context: '「数量属格是另一种常见用法：用数量词加属格名词，表示"多少的某样东西"。」珀西瓦尔写下 multum aquae，「很多水——multum 是中性宾格的数量词，aquae 是水的属格。不说 multa aqua，而是 multum aquae。」她停顿，「这种结构在英语里也有痕迹：a lot of water，many of them——of 就是属格的标志。」她又写了两个，「satis temporis——足够的时间；nimium vini——太多的酒，vinum 的属格是 vini。」她环顾教室，「这是拉丁语的一个习惯：数量通过属格来限定所修饰的名词。」'
       }
     ],
-    lessonSummary: '「今天学了四种属格用法：所有属格——谁拥有什么；主观属格——谁发出动作；客观属格——谁是动作的对象；描述性属格——描述中心名词的性质。」她停顿，「同一个变格，四种含义。区分它们需要语境和逻辑，不能只看词尾。」她又停了一秒，「还有数量属格——数量词加属格。五种用法，都是属格。」',
-    nextLessonPreview: '「下节课：句子成分分析方法。学一个系统的分析步骤，把复杂句子拆开来看。」'
+    lessonSummary: '今天学了四种属格用法：所有属格——谁拥有什么；主观属格——谁发出动作；客观属格——谁是动作的对象；描述性属格——描述中心名词的性质。同一个变格，四种含义。区分它们需要语境和逻辑，不能只看词尾。还有数量属格——数量词加属格。五种用法，都是属格。',
+    nextLessonPreview: '下节课：句子成分分析方法。学一个系统的分析步骤，把复杂句子拆开来看。'
   },
 
   19: {
@@ -2494,6 +2530,7 @@ export const lessonMap = {
           options: ['discipulis（学生们）', 'magister（老师）', 'libros（书）'],
           answer: 1
         },
+        context: '她在 magister 下面写了一个 S（Subject），「magister——主格，老师是主语。discipulis 是与格（词尾 -is），不是主语；libros 是宾格（词尾 -os），也不是主语。」她停了一秒，「步骤一和二：动词 dat，主语 magister。老师在给。」',
         contextRight: '「不错。」她在 magister 下面写了一个 S（Subject），「magister——主格，老师是主语。discipulis 是与格（词尾 -is），不是主语；libros 是宾格（词尾 -os），也不是主语。」她停了一秒，「步骤一和二：动词 dat，主语 magister。老师在给。」',
         contextWrong: '「magister。」她重复，「discipulis 词尾是 -is，这是与格，不是主格；libros 词尾是 -os，这是宾格。只有 magister 是主格。动词 dat 第三人称单数——主语是老师。」',
         blackboard: {
@@ -2552,6 +2589,7 @@ export const lessonMap = {
           options: ['学生们把老师喜爱的书给了他', '老师把书给了他所喜爱的学生们', '老师读了他所喜爱的书'],
           answer: 1
         },
+        context: '珀西瓦尔magister——老师，主语；dat——给，动词；libros——书，直接宾语；discipulis——学生们，间接宾语；quos amat——关系从句，他所喜爱的，修饰学生们。」她停了一秒，「五步分析，得出结论。这就是系统方法的价值。」',
         contextRight: '「不错。」珀西瓦尔在黑板上写出完整翻译，「老师把书给了他所喜爱的学生们。magister——老师，主语；dat——给，动词；libros——书，直接宾语；discipulis——学生们，间接宾语；quos amat——关系从句，他所喜爱的，修饰学生们。」她停了一秒，「五步分析，得出结论。这就是系统方法的价值。」',
         contextWrong: '「老师把书给了他所喜爱的学生们。」她重复，「注意：magister 是主语，dat 是动词，libros 是直接宾语，discipulis 是间接宾语，quos amat 是修饰学生的关系从句。」她在句子成分下面各写了一个标注，「五步走完，意思清晰。」',
         blackboard: {
@@ -2589,8 +2627,8 @@ export const lessonMap = {
         context: '「这五步方法，不只是做练习用的。」珀西瓦尔靠在讲台边，语气依然平静，「拉丁语句子里，任何成分都可以乱序排列——主语可以在最后，宾语可以在最前，动词可以在中间。如果你靠位置猜测成分，你一定会猜错。」她停顿，「只有词尾是可靠的。主格词尾告诉你主语，宾格词尾告诉你宾语，与格词尾告诉你间接宾语。五步方法的本质是：系统地读词尾，而不是系统地猜位置。」她扫视教室，「语言是最古老的魔法，巫师只是把它说得更大声一点。但要说对，就得先读懂词尾。」'
       }
     ],
-    lessonSummary: '「今天学了一件事：五步句子分析法——找动词、找主语、找宾语和与格、分析形容词分词、处理从句。」她停顿，「顺序不能变。永远先找动词，因为动词决定句子的核心结构。其他一切成分，都是在动词确认之后才能定位的。」她停了一秒，「词尾是唯一的证据。」',
-    nextLessonPreview: '「下节课：词根与词缀规律，以及拉丁语在英语词汇中的痕迹。你们会发现自己每天说的英语里，到处是拉丁语。」'
+    lessonSummary: '今天学了一件事：五步句子分析法——找动词、找主语、找宾语和与格、分析形容词分词、处理从句。顺序不能变。永远先找动词，因为动词决定句子的核心结构。其他一切成分，都是在动词确认之后才能定位的。词尾是唯一的证据。',
+    nextLessonPreview: '下节课：词根与词缀规律，以及拉丁语在英语词汇中的痕迹。你们会发现自己每天说的英语里，到处是拉丁语。'
   },
 
   20: {
@@ -2624,6 +2662,7 @@ export const lessonMap = {
           options: ['pro-（在前面）', 'prae-（在前面，预先）', 'per-（通过）'],
           answer: 1
         },
+        context: '珀西瓦尔英语的 pre- 直接来自拉丁语的 prae-。predict = prae + dicere，在事情发生之前就说出来。」她停了一秒，「prae- 在很多英语单词里变成了 pre-：prevent、precede、prepare——都有"预先"的含义。」',
         contextRight: '「不错。」珀西瓦尔在黑板上写下 prae-，「prae-——在前面，预先。英语的 pre- 直接来自拉丁语的 prae-。predict = prae + dicere，在事情发生之前就说出来。」她停了一秒，「prae- 在很多英语单词里变成了 pre-：prevent、precede、prepare——都有"预先"的含义。」',
         contextWrong: '「prae-。」她重复，「不是 pro-，pro- 是"向前"或"支持"的意思；不是 per-，per- 是"通过"或"完全"。prae- 是"预先"，在前面，是英语 pre- 的来源。」她在黑板上写出三个前缀的区别，「三个都以 p 开头，要分清楚。」',
         blackboard: {
@@ -2690,6 +2729,7 @@ export const lessonMap = {
           options: ['在下面', '穿越、跨越', '在前面'],
           answer: 1
         },
+        context: '她在 transport 旁边写了"穿越+带"，「trans- + port- = 穿越+携带 = 运输，把东西从一处带到另一处，跨越距离。」她停了一秒，「trans- 在英语里极其常见：translate（跨越+携带语言），transform（跨越+形状），transparent（跨越+出现，透明的）。」',
         contextRight: '「不错。」她在 transport 旁边写了"穿越+带"，「trans- + port- = 穿越+携带 = 运输，把东西从一处带到另一处，跨越距离。」她停了一秒，「trans- 在英语里极其常见：translate（跨越+携带语言），transform（跨越+形状），transparent（跨越+出现，透明的）。」',
         contextWrong: '「穿越、跨越。」她重复，「sub- 是在下面，prae- 是在前面，trans- 是穿越。transport = trans + portare，把东西带过去，跨越某个界限。」她在黑板上写出三个前缀的对比，「三个前缀，方向不同。」',
         blackboard: {
@@ -2733,8 +2773,8 @@ export const lessonMap = {
         context: '珀西瓦尔把两本词典向旁边推了推，「语言是最古老的魔法，巫师只是把它说得更大声一点。」她在黑板上写出两个咒语的词根分析，「Expecto Patronum——ex- 是向外，specto 是看、期望，spectare 的第一人称现在时；Patronum 是 patronus（守护者）的宾格。整句：我向外期待守护者。」她停顿，「Protego——pro- 是在前面，tego 来自 tegere，覆盖、遮蔽；合起来：我在前面覆盖，我保护。」她环顾教室，「这两个咒语的效果，完全由词根决定——Expecto 是召唤，Protego 是防护。如果你懂词根，你不需要记住效果，因为咒语本身已经告诉你了。」她停了一秒，「词根是咒语效果的说明书。」'
       }
     ],
-    lessonSummary: '「今天学了三件事：第一，四个核心词根——dict-（说）、port-（带）、aqua-（水）、terra-（土地）——以及它们在英语里的衍生词；第二，前缀和后缀的规律——prae-/pre-（预先）、trans-（穿越）、sub-（在下）、-tion（名词化）、-al（形容词化）；第三，咒语 Expecto 和 Protego 的词根分析。」她停顿，「理解词根，你就拥有了一把拆解语言的钥匙——无论是英语词汇，还是魔法咒语。」',
-    nextLessonPreview: '「下节课：拉丁语对英语词汇的历史影响——借词的三个时期，以及为什么拉丁语词汇在英语里通常更正式。」'
+    lessonSummary: '今天学了三件事：第一，四个核心词根——dict-（说）、port-（带）、aqua-（水）、terra-（土地）——以及它们在英语里的衍生词；第二，前缀和后缀的规律——prae-/pre-（预先）、trans-（穿越）、sub-（在下）、-tion（名词化）、-al（形容词化）；第三，咒语 Expecto 和 Protego 的词根分析。理解词根，你就拥有了一把拆解语言的钥匙——无论是英语词汇，还是魔法咒语。',
+    nextLessonPreview: '下节课：拉丁语对英语词汇的历史影响——借词的三个时期，以及为什么拉丁语词汇在英语里通常更正式。'
   },
 
   21: {
@@ -2761,6 +2801,7 @@ export const lessonMap = {
           options: ['begin', 'finish', 'speak'],
           answer: 0
         },
+        context: '她说，「begin 和 commence 含义相同，但 begin 是古英语词，commence 是法语借词，法语来自拉丁语。正式文件里用 commence，日常对话里用 begin。层次不同，功能不同。」',
         contextRight: '「不错。」她停了一秒，「begin 和 commence 含义相同，但 begin 是古英语词，commence 是法语借词，法语来自拉丁语。正式文件里用 commence，日常对话里用 begin。层次不同，功能不同。」',
         contextWrong: '「begin。」她重复，不带感情，「finish 是结束，speak 是说话，都不对应。commence 意为开始，日耳曼对应词是 begin。两词含义相同，层次不同。」',
         blackboard: {
@@ -2833,7 +2874,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '今天课程围绕英语词汇的双层体系展开：日耳曼词层次日常、简洁，拉丁词层次正式、精确。拉丁语通过三条历史渠道进入英语：罗马占领、基督教传入、文艺复兴。识别拉丁源词可依赖形态标志——后缀 -tion、-ment、-al、-ous 几乎全部来自拉丁语。词源分析是理解词义的有效工具。',
-    nextLessonPreview: '「下节课：医学与法律中的拉丁语根。这两个领域保存了最纯粹的拉丁语遗产。」'
+    nextLessonPreview: '下节课：医学与法律中的拉丁语根。这两个领域保存了最纯粹的拉丁语遗产。'
   },
 
   22: {
@@ -2862,6 +2903,7 @@ export const lessonMap = {
           options: ['某个器官', '炎症', '手术'],
           answer: 1
         },
+        context: '她停顿一秒，「-itis 表示炎症，是诊断词汇最常见的后缀之一。记住这一个后缀，你就能读懂几十种疾病名称——只需要知道前面的词根指的是哪个部位。」',
         contextRight: '「不错。」她停顿一秒，「-itis 表示炎症，是诊断词汇最常见的后缀之一。记住这一个后缀，你就能读懂几十种疾病名称——只需要知道前面的词根指的是哪个部位。」',
         contextWrong: '「炎症。」她重复，不带感情，「-itis 固定表示炎症，不是器官名称本身，不是手术。arthritis，关节炎；appendicitis，阑尾炎；meningitis，脑膜炎。后缀不变，含义不变。」',
         blackboard: {
@@ -2920,6 +2962,7 @@ export const lessonMap = {
           options: ['我禁止', '我同意', '我怀疑'],
           answer: 0
         },
+        context: '她停顿一秒，「我禁止。第一人称，直接宣告。古罗马护民官每次行使否决权时，说的就是这个词——不是申请，不是建议，是宣告。这个词今天直接进入了国际政治词汇。」',
         contextRight: '「不错。」她停顿一秒，「我禁止。第一人称，直接宣告。古罗马护民官每次行使否决权时，说的就是这个词——不是申请，不是建议，是宣告。这个词今天直接进入了国际政治词汇。」',
         contextWrong: '「我禁止。」她重复，不带感情，「vetare 意为禁止，veto 是第一人称单数"我禁止"。我同意是 approbo，我怀疑是 dubito。每个动词对应不同的语义，不要混淆。」',
         blackboard: {
@@ -2955,7 +2998,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '医学词根 cardio-（心脏）、neuro-（神经）、osteo-（骨骼）和后缀 -itis（炎症）是医学命名的核心构件。法律领域的 habeas corpus（人身保护）、pro bono（无偿服务）、veto（我禁止）至今保留拉丁原形。拉丁语之所以成为两大专业领域的通用语，原因在于它的精确性、稳定性和超越国界的权威性。',
-    nextLessonPreview: '「下节课：科学命名法——林奈双名法。每种生物的拉丁学名是如何构成的。」'
+    nextLessonPreview: '下节课：科学命名法——林奈双名法。每种生物的拉丁学名是如何构成的。'
   },
 
   23: {
@@ -2983,6 +3026,7 @@ export const lessonMap = {
           options: ['全小写', '首字母大写', '全大写'],
           answer: 1
         },
+        context: '她停顿一秒，「首字母大写，其余小写。种加词相反——全部小写。这个规则适用于所有生物学命名，没有例外。写错大小写就是写错了学名。」',
         contextRight: '「不错。」她停顿一秒，「首字母大写，其余小写。种加词相反——全部小写。这个规则适用于所有生物学命名，没有例外。写错大小写就是写错了学名。」',
         contextWrong: '「首字母大写。」她重复，不带感情，「属名首字母大写，如 Homo、Felis、Rosa。种加词全部小写，如 sapiens、catus、canina。全大写和全小写都不符合国际命名法规则。」',
         blackboard: {
@@ -3058,6 +3102,7 @@ export const lessonMap = {
           options: ['scire（知道）', 'sapere（有智慧）', 'videre（看见）'],
           answer: 1
         },
+        context: '她停顿一秒，「sapere——品味、理解、有智慧。sapiens 是其现在分词形式，意为"有智慧的"。scire 是知晓，videre 是看见，含义不同。」',
         contextRight: '「不错。」她停顿一秒，「sapere——品味、理解、有智慧。sapiens 是其现在分词形式，意为"有智慧的"。scire 是知晓，videre 是看见，含义不同。」',
         contextWrong: '「sapere。」她重复，不带感情，「sapere 意为品味、理解、有智慧。sapiens 是其现在分词。scire 是知晓，videre 是看见——三个动词语义不同，来源不同。」',
         blackboard: {
@@ -3077,7 +3122,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '林奈双名法规定每种生物用两个拉丁词命名：属名首字母大写，种加词全小写，两者均用斜体或下划线标注。属名是名词主格，种加词通常是形容词、名词所有格或地名形容词。Homo sapiens（智人）是最为人熟知的例子，sapiens 来自动词 sapere（有智慧）。这套命名体系至今是国际生物命名法的标准。',
-    nextLessonPreview: '「下节课：咒语词根精析。这是我个人研究的核心内容。」'
+    nextLessonPreview: '下节课：咒语词根精析。这是我个人研究的核心内容。'
   },
 
   24: {
@@ -3104,24 +3149,25 @@ export const lessonMap = {
           ]
         },
         question: {
-          leadIn: '珀西瓦尔用粉笔在 Lumos 旁边写下 lux，「lux——光，第三变位名词，词根是 luc- 或 lum-。Lumos 是词根 lum- 加后缀 -os，这种拉丁化希腊语的构词方式在咒语中很常见。」她又在 Nox 旁边写下 nox，「Nox——这个直接就是拉丁词 nox，夜。不需要任何改动。」她转向黑板上的派生词，「lucid——清晰的，字面是"充满光的"；equinox——昼夜平分，equi 是"相等"，nox 是"夜"。」她指向 lux 词根，「Lumos 来自哪个拉丁词的词根？」',
-          text: '「Lumos 的词根来源是？」',
+          leadIn: '珀西瓦尔用粉笔在 Lumos 旁边写下 lux，「lux——光，第三变位名词；同一词族里还有 lumen，光、光源。Lumos 不是教科书式的古典拉丁词形，但它明显借用了表示光的词根。」她又在 Nox 旁边写下 nox，「Nox——这个直接就是拉丁词 nox，夜。不需要任何改动。」她转向黑板上的派生词，「lucid——清晰的，来自光的词根；equinox——昼夜平分，equi 是"相等"，nox 是"夜"。」她指向 lux 词根，「Lumos 最可靠的词根来源是哪一组？」',
+          text: '「Lumos 最可靠的词根来源是？」',
           options: ['lux（光）', 'luna（月亮）', 'locus（地方）'],
           answer: 0
         },
-        contextRight: '「不错。」她停顿一秒，「lux，光。词根 lum-/luc- 贯穿在照明相关的词汇中：lucid，illuminate，luminous。Lumos 延续了这个词根，在魔法语境中表示产生光。语义和词根完全一致。」',
+        context: '她停顿一秒，「lux，光。词根 lum-/luc- 贯穿在照明相关的词汇中：lucid，illuminate，luminous。Lumos 延续了这个词根，在魔法语境中表示产生光。词根联系清楚，具体咒语词形则是魔法传统自己的形式。」',
+        contextRight: '「不错。」她停顿一秒，「lux，光。词根 lum-/luc- 贯穿在照明相关的词汇中：lucid，illuminate，luminous。Lumos 延续了这个词根，在魔法语境中表示产生光。词根联系清楚，具体咒语词形则是魔法传统自己的形式。」',
         contextWrong: '「lux——光。」她重复，不带感情，「luna 是月亮，locus 是地方，都与 Lumos 无关。lux 的词根 lum-/luc- 才是 Lumos 的来源。lucid，illuminate，luminous——同一族词根。」',
         blackboard: {
           type: 'formulas',
           label: '光与夜词根确认',
           lines: [
-            '[Lumos] ← lux（光）  词根 lum-',
+            '[Lumos] ~ lux/lumen（光）  词根 luc-/lum-',
             '  lucid / illuminate / luminous',
             '',
             '[Nox]   ← nox（夜）  词根 noct-',
             '  nocturnal / equinox',
             '',
-            '语义一致：咒语功能 = 词根含义',
+            '语义一致：咒语功能贴合词根含义',
           ],
           audio: [
             { text: 'lumos', src: 'audio/latin/lesson-24/lumos.wav' },
@@ -3171,6 +3217,7 @@ export const lessonMap = {
           options: ['pater（父亲）', 'patria（祖国）', 'pax（和平）'],
           answer: 0
         },
+        context: '她停顿一秒，「pater——父亲。patronus 是 pater 加后缀 -onus，意为庇护者。patria 也来自 pater，但那是"祖国"而非守护者。pax 是和平，词根完全不同。」',
         contextRight: '「不错。」她停顿一秒，「pater——父亲。patronus 是 pater 加后缀 -onus，意为庇护者。patria 也来自 pater，但那是"祖国"而非守护者。pax 是和平，词根完全不同。」',
         contextWrong: '「pater——父亲。」她重复，不带感情，「patronus 的词根是 pater。patria 是祖国，也来自 pater，但 patronus 直接来自 pater 本身。pax 是和平，词根是 pac-，与 pater 无关。」',
         blackboard: {
@@ -3203,11 +3250,11 @@ export const lessonMap = {
             'Obliviate     oblivium（遗忘）  抹去记忆',
           ]
         },
-        context: '珀西瓦尔在表格里填完最后两行。「Reparo——re- 是"再次、回到"，paro 是"准备、修整"。Reparo 的意思是恢复到原来的状态——修复。动词词形是第一人称单数现在时：我修复。」她在 Obliviate 旁边停顿，「Obliviate 来自 oblivium——遗忘，来自 ob-（面对）加 livis（光滑），字面是"让记忆变得光滑而无痕迹"。这是一个非常古老的意象。」她退后一步，看着完整的表格，「五个咒语，五个词根，含义全部与词源一致。」她把粉笔放在粉笔架上，没有再动，「这不是巧合。创造这些咒语的人懂拉丁语，而且他们是认真的。」'
+        context: '珀西瓦尔在表格里填完最后两行。「Reparo——re- 是"再次、回到"，paro 是"准备、修整"。Reparo 的意思是恢复到原来的状态——修复。动词词形是第一人称单数现在时：我修复。」她在 Obliviate 旁边停顿，「Obliviate 可联系 oblivio、oblivisci 这一组表示遗忘的拉丁词。注意我的措辞：可联系。它不是课堂上要背的标准古典动词变位。」她退后一步，看着完整的表格，「五个咒语，五个词根，含义大多与词源相吻合，但魔法传统会改造词形。」她把粉笔放在粉笔架上，没有再动，「严谨不是让咒语失去神秘感；严谨是知道神秘停在哪里。」'
       }
     ],
-    lessonSummary: '今天分析了五个核心咒语的拉丁词根：Lumos 来自 lux（光），Nox 来自 nox（夜），Expecto 来自 exspecto（期待），Patronum 来自 patronus（守护者，源于 pater 父亲），Reparo 来自 re+paro（修复），Obliviate 来自 oblivium（遗忘）。每个咒语的语义与其拉丁词根完全一致，说明魔法咒语体系是有意识地建立在拉丁语语义基础上的。',
-    nextLessonPreview: '「下节课：罗马世界的历史背景。语言在历史中如何演变。」'
+    lessonSummary: '今天分析了几个核心咒语的词根联系：Lumos 可联系 lux/lumen（光），Nox 直接来自 nox（夜），Expecto 来自 exspecto（期待），Patronum 来自 patronus（守护者，源于 pater 父亲），Reparo 来自 re+paro（修复），Obliviate 可联系遗忘词族。你们也学到一条更重要的规则：咒语常借用拉丁语，但不能把每个咒语都强行说成标准古典拉丁词形。',
+    nextLessonPreview: '下节课：罗马世界的历史背景。语言在历史中如何演变。'
   },
 
   25: {
@@ -3232,6 +3279,7 @@ export const lessonMap = {
           options: ['王政时期', '共和国末至帝国初', '中世纪'],
           answer: 1
         },
+        context: '她停顿一秒，「共和国末至帝国初——约公元前1世纪到公元1世纪。西塞罗、凯撒、维吉尔、奥维德、李维，都在这段时间写作。这是拉丁文学最精炼的时期，也是后世学拉丁语以此为标准的原因。」',
         contextRight: '「不错。」她停顿一秒，「共和国末至帝国初——约公元前1世纪到公元1世纪。西塞罗、凯撒、维吉尔、奥维德、李维，都在这段时间写作。这是拉丁文学最精炼的时期，也是后世学拉丁语以此为标准的原因。」',
         contextWrong: '「共和国末至帝国初。」她重复，不带感情，「王政时期文献极少，中世纪拉丁语已经演变。公元前1世纪到公元1世纪是黄金时代，西塞罗和维吉尔都在这个时期写作。」',
         blackboard: {
@@ -3304,6 +3352,7 @@ export const lessonMap = {
           options: ['书面古典拉丁语', '通俗拉丁语（日常口语）', '希腊语'],
           answer: 1
         },
+        context: '她停顿一秒，「通俗拉丁语，日常口语。书面古典拉丁语被刻意保持稳定，不演变——它成了教会和学术的语言。日常口语在各地自然演变，最终分化为罗曼语族的各种语言。」',
         contextRight: '「不错。」她停顿一秒，「通俗拉丁语，日常口语。书面古典拉丁语被刻意保持稳定，不演变——它成了教会和学术的语言。日常口语在各地自然演变，最终分化为罗曼语族的各种语言。」',
         contextWrong: '「通俗拉丁语。」她重复，不带感情，「罗曼语来自日常口语的自然演变，不是古典书面拉丁语。书面拉丁语被人为保持稳定。希腊语是另一支系，是东罗马帝国的语言，不是罗曼语族的来源。」',
         blackboard: {
@@ -3321,7 +3370,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '罗马历史四个时期决定了拉丁语的演变轨迹：王政时期为早期拉丁语；共和国末至帝国初（约公元前1世纪至公元1世纪）为黄金时代，西塞罗、维吉尔等人确立标准；帝国晚期书面与口语分裂；476年后通俗拉丁语在各地独立演变，最终形成法语、西班牙语等罗曼语族。书面拉丁语则作为教会和学术语言延续至今。',
-    nextLessonPreview: '「下节课：简化拉丁文阅读训练——把语法知识用于实际文本。」'
+    nextLessonPreview: '下节课：简化拉丁文阅读训练——把语法知识用于实际文本。'
   },
 
   26: {
@@ -3348,6 +3397,7 @@ export const lessonMap = {
           options: ['bonus', 'magister', 'discipulos'],
           answer: 1
         },
+        context: '她停顿一秒，「Magister，主格单数，是主语，教师。bonus 是形容词修饰语，discipulos 是宾格宾语。整句：好老师教学生们。三步法可以处理任意顺序——拉丁语语序自由，但格不会变。」',
         contextRight: '「不错。」她停顿一秒，「Magister，主格单数，是主语，教师。bonus 是形容词修饰语，discipulos 是宾格宾语。整句：好老师教学生们。三步法可以处理任意顺序——拉丁语语序自由，但格不会变。」',
         contextWrong: '「Magister。」她重复，不带感情，「Magister 是主格，是主语。bonus 是形容词，主格但不是主语名词。discipulos 是宾格，是宾语。格标志主语，不是位置。」',
         blackboard: {
@@ -3432,6 +3482,7 @@ export const lessonMap = {
           options: ['找到所有形容词', '通过格关系确定主语和宾语', '理解动词时态'],
           answer: 1
         },
+        context: '她停顿一秒，「第二步是解格——确定各名词和代词的格，从而判断它们在句子中的功能：主格是主语，宾格是宾语，与格是间接宾语。格是拉丁语句子结构的关键，不是语序。」',
         contextRight: '「不错。」她停顿一秒，「第二步是解格——确定各名词和代词的格，从而判断它们在句子中的功能：主格是主语，宾格是宾语，与格是间接宾语。格是拉丁语句子结构的关键，不是语序。」',
         contextWrong: '「通过格关系确定主语和宾语。」她重复，不带感情，「形容词是第三步处理的修饰成分。动词时态是第一步找动词时就确认的信息。第二步专门用于解读格——格决定词在句子里的功能。」',
         blackboard: {
@@ -3448,7 +3499,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '三步阅读法是处理拉丁文本的核心策略：第一步找动词确定句子核心，第二步解读格关系确定各成分功能（主格为主语、宾格为宾语、与格为间接宾语），第三步处理形容词一致性和从句修饰。今天通过五句示例文本实践了这套方法，涵盖形容词一致、关系从句、代词替换和集合表达。',
-    nextLessonPreview: '「下节课：凯撒《高卢战记》。真实的古典拉丁文本，最简洁的风格之一。」'
+    nextLessonPreview: '下节课：凯撒《高卢战记》。真实的古典拉丁文本，最简洁的风格之一。'
   },
 
   27: {
@@ -3476,6 +3527,7 @@ export const lessonMap = {
           options: ['动词现在主动式', '完成被动分词', '现在分词'],
           answer: 1
         },
+        context: '她停顿一秒，「完成被动分词——动作完成，主语被动接受。divisa 来自 dividere，分割。Gallia divisa est——高卢是被分割的状态，不是正在被分割，而是已经被分割。这个分词是句子真正的核心信息。」',
         contextRight: '「不错。」她停顿一秒，「完成被动分词——动作完成，主语被动接受。divisa 来自 dividere，分割。Gallia divisa est——高卢是被分割的状态，不是正在被分割，而是已经被分割。这个分词是句子真正的核心信息。」',
         contextWrong: '「完成被动分词。」她重复，不带感情，「现在分词表示正在进行，主动式是主语执行动作，两者都不对。divisa 表示已经完成的被动状态——高卢已被分为三部分，这是开战前的地理现实。」',
         blackboard: {
@@ -3559,6 +3611,7 @@ export const lessonMap = {
           options: ['未完成过去时', '完成时', '现在时'],
           answer: 1
         },
+        context: '她停顿一秒，「完成时——duco 的完成时词干是 dux-，加第三人称单数完成词尾 -it，得到 duxit。凯撒记录的是已经发生的军事行动，所以用完成时报告事实。」',
         contextRight: '「不错。」她停顿一秒，「完成时——duco 的完成时词干是 dux-，加第三人称单数完成词尾 -it，得到 duxit。凯撒记录的是已经发生的军事行动，所以用完成时报告事实。」',
         contextWrong: '「完成时。」她重复，不带感情，「未完成时词干加 -ba-，现在时用原词干加人称词尾。duxit 是 duco 的完成词干 dux- 加 -it，是完成时。凯撒用完成时报告已完成的军事行动。」',
         blackboard: {
@@ -3576,7 +3629,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '《高卢战记》开篇"Gallia est omnis divisa in partes tres"包含七个词，涵盖完成被动分词（divisa）、介词短语（in partes）和数词（tres）。凯撒写作风格特征：简洁短句、第三人称自述、主动语态为主，军事词汇是其核心词库。bellum、miles、pons、castra 等词至今在英语和地名中留有痕迹。',
-    nextLessonPreview: '「下节课：奥维德《变形记》。和凯撒完全相反的风格——繁复、诗意、变形。」'
+    nextLessonPreview: '下节课：奥维德《变形记》。和凯撒完全相反的风格——繁复、诗意、变形。'
   },
 
   28: {
@@ -3606,6 +3659,7 @@ export const lessonMap = {
           options: ['战争与英雄', '变形与身份', '爱情与死亡'],
           answer: 1
         },
+        context: '她停顿一秒，「变形与身份——形态改变之后，那个存在还是原来的它吗？这是整部《变形记》两百五十个故事的核心问题。奥维德通过神话回答了一个哲学问题：身份与形态的关系。」',
         contextRight: '「不错。」她停顿一秒，「变形与身份——形态改变之后，那个存在还是原来的它吗？这是整部《变形记》两百五十个故事的核心问题。奥维德通过神话回答了一个哲学问题：身份与形态的关系。」',
         contextWrong: '「变形与身份。」她重复，不带感情，「战争主题属于维吉尔的《埃涅阿斯纪》，爱情死亡是奥维德其他作品的主题。《变形记》的核心是变形——形态改变，身份是否随之改变。」',
         blackboard: {
@@ -3683,6 +3737,7 @@ export const lessonMap = {
           options: ['现在主动时', '完成被动时', '未完成过去时'],
           answer: 1
         },
+        context: '她停顿一秒，「完成被动时——完成被动分词加上 esse 的第三人称单数。主语达芙妮被变形了，变形动作已经完成，主语是被动接受者。奥维德的变形故事几乎都使用这个结构：变形是神施加在人身上的事，人是被动的。」',
         contextRight: '「不错。」她停顿一秒，「完成被动时——完成被动分词加上 esse 的第三人称单数。主语达芙妮被变形了，变形动作已经完成，主语是被动接受者。奥维德的变形故事几乎都使用这个结构：变形是神施加在人身上的事，人是被动的。」',
         contextWrong: '「完成被动时。」她重复，不带感情，「现在主动时表示主语正在执行动作，未完成过去时表示持续的过去状态。mutata est 是完成被动分词 mutata 加 est，表示变形已完成且主语被动。」',
         blackboard: {
@@ -3701,7 +3756,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '奥维德《变形记》共十五卷，开篇两行展示了诗歌拉丁语语序自由的特点——格系统使语义清晰，不依赖固定位置。奥维德风格与凯撒截然相反：诗意、繁复、情感丰富。变形与身份是全书核心主题，与霍格沃茨变形术（Transfiguration）课程从词根上同源。变形故事多使用完成被动时，体现"神对人施加变形"的叙事逻辑。',
-    nextLessonPreview: '「下节课：格言、铭文与箴言——拉丁语最精炼的形式。」'
+    nextLessonPreview: '下节课：格言、铭文与箴言——拉丁语最精炼的形式。'
   },
 
   29: {
@@ -3735,6 +3790,7 @@ export const lessonMap = {
           options: ['现在时', '完成时', '未完成过去时'],
           answer: 1
         },
+        context: '她停顿一秒，「完成时，第一人称单数。三件事已经发生，已经完成。凯撒用完成时向元老院宣告：我来了，我看见了，我征服了。简洁到极致，和他的文风完全一致。」',
         contextRight: '「不错。」她停顿一秒，「完成时，第一人称单数。三件事已经发生，已经完成。凯撒用完成时向元老院宣告：我来了，我看见了，我征服了。简洁到极致，和他的文风完全一致。」',
         contextWrong: '「完成时。」她重复，不带感情，「三个词都是完成时第一人称单数。venio→veni，video→vidi，vinco→vici。现在时表示正在发生，未完成过去时表示持续状态，都不符合这里的语义。」',
         blackboard: {
@@ -3814,6 +3870,7 @@ export const lessonMap = {
           options: ['主格', '宾格', '与格'],
           answer: 0
         },
+        context: '她停顿一秒，「主格，主语。Draco 是句子谈论的主体，Titillandus 是对它的描述——它不应该被搔弄。主格承担主语功能，宾格承担宾语功能，与格承担间接宾语功能。三者功能截然不同。」',
         contextRight: '「不错。」她停顿一秒，「主格，主语。Draco 是句子谈论的主体，Titillandus 是对它的描述——它不应该被搔弄。主格承担主语功能，宾格承担宾语功能，与格承担间接宾语功能。三者功能截然不同。」',
         contextWrong: '「主格。」她重复，不带感情，「Draco 是句子的主体，主格单数。宾格会是 Draconem，与格会是 Draconi——格变化改变词尾。Draco 词尾不变，是主格。」',
         blackboard: {
@@ -3831,7 +3888,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '今天学习了五条拉丁格言：Carpe diem（命令式+宾格），Veni vidi vici（三个完成时），Alea iacta est（完成被动时，强调不可撤销），SPQR（含附着连词 -que）。霍格沃茨校训逐词分析显示：Draco 为主格主语，Dormiens 为现在分词修饰语，Titillandus 为动形容词（应当被搔弄的），Nunquam 为副词。格言是拉丁语压缩能力的极致体现。',
-    nextLessonPreview: '「下节课：中世纪拉丁语——500年至1500年，教会与学术如何使用并改变了拉丁语。」'
+    nextLessonPreview: '下节课：中世纪拉丁语——500年至1500年，教会与学术如何使用并改变了拉丁语。'
   },
 
   30: {
@@ -3860,6 +3917,7 @@ export const lessonMap = {
           options: ['[k]', '[tʃ]', '[s]'],
           answer: 1
         },
+        context: '她停顿一秒，「[tʃ]，类似英语 church 里的 ch。这是意大利语的影响——意大利是教会的核心地区，意大利语的 c 在 e/i 前也发 [tʃ]。今天梵蒂冈教会仪式用的拉丁语还是这个发音。」',
         contextRight: '「不错。」她停顿一秒，「[tʃ]，类似英语 church 里的 ch。这是意大利语的影响——意大利是教会的核心地区，意大利语的 c 在 e/i 前也发 [tʃ]。今天梵蒂冈教会仪式用的拉丁语还是这个发音。」',
         contextWrong: '「[tʃ]。」她重复，不带感情，「古典拉丁语 c 始终是 [k]，中世纪教会拉丁语 c 在 e/i 前变为 [tʃ]，[s] 是法语的影响，不是教会标准发音。三种发音对应三个不同传统，不能混淆。」',
         blackboard: {
@@ -3940,6 +3998,7 @@ export const lessonMap = {
           options: ['古典拉丁语', '中世纪拉丁语', '通俗拉丁语'],
           answer: 1
         },
+        context: '她停顿一秒，「中世纪拉丁语，500年至1500年。993年在这个范围内。这一时期教会拉丁语是欧洲书面语的核心，霍格沃茨的创始人们使用和传授的正是这种形式的拉丁语。」',
         contextRight: '「不错。」她停顿一秒，「中世纪拉丁语，500年至1500年。993年在这个范围内。这一时期教会拉丁语是欧洲书面语的核心，霍格沃茨的创始人们使用和传授的正是这种形式的拉丁语。」',
         contextWrong: '「中世纪拉丁语。」她重复，不带感情，「古典拉丁语集中在公元前后两个世纪，993年已是中世纪盛期。通俗拉丁语是口语演变的方向，不是书面或咒语传统使用的形式。993年对应中世纪拉丁语阶段，没有其他可能。」',
         blackboard: {
@@ -3959,7 +4018,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '中世纪拉丁语（500-1500AD）在西罗马帝国灭亡后由教会延续，是欧洲中世纪书面语的核心。与古典拉丁语的主要差异：发音（c在e/i前由[k]变为[tʃ]）、词汇（借词和新造词增多）、格系统（部分简化）。Missa、Pater Noster、Vulgata是教会拉丁语的核心词汇。霍格沃茨约993AD建立，正处于中世纪拉丁语全盛时期，因此咒语传统使用的是中世纪教会拉丁语发音，而非古典发音。',
-    nextLessonPreview: '「下一阶段：文艺复兴拉丁语，以及现代世界中拉丁语的遗存。」'
+    nextLessonPreview: '下一阶段：文艺复兴拉丁语，以及现代世界中拉丁语的遗存。'
   },
 
   31: {
@@ -3995,6 +4054,7 @@ export const lessonMap = {
           options: ['-ba- 时态标志', '词干元音 a → e 变化', '词尾加 -nt'],
           answer: 1
         },
+        context: '她说，「a 变成 e——这就是第一变位现在虚拟式的唯一信号。amem，ames，amet：每一个都有这个 e 取代了直陈的 a。这个 e 告诉你：不是直陈，是虚拟。」',
         contextRight: '「不错。」她停了一秒，「a 变成 e——这就是第一变位现在虚拟式的唯一信号。amem，ames，amet：每一个都有这个 e 取代了直陈的 a。这个 e 告诉你：不是直陈，是虚拟。」',
         contextWrong: '「词干元音 a 变成 e。」她重复，不带感情，「-ba- 是未完成时的标志，词尾 -nt 只是第三人称复数。区分开来。第一变位现在虚拟式：am-e-m，am-e-s，am-e-t。中间那个 e 是关键。」',
         blackboard: {
@@ -4074,7 +4134,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '今天学了虚拟语气的基础：第一变位现在虚拟式的标志是词干元音 a 变成 e，六个变位都有这个 e；未完成虚拟式用不定式词干加人称词尾构成。虚拟语气的核心含义是意图、可能、愿望，区别于直陈语气的事实陈述。目的从句用 ut 加虚拟语气，主句现在时对应现在虚拟，主句过去时对应未完成虚拟。',
-    nextLessonPreview: '「下节课：条件句三类。真实条件、不大可能条件、反事实条件——三种情形，三种时态组合，意思截然不同。」'
+    nextLessonPreview: '下节课：条件句三类。真实条件、不大可能条件、反事实条件——三种情形，三种时态组合，意思截然不同。'
   },
 
   32: {
@@ -4104,6 +4164,7 @@ export const lessonMap = {
           options: ['第一类（真实/可能）', '第二类（不大可能）', '第三类（反事实）'],
           answer: 0
         },
+        context: '她说，「两个直陈语气，第一类。说话者认为你来的可能性是真实的。直陈语气陈述他认为可能发生的事，不加任何假设意味。」',
         contextRight: '「不错。」她停了一秒，「两个直陈语气，第一类。说话者认为你来的可能性是真实的。直陈语气陈述他认为可能发生的事，不加任何假设意味。」',
         contextWrong: '「第一类。」她重复，不带感情，「venis 是直陈，gaudebo 是直陈。两个都是直陈语气，这是第一类条件句的定义。第二类要用现在虚拟式，第三类要用大过去虚拟式。看动词形式判断类型。」',
         blackboard: {
@@ -4177,7 +4238,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '条件句三类：第一类用直陈语气，表示说话者认为条件真实或可能；第二类用现在虚拟式（从句和主句），表示不大可能；第三类用大过去虚拟式，表示反事实，事情已确知没有发生。识别时先找 si，再看从句动词语气和时态，三步确定类型。',
-    nextLessonPreview: '「下节课：间接疑问句。直接问题变成从句，疑问词加虚拟语气，时态序列同样适用。」'
+    nextLessonPreview: '下节课：间接疑问句。直接问题变成从句，疑问词加虚拟语气，时态序列同样适用。'
   },
 
   33: {
@@ -4207,6 +4268,7 @@ export const lessonMap = {
           options: ['完成时直陈', '现在虚拟式', '命令式'],
           answer: 1
         },
+        context: '她说，「sis 是 sum 的现在虚拟式第二人称单数。间接疑问句里的动词用虚拟，这是固定规则。直陈的 es 进入从句就变成虚拟的 sis。」',
         contextRight: '「不错。」她停了一秒，「sis 是 sum 的现在虚拟式第二人称单数。间接疑问句里的动词用虚拟，这是固定规则。直陈的 es 进入从句就变成虚拟的 sis。」',
         contextWrong: '「现在虚拟式。」她重复，不带感情，「sis 来自 sum，是它的现在虚拟式第二人称单数。间接疑问句的动词不用直陈，要用虚拟。完成时是 fuisti，命令式是 es——两者都不是。sis 是现在虚拟。」',
         blackboard: {
@@ -4281,7 +4343,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '间接疑问句的规则：疑问词（quis/cur/ubi等）保持不变，动词改为虚拟语气。时态序列决定虚拟的时态：主句现在/将来时对应从句现在虚拟，主句过去时对应从句未完成虚拟，若从句动作更早发生则用大过去虚拟。转换时三步走：疑问词留，动词改虚拟，检查时态序列。',
-    nextLessonPreview: '「下节课：动名词与目的结构。legendi，legendum，legendo——同一个动词的名词化形式，在句子里有不同功能。」'
+    nextLessonPreview: '下节课：动名词与目的结构。legendi，legendum，legendo——同一个动词的名词化形式，在句子里有不同功能。'
   },
 
   34: {
@@ -4311,6 +4373,7 @@ export const lessonMap = {
           options: ['属格（所有格）', '宾格（目的用法）', '夺格（工具格）'],
           answer: 1
         },
+        context: '她说，「ad 支配宾格，legendum 是动名词宾格形式。词尾 -ndum 是动名词宾格/属格的标志，加在动词词干后面。ad legendum 是目的的固定表达。」',
         contextRight: '「不错。」她停了一秒，「ad 支配宾格，legendum 是动名词宾格形式。词尾 -ndum 是动名词宾格/属格的标志，加在动词词干后面。ad legendum 是目的的固定表达。」',
         contextWrong: '「宾格。」她重复，不带感情，「ad 这个介词后面接宾格，这是规则。legendum 是动名词宾格形式，词尾是 -ndum。属格是 legendi，夺格是 legendo。三种形式分别对应不同用途。」',
         blackboard: {
@@ -4383,7 +4446,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '动名词是动词的名词化形式，有三个格：属格（-ndi）修饰名词，如 ars legendi；宾格（-ndum）用于 ad 加宾格表示目的，如 ad legendum；夺格（-ndo）表示方式手段，如 legendo discimus。目的可以用 ut 加虚拟语气，也可以用 ad 加动名词宾格，两种表达含义相同。',
-    nextLessonPreview: '「下节课：被动语态所有时态。主动和被动的对照，施动者的表达方式，以及复合时态的被动构成。」'
+    nextLessonPreview: '下节课：被动语态所有时态。主动和被动的对照，施动者的表达方式，以及复合时态的被动构成。'
   },
 
   35: {
@@ -4414,6 +4477,7 @@ export const lessonMap = {
           options: ['未完成时被动', '完成时被动', '大过去时被动'],
           answer: 1
         },
+        context: '她说，「amatus sum——完成被动分词加 sum，这是完成时被动。现在时被动是 amatur，改词尾；完成时被动是 amatus/a/um sum，分词加系动词。两种构成方式不同。」',
         contextRight: '「不错。」她停了一秒，「amatus sum——完成被动分词加 sum，这是完成时被动。现在时被动是 amatur，改词尾；完成时被动是 amatus/a/um sum，分词加系动词。两种构成方式不同。」',
         contextWrong: '「完成时被动。」她重复，不带感情，「amatus 是完成被动分词，sum 是 esse 的现在时第一人称单数。分词加 sum，就是完成时被动。未完成时被动是 amabar，大过去时被动是 amatus eram。三种形式不同。」',
         blackboard: {
@@ -4485,7 +4549,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '被动语态分两套：现在/未完成/将来时改动词词尾（-or/-ris/-tur/-mur/-mini/-ntur）；完成/大过去时用完成被动分词（随主语性数格变化）加 esse 的对应时态。施动者（人）用 a/ab 加夺格，工具（物）直接用夺格无介词。完成时被动：amatus est；大过去时被动：amatus erat。',
-    nextLessonPreview: '「下节课：GCSE 指定散文文本精读开始。西塞罗的文章，三层阅读法：词义、句法、文学效果。」'
+    nextLessonPreview: '下节课：GCSE 指定散文文本精读开始。西塞罗的文章，三层阅读法：词义、句法、文学效果。'
   },
 
   36: {
@@ -4514,6 +4578,7 @@ export const lessonMap = {
           options: ['简短单句，节奏急促', '三段排比（tricolon），三组并列', '反问句，情绪激烈'],
           answer: 1
         },
+        context: '她说，「三段排比——tricolon。三组并列的短语或句子，节奏从第一组到第三组逐渐加强，最后一组最有力量。这是西塞罗的标志性结构，在《反对喀提林》和《对布鲁图斯》里都大量使用。」',
         contextRight: '「不错。」她停了一秒，「三段排比——tricolon。三组并列的短语或句子，节奏从第一组到第三组逐渐加强，最后一组最有力量。这是西塞罗的标志性结构，在《反对喀提林》和《对布鲁图斯》里都大量使用。」',
         contextWrong: '「三段排比，tricolon。」她重复，不带感情，「西塞罗不用简短单句——他的句子通常很长，层层叠加从句。他的情绪是有节制的，修辞是有结构的。三段排比是他最常用的放大效果的手段。」',
         blackboard: {
@@ -4583,7 +4648,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '三层阅读法：词汇意义（词形分析）、句法结构（主从句关系）、文学效果（修辞手法）。西塞罗文体特征是 hypotaxis（长句层叠）和 tricolon（三段排比）。GCSE 翻译占 40% 分值，翻译时先分析词形再构建句法再润色英语。文学效果题用三步格式：识别手法、引用原文、分析效果。',
-    nextLessonPreview: '「下节课：六音步格律。维吉尔的史诗节奏——扬抑抑格和扬扬格，如何在一行诗里扫描节拍。」'
+    nextLessonPreview: '下节课：六音步格律。维吉尔的史诗节奏——扬抑抑格和扬扬格，如何在一行诗里扫描节拍。'
   },
 
   37: {
@@ -4613,6 +4678,7 @@ export const lessonMap = {
           options: ['— — （两长）', '— ∪ ∪ （一长两短）', '∪ — （一短一长）'],
           answer: 1
         },
+        context: '她说，「— ∪ ∪，一长两短，这是 dactyl。六音步格里，每一步可以是 dactyl 或 spondee，这种弹性让诗人可以根据情感选择节奏快慢。第六步固定是 spondee 或末音节截短，这是规则。」',
         contextRight: '「不错。」她停了一秒，「— ∪ ∪，一长两短，这是 dactyl。六音步格里，每一步可以是 dactyl 或 spondee，这种弹性让诗人可以根据情感选择节奏快慢。第六步固定是 spondee 或末音节截短，这是规则。」',
         contextWrong: '「— ∪ ∪。」她重复，不带感情，「一长两短，这是 dactyl。— — 是 spondee，∪ — 是 iamb（短长格），是另一种格律，不在六音步格里。六音步格只有 dactyl 和 spondee 两种音步。」',
         blackboard: {
@@ -4683,7 +4749,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '六音步格由两种音步构成：dactyl（扬抑抑格，— ∪ ∪，一长两短）和 spondee（扬扬格，— —，两长）。第六步固定为 spondee。音节长短由天然长音（双元音、长音符）和位置长音（元音后两辅音）决定。格律选择有情感效果：dactyl 扎堆节奏轻快，spondee 扎堆节奏沉重。维吉尔用格律配合内容情感。',
-    nextLessonPreview: '「下节课：修辞手法识别——明喻、暗喻、反复、对照。每种手法的术语、识别方法和 GCSE 答题格式。」'
+    nextLessonPreview: '下节课：修辞手法识别——明喻、暗喻、反复、对照。每种手法的术语、识别方法和 GCSE 答题格式。'
   },
 
   38: {
@@ -4715,6 +4781,7 @@ export const lessonMap = {
           options: ['simile（明喻）', 'anaphora（反复）', 'metaphor（暗喻）'],
           answer: 1
         },
+        context: '她说，「anaphora——反复，结构相同的词或短语的重复。Veni, vidi, vici 三个动词结构和形式完全对应，节奏的重复制造了一种势如破竹的力量感。这是凯撒修辞简洁的典型例子，和西塞罗的长句风格形成对比。」',
         contextRight: '「不错。」她停了一秒，「anaphora——反复，结构相同的词或短语的重复。Veni, vidi, vici 三个动词结构和形式完全对应，节奏的重复制造了一种势如破竹的力量感。这是凯撒修辞简洁的典型例子，和西塞罗的长句风格形成对比。」',
         contextWrong: '「anaphora——反复。」她重复，不带感情，「simile 需要 velut 或 ut 这样的连接词，metaphor 不用连接词但会用直接替换的说法。Veni vidi vici 三个词结构相同、重复出现，这是 anaphora。」',
         blackboard: {
@@ -4784,7 +4851,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '四种修辞手法：simile（明喻，velut/ut 连接），metaphor（暗喻，直接替换），anaphora（反复，结构重复制造节奏），antithesis（对照，对立并置制造张力）。GCSE 答题用三步格式：识别手法并命名，引用拉丁原文，分析对读者的效果。效果描述要具体，避免模糊说法。',
-    nextLessonPreview: '「下节课：无准备文本翻译训练。遇到没见过的文本，五步处理法——从通读到最终译文的系统流程。」'
+    nextLessonPreview: '下节课：无准备文本翻译训练。遇到没见过的文本，五步处理法——从通读到最终译文的系统流程。'
   },
 
   39: {
@@ -4810,6 +4877,7 @@ export const lessonMap = {
           options: ['跳过这个词，继续翻译其他部分', '从词根和上下文推断意思', '按英语语序猜测'],
           answer: 1
         },
+        context: '她说，「词根分析加上下文是最可靠的策略。跳过会留下空白，影响后面的理解；按语序猜没有依据。词根往往能给出词义方向，上下文里的格和句法位置能进一步限制可能的意思。两者结合，通常能得到合理的推断。」',
         contextRight: '「不错。」她停了一秒，「词根分析加上下文是最可靠的策略。跳过会留下空白，影响后面的理解；按语序猜没有依据。词根往往能给出词义方向，上下文里的格和句法位置能进一步限制可能的意思。两者结合，通常能得到合理的推断。」',
         contextWrong: '「从词根和上下文推断。」她重复，不带感情，「跳过会留下句子空缺，影响整体理解；按英语语序猜会产生错误的句法判断。拉丁语词汇和英语有大量词根重叠，配合上下文分析，推断通常是可行的。」',
         blackboard: {
@@ -4879,7 +4947,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '无准备文本翻译用五步法：通读大意、找主句动词、识别主语、处理从句分词、翻译并调整语序。两大陷阱：形容词靠格数性识别而非位置，动词末位不代表语义中心。遇到不认识的词，优先用词根分析加上下文推断。翻译时理解结构后用英语重述，而非逐词直译。',
-    nextLessonPreview: '「下节课：奥古斯都时代的文化与历史背景。三位作家，三种与政治的关系，以及为什么文学在那个时代是政治性的。」'
+    nextLessonPreview: '下节课：奥古斯都时代的文化与历史背景。三位作家，三种与政治的关系，以及为什么文学在那个时代是政治性的。'
   },
 
   40: {
@@ -4905,6 +4973,7 @@ export const lessonMap = {
           options: ['维吉尔（Vergilius）', '贺拉斯（Horatius）', '奥维德（Ovidius）'],
           answer: 2
         },
+        context: '她说，「奥维德，公元 8 年被流放至 Tomis。原因：《爱的艺术》与奥古斯都道德政策冲突，加上另一个不明确的个人原因。他在流放地继续写作——《哀歌》和《书信》，恳求被召回，但奥古斯都和继任者提比略都没有赦免他。」',
         contextRight: '「不错。」她停了一秒，「奥维德，公元 8 年被流放至 Tomis。原因：《爱的艺术》与奥古斯都道德政策冲突，加上另一个不明确的个人原因。他在流放地继续写作——《哀歌》和《书信》，恳求被召回，但奥古斯都和继任者提比略都没有赦免他。」',
         contextWrong: '「奥维德——Ovidius。」她重复，不带感情，「维吉尔和贺拉斯都是奥古斯都赞助的诗人，他们的关系比较和谐。奥维德因《爱的艺术》与道德政策冲突被流放，公元 8 年，没有被召回。」',
         blackboard: {
@@ -4978,7 +5047,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '奥古斯都时代（27 BC–14 AD）是拉丁文学黄金时代。梅塞纳斯作为赞助人资助诗人，将文学纳入帝国建设。三大作家：维吉尔的《埃涅阿斯纪》为帝国天命立说，贺拉斯接受赞助但保持诗性独立，奥维德因《爱的艺术》与道德政策冲突，公元8年被流放至Tomis，终身未归。',
-    nextLessonPreview: '「下节课：GCSE 综合复习——从语法到文本分析，整理考试所需的核心知识点框架。」'
+    nextLessonPreview: '下节课：GCSE 综合复习——从语法到文本分析，整理考试所需的核心知识点框架。'
   },
 
   41: {
@@ -5006,6 +5075,7 @@ export const lessonMap = {
           options: ['从第一个词开始逐词翻译', '先找出主动词（主句谓语）', '先查所有生词的词义'],
           answer: 1
         },
+        context: '她说，「主动词是句子的核心。找到它，你就找到了骨架——其他所有成分都是围绕这个骨架附加的。从句、分词、状语，都可以之后一层层拆解。」',
         contextRight: '「不错。」她停了一秒，「主动词是句子的核心。找到它，你就找到了骨架——其他所有成分都是围绕这个骨架附加的。从句、分词、状语，都可以之后一层层拆解。」',
         contextWrong: '「主动词。」她重复，不带感情，「从第一个词翻译，在拉丁语里几乎没用——动词通常在最后，而且从句和修饰语会把它和主语隔开很远。查生词在主动词之前也是在做无用功——你不知道句子要说什么，查了词义也放不进去。」',
         blackboard: {
@@ -5085,7 +5155,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '难句分析的方法是固定的四步：一、找主动词，确定句子骨架；二、识别从句和分词短语边界，用括号标注；三、从最内层开始理解每个从句的含义；四、按目标语言语序重建表达。拉丁语到中文的主要语序调整：关系从句提前为定语，分词短语改为"……时/之后"的状语。从句类型（定语/时间/原因/目的/条件）决定汉语连词选择。',
-    nextLessonPreview: '「下节课：词义辨析与语境推断。同一个拉丁词，在不同文本、不同语境里可以有截然不同的含义——你需要学会判断。」'
+    nextLessonPreview: '下节课：词义辨析与语境推断。同一个拉丁词，在不同文本、不同语境里可以有截然不同的含义——你需要学会判断。'
   },
 
   42: {
@@ -5114,6 +5184,7 @@ export const lessonMap = {
           options: ['沉重的（物理重量）', '严重的（程度）', '缓慢的（音乐术语）'],
           answer: 1
         },
+        context: '她说，「vulnus 是伤口，伤口没有物理重量，也不是音乐——所以 gravis 在这里是引申义：严重的、程度深的。修饰词的选义要由被修饰词的性质决定。」',
         contextRight: '「不错。」她停了一秒，「vulnus 是伤口，伤口没有物理重量，也不是音乐——所以 gravis 在这里是引申义：严重的、程度深的。修饰词的选义要由被修饰词的性质决定。」',
         contextWrong: '「严重的。」她重复，不带感情，「vulnus 是伤口，伤口没有物重，也不是声音。gravis 在这个搭配里只能是程度义：这是一处严重的伤，而不是一块沉的石头或一段低沉的旋律。看被修饰词，再选义项。」',
         blackboard: {
@@ -5191,7 +5262,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '词义辨析的核心工具是语境，而非词典。选择多义词的正确义项需要两个维度：句子内部语境（被修饰词的性质、动词宾语的搭配）和文本类型语境（军事/哲学/演讲/诗歌各有偏向的义项）。无对应概念的文化特有词需要注释或括注处理，而非强行翻译。高频易混词对（timor/metus、vis/potestas等）的区别体现在情感色彩和使用场合，词典无法完全区分，需要阅读积累。',
-    nextLessonPreview: '「下节课：历史语境对文本理解的影响。同一句话，在不同的历史时刻，对不同的听众，含义可以截然不同。」'
+    nextLessonPreview: '下节课：历史语境对文本理解的影响。同一句话，在不同的历史时刻，对不同的听众，含义可以截然不同。'
   },
 
   43: {
@@ -5222,6 +5293,7 @@ export const lessonMap = {
           options: ['知道作者的生卒年份', '同时把握写作语境与接受语境', '找到最新的学术翻译版本'],
           answer: 1
         },
+        context: '她说，「写作语境决定作者的意图，接受语境决定文本被赋予的意义。两个都忽略不了——只看写作语境会看不到文本的后世生命，只看接受语境会误读原作者的意图。」',
         contextRight: '「不错。」她停了一秒，「写作语境决定作者的意图，接受语境决定文本被赋予的意义。两个都忽略不了——只看写作语境会看不到文本的后世生命，只看接受语境会误读原作者的意图。」',
         contextWrong: '「写作语境与接受语境。」她重复，不带感情，「生卒年份是入门信息，不是理解工具。找翻译是实用手段，不是定位方法。你需要的是：知道这个文本什么时候被写，为什么被写，然后知道它之后怎样被读，被谁读，被用来做什么——这两层坐标合在一起，才是完整的历史定位。」',
         blackboard: {
@@ -5302,7 +5374,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '历史语境定位需要双重坐标：写作语境（作者、时间、受众、事件）和接受语境（后世引用与重新诠释）。概念的历史性是关键——libertas 在共和国时代和帝国时代含义不同，现代读者极易以现代自由概念误读。罗马文化特有词（pietas、gravitas、fides、otium）没有准确的现代对应，需要注释而非直译。建立历史语境需要检查：写作时期、作者立场、原始受众、文本类型、赞助关系。',
-    nextLessonPreview: '「下节课：文本评注的写法。我们会讨论一个规范的学术评注包含哪些要素，以及如何组织一段评注使它既有学术价值又清晰可读。」'
+    nextLessonPreview: '下节课：文本评注的写法。我们会讨论一个规范的学术评注包含哪些要素，以及如何组织一段评注使它既有学术价值又清晰可读。'
   },
 
   44: {
@@ -5334,6 +5406,7 @@ export const lessonMap = {
           options: ['正确识别语法结构（语言分析）', '解释作者选择的原因与效果（效果分析）', '提供准确的历史背景（历史语境）'],
           answer: 1
         },
+        context: '她说，「识别语法和提供背景是基础工作，这些可以查。效果分析要求你做判断——为什么是这个词而不是近义词，为什么这个句式而不是另一个句式，这个选择在当时的受众那里会有什么反应。这才是学术分析的核心。」',
         contextRight: '「不错。」她停了一秒，「识别语法和提供背景是基础工作，这些可以查。效果分析要求你做判断——为什么是这个词而不是近义词，为什么这个句式而不是另一个句式，这个选择在当时的受众那里会有什么反应。这才是学术分析的核心。」',
         contextWrong: '「效果分析。」她重复，不带感情，「语法识别和历史背景都有确定答案，可以验证对错。效果分析是解释性的——你要论证为什么作者做了这个选择，它产生了什么效果，这个判断需要你综合所有其他三个要素，然后做出有根据的推断。」',
         blackboard: {
@@ -5411,7 +5484,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '学术文本评注包含四个要素：语言分析（识别语法和修辞手法）、结构分析（文本位置与功能）、历史语境（背景信息）、效果分析（作者选择的目的和效果）。效果分析是核心，它要求综合其他三个要素提出有论据的判断。写作步骤：精确引用→识别→语境→效果分析。有效的文学评价要具体到手法名称、出现位置、对受众的影响及其原因，避免泛化表述。引用格式遵循标准缩写（Cic. Cat. 1.1 等），注释用于技术性语法说明和参考文献。',
-    nextLessonPreview: '「下节课：GCSE真题训练。我们会处理四种题型——翻译、语法分析、综合理解、文学评论——每种有不同的答题策略。」'
+    nextLessonPreview: '下节课：GCSE真题训练。我们会处理四种题型——翻译、语法分析、综合理解、文学评论——每种有不同的答题策略。'
   },
 
   45: {
@@ -5442,6 +5515,7 @@ export const lessonMap = {
           options: ['翻译文字不够优美', '漏译成分或时态/格理解错误', '没有使用专业术语'],
           answer: 1
         },
+        context: '她说，「文字是否优美在翻译题里几乎不影响评分——准确性才影响。漏译从句、搞错时态、把与格当宾格——这些是精确失误，每一个都对应失分。专业术语在翻译题里也不需要，那是语法题和文学评论题的要求。」',
         contextRight: '「不错。」她停了一秒，「文字是否优美在翻译题里几乎不影响评分——准确性才影响。漏译从句、搞错时态、把与格当宾格——这些是精确失误，每一个都对应失分。专业术语在翻译题里也不需要，那是语法题和文学评论题的要求。」',
         contextWrong: '「漏译成分和时态/格错误。」她重复，不带感情，「翻译题的评分标准是精确性，不是文学性。你的翻译可以读起来有点生硬，只要含义准确，每个语法成分都对应上了，就能拿分。最危险的是：遇到难词就跳过，或者猜测格/时态而不加检查。」',
         blackboard: {
@@ -5519,7 +5593,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: 'GCSE四种题型各有策略：翻译题以准确为首要，按步骤分析语法后再重建目标语言表达，用自检清单防止漏译；语法分析题要求精确命名每个语法特征，不能用描述性语言代替术语；综合理解题需要论点+原文引用+说明的三步结构，不能只翻译或只发意见；文学评论题要开头有论题，每段有一个论点+文本证据+效果分析，结尾总结不引入新内容，并分配最多时间。',
-    nextLessonPreview: '「下一章：综合输出。下节课我们练习用拉丁语写作——不只是读和分析，而是自己构造句子。」'
+    nextLessonPreview: '下一章：综合输出。下节课我们练习用拉丁语写作——不只是读和分析，而是自己构造句子。'
   },
 
   46: {
@@ -5550,6 +5624,7 @@ export const lessonMap = {
           options: ['只改动词 amat', '只改主语和宾语的位置', '把 puella 改为宾格 puellam，felis 改为主格，动词不变'],
           answer: 2
         },
+        context: '她说，「拉丁语语序自由，但格决定句子意思，不是位置。\'猫爱女孩\'——主语是猫，宾语是女孩——所以猫要用主格，女孩要用宾格 puellam，动词仍然是第三人称单数 amat。不需要移动词的顺序，只需要改格。」',
         contextRight: '「不错。」她停了一秒，「拉丁语语序自由，但格决定句子意思，不是位置。\'猫爱女孩\'——主语是猫，宾语是女孩——所以猫要用主格，女孩要用宾格 puellam，动词仍然是第三人称单数 amat。不需要移动词的顺序，只需要改格。」',
         contextWrong: '「格，不是顺序。」她重复，不带感情，「拉丁语里意思由格决定，不由位置决定。puella 在句首是主语因为它是主格，不是因为它在第一位。改成猫爱女孩：猫用主格，女孩改成宾格 puellam，felis/feles 变为主格——动词依然是第三人称单数，不变。」',
         blackboard: {
@@ -5626,7 +5701,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '拉丁语写作从确认每个词的语法特征开始：名词（变格类型+格+数）、动词（变位+人称+数+时态+语态）、形容词（与所修饰名词性数格一致）。格决定句子意思，不是词序。词汇选择优先用确定知道变格变位的词，准确的简单词胜过错误的复杂词。段落内部需要一致性：时态统一，代词性别正确，形容词与名词匹配。通过变换连词（sed/itaque/tamen）和句式（主动/被动交替、长短句结合）增加表达流畅度。',
-    nextLessonPreview: '「下节课：文学评论写作框架。重点在如何构建论点，如何使用文本证据，以及如何让你的分析有说服力而不是一张清单。」'
+    nextLessonPreview: '下节课：文学评论写作框架。重点在如何构建论点，如何使用文本证据，以及如何让你的分析有说服力而不是一张清单。'
   },
 
   47: {
@@ -5657,6 +5732,7 @@ export const lessonMap = {
           options: ['包含尽可能多的细节', '是一个有争议空间、可以用文本论证的判断', '与已有的权威评论保持一致'],
           answer: 1
         },
+        context: '她说，「有争议空间——这意味着有人理论上可以持相反观点。可以用文本论证——这意味着你能从原文中找到证据。这两个条件同时满足，才是有效论题。」',
         contextRight: '「不错。」她停了一秒，「有争议空间——这意味着有人理论上可以持相反观点。可以用文本论证——这意味着你能从原文中找到证据。这两个条件同时满足，才是有效论题。」',
         contextWrong: '「可论证的判断。」她重复，不带感情，「论题包含的细节多少取决于论文的长度，不是论题本身的质量指标。与权威评论一致不是目标——学术写作的意义在于你有自己的分析，不是重复别人说过的。能用文本支撑、有人可能不同意——这是有效论题的双重条件。」',
         blackboard: {
@@ -5741,12 +5817,12 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '文学评论的核心是有效论题：一个可以用文本论证、有争议空间的具体判断（不是事实陈述，不是泛化评价）。段落内部遵循论点-证据-分析三步结构，分析必须解释效果的产生机制（用"因为"代替"很有效"）。引用规范：拉丁原文斜体+行号，引用后必须跟分析，不能大量引文后简单断言效果。全文结构：导言提论题并提示路径，主体各段一个论点，结论重申论题并综合论证，不引入新内容。',
-    nextLessonPreview: '「下节课：跨文化比较——罗马人与巫师对语言的理解有什么共同点。这不是比较文化史，而是一种认识论问题：语言为什么有力量？」'
+    nextLessonPreview: '下节课：跨文化比较——罗马人与巫师对语言的理解有什么共同点。这不是比较文化史，而是一种认识论问题：语言为什么有力量？'
   },
 
   48: {
-    atmosphere: '黑板两侧各写着一列词：左边是拉丁语咒语词根——lumen、expecto、alohomora；右边是罗马法律与宗教术语——iuro、voveo、sacer。珀西瓦尔教授站在两列的正中，手背在身后，像在等两列词相遇。',
-    opening: '「拉丁语是死的语言——但它从未停止说话。」珀西瓦尔说出她最常说的那句话，「今天我们来谈：为什么。」她指向左边的词，「Lumos，Expecto Patronum，Alohomora——你们每天用的咒语。」她指向右边，「Iuro，voveo，sacer——罗马宗教和法律里的核心词汇。」她停顿，「你们以为这是巧合。不是。」',
+    atmosphere: '黑板两侧各写着一列词：左边是咒语词形与可追踪词根——lumen、expecto、alohomora；右边是罗马法律与宗教术语——iuro、voveo、sacer。珀西瓦尔教授站在两列的正中，手背在身后，像在等两列词相遇。',
+    opening: '「拉丁语是死的语言——但它从未停止说话。」珀西瓦尔说出她最常说的那句话，「今天我们来谈：为什么。」她指向左边的词，「Lumos，Expecto Patronum，Alohomora——你们每天用的咒语，但来源清晰程度并不相同。」她指向右边，「Iuro，voveo，sacer——罗马宗教和法律里的核心词汇。」她停顿，「相似不是巧合，但也不是许可证。我们要分清证据的等级。」',
     keyPoints: [
       {
         point: '语言作为行动：罗马的言语行为论',
@@ -5772,6 +5848,7 @@ export const lessonMap = {
           options: ['陈述事实（констатирую что光亮存在）', '施为语言（说出即完成，说Lumos光就出现）', '请求语言（请求外力产生光）'],
           answer: 1
         },
+        context: '她说，「Lumos 不是在描述光的存在，不是在请求别人开灯——说出它，光就出现。这正是施为语言的定义：说话本身就是行为，不需要额外的步骤。罗马人发誓说 iuro，誓约即成立，和巫师说 Lumos 光即出现，是同一种语言逻辑。」',
         contextRight: '「不错。」她停了一秒，「Lumos 不是在描述光的存在，不是在请求别人开灯——说出它，光就出现。这正是施为语言的定义：说话本身就是行为，不需要额外的步骤。罗马人发誓说 iuro，誓约即成立，和巫师说 Lumos 光即出现，是同一种语言逻辑。」',
         contextWrong: '「施为语言——说出即完成。」她重复，不带感情，「Lumos 不是描述，也不是请求——它是命令/触发，说出它，光就产生了。这和 iuro（我发誓，誓约即成立）是同一种语言机制：词语本身具有实现力量，不需要额外的行为配合。」',
         blackboard: {
@@ -5805,14 +5882,14 @@ export const lessonMap = {
             '  → expect（英语）',
             '  Patronum ← patronus（保护者/守护者）',
             '',
-            'Alohomora ← 疑为阿拉伯语/拉丁混成',
-            '  mora（延迟/障碍）→ 解除延迟/障碍',
+            'Alohomora ← 来源不按标准古典拉丁处理',
+            '  可讨论声音与功能，不强行变格',
             '',
-            'Accio ← accio（召唤，法律术语：传唤到庭）',
+            'Accio ← accio（召唤、招来；可作传唤）',
             'Expelliarmus ← expello（驱逐）+ arma（武器）'
           ]
         },
-        context: '珀西瓦尔走向讲台边，从磨旧的词源手册里翻到一页，「Accio——召唤咒。」她念出来，「这个词在罗马法律里是传唤令——把一个人强制召到法庭。说出 accio，对方就必须出现。」她合上书，「巫师用它召唤物品，罗马人用它召唤人——同样的语言逻辑：言语有约束力，被指名的对象必须响应。」她停顿，「珀西瓦尔讲完这个之后，弗立维教授的学生来问过我：\'为什么有些咒语用命令式，有些用不定式？\'」她停顿，「这是一个好问题。」'
+        context: '珀西瓦尔走向讲台边，从磨旧的词源手册里翻到一页，「Accio——召唤咒。」她念出来，「拉丁语 accio 有召来、招来的意思，在法律语境里也可以接近传唤。」她合上书，「巫师用它召唤物品，罗马人可以用同一类词召来人——同样的语言逻辑：被指名的对象必须响应。」她停顿，「但 Alohomora 不按标准古典拉丁处理。它可以被比较、被记录，不能被强行变格。」她停顿，「这是词源学，不是猜谜。」'
       },
       {
         point: '语法形式与魔法意图：命令式vs虚拟式',
@@ -5857,7 +5934,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '罗马人视某类语言为施为性（performative）——说出特定词语即完成法律或宗教行为，无需额外步骤（iuro、voveo、sacer esto）。魔法咒语运用相同的语言逻辑：说出即触发效果。咒语词根直接来自拉丁语（Lumos←lumen、Accio←accio法律传唤、Expelliarmus←expello+arma）。咒语语法形式与魔法意图相关：命令式（Lumos）表达直接指令，包含期望/意图的咒语（Expecto）语法接近拉丁虚拟语气。罗马诅咒板（defixio）和霍格沃茨咒语都遵循相同的逻辑：意图通过语言+媒介实现现实转化。',
-    nextLessonPreview: '「下节课：词源学综合——我们跟踪一个词根从罗马时代到现代英语和当代魔法词汇的完整旅程。」'
+    nextLessonPreview: '下节课：词源学综合——我们跟踪一个词根从罗马时代到现代英语和当代魔法词汇的完整旅程。'
   },
 
   49: {
@@ -5887,6 +5964,7 @@ export const lessonMap = {
           options: ['scrib-（现在时词干，写的动作）', 'scriptum（完成被动分词，已经被写下的东西）', 'scripsi（完成时，我已经写完了）'],
           answer: 1
         },
+        context: '她说，「script 来自 scriptum——已经被写下的东西。剧本是已经写好的文字，不是写作的动作本身。这就是为什么来自完成被动分词的词，往往是名词或形容词，表示一个已完成状态的结果。」',
         contextRight: '「不错。」她停了一秒，「script 来自 scriptum——已经被写下的东西。剧本是已经写好的文字，不是写作的动作本身。这就是为什么来自完成被动分词的词，往往是名词或形容词，表示一个已完成状态的结果。」',
         contextWrong: '「scriptum——完成被动分词。」她重复，不带感情，「script 是已经写好的东西，不是写的过程。scrib- 这个词干进入英语变成 scribe（抄写员）——强调的是做这件事的人。script 强调的是结果：写下的内容。词干不同，侧重点不同。」',
         blackboard: {
@@ -5971,7 +6049,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '词根 scrib-/script- 来自拉丁语 scribo（刻写/书写），词干分为两类：scrib-（强调动作/人，如 scribe、prescribe）和 script-（强调已成文的结果，如 script、scripture、manuscript）。词义演变轨迹：从物理刻写动作→扩展到书写媒介→获得神圣/法律含义→完全抽象化（subscribe=签名承诺→订阅）。罗曼语族各自保留词根但发生系统性语音变化（法语 écrire、西班牙语 escribir、意大利语 scrivere）。文化印记：罗马 scriptum est 的法律约束传统延续到魔法世界的书写契约体系。',
-    nextLessonPreview: '「下节课：GCSE综合复习。把这五年学过的所有内容做一次梳理——不是重复讲，是建立整体结构。」'
+    nextLessonPreview: '下节课：GCSE综合复习。把这五年学过的所有内容做一次梳理——不是重复讲，是建立整体结构。'
   },
 
   50: {
@@ -6007,6 +6085,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「-ba- 是未完成时标志，-ntur 是第三人称复数被动词尾，ama- 是第一变位词干。五个信息：变位类型、时态、语态、人称、数。全部答出，语法分析题满分。」',
         contextRight: '「不错。」她停了一秒，「-ba- 是未完成时标志，-ntur 是第三人称复数被动词尾，ama- 是第一变位词干。五个信息：变位类型、时态、语态、人称、数。全部答出，语法分析题满分。」',
         contextWrong: '「第一变位，被动，未完成时，第三人称复数。」她重复，不带感情，「-ba- 是未完成时的标志——不是完成时，不是现在时。完成时主动是 amaverunt，完成时被动是 amati sunt。现在时被动是 amantur，没有 -ba-。-ba- 出现在动词里，永远意味着未完成时。记住这个标志。」',
         blackboard: {
@@ -6088,7 +6167,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: 'GCSE综合复习确认了五年知识体系的结构：KS3奠定字母/发音/格/动词/词源基础；GCSE扩展到虚拟语气/条件句/复杂句法/翻译技巧/文学评注。核心技能：格系统六格功能、动词五维特征（时态/语态/语气/人称/数）识别、翻译四步法综合应用、文本评论论点-证据-分析结构。最大失分原因：翻译当分析、泛化评价替代具体分析。A-Level方向：古典文本精读（西塞罗/维吉尔/李维/塔西佗）和独立研究写作。',
-    nextLessonPreview: '「六年级开始，A-Level阶段。下节课：西塞罗散文——修辞结构分析。带好你们的词典，拿好你们的笔。」'
+    nextLessonPreview: '六年级开始，A-Level阶段。下节课：西塞罗散文——修辞结构分析。带好你们的词典，拿好你们的笔。'
   },
 
   51: {
@@ -6116,6 +6195,7 @@ export const lessonMap = {
           options: ['inventio（发现论证）', 'dispositio（安排结构）', 'elocutio（措辞润色）'],
           answer: 2
         },
+        context: '她说，「elocutio——这是西塞罗花最多笔墨讨论的一步。选词、句式、节奏——他认为同一个论点用不同的词说出来，说服力可以相差十倍。」她在黑板上的 elocutio 旁加了一个星号，「这也是为什么他的拉丁语那么难翻译——你翻出意思，但翻不出节奏。」',
         contextRight: '「不错。」她停了一秒，「elocutio——这是西塞罗花最多笔墨讨论的一步。选词、句式、节奏——他认为同一个论点用不同的词说出来，说服力可以相差十倍。」她在黑板上的 elocutio 旁加了一个星号，「这也是为什么他的拉丁语那么难翻译——你翻出意思，但翻不出节奏。」',
         contextWrong: '「elocutio——措辞润色。」她重复正确答案，不带感情，「inventio 是找论点，dispositio 是安排顺序，elocutio 才是处理文体和语言本身。西塞罗认为这一步决定演讲成败。记住这个词。」',
         blackboard: {
@@ -6192,6 +6272,7 @@ export const lessonMap = {
           options: ['anaphora（首词重复）', 'tricolon（三段排列）', 'chiasmus（交叉排列）'],
           answer: 1
         },
+        context: '珀西瓦尔在 tricolon 旁边画了一条短横，「三段对称，每段只有一个词，极度简洁，极度有力。这三个词概括了一场战争——这本身就是 tricolon 的效果：让复杂的事情显得不可阻挡。」她停了一秒，「A-Level 要求你分析效果，不只是贴标签。说"是 tricolon"，再说"产生什么感觉、为什么奏效"。这才算完整回答。」',
         contextRight: '「不错。」珀西瓦尔在 tricolon 旁边画了一条短横，「三段对称，每段只有一个词，极度简洁，极度有力。这三个词概括了一场战争——这本身就是 tricolon 的效果：让复杂的事情显得不可阻挡。」她停了一秒，「A-Level 要求你分析效果，不只是贴标签。说"是 tricolon"，再说"产生什么感觉、为什么奏效"。这才算完整回答。」',
         contextWrong: '「tricolon——三段排列。」她重复，不带感情，「anaphora 是开头重复同一个词，chiasmus 是 A-B / B-A 镜像结构。Veni, vidi, vici 是三个完全对称的短语，是 tricolon。找到手法，然后说效果——这是 A-Level 的要求。」',
         blackboard: {
@@ -6284,6 +6365,7 @@ export const lessonMap = {
           options: ['《奥德赛》（流浪与归家）', '《伊利亚特》（特洛伊战争）', '《工作与时日》（农耕哲学）'],
           answer: 1
         },
+        context: '珀西瓦尔在 arma 旁写了一个括号：[Iliad]，「武器——战争——《伊利亚特》。virum——英雄的流浪——《奥德赛》。维吉尔把两部史诗的灵魂装进六个词里。这是极度自信的开场，也是一种竞争宣言。」她停了一秒，「记住这一行，考试肯定会考。」',
         contextRight: '「不错。」珀西瓦尔在 arma 旁写了一个括号：[Iliad]，「武器——战争——《伊利亚特》。virum——英雄的流浪——《奥德赛》。维吉尔把两部史诗的灵魂装进六个词里。这是极度自信的开场，也是一种竞争宣言。」她停了一秒，「记住这一行，考试肯定会考。」',
         contextWrong: '「arma 对应《伊利亚特》——战争史诗。」她重复，不带感情，「《奥德赛》是奥德修斯的流浪归家，对应的是 virum，英雄个人的旅程。两个词，两部史诗。」她在黑板上补了两条连线，「记住这个对应关系。」',
         blackboard: {
@@ -6394,6 +6476,7 @@ export const lessonMap = {
           options: ['他的拉丁语过于复杂', '他把道德合理化覆盖在历史事件上，未批判性检视史料', '他没有记录事件的具体日期'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「李维让这段暴力的历史有了"幸福结局"，服务于他的罗马建国神话叙事。A-Level 要求你指出这种道德框架如何影响历史叙述的可靠性——不是说李维在撒谎，而是说他在选择，而每一种选择都有代价。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「李维让这段暴力的历史有了"幸福结局"，服务于他的罗马建国神话叙事。A-Level 要求你指出这种道德框架如何影响历史叙述的可靠性——不是说李维在撒谎，而是说他在选择，而每一种选择都有代价。」',
         contextWrong: '「道德合理化覆盖历史事实。」她重复，不带感情，「李维的拉丁语精美，他的年代记录也相当详细——但这些不是关键问题。关键问题是：他的道德立场让他选择性地呈现历史，让"强迫"变成了"接受命运"。这是史学批评要处理的核心问题。」',
         blackboard: {
@@ -6500,6 +6583,7 @@ export const lessonMap = {
           options: ['赞美罗马带来的秩序与和平', '通过借用敌人的声音，讽刺罗马帝国扩张的暴力本质', '客观记录布立吞首领的演讲内容'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「塔西佗让一个被征服者说出罗马最不想承认的真相。他自己不直接批评罗马——他借口说这是历史记录，这是别人说的话。但读者知道他在说什么。」她在黑板上圈出 pacem appellant，「这就是讽刺的高明之处：字面上是引述，实质上是控诉。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「塔西佗让一个被征服者说出罗马最不想承认的真相。他自己不直接批评罗马——他借口说这是历史记录，这是别人说的话。但读者知道他在说什么。」她在黑板上圈出 pacem appellant，「这就是讽刺的高明之处：字面上是引述，实质上是控诉。」',
         contextWrong: '「讽刺罗马帝国的扩张暴力。」她重复，语气平静，「塔西佗不是在记录事实——布立吞首领卡尔加克斯的演说词几乎肯定是他写的，不是真实记录。他借敌人的嘴说出批评，是一种政治安全的讽刺方式。不赞美，也不客观——是讽刺。记住这个例子，它经常出现在考题里。」',
         blackboard: {
@@ -6611,6 +6695,7 @@ export const lessonMap = {
           options: ['斯多葛主义（接受命运，以理性克制情欲）', '伊壁鸠鲁主义（避免痛苦，享受平静的当下快乐）', '柏拉图主义（追求理念世界，超越肉身局限）'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「伊壁鸠鲁主义——不是放纵享乐，而是珍视当下的平静幸福，不为不可知的未来焦虑。Carpe diem 的核心是"不要浪费今天"，这正是伊壁鸠鲁哲学的精髓。」她停了一秒，「贺拉斯是一个在官方赞助体系里保留了个人哲学声音的诗人——这本身就是一种技艺。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「伊壁鸠鲁主义——不是放纵享乐，而是珍视当下的平静幸福，不为不可知的未来焦虑。Carpe diem 的核心是"不要浪费今天"，这正是伊壁鸠鲁哲学的精髓。」她停了一秒，「贺拉斯是一个在官方赞助体系里保留了个人哲学声音的诗人——这本身就是一种技艺。」',
         contextWrong: '「伊壁鸠鲁主义——活在当下，不为死亡恐惧。」她重复，平静，「斯多葛主义强调用理性克制情欲、接受命运，不完全等同于"珍惜今天"。柏拉图主义关注的是超越肉身的理念世界——与 carpe diem 相反。记住这个区别，第59课我们会详细讲。」',
         blackboard: {
@@ -6699,6 +6784,7 @@ export const lessonMap = {
           options: ['宾格（直接宾语，书的接受者）', '与格（间接宾语，动作的接受对象）', '属格（表示所属关系）'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「与格——书是直接宾语，用宾格；学生是间接宾语，是给予行为的接受对象，用与格。区分宾格和与格的方法：问"给谁/为谁"，答案是与格；问"做了什么"，答案是宾格。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「与格——书是直接宾语，用宾格；学生是间接宾语，是给予行为的接受对象，用与格。区分宾格和与格的方法：问"给谁/为谁"，答案是与格；问"做了什么"，答案是宾格。」',
         contextWrong: '「与格——间接宾语。」她重复，平静，「宾格是直接宾语——在这个句子里是"书"，librum。学生是接受者，是动作指向的对象，不是动作直接作用的对象，所以用与格，discipulo。两格的区别在A-Level翻译题里很重要。」',
         blackboard: {
@@ -6829,6 +6915,7 @@ export const lessonMap = {
           options: ['法语（French）', '意大利语（Italian）', '罗马尼亚语（Romanian）'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「意大利语因为地理上最接近拉丁语的发源地，受到的外来语言影响相对少，保留了最多拉丁语的词汇形式和一部分形态变化。」她停了一秒，「这不意味着意大利语"更纯粹"——只是意味着它在这个维度上更保守。语言没有纯粹之说。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「意大利语因为地理上最接近拉丁语的发源地，受到的外来语言影响相对少，保留了最多拉丁语的词汇形式和一部分形态变化。」她停了一秒，「这不意味着意大利语"更纯粹"——只是意味着它在这个维度上更保守。语言没有纯粹之说。」',
         contextWrong: '「意大利语——最接近拉丁语原形。」她重复，平静，「法语经历了高卢方言的强烈影响，词汇形式变化极大。罗马尼亚语在地理上最偏远，受到了更多斯拉夫语和其他语言的影响。意大利语保守性最强，amare 这个词几乎原样保留了下来。」',
         blackboard: {
@@ -6949,6 +7036,7 @@ export const lessonMap = {
           options: ['宾格，fecit 的直接宾语（他制作了妻子）', '与格，表示此碑是"为了"妻子而立', '主格，表示妻子是动作的主语'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「与格——为谁做某事，受益对象。fecit 的直接宾语是这块墓碑本身（省略），coniugi 是间接宾语，说明这块碑是为了妻子而立的。这种用法在铭文里极常见：fecit + 与格，为某人制作（某物）。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「与格——为谁做某事，受益对象。fecit 的直接宾语是这块墓碑本身（省略），coniugi 是间接宾语，说明这块碑是为了妻子而立的。这种用法在铭文里极常见：fecit + 与格，为某人制作（某物）。」',
         contextWrong: '「与格——为了妻子。」她重复，平静，「宾格是动作直接作用的对象，在这里是省略的那块石碑本身。妻子是受益对象，所以用与格。fecit + 与格 = 为某人做某事，这是铭文里最常见的结构之一，要记住。」',
         blackboard: {
@@ -7068,6 +7156,7 @@ export const lessonMap = {
           options: ['伊壁鸠鲁主义（珍惜当下，不拖延享受平静的生命）', '斯多葛主义（接受命运，以理性义务约束自己，不浪费时间）', '两者都不接近'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「斯多葛主义——时间是最宝贵的资源，每一刻都应当按照理性和义务去使用。拖延是对命运赋予你的时间的浪费。塞内卡在《道德书简》里多次强调：不是生命太短，而是我们浪费了它。」她停了一秒，「这与伊壁鸠鲁的 carpe diem 有重叠，但动机不同：伊壁鸠鲁说"享受"，塔西佗说"不要浪费"。细微差别，但考试会考。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「斯多葛主义——时间是最宝贵的资源，每一刻都应当按照理性和义务去使用。拖延是对命运赋予你的时间的浪费。塞内卡在《道德书简》里多次强调：不是生命太短，而是我们浪费了它。」她停了一秒，「这与伊壁鸠鲁的 carpe diem 有重叠，但动机不同：伊壁鸠鲁说"享受"，塔西佗说"不要浪费"。细微差别，但考试会考。」',
         contextWrong: '「斯多葛主义——不要浪费命运赋予你的时间。」她重复，平静，「伊壁鸠鲁的核心是避免痛苦、享受平静，而 Dum differtur vita transcurrit 强调的是对时间的理性使用——不拖延，不浪费——这是斯多葛对 ratio 和 virtus 的要求。两者都重视时间，但出发点不同。」',
         blackboard: {
@@ -7193,6 +7282,7 @@ export const lessonMap = {
           options: ['引入更多引文，加强论点', '承认对立观点的存在，然后说明为什么自己的论点仍然成立', '总结全文，重复论点'],
           answer: 1
         },
+        context: '珀西瓦尔停了一秒，「Rebuttal 不是否定自己——它是展示你已经考虑了反例，并且仍然能够维持你的论点。一个能处理反例的论点，比一个忽视反例的论点强得多。这是学术成熟度的标志。」她停了一秒，「考官读到 rebuttal 写得好的答卷，会知道这个学生在真正地思考，而不是在背答案。」',
         contextRight: '「不错。」珀西瓦尔停了一秒，「Rebuttal 不是否定自己——它是展示你已经考虑了反例，并且仍然能够维持你的论点。一个能处理反例的论点，比一个忽视反例的论点强得多。这是学术成熟度的标志。」她停了一秒，「考官读到 rebuttal 写得好的答卷，会知道这个学生在真正地思考，而不是在背答案。」',
         contextWrong: '「承认对立观点，然后维持自己的论点。」她重复，平静，「引文是 argument 的工作，总结是 conclusio 的工作。Rebuttal 的价值在于：你承认了反例的存在，说明你不是在回避问题，而是在直面它。然后你说明为什么你的论点仍然成立——这才是完整的论证。」',
         blackboard: {
@@ -7270,6 +7360,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「情感净化与哲学示范——这是两种传统最根本的目的差异。这个差异会导出所有其他的手法差异：暴力是否在台上呈现，人物独白的长度，合唱队的作用，悲剧主角的性格类型。」',
         contextRight: '「不错。」她停了一秒，「情感净化与哲学示范——这是两种传统最根本的目的差异。这个差异会导出所有其他的手法差异：暴力是否在台上呈现，人物独白的长度，合唱队的作用，悲剧主角的性格类型。」',
         contextWrong: '「目的的差异。」她重复，不带感情，「形式上的差异——诗歌/散文、有无合唱队——是表象，不是根本。根本差异是：希腊悲剧试图净化观众的情感，塞内卡的悲剧试图示范斯多葛哲学。一个是情感教育，一个是哲学教育，方向完全不同。」',
         blackboard: {
@@ -7350,7 +7441,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '希腊悲剧（亚里士多德传统）以情感净化（katharsis）为目的，通过怜悯和恐惧的情感体验实现净化；暴力通常在台后，主角是命运的受害者。塞内卡悲剧以哲学示范（斯多葛原则）为目的，文风短促有力（horridus），暴力在台上呈现，主角是意志/情绪的体现。以美狄亚为例：欧里庇得斯版关注内心挣扎和悲剧性撕裂，塞内卡版关注愤怒意志的完整实现（Medea superest）。世界观差异：希腊——命运碾压个人是悲剧；斯多葛——失去理性才是真正的悲剧。',
-    nextLessonPreview: '「下节课：贺拉斯——从颂歌到文学批评。他在 carpe diem 里说的，不是你们以为的那个意思。」'
+    nextLessonPreview: '下节课：贺拉斯——从颂歌到文学批评。他在 carpe diem 里说的，不是你们以为的那个意思。'
   },
 
   62: {
@@ -7387,6 +7478,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「从容把握，不依赖未来——这才是贺拉斯的哲学立场。它接近斯多葛的命运观：未来不在你控制之内，所以对它的信任要最小化；但这不是悲观，而是在可以行动的当下采取恰当的行动。」',
         contextRight: '「不错。」她停了一秒，「从容把握，不依赖未来——这才是贺拉斯的哲学立场。它接近斯多葛的命运观：未来不在你控制之内，所以对它的信任要最小化；但这不是悲观，而是在可以行动的当下采取恰当的行动。」',
         contextWrong: '「从容行动，不依赖未来。」她重复，不带感情，「carpo 是采摘，不是抢夺。quam minimum credula postero 说的是对明天不信任，不是\'活得猛烈\'或\'积极进取\'。贺拉斯写的是一种克制的智慧：把握此刻，因为明天不可靠，不是因为今天要最大化享乐。」',
         blackboard: {
@@ -7471,7 +7563,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: 'Carpe diem 的准确词义：carpo（采摘）而非 seize（抢夺），完整诗句 quam minimum credula postero（对明天尽量少信任）表达从容把握当下、不依赖不可控未来的斯多葛/伊壁鸠鲁混合立场，而非纯粹的享乐主义。贺拉斯颂歌使用 Alcaic 和 Sapphic 诗节，将希腊格律移植到拉丁语。《诗艺》两大命题：ut pictura poesis（诗如绘画）和 aut prodesse aut delectare（教益或愉悦），后者成为西欧文学批评18世纪前的核心标准。影响研究：贺拉斯通过手稿传统和文艺复兴重新发现，持续塑造欧洲文学批评话语。',
-    nextLessonPreview: '「下节课：卢克莱修——他试图用诗歌证明原子的存在。这是一个很奇怪的决定，原因也很有意思。」'
+    nextLessonPreview: '下节课：卢克莱修——他试图用诗歌证明原子的存在。这是一个很奇怪的决定，原因也很有意思。'
   },
 
   63: {
@@ -7506,6 +7598,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「苦药涂蜂蜜——卢克莱修自己的比喻。诗歌不是用来证明原子的，是用来让读者通过审美愉悦接受哲学论点，包括那些让人不舒服的论点：灵魂会消散，死后什么都没有，神明不干预人类事务。」',
         contextRight: '「不错。」她停了一秒，「苦药涂蜂蜜——卢克莱修自己的比喻。诗歌不是用来证明原子的，是用来让读者通过审美愉悦接受哲学论点，包括那些让人不舒服的论点：灵魂会消散，死后什么都没有，神明不干预人类事务。」',
         contextWrong: '「审美愉悦——用诗歌吸引读者接受内容。」她重复，不带感情，「诗歌本身不是论证工具——卢克莱修仍然在用逻辑论证，但把论证放在诗歌里，让读者在被语言愉悦的同时接受论点。伊壁鸠鲁本人写的是散文，不是诗歌——这是卢克莱修的个人选择，不是哲学要求。」',
         blackboard: {
@@ -7589,7 +7682,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '卢克莱修《物性论》用六音步史诗格律传播伊壁鸠鲁哲学，策略是"苦药涂蜂蜜"：用诗歌的审美愉悦使读者接受令人不安的哲学主张（原子论、死亡是感知终止）。核心论证 nihil ad nos：死亡时原子解散、感知消失，因此死亡对我们毫无关系，死前无限岁月的类比强化这一论证。文学手法：宏大意象+微观论证并置，用可见现象（灰尘/风）类比不可见原子，诗歌语调本身示范伊壁鸠鲁的平静（ataraxia）。1417年重新发现后，影响了文艺复兴和近代科学革命（原子论、物质守恒思想）。',
-    nextLessonPreview: '「下节课：文体比较。散文、诗歌、历史写法——同样的事情，三种作家会用三种完全不同的语言策略来说它。」'
+    nextLessonPreview: '下节课：文体比较。散文、诗歌、历史写法——同样的事情，三种作家会用三种完全不同的语言策略来说它。'
   },
 
   64: {
@@ -7623,6 +7716,7 @@ export const lessonMap = {
           ],
           answer: 0
         },
+        context: '她说，「说服、情感共鸣、可信叙事——三种目的决定三种语言策略：散文用逻辑控制，诗歌用意象和节奏，历史用简洁的陈述和讽刺的暗示。」',
         contextRight: '「不错。」她停了一秒，「说服、情感共鸣、可信叙事——三种目的决定三种语言策略：散文用逻辑控制，诗歌用意象和节奏，历史用简洁的陈述和讽刺的暗示。」',
         contextWrong: '「三种目的：说服、情感共鸣、可信叙事加道德判断。」她重复，不带感情，「文体差异不只是有无格律——格律只是诗歌的表面特征，更深的差异是语言为什么目的服务。描述/娱乐/记录是过度简化的表述，没有捕捉到拉丁作者对自己写作目的的理解。」',
         blackboard: {
@@ -7709,7 +7803,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '三种拉丁文体各有其核心语言目的和策略：散文（演讲体/西塞罗）以说服为目的，用逻辑控制和有意识的修辞部署；诗歌（维吉尔）以情感共鸣和宇宙意义感为目的，词序服务于格律和意义密度；历史（塔西佗）以可信叙事和道德判断为目的，用简洁（brevitas）和讽刺暗示而非直接评论。读者预设决定语言策略：演讲需立即奏效，史诗允许处理复杂意象，历史写作预设能读懂暗示的精英读者。分析任何拉丁文本，首先判断文体和预设读者，这决定所有后续解读框架。',
-    nextLessonPreview: '「下节课：原创翻译与注释写作。我们会处理一段真正的未注释原文，你们来翻，来注，来判断——不是练习，是做真实的学术工作。」'
+    nextLessonPreview: '下节课：原创翻译与注释写作。我们会处理一段真正的未注释原文，你们来翻，来注，来判断——不是练习，是做真实的学术工作。'
   },
 
   65: {
@@ -7745,6 +7839,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「学术分析需要直译——研究者需要看见原文的所有语法特征，包括歧义、双关和不常见的结构，这些在意译里通常被消解掉了。」',
         contextRight: '「不错。」她停了一秒，「学术分析需要直译——研究者需要看见原文的所有语法特征，包括歧义、双关和不常见的结构，这些在意译里通常被消解掉了。」',
         contextWrong: '「学术注释用途。」她重复，不带感情，「公众读本和中学选本的读者需要流畅性，所以意译优先。学术研究需要看见原文信息的全部，所以直译优先——即使读起来有点生硬，学术读者能处理这种生硬，而且他们需要生硬里保留的信息。」',
         blackboard: {
@@ -7825,7 +7920,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '翻译策略选择取决于目的和受众：直译适用于学术注释和语法分析（保留全部语法信息），意译适用于普通读者（优先流畅性），风格化意译适用于文学读者（保留情感质感）。注释取舍原则：注释罕见语法、多义词选择理由、无直接对应的文化概念、与其他译本的分歧，不注释常规内容。有歧义文本处理：选择一种译法并在注释中说明另一种可能；若歧义是刻意双关则在目标语言中保留并注明。翻译与诠释必须分开：翻译重建语言信息，诠释表达解读立场——将隐形诠释混入翻译是学术写作中必须避免的错误。',
-    nextLessonPreview: '「下节课：无准备文本。不是练习，是考试条件下你真正需要做的事情——快速阅读，准确翻译，不浪费时间。」'
+    nextLessonPreview: '下节课：无准备文本。不是练习，是考试条件下你真正需要做的事情——快速阅读，准确翻译，不浪费时间。'
   },
 
   66: {
@@ -7861,6 +7956,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「扫描结构优先于处理词义。知道一段话有几个句子，哪里有对话，出现了哪些认识的专有名词——这些信息帮助你建立整体框架，然后再进入逐句分析。」',
         contextRight: '「不错。」她停了一秒，「扫描结构优先于处理词义。知道一段话有几个句子，哪里有对话，出现了哪些认识的专有名词——这些信息帮助你建立整体框架，然后再进入逐句分析。」',
         contextWrong: '「扫描结构，再找主动词。」她重复，不带感情，「逐词翻译是时间最低效的方法——你在不知道句子结构的情况下积累词义，等读到动词时可能已经迷失了。查生词更糟——在没有结构框架的情况下，查了词义也不知道放在哪里。先建立框架，再填入内容。」',
         blackboard: {
@@ -7946,7 +8042,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '无准备文本速读策略：扫全文（句数/已知关键词）→逐句找主动词→向外拓展（宾语/从句/修饰）→逐层翻译。精确不能妥协的项目：格（主/宾混淆句义反转）、时态（叙事时序）、语气（事实判断）。生词处理优先级：词根推断→语法推断（即使不知词义）→语境推断→方括号[?]标注并继续。时间分配：10%扫全文→60%逐句翻译→20%难点→10%检查；检查优先格、时态、漏句。不在前两句追求完美，保持全文时间均匀分配。',
-    nextLessonPreview: '「下节课：文学评论论点建构。A-Level最高分的文学评论有一个共同特征——今天我们找出来。」'
+    nextLessonPreview: '下节课：文学评论论点建构。A-Level最高分的文学评论有一个共同特征——今天我们找出来。'
   },
 
   67: {
@@ -7982,6 +8078,7 @@ export const lessonMap = {
           ],
           answer: 2
         },
+        context: '她说，「第三个满足三个标准：有人可以争议它（有人会说词序只是格律需要，不是意义选择）；可以用文本验证（词序确实如此）；重要——它揭示了这部史诗的核心张力。这才是文学论点。」',
         contextRight: '「不错。」她停了一秒，「第三个满足三个标准：有人可以争议它（有人会说词序只是格律需要，不是意义选择）；可以用文本验证（词序确实如此）；重要——它揭示了这部史诗的核心张力。这才是文学论点。」',
         contextWrong: '「第三个。」她重复，不带感情，「识别 anaphora 是技术性观察，不是论点——你没有说它做了什么，为什么重要。\'这是史诗\'是事实，没有争议空间。只有第三个是判断：这个词序意味着某种主题立场，这个判断有人可以不同意，也可以用文本验证。」',
         blackboard: {
@@ -8069,7 +8166,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '有效文学论点的三个标准：可争议性（有人可以持相反观点）、可验证性（可以用文本证据支撑）、重要性（揭示文本本质而非微小技术细节）。从观察升级到论点：识别手法→说明效果→解释为什么有此效果→联系整体主题。论题（全文核心立场）与论点（各段具体主张）需要区分，段落结构应是论点+证据+分析的三位一体，三者缺一不可。证据选择：精确引用有分析潜力的词语/结构，引文量不如分析深度重要。批判性论证包含处理反例、细化立场条件、比较视角，使论证更有说服力。',
-    nextLessonPreview: '「下节课：语言演变论文写作。从一个具体的语言变化现象开始，到完整的论文架构——今天我们谈研究设计。」'
+    nextLessonPreview: '下节课：语言演变论文写作。从一个具体的语言变化现象开始，到完整的论文架构——今天我们谈研究设计。'
   },
 
   68: {
@@ -8105,6 +8202,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「具体的语言变化（夺格消失）、有数据支撑（可以查铭文和文学文本里夺格的用法随时间的变化）、有前人研究（大量语言史学者研究过这个问题）。这是一个有边界、有材料、有对话空间的研究问题。」',
         contextRight: '「不错。」她停了一秒，「具体的语言变化（夺格消失）、有数据支撑（可以查铭文和文学文本里夺格的用法随时间的变化）、有前人研究（大量语言史学者研究过这个问题）。这是一个有边界、有材料、有对话空间的研究问题。」',
         contextWrong: '「夺格消失的研究问题。」她重复，不带感情，「\'整体影响\'和\'为什么演变\'都太宽——没有边界，无法在一篇论文里论证。好的研究问题有三个要素：具体对象、可查数据、与前人研究的对话空间。第一和第三个选项都缺少具体对象和边界。」',
         blackboard: {
@@ -8191,7 +8289,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '语言演变论文研究选题三要素：具体研究对象（特定语言现象+时期+地区）、可查语言数据（铭文/手稿/比较语言学重建）、与前人研究的对话空间。文献综述功能是在已有研究之间找对话，找到分歧核心和空白切入点，而非列清单。论证框架：假设（基于前人研究的预期）→证据分析（数据支撑/反例处理）→结论推导。结论的范围不能超过数据的覆盖范围，局限性声明是学术诚信的体现；研究局限+未来方向构成对话的继续而非终结。',
-    nextLessonPreview: '「下节课：跨学科综合——拉丁语与魔咒课的联动。弗立维教授会来参与一部分。」'
+    nextLessonPreview: '下节课：跨学科综合——拉丁语与魔咒课的联动。弗立维教授会来参与一部分。'
   },
 
   69: {
@@ -8218,7 +8316,7 @@ export const lessonMap = {
           ]
         },
         question: {
-          leadIn: '珀西瓦尔用粉笔把 Leviosa 分解，「Levis——轻的。-osa——拉丁语形容词后缀，第一变格阴性主格（或中性复数），表示\'充满……的\'或\'具有……性质的\'。」她停顿，「弗立维教授，」她转向那把椅子，「Wingardium Leviosa 里哪个词决定了方向性？」弗立维教授举起小手，「Wingardium 提供了方向——向上，向有翅膀的地方。Leviosa 提供了性质——轻盈。两个词合在一起，就是：让它变轻盈，向上去。」珀西瓦尔点了点头，「正确。」她转向学生，「基于这个分析，Leviosa 最可能的语法功能是什么？」',
+          leadIn: '珀西瓦尔用粉笔把 Leviosa 分解，「Levis——轻的。-osa——拉丁语形容词后缀，第一变格阴性主格（或中性复数），表示\'充满……的\'或\'具有……性质的\'。」她停顿，「弗立维教授，」她转向那把椅子，「Wingardium Leviosa 里哪个词决定了方向性？」弗立维教授举起小手，「Wingardium 提供了方向——向上，向有翅膀的地方。Leviosa 提供了性质——轻盈。两个词合在一起，就是：让它变轻盈，向上去。」珀西瓦尔点了一下头，「不错。」她转向学生，「基于这个分析，Leviosa 最可能的语法功能是什么？」',
           text: '「Leviosa 在 Wingardium Leviosa 中最可能承担什么语法功能？」',
           options: [
             '动词命令式（命令物体浮起）',
@@ -8227,8 +8325,9 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「Levis + -osa = 形容词，描述目标物的期望状态。Wingardium 提供方向，Leviosa 提供状态描述——咒语在语言层面是：描述你希望目标物变成什么样子，而不是命令它做什么动作。」弗立维教授在旁边轻轻点头。',
         contextRight: '「不错。」她停了一秒，「Levis + -osa = 形容词，描述目标物的期望状态。Wingardium 提供方向，Leviosa 提供状态描述——咒语在语言层面是：描述你希望目标物变成什么样子，而不是命令它做什么动作。」弗立维教授在旁边轻轻点头。',
-        contextWrong: '「形容词性质。」珀西瓦尔重复，不带感情，「-osa 是描述性后缀，leviosa 是描述目标物的状态，不是动词命令。命令式形式会是不同的词尾。』弗立维教授补充道：「这也解释了为什么发音时需要在 Wingardium 上强调方向感——词根承载着意图，发音承载着意志。」',
+        contextWrong: '「形容词性质。」珀西瓦尔重复，不带感情，「-osa 是描述性后缀，leviosa 是描述目标物的状态，不是动词命令。命令式形式会是不同的词尾。」弗立维教授补充道：「这也解释了为什么发音时需要在 Wingardium 上强调方向感——词根承载着意图，发音承载着意志。」',
         blackboard: {
           type: 'formulas',
           label: '咒语的双层结构（语言+意图）',
@@ -8311,7 +8410,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '咒语具有三层结构：词根层（来源决定作用域）、语法层（语法形式决定意图表达方式）、发音层（音节强调传递能量方向），三层一致才能正确施法。Wingardium Leviosa 分解：winger(翅膀/方向)+arduus(高处)+leviosa(轻盈的/充满轻盈性质)，形容词性后缀-osa描述目标期望状态而非命令动作。拉丁语元音单一发音规则对应魔法共振频率的稳定性设计。成对咒语（Lumos/Nox）来自语义相对的词根，语言对立直接对应魔法对立效果。跨学科整合：拉丁语提供设计逻辑，历史提供作用机制，物理学提供实现原理，魔咒学提供执行规范。',
-    nextLessonPreview: '「下节课：A-Level综合模拟。考试形式，真实时长，所有题型。这是今年的最后一课。」'
+    nextLessonPreview: '下节课：A-Level综合模拟。考试形式，真实时长，所有题型。这是今年的最后一课。'
   },
 
   70: {
@@ -8349,6 +8448,7 @@ export const lessonMap = {
           ],
           answer: 1
         },
+        context: '她说，「先做计划，再做题。从最难的题开始会在一开始就消耗过多的认知资源，影响后面所有题目。从有把握的题型进入状态，建立正向动力，再处理困难部分。」',
         contextRight: '「不错。」她停了一秒，「先做计划，再做题。从最难的题开始会在一开始就消耗过多的认知资源，影响后面所有题目。从有把握的题型进入状态，建立正向动力，再处理困难部分。」',
         contextWrong: '「制定计划。」她重复，不带感情，「立刻开始写第一题会浪费那三分钟的扫卷机会——你可能在一个低分题上花了过多时间，而不知道后面还有高分题等着你。从最难的题开始会消耗过多初始的认知资源，影响整体发挥。先计划，再执行。」',
         blackboard: {
@@ -8428,7 +8528,7 @@ export const lessonMap = {
       }
     ],
     lessonSummary: '模拟考试前的框架：扫全卷（3分钟）→制定时间计划→从有把握的题型进入状态；三小时参考分配：翻译50分钟/语法25分钟/理解35分钟/文学评论55分钟/检查15分钟。四种题型核心要点：翻译（准确>流畅，四步法，检查格/时态/漏句）；语法（精确命名全部特征）；理解（论点+引文+分析三步）；文学评论（有效论题+段落论证+结论重申）。最后10分钟检查：翻译漏句/格混淆、语法遗漏特征、评论结论新内容。七年课程终结：从字母表到A-Level，掌握独立阅读古典文本的能力——这是拉丁语作为活的知识传统的延续。',
-    nextLessonPreview: '「拉丁语是死的语言——但它从未停止说话。」'
+    nextLessonPreview: '拉丁语是死的语言——但它从未停止说话。'
   },
 
 };

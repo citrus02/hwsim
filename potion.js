@@ -1,13 +1,15 @@
 // potion.js — 手动熬制版（严格步骤）
-import { potions, getPotionEmoji, materialProcessingMap } from './potion-data.js';
+import { potions, materialProcessingMap } from './potion-data.js';
 import { getMatEmoji } from "./explore-data.js";
 import { onBrewResult } from './affinity-system.js';
+import { initPotionSave, hasPrinceBook, PotionSystem, autoUnlockPotionByCourse, getPotionListWithStatus, brewPotion } from './potion-core.js';
+import { createFailModal, showFailModal } from './potion-fail-modal.js';
+import { STIR_CIRCLES, buildPotionSteps, getStepAt, getStepViolationMessage } from './potion-brew-steps.js';
 
 let currentPotionSourceType = "hogwarts";
 let allPotionData = [];
 let selectedPotion = null;
 let brewPhase = 'idle';
-const STIR_CIRCLES = 3;
 let stirCount = 0;
 let prepMaterialName = null;
 let processedMaterials = {};
@@ -18,161 +20,6 @@ let stepsList = []; // 步骤列表
 let backTopBtn = null;
 
 // ==================== 存档 ====================
-function initPotionSave() {
-  const save = window.saveSys?.getSave?.() || {};
-  if (!save.bag) save.bag = { material: [], potion: [], item: [] };
-  if (!save.potion) save.potion = {};
-  if (!save.year) save.year = 1;
-  if (!save.flags) save.flags = {};
-  return save;
-}
-
-function costMaterials(materials, quantities) {
-  const data = initPotionSave();
-  if (!data.bag?.material) return false;
-  const matList = [...data.bag.material];
-  for (let i = 0; i < materials.length; i++) {
-    let total = 0;
-    for (const s of matList) {
-      if (!s) continue;
-      if ((typeof s === 'string' ? s : s.name) === materials[i]) total += s.count || 1;
-    }
-    if (total < quantities[i]) return false;
-  }
-  for (let i = 0; i < materials.length; i++) {
-    let need = quantities[i];
-    for (let j = 0; j < matList.length; j++) {
-      if (need <= 0) break;
-      const slot = matList[j]; if (!slot) continue;
-      if ((typeof slot === 'string' ? slot : slot.name) !== materials[i]) continue;
-      const cnt = slot.count || 1;
-      if (cnt <= need) { need -= cnt; matList[j] = null; } else { slot.count = cnt - need; need = 0; }
-    }
-  }
-  data.bag.material = matList;
-  window.saveSys?.setSave?.(data);
-  return true;
-}
-
-function hasPrinceBook() {
-  const data = initPotionSave();
-  const items = data.bag?.item || [];
-  return items.some(item => item.name === "混血王子的旧书");
-}
-
-// ==================== 解锁 ====================
-function checkPotionUnlock(potion) {
-  const data = initPotionSave();
-  // data.year 存的是公元年份（如1991），需换算为年级（1991=1年级）
-  const rawYear = data.year ?? 1991;
-  const y = rawYear > 100 ? rawYear - 1990 : rawYear; // 兼容旧存档直接存年级的情况
-  const f = data.flags;
-  const hasBook = hasPrinceBook();
-  
-  if (potion.grade === '一年级') return true;
-  if (potion.id === 204 && f.unlock_chamber_of_secrets) return true;
-  if (potion.id === 402 && f.unlock_chamber_of_secrets) return true;
-  if (y >= 2 && potion.grade.includes('二年级')) return true;
-  if (potion.id === 305 && f.helped_remus) return true;
-  if (y >= 3 && potion.grade.includes('三年级')) return true;
-  if (potion.id === 205 && f.unlock_goblet_of_fire) return true;
-  if (y >= 4 && potion.grade.includes('四年级')) return true;
-  if (potion.id === 207 && f.joined_da) return true;
-  if (y >= 5 && potion.grade.includes('五年级')) return true;
-  
-  // 混血王子旧书解锁魔药
-  if (potion.id === 301 && (f.got_prince_book || hasBook)) return true;
-  if (potion.id === 302 && f.got_felix_reward) return true;
-  if (potion.id === 601 && (f.got_prince_book || hasBook)) return true;
-  if (potion.id === 602 && (f.got_prince_book || hasBook)) return true;
-  
-  if (potion.id === 401 && f.used_sectumsempra) return true;
-  if (y >= 6 && potion.grade.includes('N.E.W.T.')) return true;
-  if (potion.id === 604 && f.visited_wheezes) return true;
-  if (potion.id === 803 && f.christmas_ball) return true;
-  if (potion.id === 701 && f.phoenix_bond) return true;
-  if (potion.grade.includes('黑魔法') && f.visited_black_market) return true;
-  if (potion.id === 502 && f.hunt_horcruxes) return true;
-  return false;
-}
-
-const PotionSystem = {
-  allPotions: [...potions],
-  getPotionById(id) { return this.allPotions.find(p => p.id === id); },
-  getDifficulty(p) {
-    if (p.grade.includes('一年级')) return 1;
-    if (p.grade.includes('O.W.L.')) return 3;
-    if (p.grade.includes('N.E.W.T.')) return 5;
-    if (p.grade.includes('黑魔法')) return 6;
-    return 2;
-  },
-  requiresProcessing(m) { return !!materialProcessingMap[m]; },
-  getProcessedName(m) { return materialProcessingMap[m]?.resultName || m; }
-};
-
-function autoUnlockPotionByCourse() {
-  const data = initPotionSave();
-  if (!data.potion) data.potion = {};
-  potions.forEach(p => {
-    const unlocked = checkPotionUnlock(p);
-    if (!data.potion[p.id]) data.potion[p.id] = { proficiency: 0, unlocked };
-    else data.potion[p.id].unlocked = unlocked;
-  });
-  window.saveSys?.setSave?.(data);
-}
-
-function getPotionListWithStatus() {
-  autoUnlockPotionByCourse();
-  const data = initPotionSave();
-  const pd = data.potion || {};
-  return potions.map(p => {
-    const item = pd[p.id] || { proficiency: 0, unlocked: checkPotionUnlock(p) };
-    let st = 'hogwarts';
-    if (p.type === '非课程') st = p.grade.includes('黑魔法') ? 'dark' : 'self';
-    return {
-      id: p.id, name: p.name, english: p.english,
-      effect: p.effect, grade: p.grade, icon: p.icon || '⚗️',
-      materials: p.materials || [], quantities: p.quantities || [],
-      sourceType: st, isUnlocked: item.unlocked,
-      proficiency: item.proficiency, maxProficiency: 100,
-      unlockCondition: p.unlockCondition || '未开放',
-      unlockTip: p.unlockTip || '尚未解锁',
-      color: p.color || '#f4c542',
-      colorName: p.colorName || '金色'
-    };
-  });
-}
-
-function brewPotion(potionId) {
-  const potion = PotionSystem.getPotionById(potionId);
-  if (!potion) return false;
-  const data = initPotionSave();
-  if (!data.potion[potionId]?.unlocked) { window.doStudyLog?.(`❌ ${potion.name} 尚未解锁`); return false; }
-  if (!costMaterials(potion.materials, potion.quantities)) { window.doStudyLog?.(`❌ 材料不足`); return false; }
-  
-  const hasBook = hasPrinceBook();
-  const diff = PotionSystem.getDifficulty(potion);
-  const baseSuccessRate = Math.max(20, Math.min(100, 120 - diff * 10));
-  const successRate = hasBook ? 100 : baseSuccessRate;
-  
-  if (hasBook) {
-    window.doStudyLog?.(`📕 混血王子的旧书发挥作用——魔药制作成功率提升至100%！`);
-  }
-  
-  if (Math.random() * 100 < successRate) {
-    const d2 = initPotionSave();
-    if (!d2.potion[potionId]) d2.potion[potionId] = { proficiency: 0, unlocked: true };
-    d2.potion[potionId].proficiency = Math.min(100, d2.potion[potionId].proficiency + 5);
-    window.saveSys?.setSave?.(d2);
-    window.addPotionToBag?.({ name: potion.name, emoji: getPotionEmoji(potion.name), effect: potion.effect });
-    window.doStudyLog?.(`🧪 熬制：${potion.name}（熟练度+5%，共${d2.potion[potionId].proficiency}%）`);
-    window._questHook_brew?.();
-    return true;
-  }
-  window.doStudyLog?.(`💥 熬制失败：${potion.name}`);
-  return false;
-}
-
 function addAllPotionMaterials() {
   const data = initPotionSave();
   if (!data.bag) data.bag = { material: [], potion: [], item: [] };
@@ -202,56 +49,25 @@ function addAllPotionMaterials() {
 }
 
 // ==================== 弹窗 ====================
-function createFailModal() {
-  document.getElementById('potionFailModal')?.remove();
-  const m = document.createElement('div');
-  m.id = 'potionFailModal';
-  m.className = 'potion-fail-modal';
-  m.innerHTML = `<div class="potion-fail-content"><h3 class="potion-fail-title">💥 熬制失败</h3><p id="potionFailMessage" class="potion-fail-message"></p><button id="potionFailRetryBtn" class="potion-fail-retry-btn">🔄 清理一新，重新开始</button></div>`;
-  document.body.appendChild(m);
-  document.getElementById('potionFailRetryBtn').onclick = () => { hideFailModal(); brewPhase = 'idle'; resetAll(); renderBrewStation(); };
-  m.addEventListener('click', e => { if (e.target === m) { hideFailModal(); brewPhase = 'idle'; resetAll(); renderBrewStation(); }});
-  return m;
-}
-function showFailModal(msg) {
-  let m = document.getElementById('potionFailModal'); if (!m) m = createFailModal();
-  document.getElementById('potionFailMessage').textContent = msg;
-  m.classList.add('visible');
-}
-function hideFailModal() { document.getElementById('potionFailModal')?.classList.remove('visible'); }
-
-// ==================== 状态重置 ====================
 function resetPrepState() { prepMaterialName = null; processedMaterials = {}; liquidState = 'initial'; }
 function resetStirState() { stirCount = 0; }
 function resetAll() { resetStirState(); resetPrepState(); addedMaterials = {}; currentStepIndex = 0; stepsList = []; }
 
+function resetFailedBrew() {
+  brewPhase = 'idle';
+  resetAll();
+  renderBrewStation();
+}
+
 // ==================== 构建步骤列表 ====================
 function buildStepsList() {
   if (!selectedPotion) return;
-  stepsList = [];
+  stepsList = buildPotionSteps(selectedPotion);
   currentStepIndex = 0;
-
-  selectedPotion.materials.forEach(m => {
-    if (materialProcessingMap[m]) {
-      stepsList.push({ 
-        type: 'process', 
-        material: m, 
-        action: materialProcessingMap[m].action, 
-        verb: materialProcessingMap[m].processVerb, 
-        result: materialProcessingMap[m].resultName 
-      });
-    } else {
-      stepsList.push({ type: 'add', material: m });
-    }
-  });
-
-  stepsList.push({ type: 'stir', count: STIR_CIRCLES });
 }
 
-// ==================== 步骤检查 ====================
 function getCurrentStep() {
-  if (currentStepIndex >= stepsList.length) return null;
-  return stepsList[currentStepIndex];
+  return getStepAt(stepsList, currentStepIndex);
 }
 
 function advanceStep() {
@@ -266,50 +82,12 @@ function advanceStep() {
 
 function checkStepViolation(actionType, material, action) {
   const step = getCurrentStep();
-  if (!step) return true; // 没有步骤了（应该在搅拌阶段）
-
-  if (step.type === 'stir' && actionType !== 'stir') {
-    triggerFail('你打乱了制作顺序！坩埚冒出刺鼻的绿烟...');
-    return true;
-  }
-
-  if (step.type === 'process') {
-    if (actionType === 'add' && material === step.material) {
-      triggerFail(`${step.material}需要先${step.verb}！直接丢进去导致药液沸腾喷溅！`);
-      return true;
-    }
-    if (actionType === 'process' && material === step.material && action === step.action) {
-      return false; // 正确
-    }
-    if (actionType === 'process' && material === step.material && action !== step.action) {
-      triggerFail(`处理方式错误！应该${step.verb}${step.material}，你的操作让材料彻底毁了`);
-      return true;
-    }
-    if (actionType === 'process' && material !== step.material) {
-      triggerFail(`步骤错误！当前应该先处理${step.material}，而不是${material}`);
-      return true;
-    }
-  }
-
-  if (step.type === 'add') {
-    if (actionType === 'process') {
-      triggerFail(`${material}不需要处理！直接加入坩埚即可`);
-      return true;
-    }
-    if (actionType === 'add' && material === step.material) {
-      return false; // 正确
-    }
-    if (actionType === 'add' && material !== step.material) {
-      triggerFail(`步骤错误！当前应该加入${step.material}，而不是${material}`);
-      return true;
-    }
-  }
-
-  triggerFail('步骤混乱！药液变得浑浊不堪...');
+  const message = getStepViolationMessage(step, actionType, material, action);
+  if (!message) return false;
+  triggerFail(message);
   return true;
 }
 
-// ==================== 失败触发（原著风格） ====================
 function triggerFail(reason) {
   brewPhase = 'fail';
   liquidState = 'initial';
@@ -396,7 +174,7 @@ function openPotionPanel() {
   autoUnlockPotionByCourse();
   const main = document.getElementById('actionMain'); if (main) main.style.display = 'none';
   document.getElementById('potionMain')?.remove();
-  createFailModal();
+  createFailModal(resetFailedBrew);
   selectedPotion = null; brewPhase = 'idle'; resetAll();
 
   const box = document.createElement('div'); box.id = 'potionMain';

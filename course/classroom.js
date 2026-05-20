@@ -15,123 +15,29 @@
  *   window.muggleSchedule（muggle-schedule.js 暴露的麻瓜课程表系统）
  */
 
-import { loadSave, writeSave } from './save-utils.js';
+import { loadSave } from './save-utils.js';
 import { gradeOpenAnswer } from '../ai/grader.js';
 import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
 import { GestureWidget } from '../gesture-widget.js';
 import { getGestureById } from '../gesture-data.js';
-import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, getCurrentLesson as getMuggleCurrentLesson, advanceLesson } from './muggle-schedule.js';
-import { SUBJECT_WIN_KEY, SUBJECT_NAME_KEY, HOGWARTS_SUBJECT_KEYS, getSubjectData, getAllLessons, getItemSubjectKey, scoreToRating, HOUSE_POINTS_MAP } from './utils.js';
+import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, advanceLesson } from './muggle-schedule.js';
+import { getSubjectData, getAllLessons, getItemSubjectKey, scoreToRating, HOUSE_POINTS_MAP } from './utils.js';
 import './subjects/flight.js';
 import './subjects/apparition.js';
+import { getCurrentLesson, getQuestionsForLesson, saveProgress, saveOpenAnswerEntry } from './classroom-progress.js';
+import { doQuickStudy, doFocusedStudy } from './classroom-study-actions.js';
+import {
+  _formatContext,
+  _renderBlackboard,
+  _renderMiniQuestion,
+  _renderMiniQuestionInline,
+  _renderMiniLeadIn,
+  _renderLectureText,
+  _findCalculatorBlackboard,
+  _withActiveCalculator,
+} from './classroom-render-utils.js';
 
 // ── 课时工具 ─────────────────────────────────────────────
-
-function getCurrentLesson(subjectKey) {
-  const data = getSubjectData(subjectKey);
-  if (!data) return null;
-  const all = getAllLessons(data.syllabus);
-
-  // 麻瓜课程使用特殊课时逻辑：基于课程表和学习进度
-  if (MUGGLE_SUBJECTS.includes(subjectKey)) {
-    const currentLessonNum = getMuggleCurrentLesson(subjectKey);
-    return all.find(l => l.lesson === currentLessonNum) || all[all.length - 1];
-  }
-
-  // 霍格沃茨课程使用原有逻辑
-  const prog = loadSave().course?.muggleProgress?.[subjectKey] || {};
-  const done = [...(prog.completed || []), ...(prog.expired || [])];
-  return all.find(l => !done.includes(l.lesson)) || all[all.length - 1];
-}
-
-function getQuestionsForLesson(questionBank, lessonNum) {
-  return (questionBank || []).find(q => q.lesson === lessonNum) || null;
-}
-
-// ── 结算写档 ─────────────────────────────────────────────
-function saveProgress(subjectKey, lessonNum, rating) {
-  const data = loadSave();
-  if (!data.course) data.course = {};
-  if (!data.course.muggleProgress) data.course.muggleProgress = {};
-  if (!data.course.muggleProgress[subjectKey])
-    data.course.muggleProgress[subjectKey] = { completed: [], expired: [] };
-
-  const prog = data.course.muggleProgress[subjectKey];
-  if (!prog.completed.includes(lessonNum)) prog.completed.push(lessonNum);
-
-  // ── 霍格沃茨课程：按完成课时数更新 data.course[课程名] ──
-  const sd = getSubjectData(subjectKey);
-  if (sd) {
-    const total = getAllLessons(sd.syllabus).length;
-    const done  = new Set([...(prog.completed || []), ...(prog.expired || [])]).size;
-    const pct   = total > 0 ? Math.floor(done / total * 100) : 0;
-    // 找到课程对应的中文名写入 data.course
-    const courseName = sd.subjectMeta?.name;
-    if (courseName) data.course[courseName] = pct;
-  }
-
-  // ── 麻瓜研究总进度（九门均值）──────────────────────────
-  const MUGGLE_KEYS = Object.keys(SUBJECT_WIN_KEY).filter(k => !HOGWARTS_SUBJECT_KEYS.has(k));
-  let totalRate = 0;
-  MUGGLE_KEYS.forEach(k => {
-    const sd2 = getSubjectData(k);
-    if (!sd2) return;
-    const total = getAllLessons(sd2.syllabus).length;
-    const p = data.course.muggleProgress?.[k] || {};
-    const done  = new Set([...(p.completed || []), ...(p.expired || [])]).size;
-    totalRate += total > 0 ? Math.floor(done / total * 100) : 0;
-  });
-  if (MUGGLE_KEYS.length > 0)
-    data.course["麻瓜研究"] = Math.round(totalRate / MUGGLE_KEYS.length);
-
-  writeSave(data);
-
-  // ── 学院分 ──────────────────────────────────────────────
-  if (rating && HOUSE_POINTS_MAP[rating]) {
-    const hpData   = loadSave();
-    const pKey     = window.housePoints?.HOUSE_MAP?.[hpData.player?.house];
-    if (pKey && window.housePoints?.HOUSE_DISPLAY?.[pKey]) {
-      if (!hpData.housePoints || typeof hpData.housePoints !== "object")
-        hpData.housePoints = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
-      hpData.housePoints[pKey] = Math.max(0, (hpData.housePoints[pKey] || 0) + HOUSE_POINTS_MAP[rating]);
-      writeSave(hpData);
-    }
-  }
-
-  window.refreshAll?.();
-  window.autoUnlockByCourse?.();
-}
-
-function saveOpenAnswerEntry(st, subjectKey, lesson, rating = null) {
-  if (st.openScore == null || !st.openAnswer) return;
-  const data = loadSave();
-  const key = `${subjectKey}_${lesson.lesson}`;
-  const timestamp = st.openAnswerTimestamp || Date.now();
-  st.openAnswerTimestamp = timestamp;
-
-  if (!data.openAnswers) data.openAnswers = {};
-  if (!data.openAnswers[key]) data.openAnswers[key] = [];
-
-  const entry = {
-    answer:         st.openAnswer,
-    question:       st.openQuestion || "",
-    score:          st.openScore,
-    maxScore:       st.openMaxScore,
-    feedback:       st.openFeedback,
-    pointsAchieved: st.openPointsAchieved || [],
-    lessonTitle:    lesson.title,
-    lessonNum:      lesson.lesson,
-    rating,
-    timestamp
-  };
-
-  const existingIdx = data.openAnswers[key].findIndex(e => e.timestamp === timestamp);
-  if (existingIdx >= 0) data.openAnswers[key][existingIdx] = { ...data.openAnswers[key][existingIdx], ...entry };
-  else data.openAnswers[key].unshift(entry);
-
-  if (data.openAnswers[key].length > 5) data.openAnswers[key].length = 5;
-  writeSave(data);
-}
 
 // ════════════════════════════════════════════════════════════
 //  选择弹窗
@@ -198,93 +104,6 @@ export function showLearnChoiceModal(item, items, title) {
 // ════════════════════════════════════════════════════════════
 //  随便学学（原有快速学习逻辑）
 // ════════════════════════════════════════════════════════════
-
-function doQuickStudy(item, items, title) {
-  if (!item.unlock) {
-    window.doStudyLog?.(`❌ 无法学习【${item.name}】：需要 ${item.unlockGrade} 年级`);
-    return;
-  }
-  if ((item.studyRate || 0) >= 100) {
-    window.doStudyLog?.(`✅ ${item.name} 已完全掌握`);
-    return;
-  }
-  const availability = window.courseAttendance?.validateCourseAccess?.(item);
-  if (availability && !availability.ok) {
-    window.doStudyLog?.(availability.message);
-    return;
-  }
-  window.courseAttendance?.markAttended?.(item);
-
-  const data = loadSave();
-  if (!data.course) data.course = {};
-  const currentRate = data.course[item.name] || 0;
-  const add = 5;
-  item.studyRate = Math.min(100, currentRate + add);
-  data.course[item.name] = item.studyRate;
-  writeSave(data);
-
-  // 推进课程进度
-  const subjectKey = getItemSubjectKey(item);
-  if (item.muggleSubjectKey && MUGGLE_SUBJECTS.includes(item.muggleSubjectKey)) {
-    // 麻瓜课：记录学习日期并推进课时
-    recordStudyDate(item.muggleSubjectKey);
-    advanceLesson(item.muggleSubjectKey);
-  } else if (subjectKey && HOGWARTS_SUBJECT_KEYS.has(subjectKey)) {
-    // 霍格沃茨课：推进课时（不计分）
-    const lesson = getCurrentLesson(subjectKey);
-    if (lesson) saveProgress(subjectKey, lesson.lesson, null);
-  }
-
-  const subjectData = subjectKey && HOGWARTS_SUBJECT_KEYS.has(subjectKey) ? getSubjectData(subjectKey) : null;
-  const quickEvents = subjectData?.quickStudyEvents || [];
-  const subjectQuickEvent = quickEvents.length
-    ? quickEvents[Math.floor(Math.random() * quickEvents.length)]
-    : "";
-  const evt = (item.muggleSubjectKey || subjectKey)
-    ? (item.muggleSubjectKey
-        ? (window.courseDefault?.getMuggleStudiesEvent(item.muggleSubjectKey) || "你专心学习，知识稳步提升")
-        : (subjectQuickEvent || window.courseDefault?.getQuickStudyEvent?.(subjectKey) || window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升"))
-    : (window.getStudyEvent?.(item.name) || "你专心学习，知识稳步提升");
-
-  window.doStudyLog?.(`📚 ${item.name}（熟练度+${add}%，共${item.studyRate}%）｜${evt}`);
-  window._questHook_courseStudy?.(false);
-  window.refreshAll?.();
-  window.autoUnlockByCourse?.();
-
-  window.renderLevelFn?.(items, title);
-}
-
-function doFocusedStudy(item, items, title) {
-  if (!item.unlock) {
-    window.doStudyLog?.(`❌ 无法学习【${item.name}】：需要 ${item.unlockGrade} 年级`);
-    return;
-  }
-  if ((item.studyRate || 0) >= 100) {
-    window.doStudyLog?.(`✅ ${item.name} 已完全掌握`);
-    return;
-  }
-  const availability = window.courseAttendance?.validateCourseAccess?.(item);
-  if (availability && !availability.ok) {
-    window.doStudyLog?.(availability.message);
-    return;
-  }
-
-  const data = loadSave();
-  if (!data.course) data.course = {};
-  const currentRate = data.course[item.name] || 0;
-  const add = 10;
-  item.studyRate = Math.min(100, currentRate + add);
-  data.course[item.name] = item.studyRate;
-  writeSave(data);
-  window.courseAttendance?.markAttended?.(item);
-
-  const evt = window.getStudyEvent?.(item.name) || "你认真听完了这一节课，整理了课堂笔记，知识明显扎实了一些";
-  window.doStudyLog?.(`📖 ${item.name}（熟练度+${add}%，共${item.studyRate}%）｜${evt}`);
-  window._questHook_courseStudy?.(true);
-  window.refreshAll?.();
-  window.autoUnlockByCourse?.();
-  window.renderLevelFn?.(items, title);
-}
 
 // ════════════════════════════════════════════════════════════
 //  好好学习 — 完整课堂流程
@@ -371,7 +190,7 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
   card.appendChild(panel);
 
   _clsState = {
-    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0, kpQA:false, kpCorrect:null, kpFeedback:false, kpAnsweredIdx:null, kpCalcDone:false, kpCalcStep:0, kpCalcDisplay:null, kpCalcIntroDone:false, openAnswerTimestamp:null },
+    st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0, kpQA:false, kpCorrect:null, kpFeedback:false, kpAnsweredIdx:null, kpCalcDone:false, kpCalcStep:0, kpCalcDisplay:null, kpCalcIntroDone:false, kpBoardSeen:false, openAnswerTimestamp:null },
     subjectKey,
     sd: subjectData,
     lesson,
@@ -405,7 +224,7 @@ window._clsJumpToPhase = (target) => {
   if (target === 0) {
     _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 1) {
-    st.kpIdx = 0; st.kpQA = false; st.kpCorrect = null; st.kpFeedback = false; st.kpAnsweredIdx = null; st.kpCalcDone = false; st.kpCalcStep = 0; st.kpCalcDisplay = null; st.kpCalcIntroDone = false;
+    st.kpIdx = 0; st.kpQA = false; st.kpCorrect = null; st.kpFeedback = false; st.kpAnsweredIdx = null; st.kpCalcDone = false; st.kpCalcStep = 0; st.kpCalcDisplay = null; st.kpCalcIntroDone = false; st.kpBoardSeen = false;
     _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
   } else if (target === 2) {
     // 注意：从步骤条回跳测验会重置本轮分数，相当于重新作答
@@ -459,195 +278,121 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
   }
 }
 
-// ── 小黑板 SVG 数轴生成器 ────────────────────────────────────
-function _buildNumberLineSVG({ range = [-5, 5], marks = [], regionLabels = null, compArrow = null } = {}) {
-  const [lo, hi] = range;
-  const W = 280, AY = 38;
-  const X0 = 32, X1 = 248;
-  const UW = (X1 - X0) / (hi - lo);
-  const px = n => Math.round(X0 + (n - lo) * UW);
-  const oX = px(0);
-
-  let s = `<svg viewBox="0 0 ${W} 72" style="width:100%;display:block;margin:4px 0 2px">`;
-
-  if (regionLabels?.left)
-    s += `<rect x="${X0}" y="${AY-12}" width="${oX - X0}" height="24" fill="#1c2242" rx="2"/>
-          <text x="${Math.round((X0 + oX) / 2)}" y="${AY-17}" text-anchor="middle" font-size="9" fill="#6a7ec0">${regionLabels.left}</text>`;
-  if (regionLabels?.right)
-    s += `<rect x="${oX+1}" y="${AY-12}" width="${X1 - oX}" height="24" fill="#1c3422" rx="2"/>
-          <text x="${Math.round((oX + X1) / 2)}" y="${AY-17}" text-anchor="middle" font-size="9" fill="#5abf7a">${regionLabels.right}</text>`;
-  if (regionLabels?.origin)
-    s += `<text x="${oX}" y="${AY+30}" text-anchor="middle" font-size="9" fill="#f0d870">${regionLabels.origin}</text>`;
-
-  s += `<line x1="15" y1="${AY}" x2="${W-15}" y2="${AY}" stroke="#c8e8b0" stroke-width="1.5"/>
-        <polygon points="15,${AY} 27,${AY-5} 27,${AY+5}" fill="#c8e8b0"/>
-        <polygon points="${W-15},${AY} ${W-27},${AY-5} ${W-27},${AY+5}" fill="#c8e8b0"/>`;
-
-  for (let n = lo; n <= hi; n++) {
-    const x = px(n), isO = n === 0;
-    s += `<line x1="${x}" y1="${AY-(isO?7:4)}" x2="${x}" y2="${AY+(isO?7:4)}" stroke="${isO?"#f0d870":"#c8e8b0"}" stroke-width="${isO?2:1}"/>`;
-    const lbl = n < 0 ? `−${-n}` : String(n);
-    s += `<text x="${x}" y="${AY+18}" text-anchor="middle" font-size="${isO?11:9}" fill="${isO?"#f0d870":"#7aaa6a"}"${isO?' font-weight="bold"':''}>${lbl}</text>`;
+const SUBJECT_BOARD_STYLE = {
+  potions: {
+    heading: "配方线索",
+    flow: ["材料", "火候", "步骤", "魔力"],
+    note: "先看材料，再看处理顺序；差一处，整锅都会变味。",
+    visual: "potionFlow"
+  },
+  charms: {
+    heading: "施法结构",
+    flow: ["意志", "发音", "手势", "目标"],
+    note: "声音、手腕和注意力要落在同一个点上。",
+    visual: "gesturePath"
+  },
+  transfiguration: {
+    heading: "变形框架",
+    flow: ["对象", "形态", "限制", "风险"],
+    note: "先确认对象本质，再谈变化边界。"
+  },
+  defense: {
+    heading: "防御判断",
+    flow: ["识别", "距离", "反制", "撤离"],
+    note: "先活下来，再追求漂亮的反击。"
+  },
+  herbology: {
+    heading: "观察记录",
+    flow: ["部位", "习性", "处理", "用途"],
+    note: "植物不会按课本顺序长，观察要比动作更早。",
+    visual: "plantDiagram"
+  },
+  magicHistory: {
+    heading: "史学线索",
+    flow: ["时间", "主体", "因果", "影响"],
+    note: "年份写在边上；因果比形容词重要。"
+  },
+  astronomy: {
+    heading: "观测提纲",
+    flow: ["方位", "周期", "星象", "记录"],
+    note: "先定位，再解释；不要把浪漫写成数据。",
+    visual: "starMap"
+  },
+  flight: {
+    heading: "飞行要领",
+    flow: ["姿态", "平衡", "速度", "路线"],
+    note: "身体先稳住，扫帚才会听话。",
+    visual: "flightRoute"
+  },
+  careOfMagicalCreatures: {
+    heading: "照护顺序",
+    flow: ["习性", "距离", "安抚", "风险"],
+    note: "先读懂反应，再伸手。"
+  },
+  divination: {
+    heading: "解读路径",
+    flow: ["征象", "语境", "可能性", "验证"],
+    note: "看见征兆不等于得到答案。"
+  },
+  ancientRunes: {
+    heading: "符文拆解",
+    flow: ["字形", "音值", "语境", "组合"],
+    note: "每一笔都可能改变意思。"
+  },
+  arithmancy: {
+    heading: "数字推演",
+    flow: ["数值", "模式", "对应", "结论"],
+    note: "算完之后，还要解释为什么。"
+  },
+  alchemy: {
+    heading: "炼金链条",
+    flow: ["物质", "转化", "媒介", "代价"],
+    note: "真正重要的不是变成什么，而是如何变成。"
+  },
+  apparition: {
+    heading: "移形步骤",
+    flow: ["目标", "决心", "从容", "抵达"],
+    note: "目的地越清楚，身体越不容易抗议。"
+  },
+  muggleStudies: {
+    heading: "观察框架",
+    flow: ["物品", "习惯", "制度", "误解"],
+    note: "先观察麻瓜如何使用，再判断为什么这样设计。"
   }
+};
 
-  if (compArrow) {
-    const ax = px(compArrow.from), bx = px(compArrow.to), ay = AY - 20;
-    s += `<line x1="${ax}" y1="${ay}" x2="${bx-7}" y2="${ay}" stroke="#f8c850" stroke-width="1.5"/>
-          <polygon points="${bx},${ay} ${bx-8},${ay-4} ${bx-8},${ay+4}" fill="#f8c850"/>`;
-    if (compArrow.label)
-      s += `<text x="${Math.round((ax + bx) / 2)}" y="${ay-5}" text-anchor="middle" font-size="9" fill="#f8c850">${compArrow.label}</text>`;
-  }
-
-  const MARK_COLORS = { highlight: "#f8c850", dim: "#667799", accent: "#8adfaa" };
-  for (const m of marks) {
-    const fill = MARK_COLORS[m.style] || MARK_COLORS.highlight;
-    const x = px(m.value);
-    s += `<circle cx="${x}" cy="${AY}" r="5" fill="${fill}" opacity="0.85"/>`;
-  }
-
-  return s + `</svg>`;
-}
-
-function _renderCalculator({ display = "0", highlightKey = null } = {}) {
-  const keys = ["7","8","9","÷","4","5","6","×","1","2","3","−","|x|","0",".","="];
-  const keysHtml = keys.map(k =>
-    `<div class="cls-calc-key${k === highlightKey ? " cls-calc-key-hl" : ""}" data-key="${k}">${k}</div>`
-  ).join("");
-  return `
-    <div class="cls-calc">
-      <div class="cls-calc-body">
-        <div class="cls-calc-brand">MUGGLE-7</div>
-        <div class="cls-calc-screen">
-          <div class="cls-calc-display">${display}</div>
-        </div>
-        <div class="cls-calc-keys">${keysHtml}</div>
-      </div>
-    </div>`;
-}
-
-function _renderBlackboard(bb, uniqueId = "") {
-  if (!bb) return "";
-  if (Array.isArray(bb)) return bb.map((item, idx) => _renderBlackboard(item, `${uniqueId}-${idx}`)).join("");
-  if (typeof bb === "string") return `<div class="cls-blackboard">${bb}</div>`;
-
-  let inner = "";
-  if (bb.label) inner += `<div class="cls-bb-title">${bb.label}</div>`;
-
-  if (bb.type === "numberline") {
-    inner += _buildNumberLineSVG(bb);
-  } else if (bb.type === "calculator") {
-    return _renderCalculator(bb);
-  } else if (bb.type === "formulas") {
-    const audioMap = new Map();
-    if (bb.audio && Array.isArray(bb.audio)) {
-      bb.audio.forEach((item, idx) => audioMap.set(item.lineIndex ?? idx, item));
-    }
-    const lines = (bb.lines || []).map((line, idx) => {
-      if (!line) return `<div class="cls-bb-formula-gap"></div>`;
-      const audio = audioMap.get(idx);
-      if (audio) {
-        const id = `audio-btn-${uniqueId}-${idx}`;
-        return `<div class="cls-bb-formula-line cls-bb-line-audio"><button id="${id}" class="cls-audio-btn" title="点击播放发音" onclick="playLatinAudio('${audio.src}', '${id}')">🔊</button><span class="cls-bb-line-text">${line}</span></div>`;
-      }
-      return `<div class="cls-bb-formula-line">${line}</div>`;
-    }).join("");
-    inner += `<div class="cls-bb-pre">${lines}</div>`;
-  }
-
-  if (bb.note) inner += `<div class="cls-bb-note">${bb.note}</div>`;
-
-  return inner ? `<div class="cls-blackboard">${inner}</div>` : "";
-}
-
-const _latinAudioMap = new Map();
-
-function playLatinAudio(src, buttonId) {
-  const btn = document.getElementById(buttonId);
-  if (!btn) return;
-
-  const existing = _latinAudioMap.get(buttonId);
-  if (existing && !existing.paused) {
-    existing.pause();
-    existing.currentTime = 0;
-    btn.textContent = '🔊';
-    return;
-  }
-
-  const audio = new Audio(src);
-  _latinAudioMap.set(buttonId, audio);
-  audio.onplaying = () => { btn.textContent = '🔉'; };
-  audio.onended = audio.onerror = () => {
-    btn.textContent = '🔊';
-    _latinAudioMap.delete(buttonId);
+function _buildLessonBlackboard(point, lesson, subjectKey, subjectName = "课程") {
+  const parts = String(point || "")
+    .split(/[：；，、]/)
+    .map(part => part.trim())
+    .filter(Boolean);
+  const style = SUBJECT_BOARD_STYLE[subjectKey] || {
+    heading: "课堂提纲",
+    flow: ["概念", "关系", "步骤", "例子"],
+    note: "抓住关键词；把关系和步骤写清楚。"
   };
-  audio.play().catch(e => console.error('音频播放失败:', e));
+  const topic = lesson?.title || `第${lesson?.lesson || ""}课`;
+  const hasOutline = parts.length > 1;
+  const outline = parts.length ? parts.slice(0, 3) : [String(point || "").trim()].filter(Boolean);
+  const lines = [
+    `本节：${topic}`,
+    `${style.heading}：${style.flow.join(" → ")}`,
+    hasOutline ? "课堂要点：" : "核心概念：",
+    ...outline.map(part => `- ${part}`)
+  ];
+
+  const textBoard = {
+    type: "formulas",
+    label: `${subjectName}板书`,
+    lines,
+    note: style.note
+  };
+  return style.visual
+    ? [{ type: "visual", label: `${subjectName}图示`, visual: style.visual }, textBoard]
+    : textBoard;
 }
 
-window.playLatinAudio = playLatinAudio;
-
-// ── context 格式化：对白高亮 + 换行 ──────────────────────────
-function _formatContext(text) {
-  if (!text) return text;
-  // 「对白」→ span 高亮
-  let out = text.replace(/「([^」]*)」/g, '<span class="cls-dialogue">「$1」</span>');
-  // 句末（。！？）后紧跟对白 → 插入换行
-  out = out.replace(/([。！？])(<span class="cls-dialogue">)/g, '$1<br>$2');
-  // 对白结束后紧跟叙述（非空格非标点）→ 插入换行
-  out = out.replace(/(<\/span>)([^\s，。、！？：」<])/g, '$1<br>$2');
-  return out;
-}
-
-// ── 短提问文本：只高亮对白，不拆行 ─────────────────────────
-function _formatDialogOnly(text) {
-  if (!text) return text;
-  return text.replace(/「([^」]*)」/g, '<span class="cls-dialogue">「$1」</span>');
-}
-
-// ── 讲课阶段：教授提问 UI ─────────────────────────────────
-function _renderMiniQuestion(q) {
-  const leadIn = q.leadIn
-    ? `<div class="cls-mini-leadin">${_formatContext(q.leadIn)}</div>`
-    : "";
-  return `
-    <div class="cls-mini-q">
-      ${leadIn}
-      ${_renderMiniQuestionInline(q, false, !!q.leadIn)}
-    </div>`;
-}
-
-function _renderMiniQuestionInline(q, disabled = false, separated = true) {
-  if (!q) return "";
-  const opts = q.options.map((opt, i) =>
-    `<button class="cls-mini-opt" data-idx="${i}"${disabled ? " disabled" : ""}>${opt}</button>`
-  ).join("");
-  return `
-    <div class="cls-mini-inline-question${separated ? "" : " cls-mini-inline-question-solo"}">
-      <div class="cls-mini-text">${_formatDialogOnly(q.text)}</div>
-      <div class="cls-mini-opts">${opts}</div>
-    </div>`;
-}
-
-function _renderMiniLeadIn(text) {
-  return text ? `<div class="cls-mini-q"><div class="cls-mini-leadin">${_formatContext(text)}</div></div>` : "";
-}
-
-function _renderLectureText(text) {
-  return text ? `<div class="cls-lecture-block"><div class="cls-mini-leadin">${_formatContext(text)}</div></div>` : "";
-}
-
-function _findCalculatorBlackboard(bb) {
-  if (Array.isArray(bb)) return bb.find(item => item?.type === "calculator") || null;
-  return bb?.type === "calculator" ? bb : null;
-}
-
-function _withActiveCalculator(bb, calc, display, highlightKey) {
-  if (!calc) return bb;
-  const applyCalcState = item => item === calc
-    ? { ...item, display, highlightKey }
-    : item;
-  return Array.isArray(bb) ? bb.map(applyCalcState) : applyCalcState(bb);
-}
-
+// ── 小黑板 SVG 数轴生成器 ────────────────────────────────────
 // ── 第二阶段：讲课 ────────────────────────────────────────
 function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
   _setPhase(1);
@@ -662,6 +407,7 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
     st.kpCalcStep = 0;
     st.kpCalcDisplay = null;
     st.kpCalcIntroDone = false;
+    st.kpBoardSeen = false;
   }
 
   function render() {
@@ -698,10 +444,14 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
       : st.kpCalcDone && calculatorBlackboard
         ? (st.kpCalcDisplay ?? calculatorBlackboard.result ?? calculatorBlackboard.display)
       : calculatorBlackboard?.display;
+    const fallbackBlackboard = !MUGGLE_SUBJECTS.includes(subjectKey) && typeof kp !== "string" && !kp?.blackboard && !interactiveBlackboard
+      ? _buildLessonBlackboard(point, lesson, subjectKey, sd.subjectMeta?.name)
+      : null;
+    const showBoardPreview = !!(fallbackBlackboard && !st.kpBoardSeen && !question);
     const blackboard = typeof kp === "string" ? null
       : ((showQ || showAnsweredMiniQuestion || showBoardInteraction || showCalcIntro || showCalcSequence || showCompletedCalcSequence || showCompletedCalcQuestion || showAnsweredCompletedCalcQuestion) && interactiveBlackboard
         ? _withActiveCalculator(interactiveBlackboard, calculatorBlackboard, calcDisplay, activeCalcKey)
-        : (kp?.blackboard || null));
+        : (kp?.blackboard || fallbackBlackboard));
 
     body.innerHTML = `
       <div class="cls-dots">
@@ -713,7 +463,11 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           <div class="cls-kp-point">${point}</div>
         </div>
         ${blackboard ? _renderBlackboard(blackboard, `kp-${st.kpIdx}`) : ""}
-        ${showCalcIntro
+        ${showBoardPreview
+          ? `<div class="cls-board-preview">
+              <div class="cls-board-preview-text">先抄下板书，再听教授展开。</div>
+            </div>`
+          : showCalcIntro
           ? _renderMiniLeadIn(interactionContext)
           : showCalcSequence
           ? `<div class="cls-mini-q">
@@ -746,6 +500,12 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
       </div>` : showCalcIntro ? `
       <div class="cls-nav">
         <button class="cls-btn-pri" id="cls-calc-intro-next">下一步 →</button>
+      </div>` : showBoardPreview ? `
+      <div class="cls-nav">
+        ${st.kpIdx > 0
+          ? `<button class="cls-btn-sec" id="cls-prev">← 上一条</button>`
+          : `<button class="cls-btn-sec" id="cls-to-opening">← 返回开场</button>`}
+        <button class="cls-btn-pri" id="cls-board-continue">听讲解 →</button>
       </div>` : showQ || showBoardInteraction || showCalcSequence || showCompletedCalcQuestion ? "" : `
       <div class="cls-nav">
         ${st.kpIdx > 0
@@ -839,6 +599,15 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           setTimeout(() => { st.kpQA = true; render(); }, 900);
         });
       }
+    } else if (showBoardPreview) {
+      document.getElementById("cls-prev")?.addEventListener("click", () => { st.kpIdx--; resetKeyPointInteraction(); render(); });
+      document.getElementById("cls-to-opening")?.addEventListener("click", () => {
+        _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose);
+      });
+      document.getElementById("cls-board-continue")?.addEventListener("click", () => {
+        st.kpBoardSeen = true;
+        render();
+      });
     } else {
       document.getElementById("cls-prev")?.addEventListener("click", () => { st.kpIdx--; resetKeyPointInteraction(); render(); });
       document.getElementById("cls-to-opening")?.addEventListener("click", () => {

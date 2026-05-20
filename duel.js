@@ -14,209 +14,30 @@
  *   - 消耗一次 dailyAction（通过 costAction）
  */
 
-// ── 运行时依赖（通过 window/localStorage 访问，无 import 依赖）──
-function getSpellListWithStatus() {
-  if (window.getSpellListWithStatus) return window.getSpellListWithStatus();
-  const save = window.saveSys?.getSave?.() || {};
-  const learned = save.spellList || [];
-  const prof    = save.spellProficiency || {};
-  return learned.map(id => ({ id, nameCn: id, nameEn: id, isLearned: true, proficiency: prof[id] || 0, sourceType: 'hogwarts' }));
-}
-function getSave()          { return window.saveSys?.getSave?.() || {}; }
-function setSave(data)      { if (window.saveSys?.setSave) window.saveSys.setSave(data); }
-function addLog(text)       { window.addLog?.(text); }
-function renderLog()        { window.renderLog?.(); }
-const GestureWidget = {
-  render:        (...a) => window.GestureWidget?.render(...a),
-  renderPreview: (...a) => window.GestureWidget?.renderPreview(...a)
-};
-function getGestureBySpellId(id) { return window.getGestureBySpellId?.(id) || null; }
-function getGestureById(id)      { return window.getGestureById?.(id) || null; }
-
-// ═══════════════════════════════════════════════════════════
-// 对手数据库
-// ═══════════════════════════════════════════════════════════
-
-const NAMED_OPPONENTS = {
-  1: [
-    { name: "奥利弗·平克斯", house: "赫奇帕奇", flavor: "手指发抖，魔杖差点掉在地上。" },
-    { name: "玛格丽特·弗利", house: "格兰芬多", flavor: "紧张地咬着嘴唇，但还是举起了魔杖。" },
-    { name: "塞缪尔·巴比奇", house: "拉文克劳", flavor: "嘴里念念有词地复习咒语口诀。" },
-    { name: "伊妮德·普朗克特", house: "斯莱特林", flavor: "虽然害怕，但眼神里有一股倔强。" },
-    { name: "蒂莫西·珀克斯", house: "格兰芬多", flavor: "第一次站在决斗台上，双腿微微发颤。" },
-    { name: "维罗妮卡·斯梅威克", house: "拉文克劳", flavor: "默默背诵着《标准咒语·初级》的每一页。" },
-  ],
-  2: [
-    { name: "菲利克斯·拉什", house: "格兰芬多", flavor: "除你武器已经练了整整一年，终于能稳定释放了。" },
-    { name: "多丽丝·珀基斯", house: "赫奇帕奇", flavor: "虽然不擅长攻击咒语，但防御倒是做得不错。" },
-    { name: "伦道夫·伯罗斯", house: "斯莱特林", flavor: "嘴角带着一丝轻蔑，觉得一年级生根本不值一提。" },
-    { name: "西西莉·万斯", house: "拉文克劳", flavor: "冷静地调整站姿，显然在家练习过。" },
-    { name: "赫克托·达利", house: "格兰芬多", flavor: "挥魔杖的姿势很夸张，但咒语倒确实有效。" },
-    { name: "米尔德里德·塔特", house: "赫奇帕奇", flavor: "不太情愿上台，但被朋友推了上来。" },
-  ],
-  3: [
-    { name: "昆廷·特林布尔", house: "拉文克劳", flavor: "镜片后的眼睛冷静地打量着你，显然做过充分准备。" },
-    { name: "阿格尼丝·梅里韦瑟", house: "格兰芬多", flavor: "三年级就敢挑战高年级，勇气可嘉。" },
-    { name: "雷金纳德·科顿", house: "斯莱特林", flavor: "擅长用障碍咒拖延对手，再伺机出击。" },
-    { name: "菲比·格林斯特德", house: "赫奇帕奇", flavor: "看起来温和无害，但昏迷咒出手极快。" },
-    { name: "巴塞洛缪·克劳奇", house: "斯莱特林", flavor: "家族里出过不少傲罗，决斗是传统。" },
-    { name: "尤菲米娅·普拉特", house: "拉文克劳", flavor: "在图书馆研究过每一种决斗咒语的理论。" },
-  ],
-  4: [
-    { name: "康奈利·普威特", house: "格兰芬多", flavor: "韦斯莱家的邻居，继承了红头发和倔脾气。" },
-    { name: "贝拉·普威特", house: "格兰芬多", flavor: "康奈利的双胞胎妹妹，咒语比哥哥还快。" },
-    { name: "西奥多·诺特", house: "斯莱特林", flavor: "斜靠着墙，嘴角带着一丝傲慢。显然觉得这场决斗毫无悬念。" },
-    { name: "格特鲁德·斯平纳", house: "拉文克劳", flavor: "四年级就精通四种攻击咒语，被称为'咒语机器'。" },
-    { name: "阿尔伯图斯·弗林特", house: "斯莱特林", flavor: "魁地奇球场上的冲撞让他习惯了对抗。" },
-    { name: "罗莎琳·希金斯", house: "赫奇帕奇", flavor: "看起来文静，但四年的魔咒课让她脱胎换骨。" },
-  ],
-  5: [
-    { name: "卡修斯·沃林顿", house: "斯莱特林", flavor: "在决斗俱乐部练了两年——每个手势都干净利落。" },
-    { name: "安吉利卡·科尔", house: "格兰芬多", flavor: "五年级的级长候选人，决斗实力是她的竞选资本。" },
-    { name: "菲利达·斯普劳特", house: "赫奇帕奇", flavor: "草药学和魔咒双修，咒语带着植物般的生命力。" },
-    { name: "达克·塞尔温", house: "斯莱特林", flavor: "家族世代出食死徒，但他只想在决斗中证明自己。" },
-    { name: "普鲁登斯·迈尔斯", house: "拉文克劳", flavor: "每场决斗前都会做详细的心理分析。" },
-    { name: "鲁弗斯·德里克", house: "格兰芬多", flavor: "沉默寡言，但魔杖从不犹豫。" },
-  ],
-  6: [
-    { name: "埃文·罗齐尔", house: "斯莱特林", flavor: "胸口的级长徽章在烛光下反光，眼神比咒语更冷。" },
-    { name: "阿米莉亚·博恩斯", house: "赫奇帕奇", flavor: "魔法部未来的新星，公正且强大。" },
-    { name: "吉迪翁·普威特", house: "格兰芬多", flavor: "凤凰社成员的弟弟，决斗天赋丝毫不逊。" },
-    { name: "伊万·多卡洛夫", house: "拉文克劳", flavor: "德姆斯特朗转学生，融合了两种决斗风格。" },
-    { name: "克拉丽莎·麦克米兰", house: "赫奇帕奇", flavor: "级长中的级长，连教授都对她点头称赞。" },
-    { name: "塞拉斯·雅克斯利", house: "斯莱特林", flavor: "法律执行司司长的侄子，决斗风格冷酷高效。" },
-  ],
-};
-
-function _pickNamedOpponent(grade) {
-  const pool = NAMED_OPPONENTS[grade];
-  if (!pool || pool.length === 0) return null;
-  return pool[Math.floor(Math.random() * pool.length)];
-}
-
-function _pickSecondFromPool(grade, excludeName) {
-  const pool = NAMED_OPPONENTS[grade];
-  if (!pool || pool.length === 0) return { portrait: "🧑‍🎓", name: "对手的助手" };
-  const filtered = pool.filter(n => n.name !== excludeName);
-  const pick = filtered.length > 0 ? filtered[Math.floor(Math.random() * filtered.length)] : pool[0];
-  return { portrait: "🧑‍🎓", name: pick.name };
-}
-
-const OPPONENTS = [
-  {
-    id: "firstYear",
-    name: "随机一年级新生",
-    house: "随机",
-    level: 1,
-    hp: 40,
-    spells: ["lumos", "accio"],
-    portrait: "🧑‍🎓",
-    flavorText: "手持魔杖，神情紧张，还没学会怎么稳定持杖。",
-    aiDelay: [1200, 2000],
-    aiAccuracy: 0.55,
-    rewardExp: 10,
-  },
-  {
-    id: "secondYear",
-    name: "随机二年级学生",
-    house: "格兰芬多",
-    level: 2,
-    hp: 55,
-    spells: ["expelliarmus", "protego", "accio"],
-    portrait: "🧑‍🎓",
-    flavorText: "已经上过一年魔咒课，除你武器用得还算流畅。",
-    aiDelay: [1000, 1800],
-    aiAccuracy: 0.65,
-    rewardExp: 18,
-  },
-  {
-    id: "thirdYear",
-    name: "随机三年级学生",
-    house: "拉文克劳",
-    level: 3,
-    hp: 70,
-    spells: ["expelliarmus", "protego", "stupefy", "accio"],
-    portrait: "🧑‍🎓",
-    flavorText: "镜片后的眼睛冷静地打量着你，显然做过充分准备。",
-    aiDelay: [800, 1500],
-    aiAccuracy: 0.72,
-    rewardExp: 28,
-  },
-  {
-    id: "fourthYear",
-    name: "随机四年级学生",
-    house: "斯莱特林",
-    level: 4,
-    hp: 85,
-    spells: ["expelliarmus", "protego", "stupefy", "diffindo", "depulso"],
-    portrait: "🧑‍🎓",
-    flavorText: "斜靠着墙，嘴角带着一丝傲慢。显然觉得这场决斗毫无悬念。",
-    aiDelay: [700, 1300],
-    aiAccuracy: 0.78,
-    rewardExp: 40,
-  },
-  {
-    id: "duelClub",
-    name: "随机决斗俱乐部选手",
-    house: "混合",
-    level: 5,
-    hp: 100,
-    spells: ["expelliarmus", "protego", "stupefy", "diffindo", "bombarda", "glacius"],
-    portrait: "⚔️",
-    flavorText: "这人在决斗俱乐部练了两年——每个手势都干净利落。",
-    aiDelay: [600, 1100],
-    aiAccuracy: 0.85,
-    rewardExp: 60,
-  },
-  {
-    id: "prefect",
-    name: "随机级长",
-    house: "拉文克劳",
-    level: 6,
-    hp: 120,
-    spells: ["protego", "stupefy", "expelliarmus", "incendio", "glacius", "arresto"],
-    portrait: "🏅",
-    flavorText: "胸口的级长徽章在烛光下反光。他/她的眼神平静，这种平静比愤怒更难对付。",
-    aiDelay: [500, 1000],
-    aiAccuracy: 0.88,
-    rewardExp: 85,
-  },
-];
-
-// ═══════════════════════════════════════════════════════════
-// 咒语效果定义（决斗中）
-// ═══════════════════════════════════════════════════════════
-
-const SPELL_EFFECTS = {
-  // 伤害型
-  stupefy:     { type: "damage",  base: 20, label: "昏昏倒地",  color: "#f87830", icon: "🔴" },
-  expelliarmus:{ type: "disarm",  base: 15, label: "除你武器",  color: "#f87878", icon: "💫" },
-  diffindo:    { type: "damage",  base: 22, label: "切割咒",    color: "#f8f870", icon: "⚡" },
-  bombarda:    { type: "damage",  base: 30, label: "爆炸咒",    color: "#f85820", icon: "💥" },
-  incendio:    { type: "damage",  base: 25, label: "燃烧咒",    color: "#f85820", icon: "🔥" },
-  depulso:     { type: "knockback",base:12, label: "击退咒",    color: "#c888f8", icon: "💨" },
-  glacius:     { type: "slow",    base: 18, label: "冰冻咒",    color: "#a8e8f8", icon: "❄️" },
-  relashio:    { type: "damage",  base: 14, label: "力松劲泄",  color: "#f8a850", icon: "✨" },
-  arresto:     { type: "slow",    base: 10, label: "停止咒",    color: "#88a8f8", icon: "🛑" },
-  // 防御型
-  protego:     { type: "shield",  base: 0,  label: "盔甲护身",  color: "#80c8f8", icon: "🛡️" },
-  // 工具型（决斗中减益效果）
-  accio:       { type: "disrupt", base: 8,  label: "飞来咒",    color: "#f8c870", icon: "🌀" },
-  lumos:       { type: "dazzle",  base: 5,  label: "荧光闪烁",  color: "#f8e870", icon: "✦" },
-  aguamenti:   { type: "disrupt", base: 10, label: "清水如泉",  color: "#78c8f8", icon: "💧" },
-  reparo:      { type: "heal",    base: 12, label: "修复如初",  color: "#a8f0c8", icon: "💚" },
-  scourgify:   { type: "disrupt", base: 6,  label: "清理一新",  color: "#c8f8e8", icon: "🌀" },
-  serpensortia:{ type: "damage",  base: 18, label: "乌龙出洞",  color: "#5cb85c", icon: "🐍" },
-};
-
-// 默认效果（未定义咒语）
-function getSpellEffect(spellId) {
-  return SPELL_EFFECTS[spellId] || { type: "damage", base: 10, label: spellId, color: "#aaaaaa", icon: "🔮" };
-}
-
-// ═══════════════════════════════════════════════════════════
-// 决斗状态
-// ═══════════════════════════════════════════════════════════
+import {
+  getSpellListWithStatus,
+  getSave,
+  setSave,
+  addLog,
+  renderLog,
+  GestureWidget,
+  getGestureBySpellId,
+  getGestureById,
+} from './duel-runtime.js';
+import {
+  OPPONENTS,
+  SPELL_EFFECTS,
+  _pickNamedOpponent,
+  _pickSecondFromPool,
+  getSpellEffect,
+} from './duel-config.js';
+import {
+  _getKnownCharacters,
+  _getEnemyTeams,
+  _getAffinityCooperation,
+  _buildRandomTeam,
+} from './duel-team-service.js';
+import { settleDuelResult } from './duel-result-service.js';
 
 let _duel = null;
 
@@ -334,99 +155,6 @@ function _renderModeSelect() {
 function _switchMode(mode) {
   _currentMode = mode;
   _renderModeSelect();
-}
-
-const KNOWN_CHARACTERS = {
-  minervaMcGonagall: { name: "米勒娃·麦格", portrait: "🐱", hp: 130, role: "tank", spells: ["protego","expelliarmus","stupefy","depulso"], aiAccuracy: 0.9, aiDelay: [400,800], enemyFlavorText: "麦格教授站在对面，方形眼镜后的眼神比她的咒语还锐利。", joinQuote: "「格兰芬多不会退缩。」" },
-  severusSnape: { name: "西弗勒斯·斯内普", portrait: "🧪", hp: 120, role: "damage", spells: ["expelliarmus","stupefy","diffindo","protego","incendio"], aiAccuracy: 0.92, aiDelay: [350,700], enemyFlavorText: "斯内普教授的黑袍在暗处飘动，他甚至懒得看你——但他的魔杖已经举起。", joinQuote: "「……别拖后腿。」" },
-  albusDumbledore: { name: "阿不思·邓布利多", portrait: "✨", hp: 200, role: "support", spells: ["protego","stupefy","expelliarmus","accio","incendio","bombarda"], aiAccuracy: 0.97, aiDelay: [300,600], enemyFlavorText: "邓布利多站在对面，半月形眼镜后的眼睛里有一种宁静的光芒。", joinQuote: "「偶尔出手也无妨。」" },
-  filiusFlitwick: { name: "弗立维·弗利维克", portrait: "🪄", hp: 95, role: "damage", spells: ["expelliarmus","stupefy","protego","diffindo","bombarda"], aiAccuracy: 0.88, aiDelay: [450,850], enemyFlavorText: "弗立维教授站在一摞书上，但他的魔杖挥舞速度比任何人都快。", joinQuote: "「决斗？当然！」" },
-  pomonaSprout: { name: "波莫纳·斯普劳特", portrait: "🌿", hp: 120, role: "tank", spells: ["protego","expelliarmus","stupefy","arresto","reparo"], aiAccuracy: 0.78, aiDelay: [700,1200], enemyFlavorText: "斯普劳特教授的围裙上还沾着泥土，但她握魔杖的手稳如磐石。", joinQuote: "「韧性比力量重要。」" },
-  quirrell: { name: "奎洛教授", portrait: "🧣", hp: 80, role: "damage", spells: ["stupefy","expelliarmus","protego","incendio"], aiAccuracy: 0.7, aiDelay: [800,1400], enemyFlavorText: "奎洛教授的围巾遮住了半张脸，但他的手在发抖。", joinQuote: "「呃……好吧，我试试……」" },
-  rolandaHooch: { name: "罗兰达·霍琦", portrait: "🦅", hp: 100, role: "damage", spells: ["expelliarmus","stupefy","protego","depulso"], aiAccuracy: 0.82, aiDelay: [500,900], enemyFlavorText: "霍琦教授的黄色鹰眼紧盯着你，像审视一个犯规的球员。", joinQuote: "「注意你的姿势！」" },
-  remusLupin: { name: "莱姆斯·卢平", portrait: "🐺", hp: 110, role: "support", spells: ["protego","expelliarmus","stupefy","diffindo","reparo"], aiAccuracy: 0.85, aiDelay: [500,900], enemyFlavorText: "卢平教授温和的笑容下是精准到毫厘的施法节奏。", joinQuote: "「防御永远比进攻重要。」" },
-  harry: { name: "哈利·波特", portrait: "⚡", hp: 100, role: "damage", spells: ["expelliarmus","protego","stupefy","accio"], aiAccuracy: 0.82, aiDelay: [500,900], enemyFlavorText: "哈利·波特站在对面，闪电伤疤下的绿眼睛专注而坚定。", joinQuote: "「一起上！我掩护你。」" },
-  hermione: { name: "赫敏·格兰杰", portrait: "📚", hp: 85, role: "support", spells: ["protego","expelliarmus","stupefy","reparo","arresto"], aiAccuracy: 0.86, aiDelay: [500,900], enemyFlavorText: "赫敏·格兰杰站在对面，魔杖握得标准而有力。", joinQuote: "「我已经背过了所有决斗规则。」" },
-  ron: { name: "罗恩·韦斯莱", portrait: "♟️", hp: 105, role: "tank", spells: ["expelliarmus","protego","stupefy","depulso"], aiAccuracy: 0.72, aiDelay: [700,1300], enemyFlavorText: "罗恩·韦斯莱握着魔杖，看起来有点紧张——但他的眼神告诉你，他不会轻易认输。", joinQuote: "「来吧！韦斯莱家的人不退缩！」" },
-  draco: { name: "德拉科·马尔福", portrait: "🐍", hp: 90, role: "damage", spells: ["expelliarmus","stupefy","depulso","protego"], aiAccuracy: 0.8, aiDelay: [550,1000], enemyFlavorText: "德拉科·马尔福站在对面，铂金色的头发在烛光下闪着冷光。", joinQuote: "「哼，你倒是有点胆量。」" },
-  neville: { name: "纳威·隆巴顿", portrait: "🌱", hp: 110, role: "tank", spells: ["expelliarmus","protego","stupefy","diffindo"], aiAccuracy: 0.68, aiDelay: [800,1500], enemyFlavorText: "纳威·隆巴顿握着魔杖的手在微微发抖——但他的脚没有后退一步。", joinQuote: "「我……我可以的。」" },
-  luna: { name: "卢娜·洛夫古德", portrait: "🌙", hp: 80, role: "support", spells: ["protego","expelliarmus","stupefy","accio","reparo"], aiAccuracy: 0.74, aiDelay: [700,1300], enemyFlavorText: "卢娜·洛夫古德站在对面，萝卜耳环晃来晃去，看起来完全没把决斗当回事。", joinQuote: "「Nargles说今天适合决斗。」" },
-  ginnyWeasley: { name: "金妮·韦斯莱", portrait: "🔥", hp: 90, role: "damage", spells: ["expelliarmus","stupefy","diffindo","bombarda","protego"], aiAccuracy: 0.83, aiDelay: [500,950], enemyFlavorText: "金妮·韦斯莱站在对面，红头发像火焰一样。", joinQuote: "「别小看我！」" },
-  fredWeasley: { name: "弗雷德·韦斯莱", portrait: "🃏", hp: 95, role: "damage", spells: ["expelliarmus","stupefy","bombarda","depulso","protego"], aiAccuracy: 0.78, aiDelay: [550,1000], enemyFlavorText: "弗雷德·韦斯莱站在对面，嘴角带着那种让你不安的笑。", joinQuote: "「我一个人也能赢——大概。」" },
-  georgeWeasley: { name: "乔治·韦斯莱", portrait: "🃏", hp: 95, role: "damage", spells: ["expelliarmus","stupefy","bombarda","depulso","protego"], aiAccuracy: 0.78, aiDelay: [550,1000], enemyFlavorText: "乔治·韦斯莱站在对面，表情和弗雷德一模一样。", joinQuote: "「我一个人就够。」" },
-  siriusBlack: { name: "小天狼星·布莱克", portrait: "🐕", hp: 115, role: "damage", spells: ["expelliarmus","stupefy","diffindo","bombarda","protego","incendio"], aiAccuracy: 0.87, aiDelay: [450,850], enemyFlavorText: "小天狼星·布莱克站在对面，黑发垂在眼前，眼神里有十二年的压抑。", joinQuote: "「终于来点有意思的了。」" },
-};
-
-function _getKnownCharacters() {
-  const result = [];
-  try {
-    const data = getSave();
-    Object.entries(KNOWN_CHARACTERS).forEach(([key, stats]) => {
-      const known = data.knownCharacters?.includes(key) || !!data.affinity?.[key];
-      if (known) {
-        const aff = data.affinity?.[key];
-        const v = typeof aff === 'object' ? (aff.value || 0) : (aff || 0);
-        let tier = 1;
-        if (v >= 80) tier = 5; else if (v >= 60) tier = 4; else if (v >= 40) tier = 3; else if (v >= 20) tier = 2; else if (v < 0) tier = -1;
-        result.push({ ...stats, characterKey: key, tierCurrent: tier, isStudent: false, canChallenge: true, canInvite: true });
-      }
-    });
-  } catch (e) {}
-  return result;
-}
-
-function _getEnemyTeams() {
-  if (window.duelData?.ENEMY_TEAMS?.length) return window.duelData.ENEMY_TEAMS;
-  return [
-    {
-      id: "slytherin_squad", name: "斯莱特林小队", icon: "🐍", difficulty: 2,
-      flavorText: "四个斯莱特林学生，步调一致，眼神里有同一种冷漠。",
-      members: [
-        { ...OPPONENTS[3], name: "德拉科式的四年级生" },
-        { ...OPPONENTS[2], name: "斯莱特林三年级" },
-        { ...OPPONENTS[2], name: "斯莱特林三年级" },
-        { ...OPPONENTS[1], name: "斯莱特林二年级" },
-      ],
-    },
-    {
-      id: "duel_club_elite", name: "决斗俱乐部精英队", icon: "⚔️", difficulty: 3,
-      flavorText: "他们在决斗俱乐部里见过太多阵势——对你们投来评估的目光。",
-      members: [
-        { ...OPPONENTS[4], name: "决斗俱乐部队长" },
-        { ...OPPONENTS[4], name: "决斗俱乐部老将" },
-        { ...OPPONENTS[3], name: "决斗俱乐部四年级" },
-        { ...OPPONENTS[3], name: "决斗俱乐部四年级" },
-      ],
-    },
-    {
-      id: "prefect_team", name: "级长团队", icon: "🏅", difficulty: 4,
-      flavorText: "四名级长，胸口的徽章在烛光下一齐发光。",
-      members: [
-        { ...OPPONENTS[5], name: "格兰芬多级长" },
-        { ...OPPONENTS[5], name: "拉文克劳级长" },
-        { ...OPPONENTS[5], name: "赫奇帕奇级长" },
-        { ...OPPONENTS[5], name: "斯莱特林级长" },
-      ],
-    },
-    {
-      id: "mixed_random", name: "随机混合对手", icon: "🎲", difficulty: 2,
-      flavorText: "来自不同学院、不同年级——唯一的共同点是今天想赢你。",
-      members: null, randomPool: OPPONENTS, randomCount: 4,
-    },
-  ];
-}
-
-function _getAffinityCooperation(characterKey) {
-  if (window.duelData?.getAffinityCooperation) return window.duelData.getAffinityCooperation(characterKey);
-  return { accuracyBonus: 0, healChance: 0, shieldPriority: false, label: "陌生" };
-}
-
-function _buildRandomTeam(pool, count) {
-  if (window.duelData?.buildRandomTeam) return window.duelData.buildRandomTeam(pool, count);
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count).map((o, i) => ({
-    ...o, name: `${o.name}${i > 0 ? `（${i+1}）` : ''}`,
-  }));
 }
 
 function _renderOpponentSelect() {
@@ -1561,75 +1289,11 @@ function _duelEnd(playerWon, playerSpells) {
   // ── 熟练度结算 ──────────────────────────────────────────
   // 每次成功命中：基础 +3，乘以平均精准度系数
   // 胜利额外加成 ×1.3，单场单咒上限 20
-  const profGains = [];
-  Object.entries(spellHits).forEach(([spellId, rec]) => {
-    if (rec.hits === 0) return;
-    const avgAccuracy = rec.totalAccuracy / rec.hits;
-    let gain = Math.round(rec.hits * 3 * (0.5 + avgAccuracy * 0.5));
-    if (playerWon) gain = Math.round(gain * 1.3);
-    gain = Math.min(gain, 20);
-    if (gain <= 0) return;
-    const newProf = window.gainProficiency?.(spellId, gain);
-    const spellInfo = playerSpells.find(s => s.id === spellId);
-    if (spellInfo && newProf !== undefined) {
-      profGains.push({ name: spellInfo.nameCn, gain, newProf, mastered: newProf >= 100 });
-    }
+  const { save, secondTag, profHTML } = settleDuelResult({
+    duel: _duel,
+    playerWon,
+    playerSpells,
   });
-
-  // ── 存档 ──────────────────────────────────────────────
-  const save = getSave();
-  if (!save.duelRecord) save.duelRecord = { wins: 0, losses: 0, totalRounds: 0 };
-  save.duelRecord.totalRounds += round - 1;
-  if (playerWon) save.duelRecord.wins++;
-  else save.duelRecord.losses++;
-  setSave(save);
-  // ── 学生角色好感度触发（决斗胜利）─────────────────────
-  if (playerWon) {
-    window.affinityUI?.tryStudentActionEncounter('duelWin');
-    window.affinityUI?.checkStudentSpecialTriggers('duelWin', { 
-      opponentLevel: opponent.level || 1 
-    });
-  }
-
-  window._questHook_duelEnd?.(playerWon, false);
-
-  if (opponent.characterKey) {
-    const delta = playerWon ? 3 : -1;
-    window.affinitySystem?.addAffinity(opponent.characterKey, delta, 'duel');
-    const charName = opponent.name;
-    const deltaText = delta > 0 ? `+${delta}` : `${delta}`;
-    addLog(`❤️ ${charName}好感度${deltaText}（决斗${playerWon ? '胜利' : '失败'}）`);
-  }
-
-  if (_duel.second && _duel.second.active && _duel.second.characterKey) {
-    const secDelta = playerWon ? 4 : 1;
-    window.affinitySystem?.addAffinity(_duel.second.characterKey, secDelta, 'duel');
-    const secDeltaText = secDelta > 0 ? `+${secDelta}` : `${secDelta}`;
-    addLog(`❤️ ${_duel.second.name}好感度${secDeltaText}（决斗${playerWon ? '协助胜利' : '并肩作战'}）`);
-  }
-
-  const secondInfo = _duel.second;
-  const secondTag = secondInfo ? (secondInfo.active ? `（${secondInfo.name} 接替了你）` : '') : '';
-
-  const resultText = playerWon
-    ? `🏆 你赢得了对 ${opponent.name} 的决斗！（${round-1} 回合）${secondTag}`
-    : `💔 你在第 ${round-1} 回合被 ${opponent.name} 击败了。${secondTag}`;
-  addLog(resultText);
-  if (window.renderLog) renderLog();
-
-  // ── 熟练度展示 HTML ────────────────────────────────────
-  const profHTML = profGains.length > 0 ? `
-    <div class="duel-prof-gains">
-      <div class="duel-prof-gains-title">⚡ 决斗熟练度提升</div>
-      ${profGains.map(g => `
-        <div class="duel-prof-gain-row">
-          <span class="duel-prof-gain-name">${g.name}</span>
-          <span class="duel-prof-gain-val">+${g.gain}%</span>
-          <span class="duel-prof-gain-total ${g.mastered ? 'duel-prof-mastered' : ''}">
-            ${g.mastered ? '【精通】' : `→ ${g.newProf}%`}
-          </span>
-        </div>`).join("")}
-    </div>` : "";
 
   area.innerHTML = `
     <div class="duel-result ${playerWon ? 'duel-result-win' : 'duel-result-lose'}">

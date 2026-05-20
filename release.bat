@@ -27,6 +27,7 @@ if not exist "%backup_folder%" mkdir "%backup_folder%"
 echo [1/5] Commit and push code to GitHub...
 git add . ":!.claude" ":!.trae"
 git reset -q -- .claude .trae 2>nul
+git add -u -- .claude\worktrees 2>nul
 
 git commit -m "Release v%version%"
 if errorlevel 1 (

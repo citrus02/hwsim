@@ -1,604 +1,6102 @@
 // literature-questionBank.js
 // 霍格沃茨英国文学课程 - 随堂测验题库（完整版）
 // 教授：伊莱莎·洛夫古德
-// 每课3题：basic（+2分）、medium（0分，全对得E）、hard（-1分）
+// 每课 6 题（5 道选择题 + 1 道开放题），共 420 题
+// 题目以 course/muggle-academic/literature-lesson.js 的 keyPoints 和课中提问为同步源
 
 export const questionBank = [
-  // ==================== 第1章 英国文学的起源（第1-3课） ====================
   {
-    lesson: 1, title: "古英语与贝奥武夫",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《贝奥武夫》是哪国的史诗作品？", options: ["A. 法国", "B. 英国", "C. 德国", "D. 意大利"], answer: "B", knowledgePoint: "贝奥武夫", analysis: "《贝奥武夫》是英国文学中最古老的史诗，创作于盎格鲁-撒克逊时期，是英语文学的起点。" },
-      { type: "choice", difficulty: 2, text: "《贝奥武夫》讲述的是关于什么主题的故事？", options: ["A. 爱情与背叛", "B. 英雄与怪物的战斗", "C. 宫廷阴谋", "D. 海上冒险"], answer: "B", knowledgePoint: "史诗主题", analysis: "《贝奥武夫》讲述英雄贝奥武夫与怪物格伦德尔、格伦德尔的母亲以及恶龙战斗的故事，体现了盎格鲁-撒克逊人的英雄价值观。" },
-      { type: "choice", difficulty: 3, text: "古英语与现代英语的关系是：", options: ["A. 完全不同的语言", "B. 古英语是现代英语的祖先，经过千年演变", "C. 现代英语是从古英语直接翻译过来的", "D. 两者没有关系"], answer: "B", knowledgePoint: "英语语言演变", analysis: "现代英语是从古英语经过诺曼征服、中古英语时期逐渐演变而来，虽然词汇和语法变化很大，但核心词汇和语法结构仍有传承。" }
-    ]
-  },
-  {
-    lesson: 2, title: "中世纪叙事与乔叟",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《坎特伯雷故事集》的作者是：", options: ["A. 莎士比亚", "B. 乔叟", "C. 弥尔顿", "D. 斯宾塞"], answer: "B", knowledgePoint: "乔叟", analysis: "杰弗里·乔叟是英国中世纪最伟大的诗人，《坎特伯雷故事集》是他的代表作。" },
-      { type: "choice", difficulty: 2, text: "《坎特伯雷故事集》采用什么叙事框架？", options: ["A. 书信体", "B. 朝圣者讲故事", "C. 编年史", "D. 自传体"], answer: "B", knowledgePoint: "叙事框架", analysis: "《坎特伯雷故事集》讲述一群朝圣者前往坎特伯雷大教堂途中轮流讲故事的故事，展现了中世纪英国社会的众生相。" },
-      { type: "choice", difficulty: 3, text: "乔叟对英国文学的最大贡献是：", options: ["A. 引入了十四行诗", "B. 确立了英语作为文学语言", "C. 开创了小说体裁", "D. 创造了新的诗歌韵律"], answer: "B", knowledgePoint: "乔叟的贡献", analysis: "乔叟用伦敦方言写作，使英语摆脱了拉丁语和法语的统治，确立了英语作为文学语言的地位。" }
-    ]
-  },
-  {
-    lesson: 3, title: "文艺复兴的曙光",
-    questions: [
-      { type: "choice", difficulty: 1, text: "印刷术的传入对英国文学产生了什么影响？", options: ["A. 使书籍变得昂贵", "B. 促进了知识的传播", "C. 减少了读者数量", "D. 限制了文学创作"], answer: "B", knowledgePoint: "印刷术的影响", analysis: "印刷术使书籍得以大量复制，降低了成本，促进了知识的传播和阅读的普及。" },
-      { type: "choice", difficulty: 2, text: "文艺复兴时期的核心思想是什么？", options: ["A. 宗教虔诚", "B. 人文主义", "C. 禁欲主义", "D. 科学主义"], answer: "B", knowledgePoint: "人文主义", analysis: "人文主义强调人的价值和尊严，关注现实生活，是文艺复兴时期的核心思想。" },
-      { type: "choice", difficulty: 3, text: "从手抄本到印刷书籍的转变意味着：", options: ["A. 文学变得更加精英化", "B. 阅读从少数人扩展到更广泛的人群", "C. 文学作品的质量下降", "D. 作家不再需要手写创作"], answer: "B", knowledgePoint: "阅读大众化", analysis: "印刷术使书籍不再是贵族的奢侈品，普通民众也能接触到文学作品，阅读群体大大扩展。" }
-    ]
-  },
-
-  // ==================== 第2章 莎士比亚的魔法（第4-6课） ====================
-  {
-    lesson: 4, title: "伊丽莎白时代的剧院",
-    questions: [
-      { type: "choice", difficulty: 1, text: "莎士比亚生活在哪个时期？", options: ["A. 中世纪", "B. 伊丽莎白时代", "C. 维多利亚时代", "D. 现代"], answer: "B", knowledgePoint: "莎士比亚时代", analysis: "威廉·莎士比亚（1564-1616）生活在英国伊丽莎白一世和詹姆士一世时期，这是英国文学的黄金时代。" },
-      { type: "choice", difficulty: 2, text: "莎士比亚的戏剧最初在哪里演出？", options: ["A. 伦敦塔", "B. 环球剧院", "C. 白金汉宫", "D. 牛津大学"], answer: "B", knowledgePoint: "环球剧院", analysis: "莎士比亚的大部分戏剧在伦敦的环球剧院演出，这座剧院建于1599年，是伊丽莎白时代最著名的公共剧院。" },
-      { type: "choice", difficulty: 3, text: "莎士比亚除了戏剧还创作了什么？", options: ["A. 历史著作", "B. 十四行诗", "C. 哲学论文", "D. 以上都不是"], answer: "B", knowledgePoint: "莎士比亚诗歌", analysis: "莎士比亚创作了154首十四行诗，这些诗歌探讨爱情、时间、美等主题，与他的戏剧一样具有极高的文学价值。" }
-    ]
-  },
-  {
-    lesson: 5, title: "悲剧的力量",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《哈姆雷特》中最著名的台词是：", options: ["A. 生存还是毁灭", "B. To be or not to be", "C. 这是一个问题", "D. 以上都是"], answer: "D", knowledgePoint: "哈姆雷特独白", analysis: "\"To be or not to be\"是《哈姆雷特》中最著名的独白开头，中文译为\"生存还是毁灭\"，表达了主人公对生死的思考。" },
-      { type: "choice", difficulty: 2, text: "《麦克白》的核心主题是什么？", options: ["A. 爱情与忠诚", "B. 野心与罪恶", "C. 友谊与背叛", "D. 战争与和平"], answer: "B", knowledgePoint: "麦克白主题", analysis: "《麦克白》讲述苏格兰将军麦克白因野心驱使，谋杀国王篡夺王位，最终走向毁灭的故事，探讨了野心与罪恶的主题。" },
-      { type: "choice", difficulty: 3, text: "莎士比亚悲剧的共同特点是：", options: ["A. 皆大欢喜的结局", "B. 英雄因性格缺陷而毁灭", "C. 轻松幽默的基调", "D. 完美无缺的主角"], answer: "B", knowledgePoint: "悲剧特点", analysis: "莎士比亚悲剧的主角往往是高贵的英雄，但因性格缺陷或命运捉弄而走向悲剧结局，体现了古希腊悲剧的传统。" }
-    ]
-  },
-  {
-    lesson: 6, title: "喜剧的智慧",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《仲夏夜之梦》发生在哪里？", options: ["A. 伦敦街头", "B. 雅典森林", "C. 威尼斯水城", "D. 苏格兰城堡"], answer: "B", knowledgePoint: "仲夏夜之梦", analysis: "《仲夏夜之梦》的故事发生在雅典城外的一片森林中，充满了奇幻元素和魔法。" },
-      { type: "choice", difficulty: 2, text: "莎士比亚喜剧通常以什么结尾？", options: ["A. 悲剧性死亡", "B. 婚礼和团圆", "C. 英雄凯旋", "D. 道德说教"], answer: "B", knowledgePoint: "喜剧结局", analysis: "莎士比亚的喜剧通常以婚礼和团圆结局，体现了对和谐与幸福的追求。" },
-      { type: "choice", difficulty: 3, text: "莎士比亚喜剧的语言特点是：", options: ["A. 严肃庄重", "B. 充满双关语和文字游戏", "C. 晦涩难懂", "D. 简洁朴素"], answer: "B", knowledgePoint: "喜剧语言", analysis: "莎士比亚喜剧充满机智的双关语、俏皮话和文字游戏，展现了他高超的语言技巧。" }
-    ]
-  },
-
-  // ==================== 第3章 浪漫主义诗歌（第7-9课） ====================
-  {
-    lesson: 7, title: "自然的歌唱者",
-    questions: [
-      { type: "choice", difficulty: 1, text: "华兹华斯是哪个文学流派的代表诗人？", options: ["A. 古典主义", "B. 浪漫主义", "C. 现实主义", "D. 现代主义"], answer: "B", knowledgePoint: "浪漫主义", analysis: "威廉·华兹华斯是英国浪漫主义诗歌的代表人物，与柯勒律治共同开创了浪漫主义文学运动。" },
-      { type: "choice", difficulty: 2, text: "华兹华斯的诗歌主要描写什么？", options: ["A. 城市生活", "B. 自然与乡村", "C. 宫廷生活", "D. 战争场景"], answer: "B", knowledgePoint: "华兹华斯主题", analysis: "华兹华斯的诗歌以自然和乡村生活为主题，强调自然对人类心灵的治愈作用。" },
-      { type: "choice", difficulty: 3, text: "浪漫主义诗歌与古典主义诗歌的主要区别是：", options: ["A. 更加注重理性", "B. 强调个人情感和想象力", "C. 严格遵守韵律规则", "D. 主题更加宏大"], answer: "B", knowledgePoint: "浪漫主义特点", analysis: "浪漫主义强调个人情感、想象力和自然，与古典主义的理性、秩序和规则形成对比。" }
-    ]
-  },
-  {
-    lesson: 8, title: "激情与永恒",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《西风颂》的作者是：", options: ["A. 华兹华斯", "B. 雪莱", "C. 济慈", "D. 拜伦"], answer: "B", knowledgePoint: "雪莱", analysis: "珀西·雪莱是英国浪漫主义诗人，《西风颂》是他最著名的作品之一，表达了对自由和理想的追求。" },
-      { type: "choice", difficulty: 2, text: "济慈的诗歌追求什么？", options: ["A. 政治变革", "B. 美与永恒", "C. 社会批判", "D. 宗教信仰"], answer: "B", knowledgePoint: "济慈美学", analysis: "约翰·济慈的诗歌追求美与永恒，代表作包括《秋颂》《夜莺颂》等。" },
-      { type: "choice", difficulty: 3, text: "拜伦式英雄具有什么特点？", options: ["A. 温顺善良", "B. 孤独、叛逆、充满激情", "C. 循规蹈矩", "D. 淡泊名利"], answer: "B", knowledgePoint: "拜伦式英雄", analysis: "拜伦式英雄是拜伦诗歌中塑造的一类人物，他们孤独、叛逆、充满激情，挑战传统社会规范。" }
-    ]
-  },
-  {
-    lesson: 9, title: "诗歌的形式",
-    questions: [
-      { type: "choice", difficulty: 1, text: "十四行诗有多少行？", options: ["A. 10行", "B. 12行", "C. 14行", "D. 16行"], answer: "C", knowledgePoint: "十四行诗", analysis: "十四行诗是一种有固定格式的诗歌形式，通常由14行组成，有特定的韵律和押韵方式。" },
-      { type: "choice", difficulty: 2, text: "诗歌中重复出现的节奏模式叫什么？", options: ["A. 押韵", "B. 韵律", "C. 意象", "D. 比喻"], answer: "B", knowledgePoint: "诗歌韵律", analysis: "韵律是诗歌中重复出现的节奏模式，是诗歌音乐性的重要组成部分。" },
-      { type: "choice", difficulty: 3, text: "比喻和隐喻的区别是：", options: ["A. 比喻用\"像\"或\"如\"连接，隐喻直接等同", "B. 隐喻用\"像\"或\"如\"连接，比喻直接等同", "C. 两者没有区别", "D. 比喻更抽象"], answer: "A", knowledgePoint: "修辞区别", analysis: "比喻是用\"像\"或\"如\"将两个事物进行比较，而隐喻则直接将一个事物等同于另一个事物，更加直接和隐含。" }
-    ]
-  },
-
-  // ==================== 第4章 维多利亚小说（第10-12课） ====================
-  {
-    lesson: 10, title: "狄更斯的伦敦",
-    questions: [
-      { type: "choice", difficulty: 1, text: "以下哪位是维多利亚时代最著名的小说家？", options: ["A. 海明威", "B. 狄更斯", "C. 托尔斯泰", "D. 卡夫卡"], answer: "B", knowledgePoint: "维多利亚小说", analysis: "查尔斯·狄更斯是维多利亚时代最具代表性的小说家，作品包括《雾都孤儿》《大卫·科波菲尔》《双城记》等。" },
-      { type: "choice", difficulty: 2, text: "狄更斯的小说主要关注什么主题？", options: ["A. 宫廷爱情", "B. 社会现实与人道主义", "C. 科幻冒险", "D. 神话传说"], answer: "B", knowledgePoint: "狄更斯主题", analysis: "狄更斯的小说深刻描绘了维多利亚时代的社会现实，关注贫困、童工、社会不公等问题，充满人道主义关怀。" },
-      { type: "choice", difficulty: 3, text: "《双城记》的背景是：", options: ["A. 美国独立战争", "B. 法国大革命", "C. 英国工业革命", "D. 第一次世界大战"], answer: "B", knowledgePoint: "双城记背景", analysis: "《双城记》以法国大革命为背景，讲述了伦敦和巴黎两个城市的故事，探讨了革命、复仇和牺牲的主题。" }
-    ]
-  },
-  {
-    lesson: 11, title: "奥斯汀的优雅",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《傲慢与偏见》的作者是：", options: ["A. 夏洛蒂·勃朗特", "B. 简·奥斯汀", "C. 艾米莉·勃朗特", "D. 乔治·艾略特"], answer: "B", knowledgePoint: "简·奥斯汀", analysis: "简·奥斯汀是英国著名女作家，代表作包括《傲慢与偏见》《理智与情感》《爱玛》等。" },
-      { type: "choice", difficulty: 2, text: "《傲慢与偏见》中伊丽莎白拒绝了谁的求婚？", options: ["A. 达西先生", "B. 柯林斯先生", "C. 威克姆先生", "D. 宾利先生"], answer: "B", knowledgePoint: "傲慢与偏见情节", analysis: "伊丽莎白最初拒绝了柯林斯先生的求婚，后来也拒绝了达西先生的第一次求婚，体现了她独立的性格。" },
-      { type: "choice", difficulty: 3, text: "奥斯汀小说的独特之处在于：", options: ["A. 宏大的历史叙事", "B. 细腻的社会风俗描写和幽默讽刺", "C. 奇幻的魔法元素", "D. 激烈的戏剧冲突"], answer: "B", knowledgePoint: "奥斯汀风格", analysis: "奥斯汀的小说以细腻的社会风俗描写、机智的对话和温和的幽默讽刺著称，展现了乡绅家庭的生活和婚姻问题。" }
-    ]
-  },
-  {
-    lesson: 12, title: "勃朗特姐妹",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《简·爱》的作者是：", options: ["A. 安妮·勃朗特", "B. 艾米莉·勃朗特", "C. 夏洛蒂·勃朗特", "D. 简·奥斯汀"], answer: "C", knowledgePoint: "夏洛蒂·勃朗特", analysis: "夏洛蒂·勃朗特是勃朗特三姐妹中最著名的一位，《简·爱》是她的代表作。" },
-      { type: "choice", difficulty: 2, text: "《呼啸山庄》的作者是：", options: ["A. 夏洛蒂·勃朗特", "B. 艾米莉·勃朗特", "C. 安妮·勃朗特", "D. 简·奥斯汀"], answer: "B", knowledgePoint: "艾米莉·勃朗特", analysis: "《呼啸山庄》是艾米莉·勃朗特唯一的小说，以其强烈的情感和哥特式风格著称。" },
-      { type: "choice", difficulty: 3, text: "勃朗特姐妹的作品共同特点是：", options: ["A. 轻松幽默的喜剧风格", "B. 强烈的情感和独立的女性形象", "C. 宫廷生活描写", "D. 田园牧歌式的宁静"], answer: "B", knowledgePoint: "勃朗特风格", analysis: "勃朗特姐妹的作品都塑造了坚强独立的女性形象，充满强烈的情感和对社会规范的挑战。" }
-    ]
-  },
-
-  // ==================== 第5章 现代文学探索（第13-15课） ====================
-  {
-    lesson: 13, title: "意识流的觉醒",
-    questions: [
-      { type: "choice", difficulty: 1, text: "意识流文学的特点是：", options: ["A. 注重外部事件描写", "B. 深入人物内心世界", "C. 严格遵循时间顺序", "D. 简洁明快的语言"], answer: "B", knowledgePoint: "意识流", analysis: "意识流文学打破传统叙事方式，深入人物的内心世界，展现人物的意识流动和内心独白。" },
-      { type: "choice", difficulty: 2, text: "弗吉尼亚·伍尔夫是哪个文学流派的代表？", options: ["A. 浪漫主义", "B. 现代主义", "C. 现实主义", "D. 古典主义"], answer: "B", knowledgePoint: "伍尔夫", analysis: "弗吉尼亚·伍尔夫是英国现代主义文学的重要代表，作品包括《达洛维夫人》《到灯塔去》等。" },
-      { type: "choice", difficulty: 3, text: "《尤利西斯》的作者是：", options: ["A. 乔伊斯", "B. 伍尔夫", "C. 普鲁斯特", "D. 福克纳"], answer: "A", knowledgePoint: "乔伊斯", analysis: "詹姆斯·乔伊斯的《尤利西斯》是意识流文学的巅峰之作，以其复杂的结构和深刻的心理描写著称。" }
-    ]
-  },
-  {
-    lesson: 14, title: "战争与创伤",
-    questions: [
-      { type: "choice", difficulty: 1, text: "一战对英国文学产生了什么影响？", options: ["A. 促进了乐观主义文学", "B. 产生了战争文学和反战主题", "C. 文学创作停滞", "D. 回归传统文学形式"], answer: "B", knowledgePoint: "战争文学", analysis: "第一次世界大战带来了巨大的创伤，促使作家们反思战争的意义，产生了大量战争文学和反战主题的作品。" },
-      { type: "choice", difficulty: 2, text: "存在主义文学关注什么主题？", options: ["A. 爱情与婚姻", "B. 自由、责任与存在意义", "C. 历史事件", "D. 自然美景"], answer: "B", knowledgePoint: "存在主义", analysis: "存在主义文学探讨人类存在的意义、自由与责任，反映了战后人们对人生意义的思考。" },
-      { type: "choice", difficulty: 3, text: "荒诞派文学的特点是：", options: ["A. 情节连贯完整", "B. 语言清晰易懂", "C. 表现世界的荒诞和人生的无意义", "D. 乐观积极的基调"], answer: "C", knowledgePoint: "荒诞派", analysis: "荒诞派文学通过荒诞的情节和破碎的语言，表现现代世界的荒诞性和人类存在的无意义感。" }
-    ]
-  },
-  {
-    lesson: 15, title: "多元的声音",
-    questions: [
-      { type: "choice", difficulty: 1, text: "后殖民文学关注什么主题？", options: ["A. 古代神话", "B. 殖民历史、文化身份和种族问题", "C. 宫廷生活", "D. 自然描写"], answer: "B", knowledgePoint: "后殖民文学", analysis: "后殖民文学探讨殖民历史的影响、文化身份的建构以及种族和文化冲突等问题。" },
-      { type: "choice", difficulty: 2, text: "萨尔曼·鲁西迪的作品属于什么文学范畴？", options: ["A. 浪漫主义", "B. 后殖民文学", "C. 古典主义", "D. 科幻文学"], answer: "B", knowledgePoint: "鲁西迪", analysis: "萨尔曼·鲁西迪是后殖民文学的重要代表，代表作《午夜之子》探讨了印度的历史和文化身份。" },
-      { type: "choice", difficulty: 3, text: "文学的边界拓展意味着：", options: ["A. 文学变得更加单一", "B. 接纳不同文化背景的声音和主题", "C. 回归传统文学形式", "D. 限制文学创作的主题"], answer: "B", knowledgePoint: "文学多元化", analysis: "当代文学越来越多元化，接纳来自不同文化、种族和背景的作家，拓展了文学的主题和形式。" }
-    ]
-  },
-
-  // ==================== 第6章 期中复习与考试（第16-20课） ====================
-  {
-    lesson: 16, title: "诗歌专题复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "诗歌鉴赏的第一步是：", options: ["A. 背诵诗歌", "B. 理解诗歌的字面意思", "C. 分析作者生平", "D. 查找注释"], answer: "B", knowledgePoint: "诗歌鉴赏步骤", analysis: "诗歌鉴赏首先要理解诗歌的字面意思，包括词汇、语法和基本内容。" },
-      { type: "choice", difficulty: 2, text: "分析诗歌意象的作用是：", options: ["A. 增加诗歌的长度", "B. 传达情感和主题", "C. 使诗歌难以理解", "D. 符合韵律要求"], answer: "B", knowledgePoint: "意象分析", analysis: "意象是诗歌中表达情感和主题的重要手段，通过具体形象传达抽象的情感和思想。" },
-      { type: "choice", difficulty: 3, text: "比较不同诗人风格时应关注：", options: ["A. 诗人的身高", "B. 诗歌的韵律、意象和主题表达", "C. 诗人的出生日期", "D. 诗歌的排版方式"], answer: "B", knowledgePoint: "风格比较", analysis: "比较诗人风格应关注他们在韵律、意象、语言和主题表达等方面的差异。" }
-    ]
-  },
-  {
-    lesson: 17, title: "小说专题复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "小说的三要素是：", options: ["A. 时间、地点、人物", "B. 人物、情节、环境", "C. 开头、发展、结尾", "D. 标题、作者、出版社"], answer: "B", knowledgePoint: "小说要素", analysis: "小说的三要素是人物、情节和环境，这是分析小说的基础。" },
-      { type: "choice", difficulty: 2, text: "分析人物形象应关注：", options: ["A. 人物的名字", "B. 人物的言行、心理和动机", "C. 人物的出场顺序", "D. 人物的服装描写"], answer: "B", knowledgePoint: "人物分析", analysis: "分析人物形象需要关注人物的语言、行为、心理活动和内在动机。" },
-      { type: "choice", difficulty: 3, text: "小说的主题是指：", options: ["A. 故事发生的地点", "B. 作者通过故事表达的核心思想", "C. 小说的字数", "D. 人物的数量"], answer: "B", knowledgePoint: "主题分析", analysis: "主题是作者通过故事想要表达的核心思想或观点，是小说的灵魂。" }
-    ]
-  },
-  {
-    lesson: 18, title: "戏剧专题复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "戏剧的基本要素是：", options: ["A. 诗歌、散文、小说", "B. 剧本、演员、舞台", "C. 开头、高潮、结尾", "D. 时间、地点、人物"], answer: "B", knowledgePoint: "戏剧要素", analysis: "戏剧的基本要素包括剧本（文本）、演员（表演）和舞台（表演空间）。" },
-      { type: "choice", difficulty: 2, text: "戏剧冲突的作用是：", options: ["A. 让剧情平淡无奇", "B. 推动剧情发展，展现人物性格", "C. 使观众感到无聊", "D. 增加剧本的页数"], answer: "B", knowledgePoint: "戏剧冲突", analysis: "戏剧冲突是推动剧情发展的动力，通过冲突可以展现人物性格和主题。" },
-      { type: "choice", difficulty: 3, text: "舞台指示的作用是：", options: ["A. 告诉观众剧情", "B. 指导演员表演和舞台布置", "C. 解释剧本的历史背景", "D. 提供作者的生平信息"], answer: "B", knowledgePoint: "舞台指示", analysis: "舞台指示是剧本中指导演员表演、舞台布置和场景转换的说明文字。" }
-    ]
-  },
-  {
-    lesson: 19, title: "综合练习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "阅读理解中，找出主旨句的目的是：", options: ["A. 练习写字", "B. 把握文章的中心思想", "C. 学习生词", "D. 背诵文章"], answer: "B", knowledgePoint: "阅读理解技巧", analysis: "找出主旨句是把握文章中心思想的关键步骤。" },
-      { type: "choice", difficulty: 2, text: "文学常识题考察的是：", options: ["A. 数学公式", "B. 作家、作品及其背景知识", "C. 科学实验", "D. 历史年代"], answer: "B", knowledgePoint: "文学常识", analysis: "文学常识题考察对作家、作品及其背景知识的了解。" },
-      { type: "choice", difficulty: 3, text: "考试中合理分配时间的策略是：", options: ["A. 先做难题", "B. 先做简单题，再回头做难题", "C. 随意答题", "D. 只做选择题"], answer: "B", knowledgePoint: "考试策略", analysis: "合理的时间分配策略是先完成简单题，确保得分，再处理难题。" }
-    ]
-  },
-  {
-    lesson: 20, title: "期中考试",
-    questions: [
-      { type: "choice", difficulty: 1, text: "期中考试的范围通常是：", options: ["A. 全学年内容", "B. 半学期内容", "C. 仅复习课内容", "D. 下学期内容"], answer: "B", knowledgePoint: "考试范围", analysis: "期中考试通常考察半学期的学习内容。" },
-      { type: "choice", difficulty: 2, text: "文学考试中，赏析题需要：", options: ["A. 复述故事内容", "B. 分析作品的艺术特色和主题", "C. 默写课文", "D. 列举作者生平"], answer: "B", knowledgePoint: "赏析题", analysis: "赏析题要求分析作品的艺术特色、语言风格和主题思想。" },
-      { type: "choice", difficulty: 3, text: "考试评分标准通常包括：", options: ["A. 字迹工整程度", "B. 答案的准确性、完整性和深度", "C. 答题速度", "D. 答题纸的整洁度"], answer: "B", knowledgePoint: "评分标准", analysis: "文学考试评分主要看答案的准确性、完整性和分析深度。" }
-    ]
-  },
-
-  // ==================== 第7章 文学作品精读（第21-24课） ====================
-  {
-    lesson: 21, title: "《哈姆雷特》精读",
-    questions: [
-      { type: "choice", difficulty: 1, text: "哈姆雷特的父亲是怎么死的？", options: ["A. 病逝", "B. 被克劳狄斯毒杀", "C. 战死沙场", "D. 意外身亡"], answer: "B", knowledgePoint: "哈姆雷特情节", analysis: "哈姆雷特的父亲被弟弟克劳狄斯毒杀，这是整个悲剧的起因。" },
-      { type: "choice", difficulty: 2, text: "哈姆雷特为什么迟迟不复仇？", options: ["A. 害怕死亡", "B. 性格犹豫，思考人生意义", "C. 忘记了父亲的嘱托", "D. 喜欢克劳狄斯"], answer: "B", knowledgePoint: "哈姆雷特性格", analysis: "哈姆雷特的犹豫源于他对人生意义的深刻思考和对复仇的道德考量。" },
-      { type: "choice", difficulty: 3, text: "《哈姆雷特》中的象征手法包括：", options: ["A. 光明与黑暗的对立", "B. 疾病与腐败的隐喻", "C. 以上都是", "D. 以上都不是"], answer: "C", knowledgePoint: "象征手法", analysis: "《哈姆雷特》运用了丰富的象征手法，光明与黑暗的对立象征善恶，疾病隐喻社会的腐败。" }
-    ]
-  },
-  {
-    lesson: 22, title: "《傲慢与偏见》精读",
-    questions: [
-      { type: "choice", difficulty: 1, text: "伊丽莎白的性格特点是：", options: ["A. 温顺顺从", "B. 独立、聪明、有主见", "C. 冷漠自私", "D. 虚荣浅薄"], answer: "B", knowledgePoint: "伊丽莎白性格", analysis: "伊丽莎白是一个独立、聪明、有主见的女性，不愿为了金钱和地位牺牲自己的幸福。" },
-      { type: "choice", difficulty: 2, text: "达西先生最初为什么被伊丽莎白误解？", options: ["A. 他过于傲慢", "B. 他长得不好看", "C. 他没有钱", "D. 他不爱说话"], answer: "A", knowledgePoint: "傲慢与偏见", analysis: "达西先生最初因傲慢的态度被伊丽莎白误解，两人经历了种种波折才最终走到一起。" },
-      { type: "choice", difficulty: 3, text: "小说中\"傲慢\"与\"偏见\"分别指：", options: ["A. 伊丽莎白的傲慢，达西的偏见", "B. 达西的傲慢，伊丽莎白的偏见", "C. 两人都很傲慢", "D. 两人都有偏见"], answer: "B", knowledgePoint: "主题分析", analysis: "达西因社会地位和财富而显得傲慢，伊丽莎白则因对达西的第一印象而产生偏见，小说讲述了两人克服这些缺陷的过程。" }
-    ]
-  },
-  {
-    lesson: 23, title: "《呼啸山庄》精读",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《呼啸山庄》的主人公是：", options: ["A. 希斯克利夫", "B. 凯瑟琳", "C. 林顿", "D. 耐莉"], answer: "A", knowledgePoint: "呼啸山庄主角", analysis: "希斯克利夫是《呼啸山庄》的核心人物，他的爱恨情仇构成了小说的主线。" },
-      { type: "choice", difficulty: 2, text: "希斯克利夫为什么复仇？", options: ["A. 为了金钱", "B. 因失去凯瑟琳和遭受的屈辱", "C. 为了权力", "D. 为了好玩"], answer: "B", knowledgePoint: "复仇动机", analysis: "希斯克利夫因失去爱人凯瑟琳以及在恩肖家遭受的屈辱而展开复仇。" },
-      { type: "choice", difficulty: 3, text: "小说中荒野象征什么？", options: ["A. 美丽的风景", "B. 自由、野性和原始的力量", "C. 危险的地方", "D. 人类的文明"], answer: "B", knowledgePoint: "象征意义", analysis: "荒野在小说中象征着自由、野性和原始的力量，与庄园代表的文明形成对比。" }
-    ]
-  },
-  {
-    lesson: 24, title: "诗歌名篇精读",
-    questions: [
-      { type: "choice", difficulty: 1, text: "华兹华斯的《我独自漫游像一朵云》描写的是：", options: ["A. 城市生活", "B. 水仙花", "C. 战争场景", "D. 宫廷舞会"], answer: "B", knowledgePoint: "华兹华斯诗歌", analysis: "这首诗描写了诗人看到一片水仙花时的喜悦和感动。" },
-      { type: "choice", difficulty: 2, text: "济慈的《秋颂》表达了什么情感？", options: ["A. 对秋天的赞美和对美的感悟", "B. 对冬天的恐惧", "C. 对春天的渴望", "D. 对夏天的怀念"], answer: "A", knowledgePoint: "秋颂主题", analysis: "《秋颂》通过对秋天景象的描绘，表达了对自然之美的赞美和对生命的深刻感悟。" },
-      { type: "choice", difficulty: 3, text: "雪莱《西风颂》中\"冬天来了，春天还会远吗\"表达了什么？", options: ["A. 对冬天的喜爱", "B. 对未来的希望和乐观", "C. 对春天的恐惧", "D. 对时间流逝的无奈"], answer: "B", knowledgePoint: "西风颂主题", analysis: "这句话表达了即使在最困难的时刻，也要保持希望，相信美好即将到来。" }
-    ]
-  },
-
-  // ==================== 第8章 文学创作入门（第25-28课） ====================
-  {
-    lesson: 25, title: "诗歌创作",
-    questions: [
-      { type: "choice", difficulty: 1, text: "诗歌中用来表达情感和意境的具体形象叫什么？", options: ["A. 结构", "B. 意象", "C. 韵律", "D. 主题"], answer: "B", knowledgePoint: "诗歌意象", analysis: "意象是诗歌中用来表达情感和意境的具体形象，是诗歌的重要组成部分。" },
-      { type: "choice", difficulty: 2, text: "以下哪种不是诗歌的常见形式？", options: ["A. 十四行诗", "B. 自由诗", "C. 散文", "D. 俳句"], answer: "C", knowledgePoint: "诗歌形式", analysis: "散文是一种文学体裁，不是诗歌的形式。十四行诗、自由诗和俳句都是常见的诗歌形式。" },
-      { type: "choice", difficulty: 3, text: "自由诗的特点是：", options: ["A. 严格遵守韵律和押韵", "B. 不受固定韵律和格式限制", "C. 必须有14行", "D. 必须押韵"], answer: "B", knowledgePoint: "自由诗", analysis: "自由诗不受固定韵律和格式的限制，诗人可以自由表达，注重内容和情感。" }
-    ]
-  },
-  {
-    lesson: 26, title: "记叙文写作",
-    questions: [
-      { type: "choice", difficulty: 1, text: "记叙文的六要素是：", options: ["A. 人物、情节、环境、开头、发展、结尾", "B. 时间、地点、人物、起因、经过、结果", "C. 标题、作者、时间、地点、人物、事件", "D. 开头、发展、高潮、结局、尾声、评论"], answer: "B", knowledgePoint: "记叙文要素", analysis: "记叙文的六要素是时间、地点、人物、起因、经过、结果。" },
-      { type: "choice", difficulty: 2, text: "塑造人物形象的方法包括：", options: ["A. 外貌描写、语言描写、动作描写、心理描写", "B. 天气描写、景物描写、动物描写", "C. 数学公式、物理定律、化学方程式", "D. 历史事件、地理知识、科学发现"], answer: "A", knowledgePoint: "人物塑造", analysis: "塑造人物形象常用外貌、语言、动作、心理等描写方法。" },
-      { type: "choice", difficulty: 3, text: "选择叙事视角时应考虑：", options: ["A. 作者的喜好", "B. 故事的主题和表达效果", "C. 读者的年龄", "D. 文章的字数"], answer: "B", knowledgePoint: "叙事视角", analysis: "叙事视角的选择会影响故事的呈现方式和读者的感受，应根据主题和表达效果来决定。" }
-    ]
-  },
-  {
-    lesson: 27, title: "散文写作",
-    questions: [
-      { type: "choice", difficulty: 1, text: "散文的特点是：", options: ["A. 严格的韵律要求", "B. 形散神不散，注重抒情和议论", "C. 必须有完整的故事情节", "D. 必须押韵"], answer: "B", knowledgePoint: "散文特点", analysis: "散文形式自由，没有严格的韵律要求，但主题明确，注重抒情和议论。" },
-      { type: "choice", difficulty: 2, text: "散文的结构可以是：", options: ["A. 只能是总分总结构", "B. 灵活多样，根据内容安排", "C. 必须是 chronological order", "D. 只能是倒叙"], answer: "B", knowledgePoint: "散文结构", analysis: "散文的结构灵活多样，可以根据内容和主题自由安排。" },
-      { type: "choice", difficulty: 3, text: "散文的语言风格应：", options: ["A. 晦涩难懂", "B. 生动自然，富有感染力", "C. 枯燥乏味", "D. 华丽堆砌"], answer: "B", knowledgePoint: "散文语言", analysis: "好的散文语言应该生动自然，能够打动读者，富有感染力。" }
-    ]
-  },
-  {
-    lesson: 28, title: "文学评论",
-    questions: [
-      { type: "choice", difficulty: 1, text: "文学评论的目的是：", options: ["A. 复述故事", "B. 分析和评价文学作品", "C. 介绍作者生平", "D. 列举作品目录"], answer: "B", knowledgePoint: "文学评论", analysis: "文学评论的目的是对文学作品进行分析、解读和评价。" },
-      { type: "choice", difficulty: 2, text: "文学评论需要：", options: ["A. 主观臆断", "B. 以文本为依据，有理有据", "C. 只说优点不说缺点", "D. 只说缺点不说优点"], answer: "B", knowledgePoint: "评论方法", analysis: "文学评论应以文本为依据，观点要有论据支持，不能主观臆断。" },
-      { type: "choice", difficulty: 3, text: "批判性思维在文学评论中的作用是：", options: ["A. 盲目接受作品", "B. 客观分析作品的优缺点", "C. 完全否定作品", "D. 只赞美作品"], answer: "B", knowledgePoint: "批判性思维", analysis: "批判性思维要求读者客观地分析作品，既要看到优点，也要指出不足。" }
-    ]
-  },
-
-  // ==================== 第9章 比较文学视角（第29-31课） ====================
-  {
-    lesson: 29, title: "不列颠文学与魔法世界",
-    questions: [
-      { type: "choice", difficulty: 1, text: "英雄从平凡到伟大的成长旅程被称为：", options: ["A. 英雄之旅", "B. 成长故事", "C. 冒险传奇", "D. 史诗叙事"], answer: "A", knowledgePoint: "神话原型", analysis: "英雄之旅是一种普遍的神话原型，描述英雄从平凡世界出发，经历考验，最终获得成长和转变。" },
-      { type: "choice", difficulty: 2, text: "文学作品中反复出现的具有象征意义的形象叫什么？", options: ["A. 主题", "B. 意象", "C. 原型", "D. 隐喻"], answer: "C", knowledgePoint: "文学原型", analysis: "原型是文学作品中反复出现的具有象征意义的形象或主题，反映了人类共有的心理结构。" },
-      { type: "choice", difficulty: 3, text: "《仲夏夜之梦》中的魔法元素体现了：", options: ["A. 科学原理", "B. 人类对超自然力量的想象", "C. 历史事实", "D. 数学公式"], answer: "B", knowledgePoint: "奇幻文学", analysis: "《仲夏夜之梦》中的仙女、魔法药水等元素体现了人类对超自然力量的想象和对奇幻世界的向往。" }
-    ]
-  },
-  {
-    lesson: 30, title: "不同时代的回响",
-    questions: [
-      { type: "choice", difficulty: 1, text: "古典文学与现代文学的关系是：", options: ["A. 完全割裂", "B. 现代文学继承和发展了古典文学", "C. 古典文学比现代文学更好", "D. 现代文学比古典文学更好"], answer: "B", knowledgePoint: "文学传承", analysis: "现代文学在继承古典文学传统的基础上不断创新和发展。" },
-      { type: "choice", difficulty: 2, text: "文学经典的当代解读意味着：", options: ["A. 用现代视角重新理解经典作品", "B. 否定经典作品的价值", "C. 只关注作品的历史背景", "D. 完全按照传统方式解读"], answer: "A", knowledgePoint: "经典解读", analysis: "文学经典的当代解读是用现代视角重新理解和阐释经典作品，赋予其新的意义。" },
-      { type: "choice", difficulty: 3, text: "跨时代的共鸣指的是：", options: ["A. 不同时代的作品使用相同的语言", "B. 不同时代的读者对作品产生相似的情感共鸣", "C. 不同时代的作品有相同的字数", "D. 不同时代的作者生活在同一地点"], answer: "B", knowledgePoint: "跨时代共鸣", analysis: "优秀的文学作品能够跨越时代，让不同时代的读者产生相似的情感共鸣。" }
-    ]
-  },
-  {
-    lesson: 31, title: "文化背景探索",
-    questions: [
-      { type: "choice", difficulty: 1, text: "文学作品与历史事件的关系是：", options: ["A. 文学作品完全脱离历史", "B. 文学作品反映时代背景", "C. 文学作品创造历史", "D. 文学作品与历史无关"], answer: "B", knowledgePoint: "文学与历史", analysis: "文学作品往往反映了其创作时代的历史背景和社会现实。" },
-      { type: "choice", difficulty: 2, text: "社会变革如何影响文学创作？", options: ["A. 没有影响", "B. 社会变革为文学提供新的主题和视角", "C. 社会变革限制文学创作", "D. 社会变革使文学变得单一"], answer: "B", knowledgePoint: "社会与文学", analysis: "社会变革为文学创作提供了新的主题、视角和素材。" },
-      { type: "choice", difficulty: 3, text: "地域特色在文学中的体现包括：", options: ["A. 方言使用、地方风俗描写、地理环境描写", "B. 只有地理环境描写", "C. 只有方言使用", "D. 只有地方风俗描写"], answer: "A", knowledgePoint: "地域文学", analysis: "地域特色通过方言、风俗和地理环境等多方面在文学作品中体现出来。" }
-    ]
-  },
-
-  // ==================== 第10章 第二学期期中复习与考试（第32-36课） ====================
-  {
-    lesson: 32, title: "精读篇目回顾",
-    questions: [
-      { type: "choice", difficulty: 1, text: "回顾精读篇目时应关注：", options: ["A. 书中的图片", "B. 作品的主题、人物和写作手法", "C. 书的价格", "D. 书的厚度"], answer: "B", knowledgePoint: "精读回顾", analysis: "回顾精读篇目应关注作品的主题、人物形象和写作手法。" },
-      { type: "choice", difficulty: 2, text: "经典段落需要：", options: ["A. 死记硬背", "B. 理解其含义和作用", "C. 忽略不看", "D. 只看一遍"], answer: "B", knowledgePoint: "经典段落", analysis: "经典段落需要理解其在作品中的含义和作用，而不仅仅是背诵。" },
-      { type: "choice", difficulty: 3, text: "比较不同作品的主题时应注意：", options: ["A. 只看表面相似", "B. 分析深层含义和表达差异", "C. 只关注作者名字", "D. 只看篇幅长短"], answer: "B", knowledgePoint: "主题比较", analysis: "比较作品主题应深入分析其深层含义和表达方式的差异。" }
-    ]
-  },
-  {
-    lesson: 33, title: "写作技巧复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "写作的第一步是：", options: ["A. 直接开始写", "B. 确定主题和结构", "C. 修改润色", "D. 抄写范文"], answer: "B", knowledgePoint: "写作步骤", analysis: "写作前应先确定主题和结构，做好规划。" },
-      { type: "choice", difficulty: 2, text: "修改和润色的目的是：", options: ["A. 增加字数", "B. 使文章更准确、流畅和生动", "C. 改变主题", "D. 抄袭他人"], answer: "B", knowledgePoint: "修改润色", analysis: "修改和润色可以使文章更准确、流畅和生动。" },
-      { type: "choice", difficulty: 3, text: "创意表达需要：", options: ["A. 模仿他人", "B. 独特的视角和个性化的表达", "C. 严格遵循规则", "D. 使用复杂的词汇"], answer: "B", knowledgePoint: "创意表达", analysis: "创意表达需要独特的视角和个性化的表达方式。" }
-    ]
-  },
-  {
-    lesson: 34, title: "比较文学专题",
-    questions: [
-      { type: "choice", difficulty: 1, text: "比较文学的核心是：", options: ["A. 比较作品的字数", "B. 跨文化、跨文本的比较研究", "C. 比较作者的年龄", "D. 比较书的价格"], answer: "B", knowledgePoint: "比较文学", analysis: "比较文学是对不同文化、不同文本之间的关系进行比较研究。" },
-      { type: "choice", difficulty: 2, text: "跨文本比较需要：", options: ["A. 找出相同点和不同点", "B. 只找相同点", "C. 只找不同点", "D. 忽略文本内容"], answer: "A", knowledgePoint: "文本比较", analysis: "跨文本比较需要找出作品之间的相同点和不同点，分析其原因和意义。" },
-      { type: "choice", difficulty: 3, text: "文学影响研究关注：", options: ["A. 作者的生活习惯", "B. 一部作品对另一部作品的影响", "C. 作品的印刷质量", "D. 读者的数量"], answer: "B", knowledgePoint: "影响研究", analysis: "文学影响研究关注一部作品或作家对另一部作品或作家的影响。" }
-    ]
-  },
-  {
-    lesson: 35, title: "期中综合练习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "模拟考试的目的是：", options: ["A. 浪费时间", "B. 熟悉考试形式，查漏补缺", "C. 打击自信心", "D. 增加负担"], answer: "B", knowledgePoint: "模拟考试", analysis: "模拟考试可以帮助熟悉考试形式，找出知识漏洞。" },
-      { type: "choice", difficulty: 2, text: "分析错题时应：", options: ["A. 只看答案", "B. 找出错误原因，总结规律", "C. 忽略错题", "D. 责怪题目太难"], answer: "B", knowledgePoint: "错题分析", analysis: "分析错题应找出错误原因，总结规律，避免再次犯错。" },
-      { type: "choice", difficulty: 3, text: "考试策略包括：", options: ["A. 随意答题", "B. 合理分配时间，先易后难", "C. 只做会的题", "D. 先做难题"], answer: "B", knowledgePoint: "考试策略", analysis: "合理的考试策略包括合理分配时间，先完成简单题再处理难题。" }
-    ]
-  },
-  {
-    lesson: 36, title: "第二学期期中考试",
-    questions: [
-      { type: "choice", difficulty: 1, text: "第二学期期中考试范围是：", options: ["A. 第一学期内容", "B. 第二学期所学内容", "C. 全学年内容", "D. 课外知识"], answer: "B", knowledgePoint: "考试范围", analysis: "第二学期期中考试通常考察第二学期所学内容。" },
-      { type: "choice", difficulty: 2, text: "写作题的评分标准包括：", options: ["A. 字数越多越好", "B. 内容、结构、语言和创意", "C. 字迹越漂亮越好", "D. 段落越多越好"], answer: "B", knowledgePoint: "写作评分", analysis: "写作题评分通常从内容、结构、语言和创意等方面综合考量。" },
-      { type: "choice", difficulty: 3, text: "考试前的心理调适包括：", options: ["A. 过度紧张", "B. 保持平常心，相信自己的准备", "C. 完全放松不复习", "D. 熬夜复习"], answer: "B", knowledgePoint: "心理调适", analysis: "考试前应保持平常心，相信自己的准备，避免过度紧张。" }
-    ]
-  },
-
-  // ==================== 第11章 专题拓展（第37-40课） ====================
-  {
-    lesson: 37, title: "文学与艺术",
-    questions: [
-      { type: "choice", difficulty: 1, text: "文学与绘画的关系是：", options: ["A. 完全无关", "B. 相互启发和影响", "C. 绘画抄袭文学", "D. 文学抄袭绘画"], answer: "B", knowledgePoint: "文学与绘画", analysis: "文学和绘画都是艺术形式，常常相互启发和影响。" },
-      { type: "choice", difficulty: 2, text: "诗歌与音乐的共同点是：", options: ["A. 都需要乐器", "B. 都注重节奏和韵律", "C. 都需要舞台表演", "D. 都只有文字"], answer: "B", knowledgePoint: "诗歌与音乐", analysis: "诗歌和音乐都注重节奏和韵律，具有音乐性。" },
-      { type: "choice", difficulty: 3, text: "戏剧与舞台艺术的关系是：", options: ["A. 戏剧独立于舞台艺术", "B. 戏剧需要舞台艺术的支持来呈现", "C. 舞台艺术与戏剧无关", "D. 戏剧只需要剧本"], answer: "B", knowledgePoint: "戏剧与舞台", analysis: "戏剧需要通过舞台艺术（表演、布景、灯光等）来呈现给观众。" }
-    ]
-  },
-  {
-    lesson: 38, title: "女性文学传统",
-    questions: [
-      { type: "choice", difficulty: 1, text: "女性文学关注的主题包括：", options: ["A. 女性的经历、情感和社会地位", "B. 男性的冒险故事", "C. 战争历史", "D. 科学发现"], answer: "A", knowledgePoint: "女性文学主题", analysis: "女性文学关注女性的经历、情感和社会地位等问题。" },
-      { type: "choice", difficulty: 2, text: "早期女性作家面临的困难是：", options: ["A. 写作太容易", "B. 社会偏见和出版限制", "C. 读者太多", "D. 作品太多"], answer: "B", knowledgePoint: "女性作家困境", analysis: "早期女性作家面临社会偏见和出版限制，常常需要用男性笔名发表作品。" },
-      { type: "choice", difficulty: 3, text: "当代女性文学的特点是：", options: ["A. 主题单一", "B. 多元化的声音和视角", "C. 只关注家庭生活", "D. 排斥男性读者"], answer: "B", knowledgePoint: "当代女性文学", analysis: "当代女性文学呈现多元化的声音和视角，探讨各种社会和个人问题。" }
-    ]
-  },
-  {
-    lesson: 39, title: "文学与哲学",
-    questions: [
-      { type: "choice", difficulty: 1, text: "文学与哲学的关系是：", options: ["A. 完全不同的领域", "B. 文学常常表达哲学思想", "C. 哲学比文学更重要", "D. 文学比哲学更重要"], answer: "B", knowledgePoint: "文学与哲学", analysis: "文学常常通过故事和形象表达深刻的哲学思想。" },
-      { type: "choice", difficulty: 2, text: "存在主义文学探讨：", options: ["A. 数学问题", "B. 人类存在的意义和自由", "C. 自然科学", "D. 历史事件"], answer: "B", knowledgePoint: "存在主义", analysis: "存在主义文学探讨人类存在的意义、自由和责任等问题。" },
-      { type: "choice", difficulty: 3, text: "文学中的理性与感性：", options: ["A. 只能有理性", "B. 只能有感性", "C. 两者可以并存和交织", "D. 相互排斥"], answer: "C", knowledgePoint: "理性与感性", analysis: "优秀的文学作品往往同时包含理性的思考和感性的表达，两者相互交织。" }
-    ]
-  },
-  {
-    lesson: 40, title: "阅读策略与方法",
-    questions: [
-      { type: "choice", difficulty: 1, text: "精读与泛读的区别是：", options: ["A. 精读更慢，泛读更快", "B. 精读更深入，泛读更广泛", "C. 精读只看小说", "D. 泛读只看诗歌"], answer: "B", knowledgePoint: "精读与泛读", analysis: "精读是深入细致地阅读，泛读是广泛快速地阅读，两者各有侧重。" },
-      { type: "choice", difficulty: 2, text: "做笔记的好处是：", options: ["A. 浪费时间", "B. 帮助理解和记忆", "C. 让书本变脏", "D. 增加负担"], answer: "B", knowledgePoint: "笔记技巧", analysis: "做笔记可以帮助理解和记忆阅读内容，便于日后复习。" },
-      { type: "choice", difficulty: 3, text: "批判性阅读需要：", options: ["A. 完全相信作者", "B. 质疑和分析文本", "C. 只看表面意思", "D. 忽略作者的观点"], answer: "B", knowledgePoint: "批判性阅读", analysis: "批判性阅读需要读者质疑和分析文本，而不是被动接受。" }
-    ]
-  },
-
-  // ==================== 第12章 总复习（第41-45课） ====================
-  {
-    lesson: 41, title: "全学年知识框架",
-    questions: [
-      { type: "choice", difficulty: 1, text: "英国文学的发展脉络是：", options: ["A. 现代→中世纪→文艺复兴→浪漫主义→维多利亚→现代", "B. 中世纪→文艺复兴→浪漫主义→维多利亚→现代", "C. 文艺复兴→中世纪→浪漫主义→维多利亚→现代", "D. 维多利亚→浪漫主义→文艺复兴→中世纪→现代"], answer: "B", knowledgePoint: "文学发展脉络", analysis: "英国文学的发展大致经历了中世纪、文艺复兴、浪漫主义、维多利亚和现代等时期。" },
-      { type: "choice", difficulty: 2, text: "文学流派的演变反映了：", options: ["A. 天气变化", "B. 社会和文化的变迁", "C. 作者的喜好", "D. 纸张质量的变化"], answer: "B", knowledgePoint: "流派演变", analysis: "文学流派的演变反映了不同时代社会和文化的变迁。" },
-      { type: "choice", difficulty: 3, text: "构建知识框架的方法是：", options: ["A. 死记硬背", "B. 梳理知识点之间的联系", "C. 只看标题", "D. 忽略细节"], answer: "B", knowledgePoint: "知识框架", analysis: "构建知识框架需要梳理知识点之间的逻辑联系，形成体系。" }
-    ]
-  },
-  {
-    lesson: 42, title: "诗歌模块总复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "诗歌的基本要素是：", options: ["A. 人物、情节、环境", "B. 韵律、意象、主题", "C. 开头、发展、结尾", "D. 时间、地点、人物"], answer: "B", knowledgePoint: "诗歌要素", analysis: "诗歌的基本要素包括韵律、意象和主题。" },
-      { type: "choice", difficulty: 2, text: "浪漫主义诗歌的特点是：", options: ["A. 注重理性和秩序", "B. 强调情感、自然和想象力", "C. 严格遵守古典规则", "D. 关注社会现实"], answer: "B", knowledgePoint: "浪漫主义特点", analysis: "浪漫主义诗歌强调个人情感、自然之美和想象力。" },
-      { type: "choice", difficulty: 3, text: "诗歌鉴赏的步骤是：", options: ["A. 直接下结论", "B. 理解→分析→评价", "C. 只看标题", "D. 只背诵"], answer: "B", knowledgePoint: "诗歌鉴赏", analysis: "诗歌鉴赏应遵循理解文本、分析手法、评价意义的步骤。" }
-    ]
-  },
-  {
-    lesson: 43, title: "小说模块总复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "小说的核心是：", options: ["A. 字数", "B. 人物和故事", "C. 纸张质量", "D. 印刷字体"], answer: "B", knowledgePoint: "小说核心", analysis: "小说的核心是人物塑造和故事情节。" },
-      { type: "choice", difficulty: 2, text: "维多利亚小说的特点是：", options: ["A. 关注社会现实和道德问题", "B. 充满奇幻元素", "C. 短小精悍", "D. 语言晦涩"], answer: "A", knowledgePoint: "维多利亚小说", analysis: "维多利亚小说关注社会现实、道德问题和人道主义关怀。" },
-      { type: "choice", difficulty: 3, text: "分析小说主题的方法是：", options: ["A. 只看开头", "B. 通过人物、情节和象征来提炼", "C. 只看结尾", "D. 猜测作者意图"], answer: "B", knowledgePoint: "主题分析", analysis: "分析小说主题需要通过人物形象、情节发展和象征手法来提炼。" }
-    ]
-  },
-  {
-    lesson: 44, title: "戏剧模块总复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "莎士比亚的戏剧类型包括：", options: ["A. 悲剧、喜剧、历史剧", "B. 只有悲剧", "C. 只有喜剧", "D. 只有历史剧"], answer: "A", knowledgePoint: "莎士比亚戏剧", analysis: "莎士比亚创作了悲剧、喜剧和历史剧等多种类型的戏剧。" },
-      { type: "choice", difficulty: 2, text: "戏剧冲突的类型包括：", options: ["A. 人与自然", "B. 人与人、人与社会、内心冲突", "C. 只有人与人", "D. 只有内心冲突"], answer: "B", knowledgePoint: "戏剧冲突", analysis: "戏剧冲突包括人与人、人与社会以及人物内心的冲突。" },
-      { type: "choice", difficulty: 3, text: "舞台语言包括：", options: ["A. 台词和舞台指示", "B. 只有台词", "C. 只有舞台指示", "D. 剧本的封面"], answer: "A", knowledgePoint: "舞台语言", analysis: "舞台语言包括人物台词和舞台指示两部分。" }
-    ]
-  },
-  {
-    lesson: 45, title: "写作模块总复习",
-    questions: [
-      { type: "choice", difficulty: 1, text: "写作的基本要求是：", options: ["A. 字迹工整", "B. 内容充实、结构清晰、语言通顺", "C. 字数越多越好", "D. 段落越多越好"], answer: "B", knowledgePoint: "写作要求", analysis: "好的写作需要内容充实、结构清晰、语言通顺。" },
-      { type: "choice", difficulty: 2, text: "文学创作需要：", options: ["A. 抄袭他人", "B. 观察生活、积累素材、发挥想象", "C. 只看课本", "D. 不思考"], answer: "B", knowledgePoint: "文学创作", analysis: "文学创作需要观察生活、积累素材并发挥想象力。" },
-      { type: "choice", difficulty: 3, text: "文学评论的写作要点是：", options: ["A. 复述故事", "B. 有观点、有论据、有分析", "C. 只说好话", "D. 只说坏话"], answer: "B", knowledgePoint: "评论写作", analysis: "文学评论需要有明确的观点、充分的论据和深入的分析。" }
-    ]
-  },
-
-  // ==================== 第13章 期末考试与评估（第46-50课） ====================
-  {
-    lesson: 46, title: "模拟考试（一）",
-    questions: [
-      { type: "choice", difficulty: 1, text: "全真模拟考试的作用是：", options: ["A. 增加压力", "B. 熟悉考试流程，训练答题速度", "C. 浪费时间", "D. 降低信心"], answer: "B", knowledgePoint: "模拟考试", analysis: "全真模拟考试可以帮助熟悉考试流程，训练答题速度和时间管理。" },
-      { type: "choice", difficulty: 2, text: "分析模拟考试成绩时应：", options: ["A. 只看分数", "B. 找出薄弱环节，针对性复习", "C. 忽略错题", "D. 责怪自己"], answer: "B", knowledgePoint: "成绩分析", analysis: "分析模拟考试成绩应找出薄弱环节，进行针对性复习。" },
-      { type: "choice", difficulty: 3, text: "时间管理练习的方法是：", options: ["A. 随意答题", "B. 按题型分配时间，先易后难", "C. 先做难题", "D. 不看时间"], answer: "B", knowledgePoint: "时间管理", analysis: "时间管理需要按题型分配时间，先完成简单题再处理难题。" }
-    ]
-  },
-  {
-    lesson: 47, title: "模拟考试（二）",
-    questions: [
-      { type: "choice", difficulty: 1, text: "第二次模拟考试的目的是：", options: ["A. 重复第一次", "B. 检验复习效果，进一步查漏补缺", "C. 增加负担", "D. 浪费纸张"], answer: "B", knowledgePoint: "模拟考试目的", analysis: "第二次模拟考试可以检验复习效果，进一步查漏补缺。" },
-      { type: "choice", difficulty: 2, text: "查漏补缺的方法是：", options: ["A. 只看喜欢的内容", "B. 根据错题找到知识漏洞，重点复习", "C. 从头开始复习所有内容", "D. 不复习"], answer: "B", knowledgePoint: "查漏补缺", analysis: "查漏补缺需要根据错题找到知识漏洞，进行重点复习。" },
-      { type: "choice", difficulty: 3, text: "考试前的心理准备包括：", options: ["A. 过度焦虑", "B. 保持积极心态，相信自己", "C. 熬夜复习", "D. 完全放松"], answer: "B", knowledgePoint: "心理准备", analysis: "考试前应保持积极心态，相信自己的准备，避免过度焦虑。" }
-    ]
-  },
-  {
-    lesson: 48, title: "考前答疑",
-    questions: [
-      { type: "choice", difficulty: 1, text: "考前答疑的作用是：", options: ["A. 增加紧张感", "B. 解决疑难问题，增强信心", "C. 浪费时间", "D. 让老师更忙"], answer: "B", knowledgePoint: "考前答疑", analysis: "考前答疑可以帮助学生解决复习中遇到的疑难问题，增强考试信心。" },
-      { type: "choice", difficulty: 2, text: "提问时应注意：", options: ["A. 问简单的问题", "B. 提前准备好问题，清晰表达", "C. 问与考试无关的问题", "D. 不提问"], answer: "B", knowledgePoint: "提问技巧", analysis: "提问时应提前准备好问题，清晰表达，以便老师更好地解答。" },
-      { type: "choice", difficulty: 3, text: "考前重点内容回顾应：", options: ["A. 从头开始看所有内容", "B. 聚焦核心知识点和错题", "C. 只看新内容", "D. 不回顾"], answer: "B", knowledgePoint: "考前复习", analysis: "考前应聚焦核心知识点和错题，进行有针对性的复习。" }
-    ]
-  },
-  {
-    lesson: 49, title: "期末考试",
-    questions: [
-      { type: "choice", difficulty: 1, text: "期末考试的范围通常是：", options: ["A. 半学期内容", "B. 全学年内容", "C. 仅复习课内容", "D. 课外知识"], answer: "B", knowledgePoint: "考试范围", analysis: "期末考试通常考察全学年的学习内容。" },
-      { type: "choice", difficulty: 2, text: "文学考试中的赏析题需要：", options: ["A. 复述故事", "B. 分析作品的艺术特色和主题思想", "C. 默写课文", "D. 列举作者生平"], answer: "B", knowledgePoint: "赏析题", analysis: "赏析题要求分析作品的艺术特色、语言风格和主题思想。" },
-      { type: "choice", difficulty: 3, text: "考试时间管理的关键是：", options: ["A. 快速答题不检查", "B. 合理分配时间，先易后难", "C. 只做选择题", "D. 在难题上花费太多时间"], answer: "B", knowledgePoint: "时间管理", analysis: "考试时应合理分配时间，先完成简单题，再处理难题。" }
-    ]
-  },
-  {
-    lesson: 50, title: "成绩分析与总结",
-    questions: [
-      { type: "choice", difficulty: 1, text: "成绩分析的目的是：", options: ["A. 比较分数高低", "B. 了解知识掌握情况，找出改进方向", "C. 批评学生", "D. 排名次"], answer: "B", knowledgePoint: "成绩分析", analysis: "成绩分析可以帮助学生了解知识掌握情况，找出改进方向。" },
-      { type: "choice", difficulty: 2, text: "学习建议应：", options: ["A. 笼统模糊", "B. 具体可行，针对性强", "C. 不切实际", "D. 照搬他人"], answer: "B", knowledgePoint: "学习建议", analysis: "好的学习建议应该具体可行，针对学生的实际情况。" },
-      { type: "choice", difficulty: 3, text: "进步空间在于：", options: ["A. 提高分数", "B. 弥补知识漏洞，改进学习方法", "C. 增加学习时间", "D. 减少休息时间"], answer: "B", knowledgePoint: "进步空间", analysis: "进步空间在于弥补知识漏洞，改进学习方法，而不仅仅是提高分数。" }
-    ]
-  },
-
-  // ==================== 第14章 拓展与实践（第51-54课） ====================
-  {
-    lesson: 51, title: "文学社团活动",
-    questions: [
-      { type: "choice", difficulty: 1, text: "读书会的作用是：", options: ["A. 浪费时间", "B. 交流阅读心得，加深理解", "C. 只聊天不读书", "D. 炫耀知识"], answer: "B", knowledgePoint: "读书会", analysis: "读书会可以让参与者交流阅读心得，加深对作品的理解。" },
-      { type: "choice", difficulty: 2, text: "戏剧表演有助于：", options: ["A. 提高数学能力", "B. 理解人物性格和戏剧冲突", "C. 增加体重", "D. 学习科学知识"], answer: "B", knowledgePoint: "戏剧实践", analysis: "参与戏剧表演可以帮助学生更好地理解人物性格和戏剧冲突。" },
-      { type: "choice", difficulty: 3, text: "文学创作比赛的意义在于：", options: ["A. 获得奖品", "B. 锻炼写作能力，展示创意", "C. 浪费纸张", "D. 增加负担"], answer: "B", knowledgePoint: "创作比赛", analysis: "文学创作比赛可以锻炼学生的写作能力，展示创意和才华。" }
-    ]
-  },
-  {
-    lesson: 52, title: "作家研究",
-    questions: [
-      { type: "choice", difficulty: 1, text: "研究作家生平可以：", options: ["A. 了解作家的生活习惯", "B. 理解作品的创作背景", "C. 知道作家的身高", "D. 了解作家的饮食偏好"], answer: "B", knowledgePoint: "作家研究", analysis: "研究作家生平可以帮助理解作品的创作背景和主题。" },
-      { type: "choice", difficulty: 2, text: "创作背景分析包括：", options: ["A. 作家的出生日期", "B. 历史事件、社会环境和个人经历", "C. 作家的家庭住址", "D. 作家的签名"], answer: "B", knowledgePoint: "背景分析", analysis: "创作背景分析包括历史事件、社会环境和作家的个人经历。" },
-      { type: "choice", difficulty: 3, text: "文献查阅的方法包括：", options: ["A. 只看课本", "B. 利用图书馆、数据库和学术期刊", "C. 只看网络小说", "D. 不查阅任何资料"], answer: "B", knowledgePoint: "文献查阅", analysis: "文献查阅可以利用图书馆、学术数据库和专业期刊等资源。" }
-    ]
-  },
-  {
-    lesson: 53, title: "文学与生活",
-    questions: [
-      { type: "choice", difficulty: 1, text: "文学对人生的启示包括：", options: ["A. 如何赚钱", "B. 理解人性、情感和社会", "C. 如何烹饪", "D. 如何修理电器"], answer: "B", knowledgePoint: "文学启示", analysis: "文学作品可以帮助读者理解人性、情感和社会。" },
-      { type: "choice", difficulty: 2, text: "阅读的意义在于：", options: ["A. 消磨时间", "B. 增长知识、丰富情感、提升素养", "C. 打发无聊", "D. 完成任务"], answer: "B", knowledgePoint: "阅读意义", analysis: "阅读可以增长知识、丰富情感体验、提升人文素养。" },
-      { type: "choice", difficulty: 3, text: "文学作品的现实价值在于：", options: ["A. 装饰书架", "B. 提供人生借鉴，促进思考", "C. 作为礼物", "D. 增加重量"], answer: "B", knowledgePoint: "现实价值", analysis: "优秀的文学作品可以提供人生借鉴，促进读者思考。" }
-    ]
-  },
-  {
-    lesson: 54, title: "假期阅读推荐",
-    questions: [
-      { type: "choice", difficulty: 1, text: "经典作品推荐的标准是：", options: ["A. 流行程度", "B. 文学价值和思想内涵", "C. 页数多少", "D. 价格高低"], answer: "B", knowledgePoint: "经典推荐", analysis: "经典作品推荐应基于其文学价值和思想内涵。" },
-      { type: "choice", difficulty: 2, text: "阅读计划制定应：", options: ["A. 随意安排", "B. 合理规划，兼顾兴趣和提升", "C. 只看漫画", "D. 不制定计划"], answer: "B", knowledgePoint: "阅读计划", analysis: "阅读计划应合理规划，兼顾个人兴趣和能力提升。" },
-      { type: "choice", difficulty: 3, text: "读书笔记的方法包括：", options: ["A. 只抄书名", "B. 批注、摘录、心得和思维导图", "C. 不做笔记", "D. 抄书全文"], answer: "B", knowledgePoint: "读书笔记", analysis: "读书笔记可以采用批注、摘录、心得和思维导图等多种方法。" }
-    ]
-  },
-
-  // ==================== 第15章 学习方法指导（第55-58课） ====================
-  {
-    lesson: 55, title: "读书笔记技巧",
-    questions: [
-      { type: "choice", difficulty: 1, text: "批注的作用是：", options: ["A. 弄脏书本", "B. 记录思考，加深理解", "C. 浪费时间", "D. 画涂鸦"], answer: "B", knowledgePoint: "批注技巧", analysis: "批注可以记录阅读时的思考，加深对文本的理解。" },
-      { type: "choice", difficulty: 2, text: "思维导图有助于：", options: ["A. 画画", "B. 梳理知识结构，建立联系", "C. 浪费纸张", "D. 练字"], answer: "B", knowledgePoint: "思维导图", analysis: "思维导图可以帮助梳理知识结构，建立知识点之间的联系。" },
-      { type: "choice", difficulty: 3, text: "整理与回顾笔记的重要性在于：", options: ["A. 占用空间", "B. 巩固记忆，深化理解", "C. 增加负担", "D. 浪费时间"], answer: "B", knowledgePoint: "笔记整理", analysis: "定期整理和回顾笔记可以巩固记忆，深化理解。" }
-    ]
-  },
-  {
-    lesson: 56, title: "背诵与记忆",
-    questions: [
-      { type: "choice", difficulty: 1, text: "诗歌背诵的方法包括：", options: ["A. 死记硬背", "B. 理解内容，把握节奏", "C. 不背", "D. 只背标题"], answer: "B", knowledgePoint: "背诵方法", analysis: "诗歌背诵应理解内容，把握节奏和韵律。" },
-      { type: "choice", difficulty: 2, text: "理解性记忆的好处是：", options: ["A. 容易忘记", "B. 记得牢，用得上", "C. 浪费时间", "D. 增加负担"], answer: "B", knowledgePoint: "理解记忆", analysis: "理解性记忆可以让知识记得更牢，也更容易应用。" },
-      { type: "choice", difficulty: 3, text: "复习方法包括：", options: ["A. 只看一遍", "B. 定期复习，间隔重复", "C. 不复习", "D. 一次性复习"], answer: "B", knowledgePoint: "复习策略", analysis: "有效的复习方法包括定期复习和间隔重复。" }
-    ]
-  },
-  {
-    lesson: 57, title: "写作提升策略",
-    questions: [
-      { type: "choice", difficulty: 1, text: "观察与积累的重要性在于：", options: ["A. 浪费时间", "B. 为写作提供素材", "C. 增加负担", "D. 与写作无关"], answer: "B", knowledgePoint: "观察积累", analysis: "观察生活和积累素材是写作的基础。" },
-      { type: "choice", difficulty: 2, text: "模仿与创新的关系是：", options: ["A. 模仿就是抄袭", "B. 模仿是基础，创新是提升", "C. 只模仿不创新", "D. 只创新不模仿"], answer: "B", knowledgePoint: "模仿创新", analysis: "写作可以从模仿优秀作品开始，然后逐渐形成自己的风格。" },
-      { type: "choice", difficulty: 3, text: "修改与完善的步骤包括：", options: ["A. 写完就交", "B. 检查内容、结构、语言和标点", "C. 不修改", "D. 只检查错别字"], answer: "B", knowledgePoint: "修改步骤", analysis: "修改文章应检查内容、结构、语言表达和标点符号等方面。" }
-    ]
-  },
-  {
-    lesson: 58, title: "文学素养培养",
-    questions: [
-      { type: "choice", difficulty: 1, text: "广泛阅读的好处是：", options: ["A. 浪费时间", "B. 开阔视野，增长见识", "C. 增加负担", "D. 影响学习"], answer: "B", knowledgePoint: "广泛阅读", analysis: "广泛阅读可以开阔视野，增长见识。" },
-      { type: "choice", difficulty: 2, text: "深度思考要求：", options: ["A. 表面理解", "B. 分析、评价和质疑", "C. 不思考", "D. 被动接受"], answer: "B", knowledgePoint: "深度思考", analysis: "深度思考要求对文本进行分析、评价和质疑。" },
-      { type: "choice", difficulty: 3, text: "人文情怀包括：", options: ["A. 只关心自己", "B. 理解他人，关怀社会", "C. 冷漠无情", "D. 自私自利"], answer: "B", knowledgePoint: "人文情怀", analysis: "人文情怀包括理解他人、关怀社会和尊重多元文化。" }
-    ]
-  },
-
-  // ==================== 第16章 学期总结与展望（第59-60课） ====================
-  {
-    lesson: 59, title: "学习成果展示",
-    questions: [
-      { type: "choice", difficulty: 1, text: "作品集整理的意义在于：", options: ["A. 占用空间", "B. 展示学习成果，记录成长", "C. 浪费时间", "D. 增加负担"], answer: "B", knowledgePoint: "作品集", analysis: "整理作品集可以展示学习成果，记录个人成长。" },
-      { type: "choice", difficulty: 2, text: "学习收获总结应：", options: ["A. 只说优点", "B. 客观全面，包括进步和不足", "C. 只说缺点", "D. 敷衍了事"], answer: "B", knowledgePoint: "收获总结", analysis: "学习收获总结应客观全面，包括进步和有待改进的地方。" },
-      { type: "choice", difficulty: 3, text: "自我评估的方法包括：", options: ["A. 主观臆断", "B. 对比目标，分析成果", "C. 不评估", "D. 盲目自信"], answer: "B", knowledgePoint: "自我评估", analysis: "自我评估应对比学习目标，客观分析学习成果。" }
-    ]
-  },
-  {
-    lesson: 60, title: "新学期展望",
-    questions: [
-      { type: "choice", difficulty: 1, text: "学习目标设定应：", options: ["A. 模糊不清", "B. 具体、可衡量、可实现", "C. 不切实际", "D. 没有目标"], answer: "B", knowledgePoint: "目标设定", analysis: "学习目标应具体、可衡量、可实现。" },
-      { type: "choice", difficulty: 2, text: "阅读计划应包括：", options: ["A. 只看课本", "B. 经典作品和兴趣读物", "C. 只看漫画", "D. 不阅读"], answer: "B", knowledgePoint: "阅读计划", analysis: "阅读计划应兼顾经典作品和个人兴趣读物。" },
-      { type: "choice", difficulty: 3, text: "信心与期待的重要性在于：", options: ["A. 盲目乐观", "B. 保持学习动力，面对挑战", "C. 骄傲自满", "D. 不思进取"], answer: "B", knowledgePoint: "学习信心", analysis: "保持信心和期待可以维持学习动力，勇敢面对挑战。" }
-    ]
-  },
-
-  // ==================== 第13章 现代主义与后现代（第61-65课） ====================
-  {
-    lesson: 61, title: "乔伊斯《都柏林人》",
-    questions: [
-      { type: "choice", difficulty: 1, text: "《都柏林人》的作者是：", options: ["A. 伍尔夫", "B. 乔伊斯", "C. 贝克特", "D. 艾略特"], answer: "B", knowledgePoint: "乔伊斯", analysis: "詹姆斯·乔伊斯是爱尔兰著名作家，《都柏林人》是他的短篇小说集。" },
-      { type: "choice", difficulty: 2, text: "《都柏林人》中\"顿悟\"指的是：", options: ["A. 突然的领悟或启示", "B. 佛教的觉悟", "C. 梦醒时分", "D. 灵感爆发"], answer: "A", knowledgePoint: "顿悟概念", analysis: "乔伊斯创造的\"顿悟\"指人物在某个瞬间突然获得的领悟或启示。" },
-      { type: "choice", difficulty: 3, text: "《都柏林人》的主题是：", options: ["A. 欢乐与庆典", "B. 停滞与精神瘫痪", "C. 冒险与探索", "D. 爱情与婚姻"], answer: "B", knowledgePoint: "主题分析", analysis: "《都柏林人》描绘了都柏林人的精神瘫痪和生活的停滞状态。" }
-    ]
-  },
-  {
-    lesson: 62, title: "伍尔夫的实验性写作",
-    questions: [
-      { type: "choice", difficulty: 1, text: "弗吉尼亚·伍尔夫是哪个文学流派的代表？", options: ["A. 浪漫主义", "B. 现代主义", "C. 现实主义", "D. 古典主义"], answer: "B", knowledgePoint: "伍尔夫", analysis: "弗吉尼亚·伍尔夫是英国现代主义文学的重要代表。" },
-      { type: "choice", difficulty: 2, text: "伍尔夫作品的特点是：", options: ["A. 线性叙事", "B. 意识流技巧", "C. 传统情节", "D. 简单语言"], answer: "B", knowledgePoint: "意识流", analysis: "伍尔夫擅长运用意识流技巧，深入人物内心世界。" },
-      { type: "choice", difficulty: 3, text: "《达洛维夫人》的时间跨度是：", options: ["A. 一年", "B. 一天", "C. 一个月", "D. 十年"], answer: "B", knowledgePoint: "达洛维夫人", analysis: "《达洛维夫人》讲述了克拉丽莎·达洛维一天的生活，但通过意识流展现了她的一生。" }
-    ]
-  },
-  {
-    lesson: 63, title: "贝克特荒诞派戏剧",
-    questions: [
-      { type: "choice", difficulty: 1, text: "荒诞派戏剧的特点是：", options: ["A. 情节连贯", "B. 表现存在的荒诞", "C. 大团圆结局", "D. 传统叙事"], answer: "B", knowledgePoint: "荒诞派", analysis: "荒诞派戏剧通过荒诞的情节表现人类存在的无意义感。" },
-      { type: "choice", difficulty: 2, text: "《等待戈多》的作者是：", options: ["A. 乔伊斯", "B. 伍尔夫", "C. 贝克特", "D. 萨特"], answer: "C", knowledgePoint: "贝克特", analysis: "塞缪尔·贝克特是荒诞派戏剧的代表作家，《等待戈多》是他的代表作。" },
-      { type: "choice", difficulty: 3, text: "《等待戈多》中的\"戈多\"象征：", options: ["A. 一个真实的人", "B. 希望或救赎", "C. 上帝", "D. 死亡"], answer: "B", knowledgePoint: "戈多象征", analysis: "\"戈多\"通常被解读为希望、救赎或人生意义的象征。" }
-    ]
-  },
-  {
-    lesson: 64, title: "后现代叙事技巧",
-    questions: [
-      { type: "choice", difficulty: 1, text: "元小说是指：", options: ["A. 关于小说的小说", "B. 科幻小说", "C. 历史小说", "D. 言情小说"], answer: "A", knowledgePoint: "元小说", analysis: "元小说是关于小说的小说，揭示小说的虚构性。" },
-      { type: "choice", difficulty: 2, text: "不可靠叙述者意味着：", options: ["A. 叙述者值得信赖", "B. 叙述者的叙述不可完全信任", "C. 叙述者是英雄", "D. 叙述者是反派"], answer: "B", knowledgePoint: "不可靠叙述者", analysis: "不可靠叙述者指叙述者的叙述不能被完全信任，可能有偏见或隐瞒。" },
-      { type: "choice", difficulty: 3, text: "碎片化叙事的目的是：", options: ["A. 让故事更简单", "B. 反映现代社会的破碎感", "C. 增加字数", "D. 迷惑读者"], answer: "B", knowledgePoint: "碎片化叙事", analysis: "碎片化叙事反映了现代社会的破碎感和不确定性。" }
-    ]
-  },
-  {
-    lesson: 65, title: "当代英语文学",
-    questions: [
-      { type: "choice", difficulty: 1, text: "当代英语文学的特点是：", options: ["A. 单一性", "B. 多元化", "C. 传统性", "D. 保守性"], answer: "B", knowledgePoint: "当代文学", analysis: "当代英语文学呈现多元化的特点，包容不同文化背景的声音。" },
-      { type: "choice", difficulty: 2, text: "后殖民文学关注：", options: ["A. 古代神话", "B. 殖民历史与文化身份", "C. 宫廷生活", "D. 自然描写"], answer: "B", knowledgePoint: "后殖民文学", analysis: "后殖民文学探讨殖民历史的影响和文化身份的建构。" },
-      { type: "choice", difficulty: 3, text: "身份政治在文学中的体现包括：", options: ["A. 性别、种族、性取向", "B. 只有性别", "C. 只有种族", "D. 只有阶级"], answer: "A", knowledgePoint: "身份政治", analysis: "当代文学中的身份政治涉及性别、种族、性取向等多个方面。" }
-    ]
-  },
-
-  // ==================== 第14章 论文写作（第66-70课） ====================
-  {
-    lesson: 66, title: "设计论题",
-    questions: [
-      { type: "choice", difficulty: 1, text: "好的研究问题应具备：", options: ["A. 宽泛模糊", "B. 具体、有争议、有意义", "C. 琐碎无聊", "D. 无法回答"], answer: "B", knowledgePoint: "研究问题", analysis: "好的研究问题应具体、有争议且有学术意义。" },
-      { type: "choice", difficulty: 2, text: "问题的来源包括：", options: ["A. 凭空想象", "B. 文本分析、理论研究、比较研究", "C. 道听途说", "D. 无关话题"], answer: "B", knowledgePoint: "问题来源", analysis: "研究问题可以来自文本分析、文学理论或比较研究等。" },
-      { type: "choice", difficulty: 3, text: "问题聚焦的重要性在于：", options: ["A. 扩大研究范围", "B. 使研究更深入", "C. 增加难度", "D. 浪费时间"], answer: "B", knowledgePoint: "问题聚焦", analysis: "问题聚焦能使研究更深入，避免泛泛而谈。" }
-    ]
-  },
-  {
-    lesson: 67, title: "从观察到洞见",
-    questions: [
-      { type: "choice", difficulty: 1, text: "论证的结构包括：", options: ["A. 引言、主体、结论", "B. 只有开头", "C. 只有结尾", "D. 混乱无序"], answer: "A", knowledgePoint: "论证结构", analysis: "论证应有清晰的结构：引言、主体和结论。" },
-      { type: "choice", difficulty: 2, text: "洞见产生于：", options: ["A. 表面观察", "B. 深入思考和分析", "C. 道听途说", "D. 主观臆断"], answer: "B", knowledgePoint: "洞见", analysis: "洞见来自对文本的深入思考和分析。" },
-      { type: "choice", difficulty: 3, text: "原创性在学术写作中的意义是：", options: ["A. 重复他人观点", "B. 提出自己的见解", "C. 抄袭", "D. 毫无新意"], answer: "B", knowledgePoint: "原创性", analysis: "学术写作应有原创性，提出自己独特的见解。" }
-    ]
-  },
-  {
-    lesson: 68, title: "文献综述",
-    questions: [
-      { type: "choice", difficulty: 1, text: "文献综述的目的是：", options: ["A. 罗列文献", "B. 分析已有研究", "C. 抄袭文献", "D. 忽略前人研究"], answer: "B", knowledgePoint: "文献综述", analysis: "文献综述的目的是分析已有研究，指出研究空白。" },
-      { type: "choice", difficulty: 2, text: "文献分析应关注：", options: ["A. 文献的页码", "B. 文献的观点和联系", "C. 文献的封面", "D. 文献的价格"], answer: "B", knowledgePoint: "文献分析", analysis: "文献分析应关注文献的观点及其相互联系。" },
-      { type: "choice", difficulty: 3, text: "批判性评价文献意味着：", options: ["A. 盲目接受", "B. 评价优缺点，指出研究空白", "C. 全盘否定", "D. 不加分析"], answer: "B", knowledgePoint: "批判性评价", analysis: "批判性评价要求客观分析文献的优缺点，指出研究空白。" }
-    ]
-  },
-  {
-    lesson: 69, title: "精进写作风格",
-    questions: [
-      { type: "choice", difficulty: 1, text: "学术写作的语言要求：", options: ["A. 模糊不清", "B. 清晰准确", "C. 晦涩难懂", "D. 口语化"], answer: "B", knowledgePoint: "学术语言", analysis: "学术写作语言应清晰、准确、正式。" },
-      { type: "choice", difficulty: 2, text: "连贯性的重要性在于：", options: ["A. 使文章难以理解", "B. 使文章逻辑清晰", "C. 增加字数", "D. 混淆读者"], answer: "B", knowledgePoint: "连贯性", analysis: "文章的连贯性使逻辑清晰，便于读者理解。" },
-      { type: "choice", difficulty: 3, text: "学术规范包括：", options: ["A. 引用格式、参考文献、学术语气", "B. 随意写作", "C. 不注明来源", "D. 抄袭"], answer: "A", knowledgePoint: "学术规范", analysis: "学术写作应遵守引用格式、参考文献和学术语气等规范。" }
-    ]
-  },
-  {
-    lesson: 70, title: "A-Level综合模拟",
-    questions: [
-      { type: "choice", difficulty: 1, text: "A-Level文学考试范围包括：", options: ["A. 仅诗歌", "B. 文学理论、文学史、现代主义、论文写作", "C. 仅小说", "D. 仅戏剧"], answer: "B", knowledgePoint: "考试范围", analysis: "A-Level文学考试涵盖文学理论、文学史、现代主义和论文写作等内容。" },
-      { type: "choice", difficulty: 2, text: "考试题型包括：", options: ["A. 只有选择题", "B. 文本分析、比较研究、论文写作", "C. 只有填空题", "D. 只有判断题"], answer: "B", knowledgePoint: "考试题型", analysis: "A-Level文学考试包括文本分析、比较研究和论文写作等题型。" },
-      { type: "choice", difficulty: 3, text: "论文写作的评分标准包括：", options: ["A. 字数越多越好", "B. 论点清晰、证据充分、分析深入", "C. 字迹越漂亮越好", "D. 段落越多越好"], answer: "B", knowledgePoint: "评分标准", analysis: "论文评分主要看论点清晰度、证据充分性和分析深度。" }
+    "lesson": 1,
+    "title": "《仲夏夜之梦》：魔法、爱情与混乱",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「戏剧是什么——区别于小说和诗歌」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "戏剧是什么——区别于小说和诗歌",
+        "analysis": "伊莱莎没有急着给结论：「戏剧是什么——区别于小说和诗歌」不能只当作术语背诵。它要放回「《仲夏夜之梦》：魔法、爱情与混乱」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「帕克把爱情魔汁，最先涂在了谁的眼皮上？」",
+        "options": [
+          "A. 赫米娅（人类女孩）",
+          "B. 泰坦妮娅（仙后）",
+          "C. 狄米特律斯（人类男孩）",
+          "D. 拉山德（人类男孩）"
+        ],
+        "answer": "B",
+        "knowledgePoint": "《仲夏夜之梦》的故事——仙王、仙后与爱情魔汁",
+        "analysis": "伊莱莎会先让学生回到文字本身：泰坦妮娅。这道题不只是考记忆，也在提醒你把「《仲夏夜之梦》的故事——仙王、仙后与爱情魔汁」放回「《仲夏夜之梦》：魔法、爱情与混乱」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「魔法在戏剧中的意义——内心无法控制的力量」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "魔法在戏剧中的意义——内心无法控制的力量",
+        "analysis": "伊莱莎没有急着给结论：「魔法在戏剧中的意义——内心无法控制的力量」不能只当作术语背诵。它要放回「《仲夏夜之梦》：魔法、爱情与混乱」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「《仲夏夜之梦》：魔法、爱情与混乱」这一课中，理解「戏剧是什么——区别于小说和诗歌」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "戏剧是什么——区别于小说和诗歌",
+        "analysis": "伊莱莎没有急着给结论：「戏剧是什么——区别于小说和诗歌」不能只当作术语背诵。它要放回「《仲夏夜之梦》：魔法、爱情与混乱」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「《仲夏夜之梦》：魔法、爱情与混乱」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「戏剧是什么——区别于小说和诗歌」和「《仲夏夜之梦》的故事——仙王、仙后与...」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "《仲夏夜之梦》的故事——仙王、仙后与爱情魔汁",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「《仲夏夜之梦》：魔法、爱情与混乱」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「《仲夏夜之梦》：魔法、爱情与混乱」这一课，选择「戏剧是什么——区别于小说和诗歌」和「《仲夏夜之梦》的故事——仙王、仙后与爱情魔汁」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「戏剧是什么——区别于小说和诗歌」或本课核心概念",
+          "能联系「《仲夏夜之梦》的故事——仙王、仙后与...」或「魔法在戏剧中的意义——内心无法控制的...」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 2,
+    "title": "戏剧结构：幕、场与戏剧性转折",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「《仲夏夜之梦》被分成几幕？」",
+        "options": [
+          "A. 3幕",
+          "B. 4幕",
+          "C. 5幕",
+          "D. 7幕"
+        ],
+        "answer": "C",
+        "knowledgePoint": "幕（act）：戏剧的大章节",
+        "analysis": "伊莱莎会先让学生回到文字本身：五幕。这道题不只是考记忆，也在提醒你把「幕（act）：戏剧的大章节」放回「戏剧结构：幕、场与戏剧性转折」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「场（scene）：小段落与时地转换」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "场（scene）：小段落与时地转换",
+        "analysis": "伊莱莎没有急着给结论：「场（scene）：小段落与时地转换」不能只当作术语背诵。它要放回「戏剧结构：幕、场与戏剧性转折」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「戏剧性转折：让故事改变方向的一刀」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "戏剧性转折：让故事改变方向的一刀",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「戏剧性转折：让故事改变方向的一刀」不能只当作术语背诵。它要放回「戏剧结构：幕、场与戏剧性转折」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「幕（act）：戏剧的大章节」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "幕（act）：戏剧的大章节",
+        "analysis": "伊莱莎把书页向前推了推：「幕（act）：戏剧的大章节」不能只当作术语背诵。它要放回「戏剧结构：幕、场与戏剧性转折」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「戏剧结构：幕、场与戏剧性转折」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「幕（act）：戏剧的大章节」和「场（scene）：小段落与时地转换」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "场（scene）：小段落与时地转换",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「戏剧结构：幕、场与戏剧性转折」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「戏剧结构：幕、场与戏剧性转折」这一课，选择「幕（act）：戏剧的大章节」和「场（scene）：小段落与时地转换」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「幕（act）：戏剧的大章节」或本课核心概念",
+          "能联系「场（scene）：小段落与时地转换」或「戏剧性转折：让故事改变方向的一刀」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 3,
+    "title": "喜剧与悲剧的本质区别",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「以下哪一个是喜剧的典型特征？」",
+        "options": [
+          "A. 英雄在结尾陨落",
+          "B. 爱人之间互相复仇",
+          "C. 以婚礼或团圆收场",
+          "D. 被命运诅咒无法逃脱"
+        ],
+        "answer": "C",
+        "knowledgePoint": "喜剧：以混乱开始，以团圆结束",
+        "analysis": "伊莱莎会先让学生回到文字本身：婚礼。这道题不只是考记忆，也在提醒你把「喜剧：以混乱开始，以团圆结束」放回「喜剧与悲剧的本质区别」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「悲剧：以崇高开始，以毁灭结束」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "悲剧：以崇高开始，以毁灭结束",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「悲剧：以崇高开始，以毁灭结束」不能只当作术语背诵。它要放回「喜剧与悲剧的本质区别」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「喜剧与悲剧的本质区别」这一课中，理解「卡塔西斯（catharsis）：悲剧的净化功能」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "卡塔西斯（catharsis）：悲剧的净化功能",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「卡塔西斯（catharsis）：悲剧的净化功能」不能只当作术语背诵。它要放回「喜剧与悲剧的本质区别」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「喜剧与悲剧的本质区别」这一课中，理解「喜剧：以混乱开始，以团圆结束」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "喜剧：以混乱开始，以团圆结束",
+        "analysis": "伊莱莎轻声说，「喜剧：以混乱开始，以团圆结束」不能只当作术语背诵。它要放回「喜剧与悲剧的本质区别」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「喜剧与悲剧的本质区别」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「喜剧：以混乱开始，以团圆结束」和「悲剧：以崇高开始，以毁灭结束」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "悲剧：以崇高开始，以毁灭结束",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「喜剧与悲剧的本质区别」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「喜剧与悲剧的本质区别」这一课，选择「喜剧：以混乱开始，以团圆结束」和「悲剧：以崇高开始，以毁灭结束」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「喜剧：以混乱开始，以团圆结束」或本课核心概念",
+          "能联系「悲剧：以崇高开始，以毁灭结束」或「卡塔西斯（catharsis）：悲剧...」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 4,
+    "title": "莎士比亚的语言：双关、意象与韵律",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「双关（pun）的定义是什么？」",
+        "options": [
+          "A. 一种夸张的修辞手法",
+          "B. 利用词语的多重含义或音近制造两层意思",
+          "C. 把两个不相关的比喻放在一起",
+          "D. 用反问句表达肯定意义"
+        ],
+        "answer": "B",
+        "knowledgePoint": "双关（pun）：一个词同时说两件事",
+        "analysis": "伊莱莎会先让学生回到文字本身：双关利用词语的多义性——同一个词，同时说了两件事。这道题不只是考记忆，也在提醒你把「双关（pun）：一个词同时说两件事」放回「莎士比亚的语言：双关、意象与韵律」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「意象（imagery）：用具体事物说抽象感受」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意象（imagery）：用具体事物说抽象感受",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「意象（imagery）：用具体事物说抽象感受」不能只当作术语背诵。它要放回「莎士比亚的语言：双关、意象与韵律」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「抑扬格五音步（iambic pentameter）：莎士...」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "抑扬格五音步（iambic pentameter）：莎士比亚的节奏骨架",
+        "analysis": "伊莱莎没有急着给结论：「抑扬格五音步（iambic pentameter）：莎士比亚的节奏骨架」不能只当作术语背诵。它要放回「莎士比亚的语言：双关、意象与韵律」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「双关（pun）：一个词同时说两件事」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "双关（pun）：一个词同时说两件事",
+        "analysis": "伊莱莎把书页向前推了推：「双关（pun）：一个词同时说两件事」不能只当作术语背诵。它要放回「莎士比亚的语言：双关、意象与韵律」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「莎士比亚的语言：双关、意象与韵律」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「双关（pun）：一个词同时说两件事」和「意象（imagery）：用具体事物说...」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意象（imagery）：用具体事物说抽象感受",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「莎士比亚的语言：双关、意象与韵律」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「莎士比亚的语言：双关、意象与韵律」这一课，选择「双关（pun）：一个词同时说两件事」和「意象（imagery）：用具体事物说抽象感受」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「双关（pun）：一个词同时说两件事」或本课核心概念",
+          "能联系「意象（imagery）：用具体事物说...」或「抑扬格五音步（iambic pent...」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 5,
+    "title": "伊丽莎白时代剧场：环球剧院与观众",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「以下哪一项关于环球剧院的描述是正确的？」",
+        "options": [
+          "A. 是室内剧院，有精心设计的灯光系统",
+          "B. 露天圆形建筑，演出在白天进行，无人工灯光",
+          "C. 专门为贵族建造，平民不得入内",
+          "D. 舞台上有幕布，每幕结束后降下"
+        ],
+        "answer": "B",
+        "knowledgePoint": "环球剧院的结构：露天、圆形、无灯无幕",
+        "analysis": "伊莱莎会先让学生回到文字本身：露天、白天、无幕布。这道题不只是考记忆，也在提醒你把「环球剧院的结构：露天、圆形、无灯无幕」放回「伊丽莎白时代剧场：环球剧院与观众」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「观众的阶层分布：平民与贵族在同一屋檐下」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "观众的阶层分布：平民与贵族在同一屋檐下",
+        "analysis": "伊莱莎没有急着给结论：「观众的阶层分布：平民与贵族在同一屋檐下」不能只当作术语背诵。它要放回「伊丽莎白时代剧场：环球剧院与观众」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「没有女演员——男孩扮演女角色」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "没有女演员——男孩扮演女角色",
+        "analysis": "伊莱莎轻声说，「没有女演员——男孩扮演女角色」不能只当作术语背诵。它要放回「伊丽莎白时代剧场：环球剧院与观众」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「环球剧院的结构：露天、圆形、无灯无幕」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "环球剧院的结构：露天、圆形、无灯无幕",
+        "analysis": "伊莱莎把书页向前推了推：「环球剧院的结构：露天、圆形、无灯无幕」不能只当作术语背诵。它要放回「伊丽莎白时代剧场：环球剧院与观众」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「伊丽莎白时代剧场：环球剧院与观众」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「环球剧院的结构：露天、圆形、无灯无幕」和「观众的阶层分布：平民与贵族在同一屋檐...」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "观众的阶层分布：平民与贵族在同一屋檐下",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「伊丽莎白时代剧场：环球剧院与观众」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「伊丽莎白时代剧场：环球剧院与观众」这一课，选择「环球剧院的结构：露天、圆形、无灯无幕」和「观众的阶层分布：平民与贵族在同一屋檐下」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「环球剧院的结构：露天、圆形、无灯无幕」或本课核心概念",
+          "能联系「观众的阶层分布：平民与贵族在同一屋檐...」或「没有女演员——男孩扮演女角色」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 6,
+    "title": "小说与短篇小说的叙事差异",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「小说与短篇小说的叙事差异」这一课中，理解「小说（novel）：长篇、多线索、人物关系复杂」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "小说（novel）：长篇、多线索、人物关系复杂",
+        "analysis": "伊莱莎把书页向前推了推：「小说（novel）：长篇、多线索、人物关系复杂」不能只当作术语背诵。它要放回「小说与短篇小说的叙事差异」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「以下哪一项最能描述短篇小说区别于长篇小说的核心特征？」",
+        "options": [
+          "A. 题材更轻松有趣",
+          "B. 聚焦于单一事件，常有顿悟或转变的时刻",
+          "C. 语言比小说更简单",
+          "D. 只描述一个人物"
+        ],
+        "answer": "B",
+        "knowledgePoint": "短篇小说（short story）：单一场景与顿悟时刻",
+        "analysis": "伊莱莎会先让学生回到文字本身：伊莱莎轻声说，顿悟时刻——一个人物突然理解了某件事，或者读者突然看清了什么。这道题不只是考记忆，也在提醒你把「短篇小说（short story）：单一场景与顿悟时刻」放回「小说与短篇小说的叙事差异」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「小说（novel）：长篇、多线索、人物关系复杂」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "小说（novel）：长篇、多线索、人物关系复杂",
+        "analysis": "伊莱莎把书页向前推了推：「小说（novel）：长篇、多线索、人物关系复杂」不能只当作术语背诵。它要放回「小说与短篇小说的叙事差异」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「短篇小说（short story）：单一场景与顿悟时刻」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "短篇小说（short story）：单一场景与顿悟时刻",
+        "analysis": "伊莱莎没有急着给结论：「短篇小说（short story）：单一场景与顿悟时刻」不能只当作术语背诵。它要放回「小说与短篇小说的叙事差异」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「小说与短篇小说的叙事差异」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「小说（novel）：长篇、多线索、人...」和「短篇小说（short story）：...」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "短篇小说（short story）：单一场景与顿悟时刻",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「小说与短篇小说的叙事差异」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「小说与短篇小说的叙事差异」这一课，选择「小说（novel）：长篇、多线索、人物关系复杂」和「短篇小说（short story）：单一场景与顿...」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「小说（novel）：长篇、多线索、人...」或本课核心概念",
+          "能联系「短篇小说（short story）：...」或「短篇小说（short story）：...」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 7,
+    "title": "叙述者视角：一人称、三人称全知",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「以下哪一项是第一人称叙述的核心特征？」",
+        "options": [
+          "A. 叙述者知道所有人物的内心活动",
+          "B. 叙述者只能描述自己经历和感受到的",
+          "C. 叙述者从不参与故事，只是旁观",
+          "D. 叙述者必须说实话"
+        ],
+        "answer": "B",
+        "knowledgePoint": "第一人称叙述（I）：局限与亲密",
+        "analysis": "伊莱莎会先让学生回到文字本身：第一人称叙述者只能告诉我们他自己经历和感受到的东西。这道题不只是考记忆，也在提醒你把「第一人称叙述（I）：局限与亲密」放回「叙述者视角：一人称、三人称全知」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「叙述者视角：一人称、三人称全知」这一课中，理解「第三人称全知叙述（omniscient）：上帝视角」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "第三人称全知叙述（omniscient）：上帝视角",
+        "analysis": "伊莱莎轻声说，「第三人称全知叙述（omniscient）：上帝视角」不能只当作术语背诵。它要放回「叙述者视角：一人称、三人称全知」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「第一人称叙述（I）：局限与亲密」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "第一人称叙述（I）：局限与亲密",
+        "analysis": "伊莱莎把书页向前推了推：「第一人称叙述（I）：局限与亲密」不能只当作术语背诵。它要放回「叙述者视角：一人称、三人称全知」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「第三人称全知叙述（omniscient）：上帝视角」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "第三人称全知叙述（omniscient）：上帝视角",
+        "analysis": "伊莱莎轻声说，「第三人称全知叙述（omniscient）：上帝视角」不能只当作术语背诵。它要放回「叙述者视角：一人称、三人称全知」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「叙述者视角：一人称、三人称全知」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「第一人称叙述（I）：局限与亲密」和「第三人称全知叙述（omniscien...」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "第三人称全知叙述（omniscient）：上帝视角",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「叙述者视角：一人称、三人称全知」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「叙述者视角：一人称、三人称全知」这一课，选择「第一人称叙述（I）：局限与亲密」和「第三人称全知叙述（omniscient）：上帝视...」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「第一人称叙述（I）：局限与亲密」或本课核心概念",
+          "能联系「第三人称全知叙述（omniscien...」或「第三人称全知叙述（omniscien...」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 8,
+    "title": "哥特文学：《弗兰肯斯坦》节选",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「以下哪一项是哥特文学的典型特征？」",
+        "options": [
+          "A. 明亮欢快的场景，描写田园生活",
+          "B. 阴暗神秘的氛围，探索秘密与恐惧",
+          "C. 完全依赖科学解释的情节",
+          "D. 只描写贵族的社交生活"
+        ],
+        "answer": "B",
+        "knowledgePoint": "哥特文学的定义与核心要素",
+        "analysis": "伊莱莎会先让学生回到文字本身：哥特文学的核心是阴暗、神秘和恐惧。这道题不只是考记忆，也在提醒你把「哥特文学的定义与核心要素」放回「哥特文学：《弗兰肯斯坦》节选」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「哥特文学：《弗兰肯斯坦》节选」这一课中，理解「玛丽·雪莱与《弗兰肯斯坦》的创作背景」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "玛丽·雪莱与《弗兰肯斯坦》的创作背景",
+        "analysis": "伊莱莎没有急着给结论：「玛丽·雪莱与《弗兰肯斯坦》的创作背景」不能只当作术语背诵。它要放回「哥特文学：《弗兰肯斯坦》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「怪物的人性困境：被抛弃的生命」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "怪物的人性困境：被抛弃的生命",
+        "analysis": "伊莱莎轻声说，「怪物的人性困境：被抛弃的生命」不能只当作术语背诵。它要放回「哥特文学：《弗兰肯斯坦》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「哥特文学的定义与核心要素」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特文学的定义与核心要素",
+        "analysis": "伊莱莎轻声说，「哥特文学的定义与核心要素」不能只当作术语背诵。它要放回「哥特文学：《弗兰肯斯坦》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「哥特文学：《弗兰肯斯坦》节选」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「哥特文学的定义与核心要素」和「玛丽·雪莱与《弗兰肯斯坦》的创作背景」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "玛丽·雪莱与《弗兰肯斯坦》的创作背景",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「哥特文学：《弗兰肯斯坦》节选」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「哥特文学：《弗兰肯斯坦》节选」这一课，选择「哥特文学的定义与核心要素」和「玛丽·雪莱与《弗兰肯斯坦》的创作背景」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「哥特文学的定义与核心要素」或本课核心概念",
+          "能联系「玛丽·雪莱与《弗兰肯斯坦》的创作背景」或「怪物的人性困境：被抛弃的生命」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 9,
+    "title": "哥特元素：黑暗、秘密与怪物",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「哥特文学中的阴暗场景（城堡、荒原、暴风雨）主要起什么作用？」",
+        "options": [
+          "A. 只是为了显示故事发生的地理位置",
+          "B. 制造视觉上的美感",
+          "C. 外化人物内心的黑暗或紧张状态",
+          "D. 表明故事发生在古代"
+        ],
+        "answer": "C",
+        "knowledgePoint": "哥特式场景：城堡、荒原与暴风雨",
+        "analysis": "伊莱莎会先让学生回到文字本身：哥特场景是人物内心的镜子——外部的黑暗对应内部的恐惧和秘密。这道题不只是考记忆，也在提醒你把「哥特式场景：城堡、荒原与暴风雨」放回「哥特元素：黑暗、秘密与怪物」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「哥特式人物原型：疯女人、吸血鬼与科学怪人」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特式人物原型：疯女人、吸血鬼与科学怪人",
+        "analysis": "伊莱莎没有急着给结论：「哥特式人物原型：疯女人、吸血鬼与科学怪人」不能只当作术语背诵。它要放回「哥特元素：黑暗、秘密与怪物」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「怪物象征人性黑暗面」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "怪物象征人性黑暗面",
+        "analysis": "伊莱莎轻声说，「怪物象征人性黑暗面」不能只当作术语背诵。它要放回「哥特元素：黑暗、秘密与怪物」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「哥特式场景：城堡、荒原与暴风雨」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特式场景：城堡、荒原与暴风雨",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「哥特式场景：城堡、荒原与暴风雨」不能只当作术语背诵。它要放回「哥特元素：黑暗、秘密与怪物」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「哥特元素：黑暗、秘密与怪物」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「哥特式场景：城堡、荒原与暴风雨」和「哥特式人物原型：疯女人、吸血鬼与科学...」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特式人物原型：疯女人、吸血鬼与科学怪人",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「哥特元素：黑暗、秘密与怪物」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「哥特元素：黑暗、秘密与怪物」这一课，选择「哥特式场景：城堡、荒原与暴风雨」和「哥特式人物原型：疯女人、吸血鬼与科学怪人」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「哥特式场景：城堡、荒原与暴风雨」或本课核心概念",
+          "能联系「哥特式人物原型：疯女人、吸血鬼与科学...」或「怪物象征人性黑暗面」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 10,
+    "title": "19世纪社会背景与文学的关系",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "「狄更斯的文学与工业革命的关系，以下哪项描述最准确？」",
+        "options": [
+          "A. 狄更斯赞扬了工业革命带来的进步",
+          "B. 狄更斯的写作与工业革命无关",
+          "C. 狄更斯用小说记录和批判工业革命带来的社会不公",
+          "D. 狄更斯只关注贵族和上层社会"
+        ],
+        "answer": "C",
+        "knowledgePoint": "工业革命与狄更斯文学",
+        "analysis": "伊莱莎会先让学生回到文字本身：狄更斯用小说批判工业时代的社会不公——儿童劳工、贫民窟、孤儿的命运。这道题不只是考记忆，也在提醒你把「工业革命与狄更斯文学」放回「19世纪社会背景与文学的关系」的文本关系或写作任务里理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「中产阶级兴起与连载小说」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "中产阶级兴起与连载小说",
+        "analysis": "伊莱莎轻声说，「中产阶级兴起与连载小说」不能只当作术语背诵。它要放回「19世纪社会背景与文学的关系」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「19世纪社会背景与文学的关系」这一课中，理解「女性作家的兴起：奥斯汀与勃朗特姐妹」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "女性作家的兴起：奥斯汀与勃朗特姐妹",
+        "analysis": "伊莱莎把书页向前推了推：「女性作家的兴起：奥斯汀与勃朗特姐妹」不能只当作术语背诵。它要放回「19世纪社会背景与文学的关系」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「工业革命与狄更斯文学」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "工业革命与狄更斯文学",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「工业革命与狄更斯文学」不能只当作术语背诵。它要放回「19世纪社会背景与文学的关系」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「19世纪社会背景与文学的关系」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「工业革命与狄更斯文学」和「中产阶级兴起与连载小说」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "中产阶级兴起与连载小说",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「19世纪社会背景与文学的关系」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「19世纪社会背景与文学的关系」这一课，选择「工业革命与狄更斯文学」和「中产阶级兴起与连载小说」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「工业革命与狄更斯文学」或本课核心概念",
+          "能联系「中产阶级兴起与连载小说」或「女性作家的兴起：奥斯汀与勃朗特姐妹」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 11,
+    "title": "浪漫主义：自然、情感与革命",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「浪漫主义的兴起」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "浪漫主义的兴起",
+        "analysis": "伊莱莎轻声说，「浪漫主义的兴起」不能只当作术语背诵。它要放回「浪漫主义：自然、情感与革命」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「自然作为灵感源泉」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自然作为灵感源泉",
+        "analysis": "伊莱莎把书页向前推了推：「自然作为灵感源泉」不能只当作术语背诵。它要放回「浪漫主义：自然、情感与革命」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「情感的力量」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "情感的力量",
+        "analysis": "伊莱莎没有急着给结论：「情感的力量」不能只当作术语背诵。它要放回「浪漫主义：自然、情感与革命」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「浪漫主义：自然、情感与革命」这一课中，理解「革命的精神」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "革命的精神",
+        "analysis": "伊莱莎轻声说，「革命的精神」不能只当作术语背诵。它要放回「浪漫主义：自然、情感与革命」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「浪漫主义：自然、情感与革命」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「浪漫主义的兴起」和「自然作为灵感源泉」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自然作为灵感源泉",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「浪漫主义：自然、情感与革命」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「浪漫主义：自然、情感与革命」这一课，选择「浪漫主义的兴起」和「自然作为灵感源泉」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「浪漫主义的兴起」或本课核心概念",
+          "能联系「自然作为灵感源泉」或「情感的力量」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 12,
+    "title": "华兹华斯：《序曲》中的成长主题",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「童年的记忆」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "童年的记忆",
+        "analysis": "伊莱莎把书页向前推了推：「童年的记忆」不能只当作术语背诵。它要放回「华兹华斯：《序曲》中的成长主题」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「自然的教育」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自然的教育",
+        "analysis": "伊莱莎把书页向前推了推：「自然的教育」不能只当作术语背诵。它要放回「华兹华斯：《序曲》中的成长主题」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「想象力的发展」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "想象力的发展",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「想象力的发展」不能只当作术语背诵。它要放回「华兹华斯：《序曲》中的成长主题」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「诗歌与自我」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "诗歌与自我",
+        "analysis": "伊莱莎轻声说，「诗歌与自我」不能只当作术语背诵。它要放回「华兹华斯：《序曲》中的成长主题」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「华兹华斯：《序曲》中的成长主题」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「童年的记忆」和「自然的教育」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自然的教育",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「华兹华斯：《序曲》中的成长主题」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「华兹华斯：《序曲》中的成长主题」这一课，选择「童年的记忆」和「自然的教育」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「童年的记忆」或本课核心概念",
+          "能联系「自然的教育」或「想象力的发展」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 13,
+    "title": "意象与象征：读懂诗歌的眼睛",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「意象的定义」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意象的定义",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「意象的定义」不能只当作术语背诵。它要放回「意象与象征：读懂诗歌的眼睛」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「象征的力量」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "象征的力量",
+        "analysis": "伊莱莎轻声说，「象征的力量」不能只当作术语背诵。它要放回「意象与象征：读懂诗歌的眼睛」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「如何分析意象」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "如何分析意象",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「如何分析意象」不能只当作术语背诵。它要放回「意象与象征：读懂诗歌的眼睛」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「意象与主题」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意象与主题",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「意象与主题」不能只当作术语背诵。它要放回「意象与象征：读懂诗歌的眼睛」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「意象与象征：读懂诗歌的眼睛」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「意象的定义」和「象征的力量」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "象征的力量",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「意象与象征：读懂诗歌的眼睛」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「意象与象征：读懂诗歌的眼睛」这一课，选择「意象的定义」和「象征的力量」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「意象的定义」或本课核心概念",
+          "能联系「象征的力量」或「如何分析意象」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 14,
+    "title": "格律基础：抑扬格五音步",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「格律基础：抑扬格五音步」这一课中，理解「音节的轻重」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "音节的轻重",
+        "analysis": "伊莱莎把书页向前推了推：「音节的轻重」不能只当作术语背诵。它要放回「格律基础：抑扬格五音步」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「五音步的结构」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "五音步的结构",
+        "analysis": "伊莱莎把书页向前推了推：「五音步的结构」不能只当作术语背诵。它要放回「格律基础：抑扬格五音步」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「格律的效果」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "格律的效果",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「格律的效果」不能只当作术语背诵。它要放回「格律基础：抑扬格五音步」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「打破格律」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "打破格律",
+        "analysis": "伊莱莎轻声说，「打破格律」不能只当作术语背诵。它要放回「格律基础：抑扬格五音步」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「格律基础：抑扬格五音步」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「音节的轻重」和「五音步的结构」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "五音步的结构",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「格律基础：抑扬格五音步」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「格律基础：抑扬格五音步」这一课，选择「音节的轻重」和「五音步的结构」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「音节的轻重」或本课核心概念",
+          "能联系「五音步的结构」或「格律的效果」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 15,
+    "title": "维多利亚时代诗歌：丁尼生与勃朗宁",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「维多利亚时代诗歌：丁尼生与勃朗宁」这一课中，理解「丁尼生的优雅与忧郁」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "丁尼生的优雅与忧郁",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「丁尼生的优雅与忧郁」不能只当作术语背诵。它要放回「维多利亚时代诗歌：丁尼生与勃朗宁」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「勃朗宁的戏剧性独白」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "勃朗宁的戏剧性独白",
+        "analysis": "伊莱莎把书页向前推了推：「勃朗宁的戏剧性独白」不能只当作术语背诵。它要放回「维多利亚时代诗歌：丁尼生与勃朗宁」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「维多利亚诗歌的主题」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "维多利亚诗歌的主题",
+        "analysis": "伊莱莎把书页向前推了推：「维多利亚诗歌的主题」不能只当作术语背诵。它要放回「维多利亚时代诗歌：丁尼生与勃朗宁」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「形式与内容的平衡」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "形式与内容的平衡",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「形式与内容的平衡」不能只当作术语背诵。它要放回「维多利亚时代诗歌：丁尼生与勃朗宁」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「维多利亚时代诗歌：丁尼生与勃朗宁」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「丁尼生的优雅与忧郁」和「勃朗宁的戏剧性独白」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "勃朗宁的戏剧性独白",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「维多利亚时代诗歌：丁尼生与勃朗宁」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「维多利亚时代诗歌：丁尼生与勃朗宁」这一课，选择「丁尼生的优雅与忧郁」和「勃朗宁的戏剧性独白」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「丁尼生的优雅与忧郁」或本课核心概念",
+          "能联系「勃朗宁的戏剧性独白」或「维多利亚诗歌的主题」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 16,
+    "title": "《麦克白》：野心与其后果",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「麦克白的野心」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "麦克白的野心",
+        "analysis": "伊莱莎把书页向前推了推：「麦克白的野心」不能只当作术语背诵。它要放回「《麦克白》：野心与其后果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「《麦克白》：野心与其后果」这一课中，理解「权力的诱惑」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "权力的诱惑",
+        "analysis": "伊莱莎轻声说，「权力的诱惑」不能只当作术语背诵。它要放回「《麦克白》：野心与其后果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「《麦克白》：野心与其后果」这一课中，理解「麦克白夫人的角色」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "麦克白夫人的角色",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「麦克白夫人的角色」不能只当作术语背诵。它要放回「《麦克白》：野心与其后果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「悲剧的结局」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "悲剧的结局",
+        "analysis": "伊莱莎轻声说，「悲剧的结局」不能只当作术语背诵。它要放回「《麦克白》：野心与其后果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「《麦克白》：野心与其后果」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「麦克白的野心」和「权力的诱惑」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "权力的诱惑",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「《麦克白》：野心与其后果」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「《麦克白》：野心与其后果」这一课，选择「麦克白的野心」和「权力的诱惑」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「麦克白的野心」或本课核心概念",
+          "能联系「权力的诱惑」或「麦克白夫人的角色」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 17,
+    "title": "权力、道德与自我欺骗",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「权力、道德与自我欺骗」这一课中，理解「道德的挣扎」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "道德的挣扎",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「道德的挣扎」不能只当作术语背诵。它要放回「权力、道德与自我欺骗」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「自我欺骗」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自我欺骗",
+        "analysis": "伊莱莎轻声说，「自我欺骗」不能只当作术语背诵。它要放回「权力、道德与自我欺骗」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「权力 corrupts」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "权力 corrupts",
+        "analysis": "伊莱莎没有急着给结论：「权力 corrupts」不能只当作术语背诵。它要放回「权力、道德与自我欺骗」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「罪恶的代价」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "罪恶的代价",
+        "analysis": "伊莱莎轻声说，「罪恶的代价」不能只当作术语背诵。它要放回「权力、道德与自我欺骗」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「权力、道德与自我欺骗」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「道德的挣扎」和「自我欺骗」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自我欺骗",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「权力、道德与自我欺骗」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「权力、道德与自我欺骗」这一课，选择「道德的挣扎」和「自我欺骗」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「道德的挣扎」或本课核心概念",
+          "能联系「自我欺骗」或「权力 corrupts」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 18,
+    "title": "戏剧独白：人物内心的直接呈现",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「独白的功能」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "独白的功能",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「独白的功能」不能只当作术语背诵。它要放回「戏剧独白：人物内心的直接呈现」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「戏剧独白：人物内心的直接呈现」这一课中，理解「To be or not to be」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "To be or not to be",
+        "analysis": "伊莱莎没有急着给结论：「To be or not to be」不能只当作术语背诵。它要放回「戏剧独白：人物内心的直接呈现」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「独白中的情感」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "独白中的情感",
+        "analysis": "伊莱莎没有急着给结论：「独白中的情感」不能只当作术语背诵。它要放回「戏剧独白：人物内心的直接呈现」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「表演的挑战」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "表演的挑战",
+        "analysis": "伊莱莎把书页向前推了推：「表演的挑战」不能只当作术语背诵。它要放回「戏剧独白：人物内心的直接呈现」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「戏剧独白：人物内心的直接呈现」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「独白的功能」和「To be or not to be」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "To be or not to be",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「戏剧独白：人物内心的直接呈现」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「戏剧独白：人物内心的直接呈现」这一课，选择「独白的功能」和「To be or not to be」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「独白的功能」或本课核心概念",
+          "能联系「To be or not to be」或「独白中的情感」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 19,
+    "title": "历史剧的史实与虚构",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「历史剧的史实与虚构」这一课中，理解「历史剧的史实与虚构」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史剧的史实与虚构",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「历史剧的史实与虚构」不能只当作术语背诵。它要放回「历史剧的史实与虚构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「历史剧的史实与虚构」这一课中，理解「历史剧的主题」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史剧的主题",
+        "analysis": "伊莱莎没有急着给结论：「历史剧的主题」不能只当作术语背诵。它要放回「历史剧的史实与虚构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「历史剧的史实与虚构」这一课中，理解「亨利五世」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "亨利五世",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「亨利五世」不能只当作术语背诵。它要放回「历史剧的史实与虚构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「历史剧的史实与虚构」这一课中，理解「历史的教训」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史的教训",
+        "analysis": "伊莱莎轻声说，「历史的教训」不能只当作术语背诵。它要放回「历史剧的史实与虚构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「历史剧的史实与虚构」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「历史剧的史实与虚构」和「历史剧的主题」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史剧的主题",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「历史剧的史实与虚构」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「历史剧的史实与虚构」这一课，选择「历史剧的史实与虚构」和「历史剧的主题」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「历史剧的史实与虚构」或本课核心概念",
+          "能联系「历史剧的主题」或「亨利五世」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 20,
+    "title": "表演与文本：同一台词的不同诠释",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「文本与表演的互动」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文本与表演的互动",
+        "analysis": "伊莱莎把书页向前推了推：「文本与表演的互动」不能只当作术语背诵。它要放回「表演与文本：同一台词的不同诠释」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「表演与文本：同一台词的不同诠释」这一课中，理解「同一台词的不同诠释」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "同一台词的不同诠释",
+        "analysis": "伊莱莎轻声说，「同一台词的不同诠释」不能只当作术语背诵。它要放回「表演与文本：同一台词的不同诠释」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「导演的视角」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "导演的视角",
+        "analysis": "伊莱莎轻声说，「导演的视角」不能只当作术语背诵。它要放回「表演与文本：同一台词的不同诠释」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「观众的参与」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "观众的参与",
+        "analysis": "伊莱莎把书页向前推了推：「观众的参与」不能只当作术语背诵。它要放回「表演与文本：同一台词的不同诠释」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「表演与文本：同一台词的不同诠释」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「文本与表演的互动」和「同一台词的不同诠释」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "同一台词的不同诠释",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「表演与文本：同一台词的不同诠释」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「表演与文本：同一台词的不同诠释」这一课，选择「文本与表演的互动」和「同一台词的不同诠释」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「文本与表演的互动」或本课核心概念",
+          "能联系「同一台词的不同诠释」或「导演的视角」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 21,
+    "title": "《了不起的盖茨比》：美国梦的幻灭",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「盖茨比的梦想」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "盖茨比的梦想",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「盖茨比的梦想」不能只当作术语背诵。它要放回「《了不起的盖茨比》：美国梦的幻灭」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「美国梦的幻灭」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "美国梦的幻灭",
+        "analysis": "伊莱莎把书页向前推了推：「美国梦的幻灭」不能只当作术语背诵。它要放回「《了不起的盖茨比》：美国梦的幻灭」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「爵士时代的浮华」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "爵士时代的浮华",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「爵士时代的浮华」不能只当作术语背诵。它要放回「《了不起的盖茨比》：美国梦的幻灭」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「象征与隐喻」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "象征与隐喻",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「象征与隐喻」不能只当作术语背诵。它要放回「《了不起的盖茨比》：美国梦的幻灭」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「《了不起的盖茨比》：美国梦的幻灭」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「盖茨比的梦想」和「美国梦的幻灭」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "美国梦的幻灭",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「《了不起的盖茨比》：美国梦的幻灭」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「《了不起的盖茨比》：美国梦的幻灭」这一课，选择「盖茨比的梦想」和「美国梦的幻灭」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「盖茨比的梦想」或本课核心概念",
+          "能联系「美国梦的幻灭」或「爵士时代的浮华」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 22,
+    "title": "现代主义的形式实验",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「现代主义的兴起」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "现代主义的兴起",
+        "analysis": "伊莱莎没有急着给结论：「现代主义的兴起」不能只当作术语背诵。它要放回「现代主义的形式实验」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「形式的实验」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "形式的实验",
+        "analysis": "伊莱莎把书页向前推了推：「形式的实验」不能只当作术语背诵。它要放回「现代主义的形式实验」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「对传统的挑战」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "对传统的挑战",
+        "analysis": "伊莱莎把书页向前推了推：「对传统的挑战」不能只当作术语背诵。它要放回「现代主义的形式实验」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「读者的角色」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "读者的角色",
+        "analysis": "伊莱莎没有急着给结论：「读者的角色」不能只当作术语背诵。它要放回「现代主义的形式实验」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「现代主义的形式实验」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「现代主义的兴起」和「形式的实验」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "形式的实验",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「现代主义的形式实验」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「现代主义的形式实验」这一课，选择「现代主义的兴起」和「形式的实验」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「现代主义的兴起」或本课核心概念",
+          "能联系「形式的实验」或「对传统的挑战」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 23,
+    "title": "意识流：进入人物的内心",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「什么是意识流」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "什么是意识流",
+        "analysis": "伊莱莎把书页向前推了推：「什么是意识流」不能只当作术语背诵。它要放回「意识流：进入人物的内心」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「乔伊斯的《尤利西斯》」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "乔伊斯的《尤利西斯》",
+        "analysis": "伊莱莎把书页向前推了推：「乔伊斯的《尤利西斯》」不能只当作术语背诵。它要放回「意识流：进入人物的内心」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「意识流：进入人物的内心」这一课中，理解「伍尔夫的《达洛维夫人》」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "伍尔夫的《达洛维夫人》",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「伍尔夫的《达洛维夫人》」不能只当作术语背诵。它要放回「意识流：进入人物的内心」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「意识流的效果」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意识流的效果",
+        "analysis": "伊莱莎没有急着给结论：「意识流的效果」不能只当作术语背诵。它要放回「意识流：进入人物的内心」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「意识流：进入人物的内心」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「什么是意识流」和「乔伊斯的《尤利西斯》」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "乔伊斯的《尤利西斯》",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「意识流：进入人物的内心」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「意识流：进入人物的内心」这一课，选择「什么是意识流」和「乔伊斯的《尤利西斯》」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「什么是意识流」或本课核心概念",
+          "能联系「乔伊斯的《尤利西斯》」或「伍尔夫的《达洛维夫人》」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 24,
+    "title": "二十世纪历史背景与文学反应",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「二十世纪历史背景与文学反应」这一课中，理解「一战后的文学」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "一战后的文学",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「一战后的文学」不能只当作术语背诵。它要放回「二十世纪历史背景与文学反应」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「二战的阴影」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "二战的阴影",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「二战的阴影」不能只当作术语背诵。它要放回「二十世纪历史背景与文学反应」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「二十世纪历史背景与文学反应」这一课中，理解「文学的回应」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学的回应",
+        "analysis": "伊莱莎把书页向前推了推：「文学的回应」不能只当作术语背诵。它要放回「二十世纪历史背景与文学反应」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「二十世纪历史背景与文学反应」这一课中，理解「历史的印记」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史的印记",
+        "analysis": "伊莱莎轻声说，「历史的印记」不能只当作术语背诵。它要放回「二十世纪历史背景与文学反应」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「二十世纪历史背景与文学反应」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「一战后的文学」和「二战的阴影」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "二战的阴影",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「二十世纪历史背景与文学反应」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「二十世纪历史背景与文学反应」这一课，选择「一战后的文学」和「二战的阴影」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「一战后的文学」或本课核心概念",
+          "能联系「二战的阴影」或「文学的回应」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 25,
+    "title": "反乌托邦文学：《1984》与《美丽新世界》节选",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「反乌托邦文学：《1984》与《美丽新世界》节选」这一课中，理解「反乌托邦小说的兴起」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "反乌托邦小说的兴起",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「反乌托邦小说的兴起」不能只当作术语背诵。它要放回「反乌托邦文学：《1984》与《美丽新世界》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「乔治·奥威尔的《1984》」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "乔治·奥威尔的《1984》",
+        "analysis": "伊莱莎把书页向前推了推：「乔治·奥威尔的《1984》」不能只当作术语背诵。它要放回「反乌托邦文学：《1984》与《美丽新世界》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「赫胥黎的《美丽新世界》」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "赫胥黎的《美丽新世界》",
+        "analysis": "伊莱莎没有急着给结论：「赫胥黎的《美丽新世界》」不能只当作术语背诵。它要放回「反乌托邦文学：《1984》与《美丽新世界》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「反乌托邦文学：《1984》与《美丽新世界》节选」这一课中，理解「警告的意义」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "警告的意义",
+        "analysis": "伊莱莎没有急着给结论：「警告的意义」不能只当作术语背诵。它要放回「反乌托邦文学：《1984》与《美丽新世界》节选」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「反乌托邦文学：《1984》与《美丽新世界》节选」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「反乌托邦小说的兴起」和「乔治·奥威尔的《1984》」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "乔治·奥威尔的《1984》",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「反乌托邦文学：《1984》与《美丽新世界》节选」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「反乌托邦文学：《1984》与《美丽新世界》节选」这一课，选择「反乌托邦小说的兴起」和「乔治·奥威尔的《1984》」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「反乌托邦小说的兴起」或本课核心概念",
+          "能联系「乔治·奥威尔的《1984》」或「赫胥黎的《美丽新世界》」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 26,
+    "title": "游记与回忆录：事实中的文学性",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「游记的文学性」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "游记的文学性",
+        "analysis": "伊莱莎轻声说，「游记的文学性」不能只当作术语背诵。它要放回「游记与回忆录：事实中的文学性」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「回忆录的真实性」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "回忆录的真实性",
+        "analysis": "伊莱莎把书页向前推了推：「回忆录的真实性」不能只当作术语背诵。它要放回「游记与回忆录：事实中的文学性」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「事实与虚构的边界」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "事实与虚构的边界",
+        "analysis": "伊莱莎没有急着给结论：「事实与虚构的边界」不能只当作术语背诵。它要放回「游记与回忆录：事实中的文学性」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「游记与回忆录：事实中的文学性」这一课中，理解「非虚构文学的价值」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "非虚构文学的价值",
+        "analysis": "伊莱莎没有急着给结论：「非虚构文学的价值」不能只当作术语背诵。它要放回「游记与回忆录：事实中的文学性」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「游记与回忆录：事实中的文学性」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「游记的文学性」和「回忆录的真实性」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "回忆录的真实性",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「游记与回忆录：事实中的文学性」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「游记与回忆录：事实中的文学性」这一课，选择「游记的文学性」和「回忆录的真实性」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「游记的文学性」或本课核心概念",
+          "能联系「回忆录的真实性」或「事实与虚构的边界」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 27,
+    "title": "议论性散文：观点的艺术",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「论点的明确」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "论点的明确",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「论点的明确」不能只当作术语背诵。它要放回「议论性散文：观点的艺术」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「议论性散文：观点的艺术」这一课中，理解「论证的结构」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "论证的结构",
+        "analysis": "伊莱莎没有急着给结论：「论证的结构」不能只当作术语背诵。它要放回「议论性散文：观点的艺术」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「议论性散文：观点的艺术」这一课中，理解「语言的力量」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言的力量",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「语言的力量」不能只当作术语背诵。它要放回「议论性散文：观点的艺术」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「议论性散文：观点的艺术」这一课中，理解「反驳与回应」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "反驳与回应",
+        "analysis": "伊莱莎没有急着给结论：「反驳与回应」不能只当作术语背诵。它要放回「议论性散文：观点的艺术」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「议论性散文：观点的艺术」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「论点的明确」和「论证的结构」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "论证的结构",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「议论性散文：观点的艺术」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「议论性散文：观点的艺术」这一课，选择「论点的明确」和「论证的结构」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「论点的明确」或本课核心概念",
+          "能联系「论证的结构」或「语言的力量」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 28,
+    "title": "修辞手法：劝说的技巧",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「比喻与隐喻」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "比喻与隐喻",
+        "analysis": "伊莱莎没有急着给结论：「比喻与隐喻」不能只当作术语背诵。它要放回「修辞手法：劝说的技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「修辞手法：劝说的技巧」这一课中，理解「排比与重复」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "排比与重复",
+        "analysis": "伊莱莎轻声说，「排比与重复」不能只当作术语背诵。它要放回「修辞手法：劝说的技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「反问与设问」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "反问与设问",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「反问与设问」不能只当作术语背诵。它要放回「修辞手法：劝说的技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「修辞手法：劝说的技巧」这一课中，理解「夸张与反语」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "夸张与反语",
+        "analysis": "伊莱莎没有急着给结论：「夸张与反语」不能只当作术语背诵。它要放回「修辞手法：劝说的技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「修辞手法：劝说的技巧」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「比喻与隐喻」和「排比与重复」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "排比与重复",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「修辞手法：劝说的技巧」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「修辞手法：劝说的技巧」这一课，选择「比喻与隐喻」和「排比与重复」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「比喻与隐喻」或本课核心概念",
+          "能联系「排比与重复」或「反问与设问」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 29,
+    "title": "演讲分析：丘吉尔与金博士",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「丘吉尔的《我们将战斗到底》」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "丘吉尔的《我们将战斗到底》",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「丘吉尔的《我们将战斗到底》」不能只当作术语背诵。它要放回「演讲分析：丘吉尔与金博士」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「演讲分析：丘吉尔与金博士」这一课中，理解「马丁·路德·金的《我有一个梦想》」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "马丁·路德·金的《我有一个梦想》",
+        "analysis": "伊莱莎没有急着给结论：「马丁·路德·金的《我有一个梦想》」不能只当作术语背诵。它要放回「演讲分析：丘吉尔与金博士」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「演讲分析：丘吉尔与金博士」这一课中，理解「演讲的结构」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "演讲的结构",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「演讲的结构」不能只当作术语背诵。它要放回「演讲分析：丘吉尔与金博士」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「演讲的效果」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "演讲的效果",
+        "analysis": "伊莱莎没有急着给结论：「演讲的效果」不能只当作术语背诵。它要放回「演讲分析：丘吉尔与金博士」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「演讲分析：丘吉尔与金博士」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「丘吉尔的《我们将战斗到底》」和「马丁·路德·金的《我有一个梦想》」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "马丁·路德·金的《我有一个梦想》",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「演讲分析：丘吉尔与金博士」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「演讲分析：丘吉尔与金博士」这一课，选择「丘吉尔的《我们将战斗到底》」和「马丁·路德·金的《我有一个梦想》」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「丘吉尔的《我们将战斗到底》」或本课核心概念",
+          "能联系「马丁·路德·金的《我有一个梦想》」或「演讲的结构」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 30,
+    "title": "文学评论入门：如何写分析段落",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「文学评论入门：如何写分析段落」这一课中，理解「主题句的重要性」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题句的重要性",
+        "analysis": "伊莱莎把书页向前推了推：「主题句的重要性」不能只当作术语背诵。它要放回「文学评论入门：如何写分析段落」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「文本证据的使用」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文本证据的使用",
+        "analysis": "伊莱莎把书页向前推了推：「文本证据的使用」不能只当作术语背诵。它要放回「文学评论入门：如何写分析段落」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「分析的深度」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "分析的深度",
+        "analysis": "伊莱莎把书页向前推了推：「分析的深度」不能只当作术语背诵。它要放回「文学评论入门：如何写分析段落」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「段落的连贯」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "段落的连贯",
+        "analysis": "伊莱莎把书页向前推了推：「段落的连贯」不能只当作术语背诵。它要放回「文学评论入门：如何写分析段落」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「文学评论入门：如何写分析段落」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「主题句的重要性」和「文本证据的使用」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文本证据的使用",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「文学评论入门：如何写分析段落」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「文学评论入门：如何写分析段落」这一课，选择「主题句的重要性」和「文本证据的使用」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「主题句的重要性」或本课核心概念",
+          "能联系「文本证据的使用」或「分析的深度」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 31,
+    "title": "指定小说深度分析",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「通读与理解」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "通读与理解",
+        "analysis": "伊莱莎没有急着给结论：「通读与理解」不能只当作术语背诵。它要放回「指定小说深度分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「主题的识别」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的识别",
+        "analysis": "伊莱莎轻声说，「主题的识别」不能只当作术语背诵。它要放回「指定小说深度分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「结构的分析」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "结构的分析",
+        "analysis": "伊莱莎把书页向前推了推：「结构的分析」不能只当作术语背诵。它要放回「指定小说深度分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「语言的品味」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言的品味",
+        "analysis": "伊莱莎把书页向前推了推：「语言的品味」不能只当作术语背诵。它要放回「指定小说深度分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「指定小说深度分析」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「通读与理解」和「主题的识别」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的识别",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「指定小说深度分析」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「指定小说深度分析」这一课，选择「通读与理解」和「主题的识别」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「通读与理解」或本课核心概念",
+          "能联系「主题的识别」或「结构的分析」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 32,
+    "title": "人物分析：动机、发展与象征意义",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「动机与欲望」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "动机与欲望",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「动机与欲望」不能只当作术语背诵。它要放回「人物分析：动机、发展与象征意义」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「人物的发展」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "人物的发展",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「人物的发展」不能只当作术语背诵。它要放回「人物分析：动机、发展与象征意义」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「象征意义」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "象征意义",
+        "analysis": "伊莱莎没有急着给结论：「象征意义」不能只当作术语背诵。它要放回「人物分析：动机、发展与象征意义」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「人物关系」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "人物关系",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「人物关系」不能只当作术语背诵。它要放回「人物分析：动机、发展与象征意义」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「人物分析：动机、发展与象征意义」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「动机与欲望」和「人物的发展」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "人物的发展",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「人物分析：动机、发展与象征意义」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「人物分析：动机、发展与象征意义」这一课，选择「动机与欲望」和「人物的发展」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「动机与欲望」或本课核心概念",
+          "能联系「人物的发展」或「象征意义」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 33,
+    "title": "主题解读：表面故事与深层意旨",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「表面故事与深层意旨」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "表面故事与深层意旨",
+        "analysis": "伊莱莎轻声说，「表面故事与深层意旨」不能只当作术语背诵。它要放回「主题解读：表面故事与深层意旨」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「主题的多元性」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的多元性",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「主题的多元性」不能只当作术语背诵。它要放回「主题解读：表面故事与深层意旨」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「主题与时代」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题与时代",
+        "analysis": "伊莱莎没有急着给结论：「主题与时代」不能只当作术语背诵。它要放回「主题解读：表面故事与深层意旨」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「主题与个人」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题与个人",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「主题与个人」不能只当作术语背诵。它要放回「主题解读：表面故事与深层意旨」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「主题解读：表面故事与深层意旨」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「表面故事与深层意旨」和「主题的多元性」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的多元性",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「主题解读：表面故事与深层意旨」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「主题解读：表面故事与深层意旨」这一课，选择「表面故事与深层意旨」和「主题的多元性」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「表面故事与深层意旨」或本课核心概念",
+          "能联系「主题的多元性」或「主题与时代」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 34,
+    "title": "叙事技巧：时间、空间、节奏",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「时间的处理」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "时间的处理",
+        "analysis": "伊莱莎轻声说，「时间的处理」不能只当作术语背诵。它要放回「叙事技巧：时间、空间、节奏」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「叙事技巧：时间、空间、节奏」这一课中，理解「空间的运用」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "空间的运用",
+        "analysis": "伊莱莎没有急着给结论：「空间的运用」不能只当作术语背诵。它要放回「叙事技巧：时间、空间、节奏」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「节奏的控制」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "节奏的控制",
+        "analysis": "伊莱莎没有急着给结论：「节奏的控制」不能只当作术语背诵。它要放回「叙事技巧：时间、空间、节奏」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「视角的选择」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "视角的选择",
+        "analysis": "伊莱莎轻声说，「视角的选择」不能只当作术语背诵。它要放回「叙事技巧：时间、空间、节奏」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「叙事技巧：时间、空间、节奏」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「时间的处理」和「空间的运用」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "空间的运用",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「叙事技巧：时间、空间、节奏」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「叙事技巧：时间、空间、节奏」这一课，选择「时间的处理」和「空间的运用」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「时间的处理」或本课核心概念",
+          "能联系「空间的运用」或「节奏的控制」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 35,
+    "title": "语言分析：词汇选择与句式效果",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「词汇的选择」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "词汇的选择",
+        "analysis": "伊莱莎没有急着给结论：「词汇的选择」不能只当作术语背诵。它要放回「语言分析：词汇选择与句式效果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「句式的效果」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "句式的效果",
+        "analysis": "伊莱莎没有急着给结论：「句式的效果」不能只当作术语背诵。它要放回「语言分析：词汇选择与句式效果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「修辞的运用」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "修辞的运用",
+        "analysis": "伊莱莎轻声说，「修辞的运用」不能只当作术语背诵。它要放回「语言分析：词汇选择与句式效果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「语言风格」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言风格",
+        "analysis": "伊莱莎把书页向前推了推：「语言风格」不能只当作术语背诵。它要放回「语言分析：词汇选择与句式效果」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「语言分析：词汇选择与句式效果」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「词汇的选择」和「句式的效果」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "句式的效果",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「语言分析：词汇选择与句式效果」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「语言分析：词汇选择与句式效果」这一课，选择「词汇的选择」和「句式的效果」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「词汇的选择」或本课核心概念",
+          "能联系「句式的效果」或「修辞的运用」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 36,
+    "title": "指定诗歌集逐首分析",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「诗歌的整体感受」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "诗歌的整体感受",
+        "analysis": "伊莱莎没有急着给结论：「诗歌的整体感受」不能只当作术语背诵。它要放回「指定诗歌集逐首分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「逐句解读」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "逐句解读",
+        "analysis": "伊莱莎把书页向前推了推：「逐句解读」不能只当作术语背诵。它要放回「指定诗歌集逐首分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「意象的分析」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意象的分析",
+        "analysis": "伊莱莎轻声说，「意象的分析」不能只当作术语背诵。它要放回「指定诗歌集逐首分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「主题的提炼」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的提炼",
+        "analysis": "伊莱莎把书页向前推了推：「主题的提炼」不能只当作术语背诵。它要放回「指定诗歌集逐首分析」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「指定诗歌集逐首分析」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「诗歌的整体感受」和「逐句解读」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "逐句解读",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「指定诗歌集逐首分析」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「指定诗歌集逐首分析」这一课，选择「诗歌的整体感受」和「逐句解读」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「诗歌的整体感受」或本课核心概念",
+          "能联系「逐句解读」或「意象的分析」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 37,
+    "title": "诗歌比较方法：主题与手法",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「主题的比较」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的比较",
+        "analysis": "伊莱莎没有急着给结论：「主题的比较」不能只当作术语背诵。它要放回「诗歌比较方法：主题与手法」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「手法的比较」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "手法的比较",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「手法的比较」不能只当作术语背诵。它要放回「诗歌比较方法：主题与手法」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「诗歌比较方法：主题与手法」这一课中，理解「风格的比较」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "风格的比较",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「风格的比较」不能只当作术语背诵。它要放回「诗歌比较方法：主题与手法」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「效果的比较」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "效果的比较",
+        "analysis": "伊莱莎把书页向前推了推：「效果的比较」不能只当作术语背诵。它要放回「诗歌比较方法：主题与手法」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「诗歌比较方法：主题与手法」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「主题的比较」和「手法的比较」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "手法的比较",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「诗歌比较方法：主题与手法」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「诗歌比较方法：主题与手法」这一课，选择「主题的比较」和「手法的比较」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「主题的比较」或本课核心概念",
+          "能联系「手法的比较」或「风格的比较」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 38,
+    "title": "声音分析：韵律、押韵、音效",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「韵律的分析」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "韵律的分析",
+        "analysis": "伊莱莎轻声说，「韵律的分析」不能只当作术语背诵。它要放回「声音分析：韵律、押韵、音效」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「押韵的模式」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "押韵的模式",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「押韵的模式」不能只当作术语背诵。它要放回「声音分析：韵律、押韵、音效」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「声音分析：韵律、押韵、音效」这一课中，理解「音效的运用」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "音效的运用",
+        "analysis": "伊莱莎把书页向前推了推：「音效的运用」不能只当作术语背诵。它要放回「声音分析：韵律、押韵、音效」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「声音分析：韵律、押韵、音效」这一课中，理解「声音与意义的结合」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "声音与意义的结合",
+        "analysis": "伊莱莎轻声说，「声音与意义的结合」不能只当作术语背诵。它要放回「声音分析：韵律、押韵、音效」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「声音分析：韵律、押韵、音效」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「韵律的分析」和「押韵的模式」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "押韵的模式",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「声音分析：韵律、押韵、音效」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「声音分析：韵律、押韵、音效」这一课，选择「韵律的分析」和「押韵的模式」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「韵律的分析」或本课核心概念",
+          "能联系「押韵的模式」或「音效的运用」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 39,
+    "title": "文化语境：诗人的时代背景",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「文化语境：诗人的时代背景」这一课中，理解「诗人的生平」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "诗人的生平",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「诗人的生平」不能只当作术语背诵。它要放回「文化语境：诗人的时代背景」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「文化语境：诗人的时代背景」这一课中，理解「时代背景」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "时代背景",
+        "analysis": "伊莱莎轻声说，「时代背景」不能只当作术语背诵。它要放回「文化语境：诗人的时代背景」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「文学传统」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学传统",
+        "analysis": "伊莱莎没有急着给结论：「文学传统」不能只当作术语背诵。它要放回「文化语境：诗人的时代背景」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「文化语境的重要性」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文化语境的重要性",
+        "analysis": "伊莱莎轻声说，「文化语境的重要性」不能只当作术语背诵。它要放回「文化语境：诗人的时代背景」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「文化语境：诗人的时代背景」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「诗人的生平」和「时代背景」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "时代背景",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「文化语境：诗人的时代背景」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「文化语境：诗人的时代背景」这一课，选择「诗人的生平」和「时代背景」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「诗人的生平」或本课核心概念",
+          "能联系「时代背景」或「文学传统」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 40,
+    "title": "无准备诗歌训练：陌生文本策略",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「快速通读」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "快速通读",
+        "analysis": "伊莱莎把书页向前推了推：「快速通读」不能只当作术语背诵。它要放回「无准备诗歌训练：陌生文本策略」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「识别主题」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "识别主题",
+        "analysis": "伊莱莎没有急着给结论：「识别主题」不能只当作术语背诵。它要放回「无准备诗歌训练：陌生文本策略」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「分析手法」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "分析手法",
+        "analysis": "伊莱莎轻声说，「分析手法」不能只当作术语背诵。它要放回「无准备诗歌训练：陌生文本策略」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「无准备诗歌训练：陌生文本策略」这一课中，理解「表达感受」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "表达感受",
+        "analysis": "伊莱莎没有急着给结论：「表达感受」不能只当作术语背诵。它要放回「无准备诗歌训练：陌生文本策略」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「无准备诗歌训练：陌生文本策略」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「快速通读」和「识别主题」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "识别主题",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「无准备诗歌训练：陌生文本策略」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「无准备诗歌训练：陌生文本策略」这一课，选择「快速通读」和「识别主题」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「快速通读」或本课核心概念",
+          "能联系「识别主题」或「分析手法」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 41,
+    "title": "创意写作：开场策略与氛围营造",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「创意写作：开场策略与氛围营造」这一课中，理解「开场策略」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "开场策略",
+        "analysis": "伊莱莎把书页向前推了推：「开场策略」不能只当作术语背诵。它要放回「创意写作：开场策略与氛围营造」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「氛围营造」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "氛围营造",
+        "analysis": "伊莱莎轻声说，「氛围营造」不能只当作术语背诵。它要放回「创意写作：开场策略与氛围营造」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「吸引读者」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "吸引读者",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「吸引读者」不能只当作术语背诵。它要放回「创意写作：开场策略与氛围营造」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「创意写作：开场策略与氛围营造」这一课中，理解「声音与节奏」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "声音与节奏",
+        "analysis": "伊莱莎轻声说，「声音与节奏」不能只当作术语背诵。它要放回「创意写作：开场策略与氛围营造」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「创意写作：开场策略与氛围营造」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「开场策略」和「氛围营造」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "氛围营造",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「创意写作：开场策略与氛围营造」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「创意写作：开场策略与氛围营造」这一课，选择「开场策略」和「氛围营造」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「开场策略」或本课核心概念",
+          "能联系「氛围营造」或「吸引读者」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 42,
+    "title": "议论文框架：PEEL段落结构",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「议论文框架：PEEL段落结构」这一课中，理解「PEEL结构」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "PEEL结构",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「PEEL结构」不能只当作术语背诵。它要放回「议论文框架：PEEL段落结构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「观点明确」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "观点明确",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「观点明确」不能只当作术语背诵。它要放回「议论文框架：PEEL段落结构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「证据充分」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "证据充分",
+        "analysis": "伊莱莎没有急着给结论：「证据充分」不能只当作术语背诵。它要放回「议论文框架：PEEL段落结构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「解释与链接」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "解释与链接",
+        "analysis": "伊莱莎没有急着给结论：「解释与链接」不能只当作术语背诵。它要放回「议论文框架：PEEL段落结构」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「议论文框架：PEEL段落结构」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「PEEL结构」和「观点明确」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "观点明确",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「议论文框架：PEEL段落结构」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「议论文框架：PEEL段落结构」这一课，选择「PEEL结构」和「观点明确」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「PEEL结构」或本课核心概念",
+          "能联系「观点明确」或「证据充分」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 43,
+    "title": "引用与评注：文本证据的使用规范",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「引用的选择」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "引用的选择",
+        "analysis": "伊莱莎把书页向前推了推：「引用的选择」不能只当作术语背诵。它要放回「引用与评注：文本证据的使用规范」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「引用与评注：文本证据的使用规范」这一课中，理解「引用的格式」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "引用的格式",
+        "analysis": "伊莱莎轻声说，「引用的格式」不能只当作术语背诵。它要放回「引用与评注：文本证据的使用规范」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「引用与评注：文本证据的使用规范」这一课中，理解「评注的重要性」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "评注的重要性",
+        "analysis": "伊莱莎把书页向前推了推：「评注的重要性」不能只当作术语背诵。它要放回「引用与评注：文本证据的使用规范」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「避免过度引用」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "避免过度引用",
+        "analysis": "伊莱莎轻声说，「避免过度引用」不能只当作术语背诵。它要放回「引用与评注：文本证据的使用规范」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「引用与评注：文本证据的使用规范」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「引用的选择」和「引用的格式」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "引用的格式",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「引用与评注：文本证据的使用规范」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「引用与评注：文本证据的使用规范」这一课，选择「引用的选择」和「引用的格式」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「引用的选择」或本课核心概念",
+          "能联系「引用的格式」或「评注的重要性」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 44,
+    "title": "文学分析段落的精修",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「清晰度」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "清晰度",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「清晰度」不能只当作术语背诵。它要放回「文学分析段落的精修」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「深度」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "深度",
+        "analysis": "伊莱莎把书页向前推了推：「深度」不能只当作术语背诵。它要放回「文学分析段落的精修」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「逻辑」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "逻辑",
+        "analysis": "伊莱莎没有急着给结论：「逻辑」不能只当作术语背诵。它要放回「文学分析段落的精修」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「语言」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「语言」不能只当作术语背诵。它要放回「文学分析段落的精修」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「文学分析段落的精修」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「清晰度」和「深度」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "深度",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「文学分析段落的精修」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「文学分析段落的精修」这一课，选择「清晰度」和「深度」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「清晰度」或本课核心概念",
+          "能联系「深度」或「逻辑」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 45,
+    "title": "改写与润色：从草稿到成品",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「内容的改进」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "内容的改进",
+        "analysis": "伊莱莎没有急着给结论：「内容的改进」不能只当作术语背诵。它要放回「改写与润色：从草稿到成品」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「结构的调整」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "结构的调整",
+        "analysis": "伊莱莎轻声说，「结构的调整」不能只当作术语背诵。它要放回「改写与润色：从草稿到成品」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「改写与润色：从草稿到成品」这一课中，理解「语言的润色」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言的润色",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「语言的润色」不能只当作术语背诵。它要放回「改写与润色：从草稿到成品」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「细节的检查」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "细节的检查",
+        "analysis": "伊莱莎把书页向前推了推：「细节的检查」不能只当作术语背诵。它要放回「改写与润色：从草稿到成品」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「改写与润色：从草稿到成品」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「内容的改进」和「结构的调整」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "结构的调整",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「改写与润色：从草稿到成品」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「改写与润色：从草稿到成品」这一课，选择「内容的改进」和「结构的调整」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「内容的改进」或本课核心概念",
+          "能联系「结构的调整」或「语言的润色」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 46,
+    "title": "跨文本主题比较",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「跨文本主题比较」这一课中，理解「共同主题的识别」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "共同主题的识别",
+        "analysis": "伊莱莎把书页向前推了推：「共同主题的识别」不能只当作术语背诵。它要放回「跨文本主题比较」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「主题的不同表达」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的不同表达",
+        "analysis": "伊莱莎轻声说，「主题的不同表达」不能只当作术语背诵。它要放回「跨文本主题比较」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「时代对主题的影响」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "时代对主题的影响",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「时代对主题的影响」不能只当作术语背诵。它要放回「跨文本主题比较」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「跨文本的意义」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "跨文本的意义",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「跨文本的意义」不能只当作术语背诵。它要放回「跨文本主题比较」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「跨文本主题比较」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「共同主题的识别」和「主题的不同表达」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "主题的不同表达",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「跨文本主题比较」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「跨文本主题比较」这一课，选择「共同主题的识别」和「主题的不同表达」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「共同主题的识别」或本课核心概念",
+          "能联系「主题的不同表达」或「时代对主题的影响」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 47,
+    "title": "文学批评流派介绍",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「形式主义批评」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "形式主义批评",
+        "analysis": "伊莱莎没有急着给结论：「形式主义批评」不能只当作术语背诵。它要放回「文学批评流派介绍」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「历史批评」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史批评",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「历史批评」不能只当作术语背诵。它要放回「文学批评流派介绍」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「读者反应批评」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "读者反应批评",
+        "analysis": "伊莱莎轻声说，「读者反应批评」不能只当作术语背诵。它要放回「文学批评流派介绍」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「女性主义批评」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "女性主义批评",
+        "analysis": "伊莱莎把书页向前推了推：「女性主义批评」不能只当作术语背诵。它要放回「文学批评流派介绍」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「文学批评流派介绍」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「形式主义批评」和「历史批评」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "历史批评",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「文学批评流派介绍」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「文学批评流派介绍」这一课，选择「形式主义批评」和「历史批评」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「形式主义批评」或本课核心概念",
+          "能联系「历史批评」或「读者反应批评」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 48,
+    "title": "个人回应与批判阅读",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「个人回应的重要性」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "个人回应的重要性",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「个人回应的重要性」不能只当作术语背诵。它要放回「个人回应与批判阅读」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「批判阅读」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "批判阅读",
+        "analysis": "伊莱莎把书页向前推了推：「批判阅读」不能只当作术语背诵。它要放回「个人回应与批判阅读」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「个人回应与批判阅读」这一课中，理解「表达个人观点」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "表达个人观点",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「表达个人观点」不能只当作术语背诵。它要放回「个人回应与批判阅读」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「尊重不同观点」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "尊重不同观点",
+        "analysis": "伊莱莎把书页向前推了推：「尊重不同观点」不能只当作术语背诵。它要放回「个人回应与批判阅读」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「个人回应与批判阅读」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「个人回应的重要性」和「批判阅读」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "批判阅读",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「个人回应与批判阅读」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「个人回应与批判阅读」这一课，选择「个人回应的重要性」和「批判阅读」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「个人回应的重要性」或本课核心概念",
+          "能联系「批判阅读」或「表达个人观点」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 49,
+    "title": "文学与巫师世界：莎士比亚对魔法词汇的贡献",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「莎士比亚作品中的魔法元素」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "莎士比亚作品中的魔法元素",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「莎士比亚作品中的魔法元素」不能只当作术语背诵。它要放回「文学与巫师世界：莎士比亚对魔法词汇的贡献」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「魔法词汇的来源」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "魔法词汇的来源",
+        "analysis": "伊莱莎轻声说，「魔法词汇的来源」不能只当作术语背诵。它要放回「文学与巫师世界：莎士比亚对魔法词汇的贡献」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「文学与魔法的共同点」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学与魔法的共同点",
+        "analysis": "伊莱莎没有急着给结论：「文学与魔法的共同点」不能只当作术语背诵。它要放回「文学与巫师世界：莎士比亚对魔法词汇的贡献」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「故事的力量」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "故事的力量",
+        "analysis": "伊莱莎没有急着给结论：「故事的力量」不能只当作术语背诵。它要放回「文学与巫师世界：莎士比亚对魔法词汇的贡献」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「文学与巫师世界：莎士比亚对魔法词汇的贡献」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「莎士比亚作品中的魔法元素」和「魔法词汇的来源」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "魔法词汇的来源",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「文学与巫师世界：莎士比亚对魔法词汇的贡献」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「文学与巫师世界：莎士比亚对魔法词汇的贡献」这一课，选择「莎士比亚作品中的魔法元素」和「魔法词汇的来源」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「莎士比亚作品中的魔法元素」或本课核心概念",
+          "能联系「魔法词汇的来源」或「文学与魔法的共同点」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 50,
+    "title": "GCSE综合复习",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「文学发展脉络」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学发展脉络",
+        "analysis": "伊莱莎没有急着给结论：「文学发展脉络」不能只当作术语背诵。它要放回「GCSE综合复习」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「重要作家作品」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "重要作家作品",
+        "analysis": "伊莱莎把书页向前推了推：「重要作家作品」不能只当作术语背诵。它要放回「GCSE综合复习」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「文学技巧总结」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学技巧总结",
+        "analysis": "伊莱莎没有急着给结论：「文学技巧总结」不能只当作术语背诵。它要放回「GCSE综合复习」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「GCSE综合复习」这一课中，理解「写作能力提升」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "写作能力提升",
+        "analysis": "伊莱莎轻声说，「写作能力提升」不能只当作术语背诵。它要放回「GCSE综合复习」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「GCSE综合复习」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「文学发展脉络」和「重要作家作品」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "重要作家作品",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「GCSE综合复习」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「GCSE综合复习」这一课，选择「文学发展脉络」和「重要作家作品」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「文学发展脉络」或本课核心概念",
+          "能联系「重要作家作品」或「文学技巧总结」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 51,
+    "title": "马克思主义批评：阶级与意识形态",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「马克思主义批评：阶级与意识形态」这一课中，理解「基础与上层建筑」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "基础与上层建筑",
+        "analysis": "伊莱莎把书页向前推了推：「基础与上层建筑」不能只当作术语背诵。它要放回「马克思主义批评：阶级与意识形态」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「阶级冲突」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "阶级冲突",
+        "analysis": "伊莱莎轻声说，「阶级冲突」不能只当作术语背诵。它要放回「马克思主义批评：阶级与意识形态」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「意识形态」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意识形态",
+        "analysis": "伊莱莎没有急着给结论：「意识形态」不能只当作术语背诵。它要放回「马克思主义批评：阶级与意识形态」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「文学的功能」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学的功能",
+        "analysis": "伊莱莎把书页向前推了推：「文学的功能」不能只当作术语背诵。它要放回「马克思主义批评：阶级与意识形态」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「马克思主义批评：阶级与意识形态」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「基础与上层建筑」和「阶级冲突」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "阶级冲突",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「马克思主义批评：阶级与意识形态」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「马克思主义批评：阶级与意识形态」这一课，选择「基础与上层建筑」和「阶级冲突」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「基础与上层建筑」或本课核心概念",
+          "能联系「阶级冲突」或「意识形态」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 52,
+    "title": "女性主义批评：性别与叙事权力",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「男性凝视」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "男性凝视",
+        "analysis": "伊莱莎把书页向前推了推：「男性凝视」不能只当作术语背诵。它要放回「女性主义批评：性别与叙事权力」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「女性作家的困境」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "女性作家的困境",
+        "analysis": "伊莱莎把书页向前推了推：「女性作家的困境」不能只当作术语背诵。它要放回「女性主义批评：性别与叙事权力」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「女性主义写作」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "女性主义写作",
+        "analysis": "伊莱莎把书页向前推了推：「女性主义写作」不能只当作术语背诵。它要放回「女性主义批评：性别与叙事权力」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「女性主义批评：性别与叙事权力」这一课中，理解「性别与权力」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "性别与权力",
+        "analysis": "伊莱莎没有急着给结论：「性别与权力」不能只当作术语背诵。它要放回「女性主义批评：性别与叙事权力」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「女性主义批评：性别与叙事权力」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「男性凝视」和「女性作家的困境」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "女性作家的困境",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「女性主义批评：性别与叙事权力」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「女性主义批评：性别与叙事权力」这一课，选择「男性凝视」和「女性作家的困境」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「男性凝视」或本课核心概念",
+          "能联系「女性作家的困境」或「女性主义写作」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 53,
+    "title": "后殖民文学：殖民经历的书写",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「后殖民文学：殖民经历的书写」这一课中，理解「殖民主义的遗产」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "殖民主义的遗产",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「殖民主义的遗产」不能只当作术语背诵。它要放回「后殖民文学：殖民经历的书写」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「后殖民文学：殖民经历的书写」这一课中，理解「后殖民写作」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "后殖民写作",
+        "analysis": "伊莱莎轻声说，「后殖民写作」不能只当作术语背诵。它要放回「后殖民文学：殖民经历的书写」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「混杂性」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "混杂性",
+        "analysis": "伊莱莎轻声说，「混杂性」不能只当作术语背诵。它要放回「后殖民文学：殖民经历的书写」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「文化身份」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文化身份",
+        "analysis": "伊莱莎把书页向前推了推：「文化身份」不能只当作术语背诵。它要放回「后殖民文学：殖民经历的书写」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「后殖民文学：殖民经历的书写」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「殖民主义的遗产」和「后殖民写作」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "后殖民写作",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「后殖民文学：殖民经历的书写」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「后殖民文学：殖民经历的书写」这一课，选择「殖民主义的遗产」和「后殖民写作」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「殖民主义的遗产」或本课核心概念",
+          "能联系「后殖民写作」或「混杂性」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 54,
+    "title": "精神分析批评：无意识与文本",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「精神分析批评：无意识与文本」这一课中，理解「弗洛伊德的影响」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "弗洛伊德的影响",
+        "analysis": "伊莱莎把书页向前推了推：「弗洛伊德的影响」不能只当作术语背诵。它要放回「精神分析批评：无意识与文本」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「俄狄浦斯情结」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "俄狄浦斯情结",
+        "analysis": "伊莱莎把书页向前推了推：「俄狄浦斯情结」不能只当作术语背诵。它要放回「精神分析批评：无意识与文本」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「象征与梦境」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "象征与梦境",
+        "analysis": "伊莱莎把书页向前推了推：「象征与梦境」不能只当作术语背诵。它要放回「精神分析批评：无意识与文本」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「精神分析批评：无意识与文本」这一课中，理解「作者与读者的心理」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "作者与读者的心理",
+        "analysis": "伊莱莎轻声说，「作者与读者的心理」不能只当作术语背诵。它要放回「精神分析批评：无意识与文本」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「精神分析批评：无意识与文本」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「弗洛伊德的影响」和「俄狄浦斯情结」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "俄狄浦斯情结",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「精神分析批评：无意识与文本」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「精神分析批评：无意识与文本」这一课，选择「弗洛伊德的影响」和「俄狄浦斯情结」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「弗洛伊德的影响」或本课核心概念",
+          "能联系「俄狄浦斯情结」或「象征与梦境」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 55,
+    "title": "读者反应理论：意义在哪里产生",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「意义在哪里」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意义在哪里",
+        "analysis": "伊莱莎轻声说，「意义在哪里」不能只当作术语背诵。它要放回「读者反应理论：意义在哪里产生」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「读者反应理论：意义在哪里产生」这一课中，理解「读者的主动性」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "读者的主动性",
+        "analysis": "伊莱莎轻声说，「读者的主动性」不能只当作术语背诵。它要放回「读者反应理论：意义在哪里产生」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「不同的解读」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "不同的解读",
+        "analysis": "伊莱莎把书页向前推了推：「不同的解读」不能只当作术语背诵。它要放回「读者反应理论：意义在哪里产生」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「阅读的乐趣」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "阅读的乐趣",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「阅读的乐趣」不能只当作术语背诵。它要放回「读者反应理论：意义在哪里产生」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「读者反应理论：意义在哪里产生」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「意义在哪里」和「读者的主动性」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "读者的主动性",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「读者反应理论：意义在哪里产生」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「读者反应理论：意义在哪里产生」这一课，选择「意义在哪里」和「读者的主动性」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「意义在哪里」或本课核心概念",
+          "能联系「读者的主动性」或「不同的解读」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 56,
+    "title": "弥尔顿《失乐园》：史诗传统与宗教政治",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「史诗的特点」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "史诗的特点",
+        "analysis": "伊莱莎把书页向前推了推：「史诗的特点」不能只当作术语背诵。它要放回「弥尔顿《失乐园》：史诗传统与宗教政治」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「宗教与政治」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "宗教与政治",
+        "analysis": "伊莱莎轻声说，「宗教与政治」不能只当作术语背诵。它要放回「弥尔顿《失乐园》：史诗传统与宗教政治」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「弥尔顿《失乐园》：史诗传统与宗教政治」这一课中，理解「撒旦的形象」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "撒旦的形象",
+        "analysis": "伊莱莎把书页向前推了推：「撒旦的形象」不能只当作术语背诵。它要放回「弥尔顿《失乐园》：史诗传统与宗教政治」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「语言的力量」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言的力量",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「语言的力量」不能只当作术语背诵。它要放回「弥尔顿《失乐园》：史诗传统与宗教政治」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「弥尔顿《失乐园》：史诗传统与宗教政治」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「史诗的特点」和「宗教与政治」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "宗教与政治",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「弥尔顿《失乐园》：史诗传统与宗教政治」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「弥尔顿《失乐园》：史诗传统与宗教政治」这一课，选择「史诗的特点」和「宗教与政治」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「史诗的特点」或本课核心概念",
+          "能联系「宗教与政治」或「撒旦的形象」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 57,
+    "title": "蒲柏的讽刺诗：18世纪的理性与讽刺",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「18世纪的理性」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "18世纪的理性",
+        "analysis": "伊莱莎没有急着给结论：「18世纪的理性」不能只当作术语背诵。它要放回「蒲柏的讽刺诗：18世纪的理性与讽刺」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「讽刺的艺术」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "讽刺的艺术",
+        "analysis": "伊莱莎轻声说，「讽刺的艺术」不能只当作术语背诵。它要放回「蒲柏的讽刺诗：18世纪的理性与讽刺」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「《夺发记》」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "《夺发记》",
+        "analysis": "伊莱莎轻声说，「《夺发记》」不能只当作术语背诵。它要放回「蒲柏的讽刺诗：18世纪的理性与讽刺」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「英雄双行体」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "英雄双行体",
+        "analysis": "伊莱莎轻声说，「英雄双行体」不能只当作术语背诵。它要放回「蒲柏的讽刺诗：18世纪的理性与讽刺」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「蒲柏的讽刺诗：18世纪的理性与讽刺」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「18世纪的理性」和「讽刺的艺术」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "讽刺的艺术",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「蒲柏的讽刺诗：18世纪的理性与讽刺」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「蒲柏的讽刺诗：18世纪的理性与讽刺」这一课，选择「18世纪的理性」和「讽刺的艺术」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「18世纪的理性」或本课核心概念",
+          "能联系「讽刺的艺术」或「《夺发记》」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 58,
+    "title": "18世纪小说兴起：笛福与理查森",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「小说兴起的背景」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "小说兴起的背景",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「小说兴起的背景」不能只当作术语背诵。它要放回「18世纪小说兴起：笛福与理查森」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「笛福的《鲁滨逊漂流记》」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "笛福的《鲁滨逊漂流记》",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「笛福的《鲁滨逊漂流记》」不能只当作术语背诵。它要放回「18世纪小说兴起：笛福与理查森」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「理查森的书信体小说」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "理查森的书信体小说",
+        "analysis": "伊莱莎轻声说，「理查森的书信体小说」不能只当作术语背诵。它要放回「18世纪小说兴起：笛福与理查森」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「小说的特点」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "小说的特点",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「小说的特点」不能只当作术语背诵。它要放回「18世纪小说兴起：笛福与理查森」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「18世纪小说兴起：笛福与理查森」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「小说兴起的背景」和「笛福的《鲁滨逊漂流记》」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "笛福的《鲁滨逊漂流记》",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「18世纪小说兴起：笛福与理查森」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「18世纪小说兴起：笛福与理查森」这一课，选择「小说兴起的背景」和「笛福的《鲁滨逊漂流记》」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「小说兴起的背景」或本课核心概念",
+          "能联系「笛福的《鲁滨逊漂流记》」或「理查森的书信体小说」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 59,
+    "title": "浪漫主义运动：反启蒙的政治意涵",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「浪漫主义与启蒙运动」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "浪漫主义与启蒙运动",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「浪漫主义与启蒙运动」不能只当作术语背诵。它要放回「浪漫主义运动：反启蒙的政治意涵」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「政治意涵」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "政治意涵",
+        "analysis": "伊莱莎没有急着给结论：「政治意涵」不能只当作术语背诵。它要放回「浪漫主义运动：反启蒙的政治意涵」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「自然的崇拜」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "自然的崇拜",
+        "analysis": "伊莱莎把书页向前推了推：「自然的崇拜」不能只当作术语背诵。它要放回「浪漫主义运动：反启蒙的政治意涵」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「个人主义」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "个人主义",
+        "analysis": "伊莱莎没有急着给结论：「个人主义」不能只当作术语背诵。它要放回「浪漫主义运动：反启蒙的政治意涵」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「浪漫主义运动：反启蒙的政治意涵」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「浪漫主义与启蒙运动」和「政治意涵」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "政治意涵",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「浪漫主义运动：反启蒙的政治意涵」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「浪漫主义运动：反启蒙的政治意涵」这一课，选择「浪漫主义与启蒙运动」和「政治意涵」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「浪漫主义与启蒙运动」或本课核心概念",
+          "能联系「政治意涵」或「自然的崇拜」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 60,
+    "title": "哥特文学传统：从沃波尔到斯托克",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「哥特文学的起源」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特文学的起源",
+        "analysis": "伊莱莎没有急着给结论：「哥特文学的起源」不能只当作术语背诵。它要放回「哥特文学传统：从沃波尔到斯托克」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「哥特元素」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特元素",
+        "analysis": "伊莱莎把书页向前推了推：「哥特元素」不能只当作术语背诵。它要放回「哥特文学传统：从沃波尔到斯托克」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「《弗兰肯斯坦》」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "《弗兰肯斯坦》",
+        "analysis": "伊莱莎轻声说，「《弗兰肯斯坦》」不能只当作术语背诵。它要放回「哥特文学传统：从沃波尔到斯托克」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「哥特文学传统：从沃波尔到斯托克」这一课中，理解「德古拉」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "德古拉",
+        "analysis": "伊莱莎轻声说，「德古拉」不能只当作术语背诵。它要放回「哥特文学传统：从沃波尔到斯托克」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「哥特文学传统：从沃波尔到斯托克」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「哥特文学的起源」和「哥特元素」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "哥特元素",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「哥特文学传统：从沃波尔到斯托克」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「哥特文学传统：从沃波尔到斯托克」这一课，选择「哥特文学的起源」和「哥特元素」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「哥特文学的起源」或本课核心概念",
+          "能联系「哥特元素」或「《弗兰肯斯坦》」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 61,
+    "title": "乔伊斯《都柏林人》：顿悟与停滞",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「乔伊斯《都柏林人》：顿悟与停滞」这一课中，理解「顿悟的概念」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "顿悟的概念",
+        "analysis": "伊莱莎把书页向前推了推：「顿悟的概念」不能只当作术语背诵。它要放回「乔伊斯《都柏林人》：顿悟与停滞」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「停滞的主题」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "停滞的主题",
+        "analysis": "伊莱莎把书页向前推了推：「停滞的主题」不能只当作术语背诵。它要放回「乔伊斯《都柏林人》：顿悟与停滞」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「都柏林的氛围」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "都柏林的氛围",
+        "analysis": "伊莱莎轻声说，「都柏林的氛围」不能只当作术语背诵。它要放回「乔伊斯《都柏林人》：顿悟与停滞」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「短篇故事的结构」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "短篇故事的结构",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「短篇故事的结构」不能只当作术语背诵。它要放回「乔伊斯《都柏林人》：顿悟与停滞」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「乔伊斯《都柏林人》：顿悟与停滞」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「顿悟的概念」和「停滞的主题」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "停滞的主题",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「乔伊斯《都柏林人》：顿悟与停滞」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「乔伊斯《都柏林人》：顿悟与停滞」这一课，选择「顿悟的概念」和「停滞的主题」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「顿悟的概念」或本课核心概念",
+          "能联系「停滞的主题」或「都柏林的氛围」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 62,
+    "title": "伍尔夫的实验性：时间与意识",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「时间的处理」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "时间的处理",
+        "analysis": "伊莱莎轻声说，「时间的处理」不能只当作术语背诵。它要放回「伍尔夫的实验性：时间与意识」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「意识流技巧」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意识流技巧",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「意识流技巧」不能只当作术语背诵。它要放回「伍尔夫的实验性：时间与意识」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「伍尔夫的实验性：时间与意识」这一课中，理解「《达洛维夫人》」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "《达洛维夫人》",
+        "analysis": "伊莱莎把书页向前推了推：「《达洛维夫人》」不能只当作术语背诵。它要放回「伍尔夫的实验性：时间与意识」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「女性意识」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "女性意识",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「女性意识」不能只当作术语背诵。它要放回「伍尔夫的实验性：时间与意识」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「伍尔夫的实验性：时间与意识」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「时间的处理」和「意识流技巧」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "意识流技巧",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「伍尔夫的实验性：时间与意识」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「伍尔夫的实验性：时间与意识」这一课，选择「时间的处理」和「意识流技巧」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「时间的处理」或本课核心概念",
+          "能联系「意识流技巧」或「《达洛维夫人》」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 63,
+    "title": "贝克特与荒诞派：语言的崩溃",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「荒诞派戏剧」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "荒诞派戏剧",
+        "analysis": "伊莱莎没有急着给结论：「荒诞派戏剧」不能只当作术语背诵。它要放回「贝克特与荒诞派：语言的崩溃」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「语言的崩溃」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言的崩溃",
+        "analysis": "伊莱莎把书页向前推了推：「语言的崩溃」不能只当作术语背诵。它要放回「贝克特与荒诞派：语言的崩溃」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「贝克特与荒诞派：语言的崩溃」这一课中，理解「《等待戈多》」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "《等待戈多》",
+        "analysis": "伊莱莎把书页向前推了推：「《等待戈多》」不能只当作术语背诵。它要放回「贝克特与荒诞派：语言的崩溃」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「贝克特与荒诞派：语言的崩溃」这一课中，理解「荒诞中的希望」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "荒诞中的希望",
+        "analysis": "伊莱莎没有急着给结论：「荒诞中的希望」不能只当作术语背诵。它要放回「贝克特与荒诞派：语言的崩溃」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「贝克特与荒诞派：语言的崩溃」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「荒诞派戏剧」和「语言的崩溃」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "语言的崩溃",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「贝克特与荒诞派：语言的崩溃」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「贝克特与荒诞派：语言的崩溃」这一课，选择「荒诞派戏剧」和「语言的崩溃」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「荒诞派戏剧」或本课核心概念",
+          "能联系「语言的崩溃」或「《等待戈多》」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 64,
+    "title": "后现代叙事技巧：元小说与不可靠叙述者",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「元小说」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "元小说",
+        "analysis": "伊莱莎轻声说，「元小说」不能只当作术语背诵。它要放回「后现代叙事技巧：元小说与不可靠叙述者」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「后现代叙事技巧：元小说与不可靠叙述者」这一课中，理解「不可靠叙述者」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "不可靠叙述者",
+        "analysis": "伊莱莎轻声说，「不可靠叙述者」不能只当作术语背诵。它要放回「后现代叙事技巧：元小说与不可靠叙述者」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「后现代叙事技巧：元小说与不可靠叙述者」这一课中，理解「碎片化叙事」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "碎片化叙事",
+        "analysis": "伊莱莎把书页向前推了推：「碎片化叙事」不能只当作术语背诵。它要放回「后现代叙事技巧：元小说与不可靠叙述者」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「对传统的挑战」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "对传统的挑战",
+        "analysis": "伊莱莎把书页向前推了推：「对传统的挑战」不能只当作术语背诵。它要放回「后现代叙事技巧：元小说与不可靠叙述者」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「后现代叙事技巧：元小说与不可靠叙述者」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「元小说」和「不可靠叙述者」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "不可靠叙述者",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「后现代叙事技巧：元小说与不可靠叙述者」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「后现代叙事技巧：元小说与不可靠叙述者」这一课，选择「元小说」和「不可靠叙述者」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「元小说」或本课核心概念",
+          "能联系「不可靠叙述者」或「碎片化叙事」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 65,
+    "title": "当代英语文学：多元声音",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「多元文化」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "多元文化",
+        "analysis": "伊莱莎轻声说，「多元文化」不能只当作术语背诵。它要放回「当代英语文学：多元声音」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「身份政治」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "身份政治",
+        "analysis": "伊莱莎没有急着给结论：「身份政治」不能只当作术语背诵。它要放回「当代英语文学：多元声音」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「实验与传统」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "实验与传统",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「实验与传统」不能只当作术语背诵。它要放回「当代英语文学：多元声音」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「当代英语文学：多元声音」这一课中，理解「文学的未来」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文学的未来",
+        "analysis": "伊莱莎轻声说，「文学的未来」不能只当作术语背诵。它要放回「当代英语文学：多元声音」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「当代英语文学：多元声音」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「多元文化」和「身份政治」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "身份政治",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「当代英语文学：多元声音」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「当代英语文学：多元声音」这一课，选择「多元文化」和「身份政治」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「多元文化」或本课核心概念",
+          "能联系「身份政治」或「实验与传统」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 66,
+    "title": "论题设计：好问题的标准",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「好问题的标准」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "好问题的标准",
+        "analysis": "伊莱莎轻声说，「好问题的标准」不能只当作术语背诵。它要放回「论题设计：好问题的标准」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「问题的来源」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "问题的来源",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「问题的来源」不能只当作术语背诵。它要放回「论题设计：好问题的标准」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "围绕「研究的可行性」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "研究的可行性",
+        "analysis": "伊莱莎轻声说，「研究的可行性」不能只当作术语背诵。它要放回「论题设计：好问题的标准」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「问题的聚焦」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "问题的聚焦",
+        "analysis": "伊莱莎没有急着给结论：「问题的聚焦」不能只当作术语背诵。它要放回「论题设计：好问题的标准」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「论题设计：好问题的标准」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「好问题的标准」和「问题的来源」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "问题的来源",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「论题设计：好问题的标准」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「论题设计：好问题的标准」这一课，选择「好问题的标准」和「问题的来源」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「好问题的标准」或本课核心概念",
+          "能联系「问题的来源」或「研究的可行性」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 67,
+    "title": "论证深度：从观察到洞见",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「观察与分析」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "观察与分析",
+        "analysis": "伊莱莎把书页向前推了推：「观察与分析」不能只当作术语背诵。它要放回「论证深度：从观察到洞见」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "在「论证深度：从观察到洞见」这一课中，理解「论证的结构」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "论证的结构",
+        "analysis": "伊莱莎没有急着给结论：「论证的结构」不能只当作术语背诵。它要放回「论证深度：从观察到洞见」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「论证深度：从观察到洞见」这一课中，理解「洞见的产生」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "洞见的产生",
+        "analysis": "伊莱莎把书页向前推了推：「洞见的产生」不能只当作术语背诵。它要放回「论证深度：从观察到洞见」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「原创性」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "原创性",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「原创性」不能只当作术语背诵。它要放回「论证深度：从观察到洞见」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「论证深度：从观察到洞见」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「观察与分析」和「论证的结构」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "论证的结构",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「论证深度：从观察到洞见」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「论证深度：从观察到洞见」这一课，选择「观察与分析」和「论证的结构」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「观察与分析」或本课核心概念",
+          "能联系「论证的结构」或「洞见的产生」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 68,
+    "title": "文献综述技巧",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「文献的收集」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文献的收集",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「文献的收集」不能只当作术语背诵。它要放回「文献综述技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「文献的分析」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文献的分析",
+        "analysis": "伊莱莎把书页向前推了推：「文献的分析」不能只当作术语背诵。它要放回「文献综述技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「文献综述技巧」这一课中，理解「综述的结构」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "综述的结构",
+        "analysis": "伊莱莎把书页向前推了推：「综述的结构」不能只当作术语背诵。它要放回「文献综述技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「批判性评价」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "批判性评价",
+        "analysis": "伊莱莎把书页向前推了推：「批判性评价」不能只当作术语背诵。它要放回「文献综述技巧」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「文献综述技巧」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「文献的收集」和「文献的分析」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "文献的分析",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「文献综述技巧」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「文献综述技巧」这一课，选择「文献的收集」和「文献的分析」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「文献的收集」或本课核心概念",
+          "能联系「文献的分析」或「综述的结构」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 69,
+    "title": "写作风格精进：清晰与精确",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "读到本课的「清晰性」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "清晰性",
+        "analysis": "伊莱莎轻声说，「清晰性」不能只当作术语背诵。它要放回「写作风格精进：清晰与精确」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「精确性」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "精确性",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「精确性」不能只当作术语背诵。它要放回「写作风格精进：清晰与精确」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「连贯性」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "连贯性",
+        "analysis": "伊莱莎没有急着给结论：「连贯性」不能只当作术语背诵。它要放回「写作风格精进：清晰与精确」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "在「写作风格精进：清晰与精确」这一课中，理解「学术规范」最关键的一步是什么？",
+        "options": [
+          "A. 从具体句子或情节出发，解释它为什么重要",
+          "B. 用自己的想象替代文本细节",
+          "C. 只寻找标准答案，不解释理由",
+          "D. 忽略声音、意象和叙述方式"
+        ],
+        "answer": "A",
+        "knowledgePoint": "学术规范",
+        "analysis": "伊莱莎轻声说，「学术规范」不能只当作术语背诵。它要放回「写作风格精进：清晰与精确」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「写作风格精进：清晰与精确」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「清晰性」和「精确性」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "精确性",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「写作风格精进：清晰与精确」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「写作风格精进：清晰与精确」这一课，选择「清晰性」和「精确性」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「清晰性」或本课核心概念",
+          "能联系「精确性」或「连贯性」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
+    ]
+  },
+  {
+    "lesson": 70,
+    "title": "A-Level综合模拟",
+    "questions": [
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "伊莱莎让学生把「考试范围」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "考试范围",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「考试范围」不能只当作术语背诵。它要放回「A-Level综合模拟」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 1,
+        "text": "围绕「题型」作答时，哪一项最能避免停在术语背诵？",
+        "options": [
+          "A. 说明这个手法在作品中产生了什么阅读效果",
+          "B. 先套结论，再随便找一个例子",
+          "C. 只背课堂标题，不说明文本证据",
+          "D. 把所有文学作品都归成同一种主题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "题型",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「题型」不能只当作术语背诵。它要放回「A-Level综合模拟」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "伊莱莎让学生把「时间管理」放回文本或写作任务中，是为了训练哪一种阅读能力？",
+        "options": [
+          "A. 把概念、具体细节和作品意义连在一起",
+          "B. 只判断人物对错，不观察语言和结构",
+          "C. 把魔法类比当成答案本身",
+          "D. 只写作者姓名或作品标题"
+        ],
+        "answer": "A",
+        "knowledgePoint": "时间管理",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「时间管理」不能只当作术语背诵。它要放回「A-Level综合模拟」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 2,
+        "text": "读到本课的「写作要点」时，哪一种做法最符合伊莱莎的文学课堂？",
+        "options": [
+          "A. 先找文本证据，再说明它如何影响人物、结构、语言或主题",
+          "B. 只记住术语名称，不解释它在文本中的作用",
+          "C. 把情节完整复述一遍，不做分析",
+          "D. 离开作品语境，把答案写成通用模板"
+        ],
+        "answer": "A",
+        "knowledgePoint": "写作要点",
+        "analysis": "「先回到句子。」伊莱莎提醒道，「写作要点」不能只当作术语背诵。它要放回「A-Level综合模拟」的具体文字、写作任务或结构里，说明它怎样影响论点、结构、语气、主题或读者的理解。"
+      },
+      {
+        "type": "choice",
+        "difficulty": 3,
+        "text": "如果要把「A-Level综合模拟」这一课写成一段文学分析，哪一种结构最稳妥？",
+        "options": [
+          "A. 先提出观点，再用「考试范围」和「题型」等细节证明它",
+          "B. 先写自己喜欢或不喜欢，再把课堂术语列成清单",
+          "C. 只复述故事发生了什么，不解释语言、结构或主题",
+          "D. 把魔法世界的例子写满，省略作品本身的证据"
+        ],
+        "answer": "A",
+        "knowledgePoint": "题型",
+        "analysis": "伊莱莎的文学分析从来不是术语清单。稳妥的写法是提出一个可证明的观点，再让本课知识点回到「A-Level综合模拟」的文本细节或写作任务中彼此照亮；这样答案既有结构，也有证据。"
+      },
+      {
+        "type": "open",
+        "text": "结合「A-Level综合模拟」这一课，选择「考试范围」和「题型」两个知识点，说明它们如何帮助你理解一个文本、写作任务、结构或主题。请引用或概述至少一个课堂文本细节。",
+        "scoringPoints": [
+          "准确解释「考试范围」或本课核心概念",
+          "能联系「题型」或「时间管理」形成分析，而不是孤立背诵",
+          "能引用或概述具体文本细节或写作任务要求、课堂例子或语言现象",
+          "能说明这些细节如何影响人物、结构、语气、主题或读者理解"
+        ],
+        "maxScore": 4
+      }
     ]
   }
 ];
 
-window.subject_literature_questionBank = { questionBank };
+if (typeof window !== 'undefined') {
+  window.subject_literature_questionBank = { questionBank };
+}

@@ -31,6 +31,7 @@ export const lessonMap = {
         },
         contextRight: "「对。」他在 −3 到 2 之间画了一条指向右的短箭头。「因为 2 在右边。记住这一条规则——数轴上永远都是这样：越靠右越大。位置说了算，不是数字本身。」他停顿，让学生看清那条箭头。「这条线下面的所有比较题都用同一个规则。」",
         contextWrong: "他摇了摇头，在 −3 到 2 之间画了一条指向右的短箭头。「不。看位置，不看数字。」他指着 2 的位置，「2 在右边，−3 在左边，所以 2 更大。」他停顿，「直觉可能在骗你——你会想 4 比 1 大，所以 −4 比 −1 大。错了。在数轴上唯一的规则是这个：」他又指了一遍箭头，「越靠右越大。」",
+        context: "芬威克停了五秒。他在 −3 到 2 之间画了一条指向右的短箭头。「因为 2 在右边。记住这一条规则——数轴上永远都是这样：越靠右越大。位置说了算，不是数字本身。」他停顿，让学生看清那条箭头。「这条线下面的所有比较题都用同一个规则。」",
         blackboard: {
           type: "numberline",
           range: [-5, 5],
@@ -57,6 +58,7 @@ export const lessonMap = {
         },
         contextRight: "「对。」芬威克点了一下那个小圈。「零是整数，但它既不是正整数，也不是负整数。正整数的定义是'大于零'，负整数的定义是'小于零'。零既不大于零也不小于零——它是中间的分界线，不属于任何一边。」他停了停，「三个家族：正整数、负整数、零。合在一起，那就是全部整数。」",
         contextWrong: "芬威克摇了摇头。「零不是正整数，也不是负整数。」他用粉笔在 0 上加重，「正整数的定义是'大于零'——1、2、3。负整数的定义是'小于零'——−1、−2、−3。零本身既不大于零也不小于零。」他放下粉笔，「这个位置很重要——它是两个家族的分界线，但它自己单独成一类。」",
+        context: "芬威克停了五秒。芬威克点了一下那个小圈。「零是整数，但它既不是正整数，也不是负整数。正整数的定义是'大于零'，负整数的定义是'小于零'。零既不大于零也不小于零——它是中间的分界线，不属于任何一边。」他停了停，「三个家族：正整数、负整数、零。合在一起，那就是全部整数。」",
         blackboard: {
           type: "numberline",
           range: [-5, 5],
@@ -82,6 +84,7 @@ export const lessonMap = {
         },
         contextRight: "「对。」他在黑板上写下 −1 > −4。「为什么？」他等了一下，用粉笔在 −3 到 −1 之间画了一条箭头，「因为 −1 在这里，−4 在这里。」他指向右侧，「−1 离零更近。距离零越近，值越大——这条规则对负数同样成立。」他停顿，「你们的直觉会说'−4 比 −1 大'，因为 4 比 1 大。但在数轴上，只有一个规则。」他把粉笔指向那条箭头，「看位置。位置说了算。」",
         contextWrong: "他摇了摇头，在黑板上重重画了一条从 −4 指向 −1 的箭头。「−1 更大。」他指着 −1 的位置，「−1 在右边，−4 在左边。越靠右越大——这个规则对负数没有例外。」他转身面向学生，「这是大家最容易错的地方。你们会想'4 比 1 大，所以 −4 比 −1 大'。这是直觉，但直觉在这里是错的。数学里，规则就是规则，没有例外。」",
+        context: "芬威克停了五秒。他在黑板上写下 −1 > −4。「为什么？」他等了一下，用粉笔在 −3 到 −1 之间画了一条箭头，「因为 −1 在这里，−4 在这里。」他指向右侧，「−1 离零更近。距离零越近，值越大——这条规则对负数同样成立。」他停顿，「你们的直觉会说'−4 比 −1 大'，因为 4 比 1 大。但在数轴上，只有一个规则。」他把粉笔指向那条箭头，「看位置。位置说了算。」",
         blackboard: {
           type: "numberline",
           range: [-5, 5],
@@ -109,7 +112,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「5，对。」芬威克把计算器拿回来，在黑板上写了三行：| −5 | = 5、| 5 | = 5、| 0 | = 0。「看，−5 的绝对值是 5，5 的绝对值也是 5。为什么？」他停顿，「因为它们到零的距离都是 5。距离没有负号——距离永远是正数。」他指向黑板，「这就是绝对值的全部内容：到零有多远。」",
-        contextWrong: "「不是。」芬威克重新按了一遍，让计算器显示结果。「看，出来的是 5，不是 −5。」他在黑板上写下 | −5 | = 5。「绝对值是距离，」他说，「距离是正的。−5 到零有多远？5 个单位。所以答案是 5。」他停顿，「记住：绝对值里面有负号，出来就是正数。因为距离不分方向。」",
+        contextWrong: "「回到定义。」芬威克重新按了一遍，让计算器显示结果。「看，出来的是 5，不是 −5。」他在黑板上写下 | −5 | = 5。「绝对值是距离，」他说，「距离是正的。−5 到零有多远？5 个单位。所以答案是 5。」他停顿，「记住：绝对值里面有负号，出来就是正数。因为距离不分方向。」",
+        context: "芬威克停了五秒。芬威克把计算器拿回来，在黑板上写了三行：| −5 | = 5、| 5 | = 5、| 0 | = 0。「看，−5 的绝对值是 5，5 的绝对值也是 5。为什么？」他停顿，「因为它们到零的距离都是 5。距离没有负号——距离永远是正数。」他指向黑板，「这就是绝对值的全部内容：到零有多远。」",
         blackboard: {
           type: "formulas",
           label: "绝对值的定义",
@@ -152,7 +156,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，4 是分母。」芬威克在 4 下面画了一条线，「分母告诉我们整体被分成了多少份，分子告诉我们取了多少份。记住：分子在上，分母在下。」",
-        contextWrong: "「不对。」芬威克在 3 和 4 之间画了一条线，「分子在上，分母在下。这里 3 是分子，4 是分母。分母是下面的那个数，它告诉我们整体被分成了多少份。」",
+        contextWrong: "「回到定义。」芬威克在 3 和 4 之间画了一条线，「分子在上，分母在下。这里 3 是分子，4 是分母。分母是下面的那个数，它告诉我们整体被分成了多少份。」",
+        context: "芬威克停了五秒。芬威克在 4 下面画了一条线，「分母告诉我们整体被分成了多少份，分子告诉我们取了多少份。记住：分子在上，分母在下。」",
         blackboard: {
           type: "formulas",
           label: "分数的结构",
@@ -186,7 +191,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，2/3。」芬威克在黑板上写：6÷3=2，9÷3=3，「最大公因数是 3，分子分母同除以 3，得到最简分数 2/3。越简洁，越好用。」",
-        contextWrong: "「不对。」芬威克在黑板上写 6 和 9 的因数，「6 的因数是 1、2、3、6，9 的因数是 1、3、9。最大公因数是 3。6÷3=2，9÷3=3，所以 6/9 化简为 2/3。」",
+        contextWrong: "「回到定义。」芬威克在黑板上写 6 和 9 的因数，「6 的因数是 1、2、3、6，9 的因数是 1、3、9。最大公因数是 3。6÷3=2，9÷3=3，所以 6/9 化简为 2/3。」",
+        context: "芬威克停了五秒。芬威克在黑板上写：6÷3=2，9÷3=3，「最大公因数是 3，分子分母同除以 3，得到最简分数 2/3。越简洁，越好用。」",
         blackboard: {
           type: "formulas",
           label: "分数化简",
@@ -216,7 +222,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，7/12。」芬威克在黑板上一步步写：3 和 4 的最小公倍数是 12，⅓ = 4/12，¼ = 3/12，4/12 + 3/12 = 7/12，「通分让它们变成同分母分数，然后就可以直接加分子了。」",
-        contextWrong: "「不对。」芬威克耐心地写步骤，「首先找 3 和 4 的最小公倍数——12。然后把两个分数都变成分母为 12 的分数：⅓ = 4/12，¼ = 3/12。最后加分子：4 + 3 = 7，所以是 7/12。」",
+        contextWrong: "「回到定义。」芬威克耐心地写步骤，「首先找 3 和 4 的最小公倍数——12。然后把两个分数都变成分母为 12 的分数：⅓ = 4/12，¼ = 3/12。最后加分子：4 + 3 = 7，所以是 7/12。」",
+        context: "芬威克停了五秒。芬威克在黑板上一步步写：3 和 4 的最小公倍数是 12，⅓ = 4/12，¼ = 3/12，4/12 + 3/12 = 7/12，「通分让它们变成同分母分数，然后就可以直接加分子了。」",
         blackboard: {
           type: "formulas",
           label: "分数加法步骤",
@@ -247,7 +254,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，7/2。」芬威克在黑板上写：3 是 6/2，加 1/2 就是 7/2，「整数乘分母加分子作新分子，分母不变。」",
-        contextWrong: "「不对。」芬威克一步步写，「3 ½ 等于 3 + ½。3 可以写成 6/2，6/2 + 1/2 = 7/2。记住：整数乘分母加分子作新分子，分母不变。」",
+        contextWrong: "「回到定义。」芬威克一步步写，「3 ½ 等于 3 + ½。3 可以写成 6/2，6/2 + 1/2 = 7/2。记住：整数乘分母加分子作新分子，分母不变。」",
+        context: "芬威克停了五秒。芬威克在黑板上写：3 是 6/2，加 1/2 就是 7/2，「整数乘分母加分子作新分子，分母不变。」",
         blackboard: {
           type: "formulas",
           label: "带分数转假分数",
@@ -295,7 +303,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，3/4。」芬威克在黑板上写：0.75 = 75/100 = 3/4，「两位小数，分母是 100，然后分子分母同除以 25，化简为 3/4。」",
-        contextWrong: "「不对。」芬威克一步步写，「0.75 是两位小数，所以先写成 75/100。然后找最大公因数 25，75÷25=3，100÷25=4，所以是 3/4。」",
+        contextWrong: "「回到定义。」芬威克一步步写，「0.75 是两位小数，所以先写成 75/100。然后找最大公因数 25，75÷25=3，100÷25=4，所以是 3/4。」",
+        context: "芬威克停了五秒。芬威克在黑板上写：0.75 = 75/100 = 3/4，「两位小数，分母是 100，然后分子分母同除以 25，化简为 3/4。」",
         blackboard: {
           type: "formulas",
           label: "小数分数互转",
@@ -325,7 +334,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，0.25。」芬威克写：25% = 25/100 = 0.25，「把百分比转成小数，就是把百分号去掉，小数点往左移两位。」",
-        contextWrong: "「不对。」芬威克写，「25% 就是 25/100，等于 0.25。记住：% 是'每一百'，所以除以 100，小数点往左移两位。」",
+        contextWrong: "「回到定义。」芬威克写，「25% 就是 25/100，等于 0.25。记住：% 是'每一百'，所以除以 100，小数点往左移两位。」",
+        context: "芬威克停了五秒。芬威克写：25% = 25/100 = 0.25，「把百分比转成小数，就是把百分号去掉，小数点往左移两位。」",
         blackboard: {
           type: "formulas",
           label: "百分比与小数",
@@ -354,7 +364,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，12。」芬威克算：80 × 0.15 = 12，「先把 15% 转成 0.15，然后相乘。」",
-        contextWrong: "「不对。」芬威克一步步算，「15% 是 0.15，80 × 0.15 = 12。记住：求一个数的百分之几，用乘法。」",
+        contextWrong: "「回到定义。」芬威克一步步算，「15% 是 0.15，80 × 0.15 = 12。记住：求一个数的百分之几，用乘法。」",
+        context: "芬威克停了五秒。芬威克算：80 × 0.15 = 12，「先把 15% 转成 0.15，然后相乘。」",
         blackboard: {
           type: "formulas",
           label: "百分比计算",
@@ -383,7 +394,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，46 加隆。」芬威克算：40 × 1.15 = 46，「涨 15% 就是乘以 1.15。」",
-        contextWrong: "「不对。」芬威克写，「涨 15%，就是原价的 115%。40 × 1.15 = 46。记住：增加 p% 乘以 (1+p%)，不是直接加 p。」",
+        contextWrong: "「回到定义。」芬威克写，「涨 15%，就是原价的 115%。40 × 1.15 = 46。记住：增加 p% 乘以 (1+p%)，不是直接加 p。」",
+        context: "芬威克停了五秒。芬威克算：40 × 1.15 = 46，「涨 15% 就是乘以 1.15。」",
         blackboard: {
           type: "formulas",
           label: "增减百分比",
@@ -431,7 +443,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，81。」芬威克写：3×3×3×3 = 81，「指数是 4，所以把 3 乘 4 次。」",
-        contextWrong: "「不对。」芬威克一步步乘，「3⁴ 是 3×3×3×3，不是 3×4。3×3=9，9×3=27，27×3=81。指数是乘法的次数，不是乘数。」",
+        contextWrong: "「回到定义。」芬威克一步步乘，「3⁴ 是 3×3×3×3，不是 3×4。3×3=9，9×3=27，27×3=81。指数是乘法的次数，不是乘数。」",
+        context: "芬威克停了五秒。芬威克写：3×3×3×3 = 81，「指数是 4，所以把 3 乘 4 次。」",
         blackboard: {
           type: "formulas",
           label: "乘方的计算",
@@ -454,21 +467,22 @@ export const lessonMap = {
           ]
         },
         question: {
-          leadIn: "「平方是指数为 2 的乘方：a² = a×a。」芬威克写了几个平方数，「平方根是逆运算：√25 = 5，因为 5² = 25。注意——正数有两个平方根：正的和负的，写作 ±√a。√25 其实有两个答案：5 和 -5。」他指了指黑板上的几何图形，「面积计算离不开平方，边长计算离不开平方根。」",
+          leadIn: "「平方是指数为 2 的乘方：a² = a×a。」芬威克写了几个平方数，「平方根是逆运算：√25 = 5，因为 5² = 25。注意——正数有两个平方根：正的和负的；如果 x² = 25，那么 x = ±5。但 √25 这个符号只表示主平方根，也就是 5。」他指了指黑板上的几何图形，「面积计算离不开平方，边长计算离不开平方根。」",
           text: "「√49 等于多少？」",
           options: ["7", "±7", "24.5"],
-          answer: 1
+          answer: 0
         },
-        contextRight: "「对，±7。」芬威克写：7²=49，(-7)²=49，「虽然我们通常说 √49=7，但 technically，有两个答案：7 和 -7。」",
-        contextWrong: "「不对。」芬威克解释，「√49 问的是'什么数的平方是 49'。7²=49，(-7)²=49，所以答案是 ±7。记住：正数有两个平方根。」",
+        contextRight: "「正确。」芬威克停了五秒，在黑板上写下 √49 = 7。「注意定义。√49 表示 49 的主平方根，答案是 7。若问题问'哪些数的平方等于 49'，那才是 7 和 -7。」",
+        contextWrong: "「回到定义。」芬威克解释，「√49 这个符号默认问主平方根，也就是非负的那个平方根。7²=49，所以 √49=7；-7 的平方也等于 49，但它不是 √49 的值。」",
+        context: "芬威克停了五秒，在黑板上写下 √49 = 7。「注意定义。√49 表示 49 的主平方根，答案是 7。若问题问'哪些数的平方等于 49'，那才是 7 和 -7。」",
         blackboard: {
           type: "formulas",
           label: "平方与平方根",
           lines: [
             "平方：7² = 49",
-            "平方根：√49 = ±7",
+            "主平方根：√49 = 7",
             "",
-            "正数有两个平方根"
+            "正数有两个平方根；√a 表示主平方根"
           ],
           note: "平方和平方根互为逆运算"
         }
@@ -490,7 +504,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，3。」芬威克算：3³=27，「立方根只有一个答案，而且负数也可以有立方根。」",
-        contextWrong: "「不对。」芬威克写，「∛27 问的是'什么数的立方是 27'。3³=27，所以答案是 3。立方根只有一个答案，没有 ±。」",
+        contextWrong: "「回到定义。」芬威克写，「∛27 问的是'什么数的立方是 27'。3³=27，所以答案是 3。立方根只有一个答案，没有 ±。」",
+        context: "芬威克停了五秒。芬威克算：3³=27，「立方根只有一个答案，而且负数也可以有立方根。」",
         blackboard: {
           type: "formulas",
           label: "立方与立方根",
@@ -519,7 +534,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，1/16。」芬威克写：4⁻² = 1/4² = 1/16，「负指数就是倒数，先算正指数再取倒数。」",
-        contextWrong: "「不对。」芬威克解释，「负指数不代表负数，代表倒数。4⁻² 是 1/4²，也就是 1/16。记住：负指数 = 倒数。」",
+        contextWrong: "「回到定义。」芬威克解释，「负指数不代表负数，代表倒数。4⁻² 是 1/4²，也就是 1/16。记住：负指数 = 倒数。」",
+        context: "芬威克停了五秒。芬威克写：4⁻² = 1/4² = 1/16，「负指数就是倒数，先算正指数再取倒数。」",
         blackboard: {
           type: "formulas",
           label: "0次幂和负指数",
@@ -558,7 +574,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，3∶5。」芬威克写：15÷5=3，25÷5=5，「最大公因数是 5，同除以 5，得到 3∶5。」",
-        contextWrong: "「不对。」芬威克解释，「15 和 25 的最大公因数是 5。15÷5=3，25÷5=5，所以是 3∶5。」",
+        contextWrong: "「回到定义。」芬威克解释，「15 和 25 的最大公因数是 5。15÷5=3，25÷5=5，所以是 3∶5。」",
+        context: "芬威克停了五秒。芬威克写：15÷5=3，25÷5=5，「最大公因数是 5，同除以 5，得到 3∶5。」",
         blackboard: {
           type: "formulas",
           label: "比的化简",
@@ -587,7 +604,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，12。」芬威克算：4x=48，x=12，「交叉相乘：3×16=4x，48=4x，x=12。」",
-        contextWrong: "「不对。」芬威克演示，「3∶4 = x∶16，交叉相乘：4x=3×16=48，x=12。记住：比例用交叉相乘来解。」",
+        contextWrong: "「回到定义。」芬威克演示，「3∶4 = x∶16，交叉相乘：4x=3×16=48，x=12。记住：比例用交叉相乘来解。」",
+        context: "芬威克停了五秒。芬威克算：4x=48，x=12，「交叉相乘：3×16=4x，48=4x，x=12。」",
         blackboard: {
           type: "formulas",
           label: "比例与交叉相乘",
@@ -616,7 +634,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，减半。」芬威克说，「速度和时间成反比，速度加倍，时间减半。」",
-        contextWrong: "「不对。」芬威克解释，「距离固定，速度和时间成反比。速度越快，时间越短。速度加倍，时间减半。」",
+        contextWrong: "「回到定义。」芬威克解释，「距离固定，速度和时间成反比。速度越快，时间越短。速度加倍，时间减半。」",
+        context: "芬威克停了五秒。芬威克说，「速度和时间成反比，速度加倍，时间减半。」",
         blackboard: {
           type: "formulas",
           label: "正比与反比",
@@ -645,7 +664,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，200 毫升。」芬威克算：2+3=5 份，每份 100 毫升，2×100=200，「按比例分配，先求总份数。」",
-        contextWrong: "「不对。」芬威克一步步算，「2+3=5 份，500÷5=100 毫升每份，曼德拉草汁是 2 份，所以 2×100=200 毫升。」",
+        contextWrong: "「回到定义。」芬威克一步步算，「2+3=5 份，500÷5=100 毫升每份，曼德拉草汁是 2 份，所以 2×100=200 毫升。」",
+        context: "芬威克停了五秒。芬威克算：2+3=5 份，每份 100 毫升，2×100=200，「按比例分配，先求总份数。」",
         blackboard: {
           type: "formulas",
           label: "按比例分配",
@@ -690,7 +710,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，360°。」芬威克在圆上标注，「一圈就是一个完整的圆周，360 度。」",
-        contextWrong: "「不对。」芬威克解释，「一圈是 360°，半圈是 180°，四分之一圈是 90°。记住：一圈 = 360°。」",
+        contextWrong: "「回到定义。」芬威克解释，「一圈是 360°，半圈是 180°，四分之一圈是 90°。记住：一圈 = 360°。」",
+        context: "芬威克停了五秒。芬威克在圆上标注，「一圈就是一个完整的圆周，360 度。」",
         blackboard: {
           type: "formulas",
           label: "角的单位：度",
@@ -722,7 +743,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，钝角。」芬威克指，「120° 大于 90° 小于 180°，所以是钝角。」",
-        contextWrong: "「不对。」芬威克重述定义，「小于 90° 是锐角，等于 90° 是直角，大于 90° 小于 180° 是钝角。120° 是钝角。」",
+        contextWrong: "「回到定义。」芬威克重述定义，「小于 90° 是锐角，等于 90° 是直角，大于 90° 小于 180° 是钝角。120° 是钝角。」",
+        context: "芬威克停了五秒。芬威克指，「120° 大于 90° 小于 180°，所以是钝角。」",
         blackboard: {
           type: "formulas",
           label: "角的分类",
@@ -753,7 +775,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，顶点。」芬威克点头，「中心必须对准顶点，这是第一步。」",
-        contextWrong: "「不对。」芬威克重述，「量角器的中心必须对准角的顶点，这是测量准确的关键。」",
+        contextWrong: "「回到定义。」芬威克重述，「量角器的中心必须对准角的顶点，这是测量准确的关键。」",
+        context: "芬威克停了五秒。芬威克点头，「中心必须对准顶点，这是第一步。」",
         blackboard: {
           type: "formulas",
           label: "用量角器测角",
@@ -782,7 +805,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，40°。」芬威克算：90-50=40，「互余和为 90°。」",
-        contextWrong: "「不对。」芬威克解释，「互余是和为 90°，所以 90-50=40°。互补是和为 180°，别搞混了。」",
+        contextWrong: "「回到定义。」芬威克解释，「互余是和为 90°，所以 90-50=40°。互补是和为 180°，别搞混了。」",
+        context: "芬威克停了五秒。芬威克算：90-50=40，「互余和为 90°。」",
         blackboard: {
           type: "formulas",
           label: "互余与互补",
@@ -819,7 +843,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，50°。」芬威克算：180-60-70=50，「内角和永远是 180°。」",
-        contextWrong: "「不对。」芬威克一步步算，「180-60-70=50°。记住：三角形内角和永远是 180°。」",
+        contextWrong: "「回到定义。」芬威克一步步算，「180-60-70=50°。记住：三角形内角和永远是 180°。」",
+        context: "芬威克停了五秒。芬威克算：180-60-70=50，「内角和永远是 180°。」",
         blackboard: {
           type: "formulas",
           label: "三角形内角和",
@@ -849,7 +874,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，等边三角形。」芬威克指，「三边相等，三个角也都是 60°。」",
-        contextWrong: "「不对。」芬威克重述，「三边相等的叫等边，两边相等的叫等腰，三边都不同的叫不等边。」",
+        contextWrong: "「回到定义。」芬威克重述，「三边相等的叫等边，两边相等的叫等腰，三边都不同的叫不等边。」",
+        context: "芬威克停了五秒。芬威克指，「三边相等，三个角也都是 60°。」",
         blackboard: {
           type: "formulas",
           label: "三角形分类",
@@ -879,7 +905,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，70°。」芬威克算：(180-40)/2=70，「两底角相等。」",
-        contextWrong: "「不对。」芬威克解释，「(180-40)/2=70°，两个底角相等。」",
+        contextWrong: "「回到定义。」芬威克解释，「(180-40)/2=70°，两个底角相等。」",
+        context: "芬威克停了五秒。芬威克算：(180-40)/2=70，「两底角相等。」",
         blackboard: {
           type: "formulas",
           label: "等腰三角形",
@@ -908,7 +935,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，3,4,5。」芬威克验证，「3+4>5，4+5>3，3+5>4，都满足。」",
-        contextWrong: "「不对。」芬威克检查，「1+2=3 不大于，不行；5+5<11，不行。只有 3,4,5 可以。」",
+        contextWrong: "「回到定义。」芬威克检查，「1+2=3 不大于，不行；5+5<11，不行。只有 3,4,5 可以。」",
+        context: "芬威克停了五秒。芬威克验证，「3+4>5，4+5>3，3+5>4，都满足。」",
         blackboard: {
           type: "formulas",
           label: "三角形不等式",
@@ -956,7 +984,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，是。」芬威克解释，「正方形满足长方形的所有条件，是特殊的长方形。」",
-        contextWrong: "「不对。」芬威克澄清，「正方形是特殊的长方形，长方形是特殊的平行四边形。这是继承关系。」",
+        contextWrong: "「回到定义。」芬威克澄清，「正方形是特殊的长方形，长方形是特殊的平行四边形。这是继承关系。」",
+        context: "芬威克停了五秒。芬威克解释，「正方形满足长方形的所有条件，是特殊的长方形。」",
         blackboard: {
           type: "formulas",
           label: "四边形继承关系",
@@ -985,7 +1014,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，540°。」芬威克算：(5-2)×180=540，「n=5，所以是 3×180。」",
-        contextWrong: "「不对。」芬威克算，「(5−2)×180°=540°。记住公式：(n−2)×180°。」",
+        contextWrong: "「回到定义。」芬威克算，「(5−2)×180°=540°。记住公式：(n−2)×180°。」",
+        context: "芬威克停了五秒。芬威克算：(5-2)×180=540，「n=5，所以是 3×180。」",
         blackboard: {
           type: "formulas",
           label: "多边形内角和",
@@ -1015,7 +1045,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，垂直。」芬威克画了个小方框，「正方形对角线不仅相等，还垂直。」",
-        contextWrong: "「不对。」芬威克指出，「正方形对角线是垂直的，长方形的不垂直。区分清楚。」",
+        contextWrong: "「回到定义。」芬威克指出，「正方形对角线是垂直的，长方形的不垂直。区分清楚。」",
+        context: "芬威克停了五秒。芬威克画了个小方框，「正方形对角线不仅相等，还垂直。」",
         blackboard: {
           type: "formulas",
           label: "对角线性质",
@@ -1044,7 +1075,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，120°。」芬威克算：(6-2)×180/6=120，「记住公式。」",
-        contextWrong: "「不对。」芬威克算给大家看，「(6−2)×180°÷6=4×180÷6=120°。」",
+        contextWrong: "「回到定义。」芬威克算给大家看，「(6−2)×180°÷6=4×180÷6=120°。」",
+        context: "芬威克停了五秒。芬威克算：(6-2)×180/6=120，「记住公式。」",
         blackboard: {
           type: "formulas",
           label: "正多边形",
@@ -1086,7 +1118,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，2倍。」芬威克写，「d=2r，直径是半径的两倍。」",
-        contextWrong: "「不对。」芬威克纠正，「直径是半径的两倍，d=2r。」",
+        contextWrong: "「回到定义。」芬威克纠正，「直径是半径的两倍，d=2r。」",
+        context: "芬威克停了五秒。芬威克写，「d=2r，直径是半径的两倍。」",
         blackboard: {
           type: "formulas",
           label: "圆的基本元素",
@@ -1116,7 +1149,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，18.8。」芬威克算：2×3.14×3≈18.8，「用公式 C=2πr。」",
-        contextWrong: "「不对。」芬威克演示，「2×3.14×3≈18.8。记住公式。」",
+        contextWrong: "「回到定义。」芬威克演示，「2×3.14×3≈18.8。记住公式。」",
+        context: "芬威克停了五秒。芬威克算：2×3.14×3≈18.8，「用公式 C=2πr。」",
         blackboard: {
           type: "formulas",
           label: "圆的周长",
@@ -1145,7 +1179,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，12.6。」芬威克算：3.14×2²=12.56≈12.6，「r的平方，不是乘2。」",
-        contextWrong: "「不对。」芬威克强调，「是 r 平方，不是乘2。3.14×2²=12.56。」",
+        contextWrong: "「回到定义。」芬威克强调，「是 r 平方，不是乘2。3.14×2²=12.56。」",
+        context: "芬威克停了五秒。芬威克算：3.14×2²=12.56≈12.6，「r的平方，不是乘2。」",
         blackboard: {
           type: "formulas",
           label: "圆的面积",
@@ -1174,7 +1209,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，一半。」芬威克解释，「半圆θ=180°，180/360=1/2。」",
-        contextWrong: "「不对。」芬威克算，「半圆是 180°，所以弧长是圆周长的一半。」",
+        contextWrong: "「回到定义。」芬威克算，「半圆是 180°，所以弧长是圆周长的一半。」",
+        context: "芬威克停了五秒。芬威克解释，「半圆θ=180°，180/360=1/2。」",
         blackboard: {
           type: "formulas",
           label: "弧长与扇形",
@@ -1220,7 +1256,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，(0,0)。」芬威克指，「原点是 x 轴和 y 轴的交点。」",
-        contextWrong: "「不对。」芬威克重述，「原点是 (0,0)，x 和 y 都是 0。」",
+        contextWrong: "「回到定义。」芬威克重述，「原点是 (0,0)，x 和 y 都是 0。」",
+        context: "芬威克停了五秒。芬威克指，「原点是 x 轴和 y 轴的交点。」",
         blackboard: {
           type: "formulas",
           label: "笛卡尔坐标系",
@@ -1251,7 +1288,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，第二象限。」芬威克指，「x负y正，第二象限。」",
-        contextWrong: "「不对。」芬威克再讲一遍，「x负y正是第二象限，记住顺序。」",
+        contextWrong: "「回到定义。」芬威克再讲一遍，「x负y正是第二象限，记住顺序。」",
+        context: "芬威克停了五秒。芬威克指，「x负y正，第二象限。」",
         blackboard: {
           type: "formulas",
           label: "四个象限",
@@ -1281,7 +1319,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，3。」芬威克指，「先写的是 x，后写的是 y。」",
-        contextWrong: "「不对。」芬威克强调顺序，「(x,y)，先 x 后 y，所以 3 是 x。」",
+        contextWrong: "「回到定义。」芬威克强调顺序，「(x,y)，先 x 后 y，所以 3 是 x。」",
+        context: "芬威克停了五秒。芬威克指，「先写的是 x，后写的是 y。」",
         blackboard: {
           type: "formulas",
           label: "坐标表示法",
@@ -1311,7 +1350,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，坐标。」芬威克微笑，「就像我们今天学的坐标系。」",
-        contextWrong: "「不对。」芬威克说，「用坐标，和我们学的一样。」",
+        contextWrong: "「回到定义。」芬威克说，「用坐标，和我们学的一样。」",
+        context: "芬威克停了五秒。芬威克微笑，「就像我们今天学的坐标系。」",
         blackboard: {
           type: "formulas",
           label: "坐标系的应用",
@@ -1354,7 +1394,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，7。」芬威克写：2×3 + 1 = 6 + 1 = 7，「把 3 代入 x，然后按照运算顺序计算。」",
-        contextWrong: "「不对。」芬威克一步步演示：2×3 = 6，然后 6 + 1 = 7，「先乘法再加法，顺序很重要。」",
+        contextWrong: "「回到定义。」芬威克一步步演示：2×3 = 6，然后 6 + 1 = 7，「先乘法再加法，顺序很重要。」",
+        context: "芬威克停了五秒。芬威克写：2×3 + 1 = 6 + 1 = 7，「把 3 代入 x，然后按照运算顺序计算。」",
         blackboard: {
           type: "formulas",
           label: "代入求值示例",
@@ -1386,7 +1427,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，8。」芬威克强调：3×2 = 6，然后 2 + 6 = 8，「先算乘法，再算加法。」",
-        contextWrong: "「不对。」芬威克画运算顺序图：括号、指数、乘除、加减，「a 是 2，b 是 3，所以 b×2 = 6，然后加 a 是 8。」",
+        contextWrong: "「回到定义。」芬威克画运算顺序图：括号、指数、乘除、加减，「a 是 2，b 是 3，所以 b×2 = 6，然后加 a 是 8。」",
+        context: "芬威克停了五秒。芬威克强调：3×2 = 6，然后 2 + 6 = 8，「先算乘法，再算加法。」",
         blackboard: {
           type: "formulas",
           label: "运算顺序",
@@ -1416,7 +1458,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，8x。」芬威克写：5 + 3 = 8，所以 5x + 3x = 8x，「系数相加，字母和指数不变。」",
-        contextWrong: "「不对。」芬威克解释：5x + 3x 就是 (5+3)x = 8x，「不是 5×3，也不是 x²。」",
+        contextWrong: "「回到定义。」芬威克解释：5x + 3x 就是 (5+3)x = 8x，「不是 5×3，也不是 x²。」",
+        context: "芬威克停了五秒。芬威克写：5 + 3 = 8，所以 5x + 3x = 8x，「系数相加，字母和指数不变。」",
         blackboard: {
           type: "formulas",
           label: "合并同类项",
@@ -1445,7 +1488,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，x − 1。」芬威克写：3x − 2x − 1 = x − 1，「减号要分配给括号里的每一项。」",
-        contextWrong: "「不对。」芬威克演示：3x − 2x − 1，不是 3x − 2x + 1，「减号进括号，里面的 +1 要变成 −1。」",
+        contextWrong: "「回到定义。」芬威克演示：3x − 2x − 1，不是 3x − 2x + 1，「减号进括号，里面的 +1 要变成 −1。」",
+        context: "芬威克停了五秒。芬威克写：3x − 2x − 1 = x − 1，「减号要分配给括号里的每一项。」",
         blackboard: {
           type: "formulas",
           label: "去括号",
@@ -1485,7 +1529,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，减 3。」芬威克写：x + 3 − 3 = 7 − 3，所以 x = 4，「两边做同样的事，天平保持平衡。」",
-        contextWrong: "「不对。」芬威克指着天平左边的 +3，「左边有 +3，要抵消它就要 −3，两边同时做。」",
+        contextWrong: "「回到定义。」芬威克指着天平左边的 +3，「左边有 +3，要抵消它就要 −3，两边同时做。」",
+        context: "芬威克停了五秒。芬威克写：x + 3 − 3 = 7 − 3，所以 x = 4，「两边做同样的事，天平保持平衡。」",
         blackboard: {
           type: "formulas",
           label: "等式性质应用",
@@ -1514,7 +1559,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，3x = 10 + 5。」芬威克解释：把左边的 −5 移到右边变成 +5，「减号过等号变加号，加号过等号变减号。」",
-        contextWrong: "「不对。」芬威克写：3x − 5 + 5 = 10 + 5，所以 3x = 10 + 5，「移项要变号，−5 变成 +5。」",
+        contextWrong: "「回到定义。」芬威克写：3x − 5 + 5 = 10 + 5，所以 3x = 10 + 5，「移项要变号，−5 变成 +5。」",
+        context: "芬威克停了五秒。芬威克解释：把左边的 −5 移到右边变成 +5，「减号过等号变加号，加号过等号变减号。」",
         blackboard: {
           type: "formulas",
           label: "移项示例",
@@ -1545,7 +1591,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，7。」芬威克一步步算：5x = 20 + 15 = 35，x = 35 ÷ 5 = 7，「先移项，再除以系数。」",
-        contextWrong: "「不对。」芬威克演示：5x − 15 = 20 → 5x = 35 → x = 7，「步骤别跳，慢慢写。」",
+        contextWrong: "「回到定义。」芬威克演示：5x − 15 = 20 → 5x = 35 → x = 7，「步骤别跳，慢慢写。」",
+        context: "芬威克停了五秒。芬威克一步步算：5x = 20 + 15 = 35，x = 35 ÷ 5 = 7，「先移项，再除以系数。」",
         blackboard: {
           type: "formulas",
           label: "完整解题过程",
@@ -1577,7 +1624,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，成立。」芬威克算：3×5 + 1 = 15 + 1 = 16，「右边也是 16，所以 x = 5 正确。」",
-        contextWrong: "「不对。」芬威克计算：3×5 = 15，15 + 1 = 16，「16 = 16，等式成立，所以是对的。」",
+        contextWrong: "「回到定义。」芬威克计算：3×5 = 15，15 + 1 = 16，「16 = 16，等式成立，所以是对的。」",
+        context: "芬威克停了五秒。芬威克算：3×5 + 1 = 15 + 1 = 16，「右边也是 16，所以 x = 5 正确。」",
         blackboard: {
           type: "formulas",
           label: "验算示例",
@@ -1618,7 +1666,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，小于 5。」芬威克指开口方向，「尖朝左，开口朝右，右边大，所以 x 小于 5。」",
-        contextWrong: "「不对。」芬威克重述：< 是小于，> 是大于，「开口朝向大的数，尖朝向小的数。」",
+        contextWrong: "「回到定义。」芬威克重述：< 是小于，> 是大于，「开口朝向大的数，尖朝向小的数。」",
+        context: "芬威克停了五秒。芬威克指开口方向，「尖朝左，开口朝右，右边大，所以 x 小于 5。」",
         blackboard: {
           type: "formulas",
           label: "不等号读法",
@@ -1649,7 +1698,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，x > 3。」芬威克写：2x > 6，所以 x > 3，「和方程一样，只是答案是范围。」",
-        contextWrong: "「不对。」芬威克一步步来：2x > 6，除以 2，x > 3，「别紧张，步骤和方程一样。」",
+        contextWrong: "「回到定义。」芬威克一步步来：2x > 6，除以 2，x > 3，「别紧张，步骤和方程一样。」",
+        context: "芬威克停了五秒。芬威克写：2x > 6，所以 x > 3，「和方程一样，只是答案是范围。」",
         blackboard: {
           type: "formulas",
           label: "解不等式步骤",
@@ -1679,7 +1729,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，实心圆 2，向左箭头。」芬威克说：≤ 包含 2，所以实心，向左是小于等于，「没错。」",
-        contextWrong: "「不对。」芬威克画：≤ 是实心，x ≤ 2 是左边，所以实心圆 2，向左箭头，「记住：含端点用实心，不含用空心。」",
+        contextWrong: "「回到定义。」芬威克画：≤ 是实心，x ≤ 2 是左边，所以实心圆 2，向左箭头，「记住：含端点用实心，不含用空心。」",
+        context: "芬威克停了五秒。芬威克说：≤ 包含 2，所以实心，向左是小于等于，「没错。」",
         blackboard: {
           type: "formulas",
           label: "数轴表示规则",
@@ -1707,7 +1758,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，x ≥ −3。」芬威克写：−3x ≤ 9，两边除以 −3，变号：x ≥ −3，「除以负数，不等号反转！」",
-        contextWrong: "「不对。」芬威克强调：除以负数时，一定要把 ≤ 变成 ≥，「−3x ≤ 9 → x ≥ −3，这里反转了。」",
+        contextWrong: "「回到定义。」芬威克强调：除以负数时，一定要把 ≤ 变成 ≥，「−3x ≤ 9 → x ≥ −3，这里反转了。」",
+        context: "芬威克停了五秒。芬威克写：−3x ≤ 9，两边除以 −3，变号：x ≥ −3，「除以负数，不等号反转！」",
         blackboard: {
           type: "formulas",
           label: "关键注意点",
@@ -1745,7 +1797,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，相同数量。」芬威克点头，「两个未知数两个方程，三个未知数三个方程。」",
-        contextWrong: "「不对。」芬威克强调，「两个未知数，必须两个方程才能确定唯一解。」",
+        contextWrong: "「回到定义。」芬威克强调，「两个未知数，必须两个方程才能确定唯一解。」",
+        context: "芬威克停了五秒。芬威克点头，「两个未知数两个方程，三个未知数三个方程。」",
         blackboard: {
           type: "formulas",
           label: "方程与图形",
@@ -1773,7 +1826,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，2。」芬威克算：(y+1) + y = 3 → 2y+1=3 → y=1，x=2，「代入替换，很好。」",
-        contextWrong: "「不对。」芬威克演示：把 x = y+1 代入第二个方程，(y+1)+y=3，解出 y=1，x=2，「慢慢来，代入进去。」",
+        contextWrong: "「回到定义。」芬威克演示：把 x = y+1 代入第二个方程，(y+1)+y=3，解出 y=1，x=2，「慢慢来，代入进去。」",
+        context: "芬威克停了五秒。芬威克算：(y+1) + y = 3 → 2y+1=3 → y=1，x=2，「代入替换，很好。」",
         blackboard: {
           type: "formulas",
           label: "代入消元步骤",
@@ -1803,7 +1857,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，6x = 8。」芬威克写：3x+3x=6x，+2y−2y=0，7+1=8，「y 消掉了，只剩 x！」",
-        contextWrong: "「不对。」芬威克重新加：(3x+2y)+(3x−2y)=7+1 → 6x = 8，「y 抵消了，不是保留。」",
+        contextWrong: "「回到定义。」芬威克重新加：(3x+2y)+(3x−2y)=7+1 → 6x = 8，「y 抵消了，不是保留。」",
+        context: "芬威克停了五秒。芬威克写：3x+3x=6x，+2y−2y=0，7+1=8，「y 消掉了，只剩 x！」",
         blackboard: {
           type: "formulas",
           label: "加减消元",
@@ -1832,7 +1887,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，无数个。」芬威克说：两条线完全一样，所有点都是解，「没错。」",
-        contextWrong: "「不对。」芬威克画：重合的两条线，每个点都同时在两条线上，「所以有无数个解。」",
+        contextWrong: "「回到定义。」芬威克画：重合的两条线，每个点都同时在两条线上，「所以有无数个解。」",
+        context: "芬威克停了五秒。芬威克说：两条线完全一样，所有点都是解，「没错。」",
         blackboard: {
           type: "formulas",
           label: "解的情况",
@@ -1870,7 +1926,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，7。」芬威克在黑板上写：f(3) = 2×3 + 1 = 7，「一台机器，给定配料，只出一种产品——这就是函数的核心。」",
-        contextWrong: "「不对。」芬威克再讲一遍：「f(x)=2x+1 表示用 2 乘 x 再加上 1。x=3 时，2×3=6，加 1 得 7。」",
+        contextWrong: "「回到定义。」芬威克再讲一遍：「f(x)=2x+1 表示用 2 乘 x 再加上 1。x=3 时，2×3=6，加 1 得 7。」",
+        context: "芬威克停了五秒。芬威克在黑板上写：f(3) = 2×3 + 1 = 7，「一台机器，给定配料，只出一种产品——这就是函数的核心。」",
         blackboard: {
           type: "formulas",
           label: "函数例子",
@@ -1898,7 +1955,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，x ≥ 0。」芬威克解释：「平方根要求被开方数非负，x≥0（含 x=0，因为 √0=0 有意义）。」",
-        contextWrong: "「不对。」芬威克澄清：「负数没有实数平方根，所以 x 必须 ≥ 0。注意 √0=0 是有定义的，所以定义域包括 0。」",
+        contextWrong: "「回到定义。」芬威克澄清：「负数没有实数平方根，所以 x 必须 ≥ 0。注意 √0=0 是有定义的，所以定义域包括 0。」",
+        context: "芬威克停了五秒。芬威克解释：「平方根要求被开方数非负，x≥0（含 x=0，因为 √0=0 有意义）。」",
         blackboard: {
           type: "formulas",
           label: "定义域例子",
@@ -1925,7 +1983,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，一条直线。」芬威克点头：「线性函数的图像是直线，这就是为什么叫'线性'。」",
-        contextWrong: "「不对。」芬威克解释：「f(x) = 2x + 1 是线性函数，图像是直线。抛物线是二次函数的图像，比如 f(x)=x²。」",
+        contextWrong: "「回到定义。」芬威克解释：「f(x) = 2x + 1 是线性函数，图像是直线。抛物线是二次函数的图像，比如 f(x)=x²。」",
+        context: "芬威克停了五秒。芬威克点头：「线性函数的图像是直线，这就是为什么叫'线性'。」",
         blackboard: {
           type: "formulas",
           label: "线性函数图像",
@@ -1953,7 +2012,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，斜率 2，截距 5。」芬威克在黑板上标记：「f(x)=mx+c 中，m=2 是斜率，c=5 是截距。」",
-        contextWrong: "「不对。」芬威克再讲一遍：「f(x)=mx+c，m 是 x 前面的系数（斜率），c 是常数项（截距）。这里 m=2，c=5。」",
+        contextWrong: "「回到定义。」芬威克再讲一遍：「f(x)=mx+c，m 是 x 前面的系数（斜率），c 是常数项（截距）。这里 m=2，c=5。」",
+        context: "芬威克停了五秒。芬威克在黑板上标记：「f(x)=mx+c 中，m=2 是斜率，c=5 是截距。」",
         blackboard: {
           type: "formulas",
           label: "斜率的含义",
@@ -1996,6 +2056,7 @@ export const lessonMap = {
         },
         contextRight: "对，15。5×3=15。",
         contextWrong: "不对，是长×宽，不是长+宽。5×3=15。",
+        context: "对，15。5×3=15。",
         blackboard: {
           type: "formulas",
           label: "长方形面积",
@@ -2023,6 +2084,7 @@ export const lessonMap = {
         },
         contextRight: "对，12。½×6×4=12。",
         contextWrong: "不对，别忘了½！½×6×4=12。",
+        context: "对，12。½×6×4=12。",
         blackboard: {
           type: "formulas",
           label: "三角形面积",
@@ -2050,6 +2112,7 @@ export const lessonMap = {
         },
         contextRight: "对，9。½×(2+4)×3=9。",
         contextWrong: "不对，先算上下底的和，再乘以½和高。½×6×3=9。",
+        context: "对，9。½×(2+4)×3=9。",
         blackboard: {
           type: "formulas",
           label: "梯形面积",
@@ -2076,6 +2139,7 @@ export const lessonMap = {
         },
         contextRight: "对，先想怎么拆成简单图形！",
         contextWrong: "不对，先把复杂图形拆成简单的部分。",
+        context: "对，先想怎么拆成简单图形！",
         blackboard: {
           type: "formulas",
           label: "复合图形策略",
@@ -2113,6 +2177,7 @@ export const lessonMap = {
         },
         contextRight: "对，24。3×4×2=24。",
         contextWrong: "不对，是长×宽×高，不是加起来。3×4×2=24。",
+        context: "对，24。3×4×2=24。",
         blackboard: {
           type: "formulas",
           label: "体积公式",
@@ -2141,6 +2206,7 @@ export const lessonMap = {
         },
         contextRight: "对，π×2²×5=20π。",
         contextWrong: "不对，πr²×h，不是πr×h。π×4×5=20π。",
+        context: "对，π×2²×5=20π。",
         blackboard: {
           type: "formulas",
           label: "圆柱体积",
@@ -2167,6 +2233,7 @@ export const lessonMap = {
         },
         contextRight: "对，三分之一！",
         contextWrong: "不对，是⅓，不是½。",
+        context: "对，三分之一！",
         blackboard: {
           type: "formulas",
           label: "圆锥体积",
@@ -2193,6 +2260,7 @@ export const lessonMap = {
         },
         contextRight: "对，(4/3)π×27=36π。",
         contextWrong: "不对，是(4/3)πr³，不是πr²。(4/3)π×27=36π。",
+        context: "对，(4/3)π×27=36π。",
         blackboard: {
           type: "formulas",
           label: "球体积",
@@ -2229,6 +2297,7 @@ export const lessonMap = {
         },
         contextRight: "对，斜边最长！因为斜边是直角对面的。",
         contextWrong: "不对，斜边永远是最长的边。",
+        context: "对，斜边最长！因为斜边是直角对面的。",
         blackboard: {
           type: "formulas",
           label: "勾股定理",
@@ -2257,6 +2326,7 @@ export const lessonMap = {
         },
         contextRight: "对，3²+4²=9+16=25=5²！",
         contextWrong: "不对，试算一下：3²+4²=25=5²，所以第一组是对的。",
+        context: "对，3²+4²=9+16=25=5²！",
         blackboard: {
           type: "formulas",
           label: "勾股数组",
@@ -2286,6 +2356,7 @@ export const lessonMap = {
         },
         contextRight: "对，直角！6²+8²=36+64=100=10²。",
         contextWrong: "不对，6²+8²=10²，所以是直角三角形。",
+        context: "对，直角！6²+8²=36+64=100=10²。",
         blackboard: {
           type: "formulas",
           label: "勾股定理逆定理",
@@ -2312,6 +2383,7 @@ export const lessonMap = {
         },
         contextRight: "对，5！3²+4²=5²。",
         contextWrong: "不对，√(3²+4²)=√25=5。",
+        context: "对，5！3²+4²=5²。",
         blackboard: {
           type: "formulas",
           label: "计算边长",
@@ -2349,6 +2421,7 @@ export const lessonMap = {
         },
         contextRight: "对，是总体调查！",
         contextWrong: "不对，调查所有学生就是总体调查。",
+        context: "对，是总体调查！",
         blackboard: {
           type: "formulas",
           label: "总体与样本",
@@ -2377,6 +2450,7 @@ export const lessonMap = {
         },
         contextRight: "对，3/10=0.3或30%！",
         contextWrong: "不对，频率是3/10=0.3。",
+        context: "对，3/10=0.3或30%！",
         blackboard: {
           type: "formulas",
           label: "频率与频数",
@@ -2404,6 +2478,7 @@ export const lessonMap = {
         },
         contextRight: "对，要确保不重叠、不遗漏！",
         contextWrong: "不对，区间必须不重叠、不遗漏。",
+        context: "对，要确保不重叠、不遗漏！",
         blackboard: {
           type: "formulas",
           label: "分组原则",
@@ -2432,6 +2507,7 @@ export const lessonMap = {
         },
         contextRight: "对，茎是2，叶是3！",
         contextWrong: "不对，茎是高位2，叶是低位3。",
+        context: "对，茎是2，叶是3！",
         blackboard: {
           type: "formulas",
           label: "茎叶图示例",
@@ -2470,6 +2546,7 @@ export const lessonMap = {
         },
         contextRight: "对，(1+2+3+4+5)/5=3！",
         contextWrong: "不对，均值是总和除以个数：(1+2+3+4+5)/5=3。",
+        context: "对，(1+2+3+4+5)/5=3！",
         blackboard: {
           type: "formulas",
           label: "平均值计算",
@@ -2500,6 +2577,7 @@ export const lessonMap = {
         },
         contextRight: "对，中位数不受极端值影响！",
         contextWrong: "不对，中位数更适合有极端值的情况。",
+        context: "对，中位数不受极端值影响！",
         blackboard: {
           type: "formulas",
           label: "如何选择",
@@ -2529,6 +2607,7 @@ export const lessonMap = {
         },
         contextRight: "对，1/2！",
         contextWrong: "不对，公平硬币正面概率是1/2。",
+        context: "对，1/2！",
         blackboard: {
           type: "formulas",
           label: "概率公式",
@@ -2556,6 +2635,7 @@ export const lessonMap = {
         },
         contextRight: "对，不是正面的概率就是1减去正面的！",
         contextWrong: "不对，P(非A)=1-P(A)=1-1/2=1/2。",
+        context: "对，不是正面的概率就是1减去正面的！",
         blackboard: {
           type: "formulas",
           label: "互补事件公式",
@@ -2593,6 +2673,7 @@ export const lessonMap = {
         },
         contextRight: "对，是合数！9=3×3，有除1和9之外的因数3。",
         contextWrong: "不对，9有因数3，不是质数。",
+        context: "对，是合数！9=3×3，有除1和9之外的因数3。",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -2614,6 +2695,7 @@ export const lessonMap = {
         },
         contextRight: "对，2² × 5！所有因数都是质数。",
         contextWrong: "不对，要分解到只剩质数，4和10还能继续拆。",
+        context: "对，2² × 5！所有因数都是质数。",
         blackboard: {
           type: "formulas",
           label: "质因数分解",
@@ -2635,6 +2717,7 @@ export const lessonMap = {
         },
         contextRight: "对，4！8和12的最大公因数是4。",
         contextWrong: "不对，8和12的公因数有1,2,4，最大的是4。",
+        context: "对，4！8和12的最大公因数是4。",
         blackboard: {
           type: "formulas",
           label: "GCD与LCM用途",
@@ -2656,6 +2739,7 @@ export const lessonMap = {
         },
         contextRight: "对，只有1种！36=2²×3²（顺序不计）。",
         contextWrong: "不对，不管怎么拆，最终都是2²×3²，唯一。",
+        context: "对，只有1种！36=2²×3²（顺序不计）。",
         blackboard: {
           type: "formulas",
           label: "唯一因式分解",
@@ -2686,6 +2770,7 @@ export const lessonMap = {
         },
         contextRight: "对，能！1+2+3=6，6能被3整除。",
         contextWrong: "不对，各位之和1+2+3=6，6能被3整除。",
+        context: "对，能！1+2+3=6，6能被3整除。",
         blackboard: {
           type: "formulas",
           label: "验证",
@@ -2707,6 +2792,7 @@ export const lessonMap = {
         },
         contextRight: "对，2！余数要小于除数5，所以是2。",
         contextWrong: "不对，余数必须小于除数，17=5×3+2，r=2。",
+        context: "对，2！余数要小于除数5，所以是2。",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -2728,6 +2814,7 @@ export const lessonMap = {
         },
         contextRight: "对，(1+2)=3 mod3=0？不对，10 mod3=1，8 mod3=2，1+2=3，3 mod3=0。哦，刚才的问题选项设置，让我修改一下……但答案逻辑是对的！",
         contextWrong: "不对，10 mod3=1，8 mod3=2，(1+2)=3 mod3=0。",
+        context: "对，(1+2)=3 mod3=0？不对，10 mod3=1，8 mod3=2，1+2=3，3 mod3=0。哦，刚才的问题选项设置，让我修改一下……但答案逻辑是对的！",
         blackboard: {
           type: "formulas",
           label: "模运算性质",
@@ -2749,6 +2836,7 @@ export const lessonMap = {
         },
         contextRight: "对，6！最后非零的余数就是GCD。",
         contextWrong: "不对，18=1×12+6，12=2×6+0，最后是6。",
+        context: "对，6！最后非零的余数就是GCD。",
         blackboard: {
           type: "formulas",
           label: "GCD算法",
@@ -2779,6 +2867,7 @@ export const lessonMap = {
         },
         contextRight: "对，是！集合里元素顺序无关。",
         contextWrong: "不对，集合元素无序，两个是一样的。",
+        context: "对，是！集合里元素顺序无关。",
         blackboard: {
           type: "formulas",
           label: "关键性质",
@@ -2800,6 +2889,7 @@ export const lessonMap = {
         },
         contextRight: "对，3是集合的元素！",
         contextWrong: "不对，3在{1,2,3}里，所以3 ∈ {1,2,3}。",
+        context: "对，3是集合的元素！",
         blackboard: {
           type: "formulas",
           label: "符号",
@@ -2821,6 +2911,7 @@ export const lessonMap = {
         },
         contextRight: "对，{2}！只有2同时属于两个集合。",
         contextWrong: "不对，交集是共同元素，只有2。",
+        context: "对，{2}！只有2同时属于两个集合。",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -2842,6 +2933,7 @@ export const lessonMap = {
         },
         contextRight: "对，互斥！没有共同元素。",
         contextWrong: "不对，不重叠表示交集为空，互斥。",
+        context: "对，互斥！没有共同元素。",
         blackboard: {
           type: "formulas",
           label: "韦恩图用途",
@@ -2872,6 +2964,7 @@ export const lessonMap = {
         },
         contextRight: "对，假。2是质数但不是奇数，这就是反例。",
         contextWrong: "不对，2是质数但不是偶数，所以'所有质数都是奇数'是假的。",
+        context: "对，假。2是质数但不是奇数，这就是反例。",
         blackboard: {
           type: "formulas",
           label: "反例",
@@ -2893,6 +2986,7 @@ export const lessonMap = {
         },
         contextRight: "对，逆命题是'若Q则P'。",
         contextWrong: "不对，逆命题是把条件和结论反过来。",
+        context: "对，逆命题是'若Q则P'。",
         blackboard: {
           type: "formulas",
           label: "注意",
@@ -2914,6 +3008,7 @@ export const lessonMap = {
         },
         contextRight: "对，1个就够。找到一个非等腰的三角形就行。",
         contextWrong: "不对，一个反例就足以推翻全称命题。",
+        context: "对，1个就够。找到一个非等腰的三角形就行。",
         blackboard: {
           type: "formulas",
           label: "反例威力",
@@ -2935,6 +3030,7 @@ export const lessonMap = {
         },
         contextRight: "对，依据！每一步都要有道理。",
         contextWrong: "不对，证明不能跳步，每一步都要有逻辑依据。",
+        context: "对，依据！每一步都要有道理。",
         blackboard: {
           type: "formulas",
           label: "严谨",
@@ -2965,6 +3061,7 @@ export const lessonMap = {
         },
         contextRight: "对，设n是偶数！从定义开始。",
         contextWrong: "不对，直接证明要从前提开始。",
+        context: "对，设n是偶数！从定义开始。",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -2986,6 +3083,7 @@ export const lessonMap = {
         },
         contextRight: "对，先假设结论不成立！反证法从这里开始。",
         contextWrong: "不对，反证法先假设对立面。",
+        context: "对，先假设结论不成立！反证法从这里开始。",
         blackboard: {
           type: "formulas",
           label: "经典例子",
@@ -3008,6 +3106,7 @@ export const lessonMap = {
         },
         contextRight: "对，QED或□，拉丁语意为「这就证明了！",
         contextWrong: "不对，QED是标准的。",
+        context: "对，QED或□，拉丁语意为「这就证明了！",
         blackboard: {
           type: "formulas",
           label: "规范",
@@ -3029,6 +3128,7 @@ export const lessonMap = {
         },
         contextRight: "对，情况有限！穷举只能用于有限情况。",
         contextWrong: "不对，穷举有限情况有限。",
+        context: "对，情况有限！穷举只能用于有限情况。",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -3063,6 +3163,7 @@ export const lessonMap = {
         },
         contextRight: "对，相似！全等是比例因子为1的特殊相似。",
         contextWrong: "不对，全等当然相似，比例因子是1。",
+        context: "对，相似！全等是比例因子为1的特殊相似。",
         blackboard: {
           type: "formulas",
           label: "相似vs全等",
@@ -3084,6 +3185,7 @@ export const lessonMap = {
         },
         contextRight: "对，4倍！面积是平方关系。",
         contextWrong: "不对，面积是k²，所以2²=4倍。",
+        context: "对，4倍！面积是平方关系。",
         blackboard: {
           type: "formulas",
           label: "尺度关系",
@@ -3105,6 +3207,7 @@ export const lessonMap = {
         },
         contextRight: "对，对应角相等！",
         contextWrong: "不对，对应角相等，对应边成比例。",
+        context: "对，对应角相等！",
         blackboard: {
           type: "formulas",
           label: "对应关系",
@@ -3126,6 +3229,7 @@ export const lessonMap = {
         },
         contextRight: "对，2×100=200cm=2m！",
         contextWrong: "不对，1∶100，所以×100。",
+        context: "对，2×100=200cm=2m！",
         blackboard: {
           type: "formulas",
           label: "地图",
@@ -3156,6 +3260,7 @@ export const lessonMap = {
         },
         contextRight: "对，翻书是沿着书轴反射！",
         contextWrong: "不对，翻书是镜像，反射变换。",
+        context: "对，翻书是沿着书轴反射！",
         blackboard: {
           type: "formulas",
           label: "共性",
@@ -3177,6 +3282,7 @@ export const lessonMap = {
         },
         contextRight: "对，(3+1, 2+1)=(4,3)！",
         contextWrong: "不对，平移加坐标。",
+        context: "对，(3+1, 2+1)=(4,3)！",
         blackboard: {
           type: "formulas",
           label: "平移",
@@ -3198,6 +3304,7 @@ export const lessonMap = {
         },
         contextRight: "对，顺序很重要！不同顺序结果不同。",
         contextWrong: "不对，顺序影响结果。",
+        context: "对，顺序很重要！不同顺序结果不同。",
         blackboard: {
           type: "formulas",
           label: "注意",
@@ -3219,6 +3326,7 @@ export const lessonMap = {
         },
         contextRight: "对，4条！两条对角线，两条中垂线。",
         contextWrong: "不对，正方形有4条对称轴。",
+        context: "对，4条！两条对角线，两条中垂线。",
         blackboard: {
           type: "formulas",
           label: "对称美",
@@ -3249,6 +3357,7 @@ export const lessonMap = {
         },
         contextRight: "对，条形图！比较类别大小。",
         contextWrong: "不对，比较分类选条形。",
+        context: "对，条形图！比较类别大小。",
         blackboard: {
           type: "formulas",
           label: "选择指南1",
@@ -3270,6 +3379,7 @@ export const lessonMap = {
         },
         contextRight: "对，直方图！身高是连续数据。",
         contextWrong: "不对，连续数据用直方图，分类用条形。",
+        context: "对，直方图！身高是连续数据。",
         blackboard: {
           type: "formulas",
           label: "选择指南2",
@@ -3291,6 +3401,7 @@ export const lessonMap = {
         },
         contextRight: "对，散点图！看两个变量关系。",
         contextWrong: "不对，两个变量关系用散点。",
+        context: "对，散点图！看两个变量关系。",
         blackboard: {
           type: "formulas",
           label: "选择指南3",
@@ -3312,6 +3423,7 @@ export const lessonMap = {
         },
         contextRight: "对，折线图！看趋势。",
         contextWrong: "不对，趋势选折线。",
+        context: "对，折线图！看趋势。",
         blackboard: {
           type: "formulas",
           label: "选图原则",
@@ -3342,6 +3454,7 @@ export const lessonMap = {
         },
         contextRight: "对，6/10=0.6！实验概率。",
         contextWrong: "不对，是6/10=0.6。",
+        context: "对，6/10=0.6！实验概率。",
         blackboard: {
           type: "formulas",
           label: "大数定律",
@@ -3363,6 +3476,7 @@ export const lessonMap = {
         },
         contextRight: "对，3/6=1/2！2,4,6是偶数。",
         contextWrong: "不对，6个结果，3个有利，所以3/6=1/2。",
+        context: "对，3/6=1/2！2,4,6是偶数。",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -3384,6 +3498,7 @@ export const lessonMap = {
         },
         contextRight: "对，{正,反}！两个结果。",
         contextWrong: "不对，样本空间是所有可能。",
+        context: "对，{正,反}！两个结果。",
         blackboard: {
           type: "formulas",
           label: "关键",
@@ -3405,6 +3520,7 @@ export const lessonMap = {
         },
         contextRight: "对，3.5！虽然掷不出来，但长期平均是。",
         contextWrong: "不对，计算一下是3.5。",
+        context: "对，3.5！虽然掷不出来，但长期平均是。",
         blackboard: {
           type: "formulas",
           label: "期望值",
@@ -3435,6 +3551,7 @@ export const lessonMap = {
         },
         contextRight: "对，先理解问题！不要着急算。",
         contextWrong: "不对，第一步是理解问题。",
+        context: "对，先理解问题！不要着急算。",
         blackboard: {
           type: "formulas",
           label: "迭代",
@@ -3456,6 +3573,7 @@ export const lessonMap = {
         },
         contextRight: "对，速度不变是常量！",
         contextWrong: "不对，速度不变，所以是常量。",
+        context: "对，速度不变是常量！",
         blackboard: {
           type: "formulas",
           label: "扫帚例子",
@@ -3477,6 +3595,7 @@ export const lessonMap = {
         },
         contextRight: "对，找平衡点！简单但够用最好。",
         contextWrong: "不对，要在简单和精确间平衡。",
+        context: "对，找平衡点！简单但够用最好。",
         blackboard: {
           type: "formulas",
           label: "模型哲学",
@@ -3498,6 +3617,7 @@ export const lessonMap = {
         },
         contextRight: "对，检验修正！建模是迭代过程。",
         contextWrong: "不对，应该检验修正。",
+        context: "对，检验修正！建模是迭代过程。",
         blackboard: {
           type: "formulas",
           label: "模型价值",
@@ -3531,7 +3651,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，−5。」芬威克写下步骤：2x² + 3x − 5 = 0。「移项把 5 放到左边，要变号。记住：等号右边必须是 0。」",
-        contextWrong: "「不对，要先移项。」芬威克示范：2x² + 3x − 5 = 0。「c 是 −5，因为移项要变号。」",
+        contextWrong: "「回到定义，要先移项。」芬威克示范：2x² + 3x − 5 = 0。「c 是 −5，因为移项要变号。」",
+        context: "芬威克停了五秒。芬威克写下步骤：2x² + 3x − 5 = 0。「移项把 5 放到左边，要变号。记住：等号右边必须是 0。」",
         blackboard: {
           type: "formulas",
           label: "标准二次方程",
@@ -3552,7 +3673,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，(x − 2)(x − 3)。」芬威克展开验证：(x−2)(x−3) = x²−3x−2x+6 = x²−5x+6。「−2 和 −3，加起来 −5，乘起来 6——完美。」",
-        contextWrong: "「不对，看符号。」芬威克解释：「两个数都得是负数：−2 + (−3) = −5，(−2) × (−3) = 6。」",
+        contextWrong: "「回到定义，看符号。」芬威克解释：「两个数都得是负数：−2 + (−3) = −5，(−2) × (−3) = 6。」",
+        context: "芬威克停了五秒。芬威克展开验证：(x−2)(x−3) = x²−3x−2x+6 = x²−5x+6。「−2 和 −3，加起来 −5，乘起来 6——完美。」",
         blackboard: {
           type: "formulas",
           label: "因式分解",
@@ -3574,6 +3696,7 @@ export const lessonMap = {
         },
         contextRight: "「正确，x=2 或 x=3。」芬威克在黑板上写下两个解，「代入验证：2²−5×2+6 = 4−10+6=0；3²−5×3+6=9−15+6=0。完美。」",
         contextWrong: "「不要漏解。」芬威克强调，「两个括号，每个都可能等于零，所以有两个解——除非两个括号完全一样。」",
+        context: "「正确，x=2 或 x=3。」芬威克在黑板上写下两个解，「代入验证：2²−5×2+6 = 4−10+6=0；3²−5×3+6=9−15+6=0。完美。」",
         blackboard: {
           type: "formulas",
           label: "零积原理",
@@ -3595,6 +3718,7 @@ export const lessonMap = {
         },
         contextRight: "「对，两个不同解。」芬威克总结，「Δ > 0：两个解；Δ = 0：一个解；Δ < 0：没有实数解。先算判别式，心里有数，再开始解。」",
         contextWrong: "「记住判别式的意义。」芬威克在黑板上写下三条规则，「Δ 是判断解的个数的最快方法。」",
+        context: "芬威克停了五秒。芬威克总结，「Δ > 0：两个解；Δ = 0：一个解；Δ < 0：没有实数解。先算判别式，心里有数，再开始解。」",
         blackboard: {
           type: "formulas",
           label: "判别式",
@@ -3625,6 +3749,7 @@ export const lessonMap = {
         },
         contextRight: "「对，x = 1 或 x = −5。」芬威克解：x + 3 = ±2，所以 x = −3 + 2 = −1 或 x = −3 − 2 = −5。「注意是 ± 两个解！」",
         contextWrong: "「不要只取正根。」芬威克强调，「平方等于 4 的数有两个：2 和 −2，所以 x + 3 = 2 或 x + 3 = −2，两个解。」",
+        context: "芬威克停了五秒。芬威克解：x + 3 = ±2，所以 x = −3 + 2 = −1 或 x = −3 − 2 = −5。「注意是 ± 两个解！」",
         blackboard: {
           type: "formulas",
           label: "配方求解",
@@ -3646,6 +3771,7 @@ export const lessonMap = {
         },
         contextRight: "「对，16。」芬威克算：一半是 4，平方是 16，所以 x²+8x+16 = (x+4)²。「记住：一半，平方，加上去。」",
         contextWrong: "「是一半的平方，不是一半。」芬威克说：「8 的一半是 4，4 的平方是 16。」",
+        context: "芬威克停了五秒。芬威克算：一半是 4，平方是 16，所以 x²+8x+16 = (x+4)²。「记住：一半，平方，加上去。」",
         blackboard: {
           type: "formulas",
           label: "配方的补项",
@@ -3667,6 +3793,7 @@ export const lessonMap = {
         },
         contextRight: "「对，x = [5 ± √(25−24)]/2 = [5 ± 1]/2，即 (5+1)/2=3 或 (5−1)/2=2。」芬威克满意地说，「和因式分解结果一致！」",
         contextWrong: "「代入公式试试。」芬威克耐心地重新计算，「(−b 是 5，因为 b = −5。别搞错符号！」",
+        context: "芬威克停了五秒。芬威克满意地说，「和因式分解结果一致！」",
         blackboard: {
           type: "formulas",
           label: "求根公式应用",
@@ -3688,6 +3815,7 @@ export const lessonMap = {
         },
         contextRight: "「对，一个重根 x = −1。」芬威克写下：(x+1)²=0，x=−1（两次）。「有时候说这是 '两个相等的根'。」",
         contextWrong: "「Δ=0 是重根的情况。」芬威克再讲一遍判别式的三种情况，「记牢这三条。」",
+        context: "芬威克停了五秒。芬威克写下：(x+1)²=0，x=−1（两次）。「有时候说这是 '两个相等的根'。」",
         blackboard: {
           type: "formulas",
           label: "解的三种情况",
@@ -3717,7 +3845,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，x = −1。」芬威克在黑板上写：−b/(2a) = −4/(2×2) = −1。「代入计算就行。对称轴是抛物线的'镜子'——两侧完全对称。」他停顿，「魁地奇里抛出的球在无风环境下轨迹近似抛物线，对称轴就是最高点的竖直线。」",
-        contextWrong: "「不对。」芬威克重新写：−b/(2a) = −4/(4) = −1。「a 是 2，b 是 4，代入公式。」他用粉笔圈住公式，「记住：对称轴是 x = −b/(2a)，不是 b/(2a)——负号很重要。」",
+        contextWrong: "「回到定义。」芬威克重新写：−b/(2a) = −4/(4) = −1。「a 是 2，b 是 4，代入公式。」他用粉笔圈住公式，「记住：对称轴是 x = −b/(2a)，不是 b/(2a)——负号很重要。」",
+        context: "芬威克停了五秒。芬威克在黑板上写：−b/(2a) = −4/(2×2) = −1。「代入计算就行。对称轴是抛物线的'镜子'——两侧完全对称。」他停顿，「魁地奇里抛出的球在无风环境下轨迹近似抛物线，对称轴就是最高点的竖直线。」",
         blackboard: {
           type: "formulas",
           label: "对称轴与开口方向",
@@ -3738,7 +3867,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，(2, 5)。」芬威克圈出顶点式中的 2 和 5，「顶点式直接给顶点，不用算。注意符号：(x−2) 是 +2，不是 −2。」",
-        contextWrong: "「不对。」芬威克在 (x−2) 下面画了一条线，「顶点式是 (x−h)，所以这里 h 是 2，不是 −2。k 是 5，没有变号。」他写：「顶点是 (2, 5)。」",
+        contextWrong: "「回到定义。」芬威克在 (x−2) 下面画了一条线，「顶点式是 (x−h)，所以这里 h 是 2，不是 −2。k 是 5，没有变号。」他写：「顶点是 (2, 5)。」",
+        context: "芬威克停了五秒。芬威克圈出顶点式中的 2 和 5，「顶点式直接给顶点，不用算。注意符号：(x−2) 是 +2，不是 −2。」",
         blackboard: {
           type: "formulas",
           label: "求顶点的两种方法",
@@ -3759,7 +3889,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对。」芬威克逐个解释，「(x−2) 向右平移 2，+3 向上平移 3，系数 2 让曲线变窄。掌握这几个变换，就能快速画出任意抛物线的草图。」",
-        contextWrong: "「不对。记住口诀：左加右减，上加下减。」芬威克写：「(x−2) 是向右，不是向左。系数大于 1 是变窄，小于 1 是变宽。」",
+        contextWrong: "「回到定义。记住口诀：左加右减，上加下减。」芬威克写：「(x−2) 是向右，不是向左。系数大于 1 是变窄，小于 1 是变宽。」",
+        context: "芬威克停了五秒。芬威克逐个解释，「(x−2) 向右平移 2，+3 向上平移 3，系数 2 让曲线变窄。掌握这几个变换，就能快速画出任意抛物线的草图。」",
         blackboard: {
           type: "formulas",
           label: "图像变换规则",
@@ -3780,7 +3911,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，2个。」芬威克算：Δ = 16 − 12 = 4 > 0。「从图像上能直接看出方程有几个实数解——代数和几何的对应关系就在这里。」",
-        contextWrong: "「不对。算一下判别式。」芬威克写：Δ = (−4)² − 4×1×3 = 16 − 12 = 4 > 0。「Δ 大于 0，所以有两个不同的交点。」",
+        contextWrong: "「回到定义。算一下判别式。」芬威克写：Δ = (−4)² − 4×1×3 = 16 − 12 = 4 > 0。「Δ 大于 0，所以有两个不同的交点。」",
+        context: "芬威克停了五秒。芬威克算：Δ = 16 − 12 = 4 > 0。「从图像上能直接看出方程有几个实数解——代数和几何的对应关系就在这里。」",
         blackboard: {
           type: "formulas",
           label: "判别式与图像",
@@ -3810,7 +3942,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，4x² − 3x + 3。」芬威克写过程：3x² + x² = 4x²，2x − 5x = −3x，−1 + 4 = 3。「同类项合并，不同类项并排——和数的加法一样，只是对象换成了带字母的式子。」",
-        contextWrong: "「不对。」芬威克分步写：「x² 项：3+1=4，x 项：2−5=−3，常数项：−1+4=3。所以是 4x² − 3x + 3。按次数降序排列结果。」",
+        contextWrong: "「回到定义。」芬威克分步写：「x² 项：3+1=4，x 项：2−5=−3，常数项：−1+4=3。所以是 4x² − 3x + 3。按次数降序排列结果。」",
+        context: "芬威克停了五秒。芬威克写过程：3x² + x² = 4x²，2x − 5x = −3x，−1 + 4 = 3。「同类项合并，不同类项并排——和数的加法一样，只是对象换成了带字母的式子。」",
         blackboard: {
           type: "formulas",
           label: "多项式加减",
@@ -3831,7 +3964,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，x² + x − 6。」芬威克写：x·x + x·(−2) + 3·x + 3·(−2) = x² − 2x + 3x − 6 = x² + x − 6。「每一项乘以另一个括号里的每一项——不遗漏，不重复。」",
-        contextWrong: "「不对。用 FOIL 法则一步步来。」芬威克写：「首项 x·x = x²，外项 x·(−2) = −2x，内项 3·x = 3x，尾项 3·(−2) = −6。合并：x² − 2x + 3x − 6 = x² + x − 6。」",
+        contextWrong: "「回到定义。用 FOIL 法则一步步来。」芬威克写：「首项 x·x = x²，外项 x·(−2) = −2x，内项 3·x = 3x，尾项 3·(−2) = −6。合并：x² − 2x + 3x − 6 = x² + x − 6。」",
+        context: "芬威克停了五秒。芬威克写：x·x + x·(−2) + 3·x + 3·(−2) = x² − 2x + 3x − 6 = x² + x − 6。「每一项乘以另一个括号里的每一项——不遗漏，不重复。」",
         blackboard: {
           type: "formulas",
           label: "FOIL 展开",
@@ -3852,7 +3986,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，x² + 8x + 16。」芬威克圈住公式：(a+b)² = a² + 2ab + b²。「a 是 x，b 是 4，所以 x² + 2·x·4 + 16 = x² + 8x + 16。这三个公式反过来用是因式分解的捷径——认出图案，直接写结果。」",
-        contextWrong: "「不对。完全平方有三项，不是两项。」芬威克写：「(x+4)² = x² + 2·x·4 + 4² = x² + 8x + 16。中间的 2ab 项千万别忘了。」",
+        contextWrong: "「回到定义。完全平方有三项，不是两项。」芬威克写：「(x+4)² = x² + 2·x·4 + 4² = x² + 8x + 16。中间的 2ab 项千万别忘了。」",
+        context: "芬威克停了五秒。芬威克圈住公式：(a+b)² = a² + 2ab + b²。「a 是 x，b 是 4，所以 x² + 2·x·4 + 16 = x² + 8x + 16。这三个公式反过来用是因式分解的捷径——认出图案，直接写结果。」",
         blackboard: {
           type: "formulas",
           label: "三个重要公式",
@@ -3873,7 +4008,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，x + 3。」芬威克演示长除法，「或者用余式定理：代入 x = −2，得 (−2)² + 5·(−2) + 6 = 4 − 10 + 6 = 0，所以整除。商是 x + 3。这个工具在高年级因式分解和求根里会反复用到——先熟悉机制。」",
-        contextWrong: "「不对。用长除法试试。」芬威克演示，「x² ÷ x = x，乘以 x+2 得 x² + 2x，相减得 3x + 6。3x ÷ x = 3，乘以 x+2 得 3x + 6，相减得 0。所以商是 x + 3。」",
+        contextWrong: "「回到定义。用长除法试试。」芬威克演示，「x² ÷ x = x，乘以 x+2 得 x² + 2x，相减得 3x + 6。3x ÷ x = 3，乘以 x+2 得 3x + 6，相减得 0。所以商是 x + 3。」",
+        context: "芬威克停了五秒。芬威克演示长除法，「或者用余式定理：代入 x = −2，得 (−2)² + 5·(−2) + 6 = 4 − 10 + 6 = 0，所以整除。商是 x + 3。这个工具在高年级因式分解和求根里会反复用到——先熟悉机制。」",
         blackboard: {
           type: "formulas",
           label: "多项式除法",
@@ -3903,7 +4039,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，2 和 5 是参数。」芬威克解释，「2 是斜率，5 是截距。参数是'旋钮'，变量是'输入'——旋钮调整函数的形状，输入产生输出。",
-        contextWrong: "「不对。x 和 y 是变量，它们的值会变。2 和 5 是参数，它们决定这条直线的样子，不会随 x、y 变化。",
+        contextWrong: "「回到定义。x 和 y 是变量，它们的值会变。2 和 5 是参数，它们决定这条直线的样子，不会随 x、y 变化。",
+        context: "芬威克停了五秒。芬威克解释，「2 是斜率，5 是截距。参数是'旋钮'，变量是'输入'——旋钮调整函数的形状，输入产生输出。",
         blackboard: {
           type: "formulas",
           label: "参数的作用",
@@ -3924,7 +4061,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，2(3 − ky) + y = k。」芬威克继续化简，「参数题通常要讨论分类——先把含参的表达式化简，再看参数取不同值时的情况。",
-        contextWrong: "「不对。x = 3 − ky，代入第二个方程 2x + y = k，就是 2(3 − ky) + y = k。一步步来。",
+        contextWrong: "「回到定义。x = 3 − ky，代入第二个方程 2x + y = k，就是 2(3 − ky) + y = k。一步步来。",
+        context: "芬威克停了五秒。芬威克继续化简，「参数题通常要讨论分类——先把含参的表达式化简，再看参数取不同值时的情况。",
         blackboard: {
           type: "formulas",
           label: "代入消元",
@@ -3945,7 +4083,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，无解。」芬威克解释，「0 = 5 不可能成立，说明两条直线平行，没有交点。无解和无数解都是合法的数学结果——不要认为只有唯一解才是正确答案。",
-        contextWrong: "「不对。0 = 5 不可能，所以没有解，也就是两条直线平行。」",
+        contextWrong: "「回到定义。0 = 5 不可能，所以没有解，也就是两条直线平行。」",
+        context: "芬威克停了五秒。芬威克解释，「0 = 5 不可能成立，说明两条直线平行，没有交点。无解和无数解都是合法的数学结果——不要认为只有唯一解才是正确答案。",
         blackboard: {
           type: "formulas",
           label: "解的情况",
@@ -3966,7 +4105,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，是参数。」芬威克说，「浓度可以调整，所以是参数，根据浓度变化调整分量，就是含参方程。",
-        contextWrong: "「不对。浓度是可以调整的旋钮，所以是参数，不是固定的常数，也不是要求解的未知数。",
+        contextWrong: "「回到定义。浓度是可以调整的旋钮，所以是参数，不是固定的常数，也不是要求解的未知数。",
+        context: "芬威克停了五秒。芬威克说，「浓度可以调整，所以是参数，根据浓度变化调整分量，就是含参方程。",
         blackboard: {
           type: "formulas",
           label: "参数的例子",
@@ -4001,7 +4141,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，斜边是最长的边，对着直角。」芬威克强调，「对边和邻边是相对 θ 而言的——换一个角，对边和邻边就换了。」",
-        contextWrong: "「不对。斜边是最长的边，永远对着直角。对边对着 θ，邻边在 θ 旁边。」",
+        contextWrong: "「回到定义。斜边是最长的边，永远对着直角。对边对着 θ，邻边在 θ 旁边。」",
+        context: "芬威克停了五秒。芬威克强调，「对边和邻边是相对 θ 而言的——换一个角，对边和邻边就换了。」",
         blackboard: {
           type: "formulas",
           label: "三边名称",
@@ -4022,7 +4163,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，对边 / 斜边。」芬威克用粉笔圈出 SOH，「SOH：Sin=Opposite/Hypotenuse，CAH：Cos=Adjacent/Hypotenuse，TOA：Tan=Opposite/Adjacent。」",
-        contextWrong: "「不对。SOH-CAH-TOA：sin 是对边比斜边。」",
+        contextWrong: "「回到定义。SOH-CAH-TOA：sin 是对边比斜边。」",
+        context: "芬威克停了五秒。芬威克用粉笔圈出 SOH，「SOH：Sin=Opposite/Hypotenuse，CAH：Cos=Adjacent/Hypotenuse，TOA：Tan=Opposite/Adjacent。」",
         blackboard: {
           type: "formulas",
           label: "三角比定义",
@@ -4043,7 +4185,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，1/√2。」芬威克说，「45° 的 sin 和 cos 相等，都是 1/√2，tan 是 1。这些值不需要计算器。」",
-        contextWrong: "「不对。45° 的 sin 和 cos 都是 1/√2，tan 是 1。」",
+        contextWrong: "「回到定义。45° 的 sin 和 cos 都是 1/√2，tan 是 1。」",
+        context: "芬威克停了五秒。芬威克说，「45° 的 sin 和 cos 相等，都是 1/√2，tan 是 1。这些值不需要计算器。」",
         blackboard: {
           type: "formulas",
           label: "特殊角值表",
@@ -4064,7 +4207,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，360°。」芬威克说，「天文课里描述星体周期运动用到 sin 和 cos——周期性是这两个函数最重要的特征。」",
-        contextWrong: "「不对。sin 和 cos 的周期都是 360°，tan 是 180°。」",
+        contextWrong: "「回到定义。sin 和 cos 的周期都是 360°，tan 是 180°。」",
+        context: "芬威克停了五秒。芬威克说，「天文课里描述星体周期运动用到 sin 和 cos——周期性是这两个函数最重要的特征。」",
         blackboard: {
           type: "formulas",
           label: "周期性",
@@ -4094,7 +4238,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，仰角。」芬威克解释，「仰角从水平线向上，俯角从水平线下。天文课观测星体时用仰角——芬威克在第 36 课就提过三角学和天文的联动。」",
-        contextWrong: "「不对。向上看是仰角，向下看是俯角。」",
+        contextWrong: "「回到定义。向上看是仰角，向下看是俯角。」",
+        context: "芬威克停了五秒。芬威克解释，「仰角从水平线向上，俯角从水平线下。天文课观测星体时用仰角——芬威克在第 36 课就提过三角学和天文的联动。」",
         blackboard: {
           type: "formulas",
           label: "角度定义",
@@ -4115,7 +4260,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，tan。」芬威克说，「tan 是对边比邻边。知道角和一边求另一边：边 = 已知边 × 三角函数值。知道两边求角：角 = arcsin(对边/斜边) 或 arctan(对边/邻边)。」",
-        contextWrong: "「不对。对边比邻边是 tan。」",
+        contextWrong: "「回到定义。对边比邻边是 tan。」",
+        context: "芬威克停了五秒。芬威克说，「tan 是对边比邻边。知道角和一边求另一边：边 = 已知边 × 三角函数值。知道两边求角：角 = arcsin(对边/斜边) 或 arctan(对边/邻边)。」",
         blackboard: {
           type: "formulas",
           label: "选择函数",
@@ -4136,7 +4282,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，10 米。」芬威克写：h = 10 × tan 45° = 10 × 1 = 10。「这类题的结构几乎相同——画图，标角，选三角比，解方程。」",
-        contextWrong: "「不对。tan 45° 是 1，所以 10 × 1 = 10 米。」",
+        contextWrong: "「回到定义。tan 45° 是 1，所以 10 × 1 = 10 米。」",
+        context: "芬威克停了五秒。芬威克写：h = 10 × tan 45° = 10 × 1 = 10。「这类题的结构几乎相同——画图，标角，选三角比，解方程。」",
         blackboard: {
           type: "formulas",
           label: "例题",
@@ -4157,7 +4304,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，30°。」芬威克说，「arcsin(0.5) = 30°。逆运算是'已知输出求输入'——这个思路贯穿整个数学，不只是三角学。」",
-        contextWrong: "「不对。sin 30° = 0.5，所以 θ = 30°。」",
+        contextWrong: "「回到定义。sin 30° = 0.5，所以 θ = 30°。」",
+        context: "芬威克停了五秒。芬威克说，「arcsin(0.5) = 30°。逆运算是'已知输出求输入'——这个思路贯穿整个数学，不只是三角学。」",
         blackboard: {
           type: "formulas",
           label: "反函数",
@@ -4187,7 +4335,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，所有三角形。」芬威克说，「直角三角形是特殊情况——通用定理降级到直角三角形时，会退化成 SOH-CAH-TOA。」",
-        contextWrong: "「不对。这两个定理适用于所有三角形，包括直角、锐角、钝角。」",
+        contextWrong: "「回到定义。这两个定理适用于所有三角形，包括直角、锐角、钝角。」",
+        context: "芬威克停了五秒。芬威克说，「直角三角形是特殊情况——通用定理降级到直角三角形时，会退化成 SOH-CAH-TOA。」",
         blackboard: {
           type: "formulas",
           label: "解三角形",
@@ -4208,7 +4357,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，正弦定理。」芬威克说，「三个等式同时成立，选择最方便的一对使用。注意歧义情况：已知两边一角时，可能有两个三角形。」",
-        contextWrong: "「不对。两角一边用正弦定理。」",
+        contextWrong: "「回到定义。两角一边用正弦定理。」",
+        context: "芬威克停了五秒。芬威克说，「三个等式同时成立，选择最方便的一对使用。注意歧义情况：已知两边一角时，可能有两个三角形。」",
         blackboard: {
           type: "formulas",
           label: "正弦定理用法",
@@ -4229,7 +4379,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，余弦定理。」芬威克说，「勾股定理是余弦定理的特例——这个定理把所有三角形统一了。」",
-        contextWrong: "「不对。已知三边求角用余弦定理。」",
+        contextWrong: "「回到定义。已知三边求角用余弦定理。」",
+        context: "芬威克停了五秒。芬威克说，「勾股定理是余弦定理的特例——这个定理把所有三角形统一了。」",
         blackboard: {
           type: "formulas",
           label: "余弦定理变体",
@@ -4250,7 +4401,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，角度之和为 180°。」芬威克说，「不要在没想清楚用哪个定理之前就开始计算——想清楚再算，省时间。」",
-        contextWrong: "「不对。虽然其他也重要，但角度之和为 180° 是三角形的基本性质，必须验证。」",
+        contextWrong: "「回到定义。虽然其他也重要，但角度之和为 180° 是三角形的基本性质，必须验证。」",
+        context: "芬威克停了五秒。芬威克说，「不要在没想清楚用哪个定理之前就开始计算——想清楚再算，省时间。」",
         blackboard: {
           type: "formulas",
           label: "检查",
@@ -4280,7 +4432,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，30°。」芬威克说，「主值是起点，不是全部答案。」",
-        contextWrong: "「不对。sin 30° = 0.5，所以主值是 30°。」",
+        contextWrong: "「回到定义。sin 30° = 0.5，所以主值是 30°。」",
+        context: "芬威克停了五秒。芬威克说，「主值是起点，不是全部答案。」",
         blackboard: {
           type: "formulas",
           label: "主值",
@@ -4301,7 +4454,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，150°。」芬威克说，「180° − 30° = 150°，利用 sin 图像的对称性。通解：x = 30° + 360°n 或 x = 150° + 360°n，n 为整数。周期是 360°，所有解都是主值加整数个周期。」",
-        contextWrong: "「不对。sin 150° 也等于 0.5，因为 sin(180° − x) = sin x。」",
+        contextWrong: "「回到定义。sin 150° 也等于 0.5，因为 sin(180° − x) = sin x。」",
+        context: "芬威克停了五秒。芬威克说，「180° − 30° = 150°，利用 sin 图像的对称性。通解：x = 30° + 360°n 或 x = 150° + 360°n，n 为整数。周期是 360°，所有解都是主值加整数个周期。」",
         blackboard: {
           type: "formulas",
           label: "通解",
@@ -4322,7 +4476,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，π/6。」芬威克说，「弧度制和度数制是同一件事的两种语言——以后用弧度更多，现在先熟悉度数版本。」",
-        contextWrong: "「不对。30° 转换成弧度是 π/6。」",
+        contextWrong: "「回到定义。30° 转换成弧度是 π/6。」",
+        context: "芬威克停了五秒。芬威克说，「弧度制和度数制是同一件事的两种语言——以后用弧度更多，现在先熟悉度数版本。」",
         blackboard: {
           type: "formulas",
           label: "两种单位",
@@ -4343,7 +4498,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，2个：30° 和 150°。」芬威克说，「列举范围内的解比写通解更常见于 GCSE 考试——先写通解再筛选，步骤清楚。」",
-        contextWrong: "「不对。sin 的图像在 0° 到 360° 内和 y = 0.5 有两个交点。」",
+        contextWrong: "「回到定义。sin 的图像在 0° 到 360° 内和 y = 0.5 有两个交点。」",
+        context: "芬威克停了五秒。芬威克说，「列举范围内的解比写通解更常见于 GCSE 考试——先写通解再筛选，步骤清楚。」",
         blackboard: {
           type: "formulas",
           label: "筛选步骤",
@@ -4373,7 +4529,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，2个已知点。」芬威克说，「这是地图测绘、航海定位的基本方法。麻瓜在没有消影术的情况下测量地球——用的就是三角学。整个英国地图的绘制都依赖三角测量。」",
-        contextWrong: "「不对。需要两个已知位置作为基线。」",
+        contextWrong: "「回到定义。需要两个已知位置作为基线。」",
+        context: "芬威克停了五秒。芬威克说，「这是地图测绘、航海定位的基本方法。麻瓜在没有消影术的情况下测量地球——用的就是三角学。整个英国地图的绘制都依赖三角测量。」",
         blackboard: {
           type: "formulas",
           label: "原理",
@@ -4394,7 +4551,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，东北方向。」芬威克说，「045° 意思是目标在正东北方向。航海、导航、军事地图都用方位角——它是一种标准化的角度描述系统。」",
-        contextWrong: "「不对。000° 是北，090° 是东，所以 045° 是东北。」",
+        contextWrong: "「回到定义。000° 是北，090° 是东，所以 045° 是东北。」",
+        context: "芬威克停了五秒。芬威克说，「045° 意思是目标在正东北方向。航海、导航、军事地图都用方位角——它是一种标准化的角度描述系统。」",
         blackboard: {
           type: "formulas",
           label: "方位角示例",
@@ -4415,7 +4573,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，标在图上。」芬威克说，「做这类题时，把每一步的中间结果标在图上，不要直到最后才写答案——中间步骤是得分点。」",
-        contextWrong: "「不对。中间步骤要写出来，标在图上更清楚。」",
+        contextWrong: "「回到定义。中间步骤要写出来，标在图上更清楚。」",
+        context: "芬威克停了五秒。芬威克说，「做这类题时，把每一步的中间结果标在图上，不要直到最后才写答案——中间步骤是得分点。」",
         blackboard: {
           type: "formulas",
           label: "答题技巧",
@@ -4436,7 +4595,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，越大。」芬威克说，「这是为什么麻瓜测量员需要高精度仪器——0.1° 的误差在 1000 米外会变成十几米的偏差。数学告诉你误差有多严重。」",
-        contextWrong: "「不对。距离越远，误差放大得越厉害。」",
+        contextWrong: "「回到定义。距离越远，误差放大得越厉害。」",
+        context: "芬威克停了五秒。芬威克说，「这是为什么麻瓜测量员需要高精度仪器——0.1° 的误差在 1000 米外会变成十几米的偏差。数学告诉你误差有多严重。」",
         blackboard: {
           type: "formulas",
           label: "精度重要性",
@@ -4470,7 +4630,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，瞬时速度。」芬威克说，「一辆麻瓜汽车的速度表显示的是瞬时速度，不是平均速度——它每时每刻在更新。瞬时速度是某一时刻的速度——想象把时间段缩到无限小。」",
-        contextWrong: "「不对。速度表显示的是此刻的速度，也就是瞬时速度。」",
+        contextWrong: "「回到定义。速度表显示的是此刻的速度，也就是瞬时速度。」",
+        context: "芬威克停了五秒。芬威克说，「一辆麻瓜汽车的速度表显示的是瞬时速度，不是平均速度——它每时每刻在更新。瞬时速度是某一时刻的速度——想象把时间段缩到无限小。」",
         blackboard: {
           type: "formulas",
           label: "两种速度",
@@ -4491,7 +4652,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，平均速度。」芬威克说，「在位移-时间图上，两点之间的直线叫割线，斜率是平均速度。把两点越移越近，割线趋近于一条切线，切线斜率就是瞬时速度。这个'越来越近'的过程，就是极限的直觉含义——微积分的核心概念。」",
-        contextWrong: "「不对。割线是两点之间的，所以是平均速度。」",
+        contextWrong: "「回到定义。割线是两点之间的，所以是平均速度。」",
+        context: "芬威克停了五秒。芬威克说，「在位移-时间图上，两点之间的直线叫割线，斜率是平均速度。把两点越移越近，割线趋近于一条切线，切线斜率就是瞬时速度。这个'越来越近'的过程，就是极限的直觉含义——微积分的核心概念。」",
         blackboard: {
           type: "formulas",
           label: "极限思想",
@@ -4512,7 +4674,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，极值点。」芬威克说，「函数图像上某点的切线斜率，就是函数在那一点的瞬时变化率。正斜率：函数在增大。负斜率：函数在减小。斜率为零：函数在那点有极值（最高点或最低点）。从图像上读变化率，比从代数式读更直观——先培养几何感觉。」",
-        contextWrong: "「不对。斜率为零意味着切线水平，是最高点或最低点。」",
+        contextWrong: "「回到定义。斜率为零意味着切线水平，是最高点或最低点。」",
+        context: "芬威克停了五秒。芬威克说，「函数图像上某点的切线斜率，就是函数在那一点的瞬时变化率。正斜率：函数在增大。负斜率：函数在减小。斜率为零：函数在那点有极值（最高点或最低点）。从图像上读变化率，比从代数式读更直观——先培养几何感觉。」",
         blackboard: {
           type: "formulas",
           label: "斜率判读",
@@ -4533,7 +4696,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，速度的变化率。」芬威克说，「加速度是速度的变化率。魔药浓度随时间的变化率决定药效峰值时间。植物的生长速率。变化率是描述动态世界的语言——一切会随时间变化的东西，都可以用变化率描述。」",
-        contextWrong: "「不对。加速度是速度变化的快慢。」",
+        contextWrong: "「回到定义。加速度是速度变化的快慢。」",
+        context: "芬威克停了五秒。芬威克说，「加速度是速度的变化率。魔药浓度随时间的变化率决定药效峰值时间。植物的生长速率。变化率是描述动态世界的语言——一切会随时间变化的东西，都可以用变化率描述。」",
         blackboard: {
           type: "formulas",
           label: "生活应用",
@@ -4563,7 +4727,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，4。」芬威克说，「极限是一个过程的终点——当某个量趋近于某值时，另一个量趋近的那个值。lim(x→2)(x²) = 4，因为当 x 越来越接近 2 时，x² 越来越接近 4。极限不是'代入'，是'趋近'——有时候直接代入行不通，但极限存在。」",
-        contextWrong: "「不对。x 趋近 2，x² 就趋近 4。」",
+        contextWrong: "「回到定义。x 趋近 2，x² 就趋近 4。」",
+        context: "芬威克停了五秒。芬威克说，「极限是一个过程的终点——当某个量趋近于某值时，另一个量趋近的那个值。lim(x→2)(x²) = 4，因为当 x 越来越接近 2 时，x² 越来越接近 4。极限不是'代入'，是'趋近'——有时候直接代入行不通，但极限存在。」",
         blackboard: {
           type: "formulas",
           label: "极限含义",
@@ -4584,7 +4749,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，两点之间的间距。」芬威克说，「f'(x) = lim(h→0) [f(x+h) − f(x)] / h。这是从割线斜率出发，让间距 h 趋近于零得到的切线斜率。这个定义是微积分的起点——所有求导法则都是从这里推导出来的。」",
-        contextWrong: "「不对。h 是 x+h 和 x 之间的距离。」",
+        contextWrong: "「回到定义。h 是 x+h 和 x 之间的距离。」",
+        context: "芬威克停了五秒。芬威克说，「f'(x) = lim(h→0) [f(x+h) − f(x)] / h。这是从割线斜率出发，让间距 h 趋近于零得到的切线斜率。这个定义是微积分的起点——所有求导法则都是从这里推导出来的。」",
         blackboard: {
           type: "formulas",
           label: "定义式",
@@ -4605,7 +4771,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，递增。」芬威克说，「f'(a) 是函数 f 在 x = a 处的切线斜率。斜率为正：函数在 a 处递增。斜率为负：递减。斜率为零：极值点候选。切线是函数在某点的'最佳线性近似'——在那一点附近，函数和切线几乎一样。」",
-        contextWrong: "「不对。正斜率意味着函数向上走，也就是递增。」",
+        contextWrong: "「回到定义。正斜率意味着函数向上走，也就是递增。」",
+        context: "芬威克停了五秒。芬威克说，「f'(a) 是函数 f 在 x = a 处的切线斜率。斜率为正：函数在 a 处递增。斜率为负：递减。斜率为零：极值点候选。切线是函数在某点的'最佳线性近似'——在那一点附近，函数和切线几乎一样。」",
         blackboard: {
           type: "formulas",
           label: "切线含义",
@@ -4626,7 +4793,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，y 对 x 的导数。」芬威克说，「导数的记号有两种：f'(x) 是拉格朗日记号，dy/dx 是莱布尼茨记号。两者等价。dy/dx 读作'y 对 x 的导数'，形式上看起来像分数，但它不是分数。两种记号在不同场合各有优势——见到两种都要认识。」",
-        contextWrong: "「不对。dy/dx 是一个整体记号，不是分数。读作 y 对 x 的导数。」",
+        contextWrong: "「回到定义。dy/dx 是一个整体记号，不是分数。读作 y 对 x 的导数。」",
+        context: "芬威克停了五秒。芬威克说，「导数的记号有两种：f'(x) 是拉格朗日记号，dy/dx 是莱布尼茨记号。两者等价。dy/dx 读作'y 对 x 的导数'，形式上看起来像分数，但它不是分数。两种记号在不同场合各有优势——见到两种都要认识。」",
         blackboard: {
           type: "formulas",
           label: "两种记号",
@@ -4656,7 +4824,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，3x²。」芬威克说，「若 f(x) = xⁿ，则 f'(x) = nxⁿ⁻¹。x³ 的导数是 3x²。x⁻¹ 的导数是 −x⁻²。x^(1/2) 的导数是 (1/2)x^(−1/2)。指数移下来作系数，原指数减一——这一条法则覆盖了大量函数。」",
-        contextWrong: "「不对。指数 3 移下来当系数，3 减 1 得 2，所以是 3x²。」",
+        contextWrong: "「回到定义。指数 3 移下来当系数，3 减 1 得 2，所以是 3x²。」",
+        context: "芬威克停了五秒。芬威克说，「若 f(x) = xⁿ，则 f'(x) = nxⁿ⁻¹。x³ 的导数是 3x²。x⁻¹ 的导数是 −x⁻²。x^(1/2) 的导数是 (1/2)x^(−1/2)。指数移下来作系数，原指数减一——这一条法则覆盖了大量函数。」",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -4677,7 +4846,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，15x² + 2。」芬威克说，「常数倍：[cf(x)]' = c·f'(x)，常数可以提到导数外面。求和：[f(x) + g(x)]' = f'(x) + g'(x)，逐项求导。5x³ + 2x 的导数是 15x² + 2，逐项处理，合并结果。」",
-        contextWrong: "「不对。逐项求导：5·3x² + 2·1 = 15x² + 2。」",
+        contextWrong: "「回到定义。逐项求导：5·3x² + 2·1 = 15x² + 2。」",
+        context: "芬威克停了五秒。芬威克说，「常数倍：[cf(x)]' = c·f'(x)，常数可以提到导数外面。求和：[f(x) + g(x)]' = f'(x) + g'(x)，逐项求导。5x³ + 2x 的导数是 15x² + 2，逐项处理，合并结果。」",
         blackboard: {
           type: "formulas",
           label: "组合使用",
@@ -4698,7 +4868,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，2x·sin x + x²·cos x。」芬威克说，「[f(x)·g(x)]' = f'(x)·g(x) + f(x)·g'(x)。记法：'前导后不动，加前不动后导'。(x²·sin x)' = 2x·sin x + x²·cos x。不能用'分别求导再相乘'——乘积法则是专门的规则。」",
-        contextWrong: "「不对。乘积法则是前导后不动加前不动后导，不是分别求导相乘。」",
+        contextWrong: "「回到定义。乘积法则是前导后不动加前不动后导，不是分别求导相乘。」",
+        context: "芬威克停了五秒。芬威克说，「[f(x)·g(x)]' = f'(x)·g(x) + f(x)·g'(x)。记法：'前导后不动，加前不动后导'。(x²·sin x)' = 2x·sin x + x²·cos x。不能用'分别求导再相乘'——乘积法则是专门的规则。」",
         blackboard: {
           type: "formulas",
           label: "记忆口诀",
@@ -4719,7 +4890,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，cos(x²)·2x。」芬威克说，「[f(g(x))]' = f'(g(x))·g'(x)，外函数导数乘内函数导数。(sin(x²))' = cos(x²)·2x。先识别外层函数是什么，内层函数是什么，然后逐层求导——复合函数的标配工具。」",
-        contextWrong: "「不对。链式法则需要乘以内层导数，也就是 x² 的导数 2x。」",
+        contextWrong: "「回到定义。链式法则需要乘以内层导数，也就是 x² 的导数 2x。」",
+        context: "芬威克停了五秒。芬威克说，「[f(g(x))]' = f'(g(x))·g'(x)，外函数导数乘内函数导数。(sin(x²))' = cos(x²)·2x。先识别外层函数是什么，内层函数是什么，然后逐层求导——复合函数的标配工具。」",
         blackboard: {
           type: "formulas",
           label: "复合步骤",
@@ -4749,7 +4921,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，f'(x) = 0 的解。」芬威克说，「令 f'(x) = 0，解出 x，得到临界点候选。临界点是极值点的必要条件，不是充分条件——临界点也可能是拐点。先求导，再令导数为零，解方程，得候选点——这是找极值的第一步。」",
-        contextWrong: "「不对。临界点是导数为零的点，也就是 f'(x) = 0。」",
+        contextWrong: "「回到定义。临界点是导数为零的点，也就是 f'(x) = 0。」",
+        context: "芬威克停了五秒。芬威克说，「令 f'(x) = 0，解出 x，得到临界点候选。临界点是极值点的必要条件，不是充分条件——临界点也可能是拐点。先求导，再令导数为零，解方程，得候选点——这是找极值的第一步。」",
         blackboard: {
           type: "formulas",
           label: "步骤",
@@ -4770,7 +4943,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，极小值。」芬威克说，「f''(x) > 0：函数在该点向上弯，是极小值。f''(x) < 0：向下弯，是极大值。f''(x) = 0：判别法失效，需另法判断。一阶导数为零找位置，二阶导数看弯曲方向判类型——两步配合使用。」",
-        contextWrong: "「不对。f''正的，函数向上弯，是极小值。」",
+        contextWrong: "「回到定义。f''正的，函数向上弯，是极小值。」",
+        context: "芬威克停了五秒。芬威克说，「f''(x) > 0：函数在该点向上弯，是极小值。f''(x) < 0：向下弯，是极大值。f''(x) = 0：判别法失效，需另法判断。一阶导数为零找位置，二阶导数看弯曲方向判类型——两步配合使用。」",
         blackboard: {
           type: "formulas",
           label: "凹性",
@@ -4791,7 +4965,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，临界点或端点。」芬威克说，「在闭区间 [a, b] 上求最大值或最小值：求所有临界点处的函数值，再与端点值比较，取最大或最小。最值不一定在临界点——端点也可能是最值，要一起检查。」",
-        contextWrong: "「不对。要比较临界点和端点的函数值，最大的那个就是最大值。」",
+        contextWrong: "「回到定义。要比较临界点和端点的函数值，最大的那个就是最大值。」",
+        context: "芬威克停了五秒。芬威克说，「在闭区间 [a, b] 上求最大值或最小值：求所有临界点处的函数值，再与端点值比较，取最大或最小。最值不一定在临界点——端点也可能是最值，要一起检查。」",
         blackboard: {
           type: "formulas",
           label: "完整步骤",
@@ -4812,7 +4987,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，写目标函数并用约束消元。」芬威克说，「把现实约束翻译成等式，用等式消去一个变量，写出目标函数，求导令其为零。用最少材料做最大容积的箱子——这是经典优化题。核心是把约束条件变成代入关系。」",
-        contextWrong: "「不对。优化需要建模，用约束条件简化问题。」",
+        contextWrong: "「回到定义。优化需要建模，用约束条件简化问题。」",
+        context: "芬威克停了五秒。芬威克说，「把现实约束翻译成等式，用等式消去一个变量，写出目标函数，求导令其为零。用最少材料做最大容积的箱子——这是经典优化题。核心是把约束条件变成代入关系。」",
         blackboard: {
           type: "formulas",
           label: "应用",
@@ -4842,7 +5018,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，矩形的个数。」芬威克说，「把曲线下的面积近似为 n 个矩形的面积之和，叫黎曼和。矩形越细，近似越准。当 n → ∞，黎曼和趋近于精确面积。这和割线趋近切线是同一种极限思想——微积分的两半来自同一个核心概念。」",
-        contextWrong: "「不对。n 是矩形的个数，越多越准确。」",
+        contextWrong: "「回到定义。n 是矩形的个数，越多越准确。」",
+        context: "芬威克停了五秒。芬威克说，「把曲线下的面积近似为 n 个矩形的面积之和，叫黎曼和。矩形越细，近似越准。当 n → ∞，黎曼和趋近于精确面积。这和割线趋近切线是同一种极限思想——微积分的两半来自同一个核心概念。」",
         blackboard: {
           type: "formulas",
           label: "极限思想",
@@ -4863,7 +5040,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，x² + C。」芬威克说，「∫f(x)dx 是 f(x) 的反导数，也叫不定积分。若 F'(x) = f(x)，则 ∫f(x)dx = F(x) + C，C 是积分常数。不定积分是求导的逆运算——就像减法是加法的逆运算，反导数是导数的逆运算。」",
-        contextWrong: "「不对。求导逆过来就是积分，2x 的积分是 x²，别忘了加常数 C。」",
+        contextWrong: "「回到定义。求导逆过来就是积分，2x 的积分是 x²，别忘了加常数 C。」",
+        context: "芬威克停了五秒。芬威克说，「∫f(x)dx 是 f(x) 的反导数，也叫不定积分。若 F'(x) = f(x)，则 ∫f(x)dx = F(x) + C，C 是积分常数。不定积分是求导的逆运算——就像减法是加法的逆运算，反导数是导数的逆运算。」",
         blackboard: {
           type: "formulas",
           label: "积分常数",
@@ -4884,7 +5062,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，8/3。」芬威克说，「∫[a→b] f(x)dx = F(b) − F(a)（微积分基本定理）。先求不定积分，再代入上下限相减。∫[0→2] x²dx = [x³/3] = 8/3 − 0 = 8/3。微积分基本定理把面积计算和反导数联系起来——这是数学史上最深刻的联系之一。」",
-        contextWrong: "「不对。先求积分得到 x³/3，代入 2 得 8/3，代入 0 得 0，相减得 8/3。」",
+        contextWrong: "「回到定义。先求积分得到 x³/3，代入 2 得 8/3，代入 0 得 0，相减得 8/3。」",
+        context: "芬威克停了五秒。芬威克说，「∫[a→b] f(x)dx = F(b) − F(a)（微积分基本定理）。先求不定积分，再代入上下限相减。∫[0→2] x²dx = [x³/3] = 8/3 − 0 = 8/3。微积分基本定理把面积计算和反导数联系起来——这是数学史上最深刻的联系之一。」",
         blackboard: {
           type: "formulas",
           label: "上下限代入",
@@ -4905,7 +5084,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，分段积分取绝对值。」芬威克说，「曲线 y = f(x) 在 [a, b] 上与 x 轴围成的面积 = ∫[a→b] |f(x)| dx。若函数穿越 x 轴，分段计算绝对值。注意：积分可以是负数，但面积是正数——积分计算面积时要注意符号。」",
-        contextWrong: "「不对。面积总是正的，所以要取绝对值，分段计算。」",
+        contextWrong: "「回到定义。面积总是正的，所以要取绝对值，分段计算。」",
+        context: "芬威克停了五秒。芬威克说，「曲线 y = f(x) 在 [a, b] 上与 x 轴围成的面积 = ∫[a→b] |f(x)| dx。若函数穿越 x 轴，分段计算绝对值。注意：积分可以是负数，但面积是正数——积分计算面积时要注意符号。」",
         blackboard: {
           type: "formulas",
           label: "面积 ≠ 积分",
@@ -4939,7 +5119,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，随机变量。」芬威克说，「随机变量 X 是一个结果取决于随机实验的变量。掷骰子，X = 点数，可取 1、2、3、4、5、6。大写 X 表示随机变量，小写 x 表示它的具体取值。随机变量是连接概率论和代数的桥梁——它让随机性可以被计算。」",
-        contextWrong: "「不对。X 是随机变量，它的具体值才是数字。」",
+        contextWrong: "「回到定义。X 是随机变量，它的具体值才是数字。」",
+        context: "芬威克停了五秒。芬威克说，「随机变量 X 是一个结果取决于随机实验的变量。掷骰子，X = 点数，可取 1、2、3、4、5、6。大写 X 表示随机变量，小写 x 表示它的具体取值。随机变量是连接概率论和代数的桥梁——它让随机性可以被计算。」",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -4960,7 +5141,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，1。」芬威克说，「列出 X 的所有可能取值和对应概率。所有 P(X=x) 之和 = 1。每一列的概率要准确，总和要检查——不等于 1 就是做错了。」",
-        contextWrong: "「不对。所有可能情况的概率加起来必须是 1，这是公理。」",
+        contextWrong: "「回到定义。所有可能情况的概率加起来必须是 1，这是公理。」",
+        context: "芬威克停了五秒。芬威克说，「列出 X 的所有可能取值和对应概率。所有 P(X=x) 之和 = 1。每一列的概率要准确，总和要检查——不等于 1 就是做错了。」",
         blackboard: {
           type: "formulas",
           label: "检查",
@@ -4981,7 +5163,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，3.5。」芬威克说，「E(X) = Σ[x · P(X=x)]，所有取值乘以对应概率之和。公平骰子：E(X) = 1·(1/6)+2·(1/6)+…+6·(1/6) = 3.5。期望值是大量重复实验后的长期平均值，不是某次实验的预测结果。」",
-        contextWrong: "「不对。期望值是平均，骰子平均是 3.5。」",
+        contextWrong: "「回到定义。期望值是平均，骰子平均是 3.5。」",
+        context: "芬威克停了五秒。芬威克说，「E(X) = Σ[x · P(X=x)]，所有取值乘以对应概率之和。公平骰子：E(X) = 1·(1/6)+2·(1/6)+…+6·(1/6) = 3.5。期望值是大量重复实验后的长期平均值，不是某次实验的预测结果。」",
         blackboard: {
           type: "formulas",
           label: "计算步骤",
@@ -5002,7 +5185,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，E(X²) - [E(X)]²。」芬威克说，「Var(X) = E(X²) − [E(X)]²。方差度量分布的分散程度。标准差 σ = √Var(X)，单位和 X 相同，更直观。期望值说明中心位置，方差说明分散程度——两个数一起才能描述一个分布的形状。」",
-        contextWrong: "「不对。方差是平方的期望减去期望的平方。」",
+        contextWrong: "「回到定义。方差是平方的期望减去期望的平方。」",
+        context: "芬威克停了五秒。芬威克说，「Var(X) = E(X²) − [E(X)]²。方差度量分布的分散程度。标准差 σ = √Var(X)，单位和 X 相同，更直观。期望值说明中心位置，方差说明分散程度——两个数一起才能描述一个分布的形状。」",
         blackboard: {
           type: "formulas",
           label: "两个数",
@@ -5032,7 +5216,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，P(A ∩ B) / P(B)。」芬威克说，「P(A|B) = P(A ∩ B) / P(B)，读作'已知 B 发生时 A 的概率'。分子是 A 和 B 同时发生，分母是 B 发生（新的样本空间）。条件改变了样本空间——在 B 内部重新计算 A 的比例。」",
-        contextWrong: "「不对。条件概率是 P(A ∩ B) 除以 P(B)。」",
+        contextWrong: "「回到定义。条件概率是 P(A ∩ B) 除以 P(B)。」",
+        context: "芬威克停了五秒。芬威克说，「P(A|B) = P(A ∩ B) / P(B)，读作'已知 B 发生时 A 的概率'。分子是 A 和 B 同时发生，分母是 B 发生（新的样本空间）。条件改变了样本空间——在 B 内部重新计算 A 的比例。」",
         blackboard: {
           type: "formulas",
           label: "样本空间",
@@ -5053,7 +5238,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，P(A|B) · P(B)。」芬威克说，「P(A ∩ B) = P(A|B) · P(B) = P(B|A) · P(A)。用于计算两个事件同时发生的概率。已知条件概率求联合概率——反向用条件概率公式。」",
-        contextWrong: "「不对。乘法定理是 P(A ∩ B) = P(A|B) · P(B)。」",
+        contextWrong: "「回到定义。乘法定理是 P(A ∩ B) = P(A|B) · P(B)。」",
+        context: "芬威克停了五秒。芬威克说，「P(A ∩ B) = P(A|B) · P(B) = P(B|A) · P(A)。用于计算两个事件同时发生的概率。已知条件概率求联合概率——反向用条件概率公式。」",
         blackboard: {
           type: "formulas",
           label: "顺序",
@@ -5074,7 +5260,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，P(A|B) = P(A)。」芬威克说，「若 P(A|B) = P(A)，则 A 和 B 相互独立——知道 B 发生不影响 A 的概率。独立事件：P(A ∩ B) = P(A) · P(B)。独立不是互斥——互斥意味着不能同时发生，独立意味着互不影响。两个概念完全不同。」",
-        contextWrong: "「不对。独立是 P(A|B) = P(A)，不是互斥。」",
+        contextWrong: "「回到定义。独立是 P(A|B) = P(A)，不是互斥。」",
+        context: "芬威克停了五秒。芬威克说，「若 P(A|B) = P(A)，则 A 和 B 相互独立——知道 B 发生不影响 A 的概率。独立事件：P(A ∩ B) = P(A) · P(B)。独立不是互斥——互斥意味着不能同时发生，独立意味着互不影响。两个概念完全不同。」",
         blackboard: {
           type: "formulas",
           label: "独立 vs 互斥",
@@ -5095,7 +5282,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，分情况求 P(A)。」芬威克说，「若 B₁, B₂, …Bₙ 是样本空间的一个划分，P(A) = Σ P(A|Bᵢ)·P(Bᵢ)。把总概率分解为各条件下的概率之和。先分情况，各情况分别求概率，再加权求和——这是处理复杂概率问题的通用策略。」",
-        contextWrong: "「不对。全概率公式是分情况计算 P(A)。」",
+        contextWrong: "「回到定义。全概率公式是分情况计算 P(A)。」",
+        context: "芬威克停了五秒。芬威克说，「若 B₁, B₂, …Bₙ 是样本空间的一个划分，P(A) = Σ P(A|Bᵢ)·P(Bᵢ)。把总概率分解为各条件下的概率之和。先分情况，各情况分别求概率，再加权求和——这是处理复杂概率问题的通用策略。」",
         blackboard: {
           type: "formulas",
           label: "策略",
@@ -5125,7 +5313,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，钟形对称。」芬威克说，「正态分布的图像是关于均值对称的钟形曲线。曲线无限延伸但从不碰到 x 轴。曲线下总面积等于 1。均值、中位数、众数三者相同，都在曲线中心。对称性是正态分布最重要的特征——均值左右两侧面积各占一半。」",
-        contextWrong: "「不对。正态分布是对称的钟形曲线。」",
+        contextWrong: "「回到定义。正态分布是对称的钟形曲线。」",
+        context: "芬威克停了五秒。芬威克说，「正态分布的图像是关于均值对称的钟形曲线。曲线无限延伸但从不碰到 x 轴。曲线下总面积等于 1。均值、中位数、众数三者相同，都在曲线中心。对称性是正态分布最重要的特征——均值左右两侧面积各占一半。」",
         blackboard: {
           type: "formulas",
           label: "对称性",
@@ -5146,7 +5335,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，N(μ, σ²)。」芬威克说，「均值 μ 决定曲线的中心位置。标准差 σ 决定曲线的宽窄：σ 越大越宽，越平；σ 越小越窄，越高。记作 X ~ N(μ, σ²)。同样的钟形，中心不同、宽窄不同——两个参数完全确定一个正态分布。」",
-        contextWrong: "「不对。是 N(μ, σ²)，注意方差是 σ²。」",
+        contextWrong: "「回到定义。是 N(μ, σ²)，注意方差是 σ²。」",
+        context: "芬威克停了五秒。芬威克说，「均值 μ 决定曲线的中心位置。标准差 σ 决定曲线的宽窄：σ 越大越宽，越平；σ 越小越窄，越高。记作 X ~ N(μ, σ²)。同样的钟形，中心不同、宽窄不同——两个参数完全确定一个正态分布。」",
         blackboard: {
           type: "formulas",
           label: "参数作用",
@@ -5167,7 +5357,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，约 95%。」芬威克说，「μ ± σ 内：约 68% 的数据。μ ± 2σ 内：约 95%。μ ± 3σ 内：约 99.7%。这是估算正态概率最快的工具。考试成绩如果服从正态分布，均值加减一个标准差内包含了大约三分之二的人——这是一个很有用的感觉。」",
-        contextWrong: "「不对。μ±2σ 内是约 95%。」",
+        contextWrong: "「回到定义。μ±2σ 内是约 95%。」",
+        context: "芬威克停了五秒。芬威克说，「μ ± σ 内：约 68% 的数据。μ ± 2σ 内：约 95%。μ ± 3σ 内：约 99.7%。这是估算正态概率最快的工具。考试成绩如果服从正态分布，均值加减一个标准差内包含了大约三分之二的人——这是一个很有用的感觉。」",
         blackboard: {
           type: "formulas",
           label: "经验法则",
@@ -5188,7 +5379,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，x 离均值多少个标准差。」芬威克说，「z = (x − μ) / σ，把任意正态分布变换为标准正态分布 N(0, 1)。z 值表示 x 在均值以上多少个标准差。用标准正态分布表（z 表）查概率。标准化是把不同尺度的数据放在同一把尺子上比较——消除均值和尺度的影响。」",
-        contextWrong: "「不对。z 值表示 x 离均值几个标准差。」",
+        contextWrong: "「回到定义。z 值表示 x 离均值几个标准差。」",
+        context: "芬威克停了五秒。芬威克说，「z = (x − μ) / σ，把任意正态分布变换为标准正态分布 N(0, 1)。z 值表示 x 在均值以上多少个标准差。用标准正态分布表（z 表）查概率。标准化是把不同尺度的数据放在同一把尺子上比较——消除均值和尺度的影响。」",
         blackboard: {
           type: "formulas",
           label: "标准正态",
@@ -5218,7 +5410,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，总体均值的估计量。」芬威克说，「总体参数：描述整个总体的数值，如总体均值 μ。样本统计量：从样本计算的数值，如样本均值 x̄。x̄ 是 μ 的估计量——不一定相等，但样本越大越接近。我们只能观察样本，却要推断总体——这就是统计推断的本质。」",
-        contextWrong: "「不对。x̄ 是 μ 的估计量，不是真实值。」",
+        contextWrong: "「回到定义。x̄ 是 μ 的估计量，不是真实值。」",
+        context: "芬威克停了五秒。芬威克说，「总体参数：描述整个总体的数值，如总体均值 μ。样本统计量：从样本计算的数值，如样本均值 x̄。x̄ 是 μ 的估计量——不一定相等，但样本越大越接近。我们只能观察样本，却要推断总体——这就是统计推断的本质。」",
         blackboard: {
           type: "formulas",
           label: "关键概念",
@@ -5239,7 +5432,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，用这个方法，95% 的区间会包含真实值。」芬威克说，「置信区间是一个范围，声称以某置信度（如 95%）包含真实参数。'95% 置信区间 [40, 60]'意思是：用这个方法重复 100 次，约 95 次的区间会包含真实均值。注意：不是'真实均值有 95% 概率在区间内'——真实均值是固定的，不是随机的。」",
-        contextWrong: "「不对。置信区间说的是方法的置信度，不是单次结果的概率。」",
+        contextWrong: "「回到定义。置信区间说的是方法的置信度，不是单次结果的概率。」",
+        context: "芬威克停了五秒。芬威克说，「置信区间是一个范围，声称以某置信度（如 95%）包含真实参数。'95% 置信区间 [40, 60]'意思是：用这个方法重复 100 次，约 95 次的区间会包含真实均值。注意：不是'真实均值有 95% 概率在区间内'——真实均值是固定的，不是随机的。」",
         blackboard: {
           type: "formulas",
           label: "要点",
@@ -5260,7 +5454,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，看数据是否提供足够证据拒绝 H₀。」芬威克说，「零假设 H₀：默认立场，如'这枚硬币是公平的'。备择假设 H₁：要验证的主张。收集数据，若数据在 H₀ 下极不可能，则拒绝 H₀。假设检验是'排除默认'的过程——不是证明主张，而是让数据推翻默认假设。」",
-        contextWrong: "「不对。假设检验不能'证明'任何事，只能提供证据拒绝 H₀。」",
+        contextWrong: "「回到定义。假设检验不能'证明'任何事，只能提供证据拒绝 H₀。」",
+        context: "芬威克停了五秒。芬威克说，「零假设 H₀：默认立场，如'这枚硬币是公平的'。备择假设 H₁：要验证的主张。收集数据，若数据在 H₀ 下极不可能，则拒绝 H₀。假设检验是'排除默认'的过程——不是证明主张，而是让数据推翻默认假设。」",
         blackboard: {
           type: "formulas",
           label: "逻辑",
@@ -5281,7 +5476,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，假设 H₀ 成立时，观察到这么极端数据的概率。」芬威克说，「显著性水平 α（常取 0.05 或 0.01）是拒绝 H₀ 的门槛。p 值 < α，拒绝 H₀。p 值是'假设 H₀ 成立时，观察到这么极端的数据的概率'。p 值越小，反对 H₀ 的证据越强——但它不是主张为真的概率。」",
-        contextWrong: "「不对。p 值不是 H₀ 或 H₁ 为真的概率。」",
+        contextWrong: "「回到定义。p 值不是 H₀ 或 H₁ 为真的概率。」",
+        context: "芬威克停了五秒。芬威克说，「显著性水平 α（常取 0.05 或 0.01）是拒绝 H₀ 的门槛。p 值 < α，拒绝 H₀。p 值是'假设 H₀ 成立时，观察到这么极端的数据的概率'。p 值越小，反对 H₀ 的证据越强——但它不是主张为真的概率。」",
         blackboard: {
           type: "formulas",
           label: "常用 α",
@@ -5311,7 +5507,8 @@ export const lessonMap = {
           answer: 0
         },
         contextRight: "「对，代数与几何的结合。」芬威克说，「用代数方程描述几何关系，如用坐标求三角形面积；用几何直觉理解代数，如二次方程的图形解法。两个领域互相是工具——代数是几何的语言，几何是代数的视觉化。」",
-        contextWrong: "「不对。这是代数与几何的结合，不是单独一个。」",
+        contextWrong: "「回到定义。这是代数与几何的结合，不是单独一个。」",
+        context: "芬威克停了五秒。芬威克说，「用代数方程描述几何关系，如用坐标求三角形面积；用几何直觉理解代数，如二次方程的图形解法。两个领域互相是工具——代数是几何的语言，几何是代数的视觉化。」",
         blackboard: {
           type: "formulas",
           label: "例子",
@@ -5332,7 +5529,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，积分。」芬威克说，「正态分布的面积计算是积分的应用。统计模型的拟合用到求导优化。微积分是统计的底层工具之一——但在 GCSE 阶段，两者通常分开考，到 A-Level 才深度交叉。」",
-        contextWrong: "「不对。面积计算是积分，不是导数。」",
+        contextWrong: "「回到定义。面积计算是积分，不是导数。」",
+        context: "芬威克停了五秒。芬威克说，「正态分布的面积计算是积分的应用。统计模型的拟合用到求导优化。微积分是统计的底层工具之一——但在 GCSE 阶段，两者通常分开考，到 A-Level 才深度交叉。」",
         blackboard: {
           type: "formulas",
           label: "GCSE vs A-Level",
@@ -5353,7 +5551,8 @@ export const lessonMap = {
           answer: 1
         },
         contextRight: "「对，找已知、找要求、画图。」芬威克说，「读题：找已知，找要求，画图。选工具：认出题目类型，匹配方法。计算：一步步写，不跳步。验算：代入检验，检查单位。解题不是直觉，是流程。有好的流程，难题也能稳步推进。」",
-        contextWrong: "「不对。第一步是理解问题——找已知、找要求。」",
+        contextWrong: "「回到定义。第一步是理解问题——找已知、找要求。」",
+        context: "芬威克停了五秒。芬威克说，「读题：找已知，找要求，画图。选工具：认出题目类型，匹配方法。计算：一步步写，不跳步。验算：代入检验，检查单位。解题不是直觉，是流程。有好的流程，难题也能稳步推进。」",
         blackboard: {
           type: "formulas",
           label: "核心",
@@ -5374,7 +5573,8 @@ export const lessonMap = {
           answer: 2
         },
         contextRight: "「对，会做的题。」芬威克说，「先做会的题，难题留到最后。说明步骤，即使答案错了，步骤分还在。检查量纲和数量级——答案是否合理。考试测的是你掌握了什么，不是你紧张了多少。」",
-        contextWrong: "「不对。先做会的，保证把能拿的分都拿到。」",
+        contextWrong: "「回到定义。先做会的，保证把能拿的分都拿到。」",
+        context: "芬威克停了五秒。芬威克说，「先做会的题，难题留到最后。说明步骤，即使答案错了，步骤分还在。检查量纲和数量级——答案是否合理。考试测的是你掌握了什么，不是你紧张了多少。」",
         blackboard: {
           type: "formulas",
           label: "最后忠告",
@@ -5412,6 +5612,7 @@ export const lessonMap = {
         },
         contextRight: "对！f(x−2) 是向右平移 2。这个符号容易搞反——记住：替换 x 为 x−a，图像向 x 增大的方向平移。",
         contextWrong: "不对，f(x−2) 是向右平移 2。记住：括号里的符号和移动方向相反——减号是向右，加号是向左。",
+        context: "对！f(x−2) 是向右平移 2。这个符号容易搞反——记住：替换 x 为 x−a，图像向 x 增大的方向平移。",
         blackboard: {
           type: "formulas",
           label: "平移规则",
@@ -5441,6 +5642,7 @@ export const lessonMap = {
         },
         contextRight: "对！f(2x) 是横向压缩为一半，周期从 2π 变成 π。记住：横向的 b > 1 是压缩，不是拉伸。",
         contextWrong: "不对，f(2x) 是横向压缩为一半，周期减半。记住：横向的感觉和直觉相反——系数越大，图像越窄。",
+        context: "对！f(2x) 是横向压缩为一半，周期从 2π 变成 π。记住：横向的 b > 1 是压缩，不是拉伸。",
         blackboard: {
           type: "formulas",
           label: "伸缩规则",
@@ -5469,6 +5671,7 @@ export const lessonMap = {
         },
         contextRight: "对！反函数是 x^(1/3)，因为 (x^(1/3))³ = x。原函数把 a 变成 a³，反函数把 b 变回 b^(1/3)。",
         contextWrong: "不对，反函数是 x^(1/3)。记住：反函数是输入输出互换——原函数 f(a)=b，反函数 f⁻¹(b)=a。",
+        context: "对！反函数是 x^(1/3)，因为 (x^(1/3))³ = x。原函数把 a 变成 a³，反函数把 b 变回 b^(1/3)。",
         blackboard: {
           type: "formulas",
           label: "反函数性质",
@@ -5495,6 +5698,7 @@ export const lessonMap = {
         },
         contextRight: "对！外层是 sin(u)，导数 cos(u)；内层是 u=x²，导数 2x。相乘就是 cos(x²)·2x。",
         contextWrong: "不对，应该是 cos(x²)·2x。记住：先求外层导数，保留内层不变，再乘以内层导数。",
+        context: "对！外层是 sin(u)，导数 cos(u)；内层是 u=x²，导数 2x。相乘就是 cos(x²)·2x。",
         blackboard: {
           type: "formulas",
           label: "链式法则",
@@ -5531,6 +5735,7 @@ export const lessonMap = {
         },
         contextRight: "对！y = 2ˣ 单调递增，且过 (0,1)，因为 2⁰ = 1。这是所有指数函数的共同特征。",
         contextWrong: "不对，y = 2ˣ 单调递增且过 (0,1)。记住：任何数的 0 次幂都是 1，所以指数函数都过 (0,1)。",
+        context: "对！y = 2ˣ 单调递增，且过 (0,1)，因为 2⁰ = 1。这是所有指数函数的共同特征。",
         blackboard: {
           type: "formulas",
           label: "指数函数",
@@ -5559,6 +5764,7 @@ export const lessonMap = {
         },
         contextRight: "对！d/dx (eˣ) = eˣ。这是 e 最特殊的性质——导数等于自身，这使它成为微积分中最重要的底数。",
         contextWrong: "不对，d/dx (eˣ) = eˣ。记住：eˣ 的导数就是它自己，这是 e 独特的性质。",
+        context: "对！d/dx (eˣ) = eˣ。这是 e 最特殊的性质——导数等于自身，这使它成为微积分中最重要的底数。",
         blackboard: {
           type: "formulas",
           label: "e 的性质",
@@ -5588,6 +5794,7 @@ export const lessonMap = {
         },
         contextRight: "对！ln(xy²) = ln x + ln(y²) = ln x + 2 ln y。用了两个法则：积变和，幂变倍数。",
         contextWrong: "不对，应该是 ln x + 2 ln y。记住：积变成对数的和，幂变成对数的倍数。",
+        context: "对！ln(xy²) = ln x + ln(y²) = ln x + 2 ln y。用了两个法则：积变和，幂变倍数。",
         blackboard: {
           type: "formulas",
           label: "对数法则",
@@ -5616,6 +5823,7 @@ export const lessonMap = {
         },
         contextRight: "对！ln x = 2 → 两边取指数，x = e²。指数和对数互相抵消，留下 x。",
         contextWrong: "不对，应该是 e²。记住：ln x = k → x = eᵏ，因为 e^(ln x) = x。",
+        context: "对！ln x = 2 → 两边取指数，x = e²。指数和对数互相抵消，留下 x。",
         blackboard: {
           type: "formulas",
           label: "互逆运算",
@@ -5653,6 +5861,7 @@ export const lessonMap = {
         },
         contextRight: "对！cosθ = √(1 − sin²θ) = √(1 − 9/25) = √(16/25) = 4/5。第一象限 cos 为正。",
         contextWrong: "不对，用 sin²θ + cos²θ = 1，cosθ = √(1 − 9/25) = 4/5。",
+        context: "对！cosθ = √(1 − sin²θ) = √(1 − 9/25) = √(16/25) = 4/5。第一象限 cos 为正。",
         blackboard: {
           type: "formulas",
           label: "勾股恒等式推导",
@@ -5683,6 +5892,7 @@ export const lessonMap = {
         },
         contextRight: "对！cos 2θ = 2cos²θ − 1。这是把 cos²θ − sin²θ 中的 sin²θ 替换成 1 − cos²θ 得到的。",
         contextWrong: "不对，应该是 2cos²θ − 1。记住：cos 2θ 有三种等价形式。",
+        context: "对！cos 2θ = 2cos²θ − 1。这是把 cos²θ − sin²θ 中的 sin²θ 替换成 1 − cos²θ 得到的。",
         blackboard: {
           type: "formulas",
           label: "二倍角公式",
@@ -5712,6 +5922,7 @@ export const lessonMap = {
         },
         contextRight: "对！sin(45°+45°) = sin45°cos45° + cos45°sin45° = (√2/2)(√2/2) + (√2/2)(√2/2) = 1/2 + 1/2 = 1。",
         contextWrong: "不对，应该是 1。用 sin(A+B) 公式展开计算。",
+        context: "对！sin(45°+45°) = sin45°cos45° + cos45°sin45° = (√2/2)(√2/2) + (√2/2)(√2/2) = 1/2 + 1/2 = 1。",
         blackboard: {
           type: "formulas",
           label: "和差公式",
@@ -5740,6 +5951,7 @@ export const lessonMap = {
         },
         contextRight: "对！从一边推导到另一边。思路先行，看两边差在哪里，怎么架桥，再动笔。",
         contextWrong: "不对，应该是从一边推导到另一边。不要同时操作两边。",
+        context: "对！从一边推导到另一边。思路先行，看两边差在哪里，怎么架桥，再动笔。",
         blackboard: {
           type: "formulas",
           label: "恒等式证明",
@@ -5777,6 +5989,7 @@ export const lessonMap = {
         },
         contextRight: "对！f'(x) = 1·sinx + x·cosx。前导后不导加前不导后导。",
         contextWrong: "不对，应该是 sinx + x·cosx。记住乘积法则的口诀。",
+        context: "对！f'(x) = 1·sinx + x·cosx。前导后不导加前不导后导。",
         blackboard: {
           type: "formulas",
           label: "乘积法则",
@@ -5803,6 +6016,7 @@ export const lessonMap = {
         },
         contextRight: "对！f'(x) = (2x·sinx − x²·cosx)/sin²x。分子顺序别搞反了！",
         contextWrong: "不对，应该是 (2x·sinx − x²·cosx)/sin²x。注意顺序：u'v 减 uv'。",
+        context: "对！f'(x) = (2x·sinx − x²·cosx)/sin²x。分子顺序别搞反了！",
         blackboard: {
           type: "formulas",
           label: "商法则",
@@ -5830,6 +6044,7 @@ export const lessonMap = {
         },
         contextRight: "对！2x + 2y·dy/dx = 0 → 2y·dy/dx = −2x → dy/dx = −x/y。",
         contextWrong: "不对，应该是 −x/y。记住对 y 的项求导后要乘 dy/dx。",
+        context: "对！2x + 2y·dy/dx = 0 → 2y·dy/dx = −2x → dy/dx = −x/y。",
         blackboard: {
           type: "formulas",
           label: "隐函数求导",
@@ -5858,6 +6073,7 @@ export const lessonMap = {
         },
         contextRight: "对！dy/dt = 3cos3t，dx/dt = 2t，所以 dy/dx = (3cos3t)/(2t)。",
         contextWrong: "不对，应该是 (3cos3t)/(2t)。dy/dx 是 dy/dt 除以 dx/dt。",
+        context: "对！dy/dt = 3cos3t，dx/dt = 2t，所以 dy/dx = (3cos3t)/(2t)。",
         blackboard: {
           type: "formulas",
           label: "参数方程导数",
@@ -5895,6 +6111,7 @@ export const lessonMap = {
         },
         contextRight: "对！令 u = x²，du = 2x dx，积分变为 ∫sin(u)du = −cos(u) + C = −cos(x²) + C。",
         contextWrong: "不对，应该是 −cos(x²) + C。令 u = x²，du = 2x dx。",
+        context: "对！令 u = x²，du = 2x dx，积分变为 ∫sin(u)du = −cos(u) + C = −cos(x²) + C。",
         blackboard: {
           type: "formulas",
           label: "换元积分",
@@ -5924,6 +6141,7 @@ export const lessonMap = {
         },
         contextRight: "对！令 u = x, dv = eˣdx，则 du = dx, v = eˣ。∫x·eˣdx = x·eˣ − ∫eˣdx = x·eˣ − eˣ + C。",
         contextWrong: "不对，应该是 x·eˣ − eˣ + C。用分部积分公式。",
+        context: "对！令 u = x, dv = eˣdx，则 du = dx, v = eˣ。∫x·eˣdx = x·eˣ − ∫eˣdx = x·eˣ − eˣ + C。",
         blackboard: {
           type: "formulas",
           label: "分部积分",
@@ -5952,6 +6170,7 @@ export const lessonMap = {
         },
         contextRight: "对！先代数分解成简单分式，再逐项积分。",
         contextWrong: "不对，应该是先把复杂分式拆成简单分式。",
+        context: "对！先代数分解成简单分式，再逐项积分。",
         blackboard: {
           type: "formulas",
           label: "部分分式",
@@ -5979,6 +6198,7 @@ export const lessonMap = {
         },
         contextRight: "对！V = π∫[0→1] (x²)² dx = π∫x⁴dx = π[x⁵/5]从0到1 = π/5。",
         contextWrong: "不对，应该是 π/5。V = π∫[f(x)]² dx = π∫x⁴dx = π/5。",
+        context: "对！V = π∫[0→1] (x²)² dx = π∫x⁴dx = π[x⁵/5]从0到1 = π/5。",
         blackboard: {
           type: "formulas",
           label: "圆盘法",
@@ -6021,6 +6241,7 @@ export const lessonMap = {
         },
         contextRight: "对！s = ut + ½at² = 0 + ½×2×9 = 9 m。",
         contextWrong: "不对，应该是 9 m。用 s = ut + ½at² 计算。",
+        context: "对！s = ut + ½at² = 0 + ½×2×9 = 9 m。",
         blackboard: {
           type: "formulas",
           label: "运动方程",
@@ -6051,6 +6272,7 @@ export const lessonMap = {
         },
         contextRight: "对！加速度 a = dv/dt，是速度的导数。",
         contextWrong: "不对，应该是速度的导数。",
+        context: "对！加速度 a = dv/dt，是速度的导数。",
         blackboard: {
           type: "formulas",
           label: "微积分关系",
@@ -6081,6 +6303,7 @@ export const lessonMap = {
         },
         contextRight: "对！s = ½gt² = ½×9.8×4 = 19.6 m。",
         contextWrong: "不对，应该是 19.6 m。用 s = ½gt²。",
+        context: "对！s = ½gt² = ½×9.8×4 = 19.6 m。",
         blackboard: {
           type: "formulas",
           label: "自由落体",
@@ -6111,6 +6334,7 @@ export const lessonMap = {
         },
         contextRight: "对！v-t 图下的面积就是位移。",
         contextWrong: "不对，应该是位移。",
+        context: "对！v-t 图下的面积就是位移。",
         blackboard: {
           type: "formulas",
           label: "运动图像",
@@ -6150,6 +6374,7 @@ export const lessonMap = {
         },
         contextRight: "对！|F⃗| = √(3² + 4²) = √(9 + 16) = √25 = 5。",
         contextWrong: "不对，应该是 5。用勾股定理计算。",
+        context: "对！|F⃗| = √(3² + 4²) = √(9 + 16) = √25 = 5。",
         blackboard: {
           type: "formulas",
           label: "向量表示",
@@ -6178,6 +6403,7 @@ export const lessonMap = {
         },
         contextRight: "对！F⃗_合 = (1+0, 0+1) = (1,1)。",
         contextWrong: "不对，应该是 (1,1)。逐分量相加。",
+        context: "对！F⃗_合 = (1+0, 0+1) = (1,1)。",
         blackboard: {
           type: "formulas",
           label: "合力",
@@ -6207,6 +6433,7 @@ export const lessonMap = {
         },
         contextRight: "对！a = F/m = 10/2 = 5 m/s²。",
         contextWrong: "不对，应该是 5 m/s²。a = F/m。",
+        context: "对！a = F/m = 10/2 = 5 m/s²。",
         blackboard: {
           type: "formulas",
           label: "牛顿第二定律",
@@ -6235,6 +6462,7 @@ export const lessonMap = {
         },
         contextRight: "对！sin30° = 1/2，所以沿斜面分量 = mg/2。",
         contextWrong: "不对，应该是 mg/2。sin30° = 1/2。",
+        context: "对！sin30° = 1/2，所以沿斜面分量 = mg/2。",
         blackboard: {
           type: "formulas",
           label: "斜面分力",
@@ -6273,6 +6501,7 @@ export const lessonMap = {
         },
         contextRight: "对！M = F × d = 10 × 2 = 20 N·m。",
         contextWrong: "不对，应该是 20 N·m。M = F × d。",
+        context: "对！M = F × d = 10 × 2 = 20 N·m。",
         blackboard: {
           type: "formulas",
           label: "力矩",
@@ -6302,6 +6531,7 @@ export const lessonMap = {
         },
         contextRight: "对！20×2 = F×4 → F = 10 N。",
         contextWrong: "不对，应该是 10 N。20×2 = F×4 → F = 10。",
+        context: "对！20×2 = F×4 → F = 10 N。",
         blackboard: {
           type: "formulas",
           label: "力矩定理",
@@ -6329,6 +6559,7 @@ export const lessonMap = {
         },
         contextRight: "对！两个条件同时满足：合力为零且合力矩为零。",
         contextWrong: "不对，应该是两者都为零。",
+        context: "对！两个条件同时满足：合力为零且合力矩为零。",
         blackboard: {
           type: "formulas",
           label: "平衡条件",
@@ -6357,6 +6588,7 @@ export const lessonMap = {
         },
         contextRight: "对！低重心、宽支撑面更稳定。",
         contextWrong: "不对，应该是低重心、宽支撑面。",
+        context: "对！低重心、宽支撑面更稳定。",
         blackboard: {
           type: "formulas",
           label: "稳定性",
@@ -6393,6 +6625,7 @@ export const lessonMap = {
         },
         contextRight: "对！X ~ N(μ, σ²)，μ 是均值，σ² 是方差。",
         contextWrong: "不对，应该是 N(μ, σ²)。",
+        context: "对！X ~ N(μ, σ²)，μ 是均值，σ² 是方差。",
         blackboard: {
           type: "formulas",
           label: "正态分布",
@@ -6423,6 +6656,7 @@ export const lessonMap = {
         },
         contextRight: "对！标准正态分布对称，P(Z < 0) = 0.5。",
         contextWrong: "不对，应该是 0.5。标准正态分布关于 0 对称。",
+        context: "对！标准正态分布对称，P(Z < 0) = 0.5。",
         blackboard: {
           type: "formulas",
           label: "标准化与查表",
@@ -6451,6 +6685,7 @@ export const lessonMap = {
         },
         contextRight: "对！样本量越大，标准误 σ/√n 越小，区间越窄，估计越精确。",
         contextWrong: "不对，应该是变窄。标准误随 n 增大而减小。",
+        context: "对！样本量越大，标准误 σ/√n 越小，区间越窄，估计越精确。",
         blackboard: {
           type: "formulas",
           label: "置信区间",
@@ -6480,6 +6715,7 @@ export const lessonMap = {
         },
         contextRight: "对！连续性修正是因为用连续的正态分布近似离散的二项分布。",
         contextWrong: "不对，应该是用连续分布近似离散分布。",
+        context: "对！连续性修正是因为用连续的正态分布近似离散的二项分布。",
         blackboard: {
           type: "formulas",
           label: "二项分布的正态近似",
@@ -6517,6 +6753,7 @@ export const lessonMap = {
         },
         contextRight: "对！H₀ 是保守立场，H₁ 是要支持的主张。",
         contextWrong: "不对，应该是保守立场（无效果）。",
+        context: "对！H₀ 是保守立场，H₁ 是要支持的主张。",
         blackboard: {
           type: "formulas",
           label: "原假设与备择假设",
@@ -6546,6 +6783,7 @@ export const lessonMap = {
         },
         contextRight: "对！自由度 ν = n − 1。",
         contextWrong: "不对，应该是 n − 1。",
+        context: "对！自由度 ν = n − 1。",
         blackboard: {
           type: "formulas",
           label: "t 分布",
@@ -6575,6 +6813,7 @@ export const lessonMap = {
         },
         contextRight: "对！这是单尾检验，拒绝域只在右侧。",
         contextWrong: "不对，应该是单尾检验。",
+        context: "对！这是单尾检验，拒绝域只在右侧。",
         blackboard: {
           type: "formulas",
           label: "单尾与双尾",
@@ -6605,6 +6844,7 @@ export const lessonMap = {
         },
         contextRight: "对！p < 0.05 有统计显著性，拒绝 H₀。注意 p 不是 H₀ 为真的概率。",
         contextWrong: "不对，应该是有统计显著性，拒绝 H₀。",
+        context: "对！p < 0.05 有统计显著性，拒绝 H₀。注意 p 不是 H₀ 为真的概率。",
         blackboard: {
           type: "formulas",
           label: "p 值",
@@ -6648,6 +6888,7 @@ export const lessonMap = {
         },
         contextRight: "对！是一阶 ODE，最高阶导数是一阶。",
         contextWrong: "不对，应该是 1 阶。",
+        context: "对！是一阶 ODE，最高阶导数是一阶。",
         blackboard: {
           type: "formulas",
           label: "分类",
@@ -6678,6 +6919,7 @@ export const lessonMap = {
         },
         contextRight: "对！解是 y = Ae^(kx)。",
         contextWrong: "不对，应该是 y = Ae^(kx)。",
+        context: "对！解是 y = Ae^(kx)。",
         blackboard: {
           type: "formulas",
           label: "分离变量法",
@@ -6706,6 +6948,7 @@ export const lessonMap = {
         },
         contextRight: "对！初始条件确定任意常数，从通解得到特解。",
         contextWrong: "不对，应该是确定任意常数，得到特解。",
+        context: "对！初始条件确定任意常数，从通解得到特解。",
         blackboard: {
           type: "formulas",
           label: "通解与特解",
@@ -6735,6 +6978,7 @@ export const lessonMap = {
         },
         contextRight: "对！e^(kT) = 1/2 → kT = ln(1/2) = −ln2 → T = −ln2/k。",
         contextWrong: "不对，应该是 −ln2/k。",
+        context: "对！e^(kT) = 1/2 → kT = ln(1/2) = −ln2 → T = −ln2/k。",
         blackboard: {
           type: "formulas",
           label: "增长与衰减",
@@ -6772,6 +7016,7 @@ export const lessonMap = {
         },
         contextRight: "对！这是等比数列，公比 r=2。",
         contextWrong: "不对，应该是等比数列，r=2。",
+        context: "对！这是等比数列，公比 r=2。",
         blackboard: {
           type: "formulas",
           label: "等差数列与等比数列",
@@ -6799,6 +7044,7 @@ export const lessonMap = {
         },
         contextRight: "对！S₅ = 1(1−2⁵)/(1−2) = (1−32)/(−1) = 31。",
         contextWrong: "不对，应该是 31。用等比数列求和公式。",
+        context: "对！S₅ = 1(1−2⁵)/(1−2) = (1−32)/(−1) = 31。",
         blackboard: {
           type: "formulas",
           label: "求和公式",
@@ -6827,6 +7073,7 @@ export const lessonMap = {
         },
         contextRight: "对！|r| < 1 时收敛，和为 a₁/(1−r)。",
         contextWrong: "不对，应该是收敛，和为 a₁/(1−r)。",
+        context: "对！|r| < 1 时收敛，和为 a₁/(1−r)。",
         blackboard: {
           type: "formulas",
           label: "收敛与发散",
@@ -6856,6 +7103,7 @@ export const lessonMap = {
         },
         contextRight: "对！发散级数的和不存在（不是'无穷大'，就是'不存在'）。",
         contextWrong: "不对，应该是不存在。",
+        context: "对！发散级数的和不存在（不是'无穷大'，就是'不存在'）。",
         blackboard: {
           type: "formulas",
           label: "无穷级数",
@@ -6894,6 +7142,7 @@ export const lessonMap = {
         },
         contextRight: "对！i² = −1，这是定义。",
         contextWrong: "不对，应该是 −1。",
+        context: "对！i² = −1，这是定义。",
         blackboard: {
           type: "formulas",
           label: "复数基础",
@@ -6923,6 +7172,7 @@ export const lessonMap = {
         },
         contextRight: "对！r = √(1² + 1²) = √2。",
         contextWrong: "不对，应该是 √2。",
+        context: "对！r = √(1² + 1²) = √2。",
         blackboard: {
           type: "formulas",
           label: "极坐标形式",
@@ -6951,6 +7201,7 @@ export const lessonMap = {
         },
         contextRight: "对！用棣莫弗定理，n=2，得 cos2θ + i sin2θ。",
         contextWrong: "不对，应该是 cos2θ + i sin2θ。",
+        context: "对！用棣莫弗定理，n=2，得 cos2θ + i sin2θ。",
         blackboard: {
           type: "formulas",
           label: "棣莫弗定理",
@@ -6980,6 +7231,7 @@ export const lessonMap = {
         },
         contextRight: "对！欧拉恒等式是 e^(iπ) + 1 = 0。",
         contextWrong: "不对，应该是 e^(iπ) + 1 = 0。",
+        context: "对！欧拉恒等式是 e^(iπ) + 1 = 0。",
         blackboard: {
           type: "formulas",
           label: "欧拉公式",
@@ -7018,6 +7270,7 @@ export const lessonMap = {
         },
         contextRight: "对！点积 = 1×0 + 0×1 + 0×0 = 0，两向量垂直。",
         contextWrong: "不对，应该是 0。",
+        context: "对！点积 = 1×0 + 0×1 + 0×0 = 0，两向量垂直。",
         blackboard: {
           type: "formulas",
           label: "三维向量运算",
@@ -7046,6 +7299,7 @@ export const lessonMap = {
         },
         contextRight: "对！这是过 (1,0,0) 且沿 y 轴方向的直线。",
         contextWrong: "不对，应该是一条直线。",
+        context: "对！这是过 (1,0,0) 且沿 y 轴方向的直线。",
         blackboard: {
           type: "formulas",
           label: "直线的向量方程",
@@ -7076,6 +7330,7 @@ export const lessonMap = {
         },
         contextRight: "对！法向量是垂直于平面的向量。",
         contextWrong: "不对，应该是垂直于平面的向量。",
+        context: "对！法向量是垂直于平面的向量。",
         blackboard: {
           type: "formulas",
           label: "平面方程",
@@ -7104,6 +7359,7 @@ export const lessonMap = {
         },
         contextRight: "对！点积为 0 表示方向向量与法向量垂直，所以直线平行于平面。",
         contextWrong: "不对，应该是直线平行于平面。",
+        context: "对！点积为 0 表示方向向量与法向量垂直，所以直线平行于平面。",
         blackboard: {
           type: "formulas",
           label: "直线与平面的关系",
@@ -7142,6 +7398,7 @@ export const lessonMap = {
         },
         contextRight: "对！矩阵乘法一般不满足交换律：AB ≠ BA。",
         contextWrong: "不对，应该是一般不相等。",
+        context: "对！矩阵乘法一般不满足交换律：AB ≠ BA。",
         blackboard: {
           type: "formulas",
           label: "矩阵加法与乘法",
@@ -7172,6 +7429,7 @@ export const lessonMap = {
         },
         contextRight: "对！行列式的几何意义是面积缩放比例。",
         contextWrong: "不对，应该是面积缩放比例。",
+        context: "对！行列式的几何意义是面积缩放比例。",
         blackboard: {
           type: "formulas",
           label: "行列式",
@@ -7201,6 +7459,7 @@ export const lessonMap = {
         },
         contextRight: "对！这是旋转 θ 角的标准矩阵。",
         contextWrong: "不对，应该是 [[cosθ,−sinθ],[sinθ,cosθ]]。",
+        context: "对！这是旋转 θ 角的标准矩阵。",
         blackboard: {
           type: "formulas",
           label: "线性变换",
@@ -7229,6 +7488,7 @@ export const lessonMap = {
         },
         contextRight: "对！特征向量在变换下只缩放，不改变方向。",
         contextWrong: "不对，应该是只缩放，不改变方向。",
+        context: "对！特征向量在变换下只缩放，不改变方向。",
         blackboard: {
           type: "formulas",
           label: "特征值与特征向量",
@@ -7271,6 +7531,7 @@ export const lessonMap = {
         },
         contextRight: "对！K 是环境容纳量，种群最终趋于 K。",
         contextWrong: "不对，应该是环境容纳量。",
+        context: "对！K 是环境容纳量，种群最终趋于 K。",
         blackboard: {
           type: "formulas",
           label: "种群增长",
@@ -7299,6 +7560,7 @@ export const lessonMap = {
         },
         contextRight: "对！冷却速率与物体和环境之间的温差成正比。",
         contextWrong: "不对，应该是与环境的温差。",
+        context: "对！冷却速率与物体和环境之间的温差成正比。",
         blackboard: {
           type: "formulas",
           label: "牛顿冷却",
@@ -7328,6 +7590,7 @@ export const lessonMap = {
         },
         contextRight: "对！周期 T = 2π/ω。",
         contextWrong: "不对，应该是 2π/ω。",
+        context: "对！周期 T = 2π/ω。",
         blackboard: {
           type: "formulas",
           label: "简谐振动",
@@ -7358,6 +7621,7 @@ export const lessonMap = {
         },
         contextRight: "对！检验模型准确性是最常被跳过的步骤。",
         contextWrong: "不对，应该是检验模型准确性。",
+        context: "对！检验模型准确性是最常被跳过的步骤。",
         blackboard: {
           type: "formulas",
           label: "建模流程",
@@ -7399,6 +7663,7 @@ export const lessonMap = {
         },
         contextRight: "对！数值解是近似值，精度可以任意提高。",
         contextWrong: "不对，应该是近似值，精度可任意提高。",
+        context: "对！数值解是近似值，精度可以任意提高。",
         blackboard: {
           type: "formulas",
           label: "数值解",
@@ -7428,6 +7693,7 @@ export const lessonMap = {
         },
         contextRight: "对！xₙ₊₁ 是 xₙ 处切线与 x 轴的交点。",
         contextWrong: "不对，应该是 xₙ 处切线与 x 轴的交点。",
+        context: "对！xₙ₊₁ 是 xₙ 处切线与 x 轴的交点。",
         blackboard: {
           type: "formulas",
           label: "牛顿迭代",
@@ -7457,6 +7723,7 @@ export const lessonMap = {
         },
         contextRight: "对！二次收敛意味着每次迭代有效数字大致翻倍。",
         contextWrong: "不对，应该是每次迭代有效数字大致翻倍。",
+        context: "对！二次收敛意味着每次迭代有效数字大致翻倍。",
         blackboard: {
           type: "formulas",
           label: "收敛性",
@@ -7486,6 +7753,7 @@ export const lessonMap = {
         },
         contextRight: "对！计算器用的是迭代方法，如牛顿法。",
         contextWrong: "不对，应该是迭代方法。",
+        context: "对！计算器用的是迭代方法，如牛顿法。",
         blackboard: {
           type: "formulas",
           label: "计算器实现",
@@ -7525,6 +7793,7 @@ export const lessonMap = {
         },
         contextRight: "对！图论研究节点和边之间的连接关系。",
         contextWrong: "不对，应该是节点和边之间的连接关系。",
+        context: "对！图论研究节点和边之间的连接关系。",
         blackboard: {
           type: "formulas",
           label: "图论基础",
@@ -7555,6 +7824,7 @@ export const lessonMap = {
         },
         contextRight: "对！Dijkstra 算法每步贪心选最短路径的节点。",
         contextWrong: "不对，应该是每步贪心选最短。",
+        context: "对！Dijkstra 算法每步贪心选最短路径的节点。",
         blackboard: {
           type: "formulas",
           label: "最短路径",
@@ -7584,6 +7854,7 @@ export const lessonMap = {
         },
         contextRight: "对！跳过会形成环的边，保证结果是树。",
         contextWrong: "不对，应该是会形成环的边。",
+        context: "对！跳过会形成环的边，保证结果是树。",
         blackboard: {
           type: "formulas",
           label: "最小生成树",
@@ -7613,6 +7884,7 @@ export const lessonMap = {
         },
         contextRight: "对！目标是遍历所有边至少一次，使总路程最短。",
         contextWrong: "不对，应该是遍历所有边至少一次，总路程最短。",
+        context: "对！目标是遍历所有边至少一次，使总路程最短。",
         blackboard: {
           type: "formulas",
           label: "中国邮递员问题",
@@ -7651,6 +7923,7 @@ export const lessonMap = {
         },
         contextRight: "对！归纳步是假设 P(k) 成立，证明 P(k+1) 也成立。",
         contextWrong: "不对，应该是假设 P(k) 成立，证明 P(k+1) 成立。",
+        context: "对！归纳步是假设 P(k) 成立，证明 P(k+1) 也成立。",
         blackboard: {
           type: "formulas",
           label: "数学归纳法",
@@ -7681,6 +7954,7 @@ export const lessonMap = {
         },
         contextRight: "对！反证法的第一步是假设结论不成立。",
         contextWrong: "不对，应该是假设结论不成立。",
+        context: "对！反证法的第一步是假设结论不成立。",
         blackboard: {
           type: "formulas",
           label: "反证法",
@@ -7711,6 +7985,7 @@ export const lessonMap = {
         },
         contextRight: "对！构造证明适用于证明存在性。",
         contextWrong: "不对，应该是证明存在性。",
+        context: "对！构造证明适用于证明存在性。",
         blackboard: {
           type: "formulas",
           label: "构造证明",
@@ -7741,6 +8016,7 @@ export const lessonMap = {
         },
         contextRight: "对！反例要满足前提但违反结论。",
         contextWrong: "不对，应该是满足前提但违反结论。",
+        context: "对！反例要满足前提但违反结论。",
         blackboard: {
           type: "formulas",
           label: "反例",
@@ -7779,6 +8055,7 @@ export const lessonMap = {
         },
         contextRight: "对！先看结构，想清楚步骤，再动笔。",
         contextWrong: "不对，应该是先看结构，想清楚步骤。",
+        context: "对！先看结构，想清楚步骤，再动笔。",
         blackboard: {
           type: "formulas",
           label: "代数综合",
@@ -7809,6 +8086,7 @@ export const lessonMap = {
         },
         contextRight: "对！微积分是描述变化的语言。",
         contextWrong: "不对，应该是变化。",
+        context: "对！微积分是描述变化的语言。",
         blackboard: {
           type: "formulas",
           label: "微积分综合",
@@ -7839,6 +8117,7 @@ export const lessonMap = {
         },
         contextRight: "对！数学的不同分支都是同一种思维的不同侧面。",
         contextWrong: "不对，应该是同一种思维的不同侧面。",
+        context: "对！数学的不同分支都是同一种思维的不同侧面。",
         blackboard: {
           type: "formulas",
           label: "综合应用",
@@ -7870,6 +8149,7 @@ export const lessonMap = {
         },
         contextRight: "对！先跳过做有把握的题，回头再处理难题。",
         contextWrong: "不对，应该先跳过做有把握的题。",
+        context: "对！先跳过做有把握的题，回头再处理难题。",
         blackboard: {
           type: "formulas",
           label: "考场策略",

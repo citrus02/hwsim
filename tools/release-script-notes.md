@@ -12,6 +12,8 @@
 6. 把 zip 复制到 `E:\hogwarts_backup\`。
 7. 复制成功后删除电脑上的临时 zip。
 
+发布脚本会排除 `.claude` 和 `.trae` 的普通改动，但会允许提交 `.claude/worktrees` 中已经被误跟踪文件的删除，用来清理历史遗留的嵌套工作区记录。
+
 ## create-backup-zip.ps1 做什么
 
 这个脚本负责真正压缩项目文件。

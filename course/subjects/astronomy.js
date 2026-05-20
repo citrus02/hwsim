@@ -672,3 +672,14 @@ export const quickStudyEvents = [
 
 // ── 导出 ────────────────────────────────────────────────────────
 export { lessonMap, questionBank };
+
+window.subject_astronomy = {
+  subjectMeta,
+  teachingStyle,
+  syllabus,
+  crossAnchors,
+  professorComments,
+  quickStudyEvents,
+  lessonMap,
+  questionBank
+};

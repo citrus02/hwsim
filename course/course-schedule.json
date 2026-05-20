@@ -1,0 +1,201 @@
+{
+  "version": "1.0.0",
+  "description": "霍格沃茨七年制课程表配置",
+  "lastUpdated": "2026-05-19",
+  "grades": {
+    "1": {
+      "name": "一年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" },
+          { "time": "下午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" },
+          { "time": "夜晚", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "下午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "奇洛教授" },
+          { "time": "下午", "subject": "飞行课", "icon": "🧹", "prof": "霍琦教授" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" },
+          { "time": "下午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" },
+          { "time": "下午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "奇洛教授" }
+        ]
+      }
+    },
+    "2": {
+      "name": "二年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "下午", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "洛哈特教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "洛哈特教授" },
+          { "time": "下午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" },
+          { "time": "下午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" },
+          { "time": "夜晚", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "飞行课", "icon": "🧹", "prof": "霍琦教授" },
+          { "time": "下午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" },
+          { "time": "下午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" }
+        ]
+      }
+    },
+    "3": {
+      "name": "三年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "卢平教授" },
+          { "time": "下午", "subject": "占卜学", "icon": "🔮", "prof": "特里劳妮教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "下午", "subject": "保护神奇动物", "icon": "🦎", "prof": "海格教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" },
+          { "time": "下午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" },
+          { "time": "夜晚", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" },
+          { "time": "下午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "卢平教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "算术占卜", "icon": "🔢", "prof": "维克多教授" },
+          { "time": "下午", "subject": "古代魔文", "icon": "𓂀", "prof": "巴希达教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" }
+        ]
+      }
+    },
+    "4": {
+      "name": "四年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" },
+          { "time": "下午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "穆迪教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "下午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "占卜学", "icon": "🔮", "prof": "特里劳妮教授" },
+          { "time": "下午", "subject": "保护神奇动物", "icon": "🦎", "prof": "海格教授" },
+          { "time": "夜晚", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" },
+          { "time": "下午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "穆迪教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "算术占卜", "icon": "🔢", "prof": "维克多教授" },
+          { "time": "下午", "subject": "古代魔文", "icon": "𓂀", "prof": "巴希达教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" }
+        ]
+      }
+    },
+    "5": {
+      "name": "五年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "下午", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "乌姆里奇教授" },
+          { "time": "下午", "subject": "占卜学", "icon": "🔮", "prof": "特里劳妮教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" },
+          { "time": "下午", "subject": "保护神奇动物", "icon": "🦎", "prof": "海格教授" },
+          { "time": "夜晚", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "幻影移形", "icon": "💨", "prof": "威斯考特教授" },
+          { "time": "下午", "subject": "古代魔文", "icon": "𓂀", "prof": "巴希达教授" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "乌姆里奇教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" },
+          { "time": "下午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯内普教授" }
+        ]
+      }
+    },
+    "6": {
+      "name": "六年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "魔药学", "icon": "⚗️", "prof": "斯拉格霍恩教授" },
+          { "time": "下午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "斯内普教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" },
+          { "time": "下午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "保护神奇动物", "icon": "🦎", "prof": "海格教授" },
+          { "time": "下午", "subject": "炼金术", "icon": "🥇", "prof": "尼可·勒梅" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" },
+          { "time": "下午", "subject": "古代魔文", "icon": "𓂀", "prof": "巴希达教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯拉格霍恩教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "算术占卜", "icon": "🔢", "prof": "维克多教授" },
+          { "time": "下午", "subject": "草药学", "icon": "🌿", "prof": "斯普劳特教授" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "斯内普教授" }
+        ]
+      }
+    },
+    "7": {
+      "name": "七年级",
+      "schedule": {
+        "周一": [
+          { "time": "上午", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "卡罗教授" },
+          { "time": "下午", "subject": "变形术", "icon": "🔁", "prof": "麦格教授" }
+        ],
+        "周二": [
+          { "time": "上午", "subject": "魔药学", "icon": "⚗️", "prof": "斯拉格霍恩教授" },
+          { "time": "下午", "subject": "魔咒学", "icon": "✨", "prof": "弗立维教授" }
+        ],
+        "周三": [
+          { "time": "上午", "subject": "魔法史", "icon": "📜", "prof": "宾斯教授" },
+          { "time": "下午", "subject": "保护神奇动物", "icon": "🦎", "prof": "海格教授" }
+        ],
+        "周四": [
+          { "time": "上午", "subject": "天文学", "icon": "🌌", "prof": "辛尼斯特拉教授" },
+          { "time": "下午", "subject": "炼金术", "icon": "🥇", "prof": "尼可·勒梅" },
+          { "time": "夜晚", "subject": "黑魔法防御术", "icon": "🛡️", "prof": "卡罗教授" }
+        ],
+        "周五": [
+          { "time": "上午", "subject": "占卜学", "icon": "🔮", "prof": "特里劳妮教授" },
+          { "time": "下午", "subject": "算术占卜", "icon": "🔢", "prof": "维克多教授" },
+          { "time": "夜晚", "subject": "魔药学", "icon": "⚗️", "prof": "斯拉格霍恩教授" }
+        ]
+      }
+    }
+  }
+}
