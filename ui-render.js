@@ -28,6 +28,68 @@ export function renderCourse() {
   });
 }
 
+function escapeHtml(text = "") {
+  return String(text).replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
+}
+
+export function renderWorldPaper() {
+  const mount = document.getElementById("world-paper-content");
+  if (!mount) return;
+
+  const data = getSave();
+  const world = data.world || {};
+  const daily = world.daily || {};
+  const rows = [];
+  const seen = new Set();
+  const pushRow = (row) => {
+    const text = String(row.text || "").trim();
+    if (!text) return;
+    const key = `${row.tag}:${text}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    rows.push({ ...row, text });
+  };
+
+  if (daily.summary || daily.mood) {
+    pushRow({ tag: "简报", text: [daily.mood, daily.summary].filter(Boolean).join(" ") });
+  }
+
+  (world.rumors || []).slice(-3).reverse().forEach(item => {
+    pushRow({ tag: "传闻", text: item.text || item });
+  });
+
+  (world.memory || [])
+    .filter(item => ["course", "relation", "followup", "affinity"].includes(item.type))
+    .slice(-4)
+    .reverse()
+    .forEach(item => {
+      const tagMap = { course: "课程", relation: "人际", followup: "后续", affinity: "关系" };
+      pushRow({ tag: tagMap[item.type] || "动态", text: item.text });
+    });
+
+  Object.entries(world.locationStatus || {}).slice(-3).forEach(([location, status]) => {
+    pushRow({ tag: "地点", text: `${location}：${status?.text || status}` });
+  });
+
+  if (!rows.length) {
+    mount.innerHTML = `<div class="world-paper-empty">城堡今天还没有新的传闻。</div>`;
+    return;
+  }
+
+  mount.innerHTML = rows.slice(0, 8).map(row => `
+    <div class="world-paper-row">
+      <span class="world-paper-tag">${escapeHtml(row.tag)}</span>
+      <span class="world-paper-text">${escapeHtml(row.text)}</span>
+    </div>
+  `).join("");
+}
+
 export function refreshAll() {
   const data = getSave();
   const setText = (id, val) => {
@@ -55,6 +117,7 @@ export function refreshAll() {
   if (window.renderBag) window.renderBag();
   renderLog();
   renderTimeline();
+  renderWorldPaper();
 
   if (document.getElementById("courseMain")) {
     const scheduleContainer = document.getElementById("schedule-container");
@@ -154,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 全局挂载
 window.refreshAll = refreshAll;
 window.renderCourse = renderCourse;
+window.renderWorldPaper = renderWorldPaper;
 
 export function openProfilePanel() {
   document.getElementById("profilePanelModal")?.remove();

@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.7.11';
+export const CURRENT_VERSION = '1.7.12';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.12': [
+    '重构剧情文本渲染与对白格式规范，新增剧情排版标准文档',
+    '完善世界状态面板、存档系统与课程答题记录功能',
+    '优化移动端适配与UI细节，修复各类已知问题',
+    '更新版本日志与发布相关配置',
+  ],
   '1.7.11': [
     '拆分教室、课程表、出勤与学习进度逻辑，让课程系统更容易维护和扩展',
     '重构存档、存档槽、日志与时间线相关模块，减少存档系统文件过大的问题',
@@ -251,6 +257,63 @@ function restorePlayerData(backup) {
   });
 }
 
+const versionModalScrollLock = {
+  scrollY: 0,
+  bodyStyle: null,
+  htmlOverflow: '',
+};
+
+function lockVersionModalScroll() {
+  const body = document.body;
+  const html = document.documentElement;
+  if (!body || versionModalScrollLock.bodyStyle) return;
+
+  versionModalScrollLock.scrollY = window.scrollY || html.scrollTop || body.scrollTop || 0;
+  versionModalScrollLock.htmlOverflow = html.style.overflow;
+  versionModalScrollLock.bodyStyle = {
+    position: body.style.position,
+    top: body.style.top,
+    left: body.style.left,
+    right: body.style.right,
+    width: body.style.width,
+    overflow: body.style.overflow,
+  };
+
+  body.classList.add('modal-open');
+  html.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${versionModalScrollLock.scrollY}px`;
+  body.style.left = '0';
+  body.style.right = '0';
+  body.style.width = '100%';
+  body.style.overflow = 'hidden';
+}
+
+function unlockVersionModalScroll() {
+  const body = document.body;
+  const html = document.documentElement;
+  if (!body || !versionModalScrollLock.bodyStyle) return;
+
+  const { bodyStyle, htmlOverflow, scrollY } = versionModalScrollLock;
+  body.classList.remove('modal-open');
+  html.style.overflow = htmlOverflow;
+  body.style.position = bodyStyle.position;
+  body.style.top = bodyStyle.top;
+  body.style.left = bodyStyle.left;
+  body.style.right = bodyStyle.right;
+  body.style.width = bodyStyle.width;
+  body.style.overflow = bodyStyle.overflow;
+
+  versionModalScrollLock.bodyStyle = null;
+  setTimeout(() => window.scrollTo(0, scrollY), 0);
+}
+
+function preventVersionModalBackgroundScroll(e) {
+  const logWrapper = document.getElementById('version-modal-log');
+  if (logWrapper && logWrapper.contains(e.target)) return;
+  e.preventDefault();
+}
+
 function showVersionUpdateDialog(oldVersion, backup) {
   const modal = document.createElement('div');
   modal.id = 'version-modal';
@@ -286,9 +349,12 @@ function showVersionUpdateDialog(oldVersion, backup) {
   `;
 
   const logWrapper = document.createElement('div');
+  logWrapper.id = 'version-modal-log';
   logWrapper.style.cssText = `
     flex: 1;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     margin: 16px 0;
     padding-right: 8px;
     scrollbar-width: thin;
@@ -388,9 +454,18 @@ function showVersionUpdateDialog(oldVersion, backup) {
 
   modal.appendChild(content);
   document.body.appendChild(modal);
+  lockVersionModalScroll();
+  modal.addEventListener('wheel', preventVersionModalBackgroundScroll, { passive: false });
+  modal.addEventListener('touchmove', preventVersionModalBackgroundScroll, { passive: false });
 
   const closeBtn = document.getElementById('close-version-modal');
-  closeBtn.onclick = () => { modal.remove(); };
+  closeBtn.onclick = () => {
+    modal.removeEventListener('wheel', preventVersionModalBackgroundScroll);
+    modal.removeEventListener('touchmove', preventVersionModalBackgroundScroll);
+    modal.remove();
+    style.remove();
+    unlockVersionModalScroll();
+  };
   modal.onclick = (e) => { if (e.target === modal) closeBtn.click(); };
 }
 

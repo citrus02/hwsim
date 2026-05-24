@@ -23,6 +23,39 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
 </head>
 <body>
+<script>
+  (function lockMobileViewport() {
+    var lastTouchEnd = 0;
+
+    function preventPinchZoom(event) {
+      if (event.touches && event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }
+
+    function preventDoubleTapZoom(event) {
+      var now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }
+
+    function clampHorizontalScroll() {
+      if (window.scrollX !== 0) {
+        window.scrollTo(0, window.scrollY);
+      }
+    }
+
+    document.addEventListener('touchstart', preventPinchZoom, { passive: false });
+    document.addEventListener('touchmove', preventPinchZoom, { passive: false });
+    document.addEventListener('touchend', preventDoubleTapZoom, { passive: false });
+    document.addEventListener('gesturestart', function(event) { event.preventDefault(); }, { passive: false });
+    document.addEventListener('gesturechange', function(event) { event.preventDefault(); }, { passive: false });
+    document.addEventListener('gestureend', function(event) { event.preventDefault(); }, { passive: false });
+    window.addEventListener('scroll', clampHorizontalScroll, { passive: true });
+  })();
+</script>
 
 <div class="container">
 
@@ -134,6 +167,10 @@
           <span id="bagBtn" onclick="window.openBagPanel?.()" class="bag-emoji-btn" title="背包">📦</span>
         </span>
       </div>
+      <div class='world-paper' id='world-paper'>
+        <div class='world-paper-title'>城堡动向</div>
+        <div class='world-paper-content' id='world-paper-content'></div>
+      </div>
     </div>
 
     <!-- 时间轴 -->
@@ -153,9 +190,9 @@
 
   <!-- 行动日志 -->
   <div class="card">
-    <div class="title" style="display:flex;justify-content:space-between;align-items:center;">
-      <span>行动日志</span>
-      <div id="log-filters" style="display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;"></div>
+    <div class="title log-title">
+      <span class="log-title-text">行动日志</span>
+      <div id="log-filters" class="log-filters"></div>
     </div>
     <div class="log" id="log"></div>
   </div>

@@ -478,6 +478,7 @@ export function renderAffinityPanelInline(containerEl) {
       const canChat     = config.isStudent && !!config.activeChat;
       const chatCoolKey = `chatCooldown_${todayDate}`;
       const onCooldown  = canChat && hasFlag(key, chatCoolKey);
+      const clueCount   = window.npcEvents?.getCharacterHooks?.(key)?.length || 0;
 
       const tierBadge = config.relationLabel
         ? `${config.relationLabel} Lv.${tier}`
@@ -499,6 +500,7 @@ export function renderAffinityPanelInline(containerEl) {
           </div>
           <div class="affinity-char-actions">
             <button class="affinity-char-btn affinity-btn-gift" data-key="${key}">🎁 送礼</button>
+            ${clueCount ? `<button class="affinity-char-btn affinity-btn-world" data-key="${key}">🔎 追问线索</button>` : ''}
             ${canChat ? `
               <button class="affinity-char-btn affinity-btn-chat ${onCooldown ? 'affinity-btn-cooldown' : ''}"
                 data-key="${key}" ${onCooldown ? 'disabled' : ''}>
@@ -619,6 +621,14 @@ export function renderAffinityPanelInline(containerEl) {
     btn.addEventListener('click', () => {
       const key = btn.dataset.key;
       if (window.openGiftPanel) window.openGiftPanel(key);
+    });
+  });
+
+  containerEl.querySelectorAll('.affinity-btn-world').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.key;
+      const ok = window.npcEvents?.triggerCharacterHook?.(key);
+      if (ok) renderAffinityPanelInline(containerEl);
     });
   });
 

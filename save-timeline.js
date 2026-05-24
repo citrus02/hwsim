@@ -127,8 +127,11 @@ function _renderTimelineEntry(e, storyData, STORY_MAP, today) {
   }
 
   const evt = STORY_MAP[storyId];
-  const isCompleted = !!storyData.completed[storyId];
+  const completedValue = storyData.completed[storyId];
+  const eventYear = parseInt(e.date.split('-')[0], 10);
+  const isCompleted = evt?.isBirthday ? completedValue === eventYear : !!completedValue;
   let isAvailable = false;
+  let isExpired = false;
   if (evt) {
     const data = getSave();
     const isTimeTraveling = !!data.timeTurner?.isTraveling;
@@ -151,13 +154,15 @@ function _renderTimelineEntry(e, storyData, STORY_MAP, today) {
 
     if (evt.isBirthday) {
       const todayMD = today.substring(5);
-      const completedYear = storyData.completed[storyId];
+      const completedYear = completedValue;
       const currentYear = parseInt(today.split('-')[0], 10);
       isAvailable = todayMD === evt.birthdayDate && completedYear !== currentYear
         && _prereqOk(evt.prerequisite);
+      isExpired = e.date < today && completedYear !== eventYear;
     } else {
       isAvailable = !isCompleted && today >= evt.dateRange[0] && today <= evt.dateRange[1]
         && _prereqOk(evt.prerequisite);
+      isExpired = !isCompleted && today > evt.dateRange[1];
     }
   }
 
@@ -167,12 +172,19 @@ function _renderTimelineEntry(e, storyData, STORY_MAP, today) {
 
   const desc = evt.summary || e.text;
 
-  const badge = isCompleted ? '<span class="tl-story-badge tl-badge-done">✓</span>' : '';
+  let badge = '';
+  if (isCompleted) {
+    badge = '<span class="tl-story-badge tl-badge-done">✓</span>';
+  } else if (isAvailable) {
+    badge = '<span class="tl-story-badge tl-badge-active">快去参加</span>';
+  } else if (isExpired) {
+    badge = '<span class="tl-story-badge tl-badge-expired">时间结束</span>';
+  }
   const triggerBtn = isAvailable
     ? `<button class="story-trigger-btn" onclick="window.storyEngine.startStoryEvent('${storyId}')">📖 参与剧情</button>`
     : '';
 
-  return `<div class="tl-story-entry ${isCompleted ? 'tl-story-completed' : isAvailable ? 'tl-story-available' : ''}">
+  return `<div class="tl-story-entry ${isCompleted ? 'tl-story-completed' : isAvailable ? 'tl-story-available' : isExpired ? 'tl-story-expired' : ''}">
     <div class="tl-story-header">
       <span class="event-date">${e.date}</span>
       <span class="tl-story-toggle" title="点击展开/收起"><span class="tl-toggle-arrow">▸</span> ${e.text}</span>

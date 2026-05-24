@@ -236,9 +236,13 @@ window.playLatinAudio = playLatinAudio;
 
 export function _formatContext(text) {
   if (!text) return text;
-  let out = text.replace(/「([^」]*)」/g, '<span class="cls-dialogue">「$1」</span>');
-  out = out.replace(/([。！？])(<span class="cls-dialogue">)/g, '$1<br>$2');
-  out = out.replace(/(<\/span>)([^\s，。、！？：」<])/g, '$1<br>$2');
+  let out = String(text).replace(/\r\n?/g, "\n");
+  out = out.replace(/「([^」]*)」/g, (match, dialogue, offset, source) => {
+    const nextChar = source[offset + match.length] || "";
+    const breakAfter = /[。！？]$/.test(dialogue) && !/[\n，。、！？：」<]/.test(nextChar);
+    return `<span class="cls-dialogue">「${dialogue}」</span>${breakAfter ? "\n" : ""}`;
+  });
+  out = out.replace(/\n+/g, '<br>');
   return out;
 }
 

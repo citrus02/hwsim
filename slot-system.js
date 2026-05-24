@@ -39,7 +39,8 @@ function createSlotCard(i, slots, options = {}) {
     const btn = document.createElement("button");
     Object.assign(btn.style, {
       flex: "1", border: "none", borderRadius: "4px", padding: "6px 0",
-      background: bg, color: "#fff", cursor: "pointer", transition: "all 0.2s ease"
+      background: bg, color: "#fff", cursor: "pointer", transition: "all 0.2s ease",
+      fontSize: "13px", lineHeight: "1.25", fontWeight: "600"
     });
     btn.innerText = label;
     btn.disabled = disabled;
@@ -114,7 +115,8 @@ function createUnifiedSlotCard(i, slots, options = {}) {
     const btn = document.createElement("button");
     Object.assign(btn.style, {
       flex: "1", border: "none", borderRadius: "4px", padding: "6px 0",
-      background: bg, color: "#fff", cursor: "pointer", transition: "all 0.2s ease"
+      background: bg, color: "#fff", cursor: "pointer", transition: "all 0.2s ease",
+      fontSize: "13px", lineHeight: "1.25", fontWeight: "600"
     });
     btn.innerText = label;
     btn.onmouseover = () => { btn.style.background = hoverBg; btn.style.transform = "translateY(-1px)"; };

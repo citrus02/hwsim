@@ -24,7 +24,7 @@ import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, ad
 import { getSubjectData, getAllLessons, getItemSubjectKey, scoreToRating, HOUSE_POINTS_MAP } from './utils.js';
 import './subjects/flight.js';
 import './subjects/apparition.js';
-import { getCurrentLesson, getQuestionsForLesson, saveProgress, saveOpenAnswerEntry } from './classroom-progress.js';
+import { getCurrentLesson, getQuestionsForLesson, saveProgress, saveOpenAnswerEntry, saveAnswerEntry } from './classroom-progress.js';
 import { doQuickStudy, doFocusedStudy } from './classroom-study-actions.js';
 import {
   _formatContext,
@@ -36,6 +36,109 @@ import {
   _findCalculatorBlackboard,
   _withActiveCalculator,
 } from './classroom-render-utils.js';
+
+const ANALYSIS_COLOR_CLASS = {
+  red: 'cls-rich-red',
+  green: 'cls-rich-green',
+  blue: 'cls-rich-blue',
+  yellow: 'cls-rich-yellow',
+  gold: 'cls-rich-gold',
+  purple: 'cls-rich-purple',
+  pink: 'cls-rich-pink',
+  gray: 'cls-rich-gray',
+  grey: 'cls-rich-gray',
+};
+
+function _escapeHtml(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function _formatAnalysisInline(value = '') {
+  let html = _escapeHtml(value);
+  html = html.replace(/`([^`]+)`/g, '<code class="cls-rich-code">$1</code>');
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+  html = html.replace(/(^|[^\*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+  html = html.replace(/(^|[^_])_([^_\n]+)_/g, '$1<em>$2</em>');
+  html = html.replace(/==([^=\n]+)==/g, '<mark>$1</mark>');
+  html = html.replace(/\[(red|green|blue|yellow|gold|purple|pink|gray|grey)\]([\s\S]*?)\[\/\1\]/gi, (_, color, text) => {
+    return `<span class="${ANALYSIS_COLOR_CLASS[color.toLowerCase()]}">${text}</span>`;
+  });
+  html = html.replace(/「([^」]+)」/g, '<span class="cls-fb-quote">「$1」</span>');
+  return html;
+}
+
+function _isAnalysisSpeakerLine(line) {
+  return /^[\u4e00-\u9fa5A-Za-z0-9·]{1,16}：$/.test(line);
+}
+
+function _renderAnalysisBlock(block) {
+  const lines = block
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  if (!lines.length) return '';
+
+  if (lines.every(line => line.startsWith('- '))) {
+    const items = lines
+      .map(line => `<li>${_formatAnalysisInline(line.slice(2).trim())}</li>`)
+      .join('');
+    return `<ul class="cls-fb-list">${items}</ul>`;
+  }
+
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const next = lines[i + 1];
+
+    if (_isAnalysisSpeakerLine(line) && next) {
+      out.push(`
+        <div class="cls-fb-script">
+          <div class="cls-fb-speaker-line">${_escapeHtml(line)}</div>
+          <div class="cls-fb-dialogue-line">${_formatAnalysisInline(next)}</div>
+        </div>`);
+      i++;
+      continue;
+    }
+
+    const inlineSpeaker = line.match(/^([\u4e00-\u9fa5A-Za-z0-9·]{1,16}(?:教授|老师|先生|小姐|女士|双胞胎|同学|学生)(?:强调|提醒|说明|指出|说|问|回答)?：)\s*(.+)$/);
+    if (inlineSpeaker) {
+      out.push(`
+        <div class="cls-fb-script">
+          <div class="cls-fb-speaker-line">${_escapeHtml(inlineSpeaker[1])}</div>
+          <div class="cls-fb-dialogue-line">${_formatAnalysisInline(inlineSpeaker[2])}</div>
+        </div>`);
+      continue;
+    }
+
+    out.push(`<p>${_formatAnalysisInline(line)}</p>`);
+  }
+  return out.join('');
+}
+
+function _renderAnalysisRichText(analysis) {
+  const text = String(analysis || '').trim();
+  if (!text) return '';
+
+  const blocks = text
+    .split(/\r?\n\s*\r?\n/)
+    .map(block => block.trim())
+    .filter(Boolean)
+    .map(_renderAnalysisBlock)
+    .join('');
+
+  return `
+    <div class="cls-fb-analysis cls-fb-rich">
+      <div class="cls-fb-rich-title">解析</div>
+      ${blocks}
+    </div>`;
+}
 
 // ── 课时工具 ─────────────────────────────────────────────
 
@@ -552,6 +655,16 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
           const chosen = parseInt(btn.dataset.idx);
           const correct = chosen === question.answer;
           st.kpAnsweredIdx = chosen;
+          saveAnswerEntry(subjectKey, lesson, {
+            type: "choice",
+            question: question.text || question.prompt || "",
+            answer: question.options?.[chosen] ?? chosen,
+            correctAnswer: question.options?.[question.answer] ?? question.answer,
+            correct,
+            score: correct ? 1 : 0,
+            maxScore: 1,
+            feedback: question.analysis || ""
+          });
           document.querySelectorAll(".cls-mini-opt").forEach((b, i) => {
             b.disabled = true;
             if (i === question.answer) b.classList.add("cls-mini-opt-correct");
@@ -676,6 +789,20 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
               if (q.difficulty === "hard") st.score -= 1;
             }
 
+            const gestureScore = success
+              ? (accuracy >= 0.85 ? 2 : accuracy >= 0.50 ? 1 : 0)
+              : (q.difficulty === "hard" ? -1 : 0);
+            saveAnswerEntry(subjectKey, lesson, {
+              type: "gesture",
+              question: q.text,
+              answer: `${Math.round(accuracy * 100)}%`,
+              correctAnswer: ">= 50%",
+              correct: success,
+              score: gestureScore,
+              maxScore: 2,
+              feedback: q.analysis || ""
+            });
+
             const fb = document.getElementById("cls-fb");
             if (fb) {
               const pctText = Math.round(accuracy * 100);
@@ -683,12 +810,12 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
                 fb.className = "cls-feedback cls-fb-show cls-fb-right";
                 fb.innerHTML = `
                   <div class="cls-fb-tag cls-fb-r">✦ 手势成功！精准度 ${pctText}%</div>
-                  <div class="cls-fb-analysis"><span class="cls-fb-kp">解析：</span>${q.analysis}</div>`;
+                  ${_renderAnalysisRichText(q.analysis)}`;
               } else {
                 fb.className = "cls-feedback cls-fb-show cls-fb-wrong";
                 fb.innerHTML = `
                   <div class="cls-fb-tag cls-fb-w">✗ 手势不完整（完成 ${hitCount}/${totalNodes} 个节点）</div>
-                  <div class="cls-fb-analysis"><span class="cls-fb-kp">解析：</span>${q.analysis}</div>`;
+                  ${_renderAnalysisRichText(q.analysis)}`;
               }
             }
             const nav = document.getElementById("cls-qnav");
@@ -1063,6 +1190,16 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
         const right  = chosen === q.answer;
         if (right) st.score += 2;
         else if (q.difficulty === "hard") st.score -= 1;
+        saveAnswerEntry(subjectKey, lesson, {
+          type: q.type || "choice",
+          question: q.text,
+          answer: q.options?.find(opt => opt[0] === chosen) || chosen,
+          correctAnswer: q.options?.find(opt => opt[0] === q.answer) || q.answer,
+          correct: right,
+          score: right ? 2 : (q.difficulty === "hard" ? -1 : 0),
+          maxScore: 2,
+          feedback: q.analysis || ""
+        });
 
         document.querySelectorAll(".cls-option").forEach(b => {
           b.disabled = true;
@@ -1075,7 +1212,7 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           fb.className = "cls-feedback cls-fb-show cls-fb-" + (right ? "right" : "wrong");
           fb.innerHTML = `
             <div class="cls-fb-tag ${right?"cls-fb-r":"cls-fb-w"}">${right?"✓ 正确":"✗ 错误"}</div>
-            <div class="cls-fb-analysis"><span class="cls-fb-kp">解析：</span>${q.analysis}</div>`;
+            ${_renderAnalysisRichText(q.analysis)}`;
         }
         const nav = document.getElementById("cls-qnav");
         if (nav) nav.style.display = "flex";
@@ -1200,7 +1337,7 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     </div>
     <div class="cls-result-actions">
       <button class="cls-btn-sec cls-btn-journal" id="cls-journal-btn">📖 历史答题记录</button>
-      <button class="cls-btn-leave" id="cls-leave">← 离开教室</button>
+      <button class="cls-btn-leave" id="cls-leave">离开教室 →</button>
     </div>`;
 
   document.getElementById("cls-leave").onclick = () => {

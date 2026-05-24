@@ -57,12 +57,16 @@ export function costAction() {
   updateTimeByActions();
   syncUI();
   saveTimeToSave();
+  window.npcEvents?.triggerNpcActionEvents?.();
   window.courseAttendance?.remindCurrentWindowClasses?.();
   return true;
 }
 
 export function doNothing() {
-  if (!costAction()) return;
+  if (!costAction()) {
+    if (timeSystem.dailyActionLeft <= 0) nextDay();
+    return;
+  }
   
   const messages = [
     "你决定今天什么也不做，好好休息一下。",
@@ -117,9 +121,7 @@ export function nextDay() {
     if (window.storyEngine?.checkAndTriggerStory) {
       window.storyEngine.checkAndTriggerStory();
     }
-    if (window.npcEvents?.triggerNpcDailyEvents) {
-      window.npcEvents.triggerNpcDailyEvents();
-    }
+    window.npcEvents?.triggerDailyBrief?.(true);
   }, 200);
 }
 

@@ -59,6 +59,26 @@ import {
   remindCurrentWindowClasses,
 } from './course-attendance.js';
 
+function _formatDate(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function _getSchoolWeekDateMap(currentDate) {
+  const date = new Date(currentDate);
+  if (isNaN(date.getTime())) return new Map();
+
+  const weekStart = new Date(date);
+  const dayOfWeek = weekStart.getDay();
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  weekStart.setDate(weekStart.getDate() + mondayOffset);
+
+  return new Map(SCHOOL_DAYS.map((day, index) => {
+    const cellDate = new Date(weekStart);
+    cellDate.setDate(weekStart.getDate() + index);
+    return [day, _formatDate(cellDate)];
+  }));
+}
+
 function _renderSchedule(container) {
   const data = getSave();
   const grade = getYearGrade();
@@ -67,6 +87,7 @@ function _renderSchedule(container) {
   const dayOfWeek = isNaN(dateObj.getTime()) ? -1 : dateObj.getDay();
   const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   const todayDayName = dayNames[dayOfWeek] || "";
+  const schoolWeekDates = _getSchoolWeekDateMap(currentDate);
 
   const holiday = isHoliday(currentDate);
   const gradeSchedule = courseScheduleManager.getGradeSchedule(grade) || courseScheduleManager.getGradeSchedule(1) || {};
@@ -101,7 +122,8 @@ function _renderSchedule(container) {
     <div class="schedule-cell schedule-cell-time">上午</div>`;
   for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-    const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, 1) : "";
+    const cellDate = schoolWeekDates.get(day) || currentDate;
+    const noClassLabel = getNoClassReason(cellDate, 1);
     const isSpecialNoClassCell = !!noClassLabel;
     const course = isSpecialNoClassCell ? null : gradeSchedule[day]?.find(c => c.time === "上午");
     if (course) {
@@ -119,7 +141,8 @@ function _renderSchedule(container) {
     <div class="schedule-cell schedule-cell-time">下午</div>`;
   for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-    const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, 2) : "";
+    const cellDate = schoolWeekDates.get(day) || currentDate;
+    const noClassLabel = getNoClassReason(cellDate, 2);
     const isSpecialNoClassCell = !!noClassLabel;
     const course = isSpecialNoClassCell ? null : gradeSchedule[day]?.find(c => c.time === "下午");
     if (course) {
@@ -137,7 +160,8 @@ function _renderSchedule(container) {
     <div class="schedule-cell schedule-cell-time">夜晚</div>`;
   for (const day of SCHOOL_DAYS) {
     const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-    const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, 3) : "";
+    const cellDate = schoolWeekDates.get(day) || currentDate;
+    const noClassLabel = getNoClassReason(cellDate, 3);
     const isSpecialNoClassCell = !!noClassLabel;
     const course = isSpecialNoClassCell ? null : gradeSchedule[day]?.find(c => c.time === "夜晚");
     if (course) {
@@ -199,6 +223,7 @@ function _renderMuggleSchedule(container) {
   const dayOfWeek = isNaN(dateObj.getTime()) ? -1 : dateObj.getDay();
   const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   const todayDayName = dayNames[dayOfWeek] || "";
+  const schoolWeekDates = _getSchoolWeekDateMap(currentDate);
   const holiday = isHoliday(currentDate);
   const gradeLabel = GRADE_TEXT[grade] || `${grade}年级`;
 
@@ -235,7 +260,8 @@ function _renderMuggleSchedule(container) {
     
     for (const day of SCHOOL_DAYS) {
       const cls = day === todayDayName && !holiday ? "schedule-cell schedule-cell-today" : "schedule-cell";
-      const noClassLabel = day === todayDayName ? getNoClassReason(currentDate, period) : "";
+      const cellDate = schoolWeekDates.get(day) || currentDate;
+      const noClassLabel = getNoClassReason(cellDate, period);
       const isSpecialNoClassCell = !!noClassLabel;
       const course = isSpecialNoClassCell ? null : ACTIVE_SCHEDULE[day]?.find(c => c.period === period);
       

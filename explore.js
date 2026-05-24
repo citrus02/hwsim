@@ -169,10 +169,12 @@ function createBackButton(callback) {
 function createExploreButton(data, onClickHandler) {
   const btn = document.createElement("button");
   btn.style.cssText = exploreBtnStyle;  // 用 .cssText 而不是直接赋值 .style
+  const locationStatus = window.npcEvents?.renderLocationStatus?.(data.name) || "";
 
   btn.innerHTML = `
     <div style="font-size:15px;${data.titleColor || ''}">${data.icon || ''} ${data.name}${data.rateText || ''}</div>
     <div style="font-size:12px;color:#a9b4d2;margin-top:4px;line-height:1.4;">${data.desc || ''}</div>
+    ${locationStatus ? `<div style="font-size:11px;color:#d8c27a;margin-top:6px;line-height:1.35;">${locationStatus}</div>` : ''}
     ${data.unlockTip ? `<div style="font-size:11px;color:#ff6b6b;margin-top:4px;">${data.unlockTip}</div>` : ''}
   `;
 
@@ -564,6 +566,8 @@ function renderSecondLayer() {
           }
         }
 
+        const worldFollowup = window.npcEvents?.triggerLocationHook?.(lv2.name);
+        if (worldFollowup) logSuffix += worldFollowup;
         window.doExploreLog(logMessage + logSuffix);
 
         window._questHook_explore?.();
@@ -715,6 +719,8 @@ function renderThirdLayer() {
         logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
       }
 
+      const worldFollowup = window.npcEvents?.triggerLocationHook?.(item.name);
+      if (worldFollowup) logSuffix += worldFollowup;
       window.doExploreLog(logMessage + logSuffix);
 
       window._questHook_explore?.();

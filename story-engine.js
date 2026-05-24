@@ -272,6 +272,55 @@ function _grantRewards(rewards) {
   });
 }
 
+function _escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function _formatStoryLine(line) {
+  return _escapeHtml(line)
+    .replace(/([。！？])(?=[^\n」])/g, "$1<br>")
+    .replace(/([。！？]」)(?=[^\n，。、！？：」<])/g, "$1<br>")
+    .replace(/「([^」]*)」/g, '<span class="story-dialogue">「$1」</span>');
+}
+
+function _renderStoryText(text) {
+  const normalized = String(text ?? "").replace(/\r\n?/g, "\n").trim();
+  if (!normalized) return "";
+
+  return normalized
+    .split(/\n{2,}/)
+    .map(block => {
+      const lines = block.split("\n").map(line => line.trim()).filter(Boolean);
+      if (!lines.length) return "";
+
+      const listItems = lines
+        .map(line => line.match(/^[-•]\s*(.+)$/))
+        .filter(Boolean);
+      if (listItems.length === lines.length) {
+        const items = listItems
+          .map(match => `<li>${_formatStoryLine(match[1])}</li>`)
+          .join("");
+        return `<ul class="story-text-block story-observation-list">${items}</ul>`;
+      }
+
+      const speakerMatch = lines[0].match(/^(.{1,16})[：:]$/);
+      if (speakerMatch) {
+        const speaker = _escapeHtml(speakerMatch[1]);
+        const dialogue = lines.slice(1).map(_formatStoryLine).join("<br>");
+        return `<div class="story-text-block story-dialogue-block"><div class="story-inline-speaker">${speaker}</div><p class="story-dialogue-line">${dialogue}</p></div>`;
+      }
+
+      return `<p class="story-text-block story-narration-block">${lines.map(_formatStoryLine).join("<br>")}</p>`;
+    })
+    .filter(Boolean)
+    .join("");
+}
+
 function _renderStoryScene() {
   const story = _getStoryData();
   if (!story.active) return;
@@ -309,26 +358,28 @@ function _renderStoryScene() {
   let choicesHtml = "";
   if (scene.choices) {
     choicesHtml = scene.choices.map((c, i) =>
-      `<button class="story-choice-btn" data-choice="${i}">${c.text}</button>`
+      `<button class="story-choice-btn" data-choice="${i}">${_escapeHtml(c.text)}</button>`
     ).join("");
   } else {
     choicesHtml = `<button class="story-choice-btn story-next-btn" data-choice="null">继续</button>`;
   }
 
+  const storyTextHtml = _renderStoryText(scene.text);
+
   modal.innerHTML = `
     <div class="story-overlay">
       <div class="story-dialog">
         <div class="story-header">
-          <span class="story-chapter">${evt.chapter}</span>
-          <span class="story-title">${evt.title}</span>
+          <span class="story-chapter">${_escapeHtml(evt.chapter)}</span>
+          <span class="story-title">${_escapeHtml(evt.title)}</span>
           <span class="story-progress">${currentScene}/${totalScenes}</span>
         </div>
         <div class="story-progress-bar">
           <div class="story-progress-fill" style="width:${progress}%"></div>
         </div>
         <div class="story-content">
-          <div class="story-speaker">${scene.speaker}</div>
-          <div class="story-text">${scene.text}</div>
+          <div class="story-speaker">${_escapeHtml(scene.speaker)}</div>
+          <div class="story-text">${storyTextHtml}</div>
         </div>
         <div class="story-choices">${choicesHtml}</div>
       </div>

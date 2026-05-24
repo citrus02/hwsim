@@ -78,33 +78,53 @@ export function saveProgress(subjectKey, lessonNum, rating) {
   window.autoUnlockByCourse?.();
 }
 
-export function saveOpenAnswerEntry(st, subjectKey, lesson, rating = null) {
-  if (st.openScore == null || !st.openAnswer) return;
+export function saveAnswerEntry(subjectKey, lesson, entry) {
+  if (!lesson || !entry) return;
   const data = loadSave();
   const key = `${subjectKey}_${lesson.lesson}`;
-  const timestamp = st.openAnswerTimestamp || Date.now();
-  st.openAnswerTimestamp = timestamp;
+  const timestamp = entry.timestamp || Date.now();
 
   if (!data.openAnswers) data.openAnswers = {};
   if (!data.openAnswers[key]) data.openAnswers[key] = [];
 
-  const entry = {
+  const answerEntry = {
+    type:           entry.type || "choice",
+    answer:         entry.answer,
+    question:       entry.question || "",
+    score:          entry.score ?? 0,
+    maxScore:       entry.maxScore ?? 0,
+    feedback:       entry.feedback || "",
+    pointsAchieved: entry.pointsAchieved || [],
+    correctAnswer:  entry.correctAnswer,
+    correct:        entry.correct,
+    lessonTitle:    lesson.title,
+    lessonNum:      lesson.lesson,
+    rating:         entry.rating ?? null,
+    timestamp
+  };
+
+  const existingIdx = data.openAnswers[key].findIndex(e => e.timestamp === timestamp);
+  if (existingIdx >= 0) data.openAnswers[key][existingIdx] = { ...data.openAnswers[key][existingIdx], ...answerEntry };
+  else data.openAnswers[key].unshift(answerEntry);
+
+  if (data.openAnswers[key].length > 50) data.openAnswers[key].length = 50;
+  writeSave(data);
+}
+
+export function saveOpenAnswerEntry(st, subjectKey, lesson, rating = null) {
+  if (st.openScore == null || !st.openAnswer) return;
+  const timestamp = st.openAnswerTimestamp || Date.now();
+  st.openAnswerTimestamp = timestamp;
+
+  saveAnswerEntry(subjectKey, lesson, {
+    type:           "open",
     answer:         st.openAnswer,
     question:       st.openQuestion || "",
     score:          st.openScore,
     maxScore:       st.openMaxScore,
     feedback:       st.openFeedback,
     pointsAchieved: st.openPointsAchieved || [],
-    lessonTitle:    lesson.title,
-    lessonNum:      lesson.lesson,
     rating,
     timestamp
-  };
-
-  const existingIdx = data.openAnswers[key].findIndex(e => e.timestamp === timestamp);
-  if (existingIdx >= 0) data.openAnswers[key][existingIdx] = { ...data.openAnswers[key][existingIdx], ...entry };
-  else data.openAnswers[key].unshift(entry);
-
-  if (data.openAnswers[key].length > 5) data.openAnswers[key].length = 5;
-  writeSave(data);
+  });
 }

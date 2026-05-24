@@ -324,26 +324,40 @@ export function showAnswerJournal(subjectKey, lessonNum, lessonTitle, professor 
     pct >= 0.75 ? "#98e898" : pct >= 0.5 ? "#aad4f0" : pct > 0 ? "#f0c878" : "#f88";
 
   const ratingLabel = { O: "Outstanding", E: "Exceeds Expectations", A: "Acceptable", P: "Poor", D: "Dreadful", T: "Troll" };
+  const typeLabel = { open: "开放题", choice: "选择题", gesture: "手势题" };
 
   const entriesHtml = entries.length === 0
     ? `<div style="text-align:center;padding:32px;color:#666">暂无答题记录</div>`
     : entries.map((e, i) => {
-        const pct = e.score / e.maxScore;
+        const maxScore = Number(e.maxScore) || 0;
+        const score = Number(e.score) || 0;
+        const pct = maxScore > 0 ? score / maxScore : 0;
         const date = new Date(e.timestamp).toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
         const ratingBadge = e.rating
           ? `<span style="background:${scoreColor(pct)};color:#0d0d1a;padding:1px 7px;border-radius:4px;font-size:0.75em;font-weight:bold">${e.rating}</span>`
           : "";
+        const answerLabel = e.type === "open" ? "Answer" : "Your choice";
+        const verdict = e.type && e.type !== "open" && e.correct != null
+          ? `<span style="color:${e.correct ? "#98e898" : "#f88"};font-weight:bold;font-size:0.78em">${e.correct ? "Correct" : "Wrong"}</span>`
+          : "";
+        const correctAnswer = e.type && e.type !== "open" && e.correctAnswer != null
+          ? `<div style="font-size:0.78em;color:#aaa;margin:-4px 0 10px">Correct answer: ${e.correctAnswer}</div>`
+          : "";
+        const feedbackTitle = e.type === "open" ? `${professor}` : "Analysis";
         return `
           <div style="border:1px solid #2a2a4a;border-radius:10px;padding:14px 16px;margin-bottom:14px">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap">
               <span style="font-size:0.78em;color:#666">#${entries.length - i} · ${date}</span>
               <div style="display:flex;align-items:center;gap:8px">
+                ${verdict}
                 ${ratingBadge}
-                <span style="color:${scoreColor(pct)};font-weight:bold;font-size:0.9em">${e.score} / ${e.maxScore}</span>
+                <span style="color:${scoreColor(pct)};font-weight:bold;font-size:0.9em">${score} / ${maxScore}</span>
               </div>
             </div>
             ${e.question ? `<div style="font-size:0.78em;color:#777;margin-bottom:6px;line-height:1.4">❓ ${e.question}</div>` : ""}
-            <div style="background:#0d0d1a;border-radius:6px;padding:10px 12px;font-size:0.88em;color:#c8c0e0;line-height:1.6;white-space:pre-wrap;margin-bottom:10px">${e.answer}</div>
+            <div style="font-size:0.78em;color:#888;margin-bottom:4px">${answerLabel}</div>
+            <div style="background:#0d0d1a;border-radius:6px;padding:10px 12px;font-size:0.88em;color:#c8c0e0;line-height:1.6;white-space:pre-wrap;margin-bottom:10px">${e.answer ?? ""}</div>
+            ${correctAnswer}
             <div style="font-size:0.78em;color:#9d86e9;font-weight:bold;margin-bottom:4px">👤 ${professor} 点评</div>
             <div style="font-size:0.85em;color:#c0b8d8;font-style:italic;line-height:1.5">"${e.feedback}"</div>
             ${e.pointsAchieved?.length ? `<div style="margin-top:6px;font-size:0.78em;color:#aaa">✓ ${e.pointsAchieved.join("、")}</div>` : ""}
