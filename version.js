@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.7.12';
+export const CURRENT_VERSION = '1.7.13';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.13': [
+    '补充网站标题、描述、关键词与社交分享信息，优化搜索引擎展示效果',
+    '新增 robots.txt 与 sitemap.xml，帮助搜索引擎正确发现官网页面',
+    '增加无脚本访问时的静态介绍内容，让搜索与无 JavaScript 环境也能理解游戏主题',
+    '更新版本公告，让玩家进入游戏时能看到本次 SEO 与站点发现相关改动',
+  ],
   '1.7.12': [
     '重构剧情文本渲染与对白格式规范，新增剧情排版标准文档',
     '完善世界状态面板、存档系统与课程答题记录功能',
