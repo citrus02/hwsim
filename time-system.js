@@ -122,6 +122,7 @@ export function nextDay() {
       window.storyEngine.checkAndTriggerStory();
     }
     window.npcEvents?.triggerDailyBrief?.(true);
+    window.proactiveScheduler?.run?.();
   }, 200);
 }
 

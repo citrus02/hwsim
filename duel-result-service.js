@@ -51,6 +51,21 @@ export function settleDuelResult({ duel, playerWon, playerSpells }) {
     window.affinityUI?.checkStudentSpecialTriggers('duelWin', {
       opponentLevel: opponent.level || 1
     });
+    // 写入带标签的决斗胜利记忆
+    const memData = window.saveSys?.getSave?.();
+    if (memData) {
+      if (!memData.world) memData.world = {};
+      if (!Array.isArray(memData.world.memory)) memData.world.memory = [];
+      memData.world.memory.push({
+        date: memData.time?.currentDate || '',
+        time: memData.time?.nowTime || '上午',
+        type: 'duel',
+        text: '你在决斗中取得了胜利。',
+        tag: 'duel_win',
+      });
+      memData.world.memory = memData.world.memory.slice(-80);
+      window.saveSys?.setSave?.(memData);
+    }
   }
 
   window._questHook_duelEnd?.(playerWon, false);

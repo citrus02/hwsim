@@ -785,9 +785,8 @@ function createWorldHook(data, hook) {
   const duplicate = world.hooks.some(item =>
     !item.consumed &&
     item.type === hook.type &&
-    item.location === hook.location &&
-    item.characterKey === hook.characterKey &&
-    item.sourceText === hook.sourceText
+    (hook.eventId ? item.eventId === hook.eventId : item.location === hook.location && item.sourceText === hook.sourceText) &&
+    item.characterKey === hook.characterKey
   );
   if (duplicate) return false;
 
@@ -811,6 +810,7 @@ function getActiveHooks(filter = {}) {
     if (hook.consumed) return false;
     if (filter.location && hook.location !== filter.location) return false;
     if (filter.characterKey && hook.characterKey !== filter.characterKey) return false;
+    if (filter.type && hook.type !== filter.type) return false;
     return true;
   });
 }
@@ -1757,6 +1757,7 @@ function maybeApplyWorldAffinity() {
     key: event.key,
     delta: event.delta,
     text: event.text,
+    tag: event.key === 'neville' ? 'helped_neville' : undefined,
   });
   createWorldHook(data, {
     type: "character",
@@ -1999,4 +2000,5 @@ window.npcEvents = {
   getCharacterHooks,
   triggerLocationHook,
   triggerCharacterHook,
+  consumeHook,
 };

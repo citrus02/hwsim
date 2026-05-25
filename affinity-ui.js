@@ -31,6 +31,7 @@ import {
   STUDENT_SPECIAL_TRIGGERS,
 } from './affinity-students.js';
 import { loadSave, writeSave } from './course/save-utils.js';
+import { getProactiveHooks } from './proactive-scheduler.js';
 
 // ════════════════════════════════════════════════════════════
 //  内部工具
@@ -89,6 +90,25 @@ function _showToast(text) {
     el.classList.remove('show');
     el.addEventListener('transitionend', () => el.remove(), { once: true });
   }, 2500);
+}
+
+function escapeHtml(text = "") {
+  return String(text).replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
+}
+
+function renderParagraphs(text = "") {
+  return String(text)
+    .split(/\n{2,}/)
+    .map(part => part.trim())
+    .filter(Boolean)
+    .map(part => `<p>${escapeHtml(part)}</p>`)
+    .join("");
 }
 
 // ════════════════════════════════════════════════════════════
@@ -432,6 +452,24 @@ export function checkStudentSpecialTriggers(eventType, payload = {}) {
     // 标记冷却
     if ((trigger.cooldownDays || 0) > 0) setFlag(trigger.characterKey, cdKey);
 
+    // 写入带 memoryTag 的世界记忆（供主动事件调度器检查）
+    if (trigger.memoryTag) {
+      const data = loadSave();
+      if (!data.world) data.world = {};
+      if (!Array.isArray(data.world.memory)) data.world.memory = [];
+      const logMsgForMemory = typeof trigger.logText === 'function' ? trigger.logText(payload) : '';
+      data.world.memory.push({
+        date: today,
+        time: saveData.time?.nowTime || '上午',
+        type: 'specialTrigger',
+        key: trigger.characterKey,
+        text: logMsgForMemory || `${trigger.notifText || trigger.id}`,
+        tag: trigger.memoryTag,
+      });
+      data.world.memory = data.world.memory.slice(-80);
+      writeSave(data);
+    }
+
     // 写入行动日志
     const logMsg = typeof trigger.logText === 'function' ? trigger.logText(payload) : null;
     if (logMsg) {
@@ -444,6 +482,251 @@ export function checkStudentSpecialTriggers(eventType, payload = {}) {
       _showToast(`${cfg?.icon || '👤'} ${trigger.notifText}`);
     }
   });
+}
+
+// ════════════════════════════════════════════════════════════
+//  主动事件弹窗（"有人找你"）
+// ════════════════════════════════════════════════════════════
+
+async function tryAiProactiveDialog(hook, modal) {
+  // Check if AI is available
+  const apiMode = localStorage.getItem('apiMode');
+  if (apiMode === 'local') return; // Explicitly set to local mode
+  const hasKey = window.aiGrader?.hasApiKey?.();
+  if (!hasKey && apiMode !== 'default') return;
+
+  // Check if hook has AI seed
+  if (!hook.aiSeed) return;
+
+  const persona = hook.persona;
+  if (!persona) return;
+
+  try {
+    // Build context from world memory
+    const data = window.saveSys?.getSave?.();
+    const relevantMemory = (data?.world?.memory || [])
+      .filter(m => m.key === hook.characterKey || m.type === 'proactive')
+      .slice(-5)
+      .map(m => m.text)
+      .join('\n');
+
+    const systemPrompt = `你正在扮演${hook.characterName || '对方'}，一个霍格沃茨的学生。
+
+人设概要：${persona.summary || ''}
+说话风格：${persona.speechStyle || ''}
+关键设定：${(persona.facts || []).join('；')}
+
+你现在主动来找玩家。请用角色的口吻说话，保持人设一致。回复应该是角色说的话，用中文，50-150字。`;
+
+    const userPrompt = `场景种子：${hook.aiSeed}
+
+${relevantMemory ? `相关记忆：\n${relevantMemory}` : ''}
+
+请以${hook.characterName || '对方'}的身份，说出你来找玩家时说的第一段话。只输出角色说的话，不要加引号或旁白。`;
+
+    // Get API config from grader's infrastructure
+    const provider = localStorage.getItem('apiProvider') || 'deepseek';
+    const apiKey = localStorage.getItem('apiKey') || localStorage.getItem('deepseek_api_key') || '';
+
+    if (!apiKey) return;
+
+    const API_CONFIG = {
+      openai: { url: "https://api.openai.com/v1/chat/completions", model: "gpt-4o-mini" },
+      claude: { url: "https://api.anthropic.com/v1/messages", model: "claude-3-haiku-20240307" },
+      deepseek: { url: "https://api.deepseek.com/chat/completions", model: "deepseek-v4-flash" },
+      doubao: { url: "https://ark.cn-beijing.volces.com/api/v3/chat/completions", model: "doubot-1-5-pro-32k-250115" },
+      gemini: { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent", model: "gemini-1.5-flash-latest" },
+      qianwen: { url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions", model: "qwen-turbo" },
+      glm: { url: "https://open.bigmodel.cn/api/paas/v4/chat/completions", model: "glm-4-flash" },
+      kimi: { url: "https://api.moonshot.cn/v1/chat/completions", model: "moonshot-v1-8k" },
+    };
+
+    const cfg = API_CONFIG[provider] || API_CONFIG.deepseek;
+
+    let requestBody;
+    let headers = { "Content-Type": "application/json" };
+
+    if (provider === 'claude') {
+      headers["x-api-key"] = apiKey;
+      headers["anthropic-version"] = "2023-06-01";
+      requestBody = {
+        model: cfg.model,
+        max_tokens: 300,
+        temperature: 0.8,
+        system: systemPrompt,
+        messages: [{ role: "user", content: userPrompt }]
+      };
+    } else if (provider === 'gemini') {
+      headers["X-Goog-Api-Key"] = apiKey;
+      requestBody = {
+        contents: [{ parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }] }],
+        generationConfig: { temperature: 0.8, maxOutputTokens: 300 }
+      };
+    } else {
+      headers["Authorization"] = `Bearer ${apiKey}`;
+      requestBody = {
+        model: cfg.model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
+        ],
+        temperature: 0.8,
+        max_tokens: 300
+      };
+    }
+
+    const response = await fetch(cfg.url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) return; // Silently fail, keep local text
+
+    const result = await response.json();
+    let aiText;
+
+    if (provider === 'claude') {
+      aiText = result.content?.[0]?.text;
+    } else if (provider === 'gemini') {
+      aiText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+    } else {
+      aiText = result.choices?.[0]?.message?.content;
+    }
+
+    if (!aiText) return;
+
+    // Update the dialog with AI-generated text
+    const textEl = modal.querySelector(".affinity-enc-text");
+    if (textEl) {
+      textEl.innerHTML = renderParagraphs(aiText);
+    }
+  } catch (e) {
+    // Silently fail - keep local text
+    console.warn('AI proactive dialog failed, using local text:', e);
+  }
+}
+
+function showProactiveEventDialog(hook) {
+  document.getElementById("proactive-event-modal")?.remove();
+  const modal = document.createElement("div");
+  modal.id = "proactive-event-modal";
+  modal.className = "affinity-modal-overlay";
+
+  const choices = Array.isArray(hook.choices) ? hook.choices : [];
+  const name = hook.characterName || "对方";
+
+  modal.innerHTML = `
+    <div class="affinity-modal-box">
+      <div class="affinity-enc-header">
+        <span class="affinity-enc-icon">🔔</span>
+        <span class="affinity-enc-name">${escapeHtml(name)}</span>
+        <span class="affinity-enc-tag">主动来找你</span>
+      </div>
+      <div class="affinity-enc-text">${renderParagraphs(hook.sourceText || '')}</div>
+      ${choices.length ? `
+        <div class="affinity-enc-choices">
+          ${choices.map((c, i) => `<button class="affinity-enc-choice-btn" data-idx="${i}">${escapeHtml(c.label)}</button>`).join("")}
+        </div>
+      ` : ""}
+      <button class="affinity-enc-close" id="proactive-event-close" style="${choices.length ? "display:none" : ""}">继续</button>
+    </div>`;
+
+  document.body.appendChild(modal);
+
+  // Try AI enhancement in background (falls back to local text if fails)
+  tryAiProactiveDialog(hook, modal);
+
+  const closeBtn = modal.querySelector("#proactive-event-close");
+  const choicesEl = modal.querySelector(".affinity-enc-choices");
+  let resultShown = false;
+
+  const refreshAffinityPanel = () => {
+    const mount = document.getElementById("info-affinity-mount");
+    if (mount && window.affinityUI?.renderAffinityPanelInline) {
+      window.affinityUI.renderAffinityPanelInline(mount);
+    }
+  };
+
+  const closeDialog = () => {
+    modal.remove();
+    window.refreshAll?.();
+    refreshAffinityPanel();
+  };
+
+  modal.querySelectorAll(".affinity-enc-choice-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const choice = choices[Number(btn.dataset.idx)];
+      if (!choice) return;
+
+      // Disable all buttons
+      modal.querySelectorAll(".affinity-enc-choice-btn").forEach(other => {
+        other.disabled = true;
+        other.style.opacity = other === btn ? "1" : "0.35";
+      });
+
+      // Apply affinity change
+      if (choice.delta && hook.characterKey && window.affinitySystem?.addAffinity) {
+        window.affinitySystem.addAffinity(hook.characterKey, choice.delta, "主动事件");
+      }
+
+      // Write memory
+      const data = window.saveSys?.getSave?.();
+      if (data) {
+        if (!data.world) data.world = {};
+        if (!Array.isArray(data.world.memory)) data.world.memory = [];
+        data.world.memory.push({
+          date: data.time?.currentDate || '',
+          time: data.time?.nowTime || '上午',
+          type: 'proactiveChoice',
+          key: hook.characterKey,
+          text: choice.response || '',
+        });
+        // If choice has addMemory, write tagged memory
+        if (choice.addMemory) {
+          data.world.memory.push({
+            date: data.time?.currentDate || '',
+            time: data.time?.nowTime || '上午',
+            type: 'proactiveTag',
+            key: hook.characterKey,
+            text: `${name}的主动来访：${choice.label}`,
+            tag: choice.addMemory,
+          });
+        }
+        data.world.memory = data.world.memory.slice(-80);
+        window.saveSys?.setSave?.(data);
+      }
+
+      // Show response
+      const responseEl = modal.querySelector(".affinity-enc-text");
+      if (responseEl) responseEl.innerHTML = renderParagraphs(choice.response || '');
+      if (choicesEl) choicesEl.style.display = "none";
+      resultShown = true;
+      if (closeBtn) {
+        closeBtn.textContent = "继续";
+        closeBtn.style.display = "block";
+      }
+      window.refreshAll?.();
+      refreshAffinityPanel();
+    });
+  });
+
+  closeBtn?.addEventListener("click", closeDialog);
+  modal.addEventListener("click", e => {
+    if (e.target === modal && (!choices.length || resultShown)) closeDialog();
+  });
+}
+
+function triggerProactiveEvent(hookId) {
+  const hooks = getProactiveHooks();
+  const hook = hooks.find(h => h.id === hookId);
+  if (!hook) {
+    _showToast('这个事件已经处理过了。');
+    return;
+  }
+  // Mark hook as consumed
+  window.npcEvents?.consumeHook?.(hookId);
+  showProactiveEventDialog(hook);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -575,9 +858,26 @@ export function renderAffinityPanelInline(containerEl) {
     },
   ];
 
+  // ── 主动事件钩子 ──────────────────────────────────────
+  const proactiveHooks = getProactiveHooks();
+  const proactiveHtml = proactiveHooks.length > 0
+    ? `<div class="affinity-proactive-section">
+        <div class="affinity-proactive-header">🔔 有人找你</div>
+        <div class="affinity-proactive-list">
+          ${proactiveHooks.map(hook => `
+            <button class="affinity-proactive-item" data-hook-id="${escapeHtml(hook.id)}">
+              <span class="affinity-proactive-name">${escapeHtml(hook.characterName || '对方')}</span>
+              <span class="affinity-proactive-title">${escapeHtml(hook.title || '')}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>`
+    : '';
+
   // ── 渲染 HTML ──────────────────────────────────────────
   containerEl.innerHTML = `
     <div class="aff-inline-wrapper">
+      ${proactiveHtml}
       <div class="aff-tab-bar">
         ${TABS.map((t, i) =>
           `<button class="aff-tab-btn ${i === 0 ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`
@@ -597,6 +897,14 @@ export function renderAffinityPanelInline(containerEl) {
       containerEl.querySelectorAll('.aff-tab-pane').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       containerEl.querySelector(`.aff-tab-pane[data-tab="${btn.dataset.tab}"]`)?.classList.add('active');
+    });
+  });
+
+  // ── 主动事件点击 ──────────────────────────────────────
+  containerEl.querySelectorAll('.affinity-proactive-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const hookId = btn.dataset.hookId;
+      if (hookId) triggerProactiveEvent(hookId);
     });
   });
 

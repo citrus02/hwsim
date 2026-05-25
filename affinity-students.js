@@ -1260,6 +1260,7 @@ export const STUDENT_SPECIAL_TRIGGERS = [
     delta: 3,
     once: false,       // 可以多次触发，但每次有冷却
     cooldownDays: 3,
+    memoryTag: 'study_excellence',
     logText: (payload) =>
       `赫敏注意到了你在${payload.subject || '课堂'}上的表现。`,
     notifText: '赫敏注意到你了',
@@ -1274,6 +1275,7 @@ export const STUDENT_SPECIAL_TRIGGERS = [
     delta: 2,
     once: false,
     cooldownDays: 2,
+    memoryTag: 'duel_win',
     logText: () => '罗恩看见你赢了决斗，他冲你比了个大拇指。',
     notifText: '罗恩印象深刻',
   },
@@ -1287,6 +1289,7 @@ export const STUDENT_SPECIAL_TRIGGERS = [
     delta: 4,
     once: false,
     cooldownDays: 3,
+    memoryTag: 'herbology_good',
     logText: () => '纳威看见你认真上草药课，他悄悄松了口气——你也是那种认真对待植物的人。',
     notifText: '纳威觉得你和他一样',
   },
@@ -1300,6 +1303,7 @@ export const STUDENT_SPECIAL_TRIGGERS = [
     delta: 4,
     once: false,
     cooldownDays: 5,
+    memoryTag: 'duel_win',
     logText: () => '哈利看见你在决斗里的表现，他认为你是那种值得信任的人。',
     notifText: '哈利认为你值得信任',
   },
@@ -1313,6 +1317,7 @@ export const STUDENT_SPECIAL_TRIGGERS = [
     delta: 5,
     once: false,
     cooldownDays: 4,
+    memoryTag: 'duel_win',
     logText: () => '德拉科注意到你赢得了那场决斗，他对你的评估静静地发生了变化。',
     notifText: '德拉科重新评估了你',
   },
@@ -1329,6 +1334,7 @@ export const STUDENT_SPECIAL_TRIGGERS = [
     delta: 4,
     once: false,
     cooldownDays: 2,
+    memoryTag: 'explore_rare',
     logText: (payload) =>
       `卢娜也在${payload.area}，她看见了你，「你也来这里，」她说，「我就知道。」`,
     notifText: '卢娜说她就知道你会来',

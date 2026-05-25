@@ -87,7 +87,7 @@ export function getDefaultSave() {
     bag: { material: [], potion: [], item: [], wizardCard: [] },
     course,
     potion: {},
-    world: { dateBriefed: "", memory: [], rumors: [], locationStatus: {}, hooks: [], daily: {} },
+    world: { dateBriefed: "", memory: [], rumors: [], locationStatus: {}, hooks: [], daily: {}, proactiveCooldown: {} },
     time: { year: 1991, month: 9, day: 2, dailyActionLeft: 1, nowTime: "夜晚", currentDate: "1991-09-02" }
   };
 }
@@ -134,6 +134,7 @@ export function migrateSaveData(save) {
   if (!Array.isArray(save.world.hooks)) save.world.hooks = [];
   if (!save.world.locationStatus || typeof save.world.locationStatus !== "object") save.world.locationStatus = {};
   if (!save.world.daily || typeof save.world.daily !== "object") save.world.daily = {};
+  if (!save.world.proactiveCooldown || typeof save.world.proactiveCooldown !== "object") save.world.proactiveCooldown = {};
   if (!save.story) save.story = { completed: {}, active: null };
   if (!save.bag) save.bag = { material: [], potion: [], item: [], wizardCard: [] };
   if (!save.player) save.player = {};
@@ -311,7 +312,7 @@ export function restartGame() {
     spellProficiency: {},
     darkMagicRecord: 0,
     explore: {},
-    world: { dateBriefed: "", memory: [], rumors: [], locationStatus: {}, hooks: [], daily: {} },
+    world: { dateBriefed: "", memory: [], rumors: [], locationStatus: {}, hooks: [], daily: {}, proactiveCooldown: {} },
     potion: {},
     story: { completed: {}, active: null },
   };

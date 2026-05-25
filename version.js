@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.7.15';
+export const CURRENT_VERSION = '1.8.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.0': [
+    '新增角色主动事件系统，角色会根据好感、记忆与经历主动来找玩家',
+    '新增 characters 角色档案目录，为赫敏、罗恩、哈利、德拉科、卢娜等角色补充主动事件与人设种子',
+    '扩展人物关系界面，新增“有人找你”入口与主动事件选择反馈',
+    '完善世界记忆标签、决斗胜利记忆与每日调度逻辑，让角色互动更有连续性',
+  ],
   '1.7.15': [
     '拆新增重复句子折叠、文本去重工具函数',
     '为多门课程知识点添加可视化示意图渲染',

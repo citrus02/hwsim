@@ -89,6 +89,12 @@ export function renderWorldPaper() {
     pushRow({ tag: "地点", text: `${location}：${status?.text || status}` });
   });
 
+  // 主动事件提示
+  const proactiveHooks = window.proactiveScheduler?.getProactiveHooks?.() || [];
+  proactiveHooks.forEach(hook => {
+    pushRow({ tag: "🔔", text: `${hook.characterName || '有人'}好像在找你` });
+  });
+
   if (!rows.length) {
     mount.innerHTML = `<div class="world-paper-empty">城堡今天还没有新的传闻。</div>`;
     return;
