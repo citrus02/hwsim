@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.7.14';
+export const CURRENT_VERSION = '1.7.15';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.7.15': [
+    '拆新增重复句子折叠、文本去重工具函数',
+    '为多门课程知识点添加可视化示意图渲染',
+    '重构课堂黑板渲染逻辑，支持图文结合的教学展示',
+    '调整世界事件弹窗交互与日志记录内容',
+  ],
   '1.7.14': [
     '新增 Bing 站点验证文件，方便将官网接入 Bing Webmaster Tools',
     '继续完善搜索引擎收录相关配置，让 hwsim.top 更容易被搜索平台识别',

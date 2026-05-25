@@ -4226,11 +4226,18 @@ export const lessonMap = {
     keyPoints: [
       {
         point: "仰角与俯角",
-        blackboardQ: {
-          type: "formulas",
-          label: "仰角与俯角",
-          lines: ["仰角：向上看，与水平线的夹角", "俯角：向下看，与水平线的夹角"]
-        },
+        blackboardQ: [
+          {
+            type: "formulas",
+            label: "仰角与俯角",
+            lines: ["仰角：向上看，与水平线的夹角", "俯角：向下看，与水平线的夹角"]
+          },
+          {
+            type: "visual",
+            label: "仰角/俯角示意图",
+            visual: "angleElevation"
+          }
+        ],
         question: {
           leadIn: "「仰角和俯角都是相对于水平线的，」芬威克说，「仰角是向上看，俯角是向下看。它们是相等的，因为内错角相等。」他画了示意图。",
           text: "「从地面看树顶的角度叫？」",

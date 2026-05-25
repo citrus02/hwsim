@@ -6,6 +6,7 @@
  */
 
 import { lessonMap } from './geography-lesson.js';
+import { questionBank } from './geography-questionBank.js';
 
 export const subjectMeta = {
   key: "geography",
@@ -214,10 +215,6 @@ export const crossAnchors = [
   }
 ];
 
-export const questionBank = {
-  importPath: './geography-questionBank.js'
-};
-
 export const gradeMap = {
   1: [1, 2],
   2: [3, 4],
@@ -226,6 +223,16 @@ export const gradeMap = {
   5: [9, 10],
   6: [11, 12],
   7: [13, 14]
+};
+
+window.subject_geography = {
+  subjectMeta,
+  teachingStyle,
+  syllabus,
+  crossAnchors,
+  lessonMap,
+  questionBank,
+  gradeMap
 };
 
 export default {

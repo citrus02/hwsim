@@ -155,12 +155,242 @@ function _renderFlightRoute() {
     </div>`;
 }
 
+function _renderPlateBoundaries() {
+  return `
+    <div class="cls-bb-visual" aria-label="板块边界三类示意图">
+      <svg viewBox="0 0 300 132" role="img">
+        <defs>
+          <marker id="plate-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f8d77a"></path>
+          </marker>
+        </defs>
+        <g transform="translate(0 2)">
+          <text x="8" y="13">碰撞</text>
+          <path class="cls-bb-grid-line" d="M 8 56 L 60 56 L 75 38 L 90 56 L 142 56"></path>
+          <path class="cls-bb-path-dim" d="M 60 56 L 73 43 L 82 56"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 22 42 L 55 42"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 128 42 L 95 42"></path>
+          <text x="51" y="76">山脉隆起</text>
+        </g>
+        <g transform="translate(150 2)">
+          <text x="8" y="13">张裂</text>
+          <path class="cls-bb-grid-line" d="M 8 56 L 58 56 M 88 56 L 142 56"></path>
+          <path class="cls-bb-path-dim" d="M 58 56 L 73 76 L 88 56"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 64 42 L 26 42"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 86 42 L 124 42"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 75 74 L 75 58"></path>
+          <text x="50" y="94">裂谷/岩浆</text>
+        </g>
+        <g transform="translate(0 80)">
+          <text x="8" y="13">平移</text>
+          <path class="cls-bb-grid-line" d="M 8 28 L 142 28 M 8 52 L 142 52 M 75 22 L 67 58"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 24 22 L 66 22"></path>
+          <path class="cls-bb-arrow" marker-end="url(#plate-arrow)" d="M 126 58 L 84 58"></path>
+          <text x="51" y="75">平行错动</text>
+        </g>
+        <g transform="translate(150 88)">
+          <path class="cls-bb-callout" d="M 6 18 C 30 4, 51 5, 75 18 C 100 31, 121 31, 144 18"></path>
+          <text x="9" y="47">喜马拉雅：碰撞边界</text>
+        </g>
+      </svg>
+    </div>`;
+}
+
+function _renderHastingsManeuver() {
+  return `
+    <div class="cls-bb-visual" aria-label="黑斯廷斯战役佯退包抄示意图">
+      <svg viewBox="0 0 300 116" role="img">
+        <text x="8" y="14">诺曼骑兵</text>
+        <text x="216" y="14">撒克逊盾墙</text>
+        <path class="cls-bb-grid-line" d="M 210 34 L 286 34 M 210 45 L 286 45 M 210 56 L 286 56"></path>
+        <path class="cls-bb-arrow" d="M 62 42 C 98 28, 132 28, 166 42"></path>
+        <path class="cls-bb-arrow" d="M 166 42 L 154 35 M 166 42 L 154 49"></path>
+        <text x="86" y="24">冲锋</text>
+        <path class="cls-bb-path-dim" d="M 170 58 C 126 72, 82 72, 44 54"></path>
+        <text x="88" y="88">佯装撤退</text>
+        <path class="cls-bb-arrow" d="M 96 88 C 150 110, 238 100, 264 64"></path>
+        <path class="cls-bb-arrow" d="M 264 64 L 262 78 M 264 64 L 250 68"></path>
+        <text x="188" y="104">回身包抄</text>
+      </svg>
+    </div>`;
+}
+
+function _renderAllianceChain() {
+  return `
+    <div class="cls-bb-visual" aria-label="一战前同盟链条示意图">
+      <svg viewBox="0 0 300 128" role="img">
+        <text x="18" y="15">三国同盟</text>
+        <text x="192" y="15">三国协约</text>
+        <rect class="cls-bb-node" x="10" y="27" width="104" height="54" rx="4"></rect>
+        <rect class="cls-bb-node" x="186" y="27" width="104" height="54" rx="4"></rect>
+        <text x="25" y="45">德国</text>
+        <text x="25" y="62">奥匈</text>
+        <text x="25" y="79">意大利</text>
+        <text x="202" y="45">英国</text>
+        <text x="202" y="62">法国</text>
+        <text x="202" y="79">俄国</text>
+        <path class="cls-bb-arrow" d="M 86 58 C 118 34, 168 34, 206 58"></path>
+        <path class="cls-bb-arrow" d="M 206 58 L 193 52 M 206 58 L 193 66"></path>
+        <path class="cls-bb-grid-line" d="M 62 96 L 238 96"></path>
+        <text x="36" y="115">局部冲突 -> 同盟义务 -> 大陆战争</text>
+      </svg>
+    </div>`;
+}
+
+function _renderRiverTransport() {
+  return `
+    <div class="cls-bb-visual" aria-label="河流搬运方式示意图">
+      <svg viewBox="0 0 300 120" role="img">
+        <path class="cls-bb-grid-line" d="M 12 82 C 72 72, 122 94, 178 82 S 252 76, 288 86"></path>
+        <path class="cls-bb-arrow" d="M 22 42 C 88 22, 160 32, 276 38"></path>
+        <path class="cls-bb-arrow" d="M 276 38 L 264 31 M 276 38 L 263 45"></path>
+        <circle class="cls-bb-dot" cx="72" cy="48" r="2.8"></circle>
+        <circle class="cls-bb-dot" cx="108" cy="42" r="2.2"></circle>
+        <circle class="cls-bb-dot" cx="146" cy="50" r="2.5"></circle>
+        <text x="48" y="20">悬移：细泥沙随水漂</text>
+        <circle class="cls-bb-ring" cx="116" cy="86" r="5"></circle>
+        <circle class="cls-bb-ring" cx="156" cy="86" r="5"></circle>
+        <path class="cls-bb-path-dim" d="M 112 98 Q 136 82, 160 98"></path>
+        <text x="86" y="113">推移：砂砾沿河床滚动</text>
+        <text x="196" y="68">溶解：矿物入水</text>
+      </svg>
+    </div>`;
+}
+
+function _renderPressureBelts() {
+  return `
+    <div class="cls-bb-visual" aria-label="气压带季节移动示意图">
+      <svg viewBox="0 0 300 126" role="img">
+        <path class="cls-bb-grid-line" d="M 16 22 H 284 M 16 46 H 284 M 16 70 H 284 M 16 94 H 284"></path>
+        <text x="18" y="18">极地高压</text>
+        <text x="18" y="42">中纬低压</text>
+        <text x="18" y="66">副热带高压</text>
+        <text x="18" y="90">赤道低压</text>
+        <path class="cls-bb-arrow" d="M 220 94 V 64"></path>
+        <path class="cls-bb-arrow" d="M 220 64 L 214 76 M 220 64 L 226 76"></path>
+        <text x="232" y="82">夏季北移</text>
+        <path class="cls-bb-arrow" d="M 254 64 V 94"></path>
+        <path class="cls-bb-arrow" d="M 254 94 L 248 82 M 254 94 L 260 82"></path>
+        <text x="205" y="116">冬季南移，西风带带来降水</text>
+      </svg>
+    </div>`;
+}
+
+function _renderAngleElevation() {
+  return `
+    <div class="cls-bb-visual" aria-label="仰角和俯角示意图">
+      <svg viewBox="0 0 300 118" role="img">
+        <path class="cls-bb-grid-line" d="M 18 96 H 286"></path>
+        <path class="cls-bb-stem" d="M 232 96 V 24"></path>
+        <path class="cls-bb-leaf" d="M 214 34 Q 232 10, 250 34 Q 232 26, 214 34"></path>
+        <circle class="cls-bb-dot" cx="52" cy="84" r="5"></circle>
+        <path class="cls-bb-grid-line" d="M 52 84 H 230"></path>
+        <path class="cls-bb-arrow" d="M 52 84 L 232 24"></path>
+        <path class="cls-bb-arrow" d="M 232 24 L 219 24 M 232 24 L 224 36"></path>
+        <path class="cls-bb-callout" d="M 76 84 A 34 34 0 0 1 84 73"></path>
+        <text x="82" y="74">仰角</text>
+        <path class="cls-bb-path-dim" d="M 232 24 H 286"></path>
+        <path class="cls-bb-callout" d="M 260 24 A 30 30 0 0 1 255 41"></path>
+        <text x="246" y="52">俯角</text>
+      </svg>
+    </div>`;
+}
+
+function _renderDativeCase() {
+  return `
+    <div class="cls-bb-visual" aria-label="宾格与与格示意图">
+      <svg viewBox="0 0 300 112" role="img">
+        <text x="16" y="58">Puella</text>
+        <rect class="cls-bb-node" x="126" y="32" width="62" height="28" rx="4"></rect>
+        <text x="139" y="51">书</text>
+        <rect class="cls-bb-node" x="214" y="66" width="70" height="28" rx="4"></rect>
+        <text x="226" y="85">朋友</text>
+        <path class="cls-bb-arrow" d="M 70 52 L 124 48"></path>
+        <path class="cls-bb-arrow" d="M 124 48 L 112 42 M 124 48 L 113 55"></path>
+        <text x="96" y="31">直接对象：宾格</text>
+        <path class="cls-bb-arrow" d="M 68 60 C 118 98, 174 104, 214 84"></path>
+        <path class="cls-bb-arrow" d="M 214 84 L 201 84 M 214 84 L 205 95"></path>
+        <text x="108" y="104">接受者：与格</text>
+      </svg>
+    </div>`;
+}
+
+function _renderPnJunction() {
+  return `
+    <div class="cls-bb-visual" aria-label="p-n结单向导电示意图">
+      <svg viewBox="0 0 300 112" role="img">
+        <rect class="cls-bb-node" x="56" y="28" width="78" height="48" rx="4"></rect>
+        <rect class="cls-bb-node" x="166" y="28" width="78" height="48" rx="4"></rect>
+        <text x="86" y="57">P</text>
+        <text x="196" y="57">N</text>
+        <path class="cls-bb-grid-line" d="M 150 24 V 82"></path>
+        <path class="cls-bb-arrow" d="M 72 94 H 230"></path>
+        <path class="cls-bb-arrow" d="M 230 94 L 218 87 M 230 94 L 218 101"></path>
+        <text x="104" y="108">正向导通</text>
+        <path class="cls-bb-path-dim" d="M 230 18 H 76"></path>
+        <path class="cls-bb-grid-line" d="M 86 10 L 106 30 M 106 10 L 86 30"></path>
+        <text x="118" y="21">反向截止</text>
+      </svg>
+    </div>`;
+}
+
+function _renderCompoundField() {
+  return `
+    <div class="cls-bb-visual" aria-label="复合场受力分析示意图">
+      <svg viewBox="0 0 300 124" role="img">
+        <circle class="cls-bb-dot" cx="150" cy="62" r="8"></circle>
+        <path class="cls-bb-arrow" d="M 150 62 V 104"></path>
+        <path class="cls-bb-arrow" d="M 150 104 L 143 92 M 150 104 L 157 92"></path>
+        <text x="160" y="103">mg</text>
+        <path class="cls-bb-arrow" d="M 150 62 H 220"></path>
+        <path class="cls-bb-arrow" d="M 220 62 L 208 55 M 220 62 L 208 69"></path>
+        <text x="226" y="66">qE</text>
+        <path class="cls-bb-arrow" d="M 150 62 C 122 38, 104 35, 74 42"></path>
+        <path class="cls-bb-arrow" d="M 74 42 L 87 36 M 74 42 L 86 50"></path>
+        <text x="40" y="37">qvB</text>
+        <path class="cls-bb-grid-line" d="M 22 18 H 278 M 22 108 H 278"></path>
+        <text x="28" y="15">先画受力图，再列方程</text>
+      </svg>
+    </div>`;
+}
+
+function _renderSymmetryBreaking() {
+  return `
+    <div class="cls-bb-visual" aria-label="对称性破缺示意图">
+      <svg viewBox="0 0 300 126" role="img">
+        <circle class="cls-bb-ring" cx="42" cy="60" r="22"></circle>
+        <text x="22" y="102">统一状态</text>
+        <path class="cls-bb-arrow" d="M 72 60 H 116"></path>
+        <path class="cls-bb-arrow" d="M 116 60 L 104 53 M 116 60 L 104 67"></path>
+        <circle class="cls-bb-dot-hot" cx="142" cy="60" r="6"></circle>
+        <text x="120" y="102">破缺</text>
+        <path class="cls-bb-grid-line" d="M 158 60 C 182 34, 214 24, 268 22"></path>
+        <path class="cls-bb-grid-line" d="M 158 60 C 188 52, 222 58, 270 58"></path>
+        <path class="cls-bb-grid-line" d="M 158 60 C 182 86, 214 98, 268 102"></path>
+        <text x="208" y="18">引力</text>
+        <text x="208" y="54">电磁力</text>
+        <text x="208" y="86">强/弱力</text>
+        <text x="206" y="116">魔力场假说</text>
+      </svg>
+    </div>`;
+}
+
 function _renderBoardVisual(type) {
   if (type === "gesturePath") return _renderGesturePath();
   if (type === "potionFlow") return _renderPotionFlow();
   if (type === "plantDiagram") return _renderPlantDiagram();
   if (type === "starMap") return _renderStarMap();
   if (type === "flightRoute") return _renderFlightRoute();
+  if (type === "plateBoundaries") return _renderPlateBoundaries();
+  if (type === "hastingsManeuver") return _renderHastingsManeuver();
+  if (type === "allianceChain") return _renderAllianceChain();
+  if (type === "riverTransport") return _renderRiverTransport();
+  if (type === "pressureBelts") return _renderPressureBelts();
+  if (type === "angleElevation") return _renderAngleElevation();
+  if (type === "dativeCase") return _renderDativeCase();
+  if (type === "pnJunction") return _renderPnJunction();
+  if (type === "compoundField") return _renderCompoundField();
+  if (type === "symmetryBreaking") return _renderSymmetryBreaking();
   return "";
 }
 

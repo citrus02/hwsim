@@ -876,6 +876,18 @@ function getWorldSummaryLine(data = getSave()) {
   return currentYearTheme(getCurrentYear()).mood;
 }
 
+function joinUniqueTextSegments(segments = []) {
+  const seen = new Set();
+  return segments
+    .map(text => String(text || "").trim().replace(/\s+/g, " "))
+    .filter(text => {
+      if (!text || seen.has(text)) return false;
+      seen.add(text);
+      return true;
+    })
+    .join(" ");
+}
+
 export function getLocationStatus(locationName) {
   const data = getSave();
   const status = ensureWorld(data).locationStatus?.[locationName];
@@ -1636,7 +1648,8 @@ function resolveWorldHookChoice(hook, choice) {
     text: choice.result,
   });
   setSave(data);
-  addStoryLog(`${hook.type === "character" ? "💬 线索对话" : "🔎 线索后续"}：${compactLogText(choice.result)}`);
+  const logPrefix = hook.type === "character" ? "💬 线索对话" : "🔎 线索后续";
+  addStoryLog(`${logPrefix}：你选择了「${choice.label || "继续追问"}」。`);
 }
 
 function escapeHtml(text = "") {
@@ -1656,10 +1669,6 @@ function renderParagraphs(text = "") {
     .filter(Boolean)
     .map(part => `<p>${escapeHtml(part)}</p>`)
     .join("");
-}
-
-function compactLogText(text = "") {
-  return String(text).replace(/\s*\n+\s*/g, " ").trim();
 }
 
 function maybeLogRumor(data, bucket) {
@@ -1828,6 +1837,19 @@ function showWorldHookDialog(hook) {
   document.body.appendChild(modal);
   const responseEl = modal.querySelector(".world-hook-response");
   const closeBtn = modal.querySelector("#world-hook-close");
+  const choicesEl = modal.querySelector(".world-hook-choices");
+  let resultShown = false;
+  const refreshAffinityPanel = () => {
+    const mount = document.getElementById("info-affinity-mount");
+    if (mount && window.affinityUI?.renderAffinityPanelInline) {
+      window.affinityUI.renderAffinityPanelInline(mount);
+    }
+  };
+  const closeDialog = () => {
+    modal.remove();
+    window.refreshAll?.();
+    refreshAffinityPanel();
+  };
   modal.querySelectorAll(".affinity-enc-choice-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const choice = choices[Number(btn.dataset.idx)];
@@ -1838,13 +1860,19 @@ function showWorldHookDialog(hook) {
       });
       resolveWorldHookChoice(hook, choice);
       if (responseEl) responseEl.innerHTML = renderParagraphs(choice.result);
-      if (closeBtn) closeBtn.style.display = "block";
+      if (choicesEl) choicesEl.style.display = "none";
+      resultShown = true;
+      if (closeBtn) {
+        closeBtn.textContent = "继续";
+        closeBtn.style.display = "block";
+      }
       window.refreshAll?.();
+      refreshAffinityPanel();
     });
   });
-  closeBtn?.addEventListener("click", () => modal.remove());
+  closeBtn?.addEventListener("click", closeDialog);
   modal.addEventListener("click", e => {
-    if (e.target === modal && (!choices.length || closeBtn?.style.display === "block")) modal.remove();
+    if (e.target === modal && (!choices.length || resultShown)) closeDialog();
   });
 }
 
@@ -1862,14 +1890,16 @@ export function triggerDailyBrief(force = false) {
   const classLine = noClassDay
     ? (dateEvent ? `今天不上课，${dateEvent}让城堡节奏慢了下来。` : "今天不上课，学生们更多地在公共区域和场地间活动。")
     : "今天照常上课，课程表和学院分都在悄悄推动着各院气氛。";
+  const briefSummary = summary === theme.mood ? "" : summary;
+  const briefText = joinUniqueTextSegments([classLine, theme.mood, briefSummary]);
 
   world.dateBriefed = date;
-  world.daily = { date, mood: theme.mood, summary };
+  world.daily = { date, mood: theme.mood, summary: briefSummary };
   ageLocationStatuses(data);
   updateLocationStatuses(data, 2);
-  rememberWorldEvent(data, { type: "brief", text: `${classLine}${theme.mood}` });
+  rememberWorldEvent(data, { type: "brief", text: briefText });
   setSave(data);
-  addStoryLog(`📰 城堡动向：${date}。${classLine}${theme.mood} ${summary}`);
+  addStoryLog(`📰 城堡动向：${date}。${briefText}`);
   return true;
 }
 

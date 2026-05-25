@@ -342,6 +342,7 @@ window._clsJumpToPhase = (target) => {
 function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
   _setPhase(0);
   const body = document.getElementById("cls-body");
+  const openingBlackboard = _buildOpeningBlackboard(lesson);
   if (!body) return;
 
   // 检查是否是第一次上麻瓜课程（需要触发教授自我介绍）
@@ -352,6 +353,7 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
     const intro = window.muggleSchedule?.professorIntroductions?.[subjectKey];
     body.innerHTML = `
       ${lesson.atmosphere ? `<div class="cls-atmosphere">${lesson.atmosphere}</div>` : ""}
+      ${openingBlackboard ? _renderBlackboard(openingBlackboard, "opening") : ""}
       <div class="cls-opening cls-opening-intro">
         <div class="cls-opening-label">🎭 ${intro?.professor || sd.subjectMeta.professor}</div>
         <div class="cls-opening-portrait">${intro?.portrait || ""}</div>
@@ -370,6 +372,7 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
     // 常规开场
     body.innerHTML = `
       ${lesson.atmosphere ? `<div class="cls-atmosphere">${lesson.atmosphere}</div>` : ""}
+      ${openingBlackboard ? _renderBlackboard(openingBlackboard, "opening") : ""}
       <div class="cls-opening">
         <div class="cls-opening-label">🎭 ${sd.subjectMeta.professor}</div>
         <div class="cls-opening-text">${_formatContext(lesson.opening || "教授走进了教室。")}</div>
@@ -379,6 +382,30 @@ function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
       </div>`;
     document.getElementById("cls-start").onclick = () => _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose);
   }
+}
+
+function _buildOpeningBlackboard(lesson) {
+  const text = `${lesson?.atmosphere || ""}\n${lesson?.opening || ""}`;
+  if (!/(黑板上画|示意图)/.test(text)) return null;
+
+  const diagramMatch =
+    text.match(/黑板上画着([^。]+?示意图)/) ||
+    text.match(/黑板上是([^。]+?示意图)/) ||
+    text.match(/旁边是([^。]+?示意图)/) ||
+    text.match(/画了(?:一个|一张|几个|三个)?([^。：「」]+?示意图)/);
+  const diagram = diagramMatch?.[1]?.trim() || "本课核心示意图";
+  const topicMatch = (lesson?.opening || "").match(/学习([^！」，。]+)/);
+  const topic = topicMatch?.[1]?.replace(/[——-].*$/, "").trim();
+
+  return {
+    type: "formulas",
+    label: "课堂示意图",
+    lines: [
+      `图示：${diagram}`,
+      topic ? `主题：${topic}` : "先看图中对象、箭头、因果关系",
+      "观察：结构 / 方向 / 变化 / 结果"
+    ]
+  };
 }
 
 const SUBJECT_BOARD_STYLE = {
@@ -456,6 +483,57 @@ const SUBJECT_BOARD_STYLE = {
     heading: "移形步骤",
     flow: ["目标", "决心", "从容", "抵达"],
     note: "目的地越清楚，身体越不容易抗议。"
+  },
+  math: {
+    heading: "数学推演",
+    flow: ["条件", "模型", "运算", "结论"],
+    note: "先写清已知条件，再把每一步运算和理由对齐。",
+    visual: "gesturePath"
+  },
+  physics: {
+    heading: "物理分析",
+    flow: ["现象", "受力", "公式", "验证"],
+    note: "先判断系统和方向，再代入公式；单位会替你抓住很多错误。",
+    visual: "flightRoute"
+  },
+  chemistry: {
+    heading: "反应路径",
+    flow: ["物质", "条件", "变化", "产物"],
+    note: "观察颜色、气体、沉淀和能量变化，再判断反应类型。",
+    visual: "potionFlow"
+  },
+  biology: {
+    heading: "生命结构",
+    flow: ["结构", "功能", "调节", "适应"],
+    note: "先看结构层级，再说明它如何服务功能和生存环境。",
+    visual: "plantDiagram"
+  },
+  history: {
+    heading: "历史线索",
+    flow: ["时间", "人物", "原因", "影响"],
+    note: "把事件放回时间线上，因果关系比单个年份更重要。"
+  },
+  civics: {
+    heading: "制度分析",
+    flow: ["权利", "规则", "责任", "判断"],
+    note: "先分清事实、价值和规则，再给出判断。"
+  },
+  geography: {
+    heading: "地理框架",
+    flow: ["位置", "环境", "流动", "影响"],
+    note: "地图先定位，图表看变化，最后解释人与环境的关系。",
+    visual: "starMap"
+  },
+  literature: {
+    heading: "文本解读",
+    flow: ["情节", "人物", "语言", "主题"],
+    note: "先找文本证据，再解释它怎样推动人物和主题。"
+  },
+  latin: {
+    heading: "语法拆解",
+    flow: ["词尾", "功能", "语序", "翻译"],
+    note: "先看词尾判断功能，再把句子还原成清楚的关系。",
+    visual: "gesturePath"
   },
   muggleStudies: {
     heading: "观察框架",
@@ -547,10 +625,10 @@ function _phaseLecture(st, subjectKey, sd, lesson, qGroup, onClose) {
       : st.kpCalcDone && calculatorBlackboard
         ? (st.kpCalcDisplay ?? calculatorBlackboard.result ?? calculatorBlackboard.display)
       : calculatorBlackboard?.display;
-    const fallbackBlackboard = !MUGGLE_SUBJECTS.includes(subjectKey) && typeof kp !== "string" && !kp?.blackboard && !interactiveBlackboard
+    const fallbackBlackboard = typeof kp !== "string" && !kp?.blackboard && !interactiveBlackboard
       ? _buildLessonBlackboard(point, lesson, subjectKey, sd.subjectMeta?.name)
       : null;
-    const showBoardPreview = !!(fallbackBlackboard && !st.kpBoardSeen && !question);
+    const showBoardPreview = false;
     const blackboard = typeof kp === "string" ? null
       : ((showQ || showAnsweredMiniQuestion || showBoardInteraction || showCalcIntro || showCalcSequence || showCompletedCalcSequence || showCompletedCalcQuestion || showAnsweredCompletedCalcQuestion) && interactiveBlackboard
         ? _withActiveCalculator(interactiveBlackboard, calculatorBlackboard, calcDisplay, activeCalcKey)

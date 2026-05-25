@@ -38,6 +38,18 @@ function escapeHtml(text = "") {
   }[ch]));
 }
 
+function joinUniqueTextSegments(segments = []) {
+  const seen = new Set();
+  return segments
+    .map(text => String(text || "").trim().replace(/\s+/g, " "))
+    .filter(text => {
+      if (!text || seen.has(text)) return false;
+      seen.add(text);
+      return true;
+    })
+    .join(" ");
+}
+
 export function renderWorldPaper() {
   const mount = document.getElementById("world-paper-content");
   if (!mount) return;
@@ -57,7 +69,7 @@ export function renderWorldPaper() {
   };
 
   if (daily.summary || daily.mood) {
-    pushRow({ tag: "简报", text: [daily.mood, daily.summary].filter(Boolean).join(" ") });
+    pushRow({ tag: "简报", text: joinUniqueTextSegments([daily.mood, daily.summary]) });
   }
 
   (world.rumors || []).slice(-3).reverse().forEach(item => {

@@ -4,6 +4,10 @@ import { getSave, setSave } from './save-system.js';
 const MAX_LOG_ENTRIES = 400;
 const RENDER_LOG_LIMIT = 80;
 
+function collapseRepeatedSentences(text = "") {
+  return String(text).replace(/([^。！？.!?]+[。！？.!?])\s+\1/g, "$1");
+}
+
 export function addLog(text, type = 'player', house = '') {
   const d = getSave();
   if (!d.log) d.log = [];
@@ -78,7 +82,7 @@ export function renderLog() {
   }
     
     if (filters[logType]) {
-      p.innerText = displayText;
+      p.innerText = collapseRepeatedSentences(displayText);
       
       if (logType === 'npc') {
         let npcColor = '';
