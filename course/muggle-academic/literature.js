@@ -7,6 +7,7 @@
 
 import { lessonMap } from './literature-lesson.js';
 import { questionBank } from './literature-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "literature",
@@ -180,7 +181,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_literature = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -188,3 +189,6 @@ window.subject_literature = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_literature = subjectData;

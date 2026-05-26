@@ -1,5 +1,6 @@
 import { ANCIENT_RUNES_LESSON_PLAN, lessonMap } from './ancientRunes-lesson.js';
 import { questionBank } from './ancientRunes-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "ancientRunes",
@@ -1409,7 +1410,7 @@ export const quickStudyEvents = [
   }
 ];
 
-window.subject_ancientRunes = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -1419,3 +1420,6 @@ window.subject_ancientRunes = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_ancientRunes = subjectData;

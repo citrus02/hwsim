@@ -8,6 +8,10 @@
  */
 
 import { scoreToRating, HOUSE_POINTS_MAP } from './muggle-academic/system.js';
+import {
+  getRegisteredSubjectData,
+  registerSubjectData,
+} from './subject-registry.js';
 
 // ── 学科键名常量 ─────────────────────────────────────────────
 
@@ -75,6 +79,12 @@ export function getSubjectData(subjectKey) {
   if (subjectDataCache.has(subjectKey)) {
     return subjectDataCache.get(subjectKey);
   }
+
+  const registeredData = getRegisteredSubjectData(subjectKey);
+  if (registeredData) {
+    subjectDataCache.set(subjectKey, registeredData);
+    return registeredData;
+  }
   
   const winKey = SUBJECT_WIN_KEY[subjectKey];
   if (!winKey) return null;
@@ -115,6 +125,7 @@ window.CourseUtils = {
   SUBJECT_NAME_KEY,
   MUGGLE_SUBJECTS,
   HOGWARTS_SUBJECT_KEYS,
+  registerSubjectData,
   getSubjectData,
   clearSubjectDataCache,
   getAllLessons,

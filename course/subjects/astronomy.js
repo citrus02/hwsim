@@ -20,6 +20,7 @@
 
 import { lessonMap } from './astronomy-lesson.js';
 import { questionBank } from './astronomy-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 // ── 元数据 ────────────────────────────────────────────────────────
 export const subjectMeta = {
@@ -673,7 +674,7 @@ export const quickStudyEvents = [
 // ── 导出 ────────────────────────────────────────────────────────
 export { lessonMap, questionBank };
 
-window.subject_astronomy = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -683,3 +684,6 @@ window.subject_astronomy = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_astronomy = subjectData;

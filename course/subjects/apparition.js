@@ -1,5 +1,6 @@
 import { APPARITION_LESSON_PLAN, lessonMap } from './apparition-lesson.js';
 import { questionBank } from './apparition-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "apparition",
@@ -105,7 +106,7 @@ export const quickStudyEvents = [
   "你判断出一个公共场所目标不适合移形，教授给了你额外加分。"
 ];
 
-window.subject_apparition = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -115,3 +116,6 @@ window.subject_apparition = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_apparition = subjectData;

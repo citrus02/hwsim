@@ -20,6 +20,7 @@
 
 import { lessonMap } from './defense-lesson.js';
 import { questionBank } from './defense-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 // ── 元数据 ────────────────────────────────────────────────────────
 export const subjectMeta = {
@@ -632,7 +633,7 @@ export const quickStudyEvents = [
 ];
 
 // ── 全局挂载 ──────────────────────────────────────────────────────
-window.subject_defense = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -642,3 +643,6 @@ window.subject_defense = {
   lessonMap,
   questionBank,
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_defense = subjectData;

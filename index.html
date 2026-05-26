@@ -42,39 +42,7 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a1f4d' width='192' height='192'/><text x='96' y='130' font-size='130' font-family='Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji' text-anchor='middle' dominant-baseline='middle'>🏰</text></svg>">
 </head>
 <body>
-<script>
-  (function lockMobileViewport() {
-    var lastTouchEnd = 0;
-
-    function preventPinchZoom(event) {
-      if (event.touches && event.touches.length > 1) {
-        event.preventDefault();
-      }
-    }
-
-    function preventDoubleTapZoom(event) {
-      var now = Date.now();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }
-
-    function clampHorizontalScroll() {
-      if (window.scrollX !== 0) {
-        window.scrollTo(0, window.scrollY);
-      }
-    }
-
-    document.addEventListener('touchstart', preventPinchZoom, { passive: false });
-    document.addEventListener('touchmove', preventPinchZoom, { passive: false });
-    document.addEventListener('touchend', preventDoubleTapZoom, { passive: false });
-    document.addEventListener('gesturestart', function(event) { event.preventDefault(); }, { passive: false });
-    document.addEventListener('gesturechange', function(event) { event.preventDefault(); }, { passive: false });
-    document.addEventListener('gestureend', function(event) { event.preventDefault(); }, { passive: false });
-    window.addEventListener('scroll', clampHorizontalScroll, { passive: true });
-  })();
-</script>
+<script type="module" src="viewport-lock.js"></script>
 
 <noscript>
 <section id="seo-intro">
@@ -95,7 +63,7 @@
   <div class="create-header-row">
     <button id="music-button" class="music-btn">🎵</button>
     <h2>🧙🏻‍♀️ 创建你的巫师</h2>
-    <button class="quick-test-btn" onclick="quickTest()">⚡ 测试</button>
+    <button class="quick-test-btn" data-action="quick-test">⚡ 测试</button>
   </div>
 
   <!-- 卡片 1：姓名 + 随机名字 -->
@@ -152,12 +120,12 @@
   <div class="card" id="create-save-card">
     <div class="save-card-header">
       <div class="title">💾 存档 / 读档</div>
-      <button class="info-collapse-btn" onclick="toggleCreateSaveBox()">查看</button>
+      <button class="info-collapse-btn" data-action="toggle-create-save">查看</button>
     </div>
     <div id="saveBox-create" style="display:none; margin-top:12px;">
       <div class="save-btn-row">
-        <button class="save-btn load" onclick="window.openCreateLoad?.()">📂 读取存档</button>
-        <button class="save-btn reset" onclick="window.resetGame()">🔄 重置游戏</button>
+        <button class="save-btn load" data-action="open-create-load">📂 读取存档</button>
+        <button class="save-btn reset" data-action="reset-game">🔄 重置游戏</button>
       </div>
       <div id="slotBox-create"></div>
     </div>
@@ -186,13 +154,13 @@
     <div class="tab-screen active" id="tab-daily">
       <div class="status-grid">
         <span class="sg-left">当前时间：<span id="date">1991-09-02</span> <span id="weekday">周一</span> <span id="timeOfDay">夜晚</span> <span id="dateEvent"></span></span>
-        <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分 <span id="profileBtn" onclick="window.openProfilePanel?.()" class="info-emoji-btn" title="角色信息">📋</span></span>
-        <span class="sg-left">今日行动次数：<span id="actions">1</span>/3 <span id="timeTurnerBtn" onclick="window.openTimeTurnerPanel?.()" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
+        <span class="sg-right">🏅 <span id="stat-house-points">0</span> 分 <span id="profileBtn" data-action="open-profile" class="info-emoji-btn" title="角色信息">📋</span></span>
+        <span class="sg-left">今日行动次数：<span id="actions">1</span>/3 <span id="timeTurnerBtn" data-action="open-time-turner" class="bag-emoji-btn" title="时间转换器" style="display:none">⏳</span></span>
         <span class="sg-right sg-currency">
           <span class="coin-g">🟡<span id="stat-galleons">10</span></span>
           <span class="coin-s">⚪<span id="stat-sickles">0</span></span>
           <span class="coin-b">🟤<span id="stat-knuts">0</span></span>
-          <span id="bagBtn" onclick="window.openBagPanel?.()" class="bag-emoji-btn" title="背包">📦</span>
+          <span id="bagBtn" data-action="open-bag" class="bag-emoji-btn" title="背包">📦</span>
         </span>
       </div>
       <div class='world-paper' id='world-paper'>
@@ -230,25 +198,25 @@
     <div id="actionMain">
       <div class="title">✨ 要做点什么？</div>
       <div class="action-grid">
-        <button class="action-btn" onclick="window.openCoursePanel?.()">🪶 学习课程</button>
-        <button class="action-btn" onclick="window.openDuelPanel?.()">⚔️ 决斗俱乐部</button>
-        <button class="action-btn" onclick="window.openPotionPanel()">⚗️ 熬制魔药</button>
-        <button class="action-btn" id="exploreBtn" onclick="window.openExplorePanel()">🗺️ 探索城堡</button>
-        <button class="action-btn" id="adventureBtn" onclick="window.openAdventurePanel()" style="display: none;">🚪 外出探险</button>
-        <button class="action-btn" onclick="window.doNothing?.()">😴 什么也不做</button>
+        <button class="action-btn" data-action="open-course">🪶 学习课程</button>
+        <button class="action-btn" data-action="open-duel">⚔️ 决斗俱乐部</button>
+        <button class="action-btn" data-action="open-potion">⚗️ 熬制魔药</button>
+        <button class="action-btn" id="exploreBtn" data-action="open-explore">🗺️ 探索城堡</button>
+        <button class="action-btn" id="adventureBtn" data-action="open-adventure" style="display: none;">🚪 外出探险</button>
+        <button class="action-btn" data-action="do-nothing">😴 什么也不做</button>
       </div>
     </div>
 
     <div id="exploreMain" style="display: none;">
       <div class="title" id="exploreTitle">🗺️ 探索城堡</div>
       <div class="explore-container" id="explore-container"></div>
-      <button class="action-btn back-btn" onclick="window.closeExplorePanel()">← 返回行动</button>
+      <button class="action-btn back-btn" data-action="close-explore">← 返回行动</button>
     </div>
 
     <div id="adventureMain" style="display: none;">
       <div class="title" id="adventureTitle">🚪 外出探险</div>
       <div class="explore-container" id="adventure-container"></div>
-      <button class="action-btn back-btn" onclick="window.closeAdventurePanel()">← 返回行动</button>
+      <button class="action-btn back-btn" data-action="close-adventure">← 返回行动</button>
     </div>
   </div>
 
@@ -256,281 +224,27 @@
   <div class="card">
     <div class="save-card-header">
       <div class="title">💾 存档 / 读档</div>
-      <button class="info-collapse-btn" id="saveBtnToggle" onclick="window.toggleSavePanel()">查看</button>
+      <button class="info-collapse-btn" id="saveBtnToggle" data-action="toggle-save">查看</button>
     </div>
     <div id="saveBox">
       <div class="save-btn-row">
-        <button class="save-btn save" onclick="window.exportSaveFile?.()">💾 导出存档</button>
-        <button class="save-btn load" onclick="window.importSaveFile?.()">📂 导入存档</button>
-        <button class="save-btn reset" onclick="window.resetGame()">🔄 重置</button>
+        <button class="save-btn save" data-action="export-save">💾 导出存档</button>
+        <button class="save-btn load" data-action="import-save">📂 导入存档</button>
+        <button class="save-btn reset" data-action="reset-game">🔄 重置</button>
       </div>
       <div id="slotBox"></div>
     </div>
   </div>
 </div>
 
-<script>
-/* ✅ FIX #5：课程列表提取为全局常量，不再重复定义 */
-const COURSES = [
-  "变形术","魔咒学","魔药学","黑魔法防御术",
-  "草药学","魔法史","天文学","飞行课",
-  "算术占卜","古代魔文","占卜学","保护神奇动物",
-  "麻瓜研究","幻影移形","炼金术"
-];
-
-/* ✅ FIX #6：提示框样式抽成公共函数 */
-function showTipBox(elementId, html) {
-  const box = document.getElementById(elementId);
-  box.style.display = "block";
-  box.style.background = "#2a3b66";
-  box.style.color = "#ffffff";
-  box.style.padding = "12px";
-  box.style.borderRadius = "8px";
-  box.style.marginTop = "10px";
-  box.innerHTML = html;
-}
-
-/* ✅ FIX #1 & #8：统一存档数据结构生成函数 */
-function buildSaveData(opts) {
-  const courseMap = {};
-  COURSES.forEach(c => courseMap[c] = 0);
-  return {
-    player: {
-      name:  opts.name  || "无名巫师",
-      blood: opts.blood || "混血巫师",
-      house: opts.house || "格兰芬多",
-      wand:  opts.wand  || "未知魔杖",
-      wandAccepted: opts.wandAccepted ?? true,
-      galleons: 10,
-      sickles: 0,
-      knuts: 0
-    },
-    time: {
-      year: 1991,
-      month: 9,
-      day: 2,
-      dailyActionLeft: 1,
-      nowTime: "夜晚",
-      currentDate: "1991-09-02"
-    },
-    log: opts.log || ["✅ 成功进入霍格沃茨"],
-    course: courseMap,
-    bag: {
-      material: [],
-      potion:   [],
-      item:     [],
-      wizardCard: []
-    },
-    affinity: {},
-    housePoints: { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 },
-    duelRecord: { wins: 0, losses: 0 },
-    quests: {},
-    spellList: [],
-    spellProficiency: {},
-    darkMagicRecord: 0,
-    explore: {},
-    story: { completed: {}, active: null },
-    knownCharacters: [],
-    knownSpells: []
-  };
-}
-
-// 全局测试通道
-function quickTest() {
-  let savedTime = null;
-  let savedCourse = null;
-  let savedHousePoints = null;
-  let savedAffinity = null;
-  let savedKnownCharacters = null;
-  let savedBag = null;
-  if (window.saveSys?.getSave) {
-    try {
-      const old = window.saveSys.getSave();
-      savedTime = old.time || null;
-      savedCourse = old.course || null;
-      savedHousePoints = old.housePoints || null;
-      savedAffinity = old.affinity || null;
-      savedKnownCharacters = old.knownCharacters || null;
-      savedBag = old.bag || null;
-    } catch(e) {}
-  }
-
-  const data = window.saveSys?.createNewSave?.({
-    name: "无名巫师",
-    blood: "混血巫师",
-    house: "格兰芬多",
-    wand: "冬青木・凤凰羽毛",
-    wandAccepted: true,
-    log: ["✅ 测试通道已进入"]
-  });
-
-  if (!data) {
-    alert("Save system is still loading. Please try again.");
-    return;
-  }
-
-  if (savedTime) data.time = savedTime;
-  if (savedCourse) data.course = { ...data.course, ...savedCourse };
-  if (savedHousePoints) data.housePoints = savedHousePoints;
-  if (savedAffinity) data.affinity = savedAffinity;
-  if (savedKnownCharacters) data.knownCharacters = savedKnownCharacters;
-  if (savedBag) data.bag = savedBag;
-
-  data.timeTurner = { isTraveling: false, originalTime: null, travelHistory: [], usesLeft: -1, isTestMode: true };
-  if (!data.bag) data.bag = { item: [] };
-  if (!data.bag.item.some(i => i.name === "时间转换器")) {
-    data.bag.item.push({ name: "时间转换器", emoji: "⏳", count: 1 });
-  }
-
-  if (!window.saveSys?.setSave) {
-    alert("Save system is still loading. Please try again.");
-    return;
-  }
-  window.saveSys.setSave(data);
-  document.getElementById("screen-create").classList.remove("active");
-  document.getElementById("screen-main").classList.add("active");
-
-  setTimeout(() => {
-    if (window.loadTimeFromSave) window.loadTimeFromSave();
-    if (window.refreshAll) refreshAll();
-  }, 100);
-}
-
-// 标签页切换
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-screen').forEach(s => s.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(`tab-${tab}`).classList.add('active');
-
-      if (tab === 'affinity') {
-        setTimeout(() => window.renderAffinityInline?.(), 50);
-      }
-      if (tab === 'quest') {
-        setTimeout(() => window.renderQuestPanel?.(), 50);
-      }
-    });
-  });
-});
-
-// ✅ 创建界面存档面板切换
-function toggleCreateSaveBox() {
-  const box = document.getElementById('saveBox-create');
-  box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  if (box.style.display === 'block') {
-    window.openCreateLoad?.();
-  }
-}
-
-// ✅ 最终正确：无存档 → 隐藏创建界面的【存档卡片】
-document.addEventListener('DOMContentLoaded', () => {
-  const card = document.getElementById('create-save-card');
-  if (!card) return;
-
-  const hasSave = () => {
-    return window.saveSys?.hasAnySave?.() || false;
-  };
-
-  card.style.display = hasSave() ? 'block' : 'none';
-});
-</script>
+<script type="module" src="create-screen.js"></script>
 
 <!-- 核心：随机生成 + 开始游戏 -->
-<script type="module">
-import { initRandomGenerators, initSortingHat, initWandSelection, player } from './random-generator.js';
-import { createNewSave, getSave, hasAnySave, setSave } from './save-system.js';
+<script type="module" src="game-start.js"></script>
 
-window.addEventListener('load', () => {
-  initRandomGenerators();
-  initSortingHat();
-  initWandSelection();
+<script type="module" src="audio-init.js"></script>
 
-  document.getElementById('start-game').onclick = () => {
-    if (!player.wandAccepted) {
-      showTipBox('wand-result', `
-        👴🏻 奥利凡德：<i>孩子，你还没有获得魔杖的认可！</i><br>
-        🪄 是魔杖选择巫师，不是巫师选择魔杖。<br>
-        ✨ 请先抽取魔杖并试用，成功后才能进入霍格沃茨！
-      `);
-      return;
-    }
-
-    const blood = document.getElementById('blood').value;
-    const house = document.getElementById('house').value;
-    if (!blood || !house) {
-      showTipBox('wand-result', `
-        🧙🏻‍♀️ 米勒娃 · 麦格：<i>请先登记你的出身与学院，再踏入霍格沃茨的校门。</i><br>
-        📚 规矩理应遵守，秩序不容懈怠，望各位谨记分寸。
-      `);
-      return;
-    }
-
-    const data = createNewSave({
-      name:  document.getElementById('name').value.trim(),
-      blood,
-      house,
-      wand:  document.getElementById('wand').value.trim(),
-      wandAccepted: true,
-      log: ["✅ 成功进入霍格沃茨"]
-    });
-
-    setSave(data);
-    document.getElementById("screen-create").classList.remove("active");
-    document.getElementById("screen-main").classList.add("active");
-
-    setTimeout(() => {
-      if (window.loadTimeFromSave) window.loadTimeFromSave();
-      if (window.refreshAll) refreshAll();
-    }, 100);
-  };
-});
-
-// ✅ 页面加载时：有存档则自动跳转主界面
-document.addEventListener('DOMContentLoaded', () => {
-  if (hasAnySave()) {
-    try {
-      const data = getSave();
-      if (data.player?.name) {
-        document.getElementById("screen-create").classList.remove("active");
-        document.getElementById("screen-main").classList.add("active");
-        setTimeout(() => { if (window.refreshAll) window.refreshAll(); }, 100);
-      }
-    } catch (e) { console.warn('[auto-load] parse save failed:', e); }
-  }
-});
-</script>
-
-<script type="module">
-  import { initMusicSystem, setBGMSource } from './audio.js';
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setBGMSource('./audio/Prologue.mp3');
-      initMusicSystem();
-
-      const musicBtnMain = document.getElementById('music-button-main');
-      const musicBtn = document.getElementById('music-button');
-      if (musicBtnMain && musicBtn) {
-        musicBtnMain.onclick = musicBtn.onclick;
-      }
-    });
-  } else {
-    setBGMSource('./audio/Prologue.mp3');
-    initMusicSystem();
-  }
-</script>
-
-<script type="module">
-  import { initVersionManager } from './version.js';
-  try {
-    initVersionManager();
-  } catch (e) {
-    console.error('❌ initVersionManager 出错:', e);
-  }
-</script>
+<script type="module" src="version-init.js"></script>
 
 <script type="module" src="affinity-students.js"></script>
 <script type="module" src="affinity-system.js"></script>
@@ -592,207 +306,11 @@ document.addEventListener('DOMContentLoaded', () => {
 <script type="module" src="quest-ui.js"></script>
 <script type="module" src="story-events.js"></script>
 <script type="module" src="story-engine.js"></script>
+<script type="module" src="api-settings.js"></script>
+<script type="module" src="panel-toggles.js"></script>
+<script type="module" src="action-bindings.js"></script>
 
 <!-- 折叠展开按钮 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.info-collapse-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const name = this.getAttribute('data-toggle');
-      const el = document.getElementById(name + 'Box');
-      if (el) {
-        el.style.display = el.style.display === 'none' ? 'block' : 'none';
-      }
-    });
-  });
-});
-
-window.toggleSavePanel = function() {
-  const saveBox = document.getElementById('saveBox');
-  const btn = document.getElementById('saveBtnToggle');
-
-  if (saveBox.style.display === 'none' || !saveBox.style.display) {
-    saveBox.style.display = 'block';
-    btn.textContent = '收起';
-    window.openSave();
-  } else {
-    saveBox.style.display = 'none';
-    btn.textContent = '查看';
-  }
-};
-
-// API Key 设置功能
-document.addEventListener('DOMContentLoaded', function() {
-  const apiModeRadios = document.querySelectorAll('input[name="api-mode"]');
-  apiModeRadios.forEach(radio => {
-    radio.addEventListener('change', function() {
-      const customInput = document.getElementById('custom-api-input');
-      if (this.value === 'custom') {
-        customInput.style.display = 'block';
-      } else {
-        customInput.style.display = 'none';
-      }
-    });
-  });
-
-  document.getElementById('api-provider')?.addEventListener('change', function() {
-    updateApiNote(this.value);
-  });
-
-  document.getElementById('save-api-settings')?.addEventListener('click', saveApiSettings);
-  document.getElementById('reset-api-settings')?.addEventListener('click', resetApiSettings);
-  document.addEventListener('click', function(e) {
-    if (e.target?.closest?.('#api-advanced-toggle')) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleApiAdvanced();
-    }
-  });
-
-  loadApiSettings();
-});
-
-const API_PROVIDERS = {
-  openai: { name: 'GPT (OpenAI)', url: 'https://platform.openai.com/', model: 'gpt-4o-mini', keyHint: '格式通常为 sk-xxx' },
-  claude: { name: 'Claude (Anthropic)', url: 'https://console.anthropic.com/', model: 'claude-3-haiku-20240307', keyHint: '格式通常为 sk-ant-api-xxx' },
-  doubao: { name: '豆包 (火山方舟)', url: 'https://console.volcengine.com/ark/', model: 'doubao-1-5-pro-32k-250115', keyHint: '格式通常为 ak-xxx' },
-  gemini: { name: 'Gemini (Google)', url: 'https://ai.google.dev/', model: 'gemini-1.5-flash-latest', keyHint: '格式通常为 AIza-xxx' },
-  qianwen: { name: '千问 (阿里云)', url: 'https://dashscope.aliyun.com/', model: 'qwen-turbo', keyHint: '格式通常为 sk-xxx' },
-  glm: { name: 'GLM (智谱)', url: 'https://open.bigmodel.cn/', model: 'glm-4-flash', keyHint: '使用平台生成的 Bearer Token' },
-  kimi: { name: 'Kimi (Moonshot)', url: 'https://platform.moonshot.cn/', model: 'moonshot-v1-8k', keyHint: '格式通常为 sk-xxx' },
-  deepseek: { name: 'DeepSeek (深度求索)', url: 'https://platform.deepseek.com/', model: 'deepseek-v4-flash', keyHint: '格式通常为 sk-xxx' },
-  minimax: { name: 'Minimax', url: 'https://platform.minimax.io/', model: 'MiniMax-M2.7', keyHint: '按平台控制台生成' },
-  azure: { name: 'Azure OpenAI (Microsoft)', url: 'https://azure.microsoft.com/', model: '', keyHint: '使用 Azure 门户生成的 Key', needsBaseUrl: true }
-};
-
-function updateApiNote(provider) {
-  const noteEl = document.getElementById('api-note');
-  const baseUrlInput = document.getElementById('api-base-url');
-  const modelInput = document.getElementById('api-model-input');
-  const keyInput = document.getElementById('api-key-input');
-
-  const info = API_PROVIDERS[provider];
-  if (keyInput) {
-    keyInput.placeholder = `输入 API Key，${info?.keyHint || '按平台控制台生成'}`;
-  }
-  if (modelInput) {
-    const modelHint = info?.model ? `默认 ${info.model}` : 'Azure 可留空';
-    modelInput.placeholder = `模型名（不知道就留空，${modelHint}）`;
-  }
-  if (baseUrlInput) baseUrlInput.placeholder = provider === 'azure'
-    ? '完整 Azure 部署地址'
-    : '自定义 API 地址 / 后端代理地址（不知道就留空）';
-
-  if (info) {
-    noteEl.innerHTML = `<strong>💡 提示：</strong>密钥只保存在本地浏览器；调用 AI 时会发送给当前选择的 API 平台。可在 <a href="${info.url}" target="_blank">${info.name} 平台</a> 获取。`;
-  }
-}
-
-function toggleApiAdvanced() {
-  const panel = document.getElementById('api-advanced-panel');
-  const button = document.getElementById('api-advanced-toggle');
-  panel?.classList.toggle('show');
-  if (button && panel) {
-    button.textContent = panel.classList.contains('show') ? '▾ 高级设置' : '▸ 高级设置';
-  }
-}
-
-function loadApiSettings() {
-  const savedMode = localStorage.getItem('apiMode') || 'default';
-  const savedKey = localStorage.getItem('apiKey') || '';
-  const savedProvider = localStorage.getItem('apiProvider') || 'deepseek';
-  const savedBaseUrl = localStorage.getItem('apiBaseUrl') || '';
-  const savedModel = localStorage.getItem('apiModel') || '';
-
-  const modeRadio = document.querySelector(`input[name="api-mode"][value="${savedMode}"]`);
-  const providerSelect = document.getElementById('api-provider');
-  const keyInput = document.getElementById('api-key-input');
-  const baseUrlInput = document.getElementById('api-base-url');
-  const modelInput = document.getElementById('api-model-input');
-
-  if (modeRadio) modeRadio.checked = true;
-  if (providerSelect) providerSelect.value = savedProvider;
-  if (keyInput) keyInput.value = savedKey;
-  if (baseUrlInput) baseUrlInput.value = savedBaseUrl;
-  if (modelInput) modelInput.value = savedModel;
-
-  const customInput = document.getElementById('custom-api-input');
-
-  updateApiNote(savedProvider);
-
-  if (savedMode === 'custom') {
-    customInput.style.display = 'block';
-  } else {
-    customInput.style.display = 'none';
-  }
-
-  const advancedPanel = document.getElementById('api-advanced-panel');
-  const advancedToggle = document.getElementById('api-advanced-toggle');
-  if (advancedPanel && (savedBaseUrl || savedModel)) {
-    advancedPanel.classList.add('show');
-    if (advancedToggle) advancedToggle.textContent = '▾ 高级设置';
-  }
-}
-
-function saveApiSettings() {
-  const mode = document.querySelector('input[name="api-mode"]:checked')?.value || 'default';
-  const apiKey = document.getElementById('api-key-input')?.value || '';
-  const provider = document.getElementById('api-provider')?.value || 'deepseek';
-  const baseUrl = document.getElementById('api-base-url')?.value || '';
-  const model = document.getElementById('api-model-input')?.value || '';
-
-  localStorage.setItem('apiMode', mode);
-  localStorage.setItem('apiKey', apiKey);
-  localStorage.setItem('apiProvider', provider);
-  localStorage.setItem('apiBaseUrl', baseUrl);
-  localStorage.setItem('apiModel', model);
-
-  showApiStatus('success', '✓ 设置已保存！');
-}
-
-function resetApiSettings() {
-  localStorage.removeItem('apiMode');
-  localStorage.removeItem('apiKey');
-  localStorage.removeItem('deepseek_api_key');
-  localStorage.removeItem('apiProvider');
-  localStorage.removeItem('apiBaseUrl');
-  localStorage.removeItem('apiModel');
-
-  const defaultModeRadio = document.querySelector('input[name="api-mode"][value="default"]');
-  const providerSelect = document.getElementById('api-provider');
-  const keyInput = document.getElementById('api-key-input');
-  const baseUrlInput = document.getElementById('api-base-url');
-  const modelInput = document.getElementById('api-model-input');
-
-  if (defaultModeRadio) defaultModeRadio.checked = true;
-  if (providerSelect) providerSelect.value = 'deepseek';
-  if (keyInput) keyInput.value = '';
-  if (baseUrlInput) baseUrlInput.value = '';
-  if (modelInput) modelInput.value = '';
-  document.getElementById('custom-api-input').style.display = 'none';
-  document.getElementById('api-advanced-panel')?.classList.remove('show');
-  const advancedToggle = document.getElementById('api-advanced-toggle');
-  if (advancedToggle) advancedToggle.textContent = '▸ 高级设置';
-
-  updateApiNote('deepseek');
-  showApiStatus('success', '✓ 已重置为默认设置');
-}
-
-function showApiStatus(type, message) {
-  const statusDiv = document.getElementById('api-status');
-  const statusText = document.getElementById('api-status-text');
-
-  statusDiv.className = type;
-  statusText.textContent = message;
-  statusDiv.style.display = 'block';
-
-  setTimeout(() => {
-    statusDiv.style.display = 'none';
-  }, 3000);
-}
-
-</script>
-
 <!-- 反馈与设置弹窗 -->
 <div id="feedback-modal" class="modal">
     <div class="modal-content">
@@ -887,36 +405,7 @@ function showApiStatus(type, message) {
 
 <!-- 不蒜子计数 + 降级方案 -->
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<script>
-    function initVisitorCounter() {
-        const counterSpan = document.getElementById('busuanzi_value_site_uv');
-        const fallbackSpan = document.getElementById('visitor-count');
-
-        if (!counterSpan && fallbackSpan) {
-            let checkCount = 0;
-            const interval = setInterval(function() {
-                const busuanziValue = document.getElementById('busuanzi_value_site_uv');
-                if (busuanziValue && busuanziValue.innerText && busuanziValue.innerText !== '') {
-                    fallbackSpan.innerText = busuanziValue.innerText;
-                    clearInterval(interval);
-                } else if (checkCount > 30) {
-                    let localCount = localStorage.getItem('hogwarts_visitors');
-                    if (localCount === null) {
-                        localCount = Math.floor(Math.random() * 100 + 42);
-                    } else {
-                        localCount = parseInt(localCount) + 1;
-                    }
-                    localStorage.setItem('hogwarts_visitors', localCount);
-                    fallbackSpan.innerText = localCount;
-                    clearInterval(interval);
-                }
-                checkCount++;
-            }, 100);
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', initVisitorCounter);
-</script>
+<script type="module" src="visitor-counter.js"></script>
 
 <!-- 霍格沃茨模拟器 · 页尾版权声明 -->
 <footer class="site-footer">

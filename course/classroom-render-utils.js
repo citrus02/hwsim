@@ -375,23 +375,32 @@ function _renderSymmetryBreaking() {
     </div>`;
 }
 
+const BOARD_VISUAL_RENDERERS = new Map([
+  ["gesturePath", _renderGesturePath],
+  ["potionFlow", _renderPotionFlow],
+  ["plantDiagram", _renderPlantDiagram],
+  ["starMap", _renderStarMap],
+  ["flightRoute", _renderFlightRoute],
+  ["plateBoundaries", _renderPlateBoundaries],
+  ["hastingsManeuver", _renderHastingsManeuver],
+  ["allianceChain", _renderAllianceChain],
+  ["riverTransport", _renderRiverTransport],
+  ["pressureBelts", _renderPressureBelts],
+  ["angleElevation", _renderAngleElevation],
+  ["dativeCase", _renderDativeCase],
+  ["pnJunction", _renderPnJunction],
+  ["compoundField", _renderCompoundField],
+  ["symmetryBreaking", _renderSymmetryBreaking],
+]);
+
+export function registerBoardVisualRenderer(type, renderer) {
+  if (!type || typeof renderer !== "function") return false;
+  BOARD_VISUAL_RENDERERS.set(type, renderer);
+  return true;
+}
+
 function _renderBoardVisual(type) {
-  if (type === "gesturePath") return _renderGesturePath();
-  if (type === "potionFlow") return _renderPotionFlow();
-  if (type === "plantDiagram") return _renderPlantDiagram();
-  if (type === "starMap") return _renderStarMap();
-  if (type === "flightRoute") return _renderFlightRoute();
-  if (type === "plateBoundaries") return _renderPlateBoundaries();
-  if (type === "hastingsManeuver") return _renderHastingsManeuver();
-  if (type === "allianceChain") return _renderAllianceChain();
-  if (type === "riverTransport") return _renderRiverTransport();
-  if (type === "pressureBelts") return _renderPressureBelts();
-  if (type === "angleElevation") return _renderAngleElevation();
-  if (type === "dativeCase") return _renderDativeCase();
-  if (type === "pnJunction") return _renderPnJunction();
-  if (type === "compoundField") return _renderCompoundField();
-  if (type === "symmetryBreaking") return _renderSymmetryBreaking();
-  return "";
+  return BOARD_VISUAL_RENDERERS.get(type)?.() || "";
 }
 
 function _blackboardLineClass(line) {
@@ -426,7 +435,7 @@ export function _renderBlackboard(bb, uniqueId = "") {
       const lineClass = _blackboardLineClass(line);
       if (audio) {
         const id = `audio-btn-${uniqueId}-${idx}`;
-        return `<div class="cls-bb-formula-line cls-bb-line-audio${lineClass}"><button id="${id}" class="cls-audio-btn" title="Play pronunciation" onclick="playLatinAudio('${audio.src}', '${id}')">Audio</button><span class="cls-bb-line-text">${line}</span></div>`;
+        return `<div class="cls-bb-formula-line cls-bb-line-audio${lineClass}"><button id="${id}" class="cls-audio-btn" title="Play pronunciation" data-audio-src="${_escapeAttr(audio.src)}">Audio</button><span class="cls-bb-line-text">${line}</span></div>`;
       }
       return `<div class="cls-bb-formula-line${lineClass}">${line}</div>`;
     }).join("");
@@ -439,6 +448,14 @@ export function _renderBlackboard(bb, uniqueId = "") {
 }
 
 const _latinAudioMap = new Map();
+
+function _escapeAttr(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 
 export function playLatinAudio(src, buttonId) {
   const btn = document.getElementById(buttonId);
@@ -461,6 +478,12 @@ export function playLatinAudio(src, buttonId) {
   };
   audio.play().catch(e => console.error('Audio playback failed:', e));
 }
+
+document.addEventListener("click", event => {
+  const button = event.target.closest(".cls-audio-btn[data-audio-src]");
+  if (!button) return;
+  playLatinAudio(button.dataset.audioSrc, button.id);
+});
 
 window.playLatinAudio = playLatinAudio;
 

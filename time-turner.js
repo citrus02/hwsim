@@ -132,7 +132,7 @@ function openTimeTurnerPanel() {
   panel.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;";
   panel.innerHTML = `
     <div style="background:#1a1a2e;border:2px solid #c9a84c;border-radius:16px;padding:28px 32px;max-width:420px;width:90%;color:#e0d8c0;position:relative;">
-      <button onclick="document.getElementById('timeTurnerPanel').remove()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:20px;cursor:pointer;">✕</button>
+      <button data-tt-action="close" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:20px;cursor:pointer;">✕</button>
       <div style="text-align:center;margin-bottom:20px;">
         <div style="font-size:2.4em;">⏳</div>
         <div style="font-size:18px;font-weight:bold;color:#c9a84c;margin-top:8px;">时间转换器</div>
@@ -170,6 +170,10 @@ function openTimeTurnerPanel() {
   document.body.appendChild(panel);
 
   panel.addEventListener('click', (e) => {
+    if (e.target.closest("[data-tt-action='close']")) {
+      panel.remove();
+      return;
+    }
     if (e.target === panel) panel.remove();
   });
 
@@ -362,7 +366,7 @@ function _renderReturnPanel() {
   panel.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;";
   panel.innerHTML = `
     <div style="background:#1a1a2e;border:2px solid #c9a84c;border-radius:16px;padding:28px 32px;max-width:380px;width:90%;color:#e0d8c0;position:relative;">
-      <button onclick="document.getElementById('timeTurnerPanel').remove()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:20px;cursor:pointer;">✕</button>
+      <button data-tt-action="close" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:20px;cursor:pointer;">✕</button>
       <div style="text-align:center;margin-bottom:20px;">
         <div style="font-size:2.4em;">⏳</div>
         <div style="font-size:18px;font-weight:bold;color:#c9a84c;margin-top:8px;">时间转换器</div>
@@ -387,6 +391,10 @@ function _renderReturnPanel() {
   document.body.appendChild(panel);
 
   panel.addEventListener('click', (e) => {
+    if (e.target.closest("[data-tt-action='close']")) {
+      panel.remove();
+      return;
+    }
     if (e.target === panel) panel.remove();
   });
 

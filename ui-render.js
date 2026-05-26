@@ -262,7 +262,7 @@ export function openProfilePanel() {
   panel.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
       <div style="font-size:16px; font-weight:bold; color:#f8c850;">📋 角色信息</div>
-      <button onclick="window.closeProfilePanel()" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
+      <button data-profile-action="close" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
     </div>
     <div class="info-grid-2x2">
       <div class="ig-cell">
@@ -328,6 +328,12 @@ export function openProfilePanel() {
       </div>
     </div>
   `;
+
+  panel.addEventListener('click', event => {
+    if (event.target.closest("[data-profile-action='close']")) {
+      closeProfilePanel();
+    }
+  });
 
   overlay.appendChild(panel);
   document.body.appendChild(overlay);

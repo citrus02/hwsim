@@ -766,6 +766,7 @@ function ensureWorld(data = getSave()) {
   if (!Array.isArray(data.world.hooks)) data.world.hooks = [];
   if (!data.world.locationStatus || typeof data.world.locationStatus !== "object") data.world.locationStatus = {};
   if (!data.world.daily || typeof data.world.daily !== "object") data.world.daily = {};
+  if (!data.world.npcMemory || typeof data.world.npcMemory !== "object") data.world.npcMemory = {};
   if (typeof data.world.dateBriefed !== "string") data.world.dateBriefed = "";
   return data.world;
 }
@@ -778,6 +779,24 @@ function rememberWorldEvent(data, entry) {
     ...entry,
   });
   world.memory = world.memory.slice(-80);
+}
+
+function rememberNpcMemory(data, characterKey, entry) {
+  if (!characterKey) return;
+  const world = ensureWorld(data);
+  if (!Array.isArray(world.npcMemory[characterKey])) world.npcMemory[characterKey] = [];
+  world.npcMemory[characterKey].push({
+    date: data.time?.currentDate || getCurrentDate(),
+    time: data.time?.nowTime || "上午",
+    ...entry,
+  });
+  world.npcMemory[characterKey] = world.npcMemory[characterKey].slice(-6);
+}
+
+export function getNpcMemory(characterKey, limit = 6) {
+  const data = getSave();
+  const memory = ensureWorld(data).npcMemory?.[characterKey];
+  return Array.isArray(memory) ? memory.slice(-limit) : [];
 }
 
 function createWorldHook(data, hook) {
@@ -808,6 +827,7 @@ function getActiveHooks(filter = {}) {
   const world = ensureWorld(data);
   return world.hooks.filter(hook => {
     if (hook.consumed) return false;
+    if (hook.sourceText && String(hook.sourceText).includes("世界线索选择")) return false;
     if (filter.location && hook.location !== filter.location) return false;
     if (filter.characterKey && hook.characterKey !== filter.characterKey) return false;
     if (filter.type && hook.type !== filter.type) return false;
@@ -1003,6 +1023,29 @@ function getDirectRelationDelta(hook) {
   return 1;
 }
 
+function isStaffCharacter(key) {
+  return [
+    "augustusFenwick",
+    "serafinaMoody",
+    "primroseSprout",
+    "tavishMacLaren",
+    "herbertBinns",
+    "constanceShacklebolt",
+    "felixWeasley",
+    "elizaLovegood",
+    "mirandaPercival",
+    "minervaMcGonagall",
+    "severusSnape",
+    "filiusFlitwick",
+    "pomonaSprout",
+    "rolandaHooch",
+    "sybillTrelawney",
+    "auroraSinistra",
+    "remusLupin",
+    "albusDumbledore",
+  ].includes(key);
+}
+
 function getDirectBackstory(hook) {
   const relationDelta = getDirectRelationDelta(hook);
   const positive = relationDelta >= 0;
@@ -1023,8 +1066,39 @@ function getDirectBackstory(hook) {
     draco: "马尔福记住的不是那件小事本身，而是你让他在旁人面前失了些主动权。他不一定要立刻报复，但他一定会先把账记下。",
   };
   return byKey[hook.characterKey] || (positive
-    ? "对方不是无缘无故靠近你。你之前某个小小的选择被记住了，只是这份好意来得很轻，不像正式道谢。"
-    : "对方不是随便看你不顺眼。你之前某个小动作碰到了对方在意的地方，所以这次反应才会显得格外明显。");
+    ? (isStaffCharacter(hook.characterKey)
+      ? "教授没有把这当成值得当众表扬的事，但那一瞬间的停顿说明，她确实把你的表现和之前几次联系在了一起。"
+      : "对方不是无缘无故靠近你。你之前某个小小的选择被记住了，只是这份好意来得很轻，不像正式道谢。")
+    : (isStaffCharacter(hook.characterKey)
+      ? "教授的目光不是随便落下来的。你刚才某个动作让她想起了你之前几次不太稳妥的表现。"
+      : "对方不是随便看你不顺眼。你之前某个小动作碰到了对方在意的地方，所以这次反应才会显得格外明显。"));
+}
+
+function buildStaffDirectIntro(hook) {
+  const name = hook.characterName || "教授";
+  const byKey = {
+    rolandaHooch: [
+      `${name}在场地边停下，扫了一眼你的扫帚和站姿。`,
+      "她没有笑，也没有摆出要训人的架势，只是用裁判看犯规动作的那种眼神看着你，像是刚好发现了一点值得纠正的地方。",
+    ],
+    sybillTrelawney: [
+      `${name}从厚重的披肩后抬起眼睛，像是刚从一团云雾里看见你。`,
+      "她的声音压得很轻，带着一点神秘兮兮的郑重：“亲爱的，你刚才的神情很有预兆。”",
+    ],
+    auroraSinistra: [
+      `${name}在塔楼边收起星图，抬头看了看天色，又看向你。`,
+      "她不像是临时起意，更像是刚才某个细节让她决定多提醒你一句。",
+    ],
+    herbertBinns: [
+      `${name}的声音仍然平板，却在你经过时少见地停顿了一下。`,
+      "他似乎没有完全意识到自己叫住了你，只是把刚才课堂里的某个事实又补充得更精确了一点。",
+    ],
+  };
+  const lines = byKey[hook.characterKey] || [
+    `${name}在你经过时停了一下。`,
+    "那不是一场正式谈话，更像教授在忙碌间顺手拦住你，补上一句刚才没说完的提醒。",
+  ];
+  return lines.join("\n\n");
 }
 
 function buildDirectCharacterIntro(hook) {
@@ -1071,6 +1145,9 @@ function buildDirectCharacterIntro(hook) {
       "她似乎一点也不觉得这句话需要解释，但也愿意等你问下去。",
     ],
   };
+  if (!byKey[hook.characterKey] && isStaffCharacter(hook.characterKey)) {
+    return buildStaffDirectIntro(hook);
+  }
   const lines = byKey[hook.characterKey] || [
     `你找到${name}时，对方还记得刚才那件小事。`,
     "这不像传闻，更像一次可以顺势接上的短暂交谈。",
@@ -1091,12 +1168,18 @@ function getHookDisplaySource(hook) {
     filiusFlitwick: "弗立维教授听说你认真练习咒语，显得相当高兴。",
     pomonaSprout: "斯普劳特教授注意到你小心避开了温室边的幼苗。",
     remusLupin: "卢平教授温和地问起你最近的练习。",
+    rolandaHooch: "霍琦夫人在场地边停下，注意到你的扫帚和站姿。",
+    sybillTrelawney: "特里劳妮教授像是从茶杯和云雾之间看见了什么，忽然叫住你。",
+    auroraSinistra: "辛尼斯特拉教授在塔楼边收起星图，顺口提醒了你一句。",
+    herbertBinns: "宾斯教授少见地在讲述之外停顿了一下，像是想起你刚才的回答。",
     fredWeasley: "弗雷德冲你眨了眨眼，像是把你列入了某个旁观名单。",
     georgeWeasley: "乔治顺手帮你挡开了一场小麻烦。",
     ginnyWeasley: "金妮匆匆经过时小声向你问好。",
     luna: "卢娜认真告诉你，她觉得你今天身边没有骚扰虻。",
   };
-  return byKey[hook.characterKey] || "刚才那件小事让你们之间多了一点可以继续说下去的话题。";
+  return byKey[hook.characterKey] || (isStaffCharacter(hook.characterKey)
+    ? `${hook.characterName || "教授"}似乎还有一句课堂之外的提醒要给你。`
+    : "刚才那件小事让你们之间多了一点可以继续说下去的话题。");
 }
 
 function buildCharacterIntro(hook) {
@@ -1171,6 +1254,80 @@ function buildCharacterIntro(hook) {
 function buildDirectCharacterChoices(hook, choice) {
   const name = hook.characterName || "对方";
   const backstory = getDirectBackstory(hook);
+  const staffChoices = () => {
+    const byStaffKey = {
+      rolandaHooch: [
+      choice("调整握帚的姿势", 2, [
+        "你没有急着解释，先把手往扫帚柄上挪了半寸。",
+        "霍琦夫人立刻看出来你听懂了。她抬了抬下巴，示意你把重心再压低一点。",
+        "霍琦夫人：\n「飞起来之前先站稳。否则风还没碰到你，你自己就会把自己掀下去。」",
+        ]),
+        choice("问她刚才哪里不稳", 1, [
+          "你问霍琦夫人，刚才自己到底哪里不稳。",
+          "她没有绕弯，直接指出你的肩膀太僵、视线太低。",
+          "这不像批评，更像赛前最后一次压低声音的提醒。",
+        ]),
+      choice("请她再看一次起步", 1, [
+        "你问她能不能再看一次你的起步动作。",
+        "霍琦夫人看了看场地，像是在判断时间够不够。",
+        "霍琦夫人：\n「一次。」\n\n短短一个词，却已经让你重新握紧了扫帚。",
+        ]),
+      ],
+      sybillTrelawney: [
+        choice("请她说清那个预兆", 1, [
+          "你请特里劳妮教授说清她刚才看见了什么。",
+          "她把披肩拉得更紧，声音变得更轻，仿佛答案会被空气偷听。",
+          "你没完全听懂，但至少知道她指的不是考试分数，而是你刚才做选择时的犹豫。",
+        ]),
+        choice("认真听完", 1, [
+          "你没有打断她，也没有露出敷衍的表情。",
+          "特里劳妮教授似乎因此受到了鼓励，连茶杯边缘的裂纹都被她讲出了某种命运的意味。",
+          "最后她郑重地提醒你，最近不要忽视任何从高处落下的东西。",
+        ]),
+      ],
+      auroraSinistra: [
+      choice("问她该看哪颗星", 1, [
+        "你问辛尼斯特拉教授，今晚应该先看哪颗星。",
+        "她把星图转向你，用指尖点住一小片并不起眼的天空。",
+        "辛尼斯特拉教授：\n「别只找最亮的。真正有用的参照物通常安静得多。」",
+        ]),
+      choice("承认自己刚才看错了", 2, [
+        "你承认自己刚才把方向看错了。",
+        "辛尼斯特拉教授没有笑你，只是把望远镜轻轻转回正确角度。",
+        "辛尼斯特拉教授：\n「能发现自己看错，比假装看懂要好。」",
+        ]),
+      ],
+      herbertBinns: [
+        choice("追问那个年份", 1, [
+          "你追问宾斯教授刚才补充的那个年份。",
+          "他的声音仍旧像从旧书页里飘出来，却难得多停留了几句。",
+          "你忽然意识到，哪怕是最枯燥的事实，也可能在某个细节上改变整件事的含义。",
+        ]),
+        choice("把他说的记下来", 1, [
+          "你立刻把宾斯教授补充的那句话记下来。",
+          "他似乎没有注意到你的动作，只是继续往下讲。",
+          "但这一次，你能跟上他话里的线索了。",
+        ]),
+      ],
+    };
+    return byStaffKey[hook.characterKey] || [
+      choice("请教授再指点一句", 1, [
+        `你没有把${name}的停顿当成客套，低声请她再指点一句。`,
+        "教授看了你一会儿，像是在确认你是真的想听。",
+        "她给出的提醒很短，却正好落在你刚才最容易忽略的地方。",
+      ]),
+      choice("照着提醒立刻改正", 2, [
+        "你没有多辩解，直接照着刚才的提醒调整自己的动作。",
+        `${name}的神色缓和了一点。`,
+        "她没有夸你，只是点了点头；对教授来说，这已经足够明确。",
+      ]),
+      choice("问这会不会影响下次上课", 0, [
+        "你问这件事会不会影响下次上课。",
+        `${name}没有立刻回答，只是让你先把眼前这一步做好。`,
+        "这句话听起来严厉，却也等于承认：她还会继续看你的表现。",
+      ]),
+    ];
+  };
   const byKey = {
     hermione: [
       choice("接过书并认真道谢", 2, [
@@ -1181,7 +1338,7 @@ function buildDirectCharacterChoices(hook, choice) {
       choice("问她为什么想到你", 1, [
         "你问她为什么会觉得这本书适合你。",
         "赫敏抱紧怀里的资料，像是这个问题比查资料本身更不好回答。",
-        `“因为你上次问的问题不算糟。”她说。${backstory}`,
+        `赫敏：\n「因为你上次问的问题不算糟。」\n\n${backstory}`,
       ]),
       choice("请她一起找下一条资料", 2, [
         "你没有急着离开，而是问她愿不愿意一起找下一条资料。",
@@ -1193,7 +1350,7 @@ function buildDirectCharacterChoices(hook, choice) {
       choice("安静等他先开口", 1, [
         "你没有解释，也没有急着证明自己无辜。",
         `${name}盯着你看了片刻，像是在确认你到底有没有意识到自己哪里危险。`,
-        "“别把沉默误认成聪明。”他说完便移开视线。但他没有扣分，这已经接近一种宽容。",
+        `${name}：\n「别把沉默误认成聪明。」\n\n他说完便移开视线。但他没有扣分，这已经接近一种宽容。`,
       ]),
       choice("低声问自己哪里做错", 0, [
         "你压低声音问自己哪里做错了。",
@@ -1247,19 +1404,19 @@ function buildDirectCharacterChoices(hook, choice) {
       choice("提醒他别又惹麻烦", 0, [
         "你半开玩笑地提醒他别又惹麻烦。",
         "哈利苦笑了一下，像是觉得这建议很好，但命运通常不太听话。",
-        "“我尽量。”他说。这听起来已经是他能给出的最大保证。",
+        "哈利：\n「我尽量。」\n\n这听起来已经是他能给出的最大保证。",
       ]),
     ],
     draco: [
       choice("直接问他为什么记着你", 0, [
         "你没有绕弯，直接问马尔福为什么要把这件小事记在心里。",
         "他笑了一下，像是这个问题正中他的下怀。",
-        `“因为有些人总以为自己不会被注意到。”他说。${backstory}`,
+        `马尔福：\n「因为有些人总以为自己不会被注意到。」\n\n${backstory}`,
       ]),
       choice("反问他是不是很在意", -1, [
         "你问他是不是太在意你了。",
         "马尔福的笑容立刻收窄，旁边两个斯莱特林学生也安静下来。",
-        "“别自作多情。”他说得很快。正因为太快，这句话反而显得没那么有底气。",
+        "马尔福：\n「别自作多情。」\n\n他说得很快。正因为太快，这句话反而显得没那么有底气。",
       ]),
       choice("提醒他别拿小事告状", 1, [
         "你提醒他，如果只是这点小事，拿去告状未免太难看。",
@@ -1276,7 +1433,7 @@ function buildDirectCharacterChoices(hook, choice) {
       choice("告诉他你听见了", 2, [
         "你告诉纳威，你听见了他的谢谢。",
         "他像是终于确定自己没有把话说丢，肩膀放松下来。",
-        "“那就好。”他小声说，随即露出一点不好意思的笑。",
+        "纳威：\n「那就好。」\n\n他小声说完，随即露出一点不好意思的笑。",
       ]),
       choice("问他那件事后来怎样", 1, [
         "你问他之前那件事后来怎么样了。",
@@ -1289,24 +1446,82 @@ function buildDirectCharacterChoices(hook, choice) {
         "那句话很短，却比刚才那句谢谢更像信任。",
       ]),
     ],
+    minervaMcGonagall: [
+      choice("站直一点听她说", 1, [
+        "你下意识站直了些，没有急着为自己解释。",
+        "麦格教授的目光在你袍角、书包和脚边的走廊上扫过，像是在确认你不是刚从某场混乱里逃出来。",
+        "麦格教授：\n「继续保持。」\n\n她最后只说了这两个字，语气仍然严肃，却不再像平时那样锋利。",
+      ]),
+      choice("问她是否有事吩咐", 1, [
+        "你低声问麦格教授是不是有什么事要吩咐。",
+        "她停顿了一下，似乎原本并不打算多说。",
+        "麦格教授：\n「没有。只是很少有人能在快迟到的时候还记得不撞翻盔甲。」\n\n这几乎算是一句夸奖了。",
+      ]),
+      choice("提起刚才的课堂", 1, [
+        "你提起刚才那堂课，问自己还有哪里需要注意。",
+        "麦格教授没有立刻回答，而是把问题重新抛给你，让你先说出自己哪里做得还不够稳。",
+        "等你说完，她才轻轻点头，补上一个更精确的提醒。那不像安慰，更像她愿意继续要求你。",
+      ]),
+    ],
+    filiusFlitwick: [
+      choice("再试一次发音", 2, [
+        "你照着弗立维教授的提醒，又轻声念了一遍咒语。",
+        "他立刻竖起耳朵，脸上的笑意一点点亮起来。",
+        "弗立维教授：\n「对，就是这里。」\n\n他魔杖尖轻轻一抬，像是在空气里替你标出那个细小的音节。",
+      ]),
+      choice("问他哪里还不稳", 1, [
+        "你问弗立维教授，刚才那次练习还有哪里不稳。",
+        "他没有笼统地夸你，而是认真指出了一个容易被忽略的停顿。",
+        "这让那句夸奖变得更可靠：他不是随口鼓励你，他确实听见了。",
+      ]),
+    ],
+    pomonaSprout: [
+      choice("帮她扶正花盆", 2, [
+        "你顺手扶正了门边那只快要歪倒的花盆。",
+        "斯普劳特教授笑了起来，伸手拍掉你袖口沾上的一点泥。",
+        "斯普劳特教授：\n「小心不是胆小。在温室里，这通常是最有用的本事。」",
+      ]),
+      choice("问那盆植物怎么照顾", 1, [
+        "你问旁边那盆过分安静的植物应该怎么照顾。",
+        "斯普劳特教授看起来很高兴你问的是照顾，而不是它会不会咬人。",
+        "她拉过一副手套，开始讲它真正危险的地方。你很快明白，她刚才的提醒不是客套。",
+      ]),
+    ],
+    remusLupin: [
+      choice("认真说起最近的练习", 2, [
+        "你没有用“还好”敷衍过去，而是认真说起最近练习时卡住的地方。",
+        "卢平教授听得很专注，中途没有打断你。",
+        "他说出的建议很温和，却刚好落在你最不敢承认的那个问题上。",
+      ]),
+      choice("问他为什么这样提醒你", 1, [
+        "你问卢平教授为什么会特别提醒你这一点。",
+        "他笑了笑，没有把话说得太重。",
+        "卢平教授：\n「因为害怕并不丢人。真正重要的是你下一步怎么做。」",
+      ]),
+    ],
   };
+  if (!byKey[hook.characterKey] && isStaffCharacter(hook.characterKey)) {
+    return staffChoices();
+  }
   const fallback = [
     choice(getDirectRelationDelta(hook) >= 0 ? "问清楚为什么" : "直接问为什么", 1, [
-      `你没有把${name}的反应当成偶然，而是直接问了原因。`,
+      `你没有装作没看见，直接问${name}刚才为什么停下。`,
       backstory,
-      "这让你们之间的变化不再只是一个数字，而是有了可以接下去的前因后果。",
+      `${name}：\n「别把什么事都当成偶然。」\n\n对方没有把话说满，但你听得出来，这不是一句随手丢下的寒暄。`,
     ]),
     choice("自然接过话头", 1, [
       `你没有把这件小事说破，只顺着${name}的反应接了一句。`,
-      "对方明显自在了一些，交谈也因此没有变成尴尬的追问。",
+      `${name}明显自在了一些。`,
+      "交谈没有变成尴尬的追问，只是在走廊的脚步声里自然往下续了一小段。",
     ]),
     choice("认真道谢", 2, [
       "你认真道了谢，没有让这份好意轻飘飘地过去。",
-      `${name}的反应很轻，却不像毫无触动。你们之间多了一点可以记住的东西。`,
+      `${name}的反应很轻，却不像毫无触动。`,
+      "那一刻很快过去，但并没有像普通寒暄一样立刻消失。",
     ]),
     choice("先不多问", 0, [
       "你决定先不多问，只把这次短暂互动记在心里。",
-      "有些关系不是靠一句话推进的，尤其在霍格沃茨这样的地方。",
+      "城堡的走廊很快又被脚步声填满，但刚才那一眼没有立刻散掉。",
     ]),
   ];
   return byKey[hook.characterKey] || fallback;
@@ -1662,12 +1877,27 @@ function escapeHtml(text = "") {
   }[ch]));
 }
 
+function formatWorldHookLine(line = "") {
+  return escapeHtml(line)
+    .replace(/([。！？]」)(?=[^\n，。、！？：」<])/g, "$1<br>")
+    .replace(/「([^」]*)」/g, '<span class="story-dialogue">「$1」</span>');
+}
+
 function renderParagraphs(text = "") {
   return String(text)
     .split(/\n{2,}/)
     .map(part => part.trim())
     .filter(Boolean)
-    .map(part => `<p>${escapeHtml(part)}</p>`)
+    .map(part => {
+      const lines = part.split(/\n+/).map(line => line.trim()).filter(Boolean);
+      const speakerMatch = lines[0]?.match(/^(.{1,16})[：:]$/);
+      if (speakerMatch && lines.length > 1) {
+        const speaker = escapeHtml(speakerMatch[1]);
+        const dialogue = lines.slice(1).map(formatWorldHookLine).join("<br>");
+        return `<div class="story-text-block story-dialogue-block world-hook-dialogue-block"><div class="story-inline-speaker">${speaker}</div><p class="story-dialogue-line">${dialogue}</p></div>`;
+      }
+      return `<p class="story-text-block story-narration-block world-hook-narration-block">${lines.map(formatWorldHookLine).join("<br>")}</p>`;
+    })
     .join("");
 }
 
@@ -1773,6 +2003,134 @@ function maybeApplyWorldAffinity() {
 
   const sign = event.delta > 0 ? "+" : "";
   addStoryLog(`💛 关系波动：${event.text}（${event.name}${sign}${event.delta}）`);
+}
+
+function getRatingTone(rating) {
+  return ({
+    O: { label: "卓越", mood: "惊艳", delta: 1 },
+    E: { label: "超预期", mood: "赞许", delta: 1 },
+    A: { label: "合格", mood: "认可", delta: 0 },
+    P: { label: "欠佳", mood: "担心", delta: 0 },
+    D: { label: "糟糕", mood: "严厉", delta: -1 },
+    T: { label: "极差", mood: "震惊", delta: -1 },
+  })[rating] || { label: "完成", mood: "留意", delta: 0 };
+}
+
+function pushRumor(data, rumor) {
+  const world = ensureWorld(data);
+  world.rumors.push({
+    date: data.time?.currentDate || getCurrentDate(),
+    time: data.time?.nowTime || "上午",
+    ...rumor,
+  });
+  world.rumors = world.rumors.slice(-40);
+}
+
+export function recordClassEcho(detail = {}) {
+  const data = getSave();
+  const world = ensureWorld(data);
+  const subjectName = detail.subjectName || detail.subjectKey || "这门课";
+  const lessonTitle = detail.lessonTitle || "";
+  const professor = detail.professor || "教授";
+  const rating = detail.rating || "";
+  const tone = getRatingTone(rating);
+  const date = data.time?.currentDate || getCurrentDate();
+  const lessonText = lessonTitle ? `《${lessonTitle}》` : "课堂练习";
+  const text = rating
+    ? `${professor}在${subjectName}${lessonText}后对你的表现给出${tone.label}评价，消息很快被同学们记住了。`
+    : `你完成了${subjectName}${lessonText}，这堂课的细节留在了今天的课堂气氛里。`;
+  const eventId = `class:${date}:${detail.subjectKey || subjectName}:${detail.lessonNumber || ""}:${rating || "done"}`;
+
+  rememberWorldEvent(data, {
+    type: "playerClass",
+    tag: `class_${detail.subjectKey || subjectName}`,
+    eventId,
+    key: detail.characterKey,
+    subject: subjectName,
+    rating,
+    text,
+  });
+
+  if (detail.characterKey) {
+    rememberNpcMemory(data, detail.characterKey, {
+      type: "class",
+      tag: `class_${detail.subjectKey || subjectName}`,
+      subject: subjectName,
+      rating,
+      text: `你在${subjectName}上的${tone.label}表现让${professor}对你多留意了一点。`,
+    });
+    createWorldHook(data, {
+      type: "character",
+      eventId,
+      characterKey: detail.characterKey,
+      characterName: professor,
+      title: `聊聊${subjectName}`,
+      sourceText: text,
+      sourceKind: "class",
+      relationshipDelta: tone.delta,
+      delta: Math.max(0, tone.delta),
+    });
+  }
+
+  if (rating === "O" || rating === "E" || rating === "D" || rating === "T") {
+    pushRumor(data, {
+      type: "class",
+      tag: `class_${detail.subjectKey || subjectName}`,
+      text: `长桌旁有人提起你在${subjectName}里的${tone.label}表现，版本已经开始变得不太一样了。`,
+    });
+  }
+
+  world.daily = {
+    ...(world.daily || {}),
+    lastPlayerClass: { date, subject: subjectName, rating, text },
+  };
+  setSave(data);
+  return text;
+}
+
+export function recordAffinityEcho(characterKey, delta, source = "", result = null) {
+  if (!characterKey || !delta) return false;
+  if (
+    source === "背景世界流" ||
+    source === "世界线索选择" ||
+    source === "主动事件" ||
+    source.startsWith("课堂:")
+  ) return false;
+
+  const data = getSave();
+  const tone = delta > 0 ? "靠近了一点" : "变得有些别扭";
+  const text = source
+    ? `因为${source}，你和对方的关系${tone}。`
+    : `你和对方的关系${tone}。`;
+  const eventId = `affinity:${data.time?.currentDate || getCurrentDate()}:${characterKey}:${source}:${delta}`;
+
+  rememberWorldEvent(data, {
+    type: "playerAffinity",
+    eventId,
+    key: characterKey,
+    delta,
+    source,
+    text,
+  });
+  rememberNpcMemory(data, characterKey, {
+    type: "affinity",
+    source,
+    delta,
+    text,
+    tierUp: !!result?.tierUp,
+  });
+  createWorldHook(data, {
+    type: "character",
+    eventId,
+    characterKey,
+    title: delta > 0 ? "回应刚才的事" : "解释刚才的事",
+    sourceText: text,
+    sourceKind: "direct",
+    relationshipDelta: delta,
+    delta: delta > 0 ? 1 : 0,
+  });
+  setSave(data);
+  return true;
 }
 
 export function getLocationHooks(locationName) {
@@ -1998,6 +2356,9 @@ window.npcEvents = {
   renderLocationStatus,
   getLocationHooks,
   getCharacterHooks,
+  getNpcMemory,
+  recordClassEcho,
+  recordAffinityEcho,
   triggerLocationHook,
   triggerCharacterHook,
   consumeHook,

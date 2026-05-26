@@ -22,6 +22,7 @@
 
 import { lessonMap } from './potions-lesson.js';
 import { questionBank } from './potions-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "potions",
@@ -601,7 +602,7 @@ export const quickStudyEvents = [
   "你站在坩埚前，感受着火焰的温暖——魔药的奥秘就在这沸腾的液体中"
 ];
 
-window.subject_potions = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -611,3 +612,6 @@ window.subject_potions = {
   lessonMap,
   questionBank,
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_potions = subjectData;

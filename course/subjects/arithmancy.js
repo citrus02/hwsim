@@ -1,5 +1,6 @@
 import { ARITHMANCY_LESSON_PLAN, lessonMap } from './arithmancy-lesson.js';
 import { questionBank } from './arithmancy-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "arithmancy",
@@ -1409,7 +1410,7 @@ export const quickStudyEvents = [
   }
 ];
 
-window.subject_arithmancy = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -1419,3 +1420,6 @@ window.subject_arithmancy = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_arithmancy = subjectData;

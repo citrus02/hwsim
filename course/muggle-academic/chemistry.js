@@ -7,6 +7,7 @@
 
 import { lessonMap } from './chemistry-lesson.js';
 import { questionBank } from './chemistry-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "chemistry",
@@ -225,7 +226,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_chemistry = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -233,3 +234,6 @@ window.subject_chemistry = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_chemistry = subjectData;

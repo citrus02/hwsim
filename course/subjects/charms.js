@@ -25,6 +25,7 @@
 
 import { lessonMap } from './charms-lesson.js';
 import { questionBank } from './charms-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 // ── 元数据 ────────────────────────────────────────────────────
 export const subjectMeta = {
@@ -595,7 +596,7 @@ export const quickStudyEvents = [
 ];
 
 // ── 全局挂载 ─────────────────────────────────────────────────
-window.subject_charms = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -605,3 +606,6 @@ window.subject_charms = {
   lessonMap,
   questionBank,
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_charms = subjectData;

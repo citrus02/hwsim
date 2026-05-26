@@ -7,6 +7,7 @@
 
 import { lessonMap } from './geography-lesson.js';
 import { questionBank } from './geography-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "geography",
@@ -225,7 +226,7 @@ export const gradeMap = {
   7: [13, 14]
 };
 
-window.subject_geography = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -234,6 +235,9 @@ window.subject_geography = {
   questionBank,
   gradeMap
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_geography = subjectData;
 
 export default {
   subjectMeta,

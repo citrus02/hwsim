@@ -281,16 +281,21 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
     </div>
     <div class="cls-open-container">
       <div class="cls-phase-steps">
-        <div class="cls-step cls-step-active" id="cls-s0" onclick="window._clsJumpToPhase(0)">🕯️ 开场</div>
-        <div class="cls-step" id="cls-s1" onclick="window._clsJumpToPhase(1)">📖 讲课</div>
-        <div class="cls-step" id="cls-s2" onclick="window._clsJumpToPhase(2)">📝 测验</div>
-        <div class="cls-step" id="cls-s3" onclick="window._clsJumpToPhase(3)">🎓 结算</div>
+        <div class="cls-step cls-step-active" id="cls-s0" data-phase="0">🕯️ 开场</div>
+        <div class="cls-step" id="cls-s1" data-phase="1">📖 讲课</div>
+        <div class="cls-step" id="cls-s2" data-phase="2">📝 测验</div>
+        <div class="cls-step" id="cls-s3" data-phase="3">🎓 结算</div>
       </div>
     </div>
     <div class="cls-body" id="cls-body"></div>`;
 
   const card = document.getElementById("actionMain")?.closest(".card") || document.body;
   card.appendChild(panel);
+  panel.querySelector(".cls-phase-steps")?.addEventListener("click", event => {
+    const step = event.target.closest(".cls-step[data-phase]");
+    if (!step) return;
+    jumpToPhase(Number(step.dataset.phase));
+  });
 
   _clsState = {
     st: { kpIdx:0, qIdx:0, score:0, answered:false, maxPhase:0, kpQA:false, kpCorrect:null, kpFeedback:false, kpAnsweredIdx:null, kpCalcDone:false, kpCalcStep:0, kpCalcDisplay:null, kpCalcIntroDone:false, kpBoardSeen:false, openAnswerTimestamp:null },
@@ -321,7 +326,7 @@ function _setPhase(n) {
   }
 }
 
-window._clsJumpToPhase = (target) => {
+function jumpToPhase(target) {
   if (!_clsState || target > _clsState.st.maxPhase) return;
   const { st, subjectKey, sd, lesson, qGroup, onClose } = _clsState;
   if (target === 0) {
@@ -336,7 +341,9 @@ window._clsJumpToPhase = (target) => {
   } else if (target === 3) {
     _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose);
   }
-};
+}
+
+window._clsJumpToPhase = jumpToPhase;
 
 // ── 第一阶段：开场 ────────────────────────────────────────
 function _phaseOpening(st, subjectKey, sd, lesson, qGroup, onClose) {
@@ -1360,6 +1367,21 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
     ? window.affinitySystem?.SUBJECT_TO_CHARACTER?.[subjectKey]
     : window.affinitySystem?.COURSE_TO_CHARACTER?.[sd.subjectMeta.name];
   if (charKey) markCharacterKnown(charKey);
+
+  if (!st._worldEchoRecorded) {
+    st._worldEchoRecorded = true;
+    window.npcEvents?.recordClassEcho?.({
+      subjectKey,
+      subjectName: sd.subjectMeta?.name || subjectKey,
+      lessonNumber: lesson.lesson,
+      lessonTitle: lesson.title,
+      professor: sd.subjectMeta?.professor,
+      rating,
+      isMuggle,
+      characterKey: charKey,
+      housePoints,
+    });
+  }
 
   // 检查是否全部课时完成（触发一次性 +10）
   const allLessons = getAllLessons(sd.syllabus);

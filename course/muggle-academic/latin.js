@@ -7,6 +7,7 @@
 
 import { lessonMap } from './latin-lesson.js';
 import { questionBank } from './latin-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "latin",
@@ -218,7 +219,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_latin = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -226,3 +227,6 @@ window.subject_latin = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_latin = subjectData;

@@ -144,7 +144,9 @@ export function addAffinity(key, delta, source = '') {
       writeSave(data);
     }
   }
-  return { tierUp, oldTier, newTier: char.tier, newValue: char.value };
+  const result = { tierUp, oldTier, newTier: char.tier, newValue: char.value };
+  window.npcEvents?.recordAffinityEcho?.(key, delta, source, result);
+  return result;
 }
 
 /**

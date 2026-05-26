@@ -2439,16 +2439,37 @@ body.modal-open .container {
 .world-hook-response {
   white-space: normal;
 }
-.world-hook-source p,
-.world-hook-response p {
-  margin: 0 0 10px;
-}
-.world-hook-source p:last-child,
-.world-hook-response p:last-child {
-  margin-bottom: 0;
-}
 .world-hook-response {
   font-size: 13px;
+}
+.world-hook-source .story-text-block,
+.world-hook-response .story-text-block {
+  margin: 0 0 12px;
+}
+.world-hook-source .story-text-block:last-child,
+.world-hook-response .story-text-block:last-child {
+  margin-bottom: 0;
+}
+.world-hook-source .story-narration-block,
+.world-hook-response .story-narration-block {
+  color: #d8c8e8;
+}
+.world-hook-source .story-dialogue-block,
+.world-hook-response .story-dialogue-block {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid #f8c850;
+  background: rgba(32, 20, 52, 0.62);
+  border-radius: 0 8px 8px 0;
+}
+.world-hook-source .story-inline-speaker,
+.world-hook-response .story-inline-speaker {
+  color: #f8c850;
+}
+.world-hook-source .story-dialogue-line,
+.world-hook-response .story-dialogue-line {
+  padding-left: 0;
+  color: #efe8ff;
 }
 .world-hook-choices {
   margin-top: 14px;

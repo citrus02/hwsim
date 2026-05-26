@@ -6,12 +6,22 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.0';
+export const CURRENT_VERSION = '1.8.1';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.1': [
+    '全面重构交互事件绑定，用事件委托替换内联 onclick，提升安全性与可维护性',
+    '新增 NPC 个人记忆系统（npcMemory），每位角色最多保留最近 6 条与玩家的互动记录',
+    '黑板可视化渲染器改为 Map 注册表，支持通过 registerBoardVisualRenderer 扩展新类型',
+    '新增学科注册表（subject-registry），允许动态注册自定义学科数据',
+    '课堂完成与好感变化现在会触发 recordClassEcho / recordAffinityEcho 钩子，为后续世界记忆提供数据',
+    '修复音频按钮属性注入漏洞，改用 data-audio-src 与属性转义',
+    '教职员工角色的主动事件与默认旁白现在有专属对白，不再复用学生文本',
+    '移动端视口锁定逻辑抽离为独立模块 viewport-lock.js，清理 index.html 内联脚本',
+  ],
   '1.8.0': [
     '新增角色主动事件系统，角色会根据好感、记忆与经历主动来找玩家',
     '新增 characters 角色档案目录，为赫敏、罗恩、哈利、德拉科、卢娜等角色补充主动事件与人设种子',

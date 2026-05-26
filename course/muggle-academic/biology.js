@@ -7,6 +7,7 @@
 
 import { lessonMap } from './biology-lesson.js';
 import { questionBank } from './biology-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "biology",
@@ -225,7 +226,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_biology = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -233,3 +234,6 @@ window.subject_biology = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_biology = subjectData;

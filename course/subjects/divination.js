@@ -1,5 +1,6 @@
 import { DIVINATION_LESSON_PLAN, lessonMap } from './divination-lesson.js';
 import { questionBank } from './divination-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "divination",
@@ -1409,7 +1410,7 @@ export const quickStudyEvents = [
   }
 ];
 
-window.subject_divination = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -1419,3 +1420,6 @@ window.subject_divination = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_divination = subjectData;

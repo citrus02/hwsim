@@ -8,7 +8,9 @@ const DEFAULT_BAG_SLOTS = 10;
 export let nowBagType = "material";
 
 export function setBagType(type) {
+  if (!["material", "potion", "item", "wizardCard"].includes(type)) return;
   nowBagType = type;
+  _refreshBagPanelTabs();
   renderBag();
 }
 
@@ -58,17 +60,18 @@ export function openBagPanel() {
   panel.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
       <div style="font-size:16px; font-weight:bold; color:#f8c850;">📦 物品</div>
-      <button onclick="window.closeBagPanel()" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
+      <button data-bag-action="close" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
     </div>
     <div class="bag-tab-row" id="bagPanelTabRow" style="display:flex; gap:6px; margin-bottom:12px;">
-      <button class="bag-tab active" data-bag="material" onclick="window.setBagType('material'); window._refreshBagPanelTabs();">材料</button>
-      <button class="bag-tab" data-bag="potion" onclick="window.setBagType('potion'); window._refreshBagPanelTabs();">魔药</button>
-      <button class="bag-tab" data-bag="item" onclick="window.setBagType('item'); window._refreshBagPanelTabs();">道具</button>
-      <button class="bag-tab" data-bag="wizardCard" onclick="window.setBagType('wizardCard'); window._refreshBagPanelTabs();">画片</button>
+      <button class="bag-tab active" data-bag="material" data-bag-action="tab">材料</button>
+      <button class="bag-tab" data-bag="potion" data-bag-action="tab">魔药</button>
+      <button class="bag-tab" data-bag="item" data-bag-action="tab">道具</button>
+      <button class="bag-tab" data-bag="wizardCard" data-bag-action="tab">画片</button>
     </div>
     <div class="bag-grid" id="bagGrid"></div>
   `;
 
+  bindBagPanelEvents(panel);
   overlay.appendChild(panel);
   document.body.appendChild(overlay);
   renderBag();
@@ -84,7 +87,28 @@ function _refreshBagPanelTabs() {
   row.querySelectorAll('.bag-tab').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.bag === nowBagType);
   });
-  renderBag();
+}
+
+function bindBagPanelEvents(panel) {
+  panel.addEventListener("click", event => {
+    const trigger = event.target.closest("[data-bag-action]");
+    if (!trigger) return;
+
+    const action = trigger.dataset.bagAction;
+    if (action === "close") {
+      closeBagPanel();
+      return;
+    }
+
+    if (action === "tab") {
+      setBagType(trigger.dataset.bag);
+      return;
+    }
+
+    if (action === "item") {
+      clickBagItem(trigger.dataset.bagType, Number(trigger.dataset.bagIndex));
+    }
+  });
 }
 
 export function renderBag() {
@@ -111,7 +135,7 @@ export function renderBag() {
       if (nowBagType === "wizardCard") {
         const rarityColor = { "传奇": "#ffd700", "稀有": "#a0a0ff", "普通": "#a0a0a0" };
         const color = rarityColor[item.rarity] || "#fff";
-        html += `<div class="bag-slot has-item" style="border:2px solid ${color}; cursor:pointer;" onclick="window._clickBagItem('${nowBagType}', ${i})">
+        html += `<div class="bag-slot has-item" style="border:2px solid ${color}; cursor:pointer;" data-bag-action="item" data-bag-type="${nowBagType}" data-bag-index="${i}">
           <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
             <div style="font-size:20px; line-height:1;">${emoji}</div>
             <div style="font-size:9px; line-height:1.1; margin-top:2px; color:${color};">${item.name}</div>
@@ -119,7 +143,7 @@ export function renderBag() {
           </div>
         </div>`;
       } else {
-        html += `<div class="bag-slot has-item" style="cursor:pointer;" onclick="window._clickBagItem('${nowBagType}', ${i})">
+        html += `<div class="bag-slot has-item" style="cursor:pointer;" data-bag-action="item" data-bag-type="${nowBagType}" data-bag-index="${i}">
           <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
             <div style="font-size:20px; line-height:1;">${emoji}</div>
             <div style="font-size:10px; line-height:1.1; margin-top:2px;">${item.name}</div>

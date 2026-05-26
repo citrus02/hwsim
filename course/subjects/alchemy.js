@@ -1,5 +1,6 @@
 import { ALCHEMY_LESSON_PLAN, lessonMap } from './alchemy-lesson.js';
 import { questionBank } from './alchemy-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "alchemy",
@@ -785,7 +786,7 @@ export const quickStudyEvents = [
   }
 ];
 
-window.subject_alchemy = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -795,3 +796,6 @@ window.subject_alchemy = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_alchemy = subjectData;

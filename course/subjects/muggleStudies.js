@@ -20,6 +20,7 @@
 
 import { lessonMap } from './muggleStudies-lesson.js';
 import { questionBank } from './muggleStudies-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 // ── 元数据 ────────────────────────────────────────────────────────
 export const subjectMeta = {
@@ -505,7 +506,7 @@ export const quickStudyEvents = [
 // ── 导出 ────────────────────────────────────────────────────────
 export { lessonMap, questionBank };
 
-window.subject_muggleStudies = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -515,3 +516,6 @@ window.subject_muggleStudies = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_muggleStudies = subjectData;

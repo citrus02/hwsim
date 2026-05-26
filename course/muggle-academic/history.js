@@ -7,6 +7,7 @@
 
 import { lessonMap } from './history-lesson.js';
 import { questionBank } from './history-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "history",
@@ -212,4 +213,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_history = { subjectMeta, teachingStyle, syllabus, crossAnchors, lessonMap, questionBank };
+const subjectData = { subjectMeta, teachingStyle, syllabus, crossAnchors, lessonMap, questionBank };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_history = subjectData;

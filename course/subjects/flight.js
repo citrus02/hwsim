@@ -1,5 +1,6 @@
 import { FLIGHT_LESSON_PLAN, lessonMap } from './flight-lesson.js';
 import { questionBank } from './flight-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "flight",
@@ -110,7 +111,7 @@ export const quickStudyEvents = [
   "霍琦教授让你重飞一段路线，这一次你的判断明显提前了。"
 ];
 
-window.subject_flight = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -120,3 +121,6 @@ window.subject_flight = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_flight = subjectData;

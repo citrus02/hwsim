@@ -27,6 +27,7 @@
 
 import { lessonMap } from './magic-history-lesson.js';
 import { questionBank } from './magic-history-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "magicHistory",
@@ -198,7 +199,7 @@ export const quickStudyEvents = [
   "你在课堂上认真做笔记，宾斯教授的声音穿过你的身体"
 ];
 
-window.subject_magicHistory = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -208,3 +209,6 @@ window.subject_magicHistory = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_magicHistory = subjectData;

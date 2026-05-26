@@ -108,15 +108,21 @@ export function renderTimeline() {
   el.innerHTML = html;
 
   el.querySelectorAll('.tl-story-toggle').forEach(toggle => {
-    toggle.onclick = () => {
+    toggle.addEventListener("click", () => {
       const entry = toggle.closest('.tl-story-entry');
       const detail = entry?.querySelector('.tl-story-detail');
       if (detail) {
         const open = detail.style.display !== 'none';
         detail.style.display = open ? 'none' : 'block';
-        toggle.querySelector('.tl-toggle-arrow').textContent = open ? '▸' : '▾';
+        toggle.querySelector('.tl-toggle-arrow').textContent = open ? '▶' : '▼';
       }
-    };
+    });
+  });
+
+  el.querySelectorAll(".story-trigger-btn[data-story-id]").forEach(button => {
+    button.addEventListener("click", () => {
+      window.storyEngine?.startStoryEvent?.(button.dataset.storyId);
+    });
   });
 }
 
@@ -181,7 +187,7 @@ function _renderTimelineEntry(e, storyData, STORY_MAP, today) {
     badge = '<span class="tl-story-badge tl-badge-expired">时间结束</span>';
   }
   const triggerBtn = isAvailable
-    ? `<button class="story-trigger-btn" onclick="window.storyEngine.startStoryEvent('${storyId}')">📖 参与剧情</button>`
+    ? `<button class="story-trigger-btn" data-story-id="${storyId}">📖 参与剧情</button>`
     : '';
 
   return `<div class="tl-story-entry ${isCompleted ? 'tl-story-completed' : isAvailable ? 'tl-story-available' : isExpired ? 'tl-story-expired' : ''}">

@@ -1,5 +1,6 @@
 import { lessonMap } from "./herbology-lesson.js";
 import { questionBank } from "./herbology-questionBank.js";
+import { registerSubjectData } from "../subject-registry.js";
 
 export const subjectMeta = {
   key: "herbology",
@@ -270,7 +271,7 @@ export const quickStudyEvents = [
   }
 ];
 
-window.subject_herbology = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -279,3 +280,6 @@ window.subject_herbology = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_herbology = subjectData;

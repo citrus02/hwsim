@@ -25,6 +25,7 @@
 
 import { lessonMap } from './transfiguration-lesson.js';
 import { questionBank } from './transfiguration-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 // ── 元数据 ────────────────────────────────────────────────────
 export const subjectMeta = {
@@ -595,7 +596,7 @@ export const quickStudyEvents = [
 ];
 
 // ── 全局挂载 ─────────────────────────────────────────────────
-window.subject_transfiguration = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -605,3 +606,6 @@ window.subject_transfiguration = {
   lessonMap,
   questionBank,
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_transfiguration = subjectData;

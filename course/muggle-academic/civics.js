@@ -9,6 +9,7 @@
 
 import { lessonMap } from './civics-lesson.js';
 import { questionBank } from './civics-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "civics",
@@ -227,7 +228,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_civics = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -235,3 +236,6 @@ window.subject_civics = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_civics = subjectData;

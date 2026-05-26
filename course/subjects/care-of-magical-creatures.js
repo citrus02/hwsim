@@ -1,5 +1,6 @@
 import { CARE_OF_MAGICAL_CREATURES_LESSON_PLAN, lessonMap } from './care-of-magical-creatures-lesson.js';
 import { questionBank } from './care-of-magical-creatures-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "careOfMagicalCreatures",
@@ -1721,7 +1722,7 @@ export const quickStudyEvents = [
   }
 ];
 
-window.subject_careOfMagicalCreatures = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -1731,3 +1732,6 @@ window.subject_careOfMagicalCreatures = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_careOfMagicalCreatures = subjectData;

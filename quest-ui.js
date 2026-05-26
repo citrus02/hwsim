@@ -56,7 +56,7 @@ function _renderContent(mount) {
           <span class="quest-section-sub">明天刷新</span>
           ${claimableDailies > 0
             ? `<span class="quest-badge">${claimableDailies} 可领取</span>` : ""}
-          <span onclick="window.openAchievementPanel?.()" class="ach-header-btn" title="成就">🏅 成就</span>
+          <span class="ach-header-btn" data-quest-action="open-achievements" title="成就">🏅 成就</span>
         </div>
         <div class="quest-daily-list">
           ${dailies.map(q => _renderDailyCard(q)).join("") || _emptyTip("今日任务加载中……")}
@@ -81,8 +81,9 @@ function _renderContent(mount) {
 
   // 绑定领取按钮
   mount.querySelectorAll(".quest-claim-btn[data-qid]").forEach(btn => {
-    btn.onclick = () => _handleClaim(btn.dataset.type, btn.dataset.qid);
+    btn.addEventListener("click", () => _handleClaim(btn.dataset.type, btn.dataset.qid));
   });
+  mount.querySelector("[data-quest-action='open-achievements']")?.addEventListener("click", openAchievementPanel);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -296,10 +297,10 @@ function _showRewardAnimation(rewardLines, questTitle) {
       <div class="qra-close">点击任意处关闭</div>
     </div>`;
 
-  el.onclick = () => {
+  el.addEventListener("click", () => {
     el.classList.add("qra-exit");
     setTimeout(() => el.remove(), 300);
-  };
+  });
 
   document.body.appendChild(el);
 
@@ -396,7 +397,7 @@ export function renderNpcQuestInAffinity(characterKey, containerEl) {
 
   // 绑定接取按钮
   containerEl.querySelectorAll(".npc-quest-accept-btn[data-qid]").forEach(btn => {
-    btn.onclick = () => {
+    btn.addEventListener("click", () => {
       const data = window.saveSys?.getSave?.() || {};
       if (!data.quests) data.quests = {};
       if (!data.quests.side) data.quests.side = {};
@@ -404,18 +405,18 @@ export function renderNpcQuestInAffinity(characterKey, containerEl) {
       window.saveSys?.setSave?.(data);
       window.addLog?.(`📋 接取任务：${window.questData?.SIDE_QUESTS?.find(q=>q.id===btn.dataset.qid)?.title||''}`);
       renderNpcQuestInAffinity(characterKey, containerEl);
-    };
+    });
   });
 
   // 绑定领取奖励按钮
   containerEl.querySelectorAll(".quest-claim-btn[data-type='side']").forEach(btn => {
-    btn.onclick = () => {
+    btn.addEventListener("click", () => {
       const result = engine.claimSide(btn.dataset.qid);
       if (result) {
         _showRewardAnimation(result.rewardLines, result.def.title);
         setTimeout(() => renderNpcQuestInAffinity(characterKey, containerEl), 800);
       }
-    };
+    });
   });
 }
 
@@ -450,7 +451,7 @@ export function openAchievementPanel() {
   panel.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
       <div style="font-size:16px; font-weight:bold; color:#f8c850;">🏅 成就 <span style="font-size:12px; color:#aaa; font-weight:normal;">总分 ${totalScore}</span></div>
-      <button onclick="window.closeAchievementPanel()" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
+      <button data-ach-action="close" style="background:none; border:none; color:#aaa; font-size:18px; cursor:pointer;">✕</button>
     </div>
     ${claimableAch > 0 ? `<div style="text-align:center; margin-bottom:10px; color:#ffd700; font-size:13px;">✦ ${claimableAch} 个成就可领取</div>` : ""}
     <div class="quest-ach-tabs" id="achPanelTabs" style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:12px;">
@@ -470,35 +471,43 @@ export function openAchievementPanel() {
   overlay.appendChild(panel);
   document.body.appendChild(overlay);
 
-  panel.querySelectorAll(".quest-ach-tab").forEach(tab => {
-    tab.onclick = () => {
-      panel.querySelectorAll(".quest-ach-tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      const achList = document.getElementById("achPanelList");
-      if (achList) achList.innerHTML = _renderAchList(achievements, tab.dataset.cat);
-      _bindAchClaimBtns(panel);
-    };
-  });
-
-  _bindAchClaimBtns(panel);
+  bindAchievementPanelEvents(panel);
 }
 
-function _bindAchClaimBtns(container) {
-  container.querySelectorAll(".quest-claim-btn[data-qid]").forEach(btn => {
-    btn.onclick = () => {
-      _handleClaim("ach", btn.dataset.qid);
+function bindAchievementPanelEvents(panel) {
+  panel.addEventListener("click", event => {
+    const closeButton = event.target.closest("[data-ach-action='close']");
+    if (closeButton) {
+      closeAchievementPanel();
+      return;
+    }
+
+    const tab = event.target.closest(".quest-ach-tab[data-cat]");
+    if (tab) {
+      panel.querySelectorAll(".quest-ach-tab").forEach(item => item.classList.remove("active"));
+      tab.classList.add("active");
+      refreshAchievementList(panel);
+      return;
+    }
+
+    const claimButton = event.target.closest(".quest-claim-btn[data-qid]");
+    if (claimButton) {
+      _handleClaim("ach", claimButton.dataset.qid);
       setTimeout(() => {
-        const engine = getEngine();
-        const achievements = engine?.getAchievements() || [];
-        const achList = document.getElementById("achPanelList");
-        const activeTab = container.querySelector(".quest-ach-tab.active");
-        const cat = activeTab?.dataset.cat || "all";
-        if (achList) achList.innerHTML = _renderAchList(achievements, cat);
-        _bindAchClaimBtns(container);
+        refreshAchievementList(panel);
         _updateQuestBadge();
       }, 800);
-    };
+    }
   });
+}
+
+function refreshAchievementList(panel) {
+  const engine = getEngine();
+  const achievements = engine?.getAchievements() || [];
+  const achList = document.getElementById("achPanelList");
+  const activeTab = panel.querySelector(".quest-ach-tab.active");
+  const cat = activeTab?.dataset.cat || "all";
+  if (achList) achList.innerHTML = _renderAchList(achievements, cat);
 }
 
 export function closeAchievementPanel() {

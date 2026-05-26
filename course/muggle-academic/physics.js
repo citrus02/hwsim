@@ -7,6 +7,7 @@
 
 import { lessonMap } from './physics-lesson.js';
 import { questionBank } from './physics-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 // ── 元数据 ────────────────────────────────────────────────────
 export const subjectMeta = {
@@ -228,7 +229,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_physics = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -236,3 +237,6 @@ window.subject_physics = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_physics = subjectData;

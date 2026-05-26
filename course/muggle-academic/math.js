@@ -7,6 +7,7 @@
 
 import { lessonMap } from './math-lesson.js';
 import { questionBank } from './math-questionBank.js';
+import { registerSubjectData } from '../subject-registry.js';
 
 export const subjectMeta = {
   key: "math",
@@ -225,7 +226,7 @@ export const crossAnchors = [
   }
 ];
 
-window.subject_math = {
+const subjectData = {
   subjectMeta,
   teachingStyle,
   syllabus,
@@ -233,3 +234,6 @@ window.subject_math = {
   lessonMap,
   questionBank
 };
+
+registerSubjectData(subjectMeta.key, subjectData);
+window.subject_math = subjectData;
