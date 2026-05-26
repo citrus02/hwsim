@@ -44,11 +44,9 @@ if errorlevel 1 (
 )
 
 echo [2/5] Create and push tag v%version%...
-git tag v%version%
+git tag v%version% 2>nul
 if errorlevel 1 (
-    echo ERROR: git tag failed. The tag may already exist.
-    pause
-    exit /b 1
+    echo WARNING: Local tag v%version% already exists, skipping creation.
 )
 
 git push origin v%version%
