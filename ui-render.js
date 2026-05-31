@@ -50,6 +50,8 @@ function joinUniqueTextSegments(segments = []) {
     .join(" ");
 }
 
+let worldPaperTab = "dynamic"; // 面板内子标签，跨刷新保持
+
 export function renderWorldPaper() {
   const mount = document.getElementById("world-paper-content");
   if (!mount) return;
@@ -57,55 +59,108 @@ export function renderWorldPaper() {
   const data = getSave();
   const world = data.world || {};
   const daily = world.daily || {};
-  const rows = [];
   const seen = new Set();
-  const pushRow = (row) => {
-    const text = String(row.text || "").trim();
-    if (!text) return;
-    const key = `${row.tag}:${text}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    rows.push({ ...row, text });
+  const fresh = (text) => {
+    const t = String(text || "").trim();
+    if (!t || seen.has(t)) return "";
+    seen.add(t);
+    return t;
   };
 
-  if (daily.summary || daily.mood) {
-    pushRow({ tag: "简报", text: joinUniqueTextSegments([daily.mood, daily.summary]) });
+  const fixed = []; // 始终显示：简报 + 找你
+
+  // 1. 简报：当天的头条，醒目独立
+  const headline = fresh(joinUniqueTextSegments([daily.mood, daily.summary]));
+  if (headline) {
+    const dateline = window.timeSystem?.currentDate
+      ? `<span class="world-paper-dateline">🪶 ${escapeHtml(window.timeSystem.currentDate)} · 城堡见闻</span>`
+      : "";
+    fixed.push(`<div class="world-paper-headline">${dateline}${escapeHtml(headline)}</div>`);
   }
 
-  (world.rumors || []).slice(-3).reverse().forEach(item => {
-    pushRow({ tag: "传闻", text: item.text || item });
-  });
-
-  (world.memory || [])
-    .filter(item => ["course", "relation", "followup", "affinity"].includes(item.type))
-    .slice(-4)
-    .reverse()
-    .forEach(item => {
-      const tagMap = { course: "课程", relation: "人际", followup: "后续", affinity: "关系" };
-      pushRow({ tag: tagMap[item.type] || "动态", text: item.text });
-    });
-
-  Object.entries(world.locationStatus || {}).slice(-3).forEach(([location, status]) => {
-    pushRow({ tag: "地点", text: `${location}：${status?.text || status}` });
-  });
-
-  // 主动事件提示
+  // 2. 找你：可操作，置顶高亮
   const proactiveHooks = window.proactiveScheduler?.getProactiveHooks?.() || [];
-  proactiveHooks.forEach(hook => {
-    pushRow({ tag: "🔔", text: `${hook.characterName || '有人'}好像在找你` });
-  });
+  proactiveHooks
+    .map(hook => fresh(`${hook.characterName || "有人"}好像在找你`))
+    .filter(Boolean)
+    .forEach(text => fixed.push(`<div class="world-paper-cta">🔔 ${escapeHtml(text)}</div>`));
 
-  if (!rows.length) {
+  // 类型元信息：图标 + 颜色样式，让每条动态有画面感
+  const META = {
+    传闻: { icon: "🕯️", cls: "rumor" },
+    课程: { icon: "📖", cls: "course" },
+    人际: { icon: "🤝", cls: "relation" },
+    关系: { icon: "💫", cls: "affinity" },
+    后续: { icon: "🧵", cls: "followup" },
+    地点: { icon: "📍", cls: "place" },
+  };
+  const renderCard = (tag, text) => {
+    const t = fresh(text);
+    if (!t) return "";
+    const m = META[tag] || { icon: "•", cls: "misc" };
+    return `<div class="world-card world-card-${m.cls}">
+      <span class="world-card-icon">${m.icon}</span>
+      <span class="world-card-text"><b class="world-card-kind">${escapeHtml(tag)}</b>${escapeHtml(t)}</span>
+    </div>`;
+  };
+
+  // 3. 传闻与动态
+  const tagMap = { course: "课程", relation: "人际", followup: "后续", affinity: "关系", bond: "关系" };
+  const dynamicRows = [
+    ...(world.rumors || []).slice(-3).reverse().map(item => ({ tag: "传闻", text: item.text || item })),
+    ...(world.memory || [])
+      .filter(item => ["course", "relation", "followup", "affinity", "bond"].includes(item.type))
+      .slice(-4).reverse()
+      .map(item => ({ tag: tagMap[item.type] || "动态", text: item.text })),
+  ].map(row => renderCard(row.tag, row.text)).filter(Boolean);
+
+  // 4. 地点近况
+  const locationRows = Object.entries(world.locationStatus || {}).slice(-3)
+    .map(([location, status]) => renderCard("地点", `${location}：${status?.text || status}`))
+    .filter(Boolean);
+
+  // 5. 关系网（NPC↔NPC，世界自走的暗线）
+  const bands = { 亲近: "warm", 微妙: "neutral", 紧张: "cold" };
+  const bandIcon = { 亲近: "💛", 微妙: "🌫️", 紧张: "⚡" };
+  const bondRows = (window.npcEvents?.getNpcBonds?.() || []).slice(0, 6).map(bond =>
+    `<div class="world-bond-row">
+      <span class="world-bond-pair"><span class="world-bond-glyph">${bandIcon[bond.band] || "🌫️"}</span>${escapeHtml(bond.a)} <span class="world-bond-link">—</span> ${escapeHtml(bond.b)}</span>
+      <span class="world-bond-band band-${bands[bond.band] || "neutral"}">${escapeHtml(bond.band)}</span>
+    </div>`
+  );
+
+  const groups = [
+    { key: "dynamic", label: "动态", rows: dynamicRows },
+    { key: "location", label: "地点", rows: locationRows },
+    { key: "bonds", label: "关系网", rows: bondRows },
+  ].filter(g => g.rows.length);
+
+  if (!fixed.length && !groups.length) {
     mount.innerHTML = `<div class="world-paper-empty">城堡今天还没有新的传闻。</div>`;
     return;
   }
 
-  mount.innerHTML = rows.slice(0, 8).map(row => `
-    <div class="world-paper-row">
-      <span class="world-paper-tag">${escapeHtml(row.tag)}</span>
-      <span class="world-paper-text">${escapeHtml(row.text)}</span>
-    </div>
-  `).join("");
+  const parts = [...fixed];
+  if (groups.length) {
+    if (!groups.some(g => g.key === worldPaperTab)) worldPaperTab = groups[0].key;
+    const active = groups.find(g => g.key === worldPaperTab);
+    parts.push(`
+      <div class="world-paper-tabs">
+        ${groups.map(g =>
+          `<button class="world-paper-tab${g.key === worldPaperTab ? " active" : ""}" data-wtab="${g.key}">${escapeHtml(g.label)}</button>`
+        ).join("")}
+      </div>
+      <div class="world-paper-tabbody">${active.rows.join("")}</div>`);
+  }
+
+  mount.innerHTML = parts.join("");
+
+  mount.querySelectorAll(".world-paper-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      worldPaperTab = btn.dataset.wtab;
+      renderWorldPaper();
+    });
+  });
 }
 
 export function refreshAll() {

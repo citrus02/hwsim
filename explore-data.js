@@ -55,7 +55,8 @@ export const hogwartsExploreData = [
           { level: 4, name: "黑魔法防御术教室", icon: "🛡️", desc: "学习抵御黑魔法、怪物与黑暗生物", unlock: true, exploreRate: 0, needLevel: 1, unlockTip: "一年级自动解锁" },
           { level: 4, name: "魔法史教室", icon: "📜", desc: "幽灵教授讲述巫师世界的古老历史", unlock: true, exploreRate: 0, needLevel: 1, unlockTip: "一年级自动解锁" },
           { level: 4, name: "二楼女生盥洗室", icon: "🚽", desc: "常年回荡桃金娘哭声的老旧洗手间", unlock: true, exploreRate: 0, needLevel: 1, unlockTip: "一年级自动解锁" },
-          { level: 4, name: "教师办公室走廊", icon: "👨‍🏫", desc: "各学院院长与教授办公区域", unlock: true, exploreRate: 0, needLevel: 2, unlockTip: "二年级解锁" }
+          { level: 4, name: "教师办公室走廊", icon: "👨‍🏫", desc: "各学院院长与教授办公区域", unlock: true, exploreRate: 0, needLevel: 2, unlockTip: "二年级解锁" },
+          { level: 4, name: "三楼走廊", icon: "🚷", desc: "校长明令禁止学生靠近的右侧走廊，门后似乎藏着什么", unlock: true, exploreRate: 0, needLevel: 1, unlockTip: "一年级自动解锁" }
         ]
       },
       {

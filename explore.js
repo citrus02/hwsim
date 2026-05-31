@@ -75,6 +75,34 @@ function findAreaByName(name) {
 let currentFirstParent = null;
 let currentSecondParent = null;
 
+function runAfterWorldHookDialog(callback) {
+  const run = () => {
+    if (!document.getElementById("world-hook-modal")) {
+      callback();
+      return;
+    }
+    setTimeout(run, 250);
+  };
+  run();
+}
+
+function triggerPostExploreCharacterEvents(areaName, waitForWorldHook = false) {
+  const run = () => {
+    // 尝试触发人物偶遇（30% 概率）
+    setTimeout(() => tryTriggerEncounter(areaName), 300);
+
+    // ── 学生角色好感度触发（维度一 + 维度四）──────────────
+    window.affinityUI?.tryStudentActionEncounter('explore');
+    window.affinityUI?.checkStudentSpecialTriggers('explore', { area: areaName });
+  };
+
+  if (waitForWorldHook) {
+    runAfterWorldHookDialog(run);
+  } else {
+    run();
+  }
+}
+
 // 面板布局配置常量
 const PANEL_LAYOUT = {
   display: "grid",
@@ -572,12 +600,7 @@ function renderSecondLayer() {
 
         window._questHook_explore?.();
 
-        // 尝试触发人物偶遇（30% 概率）
-        setTimeout(() => tryTriggerEncounter(lv2.name), 300);
-
-        // ── 学生角色好感度触发（维度一 + 维度四）──────────────
-        window.affinityUI?.tryStudentActionEncounter('explore');
-        window.affinityUI?.checkStudentSpecialTriggers('explore', { area: lv2.name });
+        triggerPostExploreCharacterEvents(lv2.name, Boolean(worldFollowup));
 
         if (timeSystem.dailyActionLeft <= 0) {
           closeExplorePanel();
@@ -725,12 +748,7 @@ function renderThirdLayer() {
 
       window._questHook_explore?.();
 
-      // 尝试触发人物偶遇（30% 概率）
-      setTimeout(() => tryTriggerEncounter(item.name), 300);
-
-      // ── 学生角色好感度触发（维度一 + 维度四）──────────────
-      window.affinityUI?.tryStudentActionEncounter('explore');
-      window.affinityUI?.checkStudentSpecialTriggers('explore', { area: item.name });
+      triggerPostExploreCharacterEvents(item.name, Boolean(worldFollowup));
 
       if (timeSystem.dailyActionLeft <= 0) {
         closeExplorePanel();

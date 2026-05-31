@@ -1,4 +1,12 @@
-import { getSave, setSave, addLog } from './save-system.js';
+import { getSave, setSave, addLog, getYearGrade } from './save-system.js';
+import { exploreEventLib } from './explore-default.js';
+import { mergeAuthoredPlaceScenes } from './npc-place-scenes-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR2 } from './npc-place-scenes-year2-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR3 } from './npc-place-scenes-year3-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR4 } from './npc-place-scenes-year4-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR5 } from './npc-place-scenes-year5-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR6 } from './npc-place-scenes-year6-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR7 } from './npc-place-scenes-year7-authored.js';
 
 const HOUSE_MAP = {
   "格兰芬多": "gryffindor",
@@ -556,6 +564,19 @@ const WORLD_YEAR_THEMES = [
   { year: 1997, rumors: ["走廊里的脚步声比往年更轻。", "不少学生把信件藏得更深，读完就立刻收起。", "教授们的脸色让低年级学生不敢多问。"], mood: "城堡像屏住了呼吸。" },
 ];
 
+const SEASON_FLAVORS = {
+  9: ["开学不久，走廊里满是还没认全的新面孔。", "九月的阳光透过彩窗，城堡显得格外热闹。"],
+  10: ["十月的风钻进城堡，壁炉前的位置开始变得抢手。", "万圣节临近，大礼堂的话题里多了南瓜和糖果。"],
+  11: ["天黑得越来越早，图书馆的油灯亮到很晚。", "十一月的黑湖泛着冷光，魁地奇赛季的讨论热了起来。"],
+  12: ["圣诞临近，城堡里挂起了冬青和彩灯，留校名单贴在了公告栏。", "初雪落在塔楼上，准备回家的学生开始收拾行李。"],
+  1: ["假期结束，城堡在寒风里慢慢恢复了往日的喧闹。", "一月的走廊冷得呵气成霜，没人愿意离开壁炉。"],
+  2: ["二月里魁地奇赛季进入白热化，长桌旁的赌注越押越大。", "黑湖结了薄冰，几个胆大的学生在岸边比赛打滑。"],
+  3: ["初春的暖意爬上窗台，温室里的植物开始疯长。", "三月的霍格莫德周末又被反复提起。"],
+  4: ["四月的雨敲着窗户，高年级学生的脸色一天比一天紧张。", "考试季的阴云开始笼罩公共休息室。"],
+  5: ["五月底，城堡里弥漫着复习和焦虑的气味。", "学期末的考试越来越近，图书馆一座难求。"],
+  6: ["六月考试季，羊皮纸和墨水成了最紧俏的东西。", "学年接近尾声，告别和狂欢的气氛同时在城堡里发酵。"],
+};
+
 const WORLD_RUMOR_TEMPLATES = [
   "有人说{place}附近的画像整晚都在互相传话。",
   "{place}今天格外热闹，连低年级学生都知道那里出了点小状况。",
@@ -568,6 +589,586 @@ const WORLD_RUMOR_TEMPLATES = [
   "长桌旁有人说，费尔奇正在追查一串奇怪的脚印。",
   "画像们似乎知道一点新消息，但谁也不肯先开口。"
 ];
+
+// 玩家真正能在探索地图里去到的地点，传闻锚定到这些地方才能「追过去」
+const BASE_INVESTIGABLE_PLACES = [
+  "三楼走廊", "一楼走廊", "城堡图书馆", "图书馆禁书区", "二楼女生盥洗室",
+  "教师办公室走廊", "黑湖湖畔", "魁地奇球场", "天文塔", "钟楼",
+  "猫头鹰塔楼", "庭院草坪", "海格小屋", "打人柳树下",
+  "魔药课教室", "城堡储藏室", "城堡正门门厅", "霍格沃茨大礼堂", "校医院",
+  "家养小精灵厨房", "有求必应屋", "魔咒课教室", "黑魔法防御术教室",
+  "魔法史教室", "占卜课教室", "魁地奇看台", "草药课温室", "黑湖船坞",
+  "海格小屋旁小径",
+];
+
+const INVESTIGABLE_PLACES = BASE_INVESTIGABLE_PLACES;
+
+const INVESTIGABLE_PLACE_MIN_GRADE = {
+  "图书馆禁书区": 3,
+  "教师办公室走廊": 2,
+  "打人柳树下": 3,
+  "家养小精灵厨房": 2,
+  "有求必应屋": 4,
+  "占卜课教室": 3,
+};
+
+// 锚定地点的传闻：点名某个真实地点，玩家可以追过去调查
+const PLACE_RUMOR_TEMPLATES = [
+  "据说{place}最近一到傍晚就传出说不清的动静。",
+  "好几个学生发誓，他们在{place}看见了不该出现在那里的东西。",
+  "{place}附近的画像这两天集体噤声，连最爱嚼舌根的都不肯多说。",
+  "费尔奇这几天反复往{place}跑，像在找什么，又像在防着什么。",
+  "{place}有个角落被人用咒语草草遮过，痕迹还没褪干净。",
+  "有人说昨晚{place}的方向亮起过一道不寻常的光。",
+];
+
+// 追查线索时的开场白（随机选一句，避免千篇一律）
+const LOCATION_LEAD_INS = [
+  `你揣着“{source}”，绕了点路，来到{place}。`,
+  `“{source}”——你决定亲自来{place}看看是真是假。`,
+  `等四下没什么人，你才悄悄拐进{place}，心里想着那句“{source}”。`,
+  `{place}就在眼前。传闻说的“{source}”，到底藏在哪儿？`,
+];
+
+// 各可调查地点的专属线索场景：intro 旁白 + 3 个有画面感的专属选项
+const BASE_PLACE_SCENES = {
+  "三楼走廊": {
+    intro: [
+      // —— 一年级：禁地、三头犬、活板门 ——
+      { text: "走廊尽头那扇上锁的门后，传来一声闷重的、绝不属于人的呼吸，火把被穿堂风吹得齐齐一晃。", maxGrade: 1 },
+      { text: "地板上有几道新的、像爪子刮过的木屑，越靠近那扇门，空气越冷。", maxGrade: 1 },
+      // —— 二年级及以后：禁令解除，只剩传说 ——
+      { text: "那扇曾经上锁的门如今虚掩着，里面空空荡荡，只在地板上留下一个早已干涸的巨大圆形压痕。", minGrade: 2 },
+      { text: "走廊重新对学生开放了，可路过的人还是会下意识放轻脚步——去年那扇门后的事，已经成了低年级口口相传的传说。", minGrade: 2 },
+    ],
+    choices: [
+      // —— 一年级 ——
+      { label: "贴到门缝往里看", result: "你屏住呼吸凑到门缝前。里面太暗，只看见三对反光的眼睛在同一个高度缓缓转向你，紧接着是低沉的咆哮。你弹回半步，心跳到嗓子眼——门后绝不是什么扫帚柜。", maxGrade: 1 },
+      { label: "蹲下细看爪痕", result: "你蹲下来。木屑是新的，爪痕又深又宽，三趾分得很开。你想起海格含糊提过“看门的那个家伙”，这下对上了号。", maxGrade: 1 },
+      { label: "听见脚步声赶紧撤", result: "拐角传来洛丽丝夫人的脚步。你压下满肚子好奇，贴着墙退回楼梯口——可门后那声呼吸，已经牢牢钉进了你今晚的梦里。", maxGrade: 1 },
+      // —— 二年级及以后 ——
+      { label: "走进那个房间看看", result: "你推开虚掩的门。房间里只剩冷掉的灰尘和那个圆形压痕，墙角还散落着几枚断裂的棋子。门后空得能听见自己的呼吸。", minGrade: 2 },
+      { label: "问画像当年发生了什么", result: "你抬头打听。那幅画像左右看了看，才压低声音：“去年这时候啊……有几个一年级的，深更半夜从这道门进去过。后来的事，我可不敢多嘴。”", minGrade: 2 },
+      { label: "在原地站一会儿就走", result: "你没有进去，只在门口站了站。风从空房间里漏出来，带着一股早已散尽的危险气味。有些门就算开着，也不必再推第二次。", minGrade: 2 },
+    ],
+  },
+  "黑湖湖畔": {
+    intro: [
+      "雾贴着水面铺开，芦苇丛里忽然有什么东西沉了下去，圈圈涟漪一直荡到你脚边。",
+      "湖水黑得看不见底，岸边的泥地上印着一串通向水里、却没有走回来的脚印。",
+    ],
+    choices: [
+      { label: "捡石子探探水深", result: "你扔了块石子。它没有沉下去的声音，倒像是被什么东西在水下接住了。湖面静了两秒，又涌起一个缓慢的大泡。你决定离岸边远一点。" },
+      { label: "顺着脚印找过去", result: "脚印一直延伸到水边的礁石后。那里有半截被扯断的红色围巾，料子是霍格沃茨的——有人来过，而且走得很急。" },
+      { label: "问岸边钓鱼的老学长", result: "蹲在礁石上的高年级生头也不回：“别盯着水看太久。”他顿了顿，又补一句，“尤其是它盯回来的时候。”说完就收竿走了。" },
+    ],
+  },
+  "城堡图书馆": {
+    intro: [
+      "平斯夫人今天格外警觉，可真正反常的是禁书区方向——那里有一本书的位置空着，灰尘的形状还在。",
+      "一排书架被人匆忙翻动过，几张写满批注的羊皮纸塞在书缝里，墨迹还没干透。",
+    ],
+    choices: [
+      { label: "查空位旁的借阅卡", result: "你翻开那格的借阅记录。最后一个名字被人用魔法蹭掉了，只留下一个潦草的、不属于任何在校学生的姓氏开头。" },
+      { label: "抽出夹着的羊皮纸", result: "羊皮纸上是一串关于某种禁忌魔药配方的笔记，字迹工整却越写越急，最后一行只有半句：“……剂量绝不能超过——”" },
+      { label: "装作找书继续观察", result: "你假装抽书。两个高年级生从你身后压低声音经过，一个说“他又来借那本了”，另一个立刻嘘了一声。你记住了他们的脸。" },
+    ],
+  },
+  "图书馆禁书区": {
+    intro: [
+      "禁书区的锁链被人动过，断口很新；最里侧的书架后，似乎有一本书在自己轻轻翻页。",
+      "空气里有股焦糊味，一本书的封皮上烫着一个还冒着余温的、谁也认不出的符号。",
+    ],
+    choices: [
+      { label: "凑近会翻页的那本书", result: "你刚靠近，书就猛地合上，发出一声像是叹息的闷响。封面上浮现出一行字，转瞬即逝，你只来得及看清“别问”两个字。" },
+      { label: "记下烫印的符号", result: "你把那个符号默默临摹在掌心。它不像任何课上学过的咒文，倒像是有人刻意自创、不想让人看懂的标记。" },
+      { label: "趁管理员没来溜走", result: "平斯夫人的脚步声逼近。你把一切原样放回，闪身退出禁书区——但那股焦糊味，跟着你飘出了好远。" },
+    ],
+  },
+  "二楼女生盥洗室": {
+    intro: [
+      "水管深处传来呜咽似的回声，最里间的水龙头明明没人开，却在滴水，每一滴都格外响。",
+      "镜子上凝着一层水汽，水汽里浮出一行很快又被掩盖的字迹，桃金娘的哭声忽远忽近。",
+    ],
+    choices: [
+      { label: "和桃金娘搭话", result: "“又是来嘲笑我的？”桃金娘从隔间飘出来，眼睛红红的。可当你认真问起，她反倒愣住，小声说：“……晚上是有别人来过，他对着水池说了句蛇一样的话。”" },
+      { label: "检查滴水的水龙头", result: "你蹲下细看。水龙头侧面刻着一条极小的、缠绕的蛇形花纹，和别的龙头都不一样——它根本不该出现在一间普通盥洗室里。" },
+      { label: "擦掉镜面的水汽看清字", result: "你伸手一抹，水汽下的字只剩最后两个：“……开启。”话音未落，镜子又重新蒙上了一层雾，仿佛刚才什么都没有。" },
+    ],
+  },
+  "教师办公室走廊": {
+    intro: [
+      "几扇办公室门后透出压低的争执声，墙上的教授画像全都装作在打盹，眼睛却没真正闭上。",
+      "走廊地板被擦得反光，唯独一扇门前留着一串还没干的、匆忙踩出的湿脚印。",
+    ],
+    choices: [
+      { label: "贴门听里面的争执", result: "你只听清断续几句：“……不能再瞒着校长”“……那孩子根本不知道自己卷进了什么”。门把手忽然转动，你飞快闪进旁边的壁龛。" },
+      { label: "问墙上的画像", result: "你抬头小声打听。画像里的老教授终于睁眼，意味深长地瞥了那扇门一眼：“有些门，是不该用好奇心去敲的，孩子。”" },
+      { label: "跟着湿脚印走", result: "脚印拐过两个弯，停在一扇虚掩的门前，又折返消失。水迹在门槛上乱成一团，像来人到这里时忽然改了主意。" },
+    ],
+  },
+  "魁地奇球场": {
+    intro: [
+      "空荡的看台被风灌得呼呼响，草坪正中却有一片被烧焦的圆形痕迹，扫帚棚的门虚掩着。",
+      "球门环上缠着一截不属于任何球队的银色丝线，在风里轻轻发亮。",
+    ],
+    choices: [
+      { label: "查草坪上的焦痕", result: "焦痕边缘很整齐，不像意外失火，倒像是有人深夜在这里施过某种威力不小的咒。草还没长回来，事情就发生在这一两天内。" },
+      { label: "进扫帚棚看看", result: "棚里一把光轮被人动过手脚——尾端的飞行符文被悄悄改了一道。要是没人发现，下一个骑它的人非摔个不轻。你把它单独挪到了一边。" },
+      { label: "解下球门环上的丝线", result: "那截银线在你指间凉得反常，凑近闻有股淡淡的药味。你想起魔药课上提过的某种附着咒——有人想在比赛里做点手脚。" },
+    ],
+  },
+  "天文塔": {
+    intro: [
+      "望远镜被人对准了一个奇怪的方位——不是星空，而是禁林深处；目镜上还留着别人的指温。",
+      "塔顶的风很大，石栏上压着半张被风掀动的星图，上面圈出的位置根本不存在任何已知星辰。",
+    ],
+    choices: [
+      { label: "顺着望远镜看过去", result: "你凑到目镜前。镜头那头的禁林里，有一点幽幽的光正缓慢移动，绝不是萤火虫那么简单。你后背一凉，慢慢退开。" },
+      { label: "研究那张星图", result: "图上被圈出的“星”其实标着一行小字坐标，指向城堡地下某处。画图的人懂天文，更懂得用星图来藏一张地图。" },
+      { label: "等画图的人回来", result: "你躲在阴影里等了很久。脚步声终于传来又戛然而止——对方似乎察觉了什么，掉头下了塔。你只看清一角深色的袍摆。" },
+    ],
+  },
+  "钟楼": {
+    intro: [
+      "巨大的齿轮本该匀速咬合，此刻却有一格卡着不动，钟摆的影子停在一个不对的角度。",
+      "整点早就过了，钟声却迟迟没响；齿轮深处，似乎卡着一样不属于机械的东西。",
+    ],
+    choices: [
+      { label: "爬上去看卡住的齿轮", result: "你小心攀上铁架。齿缝里卡着一只小小的、早已不走的怀表，表盖内侧刻着一个名字缩写——有人故意用它让整座钟楼停摆。" },
+      { label: "拨回停住的钟摆", result: "你伸手轻轻一推，钟摆复位，钟声轰然炸响。就在那一瞬，你瞥见楼梯口一道身影飞快退走——他不想让钟重新走起来。" },
+      { label: "记下停摆的确切时刻", result: "指针停在凌晨三点十七分。你把这个时间记下，总觉得它会和接下来某件事对上——城堡里的巧合，往往都不是巧合。" },
+    ],
+  },
+  "猫头鹰塔楼": {
+    intro: [
+      "猫头鹰们集体焦躁不安，羽毛落了一地，唯独一只缩在角落，腿上还系着没送出去的信。",
+      "窗台上散落着几片被撕碎的信纸，蜡封的红印还是新的，像是有人匆忙拦下了一封信。",
+    ],
+    choices: [
+      { label: "取下那只猫头鹰的信", result: "信封没有署名，只在角落画了个小小的记号。你没有拆——但光是那个记号，就够让你心里咯噔一下。" },
+      { label: "拼起撕碎的信纸", result: "你把碎片凑到一起，勉强读出几个词：“……他们已经怀疑”“……别再写信了”。落款被撕得最碎，只剩一小截墨痕卡在纸边。" },
+      { label: "安抚焦躁的猫头鹰", result: "你轻轻顺着羽毛，它才慢慢平静。塔楼里仍有几只猫头鹰不肯落架，圆眼睛齐刷刷盯着同一扇窗。" },
+    ],
+  },
+  "庭院草坪": {
+    intro: [
+      "学生们三三两两晒着太阳，可草坪正中有一圈草莫名枯黄，踩上去脚底发凉。",
+      "几个低年级学生围成一圈窃窃私语，一见你走近就哄笑着散开，地上留着一本被遗忘的日记。",
+    ],
+    choices: [
+      { label: "查那圈枯黄的草", result: "枯草围成一个规整的圆，边界整齐得不自然。你想起这种痕迹——昨夜这里很可能进行过一场不该有的召唤或仪式。" },
+      { label: "捡起那本日记", result: "日记没上锁，最新一页只写了半句就被泪水晕开：“我不该答应帮他做那件事的，可现在已经……”后面空白。你合上了它。" },
+      { label: "追上去问那几个学生", result: "你追上其中一个。他支吾半天，最后压低声音：“我们就是看见有人半夜在草坪上画圈……真的，别说是我说的。”" },
+    ],
+  },
+  "海格小屋": {
+    intro: [
+      "烟囱冒着歪扭的炊烟，牙牙却一反常态地冲着屋后狂吠，院子角落用麻袋盖着一个会动的大箱子。",
+      "海格慌慌张张把什么塞进炉子，见你来，咧嘴笑得太用力，背在身后的手还沾着不知名的鳞片。",
+    ],
+    choices: [
+      { label: "去看屋后会动的箱子", result: "麻袋下的箱子缝里钻出一缕青烟，伴着一声细小的、像是雏兽的尖叫。海格一个箭步挡在你面前：“没啥！就是……养了只大点的鸡。”他的耳朵红得发亮。" },
+      { label: "追问他手里藏的东西", result: "你直视他。海格的耳根红透，半晌才叹气：“你可不能跟别人讲啊。”他摊开手，掌心是一片巴掌大的、还泛着热度的鳞片。" },
+      { label: "陪他喝杯茶慢慢聊", result: "你坐下来。三杯硬得像石头的岩皮饼下肚后，海格的话匣子松了，零零碎碎漏出一句：“有些生物啊，长得吓人，心可比人善多喽。”" },
+    ],
+  },
+  "打人柳树下": {
+    intro: [
+      "打人柳的枝条无端地抽动了一下，树根附近的草被扫得乱七八糟，露出一个黑黢黢的洞口。",
+      "巨大的树影里藏着一截被压平的小径，像是有人摸准了让这棵暴躁的树安静下来的法子。",
+    ],
+    choices: [
+      { label: "找让树静止的机关", result: "你绕着树根细看，发现一个不起眼的树瘤。传闻里说按住它树就会僵住——但你没敢真的去按，万一传闻是假的呢？" },
+      { label: "探头看那个洞口", result: "洞口黑得深不见底，一股阴湿的风从里面涌出来，隐约带着远处霍格莫德的气味。洞壁泥土被蹭得很光滑。" },
+      { label: "在安全距离外观察", result: "你退到枝条够不着的地方蹲守。没过多久，柳树果然又毫无征兆地僵住几秒——有人在远处操控着它，而那人不想被看见。" },
+    ],
+  },
+  "一楼走廊": {
+    intro: [
+      "会移动的画像今天集体往同一个方向张望，费尔奇拎着灯，正盯着地上一串泥脚印发愁。",
+      "盔甲发出断断续续的咔嗒声，像是在模仿什么；走廊尽头的挂毯被掀起一角，后面透出微光。",
+    ],
+    choices: [
+      { label: "顺着泥脚印追", result: "脚印一路通向那幅被掀起的挂毯，在墙根处凭空消失。你伸手一探，挂毯后是一道连费尔奇都没发现的窄缝。" },
+      { label: "问爱八卦的画像", result: "胖夫人隔壁的骑士画像兴奋地凑过来：“我可什么都看见啦！半夜，一个披斗篷的，从这儿——嗖!——就不见了！”说完得意地捋起小胡子。" },
+      { label: "听盔甲在模仿什么", result: "你贴近那副咔嗒作响的盔甲，发现它在断断续续地重复一段脚步的节奏——快三步、停、再快三步。有人最近常从这儿匆忙跑过。" },
+    ],
+  },
+  "斯莱特林公共休息室": {
+    intro: [
+      "湖水的绿光从高窗外渗进来，壁炉火却烧得很低，几名学生围着低桌压低声音，银杯里的茶一口没动。",
+      "一名低年级学生站在壁炉边练习打领带，旁边的高年级生一边嫌弃他笨，一边还是伸手把银绿色结扣拉正了。",
+    ],
+    choices: [
+      { label: "留意银杯倒影", result: "银杯映出低桌下方一只被踢进去的墨水瓶，瓶口还沾着绿色封蜡。你刚弯腰，旁边有人轻轻咳了一声，提醒你别把手伸得太快。" },
+      { label: "问坐在炉边的人", result: "那名学生先冷冷看你一眼，确认周围没人注意后才说：“不是每个秘密都值得拿来换分数。”他说完把银杯往里推了推，像把话题也推回了阴影里。" },
+      { label: "替低年级理好领带", result: "你顺手帮那名新生把领带压平。高年级生没有道谢，只丢下一句“至少别让外人看笑话”，可他离开前把那只墨水瓶也踢得离你近了些。" },
+    ],
+  },
+  "斯莱特林宿舍": {
+    intro: [
+      "四柱床的帷幔垂得严严实实，窗外湖水拍打玻璃，有个箱子在床脚轻轻震了一下。",
+      "床头柜上摆着擦得发亮的银质徽章，旁边一排小瓶按高矮排开，最矮的一只被人转了半圈。",
+    ],
+    choices: [
+      { label: "查看震动的箱子", result: "箱扣上缠着一道简陋的静音咒，里面却仍传出细小的碰撞声。缝隙里滚出一枚袖扣，刻着的姓氏被人用刀尖划花了。" },
+      { label: "低声问室友缘由", result: "对方把帷幔掀开一条缝：“有人借了东西不还，还以为寝室里没人敢说。”他没有提高声音，手指却一直按着魔杖袋。" },
+      { label: "把小瓶转回原位", result: "你把那只最矮的小瓶转回与其他瓶子一致的角度。帷幔后传来一声很轻的吸气，像有人终于确认东西没有被拿走。" },
+    ],
+  },
+  "魔药课教室": {
+    intro: [
+      "坩埚里的残液还在冒泡，药柜门半开着，一股苦杏仁和湿石头混在一起的味道贴着地面散开。",
+      "黑板上最后一行批注被人擦了一半，只留下几道尖刻的粉笔痕，像是斯内普刚刚忍着怒气停笔。",
+      { text: "一本旧课本被塞在高脚凳下，封面破旧，夹页里密密麻麻写满比课本还小的字。", minGrade: 6 },
+    ],
+    choices: [
+      { label: "检查没洗的坩埚", result: "你用银勺挑起一滴残液。颜色从紫转灰，月长石粉末的细亮颗粒沉在底部，数量多得不像课堂失手。" },
+      { label: "问留下整理的学生", result: "那名学生一边擦桌一边小声说：“刚才有人借口找龙肝，从药柜最里面摸走了一包东西。”他说完立刻埋头，像怕墙也会告密。" },
+      { label: "抄下半截批注", result: "你把黑板上没擦干净的字照样记下。那句批注毒辣得很，却精准指向一个关键错误：有人把课上不该混用的两味药放在了一起。" },
+      { label: "翻开旧课本夹页", result: "夹页上的批注比教授讲得还快，还多出几条危险得漂亮的捷径。你只看了两行就合上书——这些字像在鼓励你犯一个聪明的错。", minGrade: 6 },
+    ],
+  },
+  "城堡储藏室": {
+    intro: [
+      "旧家具堆得像一座小山，防尘布下传来细碎的拖拽声，一只铜烛台滚到你脚边才停下。",
+      "一面穿衣镜被倒扣在墙边，镜框还在轻轻发抖，仿佛刚才有人在里面看见了不想承认的东西。",
+    ],
+    choices: [
+      { label: "掀开会动的防尘布", result: "布下是一只被施了搬运咒的旧椅子，正努力把自己挪到门口。你扶住椅背时，它反倒安静下来，像认出了曾坐过它的人。" },
+      { label: "问搬箱子的学生", result: "对方手忙脚乱地把箱子抱紧：“我只是替人拿东西。”箱盖没合严，你瞥见里面露出一角被雨水泡皱的学院长袍。" },
+      { label: "扶正倒扣的镜子", result: "镜面一立起来，你只看见自己身后空荡荡的储藏室。可镜中的一只柜门慢慢合上，现实里的那只柜门却一直开着。" },
+    ],
+  },
+  "地牢囚室": {
+    intro: [
+      "铁门上的锈斑像干涸的血，墙角挂着几段旧锁链，链环偶尔无风自响。",
+      "石墙深处渗着冷水，水痕绕开地上的一圈旧符号，仿佛连潮气都不愿碰它。",
+    ],
+    choices: [
+      { label: "照亮墙角锁链", result: "锁链内侧刻着细密的束缚咒，早已失效，却仍让魔杖尖发冷。这里曾经关过的东西，力气大到把石墙磨出沟痕。" },
+      { label: "听铁门外的回声", result: "你屏息站住，远处回声里混着一声极轻的刮擦。它停在你停住之后，隔了两秒，才慢慢又响了一下。" },
+      { label: "不踩符号慢慢退开", result: "你绕开那圈旧符号离开。门合上前，里面的水滴声忽然停了一下，像有谁终于注意到你没有上当。" },
+    ],
+  },
+  "密室": {
+    intro: [
+      { text: "蛇形石柱在黑暗里高得看不见顶，地面残留着久远水痕，连你的脚步声都像被吞下去一半。", minGrade: 2, maxGrade: 2 },
+      { text: "墙上的蛇雕睁着空洞石眼，潮湿空气里有一种陈旧的腥气，像一个秘密被关了太久。", minGrade: 2, maxGrade: 2 },
+      { text: "水面忽然泛起细小波纹，远处传来一声低沉的摩擦，仿佛有什么庞大的东西刚刚经过。", minGrade: 2, maxGrade: 2 },
+    ],
+    choices: [
+      { label: "查看石柱下的鳞痕", result: "石柱底部有新旧交叠的刮痕，最旧的几乎被时间磨平，新的却还锋利。你的指尖悬在痕迹上方，没有真正碰下去。", minGrade: 2, maxGrade: 2 },
+      { label: "对蛇雕低声发问", result: "蛇雕当然没有回答，可你话音落下后，远处水滴声忽然乱了一拍。密室像一只没有睡透的眼睛，短暂地看了你一眼。", minGrade: 2, maxGrade: 2 },
+      { label: "沿原路安静离开", result: "你没有继续深入。离开前你回头看了一眼，那些石蛇仍旧沉默，水声却在你转身时变得更近。", minGrade: 2, maxGrade: 2 },
+      { label: "追那道摩擦声", result: "你刚迈出一步，脚下水面就剧烈一颤。阴影从石柱间一闪而过，太大、太快，绝不是任何学生该独自面对的东西。", minGrade: 2, maxGrade: 2 },
+    ],
+  },
+  "城堡正门门厅": {
+    intro: [
+      "大门缝里灌进潮湿冷风，费尔奇蹲在台阶边检查泥脚印，洛丽丝夫人的尾巴绷得笔直。",
+      "沙漏里的学院宝石轻轻碰响，几个新生挤在门厅角落，盯着门外一串奇怪的拖痕不敢靠近。",
+    ],
+    choices: [
+      { label: "顺着拖痕看门外", result: "拖痕从台阶一路延到草地，边缘夹着几片湿漉漉的苔藓。来过的东西不大，却拖着某件沉重物品进了城堡。" },
+      { label: "问费尔奇在查什么", result: "费尔奇眯起眼：“少管闲事。”可洛丽丝夫人突然对着门缝哈气，他的脸色也跟着变了，灯笼被他攥得咯吱一响。" },
+      { label: "帮新生让开通道", result: "你把低年级学生带离门口。他们七嘴八舌地说刚才门自己开过一次，外面没有人，只有一阵带泥土味的风吹进来。" },
+    ],
+  },
+  "霍格沃茨大礼堂": {
+    intro: [
+      "浮空蜡烛有几支烧得忽明忽暗，长桌上传闻比南瓜汁传得还快，天花板的云层低得像要落下来。",
+      "赫奇帕奇长桌末端的盐罐自己滑过桌面，停在一个空座位前；旁边学生谁也没伸手去碰。",
+      { text: "礼堂角落多了几句关于火焰杯的低声猜测，高年级学生的目光频频投向教师席。", minGrade: 4, maxGrade: 4 },
+    ],
+    choices: [
+      { label: "追问盐罐停处", result: "空座位旁的人把餐巾折了又折，最后说：“他刚才还在这儿。”盘子里的土豆泥凉了，叉子却摆得端端正正。" },
+      { label: "听长桌传闻", result: "你装作夹土豆，听见旁边有人说：“不是皮皮鬼，这次连画像都不笑。”另一人立刻用手肘撞他，话题戛然而止。" },
+      { label: "看天花板云层", result: "天花板上的云像被无形手指划开一条缝，正对着教师席后方。它很快又合拢，但你记住了那个方向。" },
+      { label: "留意火焰杯传闻", result: "你听见有人笃定地说，今晚会有一件“全校都得看着”的东西被搬进礼堂。话音刚落，教师席上某位教授抬眼扫了过来。", minGrade: 4, maxGrade: 4 },
+    ],
+  },
+  "校医院": {
+    intro: [
+      "白色床帘后传来压抑的咳嗽声，庞弗雷夫人的药瓶排成一线，其中一瓶自己轻轻震着。",
+      "空气里满是药水和干净床单的味道，床头柜上却放着一小片焦黑羽毛，不像任何治疗用品。",
+    ],
+    choices: [
+      { label: "查看震动药瓶", result: "瓶签写着“镇静用”，里面的药水却起了细细银沫。有人把它换过，手法很谨慎，但没料到药水会对光发颤。" },
+      { label: "小声问病床学生", result: "床帘里的人声音沙哑：“我只记得一道蓝光，然后大家都喊我别动。”他把被子攥得很紧，像还在等那道光再回来。" },
+      { label: "把羽毛交给夫人", result: "庞弗雷夫人接过羽毛，眉头立刻皱紧：“你在哪儿捡到的？”她没有多解释，只把它锁进了药柜最上层。" },
+    ],
+  },
+  "家养小精灵厨房": {
+    intro: [
+      "铜锅热气把天花板熏得发亮，家养小精灵们忙得脚不沾地，却有一盘布丁被单独盖上银罩。",
+      "黄油和烤面包香气里混着一丝焦糖味，几只小精灵围着灶台窃窃私语，见你看过去立刻鞠躬。",
+    ],
+    choices: [
+      { label: "掀开银罩看看", result: "银罩下的布丁完好无损，只是旁边多了一只不属于厨房的银勺。勺柄上沾着塔楼常有的灰尘，甜味盖不住那点冷石头气。" },
+      { label: "温和询问小精灵", result: "小精灵绞着茶巾，小声说：“小精灵不能说主人的名字，先生/小姐。但有人要了三人份夜宵，却只拿走一个盘子。”" },
+      { label: "帮忙把盘子归位", result: "你顺手把乱放的盘子叠好。最下面那只盘子还温着，边缘沾了一点黑湖水藻的腥味，和厨房里的黄油香格格不入。" },
+    ],
+  },
+  "有求必应屋": {
+    intro: [
+      "墙面上那扇门若隐若现，铜把手从无到有地浮出来，像城堡刚刚想起你需要一个地方。",
+      "屋里摆着与你刚才所想完全不符的东西：一排蒙灰镜子、几只空箱子，还有一张自己翻面的椅子。",
+      { text: "房间深处多了几只练习假人，墙上残留着防御咒击中的浅痕，空气里还有新鲜火花味。", minGrade: 5 },
+    ],
+    choices: [
+      { label: "查看自动翻面的椅子", result: "椅面每翻一次，背后就显出一行淡字：“有人比你更早来过。”字迹很快消失，像房间只肯给你半句提示。" },
+      { label: "对房间说出需求", result: "你轻声说自己想知道这里发生了什么。墙边立刻滑出一只旧柜子，柜门虚掩，里面挂着几件不属于同一学院的袍子。" },
+      { label: "不多停留马上离开", result: "你退回走廊，门在身后无声消失。墙面恢复平整前，你看见门缝里有另一道影子也在退后。" },
+      { label: "检查练习假人", result: "假人胸口被缴械咒打得凹进去，脚边散着几张写满咒语缩写的纸。这里不像普通藏身处，更像有人正在认真训练一支小队。", minGrade: 5 },
+    ],
+  },
+  "魔咒课教室": {
+    intro: [
+      "羽毛、碎纸和几截断掉的粉笔悬在半空，像某个咒语练到一半忽然被打断。",
+      "讲台旁的垫脚书摞得高高的，黑板上还留着弗立维教授画出的发音弧线，其中一条被人故意改歪了。",
+    ],
+    choices: [
+      { label: "试着让羽毛落下", result: "你轻念解除咒，羽毛却只降到半空就停住，露出下面被遮住的一枚纸团。纸团上写着一个名字和一句“别在课后留下”。" },
+      { label: "问练习的学生", result: "那名学生沮丧地揉着手腕：“不是我念错，是有人把黑板上的重音改了。”他说这句时没有告状的得意，只有反复失败后的难堪。" },
+      { label: "把发音弧线改回去", result: "你把那条歪掉的弧线擦正。下一组学生练习时终于没有把羽毛炸成纸屑，教室里紧绷的气氛也松了一点。" },
+    ],
+  },
+  "黑魔法防御术教室": {
+    intro: [
+      "柜子里传来轻轻的碰撞声，墙上挂着各式防御图表，几道新鲜咒痕从地板一直划到讲台边。",
+      "教室今年又换了布置，旧教授留下的东西还没清干净，新教授的行李已经堆在角落，像两段风格不合的咒语撞在一起。",
+    ],
+    choices: [
+      { label: "查看柜子动静", result: "你靠近时，柜门猛地震了一下，里面的东西像在模仿你的呼吸。锁孔边的新刮痕还带着木屑，蹭到指尖发涩。" },
+      { label: "问收拾教具的人", result: "对方抱着一摞旧卷轴苦笑：“每年都换，谁知道哪些能留？”他从卷轴间掉出一张名单，名单上有几样危险教具被打了圈。" },
+      { label: "记录地上的咒痕", result: "咒痕从讲台边一路退到门口，越往后越浅。你能想象施咒的人一边后退，一边还努力不把桌椅彻底掀翻。" },
+    ],
+  },
+  "魔法史教室": {
+    intro: [
+      "粉笔灰在阳光里慢慢飘着，宾斯教授的声音像远处雨声，几个学生正努力把眼皮撑开。",
+      "黑板上年代线写得密密麻麻，可其中一段被人用红墨圈住，墨迹新得不像课堂笔记。",
+    ],
+    choices: [
+      { label: "看红墨圈住的年份", result: "那段年份旁标着“重演？”两个字。你翻课本对照，发现它对应一次校内失踪事件，和今天的传闻竟有几分相似。" },
+      { label: "戳醒快睡着的同学", result: "同学猛地坐直，差点打翻墨水。他小声谢你，随后迷迷糊糊补一句：“刚才后门开过，可宾斯教授一点也没停。”" },
+      { label: "装作听课继续观察", result: "你低头记笔记，余光看见后门旁的粉笔灰被风吹成一条细线。门明明关着，那条灰线却一直朝外飘。" },
+    ],
+  },
+  "格兰芬多公共休息室": {
+    intro: [
+      "壁炉烧得噼啪作响，沙发上挤满了争论魁地奇的人，胖夫人的画像在入口处不耐烦地清嗓子。",
+      "一场巫师棋下到一半停住了，执白棋的学生坐在地毯边不说话，旁边人也罕见地没有起哄。",
+    ],
+    choices: [
+      { label: "查看停住的棋局", result: "白棋国王歪在棋盘边，嘴里还在小声抱怨“那步太冲动”。执棋的学生红着耳朵，像刚把一次冒险输成了一场教训。" },
+      { label: "问壁炉边的学生", result: "对方往火里添柴，声音比平时低：“有人刚才想逞英雄，差点把低年级也带进去。”他说完看向地毯边，没有笑。" },
+      { label: "把争吵先压下来", result: "你把两边越说越快的话头截住。片刻安静后，有人别扭地把一杯热可可推给那个沉默的学生，杯子一路滑到他膝边。" },
+    ],
+  },
+  "格兰芬多宿舍": {
+    intro: [
+      "四柱床帷幔半开，海报角被火星燎了一点，地板上滚着一颗还在抗议的巫师棋卒。",
+      "有人把一件斗篷匆忙塞进箱底，床头的闹钟指针却停在深夜时分。",
+    ],
+    choices: [
+      { label: "查看停住的闹钟", result: "闹钟背面被贴了静音咒，指针卡在凌晨一点。咒语边缘贴得很平，像施咒的人练过不止一次。" },
+      { label: "问棋卒为什么乱跑", result: "棋卒气哼哼地挥剑，指向床底。你弯腰一看，那里藏着一张被踩皱的罚写纸，签名处空着。" },
+      { label: "替人拉好帷幔", result: "你没有翻箱，只把被扯歪的帷幔拉好。箱底传来轻微一响，像里面那件东西也松了口气。" },
+    ],
+  },
+  "拉文克劳公共休息室": {
+    intro: [
+      "圆形窗外风声清亮，门环刚问完一道谜题，室内已经有三个人为答案争得面红耳赤。",
+      "星图在天花板缓慢旋转，一名学生抱着枕头坐在书堆中间，认真听另外两个人争论，却一句也插不上。",
+    ],
+    choices: [
+      { label: "请安静的人先说", result: "抱枕头的学生愣了一下，慢慢说出一个没人考虑过的答案。争论声停住，门环在入口处轻轻敲了三下，像在鼓掌。" },
+      { label: "加入谜题争论", result: "你提出第四种解释，争论反而安静下来。一个高年级生若有所思地翻开窗边星图，指尖停在城堡地下那一格。" },
+      { label: "观察星图偏移", result: "你没有打断他们，只盯着天花板。星图上有一颗星反复偏离轨道，最后停在地牢方向，亮得比旁边几颗都久。" },
+    ],
+  },
+  "拉文克劳宿舍": {
+    intro: [
+      "宿舍安静得能听见羽毛笔划过羊皮纸，窗边一卷星图自己展开，又自己卷回去。",
+      "床头小桌上摆着三本摊开的书，夹页标签颜色不同，却全都指向同一个问题。",
+    ],
+    choices: [
+      { label: "按标签顺序翻书", result: "三本书的夹页连起来是一道小谜题，答案不是词，而是一串楼梯编号。最后一页留了半行空白，等着后来者自己补上。" },
+      { label: "请教还醒着的人", result: "对方从书堆里抬头，推了推眼镜：“我可以告诉你我发现了什么，但你得先告诉我，你为什么觉得这是线索。”这很拉文克劳。" },
+      { label: "只记下书名离开", result: "你没有动别人的笔记，只记住三本书名。走到门口时，星图轻轻展开一角，像在确认你是否真的看懂。" },
+    ],
+  },
+  "赫奇帕奇公共休息室": {
+    intro: [
+      "圆窗外植物轻轻晃着，空气里有烤饼和泥土的暖味，几名学生围着一只破花盆低声商量。",
+      "壁炉边多了一篮没署名的点心，旁边却放着一块写着“先问过本人”的小木牌，字迹圆圆的，态度很硬。",
+    ],
+    choices: [
+      { label: "查看破花盆", result: "花盆裂缝里夹着几根银色根须，根须还在慢慢缩。围着它的学生没有慌，只是把厚手套一副副分下去。" },
+      { label: "问分点心的学生", result: "她递给你一块饼干，又把篮子往回收了收：“不是谁送了吃的都能随便收。先弄清楚为什么送。”这话说得温和，半点不软。" },
+      { label: "帮忙固定花盆", result: "你按住花盆边缘，另一个人立刻把麻绳递给你。几个人配合得很快，谁也没抢着出风头，银色根须终于安静下来。" },
+    ],
+  },
+  "赫奇帕奇宿舍": {
+    intro: [
+      "床铺整理得朴实舒服，备用被子叠在角落，一只草药篮躲在床底，叶片时不时探出来。",
+      "窗边挂着几串干花，香味温和，却有一束用黑线扎着，和周围格格不入。",
+    ],
+    choices: [
+      { label: "拉出床底草药篮", result: "篮子里不是普通香草，而是一株被包得严严实实的小苗。标签写着“需隔离”，旁边却多了一行别人补上的字：“今晚移走。”" },
+      { label: "问谁多拿了被子", result: "室友想了想：“昨晚有人说禁林边冷，借走了一床旧毯子。”他很快补充，“不是去冒险，只是帮忙。”可他自己也不太确定。" },
+      { label: "解开黑线花束", result: "你没有拆散花，只松开一点黑线。里面掉出一片干枯叶子，边缘像被某种毒液烧过，绝不是装饰。" },
+    ],
+  },
+  "占卜课教室": {
+    intro: [
+      "熏香把阁楼熏得雾蒙蒙的，水晶球里浮着一团说不清的影子，茶杯沿上残着几片贴得太紧的茶叶。",
+      "层层帘子挡住日光，圆桌上有一副牌自己翻开又合上，像在犹豫要不要告诉你。",
+    ],
+    choices: [
+      { label: "凝视水晶球影子", result: "影子先像塔楼，后又像一扇湿漉漉的门。你眨眼时它碎成雾，只留下一个方向感：向下，向更冷的地方。" },
+      { label: "请同桌解读茶叶", result: "同桌一本正经地看了半天：“这里像一只眼睛，旁边像楼梯。”他越说越没底，可你发现杯底茶叶确实围成了旋转楼梯的形状。" },
+      { label: "把自翻的牌盖住", result: "你按住那副牌，它在掌心下轻轻发热。等你松手，最上面多了一张原本没有的空白牌，边缘写着小小的“别急”。" },
+    ],
+  },
+  "魁地奇看台": {
+    intro: [
+      "高空看台被风吹得轻轻摇晃，彩带缠在栏杆上，一只窥镜球滚到座位底下还在嗡嗡叫。",
+      "从这里能看见球场、黑湖和远处禁林，某个座位上却放着一副被折断的望远镜。",
+    ],
+    choices: [
+      { label: "捡起嗡嗡叫的窥镜球", result: "窥镜球在你手里转得更快，最后指向一排空座位。座位背面有新刻的记号，像是有人为夜里会面做的标识。" },
+      { label: "问看台管理员", result: "管理员皱着眉把彩带扯下来：“昨晚这里没人有预约。”他顿了顿，又指向最高一排，“可那儿的脚印是新的。”" },
+      { label: "用断望远镜看远处", result: "镜片裂了，却刚好把禁林边缘放大成两半画面。你看见一块白布挂在树上，很快又被人扯走。" },
+    ],
+  },
+  "草药课温室": {
+    intro: [
+      "泥土和龙粪肥料味混在一起，几株危险植物被绳索固定着，其中一盆的标签被人翻到了背面。",
+      "斯普劳特教授的照料清单夹在门边，最后一行多了个不属于她笔迹的小勾。",
+    ],
+    choices: [
+      { label: "翻回被藏的标签", result: "标签写着“夜间避光”，背面却被人补了“移至月下”。如果照做，这株植物今晚就会彻底失控。" },
+      { label: "问正在浇水的学生", result: "学生把喷壶放低，小声说：“不是我们改的。今天早上门锁没坏，但土已经被翻过。”温室里最安静的地方，反而最容易留下痕迹。" },
+      { label: "对照照料清单", result: "你把清单和花盆一一对上，发现有一盆植物被调了位置。它现在正好挡住通往后门的一小块泥印。" },
+    ],
+  },
+  "黑湖船坞": {
+    intro: [
+      "旧木船拴在码头边轻轻碰撞，青苔石阶湿滑，水下有影子从桨影间一闪而过。",
+      "几只空船明明系得牢，却都朝同一个方向偏着，像被湖底某种东西轻轻牵住。",
+    ],
+    choices: [
+      { label: "检查偏转的船绳", result: "船绳没有断，却被水下力量拉得绷紧。你摸到一小片卡在绳结里的银色鳞片，冷得像刚从深水里捞出。" },
+      { label: "问守船的高年级生", result: "他把披风裹紧：“新生来的那晚，船会自己认路。可最近有一只船总想往湖中央去。”他说这话时，没有看水面。" },
+      { label: "数清木桩上的刻痕", result: "码头木桩上多了三道新刻痕，间距规整，像某人用来标记水位。今天的水位比昨晚低了一截。" },
+    ],
+  },
+  "尖叫棚屋入口": {
+    intro: [
+      "阴风从破木板缝里钻出来，门锁锈得发黑，屋里却传来一下极轻的地板声。",
+      "通向入口的小径被杂草遮住，泥地上有几枚新脚印，到了门前却突然消失。",
+    ],
+    choices: [
+      { label: "贴近门缝听屋里", result: "里面安静得过分，你却听见远处像有管道传来一声回音。门后的空间未必只属于这间屋子，它更像一条路的尽头。" },
+      { label: "问路过的村民传闻", result: "村民立刻摇头：“别进去。那屋子闹鬼。”他说得太熟练，像是把同一句警告说了很多年，也像是真心希望你信。" },
+      { label: "不碰门锁绕开", result: "你没有碰那把锁。刚走出几步，身后木门轻轻响了一声，像里面有什么东西松了口气。" },
+      { label: "寻找通往城堡的痕迹", result: "你在入口旁发现一段被压平的草，方向正对打人柳。所谓闹鬼传闻下，藏着一条被人长期使用的密道。", minGrade: 3 },
+    ],
+  },
+  "海格小屋旁小径": {
+    intro: [
+      "南瓜地边的泥路被踩得很乱，禁林边缘传来树枝折断声，海格的嗓门远远飘过来又压低。",
+      "小径旁挂着几只旧灯笼，其中一只灯芯发绿，照出地上一串细小爪印。",
+    ],
+    choices: [
+      { label: "顺着爪印走几步", result: "爪印绕过南瓜地，停在一只倒扣的木桶旁。桶下塞着几根粗毛和一小块咬裂的饼干，像是谁在偷偷喂养什么。" },
+      { label: "回应海格的招呼", result: "海格从树影里探出头，胡子上沾着草籽：“别往里走太深，听见没？”他说得随意，手却把一串粗绳藏到身后。" },
+      { label: "只在林边记下动静", result: "你没有越过边界，只记下折枝声传来的方位。片刻后，小径尽头的旧灯笼自己熄了一盏，像有人不想被照见。" },
+    ],
+  },
+  "独角兽栖息地": {
+    intro: [
+      "林间空地干净得近乎神圣，月光落在苔藓上，几根银白色鬃毛挂在低枝。",
+      "一条浅浅的银色痕迹穿过落叶，太美也太不祥，周围连虫鸣都压低了。",
+    ],
+    choices: [
+      { label: "查看银色痕迹", result: "银光沾在落叶边缘，风一吹也不散。你没有伸手去碰，只觉得喉咙发紧，连呼吸都怕惊动这片空地。" },
+      { label: "轻声安抚林中动静", result: "树影深处有东西停住，随后传来很轻的呼吸。它没有靠近，却也没有立刻逃走，像在判断你是否带着恶意。" },
+      { label: "倒退离开空地", result: "你一步步退回树后，尽量不踩断任何枝叶。离开前，一根银白鬃毛从枝头落下，像无声的警告。" },
+    ],
+  },
+  "八眼巨蛛巢穴": {
+    intro: [
+      { text: "树枝间挂满厚重蛛网，风吹过时整片林子像在低声摩擦，地上散着啃得发白的小骨头。", minGrade: 2 },
+      { text: "蛛丝从高处垂下，黏住你的袍角，远处有许多细腿同时移动的沙沙声。", minGrade: 2 },
+      { text: "禁林深处传来群蛛骚动，像有什么新来的、庞大的意志把它们从巢穴里赶了出来。", minGrade: 2 },
+    ],
+    choices: [
+      { label: "查看蛛网震动方向", result: "蛛网的震动不是风造成的，而是一层层向外传递。有什么消息正在巢穴里扩散，而且比你跑得快。", minGrade: 2 },
+      { label: "低声问林中声音", result: "黑暗里响起细碎回应，像许多嘴同时开合。你只听懂一句含混警告：“不是你们的森林。”这已经足够。", minGrade: 2 },
+      { label: "慢慢割开袍角蛛丝", result: "你用魔杖尖小心割断蛛丝，没有惊动更深处的东西。断丝缩回树上，像一根被收走的警戒线。", minGrade: 2 },
+      { label: "追踪群蛛逃窜痕迹", result: "巨蛛足印从林子深处杂乱散开，几条粗蛛丝被硬生生扯断，断口还粘着湿泥。你没有再往那个方向走。", minGrade: 2 },
+    ],
+  },
+  "马人部落领地": {
+    intro: [
+      "林中空地上摆着几块被苔藓覆盖的观星石，马蹄印围成半圈，像有人刚结束一场沉默会议。",
+      "树冠缝隙露出星光，一支箭插在你前方的泥土里，箭羽仍在轻轻颤动。",
+    ],
+    choices: [
+      { label: "观察观星石刻痕", result: "石面上刻着星象和边界标记，其中一条新划线越过了霍格沃茨方向。马人不是迷路，他们是在重新计算危险的位置。" },
+      { label: "向暗处表明来意", result: "你放低魔杖，说自己只是来查线索。树影里传来低沉声音：“线索不会替人承担后果。”随后蹄声远去，没有再靠近。" },
+      { label: "拔不拔箭先退后", result: "你没有碰那支箭，只后退一步。箭尾颤动停止；再抬头时，树影里已经空了，只剩草叶被蹄风压弯。" },
+    ],
+  },
+  "黑暗魔法聚集地": {
+    intro: [
+      { text: "空气冷得像被掏空，树皮上有焦黑咒痕，地面残留一圈灰烬，灰烬中没有任何脚印。", minGrade: 5 },
+      { text: "你的魔杖在袖中微微发颤，附近的影子比树本身更深，仿佛光到了这里也不愿久留。", minGrade: 5 },
+    ],
+    choices: [
+      { label: "检查焦黑咒痕", result: "咒痕边缘向内卷曲，像被某种吞噬类魔法烧过。灰烬没有散，薄薄贴在树皮上，整齐得让人不舒服。", minGrade: 5 },
+      { label: "对影子念照明咒", result: "光亮刚起就被压暗一半。影子里没有实体，可你的魔杖尖偏偏朝那里轻轻坠了一下。", minGrade: 5 },
+      { label: "标记位置后撤离", result: "你在树根旁做了一个很浅的记号，随后原路退走。等你回头，记号已经被灰烬盖住，像这片地方拒绝被记住。", minGrade: 5 },
+    ],
+  },
+};
+
+const PLACE_SCENES = mergeAuthoredPlaceScenes(
+  mergeAuthoredPlaceScenes(
+    mergeAuthoredPlaceScenes(
+      mergeAuthoredPlaceScenes(
+        mergeAuthoredPlaceScenes(BASE_PLACE_SCENES, AUTHORED_PLACE_SCENES_YEAR2),
+        AUTHORED_PLACE_SCENES_YEAR3
+      ),
+      AUTHORED_PLACE_SCENES_YEAR4
+    ),
+    AUTHORED_PLACE_SCENES_YEAR5
+  ),
+  mergeAuthoredPlaceScenes(AUTHORED_PLACE_SCENES_YEAR6, AUTHORED_PLACE_SCENES_YEAR7)
+);
+
+// 未列出的地点：从多样化的通用池里随机取，避免所有地方一个样
+const GENERIC_SCENE = {
+  intro: [
+    "{place}里的气氛不太对，几个学生压低着声音，一见你就若无其事地散开了。",
+    "你在{place}停下脚步。光线、声音，还有空气里那点说不清的味道，都和传闻对得上。",
+    "{place}看起来一切如常，但越是平静，越说明刚才这里发生过点什么。",
+    "你刚踏进{place}，就觉出一丝不对劲——某样东西的位置，和它该在的地方差了那么一点。",
+  ],
+  choices: [
+    { label: "上前不动声色地打听", result: "你装作随意地搭话。对方起初推说不知道，但被你提起“{source}”后，到底还是漏了两句关键的。" },
+    { label: "远远观察周围", result: "你没靠太近，只在{place}多留了一会儿。画像闪烁的眼神、被匆匆收起的羊皮纸，都让传闻一点点变得具体。" },
+    { label: "翻找留下的痕迹", result: "你在{place}的角落细细翻找，找到一处别人忽略的痕迹——足够让“{source}”不再只是空穴来风。" },
+    { label: "先记下，不打草惊蛇", result: "你把细节默默记在心里，没有声张。有些线索现在追得太紧只会吓跑它，不如等它自己浮上来。" },
+    { label: "拦住路过的人问一句", result: "你拦下一个正要离开的学生。他眼神闪躲，最终压低声音丢下半句提示，便头也不回地快步走了。" },
+    { label: "问问墙上的画像", result: "你抬头问墙上的画像。它先是矜持地别过脸去，终究没忍住，给了你一句意味深长、却又点到为止的提示。" },
+  ],
+};
 
 const WORLD_MEMORY_FOLLOWUPS = [
   "昨天那件事还在学生间流传，不过版本已经变得离谱了。",
@@ -594,6 +1195,39 @@ const WORLD_RELATION_EVENTS = [
   { text: "斯拉格霍恩教授的邀请名单成了晚餐时最热门的话题之一。", minYear: 1996, maxYear: 1996 },
   { text: "越来越多学生把谈话压得很低，像是连墙壁都不再可靠。", minYear: 1997 },
 ];
+
+// NPC↔NPC 关系种子：在后台缓慢演化，与玩家无关。
+// tendency: warm 趋于亲近 / cold 趋于敌对 / volatile 在中间反复摇摆。
+const NPC_BONDS_SEED = [
+  { a: "harry", aName: "哈利", b: "ron", bName: "罗恩", base: 60, tendency: "warm", topic: "并肩作战" },
+  { a: "harry", aName: "哈利", b: "hermione", bName: "赫敏", base: 55, tendency: "warm", topic: "互相照应" },
+  { a: "ron", aName: "罗恩", b: "hermione", bName: "赫敏", base: 20, tendency: "volatile", topic: "又一次拌嘴" },
+  { a: "harry", aName: "哈利", b: "draco", bName: "马尔福", base: -55, tendency: "cold", topic: "走廊里的针锋相对" },
+  { a: "draco", aName: "马尔福", b: "neville", bName: "纳威", base: -40, tendency: "cold", topic: "马尔福的嘲笑" },
+  { a: "fred", aName: "弗雷德", b: "george", bName: "乔治", base: 85, tendency: "warm", topic: "新的恶作剧" },
+  { a: "crabbe", aName: "克拉布", b: "goyle", bName: "高尔", base: 50, tendency: "warm", topic: "形影不离" },
+  { a: "cedric", aName: "塞德里克", b: "cho", bName: "秋·张", base: 35, tendency: "warm", topic: "魁地奇看台上的招呼", minYear: 1993 },
+  { a: "luna", aName: "卢娜", b: "ginny", bName: "金妮", base: 25, tendency: "warm", topic: "走廊里的同行", minYear: 1992 },
+  { a: "pansy", aName: "潘西", b: "draco", bName: "马尔福", base: 30, tendency: "volatile", topic: "斯莱特林长桌旁的低语" },
+];
+
+const BOND_LINES = {
+  warm: [
+    "{a}和{b}又凑在一起，看样子最近{topic}让他们走得更近了。",
+    "有人看见{a}替{b}留了座位，两人就着{topic}聊了一路。",
+    "{a}和{b}并肩走过走廊，关于{topic}的默契几乎不用说出口。",
+  ],
+  neutral: [
+    "{a}和{b}就{topic}交换了几句，态度不冷不热，像还在彼此试探。",
+    "{a}经过{b}身边时点了点头，{topic}的事谁也没先挑明。",
+    "关于{topic}，{a}和{b}各执一词，最后谁也没说服谁。",
+  ],
+  cold: [
+    "{a}和{b}因为{topic}又起了摩擦，长桌两头的气氛肉眼可见地紧绷。",
+    "{a}和{b}在走廊里擦肩而过，谁都没看谁——{topic}显然还没翻篇。",
+    "有人说{a}和{b}为了{topic}差点吵起来，被级长一句话压了下去。",
+  ],
+};
 
 const COURSE_DYNAMIC_EVENTS = [
   { subject: "魔咒课", location: "魔咒课教室", professor: "弗立维教授", text: "弗立维教授让学生们轮流练习漂浮咒，几片羽毛一直飘到下课铃响。", minYear: 1991 },
@@ -647,6 +1281,26 @@ const LOCATION_STATUS_POOLS = {
   "斯莱特林公共休息室": ["湖水的绿光映在墙上", "地牢里的脚步声格外清楚", "壁炉旁有人压低声音交谈"],
   "拉文克劳公共休息室": ["门环留下了新的谜题", "窗边堆着几卷星图", "塔楼风声让谈话显得很轻"],
   "赫奇帕奇公共休息室": ["空气里有烘烤点心的味道", "圆窗旁摆着几盆植物", "有人在帮低年级学生补作业"],
+  "格兰芬多宿舍": ["四柱床的帘子拉得严严实实", "有人把魁地奇海报又钉高了一点", "窗台上落着几片猫头鹰的羽毛"],
+  "斯莱特林宿舍": ["湖水的绿光在墙上缓缓晃动", "有人在低声背诵魔药配方", "床头柜上摆着擦得发亮的银质徽章"],
+  "拉文克劳宿舍": ["桌上摊着没写完的星图", "有人为一道谜题争论到很晚", "窗边的风铃被夜风吹得轻响"],
+  "赫奇帕奇宿舍": ["空气里还留着点心的甜味", "有人把多余的被子分给了新生", "圆窗外能看见庭院的灯光"],
+  "城堡正门门厅": ["费尔奇盯着每一双沾泥的鞋", "沙漏里的宝石计数刚刚变动", "大门的回声把脚步放得很大"],
+  "家养小精灵厨房": ["小精灵们忙得脚不沾地", "灶台上飘着今晚宴会的香气", "一排铜锅被擦得能照出人影"],
+  "有求必应屋": ["门在墙上若隐若现", "屋里的摆设和上次完全不同", "有人刚离开，灯还亮着"],
+  "二楼女生盥洗室": ["水管深处传来呜咽似的回声", "镜子上蒙着一层薄薄的水汽", "桃金娘好像又躲进了某个隔间"],
+  "教师办公室走廊": ["几扇门后透出谈话的低语", "墙上的画像装作没在偷听", "地板被擦得反着冷光"],
+  "占卜课教室": ["熏香浓得让人发昏", "水晶球里什么也看不真切", "茶杯底的茶叶被反复端详"],
+  "天文塔": ["望远镜对准了今晚的星象", "高处的风把斗篷吹得鼓起", "有人留下了半张未完成的星图"],
+  "钟楼": ["巨大的齿轮缓慢咬合作响", "钟摆的影子扫过石墙", "整点将至，空气里有种紧绷感"],
+  "魁地奇看台": ["空荡的看台被风灌得呼呼响", "护栏上还系着上场比赛的彩带", "高处能望见整个球场和黑湖"],
+  "海格小屋": ["烟囱里冒着歪歪扭扭的炊烟", "牙牙趴在门口打着哈欠", "院子里堆着不知名生物的饲料"],
+  "海格小屋旁小径": ["小径尽头是禁林的暗影", "南瓜地里的藤蔓爬过了篱笆", "远处传来海格招呼牲口的声音"],
+  "黑湖船坞": ["小船随波轻轻碰撞着木桩", "水面下偶尔掠过模糊的影子", "潮湿的石阶上长着青苔"],
+  "黑湖湖畔": ["雾气贴着水面缓缓移动", "有人说看见湖中伸出过触手", "几只水鸟从芦苇丛里惊起"],
+  "打人柳树下": ["枝条没来由地抽动了一下", "树根附近的草被扫得乱七八糟", "没人敢靠得太近"],
+  "尖叫棚屋入口": ["木板缝里漏出阴冷的风", "据说夜里能听见里面的动静", "门上的锁锈得几乎打不开"],
+  "三楼走廊": ["走廊尽头的门紧锁着，门缝里透出沉闷的低吼", "费尔奇比平时更频繁地在这一带巡逻", "墙上的火把莫名比别处烧得更旺", "几个学生远远张望了一眼就匆匆离开"],
 };
 
 function rand(arr) {
@@ -655,6 +1309,15 @@ function rand(arr) {
 
 function randInt(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1));
+}
+/** 从数组里随机取 n 个不重复元素（保持随机顺序） */
+function sampleN(arr, n) {
+  const pool = [...arr];
+  const out = [];
+  while (pool.length && out.length < n) {
+    out.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+  }
+  return out;
 }
 
 function getCurrentYear() {
@@ -670,6 +1333,13 @@ function getCurrentDate() {
 
 function inCurrentYear(evt, year) {
   return (evt.minYear == null || year >= evt.minYear) && (evt.maxYear == null || year <= evt.maxYear);
+}
+
+function daysBetween(dateStr1, dateStr2) {
+  const d1 = new Date(dateStr1);
+  const d2 = new Date(dateStr2);
+  if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return 0;
+  return Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
 }
 
 function fillEventTemplate(template, values) {
@@ -816,17 +1486,26 @@ function createWorldHook(data, hook) {
     date,
     time,
     consumed: false,
+    ttlDays: hook.ttlDays ?? 4,
     ...hook,
   });
   world.hooks = world.hooks.slice(-40);
   return true;
 }
 
+/** 钩子是否已过期（超过 ttlDays 仍未处理则失效） */
+function isHookExpired(hook, today = getCurrentDate()) {
+  if (!hook?.date || hook.ttlDays == null) return false;
+  return daysBetween(hook.date, today) > hook.ttlDays;
+}
+
 function getActiveHooks(filter = {}) {
   const data = getSave();
   const world = ensureWorld(data);
+  const today = getCurrentDate();
   return world.hooks.filter(hook => {
     if (hook.consumed) return false;
+    if (isHookExpired(hook, today)) return false;
     if (hook.sourceText && String(hook.sourceText).includes("世界线索选择")) return false;
     if (filter.location && hook.location !== filter.location) return false;
     if (filter.characterKey && hook.characterKey !== filter.characterKey) return false;
@@ -850,6 +1529,15 @@ function currentYearTheme(year = getCurrentYear()) {
   return WORLD_YEAR_THEMES.find(theme => theme.year === year) || WORLD_YEAR_THEMES[0];
 }
 
+/** 按月份给当天一句季节质感（节日名已由 classLine 处理，这里只补季节氛围） */
+function seasonFlavorLine(data) {
+  const date = data.time?.currentDate || getCurrentDate();
+  if (window.isHogsmeadeWeekend?.(date)) return "又到霍格莫德周末，能去的学生早早就盼着出发。";
+  const month = Number(String(date).slice(5, 7));
+  const pool = SEASON_FLAVORS[month];
+  return pool ? rand(pool) : "";
+}
+
 function getWorldValues(bucket) {
   const house = rand(Object.keys(CANON_EVENT_FRAGMENTS));
   const fragments = CANON_EVENT_FRAGMENTS[house];
@@ -857,11 +1545,23 @@ function getWorldValues(bucket) {
   return pickEventValues(house, bucket, rand(GENERIC_HOUSE_ACTORS[house]).name, rand(places));
 }
 
-function generateRumor(bucket) {
+/** 在模板里挑一个近期没用过的，避免「念错的故事」这种模板级重复 */
+function pickFreshTemplate(data, templates) {
+  const world = ensureWorld(data);
+  if (!Array.isArray(world.recentRumorTemplates)) world.recentRumorTemplates = [];
+  const recent = world.recentRumorTemplates;
+  const fresh = templates.filter(t => !recent.includes(t));
+  const chosen = rand(fresh.length ? fresh : templates);
+  recent.push(chosen);
+  world.recentRumorTemplates = recent.slice(-6);
+  return chosen;
+}
+
+function generateRumor(data, bucket) {
   const year = getCurrentYear();
   const theme = currentYearTheme(year);
   if (theme?.rumors?.length && Math.random() < 0.35) return rand(theme.rumors);
-  return fillEventTemplate(rand(WORLD_RUMOR_TEMPLATES), getWorldValues(bucket));
+  return fillEventTemplate(pickFreshTemplate(data, WORLD_RUMOR_TEMPLATES), getWorldValues(bucket));
 }
 
 function updateLocationStatuses(data, count = 1) {
@@ -891,7 +1591,8 @@ function ageLocationStatuses(data) {
 function getWorldSummaryLine(data = getSave()) {
   const world = ensureWorld(data);
   const statuses = Object.entries(world.locationStatus || {}).slice(-2)
-    .map(([location, status]) => `${location}：${status.text}`);
+    .map(([location, status]) => `${location}：${status?.text || status}`)
+    .filter(line => !line.endsWith("：undefined") && !line.endsWith("：[object Object]"));
   if (statuses.length) return statuses.join("；");
   return currentYearTheme(getCurrentYear()).mood;
 }
@@ -906,6 +1607,13 @@ function joinUniqueTextSegments(segments = []) {
       return true;
     })
     .join(" ");
+}
+
+function cleanQuotedTopic(text = "") {
+  return String(text || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/[。！？；，、,.!?;:：]+$/g, "");
 }
 
 export function getLocationStatus(locationName) {
@@ -943,11 +1651,18 @@ function buildMemoryFollowup(data) {
   if (base.type === "rumor") {
     return `那条传闻又转了一圈：“${base.text}”已经被讲出了第三种版本。`;
   }
+  if (base.type === "playerAct") {
+    const topic = base.topic ? `“${base.topic}”` : "那件事";
+    const who = base.characterName ? `${base.characterName}` : "当事人";
+    if (base.delta > 0) return `长桌旁有人还记得你插手了${topic}。据说${who}私下对你多了几分好感。`;
+    if (base.delta < 0) return `${topic}还在被人提起——听说${who}到现在还有点介意你那次的态度。`;
+    return `你前几天插手${topic}的事，被学生们当成了一段不大不小的谈资，版本已经开始走样。`;
+  }
   return null;
 }
 
 function buildLocationFollowup(hook) {
-  const source = hook.sourceText || "刚才听到的那条线索";
+  const source = cleanQuotedTopic(hook.sourceText || "刚才听到的那条线索");
   if (hook.subject && hook.professor) {
     const details = [
       `你来到${hook.location}时，讲台边还留着没擦净的粉笔字。`,
@@ -957,16 +1672,62 @@ function buildLocationFollowup(hook) {
     ];
     return details.join("\n\n");
   }
-  return [
-    `你来到${hook.location}追查“${source}”。`,
-    "这里的气氛确实不太寻常，但真正有用的不是传闻本身，而是附近学生忽然压低的声音。",
-    "你把几句零散的话拼在一起，终于明白这条线索为什么会被传开。",
-  ].join("\n\n");
+  const grade = getYearGrade();
+  const lead = fillEventTemplate(rand(LOCATION_LEAD_INS), { place: hook.location, source });
+  const scene = PLACE_SCENES[hook.location];
+  const encounter = scene ? selectedSceneEncounter(hook, scene, grade) : null;
+  if (encounter) return [lead, encounter.intro].join("\n\n");
+  const introPool = scene ? sceneIntrosForGrade(scene, grade) : null;
+  const body = introPool && introPool.length
+    ? rand(introPool)
+    : fillEventTemplate(rand(GENERIC_SCENE.intro), { place: hook.location, source });
+  return [lead, body].join("\n\n");
+}
+
+/** 条目是否在当前年级（1-7）允许出现：支持 minGrade / maxGrade */
+function inGradeRange(item, grade) {
+  return (
+    (item.minGrade === undefined || grade >= item.minGrade) &&
+    (item.maxGrade === undefined || grade <= item.maxGrade)
+  );
+}
+
+/** 取一条文本：条目可以是字符串，或 { text, minGrade, maxGrade } 形式 */
+function sceneTextOf(entry) {
+  return typeof entry === "string" ? entry : (entry?.text || "");
+}
+
+/** 过滤出当前年级允许出现的 intro 旁白文本 */
+function sceneIntrosForGrade(scene, grade) {
+  return (scene.intro || [])
+    .filter(entry => typeof entry === "string" || inGradeRange(entry, grade))
+    .map(sceneTextOf)
+    .filter(Boolean);
+}
+
+function sceneEncountersForGrade(scene, grade) {
+  return (scene.encounters || []).filter(entry => inGradeRange(entry, grade));
+}
+
+function selectedSceneEncounter(hook, scene, grade) {
+  if (hook.__selectedEncounter) return hook.__selectedEncounter;
+  const encounters = sceneEncountersForGrade(scene, grade);
+  if (!encounters.length) return null;
+  hook.__selectedEncounter = rand(encounters);
+  return hook.__selectedEncounter;
+}
+
+/** 过滤出当前年级允许出现的专属选项 */
+function sceneChoicesForGrade(scene, grade) {
+  const choices = (scene.choices || [])
+    .filter(choice => inGradeRange(choice, grade))
+    .map(choice => ({ label: choice.label, result: choice.result }));
+  return sampleN(choices, 3);
 }
 
 function buildCharacterFollowup(hook) {
   const name = hook.characterName || "对方";
-  const source = hook.sourceText || "刚才那件事";
+  const source = cleanQuotedTopic(hook.sourceText || "刚才那件事");
   const byKey = {
     harry: [`你提起“${source}”。`, `${name}先是一怔，像是没想到这件事已经传到你这里。`, "他压低声音说那不是他一个人的主意。罗恩也在旁边补了半句，又立刻停住，像是他们还没决定要不要把事情讲完。"],
     ron: [`你问起“${source}”。`, `${name}的耳朵有点发红，先咕哝说事情没有传闻里那么夸张。`, "可他很快又忍不住把最关键的一段讲给你听，讲到最后还小声补了一句：“别告诉赫敏我说漏嘴了。”"],
@@ -988,7 +1749,7 @@ function buildCharacterFollowup(hook) {
 
 function getCharacterTopic(hook) {
   const name = hook.characterName || "";
-  const source = hook.sourceText || "刚才那件事";
+  const source = cleanQuotedTopic(hook.sourceText || "刚才那件事");
   const directTopics = {
     severusSnape: "刚才那道审视的目光",
     minervaMcGonagall: "她刚才在走廊里的点头",
@@ -1528,7 +2289,7 @@ function buildDirectCharacterChoices(hook, choice) {
 }
 
 function buildLocationChoices(hook) {
-  const source = hook.sourceText || "刚才听到的那条线索";
+  const source = cleanQuotedTopic(hook.sourceText || "刚才听到的那条线索");
   const place = hook.location || "这里";
   if (hook.subject) {
     return [
@@ -1547,6 +2308,18 @@ function buildLocationChoices(hook) {
           `对方一开始说“没什么”，但听你提起“${source}”后，忍不住补了两句。`,
           `${hook.professor || "教授"}确实在下课后又叫住了人，真正让大家议论的不是课堂本身，而是那之后短短几分钟里发生的事。`,
         ].join("\n\n"),
+        effect: {
+          cost: 1,
+          memoryTag: "asked_classroom_clue",
+          followHook: {
+            type: "location",
+            location: hook.location,
+            subject: hook.subject || null,
+            professor: hook.professor || null,
+            title: "门口那名学生似乎还想说什么",
+            sourceText: `关于“${source}”你还没问完`,
+          },
+        },
       },
       {
         label: "先记下细节",
@@ -1558,31 +2331,22 @@ function buildLocationChoices(hook) {
       },
     ];
   }
-  return [
-    {
-      label: "顺着声音找过去",
-      result: [
-        `你顺着${place}附近压低的说话声走过去。`,
-        `学生们一看见你靠近就换了话题，但你还是听见了“${source}”里被省掉的那一小截。`,
-        "这条线索并不轰动，却足够说明城堡里确实有人在悄悄关注它。",
-      ].join("\n\n"),
-    },
-    {
-      label: "观察周围的变化",
-      result: [
-        `你没有打断任何人，只在${place}多停了一会儿。`,
-        "几幅画像的眼神、学生突然收住的话头、还有被匆匆带走的羊皮纸，都让这条线索变得更具体了。",
-        `传闻说的是“${source}”，而你看到的是它在城堡里留下的余波。`,
-      ].join("\n\n"),
-    },
-    {
-      label: "当作普通传闻放过",
-      result: [
-        `你最终没有继续追查“${source}”。`,
-        "霍格沃茨每天都有太多半真半假的故事，有些故事越追越乱。你决定先让它留在传闻里。",
-      ].join("\n\n"),
-    },
-  ];
+  const grade = getYearGrade();
+  const scene = PLACE_SCENES[place];
+  if (scene) {
+    const encounter = selectedSceneEncounter(hook, scene, grade);
+    if (encounter?.choices?.length >= 2) return encounter.choices.map(choice => ({
+      label: choice.label,
+      result: choice.result,
+    }));
+    const choices = sceneChoicesForGrade(scene, grade);
+    // 当前年级可用的专属选项足够时随机抽 3 个；不足 2 个则退回通用池兜底
+    if (choices.length >= 2) return choices;
+  }
+  return sampleN(GENERIC_SCENE.choices, 3).map(c => ({
+    label: c.label,
+    result: fillEventTemplate(c.result, { place, source }),
+  }));
 }
 
 function buildCharacterChoices(hook) {
@@ -1597,11 +2361,20 @@ function buildCharacterChoices(hook) {
 
   const byKey = {
     severusSnape: [
-      choice("把话说得尽量精确", 0, [
-        `你没有寒暄，直接把“${source}”里最可疑的地方说出来。`,
-        `${name}没有立刻回答。他只是看着你，像在衡量你到底是观察到了什么，还是只是碰巧说中了。`,
-        `“至少你没有把传闻原样背一遍。”他说。语气仍然冷，但没有把你赶走。`,
-      ]),
+      {
+        ...choice("把话说得尽量精确", 1, [
+          `你没有寒暄，直接把“${source}”里最可疑的地方说出来。`,
+          `${name}没有立刻回答。他只是看着你，像在衡量你到底是观察到了什么，还是只是碰巧说中了。`,
+          `“至少你没有把传闻原样背一遍。”他说。语气仍然冷，但没有把你赶走。`,
+        ]),
+        effect: {
+          risk: {
+            chance: 0.4,
+            failDelta: -2,
+            failText: `可惜你有一处说错了。${name}的眉头几不可察地皱了一下：“断章取义比一无所知更糟。”——他显然把这次冒失记在了心里。`,
+          },
+        },
+      },
       choice("先承认自己只是听说", 1, [
         `你先说明自己只是听见了“${source}”，并不确定真假。`,
         `${name}的脸色没有变好，但也没有变得更坏。`,
@@ -1851,20 +2624,114 @@ function buildCharacterChoices(hook) {
   ];
   return byKey[hook.characterKey] || fallback;
 }
-function resolveWorldHookChoice(hook, choice) {
-  if (choice.delta && hook.characterKey && window.affinitySystem?.addAffinity) {
-    window.affinitySystem.addAffinity(hook.characterKey, choice.delta, "世界线索选择");
-  }
+/** 轻量扣除行动点（不触发世界推进 tick，避免对话中途世界跳动） */
+function spendHookCost(cost) {
+  const ts = window.timeSystem;
+  if (!ts || !cost) return true;
+  if ((ts.dailyActionLeft ?? 0) <= 0) return false;
+  ts.dailyActionLeft -= 1;
+  if (ts.dailyActionLeft >= 3) ts.nowTime = "上午";
+  else if (ts.dailyActionLeft === 2) ts.nowTime = "下午";
+  else if (ts.dailyActionLeft === 1) ts.nowTime = "夜晚";
+  else ts.nowTime = "深夜";
   const data = getSave();
+  if (data.time) {
+    data.time.dailyActionLeft = ts.dailyActionLeft;
+    data.time.nowTime = ts.nowTime;
+    setSave(data);
+  }
+  window.syncActionUI?.();
+  return true;
+}
+
+/** 写入结构化的「玩家介入」记忆，供后续传闻/主动事件引用 */
+function rememberPlayerAct(data, hook, choice, delta, tag) {
   rememberWorldEvent(data, {
-    type: "hookChoice",
-    key: hook.characterKey,
-    location: hook.location,
-    text: choice.result,
+    type: "playerAct",
+    key: hook.characterKey || null,
+    characterName: hook.characterName || null,
+    location: hook.location || null,
+    label: choice.label || "",
+    topic: cleanQuotedTopic(hook.sourceText || ""),
+    delta: delta || 0,
+    tag: tag || null,
+    text: `你介入了${hook.characterName ? `和${hook.characterName}有关的` : ""}“${cleanQuotedTopic(hook.sourceText || "城堡里的一桩小事")}”。`,
   });
+}
+
+/** 因果链：让这次介入有机会在之后引出后续钩子 */
+function maybeSpawnFollowHook(data, hook, choice, delta) {
+  if (choice.effect?.followHook) {
+    createWorldHook(data, choice.effect.followHook);
+    return true;
+  }
+  if (!hook.characterKey || !delta || hook.fromPlayerAct) return false;
+  if (Math.random() > 0.3) return false;
+  const name = hook.characterName || "对方";
+  const positive = delta > 0;
+  return createWorldHook(data, {
+    type: "character",
+    characterKey: hook.characterKey,
+    characterName: name,
+    title: positive ? `${name}还记着上次的事` : `${name}对上次的事还有话说`,
+    sourceText: `上次你插手了“${cleanQuotedTopic(hook.sourceText || "那件事")}”`,
+    delta: positive ? 1 : -1,
+    fromPlayerAct: true,
+  });
+}
+
+/**
+ * 统一后果结算器。
+ * 自动给每个选项写结构化记忆并有机会引出后续；
+ * choice.effect 可选挂载：cost(行动点)、risk(风险掷骰)、housePoints、flag、followHook、memoryTag。
+ * 返回 { extraText } 供对话框追加显示。
+ */
+function resolveWorldHookChoice(hook, choice) {
+  const effect = choice.effect || {};
+  let extraText = "";
+
+  // 1. 成本：消耗行动点（仅在显式声明时）
+  if (effect.cost) {
+    if (!spendHookCost(effect.cost)) {
+      return { extraText: "（你今天已经没有精力再追下去了。）" };
+    }
+  }
+
+  // 2. 风险掷骰：决定本次实际好感变化与额外文本
+  let delta = choice.delta || 0;
+  if (effect.risk && Math.random() < (effect.risk.chance ?? 0.3)) {
+    delta = effect.risk.failDelta ?? delta;
+    extraText = effect.risk.failText || "事情没有朝你希望的方向发展。";
+  }
+
+  // 3. 好感
+  if (delta && hook.characterKey && window.affinitySystem?.addAffinity) {
+    window.affinitySystem.addAffinity(hook.characterKey, delta, "世界线索选择");
+  }
+
+  const data = getSave();
+
+  // 4. 学院分
+  if (effect.housePoints?.house && effect.housePoints.points) {
+    window.housePoints?.addPoints?.(effect.housePoints.house, effect.housePoints.points, "世界线索介入");
+  }
+
+  // 5. 角色 flag
+  if (effect.flag?.key && hook.characterKey) {
+    window.affinitySystem?.setFlag?.(hook.characterKey, effect.flag.key);
+  }
+
+  // 6. 结构化记忆（替代原先整段叙述入库）
+  rememberPlayerAct(data, hook, choice, delta, effect.memoryTag);
+
+  // 7. 因果链：有机会引出后续钩子
+  maybeSpawnFollowHook(data, hook, choice, delta);
+
   setSave(data);
+
   const logPrefix = hook.type === "character" ? "💬 线索对话" : "🔎 线索后续";
   addStoryLog(`${logPrefix}：你选择了「${choice.label || "继续追问"}」。`);
+  return { extraText };
 }
 
 function escapeHtml(text = "") {
@@ -1879,6 +2746,7 @@ function escapeHtml(text = "") {
 
 function formatWorldHookLine(line = "") {
   return escapeHtml(line)
+    .replace(/“([^”]*?)[。！？；，、,.!?;:：]+”/g, "“$1”")
     .replace(/([。！？]」)(?=[^\n，。、！？：」<])/g, "$1<br>")
     .replace(/「([^」]*)」/g, '<span class="story-dialogue">「$1」</span>');
 }
@@ -1901,14 +2769,46 @@ function renderParagraphs(text = "") {
     .join("");
 }
 
-function maybeLogRumor(data, bucket) {
-  if (Math.random() > 0.45) return null;
-  const rumor = generateRumor(bucket);
+function pushRumorText(data, rumor) {
   const world = ensureWorld(data);
-  if (world.rumors.slice(-12).some(item => item.text === rumor)) return null;
+  if (world.rumors.slice(-12).some(item => item.text === rumor)) return false;
   world.rumors.push({ date: data.time?.currentDate || getCurrentDate(), text: rumor });
   world.rumors = world.rumors.slice(-40);
   rememberWorldEvent(data, { type: "rumor", text: rumor });
+  return true;
+}
+
+/** 生成一条点名真实地点的传闻，并在该地点埋下可「追过去」调查的钩子 */
+function maybeSpawnRumorHook(data) {
+  // 避开已经有未处理钩子的地点，免得线索堆叠
+  const grade = getYearGrade();
+  const open = INVESTIGABLE_PLACES.filter(p => {
+    const minGrade = INVESTIGABLE_PLACE_MIN_GRADE[p] || 1;
+    return grade >= minGrade && getActiveHooks({ location: p }).length === 0;
+  });
+  if (!open.length) return null;
+  const place = rand(open);
+  const rumor = fillEventTemplate(pickFreshTemplate(data, PLACE_RUMOR_TEMPLATES), { place });
+  if (!pushRumorText(data, rumor)) return null;
+  createWorldHook(data, {
+    type: "location",
+    location: place,
+    title: `${place}似乎有线索可查`,
+    sourceText: rumor,
+    ttlDays: 12,
+  });
+  return `🗞️ 校园传闻：${rumor}（也许值得去${place}看看）`;
+}
+
+function maybeLogRumor(data, bucket) {
+  if (Math.random() > 0.45) return null;
+  // 约四成传闻锚定到真实地点，玩家可以追过去调查
+  if (Math.random() < 0.4) {
+    const anchored = maybeSpawnRumorHook(data);
+    if (anchored) return anchored;
+  }
+  const rumor = generateRumor(data, bucket);
+  if (!pushRumorText(data, rumor)) return null;
   return `🗞️ 校园传闻：${rumor}`;
 }
 
@@ -1938,6 +2838,70 @@ function maybeLogRelationEvent(data) {
     });
   }
   return `👥 人际动态：${event.text}`;
+}
+
+function bondId(seed) {
+  return `${seed.a}|${seed.b}`;
+}
+
+function ensureBonds(world) {
+  if (!world.bonds || typeof world.bonds !== "object") world.bonds = {};
+  NPC_BONDS_SEED.forEach(seed => {
+    const id = bondId(seed);
+    if (!world.bonds[id]) world.bonds[id] = { value: seed.base, tendency: seed.tendency };
+  });
+  return world.bonds;
+}
+
+/** 把一对关系朝它的天然倾向轻推一点，volatile 则在中点附近大幅摇摆 */
+function nudgeBond(bond) {
+  if (!bond) return;
+  const target = bond.tendency === "warm" ? 80 : bond.tendency === "cold" ? -70 : 0;
+  const swing = bond.tendency === "volatile" ? randInt(-12, 12) : randInt(-3, 3);
+  const pull = Math.sign(target - bond.value) * randInt(1, 4);
+  bond.value = Math.max(-100, Math.min(100, bond.value + pull + swing));
+}
+
+function describeBond(seed, value) {
+  const band = value >= 30 ? "warm" : value <= -30 ? "cold" : "neutral";
+  return fillEventTemplate(rand(BOND_LINES[band]), { a: seed.aName, b: seed.bName, topic: seed.topic });
+}
+
+/** 每个行动节点：后台微调几对关系，偶尔把其中一对的现状冒进城堡动向 */
+function maybeDriftBonds(data) {
+  const world = ensureWorld(data);
+  const bonds = ensureBonds(world);
+  const year = getCurrentYear();
+  const activeSeeds = NPC_BONDS_SEED.filter(seed => inCurrentYear(seed, year));
+  if (!activeSeeds.length) return null;
+
+  // 后台静默漂移 1~2 对
+  const nudgeCount = 1 + (Math.random() < 0.5 ? 1 : 0);
+  for (let i = 0; i < nudgeCount; i++) {
+    nudgeBond(bonds[bondId(rand(activeSeeds))]);
+  }
+
+  // 有节制地播报：多数时候世界只是默默演化
+  if (Math.random() > 0.35) return null;
+  const seed = rand(activeSeeds);
+  const bond = bonds[bondId(seed)];
+  const line = describeBond(seed, bond.value);
+  rememberWorldEvent(data, { type: "bond", key: bondId(seed), text: line });
+  return `👥 人物关系：${line}`;
+}
+
+export function getNpcBonds() {
+  const data = getSave();
+  const world = ensureWorld(data);
+  const bonds = ensureBonds(world);
+  const year = getCurrentYear();
+  return NPC_BONDS_SEED
+    .filter(seed => inCurrentYear(seed, year))
+    .map(seed => {
+      const value = bonds[bondId(seed)]?.value ?? seed.base;
+      const band = value >= 30 ? "亲近" : value <= -30 ? "紧张" : "微妙";
+      return { a: seed.aName, b: seed.bName, value, band, topic: seed.topic };
+    });
 }
 
 function maybeLogCourseDynamic(data) {
@@ -2141,9 +3105,48 @@ export function getCharacterHooks(characterKey) {
   return getActiveHooks({ characterKey });
 }
 
+function getLocationAmbient(locationName) {
+  const stored = getLocationStatus(locationName);
+  if (stored) return stored;
+  const pool = LOCATION_STATUS_POOLS[locationName];
+  if (pool && pool.length) return rand(pool);
+  const fallback = exploreEventLib[locationName] || exploreEventLib["默认"];
+  return fallback && fallback.length ? rand(fallback) : "";
+}
+
+/** 没有预埋钩子时，探索任意地点也有概率当场撞见可调查的线索 */
+/** 近期传闻里是否点过这个地点（传闻文字比钩子寿命长，得以此兜底） */
+function recentRumorForPlace(data, locationName) {
+  const rumors = ensureWorld(data).rumors || [];
+  for (let i = rumors.length - 1; i >= 0 && i >= rumors.length - 15; i--) {
+    if ((rumors[i]?.text || "").includes(locationName)) return rumors[i].text;
+  }
+  return "";
+}
+
+function triggerImpromptuLocationEvent(locationName) {
+  const data = getSave();
+  // 传闻点过名的地点：去了必触发，且沿用传闻原文当线索；否则小概率随机撞见
+  const promised = recentRumorForPlace(data, locationName);
+  if (promised || Math.random() < 0.35) {
+    const sourceText = promised || fillEventTemplate(rand(PLACE_RUMOR_TEMPLATES), { place: locationName });
+    const stub = { type: "location", location: locationName, sourceText };
+    const followup = buildLocationFollowup(stub);
+    const choices = buildLocationChoices(stub);
+    rememberWorldEvent(data, { type: "hookConsumed", text: followup });
+    setSave(data);
+    showWorldHookDialog({ ...stub, followup, choices });
+    return `｜🔎 你在${locationName}注意到了一点不寻常的迹象。`;
+  }
+  const ambient = getLocationAmbient(locationName);
+  return ambient ? `｜🌫️ ${ambient}。` : "";
+}
+
 export function triggerLocationHook(locationName) {
   const hook = getLocationHooks(locationName)[0];
-  if (!hook) return "";
+  if (!hook) {
+    return triggerImpromptuLocationEvent(locationName);
+  }
   const consumed = consumeHook(hook.id);
   if (!consumed) return "";
   const intro = buildLocationFollowup(consumed);
@@ -2188,7 +3191,13 @@ function showWorldHookDialog(hook) {
       <div class="affinity-enc-response world-hook-response" style="display:block">${renderParagraphs(hook.followup || "")}</div>
       ${choices.length ? `
         <div class="affinity-enc-choices world-hook-choices">
-          ${choices.map((choice, i) => `<button class="affinity-enc-choice-btn" data-idx="${i}">${escapeHtml(choice.label)}</button>`).join("")}
+          ${choices.map((choice, i) => {
+            const cost = choice.effect?.cost || 0;
+            const affordable = !cost || (window.timeSystem?.dailyActionLeft ?? 0) >= cost;
+            const costTag = cost ? `<span class="world-hook-cost">（耗精力${affordable ? "" : "·不足"}）</span>` : "";
+            const riskTag = choice.effect?.risk ? `<span class="world-hook-risk">（有风险）</span>` : "";
+            return `<button class="affinity-enc-choice-btn" data-idx="${i}"${affordable ? "" : " disabled style=\"opacity:0.4\""}>${escapeHtml(choice.label)}${costTag}${riskTag}</button>`;
+          }).join("")}
         </div>
       ` : ""}
       <button class="affinity-enc-close" id="world-hook-close" style="${choices.length ? "display:none" : ""}">继续</button>
@@ -2213,12 +3222,14 @@ function showWorldHookDialog(hook) {
     btn.addEventListener("click", () => {
       const choice = choices[Number(btn.dataset.idx)];
       if (!choice) return;
+      if (btn.disabled) return;
       modal.querySelectorAll(".affinity-enc-choice-btn").forEach(other => {
         other.disabled = true;
         other.style.opacity = other === btn ? "1" : "0.35";
       });
-      resolveWorldHookChoice(hook, choice);
-      if (responseEl) responseEl.innerHTML = renderParagraphs(choice.result);
+      const { extraText } = resolveWorldHookChoice(hook, choice) || {};
+      const resultText = extraText ? `${choice.result}\n\n${extraText}` : choice.result;
+      if (responseEl) responseEl.innerHTML = renderParagraphs(resultText);
       if (choicesEl) choicesEl.style.display = "none";
       resultShown = true;
       if (closeBtn) {
@@ -2250,10 +3261,12 @@ export function triggerDailyBrief(force = false) {
     ? (dateEvent ? `今天不上课，${dateEvent}让城堡节奏慢了下来。` : "今天不上课，学生们更多地在公共区域和场地间活动。")
     : "今天照常上课，课程表和学院分都在悄悄推动着各院气氛。";
   const briefSummary = summary === theme.mood ? "" : summary;
-  const briefText = joinUniqueTextSegments([classLine, theme.mood, briefSummary]);
+  const seasonLine = seasonFlavorLine(data);
+  const briefText = joinUniqueTextSegments([seasonLine, classLine, theme.mood, briefSummary]);
 
   world.dateBriefed = date;
   world.daily = { date, mood: theme.mood, summary: briefSummary };
+  world.hooks = world.hooks.filter(hook => !isHookExpired(hook, date));
   ageLocationStatuses(data);
   updateLocationStatuses(data, 2);
   rememberWorldEvent(data, { type: "brief", text: briefText });
@@ -2340,7 +3353,7 @@ export function triggerNpcActionEvents() {
   const bucket = isNoClassDay() ? "holiday" : "school";
   const worldLogs = [];
   if (Math.random() < 0.55) updateLocationStatuses(data, 1);
-  [maybeLogRumor(data, bucket), maybeLogRelationEvent(data), maybeLogCourseDynamic(data), maybeLogMemoryFollowup(data)]
+  [maybeLogRumor(data, bucket), maybeLogRelationEvent(data), maybeLogCourseDynamic(data), maybeDriftBonds(data), maybeLogMemoryFollowup(data)]
     .filter(Boolean)
     .forEach(log => worldLogs.push(log));
   setSave(data);
@@ -2362,4 +3375,5 @@ window.npcEvents = {
   triggerLocationHook,
   triggerCharacterHook,
   consumeHook,
+  getNpcBonds,
 };

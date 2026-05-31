@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.1';
+export const CURRENT_VERSION = '1.8.2';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.2': [
+    '新增三楼走廊的16条场景文案与探索选项',
+    '重构探索后角色事件逻辑为复用函数',
+    '大幅升级世界情报面板UI，新增分类标签、关系网展示与卡片化布局',
+    '补充探索地点配置与文案规范文档',
+  ],
   '1.8.1': [
     '全面重构交互事件绑定，用事件委托替换内联 onclick，提升安全性与可维护性',
     '新增 NPC 个人记忆系统（npcMemory），每位角色最多保留最近 6 条与玩家的互动记录',
