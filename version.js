@@ -6,12 +6,19 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.2';
+export const CURRENT_VERSION = '1.8.3';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.3': [
+    '新增人物互动文案相关规范文档与审计工具',
+    '实现主动来访事件的年级过滤逻辑',
+    '重构角色注册与好感度内容加载机制',
+    '新增一年级学生与教职员互动场景包',
+    '更新Claude允许执行的命令白名单',
+  ],
   '1.8.2': [
     '新增三楼走廊的16条场景文案与探索选项',
     '重构探索后角色事件逻辑为复用函数',

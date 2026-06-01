@@ -8,7 +8,7 @@
  * 核心原则：有原因、有节制、不可预测
  */
 
-import { getSave, setSave, addLog } from './save-system.js';
+import { getSave, setSave, addLog, getYearGrade } from './save-system.js';
 import { ALL_CHARACTERS } from './characters/_registry.js';
 
 // ── 常量 ──────────────────────────────────────────────────
@@ -67,11 +67,25 @@ function checkOneTime(characterKey, eventId, oneTime) {
   return !window.affinitySystem?.hasFlag?.(characterKey, `proactive_${eventId}`);
 }
 
+/** 检查主动来访事件是否属于当前年级 */
+function checkGradeRange(ev, grade = getYearGrade()) {
+  if (!ev) return true;
+  const req = ev.require || {};
+  const grades = ev.grades || req.grades;
+  const minGrade = ev.minGrade ?? req.minGrade;
+  const maxGrade = ev.maxGrade ?? req.maxGrade;
+  if (Array.isArray(grades) && !grades.includes(grade)) return false;
+  if (minGrade != null && grade < minGrade) return false;
+  if (maxGrade != null && grade > maxGrade) return false;
+  return true;
+}
+
 // ── 投放逻辑 ──────────────────────────────────────────────
 
 /** 投放一个主动事件 */
 function deployProactiveEvent(data, character, ev) {
   const today = data.time?.currentDate || '';
+  if (!data.world || typeof data.world !== 'object') data.world = {};
 
   // 1. 创建 proactive 类型的钩子
   const hookData = {
@@ -153,6 +167,7 @@ export function runProactiveScheduler() {
   const data = getSave();
   const today = data.time?.currentDate || '';
   if (!today) return;
+  const grade = getYearGrade();
 
   const candidates = [];
 
@@ -167,6 +182,7 @@ export function runProactiveScheduler() {
       if (!checkMemoryTag(data, req.memoryTag)) continue;
       if (!checkCooldown(data, ev.id, req.cooldownDays)) continue;
       if (!checkOneTime(character.key, ev.id, req.oneTime)) continue;
+      if (!checkGradeRange(ev, grade)) continue;
 
       // 通过硬性条件，进候选池
       candidates.push({ character, ev, chance: req.chance || 0.2 });

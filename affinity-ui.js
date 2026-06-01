@@ -6,13 +6,13 @@
  *   2. 探索偶遇弹窗（教授 + 学生）
  *   3. 好感度总览面板（分组：教职员 / 同学）
  *   4. 故事 / 信件阅读弹窗
- *   5. 主动找学生聊聊（维度三，消耗行动，每日冷却）
+ *   5. 主动找认识的人聊聊（维度三，消耗行动，每日冷却）
  *   6. 行动触发偶遇（维度一）
  *   7. 专属条件触发（维度四）
  */
 
 import { getAllAffinity, getTierByValue, addAffinity, setFlag, hasFlag, isCharacterKnown, getKnownCharacters } from './affinity-system.js';
-import { addLog } from './save-system.js';
+import { addLog, getYearGrade } from './save-system.js';
 import {
   AFFINITY_CHARACTERS,
   CHARACTER_DISPLAY_ORDER,
@@ -27,6 +27,7 @@ import {
   GRYFFINDOR_ORDER,
   SLYTHERIN_ORDER,
   RAVENCLAW_ORDER,
+  HUFFLEPUFF_ORDER,
   STUDENT_ACTION_ENCOUNTERS,
   STUDENT_SPECIAL_TRIGGERS,
 } from './affinity-students.js';
@@ -111,6 +112,14 @@ function renderParagraphs(text = "") {
     .join("");
 }
 
+function inGradeRange(entry, grade = getYearGrade()) {
+  if (!entry) return true;
+  if (Array.isArray(entry.grades) && !entry.grades.includes(grade)) return false;
+  if (entry.minGrade != null && grade < entry.minGrade) return false;
+  if (entry.maxGrade != null && grade > entry.maxGrade) return false;
+  return true;
+}
+
 // ════════════════════════════════════════════════════════════
 //  1. Tier 升级通知
 // ════════════════════════════════════════════════════════════
@@ -154,6 +163,7 @@ export function tryTriggerEncounter(areaName) {
     ...Object.values(STUDENT_CHARACTERS),
   ];
   const allData = getAllAffinity();
+  const grade = getYearGrade();
 
   const candidates = [];
   allConfigs.forEach(config => {
@@ -165,6 +175,7 @@ export function tryTriggerEncounter(areaName) {
     config.encounters.forEach(enc => {
       if (enc.area !== areaName) return;
       if (curTier < enc.minTier) return;
+      if (!inGradeRange(enc, grade)) return;
       if (enc.oneTime && hasFlag(config.key, enc.id)) return;
       candidates.push({ config, enc });
     });
@@ -261,21 +272,50 @@ function showReadModal(title, text, tag) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  5. 主动找学生聊聊（维度三）
+//  5. 主动找认识的人聊聊（维度三）
 // ════════════════════════════════════════════════════════════
 
+function getActiveChatConfig(config) {
+  if (!config) return null;
+  if (config.activeChat) return config.activeChat;
+  return {
+    cost: 1,
+    dailyCooldown: true,
+    events: [
+      {
+        id: `${config.key}_generic_chat`,
+        minTier: 1,
+        text: `你找到${config.name}。这不是一场正式事件，只是霍格沃茨一天里可以被接住的一小段谈话。${config.role ? `对方身上仍带着“${config.role}”这个身份的影子，但此刻也只是愿意停下来听你说两句的人。` : ''}`,
+        choices: [
+          {
+            label: '问候近况',
+            delta: 1,
+            response: `${config.name}没有把话说得很长，却认真回应了你。关系有时候就是这样，从一次没有被敷衍的问候开始。`,
+          },
+          {
+            label: '聊起最近的传闻',
+            delta: 1,
+            response: `${config.name}听见传闻后停顿了一下，给出一句点到为止的看法。你感觉这段谈话以后还可以继续。`,
+          },
+        ],
+      },
+    ],
+  };
+}
+
 export function tryActiveChat(charKey, panelEl = null, onComplete = null) {
-  const config = STUDENT_CHARACTERS[charKey];
-  if (!config?.activeChat) return;
+  const config = getConfig(charKey);
+  const activeChat = getActiveChatConfig(config);
+  if (!config || !activeChat) return;
 
   const saveData    = loadSave();
   const todayDate   = saveData.time?.currentDate || '';
   const actionsLeft = saveData.time?.dailyActionLeft ?? 0;
-  const cost        = config.activeChat.cost || 1;
+  const cost        = activeChat.cost || 1;
   const cooldownKey = `chatCooldown_${todayDate}`;
 
   // 今日已聊
-  if (config.activeChat.dailyCooldown && hasFlag(charKey, cooldownKey)) {
+  if (activeChat.dailyCooldown && hasFlag(charKey, cooldownKey)) {
     _showToast(`${config.icon} ${config.name} 今天已经聊过了。`);
     return;
   }
@@ -290,7 +330,8 @@ export function tryActiveChat(charKey, panelEl = null, onComplete = null) {
   const allData = getAllAffinity();
   const value   = allData[charKey]?.value || 0;
   const curTier = getCharTier(config, value);
-  const eligible = (config.activeChat.events || []).filter(ev => curTier >= ev.minTier);
+  const grade = getYearGrade();
+  const eligible = (activeChat.events || []).filter(ev => curTier >= ev.minTier && inGradeRange(ev, grade));
 
   if (eligible.length === 0) {
     _showToast(`${config.icon} ${config.name} 现在好像不太方便。`);
@@ -390,6 +431,7 @@ export function tryStudentActionEncounter(actionType) {
   if (!pool || pool.length === 0) return;
 
   const allData = getAllAffinity();
+  const grade = getYearGrade();
 
   const candidates = pool.filter(enc => {
     const config = STUDENT_CHARACTERS[enc.characterKey];
@@ -397,6 +439,7 @@ export function tryStudentActionEncounter(actionType) {
     const value   = allData[enc.characterKey]?.value || 0;
     const curTier = getCharTier(config, value);
     if (curTier < enc.minTier) return false;
+    if (!inGradeRange(enc, grade)) return false;
     if (enc.oneTime && hasFlag(enc.characterKey, enc.id)) return false;
     return true;
   });
@@ -430,9 +473,11 @@ export function checkStudentSpecialTriggers(eventType, payload = {}) {
   const saveData = loadSave();
   const today    = saveData.time?.currentDate || '';
   const allData  = getAllAffinity();
+  const grade    = getYearGrade();
 
   STUDENT_SPECIAL_TRIGGERS.forEach(trigger => {
     if (trigger.event !== eventType) return;
+    if (!inGradeRange(trigger, grade)) return;
 
     // 条件检查（传入 getTier 工具，支持 harry_special_trust 类型的判断）
     const passes = trigger.condition(payload, (key) => {
@@ -758,7 +803,7 @@ export function renderAffinityPanelInline(containerEl) {
       const hasStory  = config.story  && tier >= config.story.unlockTier;
       const hasLetter = config.letter && tier >= config.letter.unlockTier;
 
-      const canChat     = config.isStudent && !!config.activeChat;
+      const canChat     = !!getActiveChatConfig(config);
       const chatCoolKey = `chatCooldown_${todayDate}`;
       const onCooldown  = canChat && hasFlag(key, chatCoolKey);
       const clueCount   = window.npcEvents?.getCharacterHooks?.(key)?.length || 0;
@@ -787,7 +832,7 @@ export function renderAffinityPanelInline(containerEl) {
             ${canChat ? `
               <button class="affinity-char-btn affinity-btn-chat ${onCooldown ? 'affinity-btn-cooldown' : ''}"
                 data-key="${key}" ${onCooldown ? 'disabled' : ''}>
-                💬 ${onCooldown ? '今天聊过了' : '主动找他聊聊'}
+                💬 ${onCooldown ? '今天聊过了' : '主动找对方聊聊'}
               </button>` : ''}
             ${hasStory  ? `<button class="affinity-char-btn affinity-btn-story"  data-key="${key}">📜 故事碎片</button>` : ''}
             ${hasLetter ? `<button class="affinity-char-btn affinity-btn-letter" data-key="${key}">✉️ 来信</button>` : ''}
@@ -844,7 +889,8 @@ export function renderAffinityPanelInline(containerEl) {
         const html =
           renderSection(GRYFFINDOR_ORDER, STUDENT_CHARACTERS, '🦁 格兰芬多', true) +
           renderSection(SLYTHERIN_ORDER,  STUDENT_CHARACTERS, '🐍 斯莱特林', true) +
-          renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳', true);
+          renderSection(RAVENCLAW_ORDER,  STUDENT_CHARACTERS, '🦅 拉文克劳', true) +
+          renderSection(HUFFLEPUFF_ORDER, STUDENT_CHARACTERS, '🦡 赫奇帕奇', true);
         return html || '<div class="aff-empty-tip">暂无认识的同学</div>';
       },
     },

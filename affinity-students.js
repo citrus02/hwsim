@@ -17,9 +17,109 @@
  * 特殊：德拉科使用「相互理解」关系轴，不是友谊
  */
 
+import { STUDENT_CHARACTER_ENRICHMENTS } from './affinity-content/students/common/extra-scenes.js';
+import { STUDENT_AMBIENT_PACK_ENRICHMENTS } from './affinity-content/students/common/ambient-scenes.js';
+import { STUDENT_LONGTAIL_PACK_ENRICHMENTS } from './affinity-content/students/common/longtail-scenes.js';
+import { STUDENT_BESPOKE_SCENE_ENRICHMENTS } from './affinity-content/students/year1/core-scenes.js';
+import { STUDENT_SECONDARY_BESPOKE_ENRICHMENTS } from './affinity-content/students/year1/house-scenes.js';
+import { STUDENT_TERTIARY_BESPOKE_ENRICHMENTS } from './affinity-content/students/year1/supporting-scenes.js';
+import { STUDENT_YEAR1_DEPTH_SCENE_ENRICHMENTS } from './affinity-content/students/year1/depth-scenes.js';
+import { STUDENT_YEAR1_ENCOUNTER_PLUS_SCENES } from './affinity-content/students/year1/encounter-plus-scenes.js';
+import { STUDENT_YEAR1_ENCOUNTER_PLUS_2_SCENES } from './affinity-content/students/year1/encounter-plus-2-scenes.js';
+import { STUDENT_YEAR1_ENCOUNTER_PLUS_3_SCENES } from './affinity-content/students/year1/encounter-plus-3-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_SCENES } from './affinity-content/students/year1/chat-plus-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_2_SCENES } from './affinity-content/students/year1/chat-plus-batch-2-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_3_SCENES } from './affinity-content/students/year1/chat-plus-batch-3-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_4_SCENES } from './affinity-content/students/year1/chat-plus-batch-4-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_5_SCENES } from './affinity-content/students/year1/chat-plus-batch-5-scenes.js';
+
 // ═══════════════════════════════════════════════════════════
 // 学生角色数据
 // ═══════════════════════════════════════════════════════════
+
+function createAmbientStudent({
+  key,
+  name,
+  role,
+  icon = '🎓',
+  house,
+  style,
+  talkPlace = '霍格沃茨大礼堂',
+  area = '霍格沃茨走廊',
+  opening,
+  askLabel = '主动搭话',
+  askResponse,
+  quietLabel = '安静听完',
+  quietResponse,
+}) {
+  return {
+    key,
+    name,
+    role,
+    icon,
+    house,
+    isStudent: true,
+    activeChat: {
+      cost: 1,
+      dailyCooldown: true,
+      events: [
+        {
+          id: `${key}_chat_1`,
+          minTier: 1,
+          text: opening,
+          choices: [
+            { label: askLabel, delta: 2, response: askResponse },
+            { label: quietLabel, delta: 1, response: quietResponse },
+          ],
+        },
+        {
+          id: `${key}_chat_2`,
+          minTier: 3,
+          text: `${name}这次没有急着离开。${style}那一点熟悉感让谈话不像偶然碰见，更像你们已经在同一座城堡里彼此记住了几次。`,
+          choices: [
+            { label: '问近况', delta: 3, response: `${name}没有把话说得很满，却认真回答了。你听见的不只是近况，还有对方愿意让你知道的一点真实。` },
+            { label: '聊起最近的传闻', delta: 2, response: `${name}听见传闻后先看了看周围，再把声音放低。这个反应本身就说明，你问到的不是完全无关紧要的事。` },
+          ],
+        },
+      ],
+    },
+    tiers: [
+      `你知道${name}，对方也许只把你当作城堡里经常擦肩而过的同学。`,
+      `${name}开始认得你，会在合适的时候点头或留出一句话的空隙。`,
+      `你们已经能聊几句不是客套的话。${style}`,
+      `${name}愿意在你面前露出更具体的一面，不再只是学院长桌旁的一个名字。`,
+      `你和${name}之间有了稳定的信任；这份关系不必轰动，却能在霍格沃茨日常里被反复看见。`,
+    ],
+    tierUnlocks: [
+      null,
+      `解锁：${name}主动聊天`,
+      `解锁：${name}探索偶遇`,
+      `解锁：${name}个人故事碎片`,
+      `解锁：${name}来信`,
+    ],
+    encounters: [
+      {
+        id: `${key}_enc_1`,
+        area,
+        minTier: 2,
+        text: `你在${area}遇见${name}。${style}对方看见你时没有立刻走开，像是这一次可以多说两句。`,
+        choices: [
+          { label: '顺势聊两句', delta: 2, response: `你们没有聊什么惊天动地的大事，但${name}记住了你说话的方式。霍格沃茨里很多关系就是这样慢慢留下来的。` },
+          { label: '问要不要帮忙', delta: 3, response: `${name}似乎有些意外，随后接受了你的好意。事情不大，却让你们之间少了一点陌生。` },
+        ],
+      },
+    ],
+    story: {
+      title: `${name}的一小段日常`,
+      unlockTier: 4,
+      text: `${name}并不只是传闻里被提到的名字。${style}在${talkPlace}、走廊、课堂和各自学院的角落里，对方也有自己的烦恼、骄傲和不愿被误解的地方。你慢慢发现，霍格沃茨真正活起来的时候，正是这些不在主线中央的人也会记住你，也会被你记住。`,
+    },
+    letter: {
+      unlockTier: 5,
+      text: `${name}的信不长，语气也不夸张。\n\n「我想了想，还是应该写给你。霍格沃茨里每天都有太多事，很多人只是经过，又很快忘记。但你没有把我当成一个传闻里的名字。\n\n这件事我记得。」`,
+    },
+  };
+}
 
 export const STUDENT_CHARACTERS = {
 
@@ -1101,7 +1201,317 @@ export const STUDENT_CHARACTERS = {
       text: `字迹很有力，不像大多数女生那样圆润，是那种一笔一划都带着力度的字。\n\n「我从来不擅长写感性的东西，所以我就直说了。\n\n你是第一个让我觉得「做自己就够了」的人。不是因为你说了什么，是因为你从来没有用那种「你是韦斯莱家的」眼神看过我。\n\n在六个哥哥的阴影下长大，我一直在证明自己不只是某人的妹妹。但你不觉得我需要证明什么。\n\n这对我来说意味着一切。\n\n如果你需要我，我永远在。这是韦斯莱家的承诺——但更重要的是，这是金妮的承诺。\n\n——金妮」\n\n信封里有一根红发，她在旁边写了一行小字：「韦斯莱家的传统——把最重要的东西送给最重要的人。」`,
     },
   },
+
+  // ── 格兰芬多：已在 npc-events.js 露面的同学 ───────────────
+  seamus: createAmbientStudent({
+    key: 'seamus',
+    name: '西莫·斐尼甘',
+    role: '格兰芬多，同届',
+    icon: '💥',
+    house: 'gryffindor',
+    style: '他身上总带着一点火药味和不服输的劲头，失败以后也会先笑出来，再想办法重试。',
+    opening: '西莫正试图解释一次“绝对不是爆炸”的课堂事故，手势比解释本身还要激烈。',
+    askLabel: '问他到底炸了什么',
+    askResponse: '西莫立刻辩解那只是“反应过度的魔法现象”。他说得很认真，最后自己也忍不住笑了。',
+    quietLabel: '帮他捡起散落的羽毛笔',
+    quietResponse: '他接过羽毛笔，嘟囔着说谢谢。对西莫来说，不当众追问已经是一种很够意思的帮忙。',
+  }),
+  deanThomas: createAmbientStudent({
+    key: 'deanThomas',
+    name: '迪安·托马斯',
+    role: '格兰芬多，同届',
+    icon: '🎨',
+    house: 'gryffindor',
+    style: '他常把魁地奇、海报和麻瓜世界的记忆混在一起，说话温和，却有自己的判断。',
+    opening: '迪安坐在长桌边给一张魁地奇海报补色，旁边放着几支快干掉的彩色羽毛笔。',
+    askLabel: '夸他的画',
+    askResponse: '迪安抬头笑了笑，告诉你这是给球队画的，不是什么大事。但他说这句话时明显很在意你的评价。',
+    quietLabel: '递给他一支颜色合适的笔',
+    quietResponse: '他接过去试了一笔，眼睛亮了一下。「正好。」他说。你们就颜色和队袍聊了很久。',
+  }),
+  leeJordan: createAmbientStudent({
+    key: 'leeJordan',
+    name: '李·乔丹',
+    role: '格兰芬多，高两级',
+    icon: '🎙️',
+    house: 'gryffindor',
+    style: '他像随身带着看台的喧闹，但真正观察比赛和人群时又出奇敏锐。',
+    opening: '李·乔丹靠在走廊墙边，正把刚才的魁地奇训练讲得像一场正式解说。',
+    askLabel: '让他继续讲',
+    askResponse: '他立刻来了精神，连手边经过的盔甲都被临时当成观众。你发现他的夸张里藏着很准的观察。',
+    quietLabel: '提醒他麦格教授在附近',
+    quietResponse: '李马上压低声音，感激地朝你眨眨眼。「救我一命。」他说，尽管这显然夸张了。',
+  }),
+  percyWeasley: createAmbientStudent({
+    key: 'percyWeasley',
+    name: '珀西·韦斯莱',
+    role: '格兰芬多，级长',
+    icon: '📋',
+    house: 'gryffindor',
+    style: '他总试图把所有事放进规章和清单里，严肃得有些好笑，却也真的想把事情做好。',
+    opening: '珀西正站在公告栏前核对巡逻表，眉头皱得像那张羊皮纸犯了校规。',
+    askLabel: '问巡逻表怎么排',
+    askResponse: '他先纠正了你的用词，然后认真解释级长巡逻的逻辑。你听得出，他其实很享受有人认真问。',
+    quietLabel: '帮他按住被风掀起的纸',
+    quietResponse: '珀西清了清嗓子，说这只是基本协助，但他把你的名字记在了表格边缘。',
+  }),
+
+  // ── 斯莱特林：已在 npc-events.js 露面的同学 ───────────────
+  pansy: createAmbientStudent({
+    key: 'pansy',
+    name: '潘西·帕金森',
+    role: '斯莱特林，同届',
+    icon: '🪞',
+    house: 'slytherin',
+    style: '她说话常带刺，但刺后面不只是刻薄，也有对位置、体面和同伴眼光的敏感。',
+    opening: '潘西在长桌旁整理手套，抬眼看你时像已经准备好一句带刺的话。',
+    askLabel: '不接她的刺，正常问好',
+    askResponse: '她似乎有点失望，又有点意外。停顿之后，她把话说得没那么难听了。',
+    quietLabel: '注意到她真正烦的事',
+    quietResponse: '潘西的表情变了一瞬，很快又收回去。她没有道谢，但也没有否认你看对了。',
+  }),
+  blaiseZabini: createAmbientStudent({
+    key: 'blaiseZabini',
+    name: '布雷司·沙比尼',
+    role: '斯莱特林，同届',
+    icon: '♟️',
+    house: 'slytherin',
+    style: '他很少急着表态，像总在旁边看棋局，等别人先暴露意图。',
+    opening: '布雷司坐在靠墙的位置，听着旁人争论，脸上没有明显站队的表情。',
+    askLabel: '问他怎么看',
+    askResponse: '他看了你一会儿，才给出一句很短的判断。话不多，却准确得让人没法轻易反驳。',
+    quietLabel: '承认你只是好奇',
+    quietResponse: '布雷司似乎接受了这个理由。他没有多热情，但愿意把话题往下放一点。',
+  }),
+  crabbe: createAmbientStudent({
+    key: 'crabbe',
+    name: '克拉布',
+    role: '斯莱特林，同届',
+    icon: '🥊',
+    house: 'slytherin',
+    style: '他常被当成马尔福身后的影子，但也有自己的脾气、饥饿和简单直接的判断。',
+    opening: '克拉布正把点心塞进口袋，发现你看见后立刻摆出凶巴巴的表情。',
+    askLabel: '装作没看见点心',
+    askResponse: '他明显放松了一点，甚至把话题从点心转到魁地奇。那已经算是难得的友好。',
+    quietLabel: '递过去一张餐巾',
+    quietResponse: '克拉布愣了一下，接过去后含糊地说了声谢谢。声音很低，但确实说了。',
+  }),
+  goyle: createAmbientStudent({
+    key: 'goyle',
+    name: '高尔',
+    role: '斯莱特林，同届',
+    icon: '🧱',
+    house: 'slytherin',
+    style: '他不擅长长篇解释，但沉默并不等于什么都没想；有些反应只是慢一点才到。',
+    opening: '高尔站在地牢入口旁，像在等人，又像只是懒得继续往前走。',
+    askLabel: '问他是不是在等马尔福',
+    askResponse: '他皱了皱眉，过了一会儿才说不是。这个回答慢得可疑，但你至少让他说话了。',
+    quietLabel: '并排站一会儿',
+    quietResponse: '你没有逼他说话。过了一阵，他忽然指了指走廊另一头，提醒你费尔奇来了。',
+  }),
+  marcusFlint: createAmbientStudent({
+    key: 'marcusFlint',
+    name: '马库斯·弗林特',
+    role: '斯莱特林，高年级魁地奇队长',
+    icon: '🏏',
+    house: 'slytherin',
+    style: '他粗鲁、好胜、把魁地奇看得比许多课堂都重，但队长的压力也真实压在他肩上。',
+    opening: '弗林特在球场边检查球箱，脸色像谁刚刚犯了低级错误。',
+    askLabel: '问训练安排',
+    askResponse: '他先嫌你多管闲事，随后还是粗声粗气地说了几句。你发现他记得每个队员的问题。',
+    quietLabel: '提醒游走球锁扣没扣紧',
+    quietResponse: '弗林特猛地看过去，脸色更难看了。可他锁好球箱后，还是低声说了句“看得挺细”。',
+  }),
+
+  // ── 拉文克劳：已在 npc-events.js 露面的同学 ───────────────
+  choChang: createAmbientStudent({
+    key: 'choChang',
+    name: '秋·张',
+    role: '拉文克劳，高一级',
+    icon: '🦅',
+    house: 'ravenclaw',
+    style: '她温和、克制，谈起魁地奇时眼神会亮起来，谈起难过的事时又会很快收住。',
+    opening: '秋·张站在看台边整理围巾，风把她的话吹得很轻。',
+    askLabel: '聊魁地奇战术',
+    askResponse: '她很快接上你的话，语气比刚才自然许多。你发现她并不只是温柔，也相当敏锐。',
+    quietLabel: '问她冷不冷',
+    quietResponse: '她笑了一下，说还好。这个问题很普通，却让你们的谈话没有停在客气里。',
+  }),
+  padmaPatil: createAmbientStudent({
+    key: 'padmaPatil',
+    name: '帕德玛·佩蒂尔',
+    role: '拉文克劳，同届',
+    icon: '📘',
+    house: 'ravenclaw',
+    style: '她聪明而清醒，不喜欢把话说得太满，也不愿被别人替她定义。',
+    opening: '帕德玛把一本参考书合上，像是刚从一个很复杂的问题里抽身出来。',
+    askLabel: '问她刚才看的内容',
+    askResponse: '她简洁地解释了几句，确认你真的在听以后，才把最有意思的一点讲出来。',
+    quietLabel: '聊起拉文克劳门环',
+    quietResponse: '帕德玛轻轻笑了，说门环有时比某些教授还会提问。这个玩笑很小，却拉近了距离。',
+  }),
+  terryBoot: createAmbientStudent({
+    key: 'terryBoot',
+    name: '泰瑞·布特',
+    role: '拉文克劳，同届',
+    icon: '🧩',
+    house: 'ravenclaw',
+    style: '他喜欢把问题拆开来看，越是复杂的事越能让他精神起来。',
+    opening: '泰瑞正对着一张写满推导的羊皮纸发呆，看见你时像终于找到能听他说话的人。',
+    askLabel: '让他讲讲推导',
+    askResponse: '他立刻从第一步讲起，讲到第三步才意识到你还没吃晚饭。可他的兴奋很有感染力。',
+    quietLabel: '指出一个你没看懂的地方',
+    quietResponse: '泰瑞没有嘲笑你，反而很高兴有人指出卡住的位置。他把那一段重写得清楚多了。',
+  }),
+  michaelCorner: createAmbientStudent({
+    key: 'michaelCorner',
+    name: '迈克尔·科纳',
+    role: '拉文克劳，同届',
+    icon: '🪶',
+    house: 'ravenclaw',
+    style: '他有点自信，也有点容易被挑战激起兴致，谈话常像一场小型辩论。',
+    opening: '迈克尔在公共休息室外和人争论一个咒语细节，看到你时顺势把问题抛了过来。',
+    askLabel: '接住这个问题',
+    askResponse: '你给出自己的看法。迈克尔没有马上同意，但他认真反驳了，这比敷衍赞同更像尊重。',
+    quietLabel: '承认双方都有道理',
+    quietResponse: '他挑了挑眉，像是不太满意这个圆滑答案，却还是笑了。争论因此没有变成争吵。',
+  }),
+  anthonyGoldstein: createAmbientStudent({
+    key: 'anthonyGoldstein',
+    name: '安东尼·戈德斯坦',
+    role: '拉文克劳，同届',
+    icon: '📐',
+    house: 'ravenclaw',
+    style: '他讲道理时很认真，认真到偶尔显得固执，但他的公平感也藏在这种认真里。',
+    opening: '安东尼正在帮低年级学生解释一道题，语速不快，却每一步都很清楚。',
+    askLabel: '称赞他讲得清楚',
+    askResponse: '他有些不好意思，随即强调是题目本身有结构。可你看得出来，他很受用。',
+    quietLabel: '帮他把书递过去',
+    quietResponse: '他接过书，顺口把刚才那道题的另一种解法讲给你听。你们就这样多站了十分钟。',
+  }),
+
+  // ── 赫奇帕奇：已在 npc-events.js 露面的同学 ───────────────
+  cedricDiggory: createAmbientStudent({
+    key: 'cedricDiggory',
+    name: '塞德里克·迪戈里',
+    role: '赫奇帕奇，高两级',
+    icon: '🏆',
+    house: 'hufflepuff',
+    style: '他受欢迎不是因为显眼，而是因为公平、体面，并且真的会照顾身边的人。',
+    opening: '塞德里克刚把捡到的课本还给低年级学生，转身看见你时仍带着温和的笑。',
+    askLabel: '说他刚才做得很好',
+    askResponse: '他摇摇头，说那只是应该做的事。正因为他说得自然，这句话才更像真的。',
+    quietLabel: '问魁地奇训练累不累',
+    quietResponse: '他笑着承认很累，但很快又说队里其他人更辛苦。你听得出他习惯先替别人想。',
+  }),
+  hannahAbbott: createAmbientStudent({
+    key: 'hannahAbbott',
+    name: '汉娜·艾博',
+    role: '赫奇帕奇，同届',
+    icon: '🍯',
+    house: 'hufflepuff',
+    style: '她容易紧张，也容易心软，但那种温柔并不软弱，只是反应更诚实。',
+    opening: '汉娜抱着一小包点心站在走廊边，像在犹豫该不该送出去。',
+    askLabel: '问她要送给谁',
+    askResponse: '她脸红了一点，说只是给有点难过的同学。你没有追问名字，她明显松了口气。',
+    quietLabel: '帮她挡住拥挤的人群',
+    quietResponse: '汉娜小声道谢，随后把点心抱得更稳。这个帮忙很小，却正好解围。',
+  }),
+  ernieMacmillan: createAmbientStudent({
+    key: 'ernieMacmillan',
+    name: '厄尼·麦克米兰',
+    role: '赫奇帕奇，同届',
+    icon: '⚖️',
+    house: 'hufflepuff',
+    style: '他说话有时正式得像在发表声明，但那份认真背后是真正的责任感。',
+    opening: '厄尼正在向几名同学解释一场误会，语气郑重得像站在审判庭里。',
+    askLabel: '问他怎么判断公平',
+    askResponse: '他立刻严肃起来，给出一套相当完整的理由。虽然有点长，但并不空泛。',
+    quietLabel: '提醒他先听完双方',
+    quietResponse: '厄尼顿了一下，然后承认你说得对。能让他当场修正判断，这已经是很大的信任。',
+  }),
+  susanBones: createAmbientStudent({
+    key: 'susanBones',
+    name: '苏珊·博恩斯',
+    role: '赫奇帕奇，同届',
+    icon: '🕯️',
+    house: 'hufflepuff',
+    style: '她比表面看上去更坚韧，谈起家人和规则时会变得格外认真。',
+    opening: '苏珊站在公告栏前看一张魔法部通知，手指在羊皮纸边缘停了很久。',
+    askLabel: '问她是不是担心',
+    askResponse: '她没有立刻回答，过了一会儿才说有一点。这个承认很轻，却不容易。',
+    quietLabel: '陪她把通知看完',
+    quietResponse: '你没有催她离开。苏珊看完后深吸一口气，向你点了点头，像是谢谢你没有把这当八卦。',
+  }),
+  justinFinchFletchley: createAmbientStudent({
+    key: 'justinFinchFletchley',
+    name: '贾斯廷·芬列里',
+    role: '赫奇帕奇，同届',
+    icon: '🎩',
+    house: 'hufflepuff',
+    style: '他说话带着一点麻瓜世界的礼貌习惯，偶尔显得拘谨，却很愿意认真理解魔法世界。',
+    opening: '贾斯廷正努力向一幅画像解释麻瓜学校的规矩，画像听得半信半疑。',
+    askLabel: '帮他补充一句',
+    askResponse: '贾斯廷立刻感激地看了你一眼。有人能听懂他的麻瓜参照，对他来说很难得。',
+    quietLabel: '问他还习不习惯霍格沃茨',
+    quietResponse: '他笑得有点无奈，说大多数时候习惯了，直到楼梯自己换方向。你们都笑了。',
+  }),
 };
+
+function mergeStudentCharacterEnrichments(characters, enrichments) {
+  Object.entries(enrichments).forEach(([key, patch]) => {
+    const target = characters[key];
+    if (!target) return;
+    if (patch.activeChatEvents?.length) {
+      if (!target.activeChat) target.activeChat = { cost: 1, dailyCooldown: true, events: [] };
+      target.activeChat.events = [
+        ...(target.activeChat.events || []),
+        ...patch.activeChatEvents,
+      ];
+    }
+    if (patch.encounters?.length) {
+      target.encounters = [
+        ...(target.encounters || []),
+        ...patch.encounters,
+      ];
+    }
+    if (patch.tiers) target.tiers = patch.tiers;
+    if (patch.tierUnlocks) target.tierUnlocks = patch.tierUnlocks;
+    if (patch.story) target.story = patch.story;
+    if (patch.letter) target.letter = patch.letter;
+  });
+}
+
+function withGradeRange(enrichments, range) {
+  const tagEvents = events => (events || []).map(event => ({
+    ...event,
+    minGrade: event.minGrade ?? range.minGrade,
+    maxGrade: event.maxGrade ?? range.maxGrade,
+    grades: event.grades ?? range.grades,
+  }));
+
+  return Object.fromEntries(Object.entries(enrichments).map(([key, patch]) => [key, {
+    ...patch,
+    activeChatEvents: tagEvents(patch.activeChatEvents),
+    encounters: tagEvents(patch.encounters),
+  }]));
+}
+
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, STUDENT_CHARACTER_ENRICHMENTS);
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, STUDENT_AMBIENT_PACK_ENRICHMENTS);
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, STUDENT_LONGTAIL_PACK_ENRICHMENTS);
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_BESPOKE_SCENE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_SECONDARY_BESPOKE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_TERTIARY_BESPOKE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_DEPTH_SCENE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_ENCOUNTER_PLUS_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_ENCOUNTER_PLUS_2_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_ENCOUNTER_PLUS_3_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_2_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_3_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_4_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_5_SCENES, { minGrade: 1, maxGrade: 1 }));
 
 // ═══════════════════════════════════════════════════════════
 // 维度一：行动触发事件库
@@ -1347,14 +1757,18 @@ export const STUDENT_SPECIAL_TRIGGERS = [
 
 export const STUDENT_DISPLAY_ORDER = [
   'hermione', 'ron', 'harry',
-  'neville', 'draco',
+  'neville', 'seamus', 'deanThomas', 'leeJordan', 'percyWeasley',
+  'draco', 'pansy', 'blaiseZabini', 'crabbe', 'goyle', 'marcusFlint',
+  'choChang', 'padmaPatil', 'terryBoot', 'michaelCorner', 'anthonyGoldstein',
+  'cedricDiggory', 'hannahAbbott', 'ernieMacmillan', 'susanBones', 'justinFinchFletchley',
   'luna', 'ginnyWeasley',
 ];
 
 // ── 按学院分组显示顺序（供 affinity-ui.js 按标签渲染）────────
-export const GRYFFINDOR_ORDER  = ['hermione', 'ron', 'harry', 'neville', 'fredWeasley', 'georgeWeasley', 'ginnyWeasley'];
-export const SLYTHERIN_ORDER   = ['draco'];
-export const RAVENCLAW_ORDER   = ['luna'];
+export const GRYFFINDOR_ORDER  = ['hermione', 'ron', 'harry', 'neville', 'seamus', 'deanThomas', 'fredWeasley', 'georgeWeasley', 'leeJordan', 'percyWeasley', 'ginnyWeasley'];
+export const SLYTHERIN_ORDER   = ['draco', 'pansy', 'blaiseZabini', 'crabbe', 'goyle', 'marcusFlint'];
+export const RAVENCLAW_ORDER   = ['choChang', 'padmaPatil', 'terryBoot', 'michaelCorner', 'anthonyGoldstein', 'luna'];
+export const HUFFLEPUFF_ORDER  = ['cedricDiggory', 'hannahAbbott', 'ernieMacmillan', 'susanBones', 'justinFinchFletchley'];
 
 window.studentData = {
   STUDENT_CHARACTERS,

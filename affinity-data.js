@@ -3,6 +3,20 @@
  * 好感度系统：人物配置、阶段文本、偶遇事件、阶段解锁内容
  */
 
+import { STAFF_LONGTAIL_PACK_ENRICHMENTS } from './affinity-content/staff/common/longtail-scenes.js';
+import { STAFF_BESPOKE_SCENE_ENRICHMENTS } from './affinity-content/staff/year1/core-scenes.js';
+import { STAFF_SECONDARY_BESPOKE_SCENE_ENRICHMENTS } from './affinity-content/staff/year1/subject-teachers-scenes.js';
+import { STAFF_BESPOKE_ENCOUNTER_ENRICHMENTS } from './affinity-content/staff/year1/encounters.js';
+import { STAFF_YEAR1_DEPTH_SCENE_ENRICHMENTS } from './affinity-content/staff/year1/depth-scenes.js';
+import { STAFF_YEAR1_ENCOUNTER_PLUS_SCENES } from './affinity-content/staff/year1/encounter-plus-scenes.js';
+import { STAFF_YEAR1_ENCOUNTER_PLUS_2_SCENES } from './affinity-content/staff/year1/encounter-plus-2-scenes.js';
+import { STAFF_YEAR1_ENCOUNTER_PLUS_3_SCENES } from './affinity-content/staff/year1/encounter-plus-3-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_SCENES } from './affinity-content/staff/year1/chat-plus-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_2_SCENES } from './affinity-content/staff/year1/chat-plus-batch-2-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_3_SCENES } from './affinity-content/staff/year1/chat-plus-batch-3-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_4_SCENES } from './affinity-content/staff/year1/chat-plus-batch-4-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_5_SCENES } from './affinity-content/staff/year1/chat-plus-batch-5-scenes.js';
+
 export const AFFINITY_CHARACTERS = {
   augustusFenwick: {
     key: 'augustusFenwick',
@@ -405,6 +419,59 @@ export const AFFINITY_CHARACTERS = {
     }
   }
 };
+
+function mergeAffinityCharacterEnrichments(characters, enrichments) {
+  Object.entries(enrichments).forEach(([key, patch]) => {
+    const target = characters[key];
+    if (!target) return;
+    if (patch.activeChatEvents?.length) {
+      if (!target.activeChat) target.activeChat = { cost: 1, dailyCooldown: true, events: [] };
+      target.activeChat.events = [
+        ...(target.activeChat.events || []),
+        ...patch.activeChatEvents,
+      ];
+    }
+    if (patch.encounters?.length) {
+      target.encounters = [
+        ...(target.encounters || []),
+        ...patch.encounters,
+      ];
+    }
+    if (patch.tiers) target.tiers = patch.tiers;
+    if (patch.tierUnlocks) target.tierUnlocks = patch.tierUnlocks;
+    if (patch.story) target.story = patch.story;
+    if (patch.letter) target.letter = patch.letter;
+  });
+}
+
+function withGradeRange(enrichments, range) {
+  const tagEvents = events => (events || []).map(event => ({
+    ...event,
+    minGrade: event.minGrade ?? range.minGrade,
+    maxGrade: event.maxGrade ?? range.maxGrade,
+    grades: event.grades ?? range.grades,
+  }));
+
+  return Object.fromEntries(Object.entries(enrichments).map(([key, patch]) => [key, {
+    ...patch,
+    activeChatEvents: tagEvents(patch.activeChatEvents),
+    encounters: tagEvents(patch.encounters),
+  }]));
+}
+
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, STAFF_LONGTAIL_PACK_ENRICHMENTS);
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_BESPOKE_SCENE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_SECONDARY_BESPOKE_SCENE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_BESPOKE_ENCOUNTER_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_DEPTH_SCENE_ENRICHMENTS, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_ENCOUNTER_PLUS_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_ENCOUNTER_PLUS_2_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_ENCOUNTER_PLUS_3_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_2_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_3_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_4_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_5_SCENES, { minGrade: 1, maxGrade: 1 }));
 
 export const CHARACTER_DISPLAY_ORDER = ['augustusFenwick', 'serafinaMoody', 'primroseSprout', 'tavishMacLaren', 'herbertBinns', 'constanceShacklebolt', 'felixWeasley', 'elizaLovegood', 'mirandaPercival', 'minervaMcGonagall', 'severusSnape', 'filiusFlitwick', 'pomonaSprout', 'rolandaHooch', 'sybillTrelawney', 'auroraSinistra', 'albusDumbledore'];
 

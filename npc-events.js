@@ -1,6 +1,6 @@
 import { getSave, setSave, addLog, getYearGrade } from './save-system.js';
 import { exploreEventLib } from './explore-default.js';
-import { mergeAuthoredPlaceScenes } from './npc-place-scenes-authored.js';
+import { mergeAuthoredPlaceScenes } from './npc-place-scenes-year1-authored.js';
 import { AUTHORED_PLACE_SCENES_YEAR2 } from './npc-place-scenes-year2-authored.js';
 import { AUTHORED_PLACE_SCENES_YEAR3 } from './npc-place-scenes-year3-authored.js';
 import { AUTHORED_PLACE_SCENES_YEAR4 } from './npc-place-scenes-year4-authored.js';
@@ -1204,10 +1204,10 @@ const NPC_BONDS_SEED = [
   { a: "ron", aName: "罗恩", b: "hermione", bName: "赫敏", base: 20, tendency: "volatile", topic: "又一次拌嘴" },
   { a: "harry", aName: "哈利", b: "draco", bName: "马尔福", base: -55, tendency: "cold", topic: "走廊里的针锋相对" },
   { a: "draco", aName: "马尔福", b: "neville", bName: "纳威", base: -40, tendency: "cold", topic: "马尔福的嘲笑" },
-  { a: "fred", aName: "弗雷德", b: "george", bName: "乔治", base: 85, tendency: "warm", topic: "新的恶作剧" },
+  { a: "fredWeasley", aName: "弗雷德", b: "georgeWeasley", bName: "乔治", base: 85, tendency: "warm", topic: "新的恶作剧" },
   { a: "crabbe", aName: "克拉布", b: "goyle", bName: "高尔", base: 50, tendency: "warm", topic: "形影不离" },
-  { a: "cedric", aName: "塞德里克", b: "cho", bName: "秋·张", base: 35, tendency: "warm", topic: "魁地奇看台上的招呼", minYear: 1993 },
-  { a: "luna", aName: "卢娜", b: "ginny", bName: "金妮", base: 25, tendency: "warm", topic: "走廊里的同行", minYear: 1992 },
+  { a: "cedricDiggory", aName: "塞德里克", b: "choChang", bName: "秋·张", base: 35, tendency: "warm", topic: "魁地奇看台上的招呼", minYear: 1993 },
+  { a: "luna", aName: "卢娜", b: "ginnyWeasley", bName: "金妮", base: 25, tendency: "warm", topic: "走廊里的同行", minYear: 1992 },
   { a: "pansy", aName: "潘西", b: "draco", bName: "马尔福", base: 30, tendency: "volatile", topic: "斯莱特林长桌旁的低语" },
 ];
 
@@ -1256,11 +1256,44 @@ const WORLD_AFFINITY_EVENTS = [
   { key: "georgeWeasley", name: "乔治", delta: 1, text: "乔治顺手帮你挡开了皮皮鬼扔来的粉笔头。", minYear: 1991 },
   { key: "ginnyWeasley", name: "金妮", delta: 1, text: "金妮匆匆经过时小声向你问好，脸上带着一点不好意思的笑。", minYear: 1992 },
   { key: "luna", name: "卢娜", delta: 1, text: "卢娜认真告诉你，她觉得你今天身边没有骚扰虻，语气非常郑重。", minYear: 1992 },
+  { key: "seamus", name: "西莫", delta: 1, text: "西莫把一根被熏黑的羽毛笔藏到袖子里，见你没笑得太大声，反而冲你咧嘴笑了。", minYear: 1991 },
+  { key: "deanThomas", name: "迪安", delta: 1, text: "迪安给魁地奇海报补完最后一笔，听见你称赞配色后显得很高兴。", minYear: 1991 },
+  { key: "leeJordan", name: "李·乔丹", delta: 1, text: "李·乔丹把刚才的训练讲得像正式比赛解说，还特意给你留了一个最佳听众的位置。", minYear: 1991 },
+  { key: "percyWeasley", name: "珀西", delta: 1, text: "珀西发现你按巡逻表上的方向让开通道，严肃地点了点头。", minYear: 1991, maxYear: 1993 },
+  { key: "pansy", name: "潘西", delta: -1, text: "潘西在斯莱特林长桌旁听见你的名字，挑剔地打量了你一眼。", minYear: 1991 },
+  { key: "blaiseZabini", name: "布雷司", delta: 1, text: "布雷司没有加入旁人的嘲笑，只在你看过去时轻轻点了一下头。", minYear: 1991 },
+  { key: "crabbe", name: "克拉布", delta: 1, text: "克拉布把多拿的一块点心往你这边推了推，动作很快，像怕别人看见。", minYear: 1991 },
+  { key: "goyle", name: "高尔", delta: 1, text: "高尔在费尔奇转过拐角前低声提醒了你一句，随后装作什么也没发生。", minYear: 1991 },
+  { key: "marcusFlint", name: "弗林特", delta: 1, text: "弗林特注意到你提醒球箱锁扣没扣紧，粗声粗气地说你眼神还算能用。", minYear: 1991, maxYear: 1994 },
+  { key: "choChang", name: "秋·张", delta: 1, text: "秋·张在看台边和你聊了两句魁地奇战术，声音轻而认真。", minYear: 1991 },
+  { key: "padmaPatil", name: "帕德玛", delta: 1, text: "帕德玛听见你认真回答门环谜题，露出一个很短却真诚的笑。", minYear: 1991 },
+  { key: "terryBoot", name: "泰瑞", delta: 1, text: "泰瑞把一张推导写到一半的羊皮纸推给你看，显然默认你会感兴趣。", minYear: 1991 },
+  { key: "michaelCorner", name: "迈克尔", delta: 1, text: "迈克尔把一个咒语细节抛给你争论，语气像是在邀请而不是挑衅。", minYear: 1991 },
+  { key: "anthonyGoldstein", name: "安东尼", delta: 1, text: "安东尼认真听完你的解释后，承认你指出的那个步骤确实更清楚。", minYear: 1991 },
+  { key: "cedricDiggory", name: "塞德里克", delta: 1, text: "塞德里克帮低年级学生捡起课本后，也顺手替你扶住了快滑落的书包带。", minYear: 1991 },
+  { key: "hannahAbbott", name: "汉娜", delta: 1, text: "汉娜把一小包点心分给你，声音很轻地说这是多烤出来的。", minYear: 1991 },
+  { key: "ernieMacmillan", name: "厄尼", delta: 1, text: "厄尼郑重其事地感谢你刚才没有打断他调解争执。", minYear: 1991 },
+  { key: "susanBones", name: "苏珊", delta: 1, text: "苏珊看完公告栏上的通知后向你点点头，像是感谢你没有追问太多。", minYear: 1991 },
+  { key: "justinFinchFletchley", name: "贾斯廷", delta: 1, text: "贾斯廷听见你能理解他的麻瓜学校比喻，整个人明显放松下来。", minYear: 1991 },
   { key: "minervaMcGonagall", name: "麦格教授", delta: 1, text: "麦格教授在走廊里看见你按时赶路，神色稍微缓和了一点。", minYear: 1991 },
   { key: "severusSnape", name: "斯内普教授", delta: -1, text: "斯内普教授的视线在你身上停了一秒，像是又发现了什么可扣分的理由。", minYear: 1991 },
   { key: "filiusFlitwick", name: "弗立维教授", delta: 1, text: "弗立维教授听说你认真练习咒语，显得相当高兴。", minYear: 1991 },
   { key: "pomonaSprout", name: "斯普劳特教授", delta: 1, text: "斯普劳特教授注意到你没有踩到温室边的幼苗，满意地点了点头。", minYear: 1991 },
   { key: "remusLupin", name: "卢平教授", delta: 1, text: "卢平教授温和地问起你最近的练习，像是真正在意答案。", minYear: 1993, maxYear: 1993 },
+  { key: "albusDumbledore", name: "邓布利多", delta: 1, text: "邓布利多在长桌尽头看见你把座位让给低年级学生，蓝眼睛在半月形眼镜后轻轻一亮。", minYear: 1991 },
+  { key: "rolandaHooch", name: "霍琦夫人", delta: 1, text: "霍琦夫人在球场边提醒你握帚姿势，语气短促，却不像只是随口一说。", minYear: 1991 },
+  { key: "sybillTrelawney", name: "特里劳妮教授", delta: 1, text: "特里劳妮教授隔着一团香炉烟雾叫住你，说你今天的茶叶影子相当值得留意。", minYear: 1993 },
+  { key: "auroraSinistra", name: "辛尼斯特拉教授", delta: 1, text: "辛尼斯特拉教授在天文塔边收起星图，指出你观测记录里一个很小却重要的偏差。", minYear: 1991 },
+  { key: "siriusBlack", name: "小天狼星", delta: 1, text: "一封没有署名的短笺提醒你避开某条走廊，字迹潦草，却带着一种近乎鲁莽的关心。", minYear: 1993 },
+  { key: "augustusFenwick", name: "芬威克教授", delta: 1, text: "芬威克教授在黑板右下角留下一道没有讲过的题，离开前看了你一眼。", minYear: 1991 },
+  { key: "serafinaMoody", name: "塞拉菲娜教授", delta: 1, text: "塞拉菲娜教授把一个拆开的麻瓜电器塞给你，让你先别问来源，看看结构。", minYear: 1991 },
+  { key: "primroseSprout", name: "普里姆罗斯教授", delta: 1, text: "普里姆罗斯教授注意到你没有乱碰实验瓶，便把一条安全标记的含义多解释了一句。", minYear: 1991 },
+  { key: "tavishMacLaren", name: "麦克拉伦教授", delta: 1, text: "麦克拉伦教授在温室边蹲下查看叶脉，顺手让你也看那处几乎看不见的变化。", minYear: 1991 },
+  { key: "herbertBinns", name: "宾斯教授", delta: 1, text: "宾斯教授讲到一半少见地停顿，补充了一个你上次问过的历史年份。", minYear: 1991 },
+  { key: "constanceShacklebolt", name: "沙克博特教授", delta: 1, text: "沙克博特教授听见你没有急着下结论，便让你把那件事从另一个人的角度再想一遍。", minYear: 1991 },
+  { key: "felixWeasley", name: "菲利克斯教授", delta: 1, text: "菲利克斯教授把一张麻瓜城市地图转向你，问你能不能看出路线为什么这样绕。", minYear: 1991 },
+  { key: "elizaLovegood", name: "伊莱莎教授", delta: 1, text: "伊莱莎教授在图书馆窗边递给你一本诗集，说其中一行也许能解释你今天的心情。", minYear: 1991 },
+  { key: "mirandaPercival", name: "珀西瓦尔教授", delta: 1, text: "珀西瓦尔教授把你作业里一句表达圈出来，没有批评，只问你是不是还可以说得更准确。", minYear: 1991 },
 ];
 
 const LOCATION_STATUS_POOLS = {
