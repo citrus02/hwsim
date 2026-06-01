@@ -6,12 +6,15 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.3';
+export const CURRENT_VERSION = '1.8.4';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.4': [
+    '新增一年级学生与教职工互动场景加厚包16批次！',
+  ],
   '1.8.3': [
     '新增人物互动文案相关规范文档与审计工具',
     '实现主动来访事件的年级过滤逻辑',

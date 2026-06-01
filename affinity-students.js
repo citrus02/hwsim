@@ -32,6 +32,17 @@ import { STUDENT_YEAR1_CHAT_PLUS_BATCH_2_SCENES } from './affinity-content/stude
 import { STUDENT_YEAR1_CHAT_PLUS_BATCH_3_SCENES } from './affinity-content/students/year1/chat-plus-batch-3-scenes.js';
 import { STUDENT_YEAR1_CHAT_PLUS_BATCH_4_SCENES } from './affinity-content/students/year1/chat-plus-batch-4-scenes.js';
 import { STUDENT_YEAR1_CHAT_PLUS_BATCH_5_SCENES } from './affinity-content/students/year1/chat-plus-batch-5-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_6_SCENES } from './affinity-content/students/year1/chat-plus-batch-6-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_7_SCENES } from './affinity-content/students/year1/chat-plus-batch-7-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_8_SCENES } from './affinity-content/students/year1/chat-plus-batch-8-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_9_SCENES } from './affinity-content/students/year1/chat-plus-batch-9-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_10_SCENES } from './affinity-content/students/year1/chat-plus-batch-10-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_11_SCENES } from './affinity-content/students/year1/chat-plus-batch-11-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_12_SCENES } from './affinity-content/students/year1/chat-plus-batch-12-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_13_SCENES } from './affinity-content/students/year1/chat-plus-batch-13-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_14_SCENES } from './affinity-content/students/year1/chat-plus-batch-14-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_15_SCENES } from './affinity-content/students/year1/chat-plus-batch-15-scenes.js';
+import { STUDENT_YEAR1_CHAT_PLUS_BATCH_16_SCENES } from './affinity-content/students/year1/chat-plus-batch-16-scenes.js';
 
 // ═══════════════════════════════════════════════════════════
 // 学生角色数据
@@ -1512,6 +1523,17 @@ mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR
 mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_3_SCENES, { minGrade: 1, maxGrade: 1 }));
 mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_4_SCENES, { minGrade: 1, maxGrade: 1 }));
 mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_5_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_6_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_7_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_8_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_9_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_10_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_11_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_12_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_13_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_14_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_15_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeStudentCharacterEnrichments(STUDENT_CHARACTERS, withGradeRange(STUDENT_YEAR1_CHAT_PLUS_BATCH_16_SCENES, { minGrade: 1, maxGrade: 1 }));
 
 // ═══════════════════════════════════════════════════════════
 // 维度一：行动触发事件库

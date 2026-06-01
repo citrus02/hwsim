@@ -16,6 +16,17 @@ import { STAFF_YEAR1_CHAT_PLUS_BATCH_2_SCENES } from './affinity-content/staff/y
 import { STAFF_YEAR1_CHAT_PLUS_BATCH_3_SCENES } from './affinity-content/staff/year1/chat-plus-batch-3-scenes.js';
 import { STAFF_YEAR1_CHAT_PLUS_BATCH_4_SCENES } from './affinity-content/staff/year1/chat-plus-batch-4-scenes.js';
 import { STAFF_YEAR1_CHAT_PLUS_BATCH_5_SCENES } from './affinity-content/staff/year1/chat-plus-batch-5-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_6_SCENES } from './affinity-content/staff/year1/chat-plus-batch-6-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_7_SCENES } from './affinity-content/staff/year1/chat-plus-batch-7-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_8_SCENES } from './affinity-content/staff/year1/chat-plus-batch-8-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_9_SCENES } from './affinity-content/staff/year1/chat-plus-batch-9-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_10_SCENES } from './affinity-content/staff/year1/chat-plus-batch-10-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_11_SCENES } from './affinity-content/staff/year1/chat-plus-batch-11-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_12_SCENES } from './affinity-content/staff/year1/chat-plus-batch-12-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_13_SCENES } from './affinity-content/staff/year1/chat-plus-batch-13-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_14_SCENES } from './affinity-content/staff/year1/chat-plus-batch-14-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_15_SCENES } from './affinity-content/staff/year1/chat-plus-batch-15-scenes.js';
+import { STAFF_YEAR1_CHAT_PLUS_BATCH_16_SCENES } from './affinity-content/staff/year1/chat-plus-batch-16-scenes.js';
 
 export const AFFINITY_CHARACTERS = {
   augustusFenwick: {
@@ -472,6 +483,17 @@ mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR
 mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_3_SCENES, { minGrade: 1, maxGrade: 1 }));
 mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_4_SCENES, { minGrade: 1, maxGrade: 1 }));
 mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_5_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_6_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_7_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_8_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_9_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_10_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_11_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_12_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_13_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_14_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_15_SCENES, { minGrade: 1, maxGrade: 1 }));
+mergeAffinityCharacterEnrichments(AFFINITY_CHARACTERS, withGradeRange(STAFF_YEAR1_CHAT_PLUS_BATCH_16_SCENES, { minGrade: 1, maxGrade: 1 }));
 
 export const CHARACTER_DISPLAY_ORDER = ['augustusFenwick', 'serafinaMoody', 'primroseSprout', 'tavishMacLaren', 'herbertBinns', 'constanceShacklebolt', 'felixWeasley', 'elizaLovegood', 'mirandaPercival', 'minervaMcGonagall', 'severusSnape', 'filiusFlitwick', 'pomonaSprout', 'rolandaHooch', 'sybillTrelawney', 'auroraSinistra', 'albusDumbledore'];
 
