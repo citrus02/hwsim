@@ -6,12 +6,17 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.6';
+export const CURRENT_VERSION = '1.8.7';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.7': [
+    '重构探索界面的地点锁定、商店打开与行动点耗尽后的时间推进逻辑',
+    '优化时间转换器测试模式，可选择更远的未来日期并动态限制月份与日期范围',
+    '整理时间转换器快照与返回原时间的保存恢复流程，减少重复代码并保持关键进度',
+  ],
   '1.8.6': [
     '整理一年级人物互动内容文件结构，按角色归档学生与教职工相遇、闲聊场景',
     '将大量分批场景入口收束为角色聚合索引，减少主数据文件中的重复导入和合并代码',

@@ -2,6 +2,55 @@ import { getSave, setSave, addLog } from './save-system.js';
 import { unlockAchievement } from './course/achievement.js';
 
 const TIME_PERIODS = ["上午", "下午", "夜晚"];
+const TEST_MODE_FUTURE_YEARS = 7;
+const TIME_TURNER_PRESERVED_KEYS = [
+  "bag",
+  "course",
+  "spellProficiency",
+  "potion",
+  "exploreRate",
+  "housePoints",
+];
+const TIME_TURNER_TRANSIENT_KEYS = [
+  "originalTime",
+  "affinitySnapshot",
+  "knownCharactersSnapshot",
+  "courseSnapshot",
+];
+
+function _cloneSaveSlice(value) {
+  if (value === undefined) return undefined;
+  return JSON.parse(JSON.stringify(value));
+}
+
+function _snapshotSaveKeys(data, keys) {
+  return keys.reduce((snapshot, key) => {
+    if (data[key] !== undefined) snapshot[key] = _cloneSaveSlice(data[key]);
+    return snapshot;
+  }, {});
+}
+
+function _restoreSaveKeys(data, snapshot) {
+  Object.entries(snapshot || {}).forEach(([key, value]) => {
+    data[key] = _cloneSaveSlice(value);
+  });
+}
+
+function _createTravelSnapshots(data, isFutureTravel) {
+  return {
+    affinitySnapshot: _cloneSaveSlice(data.affinity) || {},
+    knownCharactersSnapshot: Array.isArray(data.knownCharacters) ? [...data.knownCharacters] : [],
+    courseSnapshot: isFutureTravel && data.course ? _cloneSaveSlice(data.course) : null,
+  };
+}
+
+function _clearTravelState(timeTurner) {
+  TIME_TURNER_TRANSIENT_KEYS.forEach(key => {
+    timeTurner[key] = null;
+  });
+  timeTurner.isTraveling = false;
+  timeTurner.isFutureTravel = false;
+}
 
 function isTimeTraveling() {
   const data = getSave();
@@ -25,6 +74,18 @@ function _dateStr(d) {
 function _parseDate(s) {
   const parts = s.split('-');
   return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+}
+
+function _getMaxSelectableMonth(year, endDate) {
+  return year === endDate.getFullYear() ? endDate.getMonth() + 1 : 12;
+}
+
+function _getMaxSelectableDay(year, month, endDate) {
+  const daysInMonth = new Date(year, month, 0).getDate();
+  if (year === endDate.getFullYear() && month === endDate.getMonth() + 1) {
+    return Math.min(daysInMonth, endDate.getDate());
+  }
+  return daysInMonth;
 }
 
 function _periodToAction(period) {
@@ -76,7 +137,7 @@ function openTimeTurnerPanel() {
   const startDate = _parseDate("1991-09-02");
   const todayDate = _parseDate(currentDate);
   const futureLimit = new Date(todayDate);
-  futureLimit.setFullYear(futureLimit.getFullYear() + 1);
+  futureLimit.setFullYear(futureLimit.getFullYear() + TEST_MODE_FUTURE_YEARS);
   const endDate = testMode ? futureLimit : todayDate;
 
   const currentParts = currentDate.split('-');
@@ -96,17 +157,20 @@ function openTimeTurnerPanel() {
   }
 
   let monthOptions = "";
-  for (let m = 1; m <= 12; m++) {
-    const selected = m === curMonth ? "selected" : "";
+  const maxInitialMonth = _getMaxSelectableMonth(curYear, endDate);
+  const initialMonth = Math.min(curMonth, maxInitialMonth);
+  for (let m = 1; m <= maxInitialMonth; m++) {
+    const selected = m === initialMonth ? "selected" : "";
     monthOptions += `<option value="${m}" ${selected}>${m}月</option>`;
   }
 
   let dayOptions = "";
-  const daysInMonth = new Date(curYear, curMonth, 0).getDate();
+  const daysInMonth = _getMaxSelectableDay(curYear, initialMonth, endDate);
   const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const initialDay = Math.min(curDay, daysInMonth);
   for (let d = 1; d <= daysInMonth; d++) {
-    const selected = d === curDay ? "selected" : "";
-    const date = new Date(curYear, curMonth - 1, d);
+    const selected = d === initialDay ? "selected" : "";
+    const date = new Date(curYear, initialMonth - 1, d);
     const weekday = weekdays[date.getDay()];
     dayOptions += `<option value="${d}" ${selected}>${d}日 ${weekday}</option>`;
   }
@@ -121,7 +185,7 @@ function openTimeTurnerPanel() {
     : '';
 
   const futureRule = testMode
-    ? `<div>• <span style="color:#ff6b6b">测试功能</span>：可选择未来日期（最多1年），🔮 标记为未来日期</div>
+    ? `<div>• <span style="color:#ff6b6b">测试功能</span>：可选择未来日期（最多${TEST_MODE_FUTURE_YEARS}年），🔮 标记为未来日期</div>
        <div>• 前往未来时，好感度和认识角色<span style="color:#5cb85c">保留不变</span>（非还原）</div>`
     : '';
 
@@ -181,11 +245,26 @@ function openTimeTurnerPanel() {
   const monthSel = document.getElementById("tt-month");
   const daySel = document.getElementById("tt-day");
 
+  function _updateMonths() {
+    const y = parseInt(yearSel.value);
+    const maxMonth = _getMaxSelectableMonth(y, endDate);
+    const curM = parseInt(monthSel.value) || 1;
+    monthSel.innerHTML = '';
+    for (let m = 1; m <= maxMonth; m++) {
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = `${m}月`;
+      if (m === Math.min(curM, maxMonth)) opt.selected = true;
+      monthSel.appendChild(opt);
+    }
+  }
+
   function _updateDays() {
     const y = parseInt(yearSel.value);
     const m = parseInt(monthSel.value);
-    const maxDay = new Date(y, m, 0).getDate();
+    const maxDay = _getMaxSelectableDay(y, m, endDate);
     const curD = parseInt(daySel.value);
+    const selectedDay = Math.min(curD || 1, maxDay);
     const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     daySel.innerHTML = '';
     for (let d = 1; d <= maxDay; d++) {
@@ -194,7 +273,7 @@ function openTimeTurnerPanel() {
       const date = new Date(y, m - 1, d);
       const weekday = weekdays[date.getDay()];
       opt.textContent = `${d}日 ${weekday}`;
-      if (d === Math.min(curD, maxDay)) opt.selected = true;
+      if (d === selectedDay) opt.selected = true;
       daySel.appendChild(opt);
     }
     _updateWeekday();
@@ -211,7 +290,10 @@ function openTimeTurnerPanel() {
     }
   }
 
-  yearSel.addEventListener('change', _updateDays);
+  yearSel.addEventListener('change', () => {
+    _updateMonths();
+    _updateDays();
+  });
   monthSel.addEventListener('change', _updateDays);
   daySel.addEventListener('change', _updateWeekday);
 
@@ -254,7 +336,7 @@ function _travelTo(targetDate, targetPeriod) {
     return;
   }
 
-  const courseSnapshot = isFuture && data.course ? JSON.parse(JSON.stringify(data.course)) : null;
+  const travelSnapshots = _createTravelSnapshots(data, isFuture);
   if (isFuture) {
     window.courseAttendance?.recordMissedClassesBetween?.(
       currentFullDate,
@@ -265,9 +347,6 @@ function _travelTo(targetDate, targetPeriod) {
     data = getSave();
   }
 
-  const affinitySnapshot = data.affinity ? JSON.parse(JSON.stringify(data.affinity)) : {};
-  const knownCharactersSnapshot = data.knownCharacters ? [...data.knownCharacters] : [];
-
   data.timeTurner = {
     isTraveling: true,
     originalTime: {
@@ -275,9 +354,7 @@ function _travelTo(targetDate, targetPeriod) {
       nowTime: currentPeriod,
       dailyActionLeft: currentActions,
     },
-    affinitySnapshot,
-    knownCharactersSnapshot,
-    courseSnapshot,
+    ...travelSnapshots,
     isFutureTravel: isFuture,
     travelHistory: [...(data.timeTurner?.travelHistory || []), {
       from: { currentDate: currentFullDate, nowTime: currentPeriod },
@@ -408,12 +485,8 @@ function _returnToOriginal() {
   const orig = data.timeTurner?.originalTime;
   if (!orig) return;
 
-  const currentBag = data.bag ? JSON.parse(JSON.stringify(data.bag)) : null;
-  const currentCourse = data.course ? JSON.parse(JSON.stringify(data.course)) : null;
-  const currentSpellProf = data.spellProficiency ? JSON.parse(JSON.stringify(data.spellProficiency)) : null;
-  const currentPotion = data.potion ? JSON.parse(JSON.stringify(data.potion)) : null;
-  const currentExploreRate = data.exploreRate ? JSON.parse(JSON.stringify(data.exploreRate)) : null;
-  const currentHousePoints = data.housePoints ? JSON.parse(JSON.stringify(data.housePoints)) : null;
+  const preservedState = _snapshotSaveKeys(data, TIME_TURNER_PRESERVED_KEYS);
+  const wasFutureTravel = !!data.timeTurner.isFutureTravel;
 
   data.time.currentDate = orig.currentDate;
   data.time.nowTime = orig.nowTime;
@@ -424,31 +497,18 @@ function _returnToOriginal() {
   data.time.month = parseInt(parts[1]);
   data.time.day = parseInt(parts[2]);
 
-  if (data.timeTurner.affinitySnapshot && !data.timeTurner.isFutureTravel) {
-    data.affinity = JSON.parse(JSON.stringify(data.timeTurner.affinitySnapshot));
+  if (data.timeTurner.affinitySnapshot && !wasFutureTravel) {
+    data.affinity = _cloneSaveSlice(data.timeTurner.affinitySnapshot);
   }
-  if (data.timeTurner.knownCharactersSnapshot && !data.timeTurner.isFutureTravel) {
+  if (data.timeTurner.knownCharactersSnapshot && !wasFutureTravel) {
     data.knownCharacters = [...data.timeTurner.knownCharactersSnapshot];
   }
 
-  if (currentBag) data.bag = currentBag;
-  if (data.timeTurner.isFutureTravel && data.timeTurner.courseSnapshot) {
-    data.course = JSON.parse(JSON.stringify(data.timeTurner.courseSnapshot));
-  } else if (currentCourse) {
-    data.course = currentCourse;
+  _restoreSaveKeys(data, preservedState);
+  if (wasFutureTravel && data.timeTurner.courseSnapshot) {
+    data.course = _cloneSaveSlice(data.timeTurner.courseSnapshot);
   }
-  if (currentSpellProf) data.spellProficiency = currentSpellProf;
-  if (currentPotion) data.potion = currentPotion;
-  if (currentExploreRate) data.exploreRate = currentExploreRate;
-  if (currentHousePoints) data.housePoints = currentHousePoints;
-
-  data.timeTurner.isTraveling = false;
-  data.timeTurner.originalTime = null;
-  data.timeTurner.affinitySnapshot = null;
-  data.timeTurner.knownCharactersSnapshot = null;
-  data.timeTurner.courseSnapshot = null;
-  const wasFutureTravel = data.timeTurner.isFutureTravel;
-  data.timeTurner.isFutureTravel = false;
+  _clearTravelState(data.timeTurner);
 
   setSave(data);
 

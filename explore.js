@@ -218,6 +218,87 @@ function createExploreButton(data, onClickHandler) {
   return btn;
 }
 
+function checkAreaLock(area, {
+  currentGrade = getYearGrade(),
+  currentHouse = getPlayerHouse(),
+  holiday = isHoliday(),
+  checkHouse = true,
+  checkHoliday = false,
+  checkHogsmeade = false
+} = {}) {
+  if (area.needLevel !== undefined && area.needLevel > currentGrade) {
+    return { locked: true, reason: area.unlockTip || `需要${area.needLevel}年级` };
+  }
+
+  if (checkHouse && area.requiredHouse && currentHouse !== area.requiredHouse) {
+    return { locked: true, reason: `需要${area.requiredHouse}学院身份` };
+  }
+
+  if (checkHoliday && area.isHolidayOnly && !holiday) {
+    return { locked: true, reason: "仅限假期前往" };
+  }
+
+  if (checkHogsmeade && area.name === "霍格莫德村" && !holiday && !isHogsmeadeWeekend()) {
+    return { locked: true, reason: "周末或假期才能前往" };
+  }
+
+  return { locked: false, reason: "" };
+}
+
+function handleTimeAfterAction({ closePanel, refresh } = {}) {
+  if (timeSystem.dailyActionLeft <= 0) {
+    closePanel?.();
+    setTimeout(() => {
+      nextTime();
+      if (timeSystem.dailyActionLeft <= 0) {
+        nextDay();
+      }
+      syncActionUI();
+    }, 80);
+    return;
+  }
+
+  refresh?.();
+}
+
+async function openShopWithUI(shopId, areaName, {
+  closePanel,
+  refresh,
+  consumeAction = true,
+  advanceTimeOnUnavailable = consumeAction,
+  refreshAllOnClose = true,
+  errorWithMessage = true
+} = {}) {
+  if (consumeAction && !costAction()) return false;
+
+  try {
+    const shopManager = await window.openShop(shopId);
+    if (!shopManager) {
+      window.doExploreLog(`🏪 ${areaName} 暂未开业，敬请期待。`);
+      if (advanceTimeOnUnavailable) {
+        handleTimeAfterAction({ closePanel, refresh });
+      } else {
+        refresh?.();
+      }
+      return false;
+    }
+
+    const { shopUI } = await import('./hogsmeade/shopUI.js');
+    const shopUIInstance = new shopUI(shopManager, () => {
+      if (refreshAllOnClose && window.refreshAll) window.refreshAll();
+      handleTimeAfterAction({ closePanel, refresh });
+    });
+    const uiElement = shopUIInstance.render();
+    document.body.appendChild(uiElement);
+    return true;
+  } catch (err) {
+    console.error('打开商店失败:', err);
+    const message = errorWithMessage && err?.message ? `：${err.message}` : "";
+    window.doExploreLog(`❌ 打开 ${areaName} 失败${message}`);
+    return false;
+  }
+}
+
 function _handleGringotts() {
   const currentGrade = getYearGrade();
   const baseGalleons = 5 + currentGrade * 3;
@@ -269,13 +350,9 @@ export function renderAdventureLayer() {
   ];
 
   adventureAreas.forEach(area => {
-    let isLock = false;
-    let unlockTipText = '';
-    
-    if (area.needLevel !== undefined && area.needLevel > currentGrade) {
-      isLock = true;
-      unlockTipText = `需要${area.needLevel}年级`;
-    }
+    const lock = checkAreaLock(area, { currentGrade, checkHouse: false });
+    const isLock = lock.locked;
+    const unlockTipText = lock.reason;
     
     const btn = createExploreButton({
       icon: area.icon || '',
@@ -356,13 +433,9 @@ function renderAdventureSecondLayer() {
   }
 
   subAreas.forEach(area => {
-    let isLock = false;
-    let unlockTipText = '';
-    
-    if (area.needLevel !== undefined && area.needLevel > currentGrade) {
-      isLock = true;
-      unlockTipText = `需要${area.needLevel}年级`;
-    }
+    const lock = checkAreaLock(area, { currentGrade, checkHouse: false });
+    const isLock = lock.locked;
+    const unlockTipText = lock.reason;
     
     const btn = createExploreButton({
       icon: area.icon || '',
@@ -378,45 +451,10 @@ function renderAdventureSecondLayer() {
       }
       
       if (area.shopId) {
-        if (!costAction()) return;
-        try {
-          const shopManager = await window.openShop(area.shopId);
-          if (!shopManager) {
-            window.doExploreLog(`🏪 ${area.name} 暂未开业，敬请期待。`);
-            if (timeSystem.dailyActionLeft <= 0) {
-              closeAdventurePanel();
-              setTimeout(() => { 
-                nextTime(); 
-                if (timeSystem.dailyActionLeft <= 0) {
-                  nextDay();
-                }
-                syncActionUI(); 
-              }, 80);
-            }
-            return;
-          }
-          const { shopUI } = await import('./hogsmeade/shopUI.js');
-          const shopUIInstance = new shopUI(shopManager, () => {
-            if (window.refreshAll) window.refreshAll();
-            if (timeSystem.dailyActionLeft <= 0) {
-              closeAdventurePanel();
-              setTimeout(() => { 
-                nextTime(); 
-                if (timeSystem.dailyActionLeft <= 0) {
-                  nextDay();
-                }
-                syncActionUI(); 
-              }, 80);
-            } else {
-              renderAdventureLayer();
-            }
-          });
-          const uiElement = shopUIInstance.render();
-          document.body.appendChild(uiElement);
-        } catch (err) {
-          console.error('打开商店失败:', err);
-          window.doExploreLog(`❌ 打开 ${area.name} 失败：${err.message}`);
-        }
+        await openShopWithUI(area.shopId, area.name, {
+          closePanel: closeAdventurePanel,
+          refresh: renderAdventureLayer
+        });
         return;
       }
       
@@ -436,30 +474,15 @@ export function renderFirstLayer() {
   const holiday = isHoliday();
 
   hogwartsExploreData.forEach(lv1 => {
-    let isLock = false;
-    let unlockTipText = '';
-    
-    if (lv1.needLevel !== undefined && lv1.needLevel > currentGrade) {
-      isLock = true;
-      unlockTipText = lv1.unlockTip || `需要${lv1.needLevel}年级`;
-    }
-    
-    if (!isLock && lv1.requiredHouse && currentHouse !== lv1.requiredHouse) {
-      isLock = true;
-      unlockTipText = `需要${lv1.requiredHouse}学院身份`;
-    }
-
-    if (!isLock && lv1.isHolidayOnly && !holiday) {
-      isLock = true;
-      unlockTipText = "仅限假期前往";
-    }
-
-    if (!isLock && lv1.name === "霍格莫德村") {
-      if (!holiday && !isHogsmeadeWeekend()) {
-        isLock = true;
-        unlockTipText = "周末或假期才能前往";
-      }
-    }
+    const lock = checkAreaLock(lv1, {
+      currentGrade,
+      currentHouse,
+      holiday,
+      checkHoliday: true,
+      checkHogsmeade: true
+    });
+    const isLock = lock.locked;
+    const unlockTipText = lock.reason;
     
     const btn = createExploreButton({
       icon: lv1.icon || '',
@@ -496,20 +519,9 @@ function renderSecondLayer() {
   const currentHouse = getPlayerHouse();
 
   (currentFirstParent.children || []).forEach(lv2 => {
-    // 检查第二层锁定
-    let isLock = false;
-    let unlockTipText = '';
-    
-    if (lv2.needLevel !== undefined && lv2.needLevel > currentGrade) {
-      isLock = true;
-      unlockTipText = lv2.unlockTip || `需要${lv2.needLevel}年级`;
-    }
-    
-    // 检查学院锁
-    if (!isLock && lv2.requiredHouse && currentHouse !== lv2.requiredHouse) {
-      isLock = true;
-      unlockTipText = `需要${lv2.requiredHouse}学院身份`;
-    }
+    const lock = checkAreaLock(lv2, { currentGrade, currentHouse });
+    const isLock = lock.locked;
+    const unlockTipText = lock.reason;
     
     const isShop2 = lv2.shopId && lv2.shopId !== undefined;
     const shopIcon2 = isShop2 ? " 🏪" : "";
@@ -529,41 +541,10 @@ function renderSecondLayer() {
 
       // 商店节点：打开商店UI
       if (isShop2) {
-        if (!costAction()) return;
-        try {
-          const shopManager = await window.openShop(lv2.shopId);
-          if (!shopManager) {
-            window.doExploreLog(`🏪 ${lv2.name} 暂未开业，敬请期待。`);
-            if (timeSystem.dailyActionLeft <= 0) {
-              closeExplorePanel();
-              setTimeout(() => { nextTime(); syncActionUI(); }, 80);
-            } else {
-              renderSecondLayer();
-            }
-            return;
-          }
-          const { shopUI } = await import('./hogsmeade/shopUI.js');
-          const shopUIInstance = new shopUI(shopManager, () => {
-            if (window.refreshAll) window.refreshAll();
-            if (timeSystem.dailyActionLeft <= 0) {
-              closeExplorePanel();
-              setTimeout(() => { 
-                nextTime(); 
-                if (timeSystem.dailyActionLeft <= 0) {
-                  nextDay();
-                }
-                syncActionUI(); 
-              }, 80);
-            } else {
-              renderSecondLayer();
-            }
-          });
-          const uiElement = shopUIInstance.render();
-          document.body.appendChild(uiElement);
-        } catch (err) {
-          console.error('打开商店失败:', err);
-          window.doExploreLog(`❌ 打开 ${lv2.name} 失败：${err.message}`);
-        }
+        await openShopWithUI(lv2.shopId, lv2.name, {
+          closePanel: closeExplorePanel,
+          refresh: renderSecondLayer
+        });
         return;
       }
 
@@ -602,12 +583,10 @@ function renderSecondLayer() {
 
         triggerPostExploreCharacterEvents(lv2.name, Boolean(worldFollowup));
 
-        if (timeSystem.dailyActionLeft <= 0) {
-          closeExplorePanel();
-          setTimeout(() => { nextTime(); syncActionUI(); }, 80);
-          return;
-        }
-        renderSecondLayer();
+        handleTimeAfterAction({
+          closePanel: closeExplorePanel,
+          refresh: renderSecondLayer
+        });
         return;
       }
 
@@ -632,15 +611,9 @@ function renderThirdLayer() {
   list.forEach(item => {
     if (!item) return;  
 
-    // 检查年级锁
-    let isLock = item.needLevel > currentGrade;
-    let unlockTipText = item.unlockTip || '';
-    
-    // 检查学院锁（如果还没有被年级锁锁定）
-    if (!isLock && item.requiredHouse && currentHouse !== item.requiredHouse) {
-      isLock = true;
-      unlockTipText = `需要${item.requiredHouse}学院身份`;
-    }
+    const lock = checkAreaLock(item, { currentGrade, currentHouse });
+    const isLock = lock.locked;
+    const unlockTipText = lock.reason;
     
     // 修改：不再把100%当作禁用条件，只是显示已完成
     const isComplete = item.exploreRate >= 100;
@@ -674,49 +647,12 @@ function renderThirdLayer() {
 
       // 如果是商店，异步打开商店界面
       if (isShop) {
-        if (item.needLevel && currentGrade < item.needLevel) {
-          window.doExploreLog(`🔒 ${item.name} 需要 ${item.needLevel} 年级才能进入`);
-          return;
-        }
-        
-        try {
-          // 异步打开商店
-          const shopManager = await window.openShop(item.shopId);
-          if (!shopManager) {
-            window.doExploreLog(`🏪 ${item.name} 暂未开业，敬请期待。`);
-            renderThirdLayer();
-            return;
-          }
-          
-          // 动态导入 shopUI
-          const { shopUI } = await import('./hogsmeade/shopUI.js');
-          
-          // 创建商店UI实例
-          const shopUIInstance = new shopUI(
-            shopManager,
-            () => {
-              if (timeSystem.dailyActionLeft <= 0) {
-                closeExplorePanel();
-                setTimeout(() => { 
-                  nextTime(); 
-                  if (timeSystem.dailyActionLeft <= 0) {
-                    nextDay();
-                  }
-                  syncActionUI(); 
-                }, 80);
-              } else {
-                renderThirdLayer();
-                if (window.refreshAll) window.refreshAll();
-              }
-            }
-          );
-          
-          const uiElement = shopUIInstance.render();
-          document.body.appendChild(uiElement);
-        } catch (err) {
-          console.error('打开商店失败:', err);
-          window.doExploreLog(`❌ 打开 ${item.name} 失败`);
-        }
+        await openShopWithUI(item.shopId, item.name, {
+          closePanel: closeExplorePanel,
+          refresh: renderThirdLayer,
+          consumeAction: false,
+          errorWithMessage: false
+        });
         return;
       }
       
@@ -750,15 +686,10 @@ function renderThirdLayer() {
 
       triggerPostExploreCharacterEvents(item.name, Boolean(worldFollowup));
 
-      if (timeSystem.dailyActionLeft <= 0) {
-        closeExplorePanel();
-        setTimeout(() => {
-          nextTime();
-          syncActionUI();
-        }, 80);
-        return;
-      }
-      renderThirdLayer();
+      handleTimeAfterAction({
+        closePanel: closeExplorePanel,
+        refresh: renderThirdLayer
+      });
     });
     wrap.appendChild(btn);
   });
