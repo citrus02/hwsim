@@ -1,4 +1,4 @@
-/**
+﻿/**
  * year1-slytherin-students-plus.js
  * 一年级斯莱特林学生主动来访加厚包。
  *
@@ -16,7 +16,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '帮她把线脚藏好', delta: 4, response: '你把散线压进边缝里，潘西盯着你的手，难得没有催促。手套重新戴回去时几乎看不出破绽，她把手指伸直，像重新披上一层盔甲。「还算可以。」她说得挑剔，但没有立刻走开。那句短短的评价下面，藏着一点被妥善维护后的安心。', addMemory: 'pansy_glove_stitch' },
         { label: '问她为什么怕被记住', delta: 3, response: '潘西抿了抿嘴，说有些笑话一旦落到你身上，就会在长桌边反复出现，直到你自己也开始相信那就是你。她很快又恢复了刻薄的表情，补充说她当然不会给别人这种机会。可你已经听见了那一瞬间的疲惫。' },
       ],
-      aiSeed: '潘西主动请求玩家帮她处理手套散线。她在意体面不是单纯虚荣，而是害怕在斯莱特林小圈子里失去位置和安全感。',
+      aiSeed: '',
     },
     {
       id: 'pansy_year1_seating_order',
@@ -26,7 +26,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '告诉她你听到的情况', delta: 4, response: '潘西迅速把草图改了两笔，安排出一条不会让新生撞进高年级争执里的路线。她嘴上说这只是为了不让场面难看，手却把最容易被挤出去的位置留给了自己。你发现她所谓的控制局面，有时是在替别人挡住难堪。', addMemory: 'pansy_seating_order' },
         { label: '问她为什么不直接让开', delta: 3, response: '她像被冒犯似的看你一眼，随后冷冷说让开一次，就会有人以为你永远都可以被推开。话说出口后，她的神情更硬了，像是在提醒自己也相信这条规则。' },
       ],
-      aiSeed: '潘西主动向玩家确认礼堂座位变化。她把社交秩序看得很重，背后是斯莱特林内部位置感和不愿被轻易推开的防御。',
+      aiSeed: '',
     },
     {
       id: 'pansy_year1_lip_of_cup',
@@ -36,7 +36,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '陪她试着修杯子', delta: 5, response: '你们用最基础的修复咒试了几次，裂纹终于合上，只剩一条银色暗痕。潘西把杯子拿回去，走到那个新生面前时语气依然不耐烦：「下次拿稳。」但她把杯子递过去的动作很轻。那名新生笑起来后，她才像完成一项烦人的任务似的转身。', addMemory: 'pansy_repaired_cup' },
         { label: '指出她其实很担心', delta: 3, response: '潘西立刻皱眉，说你想得太多。可她没有否认自己看见对方发抖，也没有把杯子丢回去。沉默了一会儿，她说斯莱特林不能总在外人面前显得狼狈。那已经很接近承认了。' },
       ],
-      aiSeed: '潘西主动找玩家修被新生摔裂的银杯。她用嫌弃掩饰照顾，表现出斯莱特林式维护体面的温柔。',
+      aiSeed: '',
     },
     {
       id: 'pansy_year1_wrong_rumour',
@@ -46,7 +46,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '答应帮她澄清事实', delta: 5, response: '潘西的肩膀几不可察地松了一下。她很快补上一句说她并不需要别人替她辩解，只是不喜欢愚蠢的传话。可当你真的把事实说清楚后，她经过你身边时低声说了句谢谢，轻得几乎被翻书声盖住。', addMemory: 'pansy_wrong_rumour' },
         { label: '问她为什么只在意这一句', delta: 4, response: '她沉默片刻，承认自己确实说过很多难听话，但没说过的东西不该算在她头上。那种近乎执拗的公平感从刻薄里露出来，反倒让她显得更真实。' },
       ],
-      aiSeed: '潘西主动找玩家澄清一条错误传言。她不是突然变温柔，而是坚持“我说过的我认，没说过的不认”的骄傲和边界。',
+      aiSeed: '',
     },
   ],
 
@@ -59,7 +59,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '问他为什么告诉你', delta: 4, response: '布雷司把书合上，说因为被迫旁观愚蠢场面会影响胃口。你绕路离开时，他没有看你，只在窗影里轻轻点了一下头。那不是热情，却是他愿意给出的提醒。', addMemory: 'blaise_window_warning' },
         { label: '请他说明是哪两个人', delta: 3, response: '他只给出两个足够辨认的细节，没有说名字。「名字会让事情变得像告密，细节只是在帮助你避开麻烦。」他说。这种分寸感比直接袒护更像布雷司。' },
       ],
-      aiSeed: '布雷司主动提醒玩家避开一场被设计好的争吵。他冷静、旁观、讲究分寸，不愿把帮助说成帮助。',
+      aiSeed: '',
     },
     {
       id: 'blaise_year1_book_margin',
@@ -69,7 +69,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '认真谈句子的节奏', delta: 5, response: '你指出他把三个判断挤在了一句话里。布雷司听完没有立刻反驳，只把其中一段拆开重写。改完后，他说这样确实不那么像在急着证明自己聪明。那句话带着一点自嘲，也带着罕见的诚实。', addMemory: 'blaise_book_margin' },
         { label: '问他在意论文评价吗', delta: 3, response: '他轻轻一笑，说在意评价是很普通的事，假装不在意才比较费力。你没想到他会把这句话说得这么坦然，也因此看见了冷淡外壳下面的清醒。' },
       ],
-      aiSeed: '布雷司主动请玩家看论文表达。他关注语气和节奏，体现观察力、审美和对自我形象的克制管理。',
+      aiSeed: '',
     },
     {
       id: 'blaise_year1_owl_post',
@@ -79,7 +79,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '帮他删掉过分客气的话', delta: 4, response: '你指出几句读起来像在隔着一整张长桌说话的寒暄。布雷司看了很久，最后把它们划掉，留下更短也更真切的句子。他说有些家庭只教人怎么不失礼，却不教人怎么说想念。', addMemory: 'blaise_owl_post_letter' },
         { label: '问这封信写给谁', delta: 3, response: '他没有直接回答，只说是给一个会看穿客套的人。你没有追问，他似乎因此更愿意继续站在你旁边，把信封慢慢封好。' },
       ],
-      aiSeed: '布雷司主动请玩家看一封家信。他优雅冷淡，但对亲密表达不熟练，事件要有克制的情感。',
+      aiSeed: '',
     },
     {
       id: 'blaise_year1_staircase_pause',
@@ -89,7 +89,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '说两者都有', delta: 4, response: '布雷司终于笑了一下，说这是个很霍格沃茨的答案。楼梯重新移动前，你们短暂地悬在半空，下面的吵闹声变得很远。他说有时候被迫停一下也不错，只要旁边的人不急着填满沉默。', addMemory: 'blaise_staircase_pause' },
         { label: '问他讨厌失控吗', delta: 5, response: '他看向栏杆外的空处，承认自己不喜欢别人看见他不知道下一步怎么走。话出口后，他又恢复了平静，像那只是对天气的评价。但你知道他刚才把一个很少展示的部分交给了你。' },
       ],
-      aiSeed: '布雷司在移动楼梯停住时主动与玩家谈计划和失控。用霍格沃茨城堡本身制造真实日常，让他显露克制下的不安。',
+      aiSeed: '',
     },
   ],
 
@@ -102,7 +102,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '接过材料袋并道谢', delta: 4, response: '克拉布点点头，像这件事已经结束。走出几步后，他又回头补充说里面有一瓶豪猪刺，摔了会很麻烦。那句提醒说得很慢，却非常具体。你突然意识到他并不是不注意细节，只是不常把细节说出来。', addMemory: 'crabbe_heavy_cauldron' },
         { label: '问他怎么发现的', delta: 3, response: '他想了想，说因为你的桌子平时没那么空。这个回答让你有点意外。克拉布看见你的表情，皱起眉，像不明白记住这种事有什么值得惊讶。' },
       ],
-      aiSeed: '克拉布主动把玩家遗忘的魔药材料送回来。他表达笨拙但观察具体，善意通过行动出现。',
+      aiSeed: '',
     },
     {
       id: 'crabbe_year1_fireplace_corner',
@@ -112,7 +112,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '坐过去暖一会儿', delta: 4, response: '你在壁炉边坐下，克拉布把纸袋推过来一点，没有说“吃吧”，但意思已经很清楚。栗子剥起来有点烫，他沉默地递给你一张粗糙的纸巾。整个过程几乎没有多余的话，却并不冷淡。', addMemory: 'crabbe_fireplace_corner' },
         { label: '问他是不是常来这里', delta: 3, response: '克拉布点头，说这里没人催他说话。火光照着他的脸，让他看起来没那么凶。过了一会儿，他补充说，如果你冷，也可以来。那大概是他能给出的邀请。' },
       ],
-      aiSeed: '克拉布主动给玩家让出壁炉边的暖位并分享食物。用沉默、食物和空间表现关系推进。',
+      aiSeed: '',
     },
     {
       id: 'crabbe_year1_broken_quill',
@@ -122,7 +122,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '请他说明发生了什么', delta: 4, response: '克拉布很慢地讲完经过：是谁撞了桌子，谁把书推过去，谁假装没看见。他说得不漂亮，却没有漏掉关键。你感谢他时，他只是耸肩，像帮人把事实放回原位是一件普通事。', addMemory: 'crabbe_broken_quill_truth' },
         { label: '说没关系，可以再修', delta: 3, response: '他看起来反而有点不满意，低声说不是有没有关系的问题，是谁弄坏的。你从这句短话里听出一种朴素的公道感，不会演讲，也不会包装，却很硬。' },
       ],
-      aiSeed: '克拉布主动告诉玩家羽毛笔不是玩家弄坏的。他不擅言辞，但对事实和简单公道很坚持。',
+      aiSeed: '',
     },
     {
       id: 'crabbe_year1_midnight_steps',
@@ -132,7 +132,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '听他的改走另一边', delta: 4, response: '你换了条路，成功避开费尔奇。克拉布跟在后面，直到确认你不会再撞上巡逻，才转身离开。你说谢谢，他停了停，含糊地说被关禁闭很烦。那理由粗糙，却掩不住他确实替你看了路。', addMemory: 'crabbe_midnight_steps' },
         { label: '问他为什么帮你', delta: 5, response: '克拉布沉默很久，最后说：「你上次分我吃的。」这听起来简单得近乎孩子气，却也真诚得无法反驳。在他的世界里，一份食物、一句没有嘲笑的话，都足以变成需要记住的东西。' },
       ],
-      aiSeed: '克拉布主动在宵禁前帮玩家避开费尔奇。动机朴素，回报曾经的善意，展现他行动式的关系逻辑。',
+      aiSeed: '',
     },
   ],
 
@@ -145,7 +145,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '和他一起把木尺取出来', delta: 4, response: '你用羽毛笔尖把木尺一点点拨出，高尔扶着门，力气稳得像一块石头。门终于打开时，他没有得意，只说「这样好」。你发现他并不总想用蛮力解决问题，只是很少有人等他慢慢配合。', addMemory: 'goyle_stuck_door' },
         { label: '问他为什么不直接撞开', delta: 3, response: '高尔看你一眼，说撞坏了要赔。这个答案朴素得让人无法反驳。他又补充说，门后可能有人。那句话短，却说明他比别人以为的更知道分寸。' },
       ],
-      aiSeed: '高尔主动请玩家帮忙处理卡住的门。表现他沉默、力气大，但不是没有判断力。',
+      aiSeed: '',
     },
     {
       id: 'goyle_year1_note_without_name',
@@ -155,7 +155,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '问他是不是看见了谁', delta: 4, response: '高尔沉默片刻，说看见了，但不想说名字。你没有逼问，他反而补充了一个有用细节：那个人袖口有蓝色墨水。对他来说，这已经是很复杂的表达了。', addMemory: 'goyle_note_warning' },
         { label: '认真收下纸条', delta: 3, response: '你把纸条夹进课本，高尔点点头，像确认任务完成。临走前他说「别放下面」，又重复了一遍。那不是啰嗦，是他能想到的最直接的保护。' },
       ],
-      aiSeed: '高尔主动转交匿名提醒。不要把他写笨，要写成表达短、绕不开复杂社交，但愿意做可靠的传递者。',
+      aiSeed: '',
     },
     {
       id: 'goyle_year1_bad_joke',
@@ -165,7 +165,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '说你也觉得不好笑', delta: 5, response: '高尔松了口气，虽然表情几乎没变。他说笑话应该让人笑，不应该让一个人站在那里不知道把手放哪。这个描述笨拙，却准确得惊人。你第一次听见他把“不公平”说得这么清楚。', addMemory: 'goyle_bad_joke' },
         { label: '问他要不要提醒他们', delta: 4, response: '高尔想了很久，最后摇头，说他说不明白。于是你陪他走过去，只用一句话把话题岔开。那个新生得以离开，回头看了你们一眼。高尔没有邀功，只把手插进袍子口袋。' },
       ],
-      aiSeed: '高尔主动表达某个笑话不好。用少量语言表现他的道德直觉和对被嘲笑者的敏感。',
+      aiSeed: '',
     },
     {
       id: 'goyle_year1_lantern_carry',
@@ -175,7 +175,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '和他一起穿过走廊', delta: 4, response: '高尔走在前面，灯笼始终偏向你这边，自己反而半个身子在暗处。你提醒他也照一下脚下，他愣了愣，才把灯往中间挪。走到亮处后，他说「到了」，像完成了一件不需要讨论的事。', addMemory: 'goyle_lantern_carry' },
         { label: '问他怕不怕黑', delta: 3, response: '高尔想了想，说不喜欢看不见台阶。这个答案没有逞强，也没有装可怜。你们在小小的灯光里走了一段，沉默比平时更像一种信任。' },
       ],
-      aiSeed: '高尔主动提灯陪玩家穿过变暗的走廊。行动可靠、语言极短，氛围要有霍格沃茨夜间城堡感。',
+      aiSeed: '',
     },
   ],
 
@@ -188,7 +188,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '帮他按住固定带', delta: 4, response: '你按住皮带，弗林特迅速把扣眼重新穿好。修完后他粗声说还行，又补了一句如果这东西在半空松开，摔下来的可不只是面子。那句话粗鲁，但里面有真实的队长警觉。', addMemory: 'flint_broom_strap' },
         { label: '问他为什么自己不找队员', delta: 3, response: '他冷哼一声，说队员如果连装备都看不好，就该跑圈。可他还是在训练前亲自检查了每把扫帚。你看见他的凶并不只是为了摆架子，也是一种粗糙的负责。' },
       ],
-      aiSeed: '弗林特主动请玩家帮忙修扫帚固定带。保持粗鲁语气，但要显出他对魁地奇安全和队长职责的认真。',
+      aiSeed: '',
     },
     {
       id: 'flint_year1_weather_call',
@@ -198,7 +198,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '告诉他风向变急了', delta: 4, response: '弗林特骂了一句天气，随即吹哨让队员收东西。有人不满，他直接吼回去，说摔断胳膊不能替学院拿分。你发现他所谓的强硬，有时是在替别人做不受欢迎但正确的决定。', addMemory: 'flint_weather_call' },
         { label: '问他是不是担心队员', delta: 3, response: '弗林特瞪你一眼，说他担心的是比赛名单。可他把最小的队员先赶回更衣室，还亲自扣上游走球箱。那句否认实在没有太多说服力。' },
       ],
-      aiSeed: '弗林特主动询问天气来决定是否继续训练。粗鲁外壳下有安全判断和队长责任。',
+      aiSeed: '',
     },
     {
       id: 'flint_year1_strategy_board',
@@ -208,7 +208,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '指出一处空档', delta: 5, response: '弗林特盯着你指出的位置，先皱眉，随后把粉笔抢过去重画了一条线。「有点用。」他说。对他来说，这已经是很高的称赞。你看着那行“别让找球手一个人挨打”，忽然明白他凶狠的战术里也藏着保护。', addMemory: 'flint_strategy_board' },
         { label: '问那行字是什么意思', delta: 4, response: '他把字擦掉一半，嘴硬说只是战术要求。可擦到最后又停住，把它重新写得更小。不是每个队长都会温和地关心队友，弗林特显然不会，但他会把关心写进路线图里。' },
       ],
-      aiSeed: '弗林特主动让玩家看魁地奇战术板。要有粗糙但真实的队长思维，不能只写成欺负人的运动员。',
+      aiSeed: '',
     },
     {
       id: 'flint_year1_after_loss',
@@ -218,7 +218,7 @@ export const YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE = {
         { label: '说你看见他最后还在喊队形', delta: 5, response: '弗林特沉默一会儿，低声说输球的时候队形最容易散，散了就什么都没了。他没有为自己辩解，也没有骂队友，只把护具一个个捡起来。你帮他扶正箱子时，他没说谢谢，但把最重的那只箱子从你手里接了过去。', addMemory: 'flint_after_loss' },
         { label: '问他是不是很生气', delta: 3, response: '他嗤了一声，说当然生气。随后又说，生气没用，下一次要让他们知道该往哪飞。这句话仍然强硬，却不再只是逞凶，而是输掉后仍然要把队伍拢回来的笨重意志。' },
       ],
-      aiSeed: '弗林特输掉训练赛后主动与玩家短暂交谈。展现挫败、责任和不善表达的坚持，保持魁地奇场地真实感。',
+      aiSeed: '',
     },
   ],
 };

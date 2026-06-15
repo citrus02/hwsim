@@ -16,6 +16,12 @@ import { AFFINITY_CHARACTERS } from '../affinity-data.js';
 import { YEAR1_CORE_STUDENT_PROACTIVE } from './proactive-packs/year1-core-students.js';
 import { YEAR1_STUDENT_FOUNDATION_PROACTIVE } from './proactive-packs/year1-students-foundation.js';
 import { YEAR1_STAFF_FOUNDATION_PROACTIVE } from './proactive-packs/year1-staff-foundation.js';
+import { YEAR1_STUDENT_PROACTIVE_BATCH_1 } from './proactive-packs/year1-students-proactive-batch-1.js';
+import { YEAR1_STAFF_PROACTIVE_BATCH_1 } from './proactive-packs/year1-staff-proactive-batch-1.js';
+import { YEAR1_STUDENT_PROACTIVE_BATCH_2 } from './proactive-packs/year1-students-proactive-batch-2.js';
+import { YEAR1_STAFF_PROACTIVE_BATCH_2 } from './proactive-packs/year1-staff-proactive-batch-2.js';
+import { YEAR1_STUDENT_PROACTIVE_BATCH_3 } from './proactive-packs/year1-students-proactive-batch-3.js';
+import { YEAR1_STAFF_PROACTIVE_BATCH_3 } from './proactive-packs/year1-staff-proactive-batch-3.js';
 import { YEAR1_GRYFFINDOR_STUDENT_PLUS_PROACTIVE } from './proactive-packs/year1-gryffindor-students-plus.js';
 import { YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE } from './proactive-packs/year1-slytherin-students-plus.js';
 import { YEAR1_RAVENCLAW_STUDENT_PLUS_PROACTIVE } from './proactive-packs/year1-ravenclaw-students-plus.js';
@@ -73,6 +79,12 @@ export const ALL_CHARACTERS = Object.values(ALL_CONFIGS).map(config => {
     YEAR1_CORE_STUDENT_PROACTIVE[config.key] || [],
     YEAR1_STUDENT_FOUNDATION_PROACTIVE[config.key] || [],
     YEAR1_STAFF_FOUNDATION_PROACTIVE[config.key] || [],
+    YEAR1_STUDENT_PROACTIVE_BATCH_1[config.key] || [],
+    YEAR1_STAFF_PROACTIVE_BATCH_1[config.key] || [],
+    YEAR1_STUDENT_PROACTIVE_BATCH_2[config.key] || [],
+    YEAR1_STAFF_PROACTIVE_BATCH_2[config.key] || [],
+    YEAR1_STUDENT_PROACTIVE_BATCH_3[config.key] || [],
+    YEAR1_STAFF_PROACTIVE_BATCH_3[config.key] || [],
     YEAR1_GRYFFINDOR_STUDENT_PLUS_PROACTIVE[config.key] || [],
     YEAR1_SLYTHERIN_STUDENT_PLUS_PROACTIVE[config.key] || [],
     YEAR1_RAVENCLAW_STUDENT_PLUS_PROACTIVE[config.key] || [],

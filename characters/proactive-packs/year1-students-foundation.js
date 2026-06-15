@@ -1,4 +1,4 @@
-/**
+﻿/**
  * year1-students-foundation.js
  * 一年级学生主动来访基础包。
  *
@@ -16,7 +16,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '认真看清单', delta: 5, response: '你把清单按地点重新排了一遍，发现大多数东西都在拉文克劳塔楼附近消失。卢娜点点头，说这说明不是骚扰虻特别偏爱她，而是有人很缺乏想象力。她看起来并不难过，只是很感谢你没有把清单当笑话。', addMemory: 'luna_lost_list_pattern' },
         { label: '问她会不会生气', delta: 4, response: '卢娜想了想，说会，但生气容易让人看不见小线索。她把清单折好，补充说如果你哪天也丢了不想被别人笑的东西，她会帮你找。' },
       ],
-      aiSeed: '卢娜主动请玩家帮她分析丢失物品的规律。她不要求同情，只希望有人认真看待那些被别人当成笑话的小事。',
+      aiSeed: '',
     },
   ],
   ginnyWeasley: [
@@ -28,7 +28,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '顺势把她叫走', delta: 5, response: '你随便编了个关于作业的问题，金妮立刻站起来，快得像早就等着这个台阶。走到门口后，她长长吐了口气，说有时候家人太多也会让人没有地方放下自己。她说完看向你，像确认你不会拿这句话去换笑料。', addMemory: 'ginny_escaped_table' },
         { label: '问她想去哪儿', delta: 4, response: '她想了想，说哪里都行，只要暂时没有人提醒她她是谁的妹妹。你们最后去了球场边，风很大，她反而看起来更自在。' },
       ],
-      aiSeed: '金妮主动请玩家帮她从韦斯莱家人的热闹里脱身。她不讨厌家人，但想被当成自己，而不是某人的妹妹。',
+      aiSeed: '',
     },
   ],
   fredWeasley: [
@@ -40,7 +40,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '指出烟花太明显', delta: 4, response: '弗雷德看起来受到了艺术上的伤害，但还是把小烟花划掉了。「你说得对，」他说，「严肃的胡说八道要有严肃的外观。」他把修改后的公告举起来，像你刚参与了一次重大创作。', addMemory: 'fred_fake_notice_review' },
         { label: '问贴出去会怎样', delta: 5, response: '弗雷德咧嘴笑，说最理想的结果是楼梯自己感到羞愧。你提醒他别让新生真的信了。他点点头，在底部加了一行小字：如楼梯拒不配合，请不要尝试争辩。' },
       ],
-      aiSeed: '弗雷德主动请玩家评审一张恶作剧公告。玩家可以看见他把恶作剧当创作，也能提醒他别误伤新生。',
+      aiSeed: '',
     },
   ],
   georgeWeasley: [
@@ -52,7 +52,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '支持沉默三秒', delta: 4, response: '乔治郑重宣布你有惊人的艺术判断力。他把那三秒写进计划里，又在旁边标注“观察对象是否真的觉得好笑”。你发现他在意的不只是效果，也在意笑声落到谁身上。', addMemory: 'george_punchline_review' },
         { label: '问为什么要取消', delta: 5, response: '乔治翻到背面，看了那行字一眼，说笑话如果只能靠别人难堪来成立，就不够聪明。说完他像觉得自己太严肃，立刻补了一句当然爆炸还是必要的。' },
       ],
-      aiSeed: '乔治主动请玩家判断恶作剧笑话的节奏。这个事件显示乔治比表面更在意分寸和被开玩笑者的感受。',
+      aiSeed: '',
     },
   ],
   seamus: [
@@ -64,7 +64,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '承认这是进步', delta: 4, response: '西莫立刻笑开了，说你很有科学精神。随后他压低声音承认，他写信给家里时可能会省略“冒烟”那部分。你建议写“几乎成功”，他认真考虑了。', addMemory: 'seamus_smoke_progress' },
         { label: '问他还敢再试吗', delta: 3, response: '西莫像被冒犯了似的挺起胸，说当然敢。三秒后他又补充，最好站远一点。你们都笑了，那根焦黑羽毛也终于不那么像失败。' },
       ],
-      aiSeed: '西莫主动向玩家展示一次没有完全爆炸的魔咒尝试。他渴望有人把小进步当进步，而不是只记得爆炸。',
+      aiSeed: '',
     },
   ],
   deanThomas: [
@@ -76,7 +76,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '认真看构图', delta: 4, response: '你指出右上角可以留白，迪安立刻用炭笔改了几下。横幅一下子有了呼吸感。他笑着说你比某些只会喊“画大点”的人有用多了。', addMemory: 'dean_banner_opinion' },
         { label: '问麻瓜广告牌是什么', delta: 3, response: '迪安来了精神，给你讲伦敦街边那些巨大海报。说着说着，他又低头看霍格沃茨的看台，像在把两个世界的颜色慢慢调到一起。' },
       ],
-      aiSeed: '迪安主动请玩家看学院横幅草图。他把麻瓜绘画经验带进霍格沃茨，也希望有人认真看他的创作。',
+      aiSeed: '',
     },
   ],
   leeJordan: [
@@ -88,7 +88,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '让他念来听听', delta: 4, response: '李清了清嗓子，用正式比赛的架势念出那句解说。确实好笑，也确实危险。你建议他删掉最后半句，他遗憾地点头，说活着解说下一场也很重要。', addMemory: 'lee_commentary_test' },
         { label: '问他怕麦格吗', delta: 3, response: '李立刻说这是尊重，不是害怕。远处麦格教授恰好经过看台下方，他的音量瞬间降了一半。你们对视一眼，谁也没有拆穿他。' },
       ],
-      aiSeed: '李·乔丹主动找玩家测试魁地奇解说稿。他追求好笑，但也知道语言会伤人或惹麻烦。',
+      aiSeed: '',
     },
   ],
   percyWeasley: [
@@ -100,7 +100,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '告诉他楼梯情况', delta: 3, response: '珀西认真把你的描述记下来，还在旁边标了时间。你发现他并不是享受管人，而是真的相信秩序能让大家少出事。这让他的严肃不那么讨厌了。', addMemory: 'percy_patrol_info' },
         { label: '问他会不会太累', delta: 4, response: '珀西愣了一下，像这个问题不在表格范围内。他说级长职责本来就多，随后又小声承认今天还没写完变形术论文。你帮他把表格压平，他没有拒绝。' },
       ],
-      aiSeed: '珀西主动找玩家确认楼梯和巡逻信息。他看似官僚，实际想防止学生迷路或出事。',
+      aiSeed: '',
     },
   ],
   pansy: [
@@ -112,7 +112,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '说她控场很稳', delta: 4, response: '潘西显然准备好了反击，却没准备好被这样评价。她哼了一声，说这只是基本能力。可她重新看向镜子时，嘴角有一点很快压下去的得意。', addMemory: 'pansy_table_control' },
         { label: '问她为什么在意体面', delta: 3, response: '她立刻说体面就是位置，位置就是安全。话说出口后，她像意识到太直接，又用一句刻薄把它盖住。但你已经听见了。' },
       ],
-      aiSeed: '潘西主动提起自己管理斯莱特林长桌的小冲突。她在意体面和位置，刻薄背后有对安全感的控制。',
+      aiSeed: '',
     },
   ],
   blaiseZabini: [
@@ -124,7 +124,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '问他怎么知道', delta: 4, response: '布雷司看了你一眼，说有些人吵架时声音太大，有些教授生气时脚步太轻。你顺着他指的方向绕开，远处果然传来斯内普教授冰冷的声音。', addMemory: 'blaise_quiet_warning' },
         { label: '谢谢他的提醒', delta: 3, response: '他没有表现出高兴，只淡淡说你如果被扣分，走廊会更吵。可他离开时把诗集夹在臂弯里，脚步比刚才轻松一点。' },
       ],
-      aiSeed: '布雷司主动提醒玩家避开麻烦。他不愿承认这是关心，用观察力和冷淡语气包装帮助。',
+      aiSeed: '',
     },
   ],
   crabbe: [
@@ -136,7 +136,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '接过馅饼', delta: 3, response: '馅饼还很热，边缘有点烫手。你说谢谢，克拉布只是点点头，转身就走。走了几步后，他又回头补一句：里面是肉馅，比甜的好。那像是他能给出的详细关心。', addMemory: 'crabbe_pastry_share' },
         { label: '问他要不要一起吃', delta: 4, response: '克拉布明显愣住，像这个选项不在他的计划里。最后他坐到墙边，和你分着吃完。你们说话不多，但这次沉默并不尴尬。' },
       ],
-      aiSeed: '克拉布主动把多拿的馅饼分给玩家。他不擅长表达，但食物和沉默里有笨拙好意。',
+      aiSeed: '',
     },
   ],
   goyle: [
@@ -148,7 +148,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '听他的绕路', delta: 4, response: '你改走另一条路。高尔没有看你，只把肩膀稍微往旁边挪，让你能过去。这个动作很小，但显然不是偶然。', addMemory: 'goyle_short_warning' },
         { label: '问里面怎么了', delta: 3, response: '高尔想了很久，最后说：「有人蠢。」这解释短得过分，却足够准确。你忍住没笑，他看起来因此没那么紧绷。' },
       ],
-      aiSeed: '高尔主动用很短的话提醒玩家避开地牢麻烦。他不善言辞，但愿意用行动帮忙。',
+      aiSeed: '',
     },
   ],
   marcusFlint: [
@@ -160,7 +160,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '帮他压住球箱', delta: 3, response: '你按住箱盖，弗林特迅速扣上锁。游走球在里面重重撞了一下，终于安静。他看你一眼，粗声说你手劲还行。对他来说，这大概已经是相当正式的感谢。', addMemory: 'flint_ball_box_help' },
         { label: '问队友去哪了', delta: 4, response: '弗林特冷哼一声，说队长最后总得收拾别人留下的东西。那句话不客气，却让你看见他粗鲁下面那点责任。' },
       ],
-      aiSeed: '弗林特主动叫玩家帮忙压住魁地奇球箱。他粗鲁，但队长责任感真实存在。',
+      aiSeed: '',
     },
   ],
   choChang: [
@@ -172,7 +172,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '说先看其他人', delta: 4, response: '秋的眼睛亮了一下，说很多人都只盯着金色，可耐心常常先从人的动作里漏出来。她接过望远镜，像你刚刚答对的不是战术题，而是她看世界的一种方式。', addMemory: 'cho_seeker_question' },
         { label: '问她自己的答案', delta: 3, response: '她笑了笑，说要看风、看人、也看自己什么时候开始急。这个答案很温和，却藏着找球手的锋利。' },
       ],
-      aiSeed: '秋主动问玩家找球手观察问题。她温柔克制，但谈魁地奇时非常敏锐。',
+      aiSeed: '',
     },
   ],
   padmaPatil: [
@@ -184,7 +184,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '给出直觉答案', delta: 4, response: '你说出自己的答案，帕德玛没有立刻评判，而是认真把它写到纸边。她说这比她那版简洁，虽然不够漂亮。过了一会儿，她又补充，有时简洁本身就很漂亮。', addMemory: 'padma_riddle_answer' },
         { label: '问她的推理过程', delta: 3, response: '帕德玛立刻展开那张纸，从三个假设讲到两个排除项。她讲得很快，但发现你在听，就把最后一步放慢了。那是她表达尊重的方式。' },
       ],
-      aiSeed: '帕德玛主动请玩家提供门环谜题的不同答案。她想摆脱只在拉文克劳内部循环的思路，也希望被认真听见。',
+      aiSeed: '',
     },
   ],
   terryBoot: [
@@ -196,7 +196,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '陪他补那一步', delta: 4, response: '你们站在窗台边讨论了很久，终于找到缺失的推导。泰瑞长出一口气，像心里一块歪掉的砖终于放正。他说你不一定懂全部，但你很会问让人停下来的问题。', addMemory: 'terry_proof_gap' },
         { label: '问为什么这么在意', delta: 3, response: '泰瑞说答案对不代表路是对的，路错了下次还会摔。说完他有点不好意思，像刚把自己最较真的部分暴露出来。' },
       ],
-      aiSeed: '泰瑞主动找玩家看推导缺口。他在意过程的完整性，玩家通过提问帮助他补上缺失步骤。',
+      aiSeed: '',
     },
   ],
   michaelCorner: [
@@ -208,7 +208,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '和他认真争论', delta: 4, response: '你指出往左会暴露侧面，迈克尔立刻反驳，又在第三次推演时停住。你们谁也没完全赢，但他看起来很高兴，因为这场争论没有变成面子问题。', addMemory: 'michael_duel_argument' },
         { label: '问他是不是想赢你', delta: 3, response: '迈克尔笑了一下，说当然想，但更想知道自己想得对不对。这个答案比单纯好胜诚实得多，也让他没那么刺人。' },
       ],
-      aiSeed: '迈克尔主动找玩家讨论决斗站位。他有好胜心，但真正兴奋的是被认真反驳。',
+      aiSeed: '',
     },
   ],
   anthonyGoldstein: [
@@ -220,7 +220,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '帮他看时间线', delta: 4, response: '你指出其中一段可以换成事件顺序，安东尼认真改了。改完后他承认这样更容易懂。这个承认很正式，却一点也不敷衍。', addMemory: 'anthony_timeline_check' },
         { label: '问他为什么帮别人整理', delta: 3, response: '他说如果大家都记错，课堂讨论会变得很痛苦。停了一下，他又补充，也许他只是受不了混乱。诚实让这句话听起来没那么自负。' },
       ],
-      aiSeed: '安东尼主动请玩家帮忙检查魔法史时间线。他严谨、爱清楚，也愿意承认更好的表达。',
+      aiSeed: '',
     },
   ],
   cedricDiggory: [
@@ -232,7 +232,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '认真道谢', delta: 4, response: '塞德里克笑了笑，说不是什么大事。可他没有敷衍，而是提醒你第三章有一处容易误读。你发现他的体贴不是表演，是已经习惯先替别人多想一步。', addMemory: 'cedric_returned_book' },
         { label: '问他怎么知道你要用', delta: 3, response: '他说你上次在长桌旁提过一次。你自己几乎忘了，他却记住了。这个事实比那本书本身更让人意外。' },
       ],
-      aiSeed: '塞德里克主动把玩家需要的书找回来。他体贴、公平、记得别人随口说过的小事。',
+      aiSeed: '',
     },
   ],
   hannahAbbott: [
@@ -244,7 +244,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '接过饼干', delta: 4, response: '饼干有一点姜味，暖得很快。汉娜看你吃了一口，整个人都放松下来。她小声说她紧张的时候也会想吃东西，所以也许这有用。', addMemory: 'hannah_biscuit_bag' },
         { label: '问她自己紧不紧张', delta: 5, response: '汉娜愣了一下，随后点点头。她说温室里的植物有些会突然咬人，学生有时也差不多。你们一起笑了，她终于没那么绷着。' },
       ],
-      aiSeed: '汉娜主动给玩家带饼干。她温柔、紧张，关心别人时总怕自己太打扰。',
+      aiSeed: '',
     },
   ],
   ernieMacmillan: [
@@ -256,7 +256,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '建议写简单点', delta: 4, response: '厄尼一开始有点受伤，但还是听你把那句改成“对不起，我刚才太急了”。他读了两遍，承认这比原文更像人话。这个承认让他显得比正式声明可靠得多。', addMemory: 'ernie_apology_draft' },
         { label: '问他为什么道歉', delta: 3, response: '他说公正不是只在别人错的时候坚持，也包括自己错了一部分时承认。说这话时，他挺直背，像终于找到了比体面更重要的东西。' },
       ],
-      aiSeed: '厄尼主动请玩家看道歉信。他正式得过头，但是真心想公正处理自己的错误。',
+      aiSeed: '',
     },
   ],
   susanBones: [
@@ -268,7 +268,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '陪她去查', delta: 5, response: '你们在旧报纸里找到那个名字，拼写确实和通知上不一样。苏珊把两种写法抄下来，手指有点发白。她说名字如果被写错，后面的事也会一点点歪掉。', addMemory: 'susan_checked_name' },
         { label: '问这个名字重要吗', delta: 4, response: '苏珊看着公告，说对某些人来说重要。她没有讲家族故事，你也没有逼她。那份克制让她终于能继续站在你身边。' },
       ],
-      aiSeed: '苏珊主动请玩家一起查一个被写错的名字。她对魔法部、记录和家族记忆敏感，不希望名字被轻易抹掉。',
+      aiSeed: '',
     },
   ],
   justinFinchFletchley: [
@@ -280,7 +280,7 @@ export const YEAR1_STUDENT_FOUNDATION_PROACTIVE = {
         { label: '帮他找新类比', delta: 4, response: '你们把变形术比作一种更任性的语法，把魔药课比作绝不能省略步骤的烹饪。贾斯廷笑了，说这听起来终于像他能抓住的东西。', addMemory: 'justin_muggle_comparison' },
         { label: '问他想念旧学校吗', delta: 5, response: '贾斯廷沉默了一会儿，说有时候想。不是因为霍格沃茨不好，而是因为在旧学校里他至少知道自己该怎么当学生。你没有笑这个理由，他明显松了口气。' },
       ],
-      aiSeed: '贾斯廷主动请玩家帮他用麻瓜学校经验理解魔法课程。他既兴奋又失去熟悉坐标，需要有人接住这种不适应。',
+      aiSeed: '',
     },
   ],
 };

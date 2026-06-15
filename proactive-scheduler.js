@@ -34,6 +34,25 @@ function shuffle(arr) {
   return a;
 }
 
+function sanitizeProactiveAiSeed(seed) {
+  if (!seed || typeof seed !== 'string') return '';
+  const metaPatterns = [
+    '体现',
+    '表现',
+    '写成',
+    '写出',
+    '重点是',
+    '不要',
+    '玩家',
+    '人设',
+    '气质',
+    '真实',
+    '可读性',
+    '沉浸',
+  ];
+  return metaPatterns.some(pattern => seed.includes(pattern)) ? '' : seed;
+}
+
 // ── 条件筛选 ──────────────────────────────────────────────
 
 /** 检查好感阶段门槛 */
@@ -96,7 +115,7 @@ function deployProactiveEvent(data, character, ev) {
     title: `${character.name}似乎在找你`,
     sourceText: ev.opening,
     choices: ev.choices,
-    aiSeed: ev.aiSeed || '',
+    aiSeed: sanitizeProactiveAiSeed(ev.aiSeed),
     persona: character.persona || null,
   };
 

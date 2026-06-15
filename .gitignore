@@ -16,6 +16,7 @@ extract_*.py
 generate_lessons.py
 rebuild*.js
 temp_*.txt
+_temp*.py
 test-questionbank.mjs
 _spec/check_syntax.js
 scripts/

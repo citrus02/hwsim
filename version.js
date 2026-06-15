@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.4';
+export const CURRENT_VERSION = '1.8.5';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.5': [
+    '继续加厚一年级人物互动内容，新增学生与教职工大量相遇场景包',
+    '补充一年级教职工与学生主动来访批次，让角色会在更多关系阶段主动找玩家',
+    '扩展角色档案与主动事件注册表，完善德拉科、哈利、罗恩、卢娜、纳威等角色的触发条件',
+    '优化主动事件调度与好感内容加载规则，让人物互动更稳定地按年级和关系进度出现',
+  ],
   '1.8.4': [
     '新增一年级学生与教职工互动场景加厚包16批次！',
   ],

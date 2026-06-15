@@ -1,4 +1,4 @@
-/**
+﻿/**
  * year1-core-students.js
  * 一年级核心学生主动来访补充包。
  *
@@ -15,7 +15,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '请她从头讲', delta: 4, response: '赫敏明显松了一口气，像终于有人没有把“纠正”听成炫耀。她从定义讲到例外，又在你皱眉时主动放慢。讲完以后，她小声说：「你刚才那个问题很好。」对她来说，这几乎等同于一次郑重邀请。', addMemory: 'hermione_corrected_textbook' },
         { label: '先问她有没有吃晚饭', delta: 3, response: '她被问得一愣，本能地说这不重要。可下一秒，她的肚子替她做了回答。赫敏脸红得厉害，最后允许你陪她去大礼堂拿点吃的。一路上她还在讲那条定义，只是语气没那么绷了。' },
       ],
-      aiSeed: '一年级赫敏主动来找玩家纠正课本里容易误解的知识点。她不是炫耀，而是担心玩家真的学错；玩家可以认真听，也可以先关心她是否照顾自己。',
+      aiSeed: '',
     },
     {
       id: 'hermione_year1_first_rule_worry',
@@ -25,7 +25,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '谢谢她提醒', delta: 4, response: '赫敏像是没想到你会这么直接地接受。她把那张抄下来的校规折好，声音低了一点：「好。那就好。」这不是一次说教成功，而是她第一次发现关心可以不必伪装成批评。', addMemory: 'hermione_warned_corridor' },
         { label: '问她为什么亲自来', delta: 5, response: '她立刻说因为你可能不会看公告。停了一下，她又补充：「而且……我不想明天在麦格教授那里听见你的名字。」说完她移开目光，像这句话比校规难背得多。' },
       ],
-      aiSeed: '一年级赫敏因为担心玩家夜里走错楼梯被费尔奇抓住，主动来提醒。她把关心包装成校规和逻辑，实际是不想玩家出事。',
+      aiSeed: '',
     },
     {
       id: 'hermione_year1_quill_note',
@@ -35,7 +35,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '过去找她继续聊', delta: 5, response: '赫敏立刻把书翻到标记好的地方，像已经等你很久。她没有说“我就知道你会来”，但那些密密麻麻的书签已经替她说了。你们聊到南瓜汁都凉了，她仍然没有露出不耐烦。', addMemory: 'hermione_followed_question' },
         { label: '在纸条背面回谢', delta: 4, response: '你写下一句谢谢，把纸条推回去。赫敏读完后把它收进书页，没有抬头，却用羽毛笔在自己的笔记边画了一个很小的星号。那不是课堂标记，更像某种私人记号。' },
       ],
-      aiSeed: '赫敏主动用纸条回应玩家之前的问题，说明她把玩家的思考放在心上。她不擅长直接表达重视，于是用补充资料和书签表达。',
+      aiSeed: '',
     },
     {
       id: 'hermione_year1_common_room_help',
@@ -45,7 +45,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '认真读她的提醒', delta: 4, response: '你没有只看答案，而是把她写在边角的提醒一句句读完。赫敏看起来比你答对题还高兴：「我就知道你会注意到那里。」她说得太快，像怕这份期待显得过分。', addMemory: 'hermione_shared_revision' },
         { label: '问她是不是也很累', delta: 3, response: '赫敏本来准备继续讲重点，听见这句话后停住了。她低头看那叠纸，承认有一点。但她马上补充，累不代表不值得。你没有反驳，只帮她把羊皮纸按顺序理好。' },
       ],
-      aiSeed: '赫敏主动把自己整理的复习易错点带给玩家。她嘴上说不是帮忙，实际上是在用自己最熟悉的方式照看玩家。',
+      aiSeed: '',
     },
   ],
   ron: [
@@ -57,7 +57,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '接过三明治', delta: 4, response: '罗恩明显松了口气，立刻开始抱怨家里寄来的包裹总是太大。可他说着说着又忍不住补充，里面的东西其实都挺好吃。你们分着吃完三明治，他假装这只是处理多余食物。', addMemory: 'ron_shared_sandwich' },
         { label: '问他自己够不够吃', delta: 5, response: '罗恩像被这个问题烫了一下，立刻说当然够。过了一会儿，他把另一个三明治掰成两半，说这样比较公平。你没有拆穿他的慷慨，他看起来因此轻松许多。' },
       ],
-      aiSeed: '罗恩注意到玩家错过晚饭，主动把家里寄来的食物分给玩家。他用抱怨掩饰关心，也很怕自己的好意显得寒酸。',
+      aiSeed: '',
     },
     {
       id: 'ron_year1_chess_piece_escape',
@@ -67,7 +67,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '帮他堵住棋子', delta: 4, response: '你在楼梯口截住骑士，罗恩一把将它按回盒子。棋子还在抗议，但罗恩笑得停不下来。他说它虽然嘴坏，眼光倒不错。你知道这句夸奖绕了一个很大的弯才落到你身上。', addMemory: 'ron_chess_piece_escape' },
         { label: '问棋子为什么叛逃', delta: 3, response: '罗恩立刻试图解释战术失误，讲到一半自己也笑了。那不是尴尬的笑，而是有人愿意听他把一盘棋讲成史诗之后的满足。' },
       ],
-      aiSeed: '罗恩的巫师棋棋子跑来找玩家，罗恩追上来求助。事件轻松好笑，但背后是罗恩把玩家纳入自己最自信的领域。',
+      aiSeed: '',
     },
     {
       id: 'ron_year1_old_robe_joke',
@@ -77,7 +77,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '帮他看扣子', delta: 4, response: '你没有提补丁，只认真看那枚松掉的扣子。罗恩慢慢放下挡着袖口的手，说这袍子以前是比尔的，也可能是查理的，他已经懒得追究。语气是抱怨，里面却有一点属于家的温度。', addMemory: 'ron_old_robe_button' },
         { label: '说旧袍子挺有故事', delta: 5, response: '罗恩本来准备反驳，最后却咧嘴笑了，说它的故事大概包括很多次被迫参加家庭合照。你们一起把扣子缝回去，他不再急着把袖口藏起来。' },
       ],
-      aiSeed: '罗恩主动找玩家帮忙处理旧袍子的扣子。他害怕被嘲笑二手衣物，但如果玩家给足分寸，他会讲起家人和旧物的温度。',
+      aiSeed: '',
     },
     {
       id: 'ron_year1_rat_trouble',
@@ -87,7 +87,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '陪他一起找', delta: 4, response: '你们在旧沙发底下找到斑斑，它正睡得理直气壮。罗恩松了口气，嘴上却骂它没良心。他把老鼠揣回口袋时，小声说谢谢，像这件小事对他比看起来重要得多。', addMemory: 'ron_found_scabbers' },
         { label: '提醒他魔杖拿反了', delta: 3, response: '罗恩低头一看，脸瞬间红了。「我知道，」他说，「这是战术。」你没有笑得太大声，于是他也跟着笑了出来。紧张散掉后，找老鼠这件事终于没那么像灾难。' },
       ],
-      aiSeed: '罗恩因为宠物斑斑不见主动找玩家帮忙。他嘴上夸张抱怨，实际上很担心，也怕被哥哥说教。',
+      aiSeed: '',
     },
   ],
   harry: [
@@ -99,7 +99,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '一起走去图书馆', delta: 4, response: '你们一路聊的都是作业、楼梯和今天南瓜汁太甜。哈利走到图书馆门口时笑了一下，说这大概是他今天最正常的十分钟。对他来说，这不是小事。', addMemory: 'harry_normal_walk' },
         { label: '问他是不是被盯烦了', delta: 5, response: '哈利沉默了一会儿，说有一点。不是所有目光都恶意，可一直被看着还是很累。你没有安慰得太用力，只陪他绕开那群还在偷看的学生。' },
       ],
-      aiSeed: '哈利主动找玩家一起走一段普通路。他需要一个不把他当传闻中心的人，哪怕只是十分钟普通聊天。',
+      aiSeed: '',
     },
     {
       id: 'harry_year1_broom_polish',
@@ -109,7 +109,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '跟他去球场', delta: 5, response: '哈利在看台阴影下把扫帚横放到膝上，认真得像在处理一件会回应他的活物。他教你顺着尾枝方向擦油，说飞行不是命令扫帚，而是让它相信你知道自己在做什么。你听得出，他说的不只是扫帚。', addMemory: 'harry_broom_care_together' },
         { label: '问他为什么愿意教你', delta: 4, response: '哈利想了想，说因为你问的时候不是为了看热闹。这个答案很短，却像把你从围观者那边划到了他愿意分享东西的人那边。' },
       ],
-      aiSeed: '哈利主动邀请玩家学习扫帚保养。这是他分享私人热爱的方式，也是在确认玩家不是只对他的名声感兴趣。',
+      aiSeed: '',
     },
     {
       id: 'harry_year1_trophy_name',
@@ -119,7 +119,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '安静陪他看', delta: 5, response: '你们站了很久。哈利没有讲父母，也没有讲传闻，只说这个姓在这里看起来不像姨妈家嘴里的坏词。你点点头，没有把沉默填满。那让他明显轻松了一点。', addMemory: 'harry_shared_potter_name' },
         { label: '问这个名字让他难过吗', delta: 4, response: '哈利想了很久，说不完全是。难过、好奇、还有一点他不太敢承认的骄傲混在一起。能把这些说出口以后，他不再一直盯着玻璃里的倒影。' },
       ],
-      aiSeed: '哈利主动带玩家看奖杯上的波特姓氏。他不是要讲大秘密，而是想和一个不会消费他身世的人共同确认这个姓氏在霍格沃茨里的重量。',
+      aiSeed: '',
     },
   ],
   neville: [
@@ -131,7 +131,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '立刻陪他找', delta: 4, response: '你们在盔甲后面找到莱福。纳威小心把它捧起来，松了口气之后差点哭出来。他说自己总是弄丢东西，你说至少这次你们找回来了。他把这句话听得很认真。', addMemory: 'neville_found_trevor_together' },
         { label: '先问它常去哪里', delta: 5, response: '纳威愣住了，像第一次有人把他当成最了解莱福的人。他想了想，说它喜欢潮湿阴凉的地方。你们按这个线索找，果然在石缝边找到它。纳威看起来比被直接帮忙还高兴。' },
       ],
-      aiSeed: '纳威主动请玩家帮忙找蟾蜍莱福。他很怕自己显得麻烦，但玩家如果认真对待，会让他感到被尊重。',
+      aiSeed: '',
     },
     {
       id: 'neville_year1_gran_parcel',
@@ -141,7 +141,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问信里还写了什么', delta: 4, response: '纳威犹豫很久，最后说奶奶希望他“像个隆巴顿”。他说这句话时肩膀缩了一下。你没有评价，只帮他把围巾叠好。那份安静让他没有继续把自己藏起来。', addMemory: 'neville_gran_letter_shared' },
         { label: '帮他收拾包裹', delta: 3, response: '你们把东西一件件放好。纳威发现糖果下面还压着一包植物种子，眼睛立刻亮了。他说奶奶大概忘了写，但这才是最好的东西。' },
       ],
-      aiSeed: '纳威收到奶奶包裹后主动找玩家。他想装作轻松，但家族期待让他压力很大；植物种子能让他重新亮起来。',
+      aiSeed: '',
     },
     {
       id: 'neville_year1_plant_rescue',
@@ -151,7 +151,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '跟他去温室', delta: 5, response: '你们一起扶住那株软下去的幼苗，纳威的声音在讲养护步骤时越来越稳。等叶片终于不再继续垂下，他长长松了口气。你发现他不是在求你救场，而是在邀请你进入他真正擅长的世界。', addMemory: 'neville_saved_seedling' },
         { label: '让他指挥你', delta: 5, response: '纳威愣了一下，随后认真告诉你该扶哪里、什么时候松手。你照做以后，他整个人都变得不一样了。那一小会儿，他不是总出错的纳威，而是知道怎么救活一株植物的人。' },
       ],
-      aiSeed: '纳威主动请玩家帮忙救温室幼苗。重点是让纳威指挥玩家，体现他在草药学领域真正有能力。',
+      aiSeed: '',
     },
   ],
   draco: [
@@ -163,7 +163,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问他为什么提醒你', delta: 4, response: '马尔福立刻说他只是不想下次闻到失败药剂的味道。可他没有把纸抢回去。你看见那张纸边缘写得很整齐，显然不是随手一划。', addMemory: 'draco_private_potion_note' },
         { label: '认真看那张纸', delta: 3, response: '你没有嘲笑他的别扭，也没有道谢得太响。马尔福似乎满意这种分寸，只冷冷补了一句：「别让我后悔浪费墨水。」这句话听起来像威胁，实际更像遮掩。' },
       ],
-      aiSeed: '一年级德拉科私下提醒玩家魔药步骤错误。他用嫌弃掩饰帮助，也害怕这份帮助被别人看见。',
+      aiSeed: '',
     },
     {
       id: 'draco_year1_table_position',
@@ -173,7 +173,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '坐到那个位置', delta: 4, response: '马尔福没有表示欢迎，只把一盘你够不到的食物推近一点。他继续和旁人说话，仿佛你本来就该坐在那里。那种别扭的维护，比一句欢迎更像斯莱特林式的承认。', addMemory: 'draco_offered_seat' },
         { label: '问这算邀请吗', delta: 5, response: '他立刻说当然不是，只是看不惯你挡路。可他没有收回那个位置。你坐下时，他的嘴角动了一下，像赢了一场只有他自己知道规则的小比赛。' },
       ],
-      aiSeed: '德拉科主动在斯莱特林长桌边给玩家留位置。他绝不承认这是邀请，但会用位置和目光替玩家挡住旁人的审视。',
+      aiSeed: '',
     },
     {
       id: 'draco_year1_owlery_weather',
@@ -183,7 +183,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '不问信的内容', delta: 5, response: '你们只谈天气、猫头鹰和塔楼有多冷。马尔福等了很久才把信放出去。猫头鹰飞远后，他说有些信寄出去以前比寄出去以后更烦人。你没有接着问，他因此没有离开。', addMemory: 'draco_owlery_silence' },
         { label: '问他是不是紧张', delta: 4, response: '马尔福的脸色瞬间冷下来，却没有否认得太干净。他说马尔福家的人不紧张，只是讨厌无能的猫头鹰。那只猫头鹰在风里飞得很稳，你们都看见了。' },
       ],
-      aiSeed: '德拉科主动让玩家在猫头鹰塔楼陪他寄信。他不愿谈家里压力，但允许玩家在旁边保持沉默，这是高信任度的表现。',
+      aiSeed: '',
     },
   ],
   luna: [
@@ -195,7 +195,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问纽扣为什么找你', delta: 4, response: '卢娜认真想了想，说也许是因为你最近没有把小东西看得太轻。她把纽扣放到你手里，像交付一个任务。你忽然觉得这枚纽扣确实不该被随便丢掉。', addMemory: 'luna_gave_button' },
         { label: '帮她找原主人', delta: 5, response: '你们沿着走廊问了几个人，最后发现纽扣来自一个新生快散开的袖口。卢娜说你看，小东西总会带人去该去的地方。她说这话时，一点也不像在开玩笑。' },
       ],
-      aiSeed: '卢娜主动拿着一枚纽扣来找玩家。事件看似古怪，其实是她邀请玩家一起重视被别人忽略的小东西。',
+      aiSeed: '',
     },
     {
       id: 'luna_year1_corridor_listening',
@@ -205,7 +205,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '说你想听', delta: 5, response: '卢娜告诉你画像背后有一阵细小的刮擦声，像有什么东西每天同一时间经过。你陪她听了很久，真的听见了。她没有得意，只说你果然比较不容易被笑声挡住耳朵。', addMemory: 'luna_shared_corridor_sound' },
         { label: '问她另一只耳环呢', delta: 3, response: '她摸了摸空着的耳朵，说大概去参加短途旅行了。你没有笑，她便补充，如果它回来时带着消息，她会第一个告诉你。' },
       ],
-      aiSeed: '卢娜因为玩家没有跟着别人嘲笑她而主动分享一个奇怪发现。重点是玩家愿意认真听她的世界。',
+      aiSeed: '',
     },
     {
       id: 'luna_year1_rain_note',
@@ -215,7 +215,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问她看见了什么', delta: 5, response: '卢娜说她看见你最近把一句话吞回去很多次。她没有追问那句话是什么，只把纸条折成小船，放到窗台积水里。小船漂了一小段，停在你手边。', addMemory: 'luna_rain_note' },
         { label: '说画得很像茶壶', delta: 4, response: '卢娜看起来很高兴，说它确实有一点茶壶血统。你们就这只奇怪生物聊了很久，直到那句没说出口的话不再那么堵。' },
       ],
-      aiSeed: '卢娜用一张雨天纸条主动找玩家。她以古怪方式指出玩家有心事，但不会逼问，只提供一个柔软出口。',
+      aiSeed: '',
     },
   ],
   ginnyWeasley: [
@@ -227,7 +227,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问她想怎么练', delta: 5, response: '金妮立刻讲出一套躲开家人视线的练习计划，详细得不像临时起意。你没有笑她，她的声音就越来越稳。那根旧尾枝在她手里不再像废物，而像第一把真正属于她的扫帚。', addMemory: 'ginny_secret_broom_practice' },
         { label: '答应不告诉罗恩', delta: 4, response: '她看着你确认了一秒，像在判断你的承诺是不是会漏风。最后她点点头，说那你可以站远一点看。不是为了保护你，是她不想第一次练习就撞到朋友。' },
       ],
-      aiSeed: '一年级金妮主动找玩家分享秘密飞行练习。她不想只被看作罗恩妹妹，而是想让玩家见证她自己的开始。',
+      aiSeed: '',
     },
     {
       id: 'ginny_year1_bat_bogey_whisper',
@@ -237,7 +237,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问她咒语是什么', delta: 4, response: '金妮小声说出名字，语气里有一点恶作剧的亮光。你提醒她别在走廊里乱试，她不情愿地哼了一声，却没有反驳。你看得出她不是想惹事，只是不喜欢有人仗着高个子欺负人。', addMemory: 'ginny_shared_bat_bogey' },
         { label: '和她一起走过去', delta: 5, response: '你们并肩走向那几个高年级学生。金妮没有施咒，只用很清楚的声音问他们是不是迷路到低年级面前找存在感。那几个人愣住了。她转头看你，眼睛亮得像刚赢了一场小仗。' },
       ],
-      aiSeed: '金妮主动告诉玩家自己学到一个有攻击性的咒语，并想用它保护被欺负的新生。重点是她的勇敢和冲动同时存在。',
+      aiSeed: '',
     },
     {
       id: 'ginny_year1_diary_silence',
@@ -247,7 +247,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '陪她走一段', delta: 5, response: '你们沿着走廊慢慢走，金妮一路没有解释。快到楼梯口时，她忽然说谢谢。你没有问她谢什么。她松开被捏皱的袖口，像这段没被追问的路本身就已经帮了她。', addMemory: 'ginny_walked_without_questions' },
         { label: '说想说时你会听', delta: 4, response: '金妮抬头看你，眼神有点防备，又慢慢软下来。她说也许以后会说。不是今天，但也许以后。这个“以后”听起来很小，却很认真。' },
       ],
-      aiSeed: '一年级金妮主动找玩家陪她走一段，但不愿说明原因。玩家的分寸比追问更重要，给她一个以后可以开口的位置。',
+      aiSeed: '',
     },
   ],
   fredWeasley: [
@@ -259,7 +259,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问表演内容', delta: 4, response: '弗雷德郑重宣布这是一场关于“盔甲是否会打喷嚏”的严肃实验。你看见他在计划表底部写着“避开一年级”。他注意到你的目光，耸耸肩说艺术也要有底线。', addMemory: 'fred_invited_audience' },
         { label: '提醒别伤到人', delta: 5, response: '弗雷德脸上的笑短暂收了一点，随后说这就是为什么他来找你而不是随便找个人。你们一起检查退路和解咒，他把认真藏在夸张鞠躬下面，却没有藏得很成功。' },
       ],
-      aiSeed: '弗雷德主动邀请玩家当恶作剧观众。玩笑下面有分寸，他希望玩家看见的不只是热闹，也是不伤人的底线。',
+      aiSeed: '',
     },
     {
       id: 'fred_year1_confiscated_sweets',
@@ -269,7 +269,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问糖有什么效果', delta: 3, response: '弗雷德开始列举：打嗝、变声、短暂长出非常有礼貌的小胡子。说到最后一种时，他自己先笑了。你指出这听起来不完全安全，他立刻补充解药已经准备好了。', addMemory: 'fred_confiscated_sweets' },
         { label: '建议先别去偷回', delta: 4, response: '弗雷德露出受伤表情，说你竟然站在费尔奇那边。可他没有真的生气，反而摸着下巴承认也许可以等巡逻松一点。你的谨慎被他翻译成“战略耐心”。' },
       ],
-      aiSeed: '弗雷德主动找玩家商量被费尔奇没收的恶作剧糖果。玩家可以参与，也可以劝他克制；重点是他的玩笑里有计划和安全意识。',
+      aiSeed: '',
     },
     {
       id: 'fred_year1_after_prank_apology',
@@ -279,7 +279,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '说要看被笑的人', delta: 5, response: '弗雷德点点头，像你说中了他不想自己说出的部分。他把那颗普通糖塞进口袋，说有个低年级今天可能需要这个，而不是会喷烟的那种。你看见他把道歉藏进了糖纸里。', addMemory: 'fred_checked_prank_line' },
         { label: '问是不是出事了', delta: 4, response: '他立刻说没有，最多只是艺术效果过强。可过了一会儿，他承认那孩子脸色不太好。弗雷德不常承认过界，这次承认得很轻，却很认真。' },
       ],
-      aiSeed: '弗雷德主动来问玩家一个恶作剧是否过线。他表面轻松，实际在反省如何不伤到被开玩笑的人。',
+      aiSeed: '',
     },
   ],
   georgeWeasley: [
@@ -291,7 +291,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '认真看地图', delta: 4, response: '你发现那些小叉都避开了最容易让新生迷路的走廊。乔治说研究必须考虑无辜群众安全，语气像在宣读校规。你们一起补了两条退路，他把你的名字缩写写在角落。', addMemory: 'george_exit_map' },
         { label: '问弗雷德知不知道', delta: 3, response: '乔治说弗雷德负责制造问题，他负责确保问题有出口。说完他又补充，两人偶尔互换，但最好别在报告里写。' },
       ],
-      aiSeed: '乔治主动给玩家看他们研究费尔奇巡逻路线的地图。乔治比弗雷德更关注退路和善后，玩家能看见他玩笑背后的细致。',
+      aiSeed: '',
     },
     {
       id: 'george_year1_paper_bird_delivery',
@@ -301,7 +301,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '帮他确认是谁', delta: 5, response: '你们在人群里找到那个新生，纸鸟飞过去，把小纸条落在他课本上。新生读完后笑了一下。乔治没有上前邀功，只远远看着，像确认某个小机关成功把难过转了个方向。', addMemory: 'george_sent_paper_bird' },
         { label: '问纸条写了什么', delta: 3, response: '乔治给你看备份，上面是一句非常笨、却刚好能让人笑出来的双关。你说这不像恶作剧，他说你又来了，老是低估温柔造成的破坏力。' },
       ],
-      aiSeed: '乔治主动请玩家帮忙把安慰纸条送给难过的新生。他不想被看成善良，所以把温柔伪装成恶作剧。',
+      aiSeed: '',
     },
     {
       id: 'george_year1_quiet_inventory',
@@ -311,7 +311,7 @@ export const YEAR1_CORE_STUDENT_PROACTIVE = {
         { label: '问为什么不准备好', delta: 5, response: '乔治说一个玩笑如果只能靠别人倒霉才能成立，就太懒了。他说得很轻，像怕这句话太严肃。你帮他把危险品分开放好，他没有开玩笑，只说你眼光不错。', addMemory: 'george_inventory_line' },
         { label: '帮他一起清点', delta: 4, response: '你们给每样东西贴上小标签：可用、待改、绝对别给弗雷德单独拿走。乔治看到最后一类时笑了很久，笑完却真的把盒子锁上了。' },
       ],
-      aiSeed: '乔治主动让玩家参与深夜清点恶作剧道具。这里展示乔治的分寸、善后和比弗雷德更安静的责任感。',
+      aiSeed: '',
     },
   ],
 };
