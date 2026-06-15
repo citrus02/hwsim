@@ -1,6 +1,6 @@
-import { getMatEmoji } from "./explore-data.js";
-import { getPotionEmoji } from './potion-data.js';
-import { getSave, setSave } from './save-system.js';
+import { getMatEmoji } from "./explore/explore-data.js";
+import { getPotionEmoji } from './potion/potion-data.js';
+import { getSave, setSave } from './save/save-system.js';
 import { getItemEmoji, applyItemEffect } from './item.js';
 
 const DEFAULT_BAG_SLOTS = 10;

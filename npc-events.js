@@ -1,12 +1,12 @@
-import { getSave, setSave, addLog, getYearGrade } from './save-system.js';
-import { exploreEventLib } from './explore-default.js';
-import { mergeAuthoredPlaceScenes } from './npc-place-scenes-year1-authored.js';
-import { AUTHORED_PLACE_SCENES_YEAR2 } from './npc-place-scenes-year2-authored.js';
-import { AUTHORED_PLACE_SCENES_YEAR3 } from './npc-place-scenes-year3-authored.js';
-import { AUTHORED_PLACE_SCENES_YEAR4 } from './npc-place-scenes-year4-authored.js';
-import { AUTHORED_PLACE_SCENES_YEAR5 } from './npc-place-scenes-year5-authored.js';
-import { AUTHORED_PLACE_SCENES_YEAR6 } from './npc-place-scenes-year6-authored.js';
-import { AUTHORED_PLACE_SCENES_YEAR7 } from './npc-place-scenes-year7-authored.js';
+import { getSave, setSave, addLog, getYearGrade } from './save/save-system.js';
+import { exploreEventLib } from './explore/explore-default.js';
+import { mergeAuthoredPlaceScenes } from './data/npc-place-scenes/npc-place-scenes-year1-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR2 } from './data/npc-place-scenes/npc-place-scenes-year2-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR3 } from './data/npc-place-scenes/npc-place-scenes-year3-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR4 } from './data/npc-place-scenes/npc-place-scenes-year4-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR5 } from './data/npc-place-scenes/npc-place-scenes-year5-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR6 } from './data/npc-place-scenes/npc-place-scenes-year6-authored.js';
+import { AUTHORED_PLACE_SCENES_YEAR7 } from './data/npc-place-scenes/npc-place-scenes-year7-authored.js';
 
 const HOUSE_MAP = {
   "格兰芬多": "gryffindor",

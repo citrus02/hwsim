@@ -3,15 +3,21 @@
 // 版本管理 & 存档继承系统
 // ===========================
 
-import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
+import { SAVE_KEY } from './save/save-system.js'; // 统一来源，不再重复定义
 
-import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.7';
+import { getSave } from './save/save-system.js';
+export const CURRENT_VERSION = '1.8.8';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.8': [
+    '整理项目目录结构，将好感、决斗、探索、魔药、存档、咒语与剧情模块归入独立文件夹',
+    '新增 main.js 统一前端模块入口，精简 index.html 中的大量脚本引用',
+    '同步更新课程、商店、角色、存档等模块的导入路径，适配新的文件组织方式',
+    '清理临时检查脚本并更新忽略规则，减少发布包中的杂项文件',
+  ],
   '1.8.7': [
     '重构探索界面的地点锁定、商店打开与行动点耗尽后的时间推进逻辑',
     '优化时间转换器测试模式，可选择更远的未来日期并动态限制月份与日期范围',

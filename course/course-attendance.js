@@ -1,6 +1,6 @@
 // course-attendance.js - scheduled course lookup, access checks, attendance, and missed-class progress
 import { isSchoolNoClassDate, isSchoolNoClassPeriod } from '../time-system.js';
-import { getYearGrade } from '../save-system.js';
+import { getYearGrade } from '../save/save-system.js';
 import { courseData } from './course-data.js';
 import { loadSave, writeSave } from './save-utils.js';
 import { showLearnChoiceModal } from './classroom.js';

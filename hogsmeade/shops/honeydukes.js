@@ -18,7 +18,7 @@
 //   吹宝超级泡泡糖约3~5西可
 
 import { BaseShop } from '../baseShop.js';
-import { getSave, setSave } from '../../save-system.js';
+import { getSave, setSave } from '../../save/save-system.js';
 
 // shop-bridge.js 已挂到 window
 const { updateShopStats } = window;

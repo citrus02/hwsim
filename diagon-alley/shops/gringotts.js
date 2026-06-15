@@ -2,7 +2,7 @@
 // 古灵阁巫师银行 - 完整银行系统
 
 import { BaseShop } from '../../hogsmeade/baseShop.js';
-import { getSave, setSave, addLog } from '../../save-system.js';
+import { getSave, setSave, addLog } from '../../save/save-system.js';
 
 const G = (g) => g * 493;
 const S = (s) => s * 29;

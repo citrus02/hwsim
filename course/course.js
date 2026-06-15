@@ -35,7 +35,7 @@
  */
 
 import { loadTimeFromSave, isHoliday, getNoClassReason, isSchoolNoClassDate, isSchoolNoClassPeriod } from '../time-system.js';
-import { getYearGrade, getSave } from '../save-system.js';
+import { getYearGrade, getSave } from '../save/save-system.js';
 import { courseData, getStudyEvent } from './course-data.js';
 import './course-ui.js';
 import { addInternalPoints } from './muggle-academic/system.js';

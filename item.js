@@ -2,7 +2,7 @@
 // 基于哈利波特原著整理，涵盖可使用道具与展示/收藏道具
 // 与 bag-system.js 中的 useItem() 配合使用
 
-import { getSave, setSave } from './save-system.js';
+import { getSave, setSave } from './save/save-system.js';
 
 // ─────────────────────────────────────────────
 // 道具数据表

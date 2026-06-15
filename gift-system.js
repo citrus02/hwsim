@@ -1,11 +1,11 @@
-import { getSave, setSave, addLog } from './save-system.js';
-import { addAffinity } from './affinity-system.js';
+import { getSave, setSave, addLog } from './save/save-system.js';
+import { addAffinity } from './affinity/affinity-system.js';
 import { GIFT_TIERS, GIFT_CATEGORIES, getGiftTier, getGiftResponse, getGiftDelta, getCharacterGiftPrefs } from './gift-data.js';
 import { getItemData, getItemEmoji } from './item.js';
-import { getMatEmoji } from './explore-data.js';
-import { getPotionEmoji } from './potion-data.js';
-import { AFFINITY_CHARACTERS } from './affinity-data.js';
-import { STUDENT_CHARACTERS } from './affinity-students.js';
+import { getMatEmoji } from './explore/explore-data.js';
+import { getPotionEmoji } from './potion/potion-data.js';
+import { AFFINITY_CHARACTERS } from './affinity/affinity-data.js';
+import { STUDENT_CHARACTERS } from './affinity/affinity-students.js';
 
 function renderLog() { window.renderLog?.(); }
 

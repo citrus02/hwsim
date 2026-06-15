@@ -1,4 +1,4 @@
-import { getSave, setSave, addLog } from './save-system.js';
+import { getSave, setSave, addLog } from './save/save-system.js';
 import { unlockAchievement } from './course/achievement.js';
 
 const TIME_PERIODS = ["上午", "下午", "夜晚"];

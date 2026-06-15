@@ -9,7 +9,7 @@
  * 全局挂载：window.housePoints
  */
 
-import { getSave, setSave } from './save-system.js';
+import { getSave, setSave } from './save/save-system.js';
 
 const HOUSE_MAP = {
   "格兰芬多": "gryffindor",

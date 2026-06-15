@@ -17,13 +17,13 @@
 
 import { loadSave } from './save-utils.js';
 import { gradeOpenAnswer } from '../ai/grader.js';
-import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity-system.js';
-import { GestureWidget } from '../gesture-widget.js';
-import { getGestureById } from '../gesture-data.js';
+import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity/affinity-system.js';
+import { GestureWidget } from '../gesture/gesture-widget.js';
+import { getGestureById } from '../gesture/gesture-data.js';
 import { MUGGLE_SUBJECTS, hasMetProfessor, markMetProfessor, recordStudyDate, advanceLesson } from './muggle-schedule.js';
 import { getSubjectData, getAllLessons, getItemSubjectKey, scoreToRating, HOUSE_POINTS_MAP } from './utils.js';
-import './subjects/flight.js';
-import './subjects/apparition.js';
+import './subjects/flight/index.js';
+import './subjects/apparition/index.js';
 import { getCurrentLesson, getQuestionsForLesson, saveProgress, saveOpenAnswerEntry, saveAnswerEntry } from './classroom-progress.js';
 import { doQuickStudy, doFocusedStudy } from './classroom-study-actions.js';
 import {

@@ -1,6 +1,6 @@
 // diagon-alley/baseShop.js - 对角巷商店基类
 
-import { addLog, getYearGrade, getPlayerHouse } from '../save-system.js';
+import { addLog, getYearGrade, getPlayerHouse } from '../save/save-system.js';
 
 function knutsToDisplay(knuts) {
   const g = Math.floor(knuts / 493);

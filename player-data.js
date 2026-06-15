@@ -1,4 +1,4 @@
-import { loadPlayer, savePlayer } from './save-system.js';
+import { loadPlayer, savePlayer } from './save/save-system.js';
 
 export const player = {
   name: "无名巫师",

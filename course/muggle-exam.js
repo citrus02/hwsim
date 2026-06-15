@@ -30,7 +30,7 @@
  *   getMuggleExamSummary()                    汇总成绩单
  */
 
-import { getSave, setSave, getYearGrade } from '../save-system.js';
+import { getSave, setSave, getYearGrade } from '../save/save-system.js';
 
 // ── 成绩常量 ─────────────────────────────────────────────────
 export const EXAM_GRADES = ['O', 'E', 'A', 'P', 'D', 'T'];

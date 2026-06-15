@@ -16,7 +16,7 @@
 
 // ── 工具函数 ──────────────────────────────────────────────
 
-import { getSave } from '../save-system.js';
+import { getSave } from '../save/save-system.js';
 
 function el(id) { return document.getElementById(id); }
 

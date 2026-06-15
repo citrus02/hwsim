@@ -1,6 +1,6 @@
 // ui-render.js — UI 渲染 + 全局刷新 + 标签页初始化
 
-import { getSave, setSave, addLog, renderLog, renderTimeline } from './save-system.js';
+import { getSave, setSave, addLog, renderLog, renderTimeline } from './save/save-system.js';
 import { getDateEventName } from './time-system.js';
 
 const allCourseList = [

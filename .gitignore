@@ -7,7 +7,7 @@ __pycache__/
 CLAUDE.md
 ai/private-config.js
 
-# 本地临时修复/生成脚本，不随版本发布
+# Local temporary repair/generated scripts; do not ship.
 *.bak
 *.bak*
 fix*.js
@@ -16,6 +16,7 @@ extract_*.py
 generate_lessons.py
 rebuild*.js
 temp_*.txt
+_temp*.js
 _temp*.py
 test-questionbank.mjs
 _spec/check_syntax.js

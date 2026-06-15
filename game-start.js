@@ -1,5 +1,5 @@
 import { initRandomGenerators, initSortingHat, initWandSelection, player } from "./random-generator.js";
-import { createNewSave, getSave, hasAnySave, setSave } from "./save-system.js";
+import { createNewSave, getSave, hasAnySave, setSave } from "./save/save-system.js";
 import { showTipBox } from "./create-screen.js";
 
 function showScreen(screenId) {

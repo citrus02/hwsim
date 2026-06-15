@@ -1,6 +1,6 @@
 // hogsmeade/baseShop.js - 修改以适配你的存档系统
 
-import { addLog, getYearGrade, getPlayerHouse } from '../save-system.js';
+import { addLog, getYearGrade, getPlayerHouse } from '../save/save-system.js';
 
 // 纳特数转人类可读价格
 function knutsToDisplay(knuts) {
@@ -176,7 +176,7 @@ export class BaseShop {
     if (!bagGrid) return false;
     
     // 从存档系统获取
-    const { getSave } = require('../save-system.js');
+    const { getSave } = require('../save/save-system.js');
     const data = getSave();
     const materials = data.bag?.material || [];
     const item = materials.find(i => i?.name === materialName);

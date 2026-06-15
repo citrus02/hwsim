@@ -8,7 +8,7 @@
  * 核心原则：有原因、有节制、不可预测
  */
 
-import { getSave, setSave, addLog, getYearGrade } from './save-system.js';
+import { getSave, setSave, addLog, getYearGrade } from './save/save-system.js';
 import { ALL_CHARACTERS } from './characters/_registry.js';
 
 // ── 常量 ──────────────────────────────────────────────────

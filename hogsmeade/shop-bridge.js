@@ -1,6 +1,6 @@
 // shop-bridge.js — 商店系统集成
 
-import { getSave, setSave, addLog, getYearGrade, getPlayerHouse } from '../save-system.js';
+import { getSave, setSave, addLog, getYearGrade, getPlayerHouse } from '../save/save-system.js';
 import { getWallet, addMoney, spendMoney } from '../currency.js';
 
 let _shopManager = null;

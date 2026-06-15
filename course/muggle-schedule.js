@@ -87,7 +87,7 @@
 
 import { loadSave, writeSave } from './save-utils.js';
 import { isHoliday, isSchoolNoClassDate } from '../time-system.js';
-import { getYearGrade } from '../save-system.js';
+import { getYearGrade } from '../save/save-system.js';
 
 // ── 九门麻瓜课程键名 ────────────────────────────────────────
 export const MUGGLE_SUBJECTS = [

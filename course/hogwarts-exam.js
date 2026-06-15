@@ -30,7 +30,7 @@
  *   getHogwartsExamSummary()                    汇总成绩单
  */
 
-import { getSave, setSave, getYearGrade } from '../save-system.js';
+import { getSave, setSave, getYearGrade } from '../save/save-system.js';
 
 export const EXAM_GRADES = ['O', 'E', 'A', 'P', 'D', 'T'];
 export const GRADE_THRESHOLDS = { O: 90, E: 75, A: 60, P: 45, D: 30, T: 0 };

@@ -6,7 +6,7 @@
  * the rest of the game use the same migration, recovery, and backup behavior.
  */
 
-import { getSave, setSave, SAVE_KEY } from '../save-system.js';
+import { getSave, setSave, SAVE_KEY } from '../save/save-system.js';
 
 export function loadSave() {
   try {
