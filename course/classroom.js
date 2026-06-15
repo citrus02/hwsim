@@ -16,7 +16,7 @@
  */
 
 import { loadSave } from './save-utils.js';
-import { gradeOpenAnswer } from '../ai/grader.js';
+import { gradeOpenAnswer, isAiGradingEnabled, setAiGradingEnabled } from '../ai/grader.js';
 import { onClassResult, onSubjectCompleted, onCourseSubjectCompleted, markCharacterKnown } from '../affinity/affinity-system.js';
 import { GestureWidget } from '../gesture/gesture-widget.js';
 import { getGestureById } from '../gesture/gesture-data.js';
@@ -916,6 +916,7 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
 
     // ── 开放题（教授判题） ─────────────────────────────────
     if (q.type === "open") {
+      const aiGradingChecked = isAiGradingEnabled();
       body.innerHTML = `
         <div class="cls-quiz-header">
           <span class="cls-quiz-count">开放题（教授判题）</span>
@@ -931,8 +932,15 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           </div>
         </div>
         <div class="cls-feedback" id="cls-fb"></div>
-        <div class="cls-open-api-note">
-          💡 教授判题需要网络连接。可在右上角⚙️配置自己的 API Key。
+        <div class="cls-open-tools">
+          <label class="cls-grading-select-label">
+            判题
+            <select id="cls-ai-grading-mode" class="cls-grading-select">
+              <option value="local" ${aiGradingChecked ? "" : "selected"}>本地</option>
+              <option value="ai" ${aiGradingChecked ? "selected" : ""}>AI</option>
+            </select>
+          </label>
+          <span class="cls-open-api-note">AI 可在右上角⚙️设置 API Key</span>
         </div>
         <div class="cls-nav cls-nav-wide">
           <button id="cls-open-skip" class="cls-open-skip-btn">
@@ -945,6 +953,10 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
       const ta = document.getElementById("cls-open-ta");
       ta?.addEventListener("input", () => {
         document.getElementById("cls-open-cnt").textContent = ta.value.length;
+      });
+
+      document.getElementById("cls-ai-grading-mode")?.addEventListener("change", event => {
+        setAiGradingEnabled(event.target.value === "ai");
       });
 
       document.getElementById("cls-open-api-link")?.addEventListener("click", (e) => {
@@ -977,24 +989,69 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           return;
         }
 
+        const useAiGrading = document.getElementById("cls-ai-grading-mode")?.value === "ai";
+        setAiGradingEnabled(useAiGrading);
+
         // 进入 loading 状态
         const submitBtn = document.getElementById("cls-open-submit");
-        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "教授判题中…"; }
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = useAiGrading ? "AI 判题中..." : "自动判题中...";
+        }
         if (fb) {
           fb.className = "cls-feedback cls-fb-show";
           fb.style.background = "rgba(108,92,231,0.1)";
-          fb.innerHTML = `<div class="cls-ai-loading">🪶 教授判题中…</div>`;
+          fb.innerHTML = `<div class="cls-ai-loading">${useAiGrading ? "AI 判题中..." : "自动判题中..."}</div>`;
         }
 
-        // 降级评分函数：基于关键词匹配
+        // 本地评分函数：按得分点做柔性匹配，AI 不可用或未开启时使用。
+        function normalizeFallbackText(value) {
+          return String(value || '')
+            .toLowerCase()
+            .replace(/[“”"「」『』《》]/g, '')
+            .replace(/\s+/g, '')
+            .replace(/[，。！？、；：,.!?;:()（）[\]【】{}]/g, '');
+        }
+
+        function getPointText(point) {
+          if (typeof point === 'object' && point !== null) return String(point.text || point.label || '');
+          return String(point || '');
+        }
+
+        function uniqueList(items) {
+          return [...new Set(items.map(item => String(item || '').trim()).filter(Boolean))];
+        }
+
+        function getSemanticHints(pointText) {
+          const hints = [];
+          const rules = [
+            [/定义|概念|含义|意思/, ['定义', '含义', '意思', '概念', '是什么']],
+            [/例子|案例|举例|生活|现实/, ['例子', '例如', '比如', '案例', '生活中', '现实']],
+            [/观察|验证|证据|实验|条件|方法|来源/, ['观察', '验证', '证据', '实验', '条件', '方法', '记录', '来源']],
+            [/区分|边界|不同|区别/, ['区分', '不同', '区别', '边界', '不能混为一谈']],
+            [/原因|解释|说明|导致|影响/, ['因为', '原因', '所以', '导致', '影响', '说明', '解释']],
+            [/推理|论证|前提|结论/, ['推理', '论证', '前提', '结论', '依据']],
+            [/计算|数|值|绝对值|距离/, ['计算', '数值', '距离', '零', '大小', '绝对值']],
+            [/准确|精确|清楚|模糊/, ['准确', '精确', '清楚', '具体', '不模糊']]
+          ];
+          rules.forEach(([pattern, words]) => {
+            if (pattern.test(pointText)) hints.push(...words);
+          });
+          return hints;
+        }
+
         function extractFallbackKeywords(point) {
+          const pointText = getPointText(point);
+          const explicitKeywords = typeof point === 'object' && point !== null && Array.isArray(point.keywords)
+            ? point.keywords
+            : [];
+          const keywords = [...explicitKeywords, ...getSemanticHints(pointText)];
+
           if (typeof point === 'object' && point !== null) {
-            return point.keywords || [point.text || ''].filter(Boolean);
+            keywords.push(pointText);
           }
-          const text = String(point);
-          const keywords = [];
           // 括号内的提示词优先（如"（数到零的距离，或去掉符号后的值）"）
-          const bracketMatches = text.match(/[（(]([^）)]+)[）)]/g) || [];
+          const bracketMatches = pointText.match(/[（(]([^）)]+)[）)]/g) || [];
           bracketMatches.forEach(m => {
             const inner = m.replace(/^[（(]|[）)]$/g, '');
             inner.split(/[、，,或以及]/).forEach(kw => {
@@ -1003,12 +1060,31 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
             });
           });
           // 括号外：按标点拆分，取 2-8 字的短语
-          const mainText = text.replace(/[（(][^）)]*[）)]/g, '');
+          const mainText = pointText.replace(/[（(][^）)]*[）)]/g, '');
           mainText.split(/[、，,。：:（(]/).forEach(chunk => {
-            const c = chunk.replace(/^(正确|合理|举出|说明|解释|描述|阐述)+/, '').trim();
-            if (c.length >= 2 && c.length <= 8) keywords.push(c);
+            const c = chunk.replace(/^(正确|合理|举出|说明|解释|描述|阐述|能够|能|可以)+/, '').trim();
+            if (c.length >= 2 && c.length <= 12) keywords.push(c);
           });
-          return keywords.length > 0 ? keywords : [text];
+          return uniqueList(keywords);
+        }
+
+        function matchesFallbackPoint(point, normalizedAnswer, rawAnswer) {
+          const pointText = getPointText(point);
+          const keywords = extractFallbackKeywords(point);
+          const normalizedKeywords = keywords.map(normalizeFallbackText).filter(kw => kw.length >= 2);
+          const exactHits = normalizedKeywords.filter(kw => normalizedAnswer.includes(kw));
+          if (exactHits.length > 0) return true;
+
+          const hints = getSemanticHints(pointText).map(normalizeFallbackText).filter(Boolean);
+          const hintHits = hints.filter(hint => normalizedAnswer.includes(hint));
+          const longerPhrasePartial = normalizedKeywords.some(kw => {
+            if (kw.length < 5) return false;
+            const chars = [...kw];
+            const hitCount = chars.filter(ch => normalizedAnswer.includes(ch)).length;
+            return hitCount / chars.length >= 0.45;
+          });
+
+          return hintHits.length >= 2 || longerPhrasePartial || (hintHits.length === 1 && rawAnswer.length >= 24);
         }
 
         function fallbackGrade() {
@@ -1017,28 +1093,39 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           const professor = sd.subjectMeta?.professor || '';
           let score = 0;
           const achieved = [];
+          const missing = [];
+          const normalizedAnswer = normalizeFallbackText(answer);
+          const isVagueAnswer = /不知道|不会|没学|随便|不清楚|不知道怎么|无所谓/.test(normalizedAnswer);
+          let matchedCount = 0;
 
           scoringPoints.forEach((point, idx) => {
-            const keywords = extractFallbackKeywords(point);
-            const found = keywords.some(kw => answer.includes(kw));
-            if (found) {
-              score += 1;
-              achieved.push(typeof point === 'object' ? (point.text || `要点${idx + 1}`) : `要点${idx + 1}`);
+            const label = typeof point === 'object' ? (point.text || `要点${idx + 1}`) : `要点${idx + 1}`;
+            if (matchesFallbackPoint(point, normalizedAnswer, answer)) {
+              matchedCount += 1;
+              achieved.push(label);
+            } else {
+              missing.push(getPointText(point) || `要点${idx + 1}`);
             }
           });
+          score = scoringPoints.length
+            ? Math.round((matchedCount / scoringPoints.length) * maxScore)
+            : (answer.length >= 20 && !isVagueAnswer ? maxScore : 0);
 
           // 答案有实质内容但关键词未命中时给基础分，避免认真作答却得零
-          if (score === 0 && answer.length >= 20) {
-            score = Math.max(1, Math.floor(maxScore * 0.25));
+          if (!isVagueAnswer && score === 0 && answer.length >= 20) {
+            score = Math.max(1, Math.round(maxScore * 0.2));
           }
-          // 较长答案酌情加分
-          if (answer.length > 100 && score < maxScore) score = Math.min(maxScore, score + 1);
-          if (answer.length > 200 && score < maxScore) score = Math.min(maxScore, score + 1);
+          // 较长且覆盖多个连接词的答案，给少量表达完整度加成，但不替代得分点。
+          const hasReasoning = /因为|所以|例如|比如|首先|其次|最后|但是|因此|如果/.test(answer);
+          if (!isVagueAnswer && hasReasoning && answer.length > 80 && score > 0 && score < maxScore) {
+            score = Math.min(maxScore, score + 1);
+          }
+          score = Math.round(Math.max(0, Math.min(maxScore, score)));
 
           return {
             score,
             maxScore,
-            feedback: getFallbackFeedback(score, maxScore, professor),
+            feedback: getFallbackFeedback(score, maxScore, professor, achieved, missing),
             pointsAchieved: achieved
           };
         }
@@ -1101,26 +1188,87 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           }
         };
 
-        function getFallbackFeedback(score, max, professor) {
+        function pickFallback(list) {
+          return list[Math.floor(Math.random() * list.length)];
+        }
+
+        function summarizePoint(text) {
+          return String(text || '')
+            .replace(/[（(].*?[）)]/g, '')
+            .replace(/^(正确|合理|举出|说明|解释|描述|阐述|能够|能|可以)/, '')
+            .trim()
+            .slice(0, 18);
+        }
+
+        function getFallbackFeedback(score, max, professor, achieved = [], missing = []) {
           const style = PROFESSOR_FALLBACK_FEEDBACK[professor];
           const pct = score / max;
+          const hit = achieved.length ? summarizePoint(achieved[0]) : '';
+          const gap = missing.length ? summarizePoint(missing[0]) : '';
+          const addDetail = () => {
+            if (pct >= 0.75 && hit) {
+              return pickFallback([
+                `你抓住了“${hit}”这一点，整体已经站得住。`,
+                `“${hit}”说到了关键处，答案的骨架是清楚的。`,
+                `最重要的是你没有绕开“${hit}”。`
+              ]);
+            }
+            if (pct >= 0.5) {
+              return gap
+                ? pickFallback([
+                    `还差一点：把“${gap}”补清楚，分数会更稳。`,
+                    `方向是对的，不过“${gap}”还需要再落到具体表达上。`,
+                    `你已经碰到核心了，下一步是把“${gap}”说实。`
+                  ])
+                : pickFallback([
+                    '思路已经打开，但还可以再具体一点。',
+                    '答案有内容，细节再收紧会更好。',
+                    '不是空答，只是还没完全扣住标准。'
+                  ]);
+            }
+            if (pct > 0) {
+              return gap
+                ? pickFallback([
+                    `能看出你在想，但“${gap}”还没有真正答出来。`,
+                    `有一点方向，先回到“${gap}”这个得分点。`,
+                    `别急着铺开，先把“${gap}”这一处说准。`
+                  ])
+                : pickFallback([
+                    '有一点方向，但还需要回到题目要求。',
+                    '这不是完全没答，不过证据还太少。',
+                    '先把一个核心概念讲清楚，再展开。'
+                  ]);
+            }
+            return gap
+              ? pickFallback([
+                  `先从“${gap}”开始答，不要只写感受。`,
+                  `这题至少要碰到“${gap}”，再重新组织一次。`,
+                  `目前没有命中得分点，先补“${gap}”。`
+                ])
+              : pickFallback([
+                  '先回到题目，写出一个清楚的概念或例子。',
+                  '现在还看不出你的判断依据，再试一次。',
+                  '答案太散，先抓一个得分点。'
+                ]);
+          };
+
           if (style) {
-            if (pct >= 0.75) return style.high;
-            if (pct >= 0.5)  return style.mid;
-            if (pct > 0)     return style.low;
-            return style.zero;
+            const base = pct >= 0.75 ? style.high : pct >= 0.5 ? style.mid : pct > 0 ? style.low : style.zero;
+            return `${base} ${addDetail()}`.trim();
           }
           // 通用后备
-          if (pct >= 0.75) return "回答完整，思路清晰。";
-          if (pct >= 0.5)  return "有一定深度，可进一步完善。";
-          if (pct > 0)     return "有方向，继续加油。";
-          return "请再想想，结合讲义重新作答。";
+          if (pct >= 0.75) return `回答完整，思路清晰。${addDetail()}`;
+          if (pct >= 0.5)  return `有一定深度，可进一步完善。${addDetail()}`;
+          if (pct > 0)     return `有方向。${addDetail()}`;
+          return `请再想想，结合讲义重新作答。${addDetail()}`;
         }
 
         let retryCount = 0;
         const maxRetries = 2;
 
         async function attemptGrade() {
+          if (!useAiGrading) return fallbackGrade();
+
           try {
             const result = await gradeOpenAnswer({
               question:      q.text,
@@ -1196,7 +1344,7 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
           }
 
         } catch (err) {
-          // 所有重试都失败，使用降级评分
+          // 所有重试都失败，本次提交使用降级评分；下次仍会按设置继续尝试 AI。
           const result = fallbackGrade();
           st.openScore = result.score;
           st.openMaxScore = result.maxScore;
@@ -1227,7 +1375,7 @@ function _phaseQuiz(st, subjectKey, sd, lesson, qGroup, onClose) {
                 "${result.feedback}"
               </div>
               <div class="cls-fb-analysis cls-fb-muted">
-                教授暂时无法连线，已使用自动判题
+                AI 判题暂时不可用，本次已使用本地自动判题
               </div>`;
           }
 

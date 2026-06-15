@@ -20,6 +20,8 @@ import {
 
 const STORAGE_KEY = "apiKey";
 const LEGACY_STORAGE_KEY = "deepseek_api_key";
+const AI_GRADING_ENABLED_KEY = "aiGradingEnabled";
+const AI_GRADING_TIMEOUT_MS = 20000;
 
 let localApiKeysPromise = null;
 
@@ -111,6 +113,18 @@ function getApiMode() {
   return localStorage.getItem('apiMode') || 'default';
 }
 
+export function hasAiGradingPreference() {
+  return localStorage.getItem(AI_GRADING_ENABLED_KEY) !== null;
+}
+
+export function isAiGradingEnabled() {
+  return localStorage.getItem(AI_GRADING_ENABLED_KEY) === 'true';
+}
+
+export function setAiGradingEnabled(enabled) {
+  localStorage.setItem(AI_GRADING_ENABLED_KEY, enabled ? 'true' : 'false');
+}
+
 function getDefaultApiProvider(localApiKeys = {}) {
   if (Object.prototype.hasOwnProperty.call(localApiKeys, 'DEFAULT_API_PROVIDER')) {
     return localApiKeys.DEFAULT_API_PROVIDER || 'deepseek';
@@ -158,12 +172,22 @@ function isServerProxyUrl(url) {
   return typeof url === 'string' && url.startsWith('/');
 }
 
+function isLocalStaticHost() {
+  const host = window.location.hostname;
+  return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0';
+}
+
+function resolveLocalDefaultProxyUrl(url) {
+  if (getApiMode() !== 'default' || !isServerProxyUrl(url) || !isLocalStaticHost()) return url;
+  return `https://www.hwsim.top${url}`;
+}
+
 function getApiConfig(localApiKeys = {}) {
   const provider = getApiProvider(localApiKeys);
   const config = API_CONFIG[provider] || API_CONFIG.deepseek;
   const baseUrl = getApiBaseUrl(localApiKeys);
   const model = getApiModel(localApiKeys);
-  const url = baseUrl || config.url;
+  const url = resolveLocalDefaultProxyUrl(baseUrl || config.url);
   const isDefaultServerProxy = getApiMode() === 'default' && isServerProxyUrl(url);
   return {
     ...config,
@@ -299,6 +323,8 @@ const PROFESSOR_GRADING_STYLES = {
  * @returns {Promise<{score:number, maxScore:number, pointsAchieved:string[], feedback:string}|null>}
  */
 export async function gradeOpenAnswer({ question, scoringPoints, maxScore, studentAnswer, subject, lessonTitle, professor }) {
+  if (!isAiGradingEnabled()) return null;
+
   const localApiKeys = await loadLocalApiKeys();
   const config = getApiConfig(localApiKeys);
   const provider = getApiProvider(localApiKeys);
@@ -391,15 +417,32 @@ ${studentAnswer}
     if (config.model) requestBody.model = config.model;
   }
 
-  const response = await fetch(config.url, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(requestBody)
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), AI_GRADING_TIMEOUT_MS);
+  let response;
+  try {
+    response = await fetch(config.url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(requestBody),
+      signal: controller.signal
+    });
+  } catch (error) {
+    if (error?.name === 'AbortError') {
+      throw new Error("AI 判题超时，已切换为本地自动判题");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!response.ok) {
     let detail = "";
     try { detail = (await response.json())?.error?.message || ""; } catch { /**/ }
+    if (response.status === 405) {
+      console.info("AI 判题接口不支持当前请求方式，已使用本地自动判题。");
+      return null;
+    }
     if (response.status === 401) {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(LEGACY_STORAGE_KEY);
@@ -450,7 +493,14 @@ export function hasApiKey() {
 }
 
 // ── 全局挂载（供 classroom.js 非模块上下文访问） ──────────────
-window.aiGrader = { gradeOpenAnswer, clearApiKey, hasApiKey };
+window.aiGrader = {
+  gradeOpenAnswer,
+  clearApiKey,
+  hasApiKey,
+  hasAiGradingPreference,
+  isAiGradingEnabled,
+  setAiGradingEnabled
+};
 window.deepseekGrader = window.aiGrader;
 
 function extractJson(raw) {

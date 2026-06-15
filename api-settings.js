@@ -1,4 +1,6 @@
 // API Key 设置功能
+import { isAiGradingEnabled, setAiGradingEnabled } from './ai/grader.js';
+
 document.addEventListener('DOMContentLoaded', function() {
   const apiModeRadios = document.querySelectorAll('input[name="api-mode"]');
   apiModeRadios.forEach(radio => {
@@ -80,18 +82,21 @@ function loadApiSettings() {
   const savedProvider = localStorage.getItem('apiProvider') || 'deepseek';
   const savedBaseUrl = localStorage.getItem('apiBaseUrl') || '';
   const savedModel = localStorage.getItem('apiModel') || '';
+  const savedAiGradingEnabled = isAiGradingEnabled();
 
   const modeRadio = document.querySelector(`input[name="api-mode"][value="${savedMode}"]`);
   const providerSelect = document.getElementById('api-provider');
   const keyInput = document.getElementById('api-key-input');
   const baseUrlInput = document.getElementById('api-base-url');
   const modelInput = document.getElementById('api-model-input');
+  const aiGradingToggle = document.getElementById('ai-grading-enabled');
 
   if (modeRadio) modeRadio.checked = true;
   if (providerSelect) providerSelect.value = savedProvider;
   if (keyInput) keyInput.value = savedKey;
   if (baseUrlInput) baseUrlInput.value = savedBaseUrl;
   if (modelInput) modelInput.value = savedModel;
+  if (aiGradingToggle) aiGradingToggle.checked = savedAiGradingEnabled;
 
   const customInput = document.getElementById('custom-api-input');
 
@@ -117,12 +122,14 @@ function saveApiSettings() {
   const provider = document.getElementById('api-provider')?.value || 'deepseek';
   const baseUrl = document.getElementById('api-base-url')?.value || '';
   const model = document.getElementById('api-model-input')?.value || '';
+  const aiGradingEnabled = document.getElementById('ai-grading-enabled')?.checked !== false;
 
   localStorage.setItem('apiMode', mode);
   localStorage.setItem('apiKey', apiKey);
   localStorage.setItem('apiProvider', provider);
   localStorage.setItem('apiBaseUrl', baseUrl);
   localStorage.setItem('apiModel', model);
+  setAiGradingEnabled(aiGradingEnabled);
 
   showApiStatus('success', '✓ 设置已保存！');
 }
@@ -134,18 +141,21 @@ function resetApiSettings() {
   localStorage.removeItem('apiProvider');
   localStorage.removeItem('apiBaseUrl');
   localStorage.removeItem('apiModel');
+  localStorage.removeItem('aiGradingEnabled');
 
   const defaultModeRadio = document.querySelector('input[name="api-mode"][value="default"]');
   const providerSelect = document.getElementById('api-provider');
   const keyInput = document.getElementById('api-key-input');
   const baseUrlInput = document.getElementById('api-base-url');
   const modelInput = document.getElementById('api-model-input');
+  const aiGradingToggle = document.getElementById('ai-grading-enabled');
 
   if (defaultModeRadio) defaultModeRadio.checked = true;
   if (providerSelect) providerSelect.value = 'deepseek';
   if (keyInput) keyInput.value = '';
   if (baseUrlInput) baseUrlInput.value = '';
   if (modelInput) modelInput.value = '';
+  if (aiGradingToggle) aiGradingToggle.checked = false;
   document.getElementById('custom-api-input').style.display = 'none';
   document.getElementById('api-advanced-panel')?.classList.remove('show');
   const advancedToggle = document.getElementById('api-advanced-toggle');

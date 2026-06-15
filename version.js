@@ -6,12 +6,18 @@
 import { SAVE_KEY } from './save/save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save/save-system.js';
-export const CURRENT_VERSION = '1.8.8';
+export const CURRENT_VERSION = '1.8.9';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.9': [
+    '新增开放题本地/AI判题切换，玩家可在课堂答题时选择是否联网调用AI',
+    '补充本地自动判题逻辑与教授反馈文案，AI未开启或不可用时也能完成开放题评分',
+    '优化AI判题配置面板，新增启用AI判题开关并保存到本地设置',
+    '为AI判题请求增加超时与本地开发代理处理，减少接口异常时卡住课堂流程',
+  ],
   '1.8.8': [
     '整理项目目录结构，将好感、决斗、探索、魔药、存档、咒语与剧情模块归入独立文件夹',
     '新增 main.js 统一前端模块入口，精简 index.html 中的大量脚本引用',

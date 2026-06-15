@@ -276,6 +276,14 @@
         <div class="modal-tab-content" id="tab-api-key">
             <h2>🔑 API Key 设置</h2>
 
+            <label class="api-key-option ai-grading-option">
+                <input type="checkbox" id="ai-grading-enabled">
+                <div class="option-content">
+                    <span>启用 AI 判题</span>
+                    <p class="option-desc">关闭后，开放题不再联网调用 AI，会使用本地自动判题。第一次提交开放题前也会询问你。</p>
+                </div>
+            </label>
+
             <label class="api-key-option">
                 <input type="radio" name="api-mode" value="default" checked>
                 <div class="option-content">
