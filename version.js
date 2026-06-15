@@ -6,12 +6,17 @@
 import { SAVE_KEY } from './save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save-system.js';
-export const CURRENT_VERSION = '1.8.5';
+export const CURRENT_VERSION = '1.8.6';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.8.6': [
+    '整理一年级人物互动内容文件结构，按角色归档学生与教职工相遇、闲聊场景',
+    '将大量分批场景入口收束为角色聚合索引，减少主数据文件中的重复导入和合并代码',
+    '保留一年级互动内容覆盖范围，同时让后续扩展、审查和维护更容易定位到具体角色',
+  ],
   '1.8.5': [
     '继续加厚一年级人物互动内容，新增学生与教职工大量相遇场景包',
     '补充一年级教职工与学生主动来访批次，让角色会在更多关系阶段主动找玩家',
