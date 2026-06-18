@@ -133,6 +133,7 @@ function openTimeTurnerPanel() {
 
   let existing = document.getElementById("timeTurnerPanel");
   if (existing) existing.remove();
+  document.body.classList.add("modal-open");
 
   const startDate = _parseDate("1991-09-02");
   const todayDate = _parseDate(currentDate);
@@ -189,34 +190,34 @@ function openTimeTurnerPanel() {
        <div>• 前往未来时，好感度和认识角色<span style="color:#5cb85c">保留不变</span>（非还原）</div>`
     : '';
 
-  const selectStyle = "padding:8px 10px;background:#2a2a3e;color:#e0d8c0;border:1px solid #444;border-radius:8px;font-size:14px;";
+  const selectStyle = "min-width:0;padding:8px 10px;background:#2a2a3e;color:#e0d8c0;border:1px solid #444;border-radius:8px;font-size:14px;";
 
   const panel = document.createElement("div");
   panel.id = "timeTurnerPanel";
-  panel.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;";
+  panel.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;padding:10px 0;box-sizing:border-box;";
   panel.innerHTML = `
-    <div style="background:#1a1a2e;border:2px solid #c9a84c;border-radius:16px;padding:28px 32px;max-width:420px;width:90%;color:#e0d8c0;position:relative;">
+    <div style="background:#1a1a2e;border:2px solid #c9a84c;border-radius:16px;padding:22px 20px;max-width:min(420px, calc(100vw - 20px));width:calc(100% - 20px);color:#e0d8c0;position:relative;max-height:calc(100vh - 20px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;box-sizing:border-box;">
       <button data-tt-action="close" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:20px;cursor:pointer;">✕</button>
-      <div style="text-align:center;margin-bottom:20px;">
+      <div style="text-align:center;margin-bottom:16px;">
         <div style="font-size:2.4em;">⏳</div>
         <div style="font-size:18px;font-weight:bold;color:#c9a84c;margin-top:8px;">时间转换器</div>
         <div style="font-size:12px;color:#888;margin-top:4px;">${unlimited ? '使用次数：无限' : `剩余使用次数：${usesLeft}`} <span style="color:#666">| 累计使用：${data.timeTurner?.totalUses || 0}次</span></div>
         ${testBadge}
       </div>
-      <div style="margin-bottom:16px;">
-        <label style="font-size:13px;color:#aaa;display:block;margin-bottom:6px;">选择日期</label>
-        <div style="display:flex;gap:6px;">
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;color:#aaa;display:block;margin-bottom:5px;">选择日期</label>
+        <div style="display:flex;gap:5px;min-width:0;">
           <select id="tt-year" style="flex:1;${selectStyle}">${yearOptions}</select>
           <select id="tt-month" style="flex:0.6;${selectStyle}">${monthOptions}</select>
           <select id="tt-day" style="flex:0.6;${selectStyle}">${dayOptions}</select>
         </div>
       </div>
-      <div style="margin-bottom:20px;">
-        <label style="font-size:13px;color:#aaa;display:block;margin-bottom:6px;">选择时段</label>
+      <div style="margin-bottom:14px;">
+        <label style="font-size:13px;color:#aaa;display:block;margin-bottom:5px;">选择时段</label>
         <select id="tt-period" style="width:100%;${selectStyle}">${periodOptions}</select>
       </div>
-      <div style="font-size:11px;color:#777;margin-bottom:16px;line-height:1.6;">
-        <div style="color:#aaa;margin-bottom:4px;">⏳ 使用规则</div>
+      <div style="font-size:11px;color:#777;margin-bottom:12px;line-height:1.35;">
+        <div style="color:#aaa;margin-bottom:3px;">⏳ 使用规则</div>
         <div>• 选择过去的日期和时段，回到那个时间点并获得对应行动次数</div>
         <div>• <span style="color:#5cb85c">保留</span>：道具、课程进度、咒语熟练度、魔药熟练度、探索进度、学院分</div>
         <div>• <span style="color:#dc143c">还原</span>：好感度、认识的角色（返回时恢复到旅行前）</div>
@@ -235,10 +236,10 @@ function openTimeTurnerPanel() {
 
   panel.addEventListener('click', (e) => {
     if (e.target.closest("[data-tt-action='close']")) {
-      panel.remove();
+      _closeTimeTurnerPanel();
       return;
     }
-    if (e.target === panel) panel.remove();
+    if (e.target === panel) _closeTimeTurnerPanel();
   });
 
   const yearSel = document.getElementById("tt-year");
@@ -310,6 +311,11 @@ function openTimeTurnerPanel() {
   }
 }
 
+function _closeTimeTurnerPanel() {
+  document.getElementById("timeTurnerPanel")?.remove();
+  document.body.classList.remove("modal-open");
+}
+
 function _travelTo(targetDate, targetPeriod) {
   let data = getSave();
   const currentFullDate = data.time?.currentDate || "1991-09-02";
@@ -319,8 +325,7 @@ function _travelTo(targetDate, targetPeriod) {
 
   if (targetDate === currentFullDate && targetPeriod === currentPeriod) {
     addLog("⏳ 时间转换器嗡嗡作响——你已经在那个时间点了。");
-    const panel = document.getElementById("timeTurnerPanel");
-    if (panel) panel.remove();
+    _closeTimeTurnerPanel();
     return;
   }
 
@@ -331,8 +336,7 @@ function _travelTo(targetDate, targetPeriod) {
 
   if (isFuture && !isTestMode()) {
     addLog("⏳ 时间转换器只能回到过去，无法前往未来。");
-    const panel = document.getElementById("timeTurnerPanel");
-    if (panel) panel.remove();
+    _closeTimeTurnerPanel();
     return;
   }
 
@@ -383,8 +387,7 @@ function _travelTo(targetDate, targetPeriod) {
   window.timeSystem.dailyActionLeft = targetActions;
   if (window.syncActionUI) window.syncActionUI();
 
-  const panel = document.getElementById("timeTurnerPanel");
-  if (panel) panel.remove();
+  _closeTimeTurnerPanel();
 
   if (isFuture) {
     addLog(`🔮⏳ 时间转换器逆转——你来到了未来：${targetDate} ${targetPeriod}。`, 'story');
@@ -426,6 +429,7 @@ function _renderReturnPanel() {
 
   let existing = document.getElementById("timeTurnerPanel");
   if (existing) existing.remove();
+  document.body.classList.add("modal-open");
 
   const travelLabel = isFuture ? "你正在未来的时间中" : "你正在过去的时间中";
   const returnRules = isFuture
@@ -440,23 +444,23 @@ function _renderReturnPanel() {
 
   const panel = document.createElement("div");
   panel.id = "timeTurnerPanel";
-  panel.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;";
+  panel.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;padding:10px 0;box-sizing:border-box;";
   panel.innerHTML = `
-    <div style="background:#1a1a2e;border:2px solid #c9a84c;border-radius:16px;padding:28px 32px;max-width:380px;width:90%;color:#e0d8c0;position:relative;">
+    <div style="background:#1a1a2e;border:2px solid #c9a84c;border-radius:16px;padding:22px 20px;max-width:min(380px, calc(100vw - 20px));width:calc(100% - 20px);color:#e0d8c0;position:relative;max-height:calc(100vh - 20px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;box-sizing:border-box;">
       <button data-tt-action="close" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:20px;cursor:pointer;">✕</button>
-      <div style="text-align:center;margin-bottom:20px;">
+      <div style="text-align:center;margin-bottom:16px;">
         <div style="font-size:2.4em;">⏳</div>
         <div style="font-size:18px;font-weight:bold;color:#c9a84c;margin-top:8px;">时间转换器</div>
         <div style="font-size:12px;color:#888;margin-top:4px;">${travelLabel}</div>
         ${testBadge}
       </div>
-      <div style="background:#2a2a3e;border-radius:8px;padding:14px;margin-bottom:16px;">
+      <div style="background:#2a2a3e;border-radius:8px;padding:12px;margin-bottom:12px;">
         <div style="font-size:12px;color:#888;margin-bottom:8px;">原时间节点</div>
         <div style="font-size:15px;color:#c9a84c;">📅 ${orig.currentDate} ${orig.nowTime}</div>
         <div style="font-size:12px;color:#888;margin-top:6px;">剩余行动次数：${orig.dailyActionLeft}</div>
       </div>
-      <div style="font-size:11px;color:#777;margin-bottom:16px;line-height:1.5;">
-        <div style="color:#aaa;margin-bottom:4px;">返回规则</div>
+      <div style="font-size:11px;color:#777;margin-bottom:12px;line-height:1.35;">
+        <div style="color:#aaa;margin-bottom:3px;">返回规则</div>
         ${returnRules}
       </div>
       <button id="tt-return" style="width:100%;padding:12px;background:linear-gradient(135deg,#c9a84c,#a07830);color:#1a1a2e;border:none;border-radius:10px;font-size:15px;font-weight:bold;cursor:pointer;">
@@ -469,10 +473,10 @@ function _renderReturnPanel() {
 
   panel.addEventListener('click', (e) => {
     if (e.target.closest("[data-tt-action='close']")) {
-      panel.remove();
+      _closeTimeTurnerPanel();
       return;
     }
-    if (e.target === panel) panel.remove();
+    if (e.target === panel) _closeTimeTurnerPanel();
   });
 
   document.getElementById("tt-return")?.addEventListener('click', () => {
@@ -517,8 +521,7 @@ function _returnToOriginal() {
   window.timeSystem.dailyActionLeft = orig.dailyActionLeft;
   if (window.syncActionUI) window.syncActionUI();
 
-  const panel = document.getElementById("timeTurnerPanel");
-  if (panel) panel.remove();
+  _closeTimeTurnerPanel();
 
   if (wasFutureTravel) {
     addLog(`🔮⏳ 时间转换器再次转动——你从未来回到了 ${orig.currentDate} ${orig.nowTime}。`, 'story');

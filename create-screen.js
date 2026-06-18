@@ -51,6 +51,7 @@ export function buildSaveData(opts = {}) {
       item: [],
       wizardCard: []
     },
+    economy: { exploreMilestones: {}, interestPaid: {}, houseCupPaid: {} },
     affinity: {},
     housePoints: { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 },
     duelRecord: { wins: 0, losses: 0 },
@@ -133,6 +134,7 @@ export function quickTest() {
   setTimeout(() => {
     window.loadTimeFromSave?.();
     window.refreshAll?.();
+    window.openCourseTestPanel?.();
   }, 100);
 }
 

@@ -21,6 +21,11 @@ function knutsToCurrency(knuts) {
   return { g, s, n };
 }
 
+function addKnutsToWallet(knuts, reason = '') {
+  const { g, s, n } = knutsToCurrency(knuts);
+  window.currency?.addMoney?.(g, s, n, reason);
+}
+
 export class BaseShop {
   constructor(config) {
     this.id = config.id;
@@ -145,17 +150,17 @@ export class BaseShop {
     window.removeMaterialFromBag(itemName, quantity);
     
     // 增加加隆
-    window.updatePlayerGalleons(totalPrice);
+    addKnutsToWallet(totalPrice, `卖给${this.name}：${itemName}×${quantity}`);
     
     // 记录统计
     window.updateShopStats(this.id, totalPrice, 'earned');
     
     // 添加日志
-    addLog(`💰 在 ${this.name} 出售了 ${itemName} x${quantity}，获得 ${totalPrice} 加隆`);
+    addLog(`💰 在 ${this.name} 出售了 ${itemName} x${quantity}，获得 ${knutsToDisplay(totalPrice)}`);
     
     return {
       success: true,
-      message: `成功出售 ${itemName} x${quantity}，获得 ${totalPrice} 加隆`,
+      message: `成功出售 ${itemName} x${quantity}，获得 ${knutsToDisplay(totalPrice)}`,
       totalPrice: totalPrice
     };
   }
@@ -176,8 +181,7 @@ export class BaseShop {
     if (!bagGrid) return false;
     
     // 从存档系统获取
-    const { getSave } = require('../save/save-system.js');
-    const data = getSave();
+    const data = window.saveSys?.getSave?.();
     const materials = data.bag?.material || [];
     const item = materials.find(i => i?.name === materialName);
     return item && (item.count || 1) >= quantity;

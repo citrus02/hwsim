@@ -9,6 +9,11 @@
 
 // ── 运行时依赖 ───────────────────────────────────────────
 function getEngine() { return window.questEngine; }
+function _getCharacterName(key) {
+  return window.affinityData?.AFFINITY_CHARACTERS?.[key]?.name ||
+         window.studentData?.STUDENT_CHARACTERS?.[key]?.name ||
+         key;
+}
 
 // ═══════════════════════════════════════════════════════════
 // 入口：渲染整个任务子标签页
@@ -109,8 +114,23 @@ function _renderDailyCard(q) {
     ? `<button class="quest-claim-btn" data-type="daily" data-qid="${q.id}">领取奖励</button>`
     : "";
 
-  const progressHTML = (!done && progressText)
-    ? `<div class="quest-progress-text">${progressText}</div>`
+  const metaHTML = (q.source || q.location)
+    ? `<div class="quest-meta-row">
+        ${q.source ? `<span class="quest-meta-pill">📌 ${q.source}</span>` : ""}
+        ${q.location ? `<span class="quest-meta-pill">📍 ${q.location}</span>` : ""}
+      </div>`
+    : "";
+
+  const hookHTML = q.hook
+    ? `<div class="quest-hook-text">${q.hook}</div>`
+    : "";
+
+  const conditionHTML = !done && progressText
+    ? `<div class="quest-condition">🎯 ${progressText}</div>`
+    : "";
+
+  const completionHTML = done && !claimed && q.completionText
+    ? `<div class="quest-completion-text">${q.completionText}</div>`
     : "";
 
   return `
@@ -119,8 +139,11 @@ function _renderDailyCard(q) {
         <span class="quest-card-icon">${q.icon}</span>
         <div class="quest-card-info">
           <div class="quest-card-title">${q.title} ${statusBadge}</div>
+          ${metaHTML}
           <div class="quest-card-desc">${q.desc}</div>
-          ${progressHTML}
+          ${hookHTML}
+          ${conditionHTML}
+          ${completionHTML}
         </div>
       </div>
       <div class="quest-rewards-row">
@@ -237,8 +260,15 @@ function _renderRewards(rewards, mini = false) {
       case "material":   return `<span class="quest-reward-tag">📦 ${r.name}×${r.count}</span>`;
       case "item":       return `<span class="quest-reward-tag">🎁 ${r.name}×${r.count}</span>`;
       case "housePoint": return `<span class="quest-reward-tag">🏅 学院+${r.amount}</span>`;
+      case "money": {
+        const parts = [];
+        if (r.galleons) parts.push(`${r.galleons}加隆`);
+        if (r.sickles) parts.push(`${r.sickles}西可`);
+        if (r.knuts) parts.push(`${r.knuts}纳特`);
+        return `<span class="quest-reward-tag">💰 ${parts.join(" ")}</span>`;
+      }
       case "affinity": {
-        const name = window.affinityData?.AFFINITY_CHARACTERS?.[r.key]?.name || r.key;
+        const name = _getCharacterName(r.key);
         return `<span class="quest-reward-tag">💛 ${name}+${r.delta}</span>`;
       }
       case "log": return "";

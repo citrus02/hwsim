@@ -1,4 +1,4 @@
-// ===========================
+﻿// ===========================
 // version.js
 // 版本管理 & 存档继承系统
 // ===========================
@@ -6,12 +6,21 @@
 import { SAVE_KEY } from './save/save-system.js'; // 统一来源，不再重复定义
 
 import { getSave } from './save/save-system.js';
-export const CURRENT_VERSION = '1.8.9';
+export const CURRENT_VERSION = '1.9.0';
 export const VERSION_KEY = 'hogwarts_version';
 export { SAVE_KEY }; // 透传导出，外部如需使用可从此处或 save-system.js 取
 
 // git add . && git commit -m "1.2.1" && git pull origin main --rebase && git push
 export const versionLogs = {
+  '1.9.0': [
+    '新增魔法经济奖励系统：探索里程碑奖金、决斗胜利奖赏、古灵阁月息与学院杯年终奖',
+    '日常任务从手写扩展为程序化组合生成，10类任务轴交叉产出800+条，一年级全年基本不重复',
+    '数学课从70课扩展到136课，一年级全年排课完整覆盖，新增跨学科锚点',
+    '重构角色注册表，合并好感数据与主动事件包为统一角色档案',
+    '新增课堂测试面板，支持快速跳转课次、模拟完成与完整性检查',
+    '新增任务文案手写标准规范，明确日常任务的写作底线与审校要求',
+    '商店价格支持纳特精度，存档系统新增经济数据迁移与初始化',
+  ],
   '1.8.9': [
     '新增开放题本地/AI判题切换，玩家可在课堂答题时选择是否联网调用AI',
     '补充本地自动判题逻辑与教授反馈文案，AI未开启或不可用时也能完成开放题评分',

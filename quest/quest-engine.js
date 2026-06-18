@@ -55,14 +55,69 @@
  */
 
 import { DAILY_QUEST_POOL, SIDE_QUESTS, ACHIEVEMENTS, drawDailyQuests } from './quest-data.js';
+import { addMoney } from '../currency.js';
 
 // ── 运行时依赖 ───────────────────────────────────────────
 function getSave() { return window.saveSys?.getSave?.() || {}; }
 function setSave(d){ window.saveSys?.setSave?.(d); }
 function addLog(t) { window.addLog?.(t); window.renderLog?.(); }
+function getCharacterName(key) {
+  return window.affinityData?.AFFINITY_CHARACTERS?.[key]?.name ||
+         window.studentData?.STUDENT_CHARACTERS?.[key]?.name ||
+         key;
+}
 function getDate() {
   const d = getSave();
   return d.time?.currentDate || d.time?.currentDate || "1991-09-02";
+}
+
+function _getAcademicYearKey(dateStr) {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return "1991";
+  const year = date.getFullYear();
+  return date.getMonth() + 1 >= 9 ? String(year) : String(year - 1);
+}
+
+function _isWeekend(dateStr) {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return false;
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
+function _isClassAvailableDate(dateStr) {
+  if (_isWeekend(dateStr)) return false;
+  return !window.getNoClassReason?.(dateStr);
+}
+
+function _conditionUsesClass(cond) {
+  if (!cond) return false;
+  if (cond.type === "courseStudy" || cond.type === "goodStudy") return true;
+  if (cond.type === "compound") return cond.conditions?.some(_conditionUsesClass) || false;
+  return false;
+}
+
+function _isDailyQuestAvailable(qDef, dateStr) {
+  const noClass = !_isClassAvailableDate(dateStr);
+  const weekend = _isWeekend(dateStr);
+
+  if (qDef.requiresClass || _conditionUsesClass(qDef.condition)) {
+    return !noClass;
+  }
+
+  if (qDef.holidayOnly) {
+    return !!window.getNoClassReason?.(dateStr);
+  }
+
+  if (qDef.weekendOnly) {
+    return weekend && !window.getNoClassReason?.(dateStr);
+  }
+
+  return true;
+}
+
+function _getAvailableDailyPool(dateStr) {
+  return DAILY_QUEST_POOL.filter(qd => _isDailyQuestAvailable(qd, dateStr));
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -74,6 +129,7 @@ function _initQuestData(data) {
   const q = data.quests;
 
   if (!q.daily) q.daily = { date: "", quests: [], doneCount: 0 };
+  if (!q.daily.historyByYear || typeof q.daily.historyByYear !== "object") q.daily.historyByYear = {};
   if (!q.side)  q.side  = {};
   if (!q.achievements) q.achievements = {};
 
@@ -113,6 +169,8 @@ function _saveQuests(q) {
 function _refreshDailyIfNeeded(q) {
   const today = getDate();
   if (q.daily.date === today) return false; // 今天已刷新过
+  const yearKey = _getAcademicYearKey(today);
+  if (!Array.isArray(q.daily.historyByYear[yearKey])) q.daily.historyByYear[yearKey] = [];
 
   // 新的一天：重置今日计数器
   q.todayCounters = {
@@ -121,10 +179,17 @@ function _refreshDailyIfNeeded(q) {
     duel4v4Play: 0, explore: 0, brewPotion: 0,
   };
 
-  // 抽取今日3条任务（排除昨天的）
+  // 抽取今日3条任务：优先整学年不重复，再退回到可完成池。
   const lastIds = (q.daily.quests || []).map(dq => dq.id);
-  const pool    = DAILY_QUEST_POOL.filter(qd => !lastIds.includes(qd.id));
-  const drawn   = drawDailyQuests(3, pool.length >= 3 ? pool : DAILY_QUEST_POOL);
+  const usedThisYear = new Set(q.daily.historyByYear[yearKey]);
+  const availablePool = _getAvailableDailyPool(today);
+  const freshPool = availablePool.filter(qd => !lastIds.includes(qd.id) && !usedThisYear.has(qd.id));
+  const fallbackPool = availablePool.filter(qd => !lastIds.includes(qd.id));
+  const pool = freshPool.length >= 3 ? freshPool
+             : fallbackPool.length >= 3 ? fallbackPool
+             : availablePool.length >= 3 ? availablePool
+             : DAILY_QUEST_POOL.filter(qd => !lastIds.includes(qd.id));
+  const drawn = drawDailyQuests(3, pool.length >= 3 ? pool : DAILY_QUEST_POOL);
 
   q.daily.date   = today;
   q.daily.quests = drawn.map(qd => ({
@@ -133,6 +198,11 @@ function _refreshDailyIfNeeded(q) {
     done:     false,
     claimed:  false,
   }));
+  drawn.forEach(qd => {
+    if (!q.daily.historyByYear[yearKey].includes(qd.id)) {
+      q.daily.historyByYear[yearKey].push(qd.id);
+    }
+  });
 
   return true; // 刷新了
 }
@@ -152,6 +222,45 @@ function _checkDailyDone(qState, qDef, todayCounters) {
 
   const key = cond.type;
   return (todayCounters[key] || 0) >= (cond.count || 1);
+}
+
+function _getConditionLabel(qDef, type) {
+  const labels = {
+    courseStudy: "完成课程",
+    goodStudy: "好好学习",
+    duelPlay: "参与决斗",
+    duelWin: "赢得决斗",
+    duel4v4Play: "参加4v4",
+    explore: "探索区域",
+    brewPotion: "熬制魔药",
+  };
+  return qDef.conditionLabels?.[type] || labels[type] || type;
+}
+
+function _formatDailyProgress(qDef, todayCounters) {
+  const cond = qDef.condition;
+
+  if (cond.type === "compound") {
+    return cond.conditions.map(sub => {
+      const cur = Math.min(todayCounters[sub.type] || 0, sub.count || 1);
+      return `${_getConditionLabel(qDef, sub.type)} ${cur}/${sub.count || 1}`;
+    }).join(" · ");
+  }
+
+  const cur = Math.min(todayCounters[cond.type] || 0, cond.count || 1);
+  return `${_getConditionLabel(qDef, cond.type)} ${cur}/${cond.count || 1}`;
+}
+
+function _formatDailyCondition(qDef) {
+  const cond = qDef.condition;
+
+  if (cond.type === "compound") {
+    return cond.conditions
+      .map(sub => `${_getConditionLabel(qDef, sub.type)}×${sub.count || 1}`)
+      .join(" + ");
+  }
+
+  return `${_getConditionLabel(qDef, cond.type)}×${cond.count || 1}`;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -287,9 +396,18 @@ function _grantRewards(rewards) {
         window.housePoints?.addPlayerPoints?.(r.amount);
         lines.push(`🏅 学院积分 +${r.amount}`);
         break;
+      case "money": {
+        addMoney(r.galleons || 0, r.sickles || 0, r.knuts || 0, "任务奖励");
+        const parts = [];
+        if (r.galleons) parts.push(`${r.galleons} 加隆`);
+        if (r.sickles) parts.push(`${r.sickles} 西可`);
+        if (r.knuts) parts.push(`${r.knuts} 纳特`);
+        lines.push(`💰 ${parts.join(" ") || "0 纳特"}`);
+        break;
+      }
       case "affinity":
         window.affinitySystem?.addAffinity?.(r.key, r.delta, "任务奖励");
-        const name = window.affinityData?.AFFINITY_CHARACTERS?.[r.key]?.name || r.key;
+        const name = getCharacterName(r.key);
         lines.push(`💛 ${name} 好感度 +${r.delta}`);
         break;
       case "log":
@@ -524,20 +642,10 @@ export const QuestEngine = {
       const def = DAILY_QUEST_POOL.find(d => d.id === dqState.id);
       if (!def) return null;
 
-      // 计算进度文字
-      let progressText = "";
-      const cond = def.condition;
-      if (cond.type === "compound") {
-        progressText = cond.conditions.map(sub => {
-          const cur = q.todayCounters[sub.type] || 0;
-          return `${sub.type}: ${Math.min(cur, sub.count)}/${sub.count}`;
-        }).join(" · ");
-      } else {
-        const cur = q.todayCounters[cond.type] || 0;
-        if (cond.count > 1) progressText = `${Math.min(cur, cond.count)} / ${cond.count}`;
-      }
+      const progressText = _formatDailyProgress(def, q.todayCounters);
+      const conditionText = _formatDailyCondition(def);
 
-      return { ...def, state: dqState, progressText };
+      return { ...def, state: dqState, progressText, conditionText };
     }).filter(Boolean);
   },
 

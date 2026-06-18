@@ -119,14 +119,26 @@ export function formatWalletFull() {
 }
 
 // ── UI 刷新（由 refreshAll 调用）────────────────────────
+function formatCompactNumber(value) {
+  const n = Number(value) || 0;
+  const abs = Math.abs(n);
+  if (abs < 10000) return String(n);
+  if (abs < 1000000) {
+    const k = n / 1000;
+    return `${k >= 100 ? Math.round(k) : k.toFixed(1).replace(/\.0$/, '')}k`;
+  }
+  const m = n / 1000000;
+  return `${m >= 100 ? Math.round(m) : m.toFixed(1).replace(/\.0$/, '')}m`;
+}
+
 export function refreshCurrencyUI() {
   const { galleons, sickles, knuts } = getWallet();
   const g = document.getElementById("stat-galleons");
   const s = document.getElementById("stat-sickles");
   const k = document.getElementById("stat-knuts");
-  if (g) g.textContent = galleons;
-  if (s) s.textContent = sickles;
-  if (k) k.textContent = knuts;
+  if (g) { g.textContent = formatCompactNumber(galleons); g.removeAttribute("title"); }
+  if (s) { s.textContent = formatCompactNumber(sickles); s.removeAttribute("title"); }
+  if (k) { k.textContent = formatCompactNumber(knuts); k.removeAttribute("title"); }
 }
 
 // ── 全局挂载 ─────────────────────────────────────────────

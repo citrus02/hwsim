@@ -49,6 +49,8 @@ const ANALYSIS_COLOR_CLASS = {
   grey: 'cls-rich-gray',
 };
 
+const TEST_RATING_SCORE = { O: 6, E: 5, A: 3, P: 1, D: -1, T: -2 };
+
 function _escapeHtml(value = '') {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -211,12 +213,12 @@ export function showLearnChoiceModal(item, items, title) {
 // ════════════════════════════════════════════════════════════
 //  好好学习 — 完整课堂流程
 // ════════════════════════════════════════════════════════════
-function enterClassroom(item, subjectKey, subjectData, items, title) {
+function enterClassroom(item, subjectKey, subjectData, items, title, options = {}) {
   if (!item.unlock) {
     window.doStudyLog?.(`❌ 无法进入课堂【${item.name}】：需要 ${item.unlockGrade} 年级`);
     return;
   }
-  const availability = window.courseAttendance?.validateCourseAccess?.(item);
+  const availability = options.skipAttendance ? null : window.courseAttendance?.validateCourseAccess?.(item);
   if (availability && !availability.ok) {
     window.doStudyLog?.(availability.message);
     return;
@@ -227,22 +229,30 @@ function enterClassroom(item, subjectKey, subjectData, items, title) {
     return;
   }
 
-  const lessonBase = getCurrentLesson(subjectKey);
+  const lessonBase = options.lessonNumber
+    ? getAllLessons(subjectData.syllabus).find(l => l.lesson === Number(options.lessonNumber))
+    : getCurrentLesson(subjectKey);
   if (!lessonBase) {
     window.doStudyLog?.(`✅ ${item.name} 所有课时已完成`);
     return;
   }
-  window.courseAttendance?.markAttended?.(item);
+  if (!options.skipAttendance) {
+    window.courseAttendance?.markAttended?.(item);
+  }
   // 从 lessonMap 合并完整内容（opening/atmosphere/keyPoints含context）
   const lessonExtra = subjectData.lessonMap?.[lessonBase.lesson] || {};
   const lesson = { ...lessonBase, ...lessonExtra };
   const qGroup = getQuestionsForLesson(subjectData.questionBank, lesson.lesson);
 
   _buildPanel(item, subjectKey, subjectData, lesson, qGroup, () => {
+    if (options.onClose) {
+      options.onClose();
+      return;
+    }
     window.refreshAll?.();
     window.loadCourseProgressFromSave?.();
     window.renderLevelFn?.(items, title);
-  });
+  }, options);
 }
 
 // ── 课堂内部状态 ─────────────────────────────────────────
@@ -259,7 +269,7 @@ function resetClassroom() {
 }
 
 // ── 课堂面板外框 ─────────────────────────────────────────
-function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
+function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose, options = {}) {
   document.getElementById("classroomPanel")?.remove();
   const courseMain = document.getElementById("courseMain");
   if (courseMain) courseMain.style.display = "none";
@@ -307,6 +317,37 @@ function _buildPanel(item, subjectKey, subjectData, lesson, qGroup, onClose) {
     isMuggleStudy: !!item.muggleSubjectKey,
   };
   const { st, sd, onClose: oc } = _clsState;
+  if (options.stage === "lecture" || options.stage === "quiz" || options.stage === "result") {
+    st.maxPhase = 3;
+  }
+  if (Number.isInteger(options.keyPointIndex)) {
+    const maxKeyPointIndex = Math.max(0, (lesson.keyPoints || []).length - 1);
+    st.kpIdx = Math.min(maxKeyPointIndex, Math.max(0, options.keyPointIndex));
+  }
+  if (options.simulateRating && TEST_RATING_SCORE[options.simulateRating] !== undefined) {
+    st.score = TEST_RATING_SCORE[options.simulateRating];
+  }
+  if (options.openAnswerDebug) {
+    st.openScore = options.openAnswerDebug.score;
+    st.openMaxScore = options.openAnswerDebug.maxScore;
+    st.openFeedback = options.openAnswerDebug.feedback;
+    st.openPointsAchieved = options.openAnswerDebug.pointsAchieved || [];
+    st.openAnswer = options.openAnswerDebug.answer;
+    st.openQuestion = options.openAnswerDebug.question;
+    st.openAnswerTimestamp = Date.now();
+  }
+  if (options.stage === "lecture") {
+    _phaseLecture(st, subjectKey, sd, lesson, qGroup, oc);
+    return;
+  }
+  if (options.stage === "quiz") {
+    _phaseQuiz(st, subjectKey, sd, lesson, qGroup, oc);
+    return;
+  }
+  if (options.stage === "result") {
+    _phaseResult(st, subjectKey, sd, lesson, qGroup, oc);
+    return;
+  }
   _phaseOpening(st, subjectKey, sd, lesson, qGroup, oc);
 }
 
@@ -1602,4 +1643,33 @@ function _phaseResult(st, subjectKey, sd, lesson, qGroup, onClose) {
 }
 
 // ── 全局挂载 ─────────────────────────────────────────────
-window.classroom = { showLearnChoiceModal, resetClassroom };
+export function startTestLesson({ subjectKey, lessonNumber, stage = "opening", keyPointIndex = 0, simulateRating = "O", openAnswerDebug = null, onClose } = {}) {
+  const subjectData = getSubjectData(subjectKey);
+  if (!subjectData?.syllabus) {
+    window.doStudyLog?.(`Test lesson unavailable: ${subjectKey}`);
+    return false;
+  }
+
+  const item = {
+    name: subjectData.subjectMeta?.name || subjectKey,
+    icon: subjectData.subjectMeta?.icon || "📘",
+    unlock: true,
+    unlockGrade: 1,
+    professor: subjectData.subjectMeta?.professor || "",
+  };
+  if (MUGGLE_SUBJECTS.includes(subjectKey)) item.muggleSubjectKey = subjectKey;
+  else item.hogwartsSubjectKey = subjectKey;
+
+  enterClassroom(item, subjectKey, subjectData, [], "Test Lesson", {
+    skipAttendance: true,
+    lessonNumber,
+    stage,
+    keyPointIndex,
+    simulateRating,
+    openAnswerDebug,
+    onClose,
+  });
+  return true;
+}
+
+window.classroom = { showLearnChoiceModal, resetClassroom, startTestLesson };

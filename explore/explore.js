@@ -5,6 +5,7 @@ import { hogwartsExploreData, alwaysAllowArea, exploreMaterials, getMatEmoji } f
 import { getYearGrade, getPlayerHouse, getSave, setSave } from "../save/save-system.js";
 import { exploreEventLib } from "./explore-default.js";
 import { tryTriggerEncounter } from "../affinity/affinity-ui.js";
+import { grantExploreReward } from "../economy-rewards.js";
 
 function _saveExploreRate(area) {
   const data = getSave();
@@ -575,6 +576,9 @@ function renderSecondLayer() {
           }
         }
 
+        const moneyLines = grantExploreReward({ areaName: lv2.name, exploreRate: lv2.exploreRate });
+        if (moneyLines.length) logSuffix += `【${moneyLines.join("；")}】`;
+
         const worldFollowup = window.npcEvents?.triggerLocationHook?.(lv2.name);
         if (worldFollowup) logSuffix += worldFollowup;
         window.doExploreLog(logMessage + logSuffix);
@@ -677,6 +681,9 @@ function renderThirdLayer() {
         window.addMaterialToBag(mat.name, mat.count);
         logSuffix += `【获得材料: ${emoji} ${mat.name} x${mat.count}】`;
       }
+
+      const moneyLines = grantExploreReward({ areaName: item.name, exploreRate: item.exploreRate });
+      if (moneyLines.length) logSuffix += `【${moneyLines.join("；")}】`;
 
       const worldFollowup = window.npcEvents?.triggerLocationHook?.(item.name);
       if (worldFollowup) logSuffix += worldFollowup;

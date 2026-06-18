@@ -76,6 +76,10 @@ Classroom narrative text is rendered through `_formatContext()` in `course/class
 
 `affinity-system.js` tracks all NPC relationships. It is driven as a side effect by classroom completions, duels, quests, and gift-giving — not directly called from the main game loop. The `onClassResult()` hook in `classroom.js` is the primary trigger.
 
+### Quest Writing Standard
+
+Task content must follow `_spec/任务文案_手写标准.md`. Quests should feel like a living Hogwarts noticeboard: helping classmates find things, running errands for professors, investigating rumors, grouping with friends for duels, and discovering systems through characterful school-life hooks. Do not write daily quests as bare system chores such as "go to class", "explore once", or "brew a potion" unless the task has a concrete person, place, object, and reason. Rewards may combine money, affinity, house points, items, and materials, but must match the source and difficulty.
+
 ### Time & Schedule Gating
 
 `time-system.js` manages the in-game clock (1991–1998), action points, holidays, and day cycles. Lesson access is gated: the course system checks whether the current in-game day and period match the fixed schedule before allowing a class.

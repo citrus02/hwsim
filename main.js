@@ -19,7 +19,7 @@ import './potion/potion.js';
 import './currency.js';
 import './house-points.js';
 import './npc-events.js';
-import './characters/_registry.js';
+import './characters/registry.js';
 import './proactive-scheduler.js';
 
 import './course/muggle-academic/math/index.js';
@@ -51,6 +51,7 @@ import './course/subjects/divination/index.js';
 import './course/muggle-schedule.js';
 import './course/classroom.js';
 import './course/course.js';
+import './test-course-panel.js';
 
 import './spell/spell.js';
 import './duel/duel-data.js';
@@ -62,6 +63,7 @@ import './save/slot-system.js';
 import './ui-render.js';
 import './hogsmeade/shop-bridge.js';
 import './quest/quest-data.js';
+import './economy-rewards.js';
 import './quest/quest-engine.js';
 import './quest/quest-ui.js';
 import './story/story-events.js';

@@ -1,3 +1,5 @@
+import { applyHouseCupReward, applyMonthlyInterest } from './economy-rewards.js';
+
 export const timeSystem = {
   dailyActionLeft: 1,
   nowTime: "夜晚",
@@ -111,6 +113,8 @@ export function nextDay() {
   timeSystem.nowTime = "上午";
   syncUI();
   saveTimeToSave();
+  applyMonthlyInterest();
+  applyHouseCupReward();
   window.courseAttendance?.remindCurrentWindowClasses?.();
 
   setTimeout(() => {

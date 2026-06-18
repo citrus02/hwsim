@@ -5,6 +5,7 @@ const ACTIONS = {
   "reset-game": () => window.resetGame?.(),
   "open-profile": () => window.openProfilePanel?.(),
   "open-time-turner": () => window.openTimeTurnerPanel?.(),
+  "open-course-test": () => window.openCourseTestPanel?.(),
   "open-bag": () => window.openBagPanel?.(),
   "open-course": () => window.openCoursePanel?.(),
   "open-duel": () => window.openDuelPanel?.(),

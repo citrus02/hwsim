@@ -22,12 +22,14 @@
 
 ## 全科课程结构标准
 
-- 每个完整科目采用 **7 年级、14 章、70 课**结构。
-- 每章 5 课。
+- 课程推进采用 **每次排课消耗 1 个 lesson** 的口径；默认玩家会参加每节排定课程。
+- 每个年级的最低课时数由课程表决定：`周课时 × 34 个有效教学周`。34 周来自校历估算（37 校历周扣除圣诞、复活节和考试周）。
+- 旧的 **7 年级、14 章、70 课** 结构已废弃，不得作为新课程主线，也不得用总课数冒充某一学年的课时。
+- 周课时较高的科目必须扩展到对应年级目标课时。例如数学、拉丁语在 Year 1 每周 4 节，最低需要 `4 × 34 = 136` 课；数学 Year 1 的权威目标就是 136 课。
 - 1-3 年级为 `KS3`，4-5 年级为 `GCSE`，6-7 年级为 `A-Level`。
 - 科目主文件的 `syllabus` 应与 `_spec/muggle-syllabus.md` 对齐。
-- 课程大纲文件应保持与数学课现行结构一致：每章包含 `chapter`、`yearRange`、`phase`、`lessons` 等核心字段。
-- 旧实现中多出的考试安排、假期作业、学习方法类非学科课程，不应混入 70 课主线，除非 `_spec/muggle-syllabus.md` 明确列出。
+- 课程大纲应按学年拆分维护。数学采用 `course/muggle-academic/math/yearN/` 结构，每个学年目录至少包含 `index.js`、`lesson.js`、`question-bank.js`；根 `math/index.js` 只做汇总注册。每章包含 `chapter`、`yearRange`、`phase`、`lessons` 等核心字段。
+- 旧实现中多出的考试安排、假期作业、学习方法类非学科课程，不应混入课程主线，除非 `_spec/muggle-syllabus.md` 明确列出。
 
 ---
 
@@ -36,13 +38,13 @@
 每个 `course/muggle-academic/[subject]-lesson.js` 必须符合 `_spec/course-content-prompt.md` 中的“课程级别字段”“keyPoint context 写作原则”和“小黑板（blackboard）规范”。本文件只保留维护层面的约束：
 
 - 导出 `lessonMap`。
-- 覆盖第 1-70 课，课号连续。
+- 覆盖 `_spec/muggle-syllabus.md` 中该科目、该学年列出的全部课次，课号连续。
 - 每课主题与 `_spec/muggle-syllabus.md` 和 `[subject].js` 中对应课次一致。
 - 教授语气必须来自 `course/staff-data.js` 的主档案，不可只写通用教师口吻。
 
 专项迁移要求：
 
-- 旧 lesson 文件少于 70 课时，应扩展到 70 课，而不是保留旧课数。
+- 旧 lesson 文件少于当前排课口径目标课时，应扩展到目标课时，而不是保留旧课数；不得把一年级补课内容追加到高年级/A-Level 内容之后。
 - 旧 lesson 内容与新大纲不匹配时，应按新大纲重写，不把旧内容硬塞进新课次。
 - 若旧文件误用了其他科目的内容，应整体替换为本学科内容。
 
@@ -95,9 +97,9 @@
 
 修改课程大纲、lesson 或 questionBank 后，至少检查以下入口；具体字段细则以 `_spec/course-content-prompt.md` 为准：
 
-- 科目主文件：14 章、70 课、课号连续、阶段标记正确。
-- lesson 文件：70 课、每课结构完整、主题与 syllabus 对应。
-- questionBank 文件：70 课、420 题、350 choice、70 open、每课 6 题。
+- 科目主文件：课时数达到该科目当前目标，课号连续、阶段标记正确。
+- lesson 文件：覆盖所有 syllabus 课次，每课结构完整、主题与 syllabus 对应。
+- questionBank 文件：覆盖所有 syllabus 课次，每课 6 题（5 choice + 1 open），总题量为 `课时数 × 6`。
 - 人设：语气与 `staff-data.js` 对应教授一致。
 - 运行：目标 JS 文件通过语法检查。
 

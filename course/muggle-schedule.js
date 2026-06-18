@@ -9,79 +9,81 @@
  *   4. 每天3节课，周一至周五上课，周六周日不上课
  *
  * 课程安排（参考英国Year 7（11-12岁）标准，周一至周五上课，共15节/周）：
- *   周一：数学（1）、英语（2）、英语文学（3）
- *   周二：数学（1）、英语（2）、历史（3）
- *   周三：英语（1）、地理（2）、生物（3）
- *   周四：数学（1）、英语（2）、化学（3）
- *   周五：数学（1）、物理（2）、道德与法治（3）
+ *   周一：数学（1）、拉丁语（2）、英语文学（3）
+ *   周二：数学（1）、拉丁语（2）、历史（3）
+ *   周三：拉丁语（1）、地理（2）、生物（3）
+ *   周四：数学（1）、拉丁语（2）、化学（3）
+ *   周五：数学（1）、物理（2）、哲学与伦理（3）
  *
- *   英语4 + 数学4 + 物理1 + 化学1 + 生物1 + 历史1 + 地理1 + 英语文学1 + 道德与法治1 = 15
+ *   拉丁语4 + 数学4 + 物理1 + 化学1 + 生物1 + 历史1 + 地理1 + 英语文学1 + 哲学与伦理1 = 15
  *
  *   【英国Year 7课表核心逻辑】
  *   英国 vs 中国初一最大区别：
- *   1. 英语（English）是母语课，节数最多（英国通常5节/周，游戏适配为4节）
+ *   1. 拉丁语承担语言基础训练，节数与数学并列最高（各4节/周）
  *   2. 没有独立"语文"科目——阅读/写作/文学全归入 English 体系
  *      → literature 科目重新定位为"英语文学"课（English Literature）
  *   3. 历史与地理在英国Year 7受到更高重视（各2节/周，游戏压缩至1节）
  *   4. 自然科学在英国Year 7通常作综合科学教授，但霍格沃茨麻瓜学术系
  *      保留了物理/化学/生物三科分设的传统（与英国私立学校做法一致）
- *   5. 道德与法治对应英国 RE（Religious Education）+ PSHE 课程性质
+ *   5. 哲学与伦理对应英国 RE（Religious Education）+ PSHE 课程性质
  *
  * =====================================================================
  *  麻瓜学术系七年制 · 年级课时总表  （开发完整度检查用）
- *  说明：Year 1 数据实际采集自各科目 .js 文件，Year 2-7 为规划目标
+ *  说明：Year 1 数据实际采集自各科目 index.js / lesson.js / question-bank.js，
+ *       Year 2-7 为规划目标。
  * =====================================================================
  *
  *  学年有效教学周：约34周（37校历周 - 圣诞2.5周 - 复活节1周 - 考试约0.5周）
  *  目标课时 = 周课时 × 34周（每年级）
- *  实际课时 = 各科目 .js 文件中最大 lesson 编号（仅 Year 1 已实现）
+ *  实际课时 = 各科目三件套均具备的 lesson 数量
+ *  推进逻辑 = 每次排课消耗一课；因此高周课时科目必须准备更多独立课时
  *
  *  科目         周时  年1目标/实现     年2    年3    年4    年5    年6    年7
  *  ─────────────────────────────────────────────────────────────────────
- *  数学           4   136 / 110 ⚠   136    136    136    136    136    —
- *  语文与文学      3   102 /  48 ❌   102    102    102    102    102    —
- *  英语            2    68 /  75 ✅    68     68     68     68     68    —
- *  物理            1    34 /  60 ⚠    34     34     34     34     34    —
- *  化学            1    34 /  56 ⚠    34     34     34     34     34    —
- *  生物            1    34 /  34 ✅    34     34     —      —      —     —
- *  历史            1    34 /  45 ⚠    34     34     34     34     —     —
- *  地理            1    34 /  69 ⚠    34     —      —      —      —     —
- *  道德与法治       1    34 /  45 ⚠    34     34     —      —      —     —
+ *  数学           4   136 / 136 ✅   136    136    136    136    136    —
+ *  拉丁语          4   136 /  70 ❌   136    136    136    136    136    —
+ *  英语文学         1    34 /  70 ✅    34     34     34     34     34    —
+ *  物理            1    34 /  70 ✅    34     34     34     34     34    —
+ *  化学            1    34 /  70 ✅    34     34     34     34     34    —
+ *  生物            1    34 /  70 ✅    34     34     —      —      —     —
+ *  历史            1    34 /  70 ✅    34     34     34     34     —     —
+ *  地理            1    34 /  70 ✅    34     —      —      —      —     —
+ *  哲学与伦理       1    34 /  70 ✅    34     34     —      —      —     —
  *  ─────────────────────────────────────────────────────────────────────
- *  年级合计      15   510 / 482      510    476    408    374    374    —
+ *  年级合计      15   510 / 696      510    476    408    374    374    —
  *
- *  ✅ 达标   ⚠ 偏差（超出或不足）   ❌ 严重不足   — 该年级无此科目
+ *  ✅ 达标   ❌ 不足   — 该年级无此科目
  *
  *  【各年级科目规划（对应中国学制）】
  *  年1（初一）：全9科开放
  *  年2（初二）：全9科，地理内容压缩进阶
- *  年3（初三）：8科（地理结束，理化生深化，道德继续）
- *  年4（高一）：7科（道德与法治结束，转为政治选修；理化生高中版本）
+ *  年3（初三）：8科（地理结束，理化生深化，哲学与伦理继续）
+ *  年4（高一）：7科（哲学与伦理结束，转为政治选修；理化生高中版本）
  *  年5（高二）：6科（生物选修化；O.W.L.考试年）
  *  年6（高三）：5科（选修制深化；N.E.W.T.准备）
  *  年7（毕业年）：无麻瓜学术必修课，N.E.W.T.另立
  *
  *  【Year 1 各科目完整度诊断】
- *  数学   (110课)：目标136，缺26课 ——初一下学期部分知识点可补充
- *  语文   ( 48课)：目标102，缺54课 ——水课已清除，真实章节内容待大量补充
- *  英语   ( 75课)：目标 68，超  7课 ——可接受，含复习和拓展
- *  物理   ( 60课)：目标 34，超 26课 ——建议视为Year1+Year2联合内容
- *  化学   ( 56课)：目标 34，超 22课 ——建议视为Year1+Year2联合内容
- *  生物   ( 34课)：目标 34，精确对齐✅
- *  历史   ( 45课)：目标 34，超 11课 ——约含Year2初期内容
- *  地理   ( 69课)：目标 34，超 35课 ——约覆盖Year1+Year2全部
- *  道德   ( 45课)：目标 34，超 11课 ——约含Year2初期内容
+ *  数学   (136课)：目标136，精确对齐✅
+ *  拉丁语 ( 70课)：目标136，缺66课 ——按4节/周推进会在第18周左右耗尽
+ *  英语文学(70课)：目标 34，超36课 ——足够覆盖Year 1，并含后续余量
+ *  物理   ( 70课)：目标 34，超36课 ——足够覆盖Year 1，并含后续余量
+ *  化学   ( 70课)：目标 34，超36课 ——足够覆盖Year 1，并含后续余量
+ *  生物   ( 70课)：目标 34，超36课 ——足够覆盖Year 1，并含后续余量
+ *  历史   ( 70课)：目标 34，超36课 ——足够覆盖Year 1，并含后续余量
+ *  地理   ( 70课)：目标 34，超36课 ——足够覆盖Year 1，并含后续余量
+ *  哲学与伦理(70课)：目标34，超36课 ——足够覆盖Year 1，并含后续余量
  *
  *  【内容文件位置】
- *  course/muggle-academic/math.js / math-lesson.js / math-questionBank.js
- *  course/muggle-academic/literature.js / literature-lesson.js
- *  course/muggle-academic/latin.js / latin-questionBank.js / latin-lesson.js
- *  course/muggle-academic/physics.js / physics-lesson.js / physics-questionBank.js
- *  course/muggle-academic/chemistry.js / chemistry-lesson.js / chemistry-questionBank.js
- *  course/muggle-academic/biology.js / biology-lesson.js / biology-questionBank.js
- *  course/muggle-academic/history.js / history-lesson.js / history-questionBank.js
- *  course/muggle-academic/geography.js / geography-questionBank.js
- *  course/muggle-academic/civics.js / civics-lesson.js / civics-questionBank.js
+ *  course/muggle-academic/math/index.js / year1/index.js / year1/lesson.js / year1/question-bank.js
+ *  course/muggle-academic/literature/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/latin/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/physics/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/chemistry/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/biology/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/history/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/geography/index.js / lesson.js / question-bank.js
+ *  course/muggle-academic/civics/index.js / lesson.js / question-bank.js
  * =====================================================================
  */
 

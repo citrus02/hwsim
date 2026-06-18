@@ -1,5 +1,6 @@
 // duel-result-service.js - duel outcome persistence, affinity hooks, and reward summaries
 import { getSave, setSave, addLog, renderLog } from './duel-runtime.js';
+import { grantDuelReward } from '../economy-rewards.js';
 
 export function collectProficiencyGains(spellHits, playerSpells, playerWon) {
   const profGains = [];
@@ -47,6 +48,7 @@ export function settleDuelResult({ duel, playerWon, playerSpells }) {
   setSave(save);
 
   if (playerWon) {
+    grantDuelReward({ won: true, opponentLevel: opponent.level || 1, is4v4: false });
     window.affinityUI?.tryStudentActionEncounter('duelWin');
     window.affinityUI?.checkStudentSpecialTriggers('duelWin', {
       opponentLevel: opponent.level || 1

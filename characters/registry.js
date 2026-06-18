@@ -1,5 +1,5 @@
 /**
- * characters/_registry.js
+ * characters/registry.js
  * 角色注册表 — 汇总导出所有角色对象，供调度器遍历
  */
 import neville from './neville.js';

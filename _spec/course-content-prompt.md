@@ -11,7 +11,7 @@
 在开始之前，先读：
 
 - `_spec/muggle-syllabus.md`——找到对应科目、年级、课次的题目
-- `_spec/course-maintenance-standards.md`——确认 70 课结构、题库题量、文件维护与旧规格废弃规则
+- `_spec/course-maintenance-standards.md`——确认按排课消耗计算的目标课时、题库题量、文件维护与旧规格废弃规则
 - `course/staff-data.js` 中 `muggleStudiesStaff` 的对应条目——**教授主档案**（背景、性格、catchphrase、quizStyle 全在这里）
 - 如有需要，补充读 `course/muggle-academic/[subject].js` 中的 crossAnchors（联动信息）
 
@@ -128,9 +128,9 @@
 
 本项目题库以 `math-questionBank.js` 的现行结构为标准。旧规格中出现过的"每课 3 题（basic/medium/hard）"已废弃，除非用户明确要求兼容旧文件，否则一律按以下标准执行：
 
-- 每个科目完整题库为 **70 课**。
+- 每个科目完整题库的课时数必须等于 `_spec/muggle-syllabus.md` 为该科列出的当前目标课时数。
 - 每课必须有 **6 题**：**5 道选择题 + 1 道开放题**。
-- 完整题库总题量为 **420 题**：350 道选择题 + 70 道开放题。
+- 完整题库总题量为 **课时数 × 6**；选择题为 **课时数 × 5**，开放题为 **课时数 × 1**。
 - 选择题难度分布：`difficulty: 1` 两题，`difficulty: 2` 两题，`difficulty: 3` 一题。
 - 选择题字段必须包含：`type`、`difficulty`、`text`、`options`、`answer`、`knowledgePoint`、`analysis`。
 - 开放题字段必须包含：`type: "open"`、`text`、`scoringPoints`、`maxScore`。
@@ -148,10 +148,10 @@ if (typeof window !== 'undefined') {
 
 **验证时必须检查**：
 
-- `lessons === 70`
-- `questions === 420`
-- `choice === 350`
-- `open === 70`
+- `lessons === syllabus 课时数`
+- `questions === lessons × 6`
+- `choice === lessons × 5`
+- `open === lessons`
 - 每课 `questions.length === 6`
 - 每课 `choice.length === 5`
 - 每课 `open.length === 1`

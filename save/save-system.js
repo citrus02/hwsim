@@ -85,6 +85,7 @@ export function getDefaultSave() {
     log: [], timeline: [],
     player: { name: "无名巫师", era: "", house: "", blood: "", wand: "", wandAccepted: true, galleons: 10 },
     bag: { material: [], potion: [], item: [], wizardCard: [] },
+    economy: { exploreMilestones: {}, interestPaid: {}, houseCupPaid: {} },
     course,
     potion: {},
     world: { dateBriefed: "", memory: [], rumors: [], locationStatus: {}, hooks: [], daily: {}, proactiveCooldown: {}, npcMemory: {} },
@@ -138,6 +139,10 @@ export function migrateSaveData(save) {
   if (!save.world.npcMemory || typeof save.world.npcMemory !== "object") save.world.npcMemory = {};
   if (!save.story) save.story = { completed: {}, active: null };
   if (!save.bag) save.bag = { material: [], potion: [], item: [], wizardCard: [] };
+  if (!save.economy || typeof save.economy !== "object") save.economy = {};
+  if (!save.economy.exploreMilestones || typeof save.economy.exploreMilestones !== "object") save.economy.exploreMilestones = {};
+  if (!save.economy.interestPaid || typeof save.economy.interestPaid !== "object") save.economy.interestPaid = {};
+  if (!save.economy.houseCupPaid || typeof save.economy.houseCupPaid !== "object") save.economy.houseCupPaid = {};
   if (!save.player) save.player = {};
   if (save.player.sickles === undefined) save.player.sickles = 0;
   if (save.player.knuts === undefined) save.player.knuts = 0;
@@ -303,6 +308,7 @@ export function restartGame() {
     timeline: [],
     course,
     bag: { material: [], potion: [], item: [], wizardCard: [] },
+    economy: { exploreMilestones: {}, interestPaid: {}, houseCupPaid: {} },
     affinity: {},
     knownCharacters: [],
     knownSpells: [],

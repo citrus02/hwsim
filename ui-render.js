@@ -51,10 +51,24 @@ function joinUniqueTextSegments(segments = []) {
 }
 
 let worldPaperTab = "dynamic"; // 面板内子标签，跨刷新保持
+let worldPaperCollapsed = false; // 城堡动向折叠状态，跨刷新保持
 
 export function renderWorldPaper() {
   const mount = document.getElementById("world-paper-content");
   if (!mount) return;
+  const toggle = document.getElementById("world-paper-toggle");
+  if (toggle) {
+    toggle.textContent = worldPaperCollapsed ? "→" : "↓";
+    toggle.setAttribute("aria-label", worldPaperCollapsed ? "展开城堡动向" : "收起城堡动向");
+    toggle.setAttribute("aria-expanded", String(!worldPaperCollapsed));
+    toggle.onclick = () => {
+      worldPaperCollapsed = !worldPaperCollapsed;
+      renderWorldPaper();
+    };
+  }
+
+  mount.hidden = worldPaperCollapsed;
+  if (worldPaperCollapsed) return;
 
   const data = getSave();
   const world = data.world || {};
@@ -173,7 +187,6 @@ export function refreshAll() {
   setText("stat-blood", data.player?.blood || "—");
   setText("stat-house", data.player?.house || "—");
   setText("stat-wand", data.player?.wand || "—");
-  setText("stat-galleons", data.player?.galleons ?? 10);
   const curDate = data.time?.currentDate || "1991-09-02";
   setText("date", curDate);
   setText("timeOfDay", data.time?.nowTime || "上午");
@@ -209,6 +222,7 @@ export function refreshAll() {
   if (ttBtn) {
     const hasTT = data.timeTurner?.usesLeft !== undefined || (data.bag?.item || []).some(i => i.name === "时间转换器");
     ttBtn.style.display = hasTT ? "inline" : "none";
+    window.ensureCourseTestEntry?.();
   }
 
   const dateEl = document.getElementById("date");

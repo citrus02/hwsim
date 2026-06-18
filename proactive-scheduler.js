@@ -9,10 +9,14 @@
  */
 
 import { getSave, setSave, addLog, getYearGrade } from './save/save-system.js';
-import { ALL_CHARACTERS } from './characters/_registry.js';
+import { ALL_CHARACTERS } from './characters/registry.js';
 
 // ── 常量 ──────────────────────────────────────────────────
 const MAX_TODAY = 1; // 每天最多1个主动事件
+const MAX_ACTIVE_PROACTIVE = 1;
+const DEFAULT_PROACTIVE_TTL_DAYS = 3;
+const DEFAULT_CHARACTER_COOLDOWN_DAYS = 5;
+const MIN_PROACTIVE_RELATION_VALUE = 20;
 
 // ── 工具函数 ──────────────────────────────────────────────
 
@@ -56,9 +60,39 @@ function sanitizeProactiveAiSeed(seed) {
 // ── 条件筛选 ──────────────────────────────────────────────
 
 /** 检查好感阶段门槛 */
-function checkMinTier(characterKey, minTier) {
+function getStoredAffinity(data, characterKey) {
+  const affinity = data.affinity?.[characterKey];
+  return affinity && typeof affinity === 'object' ? affinity : null;
+}
+
+function getStoredAffinityTier(data, characterKey) {
+  const affinity = getStoredAffinity(data, characterKey);
+  if (Number.isFinite(affinity?.tier)) return affinity.tier;
+  if (!Number.isFinite(affinity?.value)) return null;
+  const tier = window.affinitySystem?.getTierByValue?.(affinity.value);
+  return Number.isFinite(tier?.tier) ? tier.tier : null;
+}
+
+function hasRealAcquaintance(data, characterKey) {
+  if (!characterKey) return false;
+  if (data.knownCharacters?.includes(characterKey)) return true;
+
+  const affinity = getStoredAffinity(data, characterKey);
+  if (!affinity) return false;
+  if (Number.isFinite(affinity.value) && Math.abs(affinity.value) >= MIN_PROACTIVE_RELATION_VALUE) return true;
+
+  const tier = getStoredAffinityTier(data, characterKey);
+  return Number.isFinite(tier) && tier >= 2;
+}
+
+function checkAcquaintance(data, characterKey, req = {}) {
+  if (req.allowStranger === true) return true;
+  return hasRealAcquaintance(data, characterKey);
+}
+
+function checkMinTier(data, characterKey, minTier) {
   if (!minTier) return true;
-  const tier = window.affinitySystem?.getTier?.(characterKey);
+  const tier = getStoredAffinityTier(data, characterKey);
   if (tier == null) return false;
   return tier >= minTier;
 }
@@ -75,6 +109,15 @@ function checkCooldown(data, eventId, cooldownDays) {
   if (!cooldownDays) return true;
   const cooldowns = data.world?.proactiveCooldown || {};
   const lastDate = cooldowns[eventId];
+  if (!lastDate) return true;
+  const today = data.time?.currentDate || '';
+  return daysBetween(lastDate, today) >= cooldownDays;
+}
+
+function checkCharacterCooldown(data, characterKey, cooldownDays = DEFAULT_CHARACTER_COOLDOWN_DAYS) {
+  if (!cooldownDays) return true;
+  const cooldowns = data.world?.proactiveCharacterCooldown || {};
+  const lastDate = cooldowns[characterKey];
   if (!lastDate) return true;
   const today = data.time?.currentDate || '';
   return daysBetween(lastDate, today) >= cooldownDays;
@@ -99,12 +142,46 @@ function checkGradeRange(ev, grade = getYearGrade()) {
   return true;
 }
 
+function isProactiveExpired(hook, today) {
+  if (!hook?.date) return false;
+  const ttlDays = hook.ttlDays ?? DEFAULT_PROACTIVE_TTL_DAYS;
+  return daysBetween(hook.date, today) > ttlDays;
+}
+
+function isActiveProactiveHook(hook, today) {
+  return hook && !hook.consumed && hook.type === 'proactive' && !isProactiveExpired(hook, today);
+}
+
+function getActiveProactiveHooksFromData(data) {
+  const hooks = data.world?.hooks;
+  if (!Array.isArray(hooks)) return [];
+  const today = data.time?.currentDate || '';
+  return hooks.filter(hook => isActiveProactiveHook(hook, today));
+}
+
+function expireStaleProactiveHooks(data) {
+  const hooks = data.world?.hooks;
+  if (!Array.isArray(hooks)) return false;
+  const today = data.time?.currentDate || '';
+  let changed = false;
+  for (const hook of hooks) {
+    if (hook?.type !== 'proactive' || hook.consumed) continue;
+    if (!isProactiveExpired(hook, today)) continue;
+    hook.consumed = true;
+    hook.expired = true;
+    hook.consumedAt = `${today} ${data.time?.nowTime || '上午'}`;
+    changed = true;
+  }
+  return changed;
+}
+
 // ── 投放逻辑 ──────────────────────────────────────────────
 
 /** 投放一个主动事件 */
 function deployProactiveEvent(data, character, ev) {
   const today = data.time?.currentDate || '';
   if (!data.world || typeof data.world !== 'object') data.world = {};
+  if (getActiveProactiveHooksFromData(data).length >= MAX_ACTIVE_PROACTIVE) return false;
 
   // 1. 创建 proactive 类型的钩子
   const hookData = {
@@ -143,6 +220,7 @@ function deployProactiveEvent(data, character, ev) {
     date,
     time,
     consumed: false,
+    ttlDays: ev.require?.ttlDays ?? DEFAULT_PROACTIVE_TTL_DAYS,
     ...hookData,
   });
   world.hooks = world.hooks.slice(-40);
@@ -150,6 +228,8 @@ function deployProactiveEvent(data, character, ev) {
   // 2. 记录冷却
   if (!world.proactiveCooldown) world.proactiveCooldown = {};
   world.proactiveCooldown[ev.id] = today;
+  if (!world.proactiveCharacterCooldown) world.proactiveCharacterCooldown = {};
+  world.proactiveCharacterCooldown[character.key] = today;
 
   // 3. 如果是一次性事件，标记 flag
   if (ev.require?.oneTime) {
@@ -186,6 +266,8 @@ export function runProactiveScheduler() {
   const data = getSave();
   const today = data.time?.currentDate || '';
   if (!today) return;
+  const expiredAny = expireStaleProactiveHooks(data);
+  if (expiredAny) setSave(data);
   const grade = getYearGrade();
 
   const candidates = [];
@@ -197,9 +279,11 @@ export function runProactiveScheduler() {
       const req = ev.require || {};
 
       // 逐条硬性筛选
-      if (!checkMinTier(character.key, req.minTier)) continue;
+      if (!checkAcquaintance(data, character.key, req)) continue;
+      if (!checkMinTier(data, character.key, req.minTier)) continue;
       if (!checkMemoryTag(data, req.memoryTag)) continue;
       if (!checkCooldown(data, ev.id, req.cooldownDays)) continue;
+      if (!checkCharacterCooldown(data, character.key, req.characterCooldownDays)) continue;
       if (!checkOneTime(character.key, ev.id, req.oneTime)) continue;
       if (!checkGradeRange(ev, grade)) continue;
 
@@ -209,6 +293,7 @@ export function runProactiveScheduler() {
   }
 
   if (candidates.length === 0) return; // 今天没人来，很正常
+  if (getActiveProactiveHooksFromData(data).length >= MAX_ACTIVE_PROACTIVE) return;
 
   // 节制控制
   let triggered = 0;
@@ -230,9 +315,7 @@ export function runProactiveScheduler() {
 
 export function getProactiveHooks() {
   const data = getSave();
-  const world = data.world || {};
-  if (!Array.isArray(world.hooks)) return [];
-  return world.hooks.filter(h => !h.consumed && h.type === 'proactive');
+  return getActiveProactiveHooksFromData(data).slice(0, MAX_ACTIVE_PROACTIVE);
 }
 
 // ── 全局挂载 ──────────────────────────────────────────────

@@ -31,7 +31,7 @@ const inGradeRange = (entry, grade) => {
 
 const students = await import(`../affinity-students.js?v=${Date.now()}`);
 const staff = await import(`../affinity-data.js?v=${Date.now()}`);
-const registry = await import(`../characters/_registry.js?v=${Date.now()}`);
+const registry = await import(`../characters/registry.js?v=${Date.now()}`);
 
 const characters = {
   ...students.STUDENT_CHARACTERS,
